@@ -1,0 +1,255 @@
+{
+    "omni_llm_api_config": {
+        "title": "Omni LLM API 配置",
+        "inputs": {
+            "load_preset": "加载预设"
+        },
+        "widgets": {
+            "api_provider": "API提供商",
+            "model_name": "模型名称",
+            "api_base": "API地址",
+            "api_key": "API密钥",
+            "context_limit": "上下文限制",
+            "timeout": "超时时间",
+            "max_history_rounds": "最大历史轮次",
+            "max_edge": "最大边缘",
+            "preserve_thinking": "保留思考过程",
+            "save_preset": "保存预设",
+            "preset_name": "预设名称",
+            "delete_preset": "删除预设"
+        },
+        "outputs": {
+            "api_config": "API配置"
+        },
+        "description": "Omni LLM API 配置节点"
+    },
+    "omni_llm_asr_loader": {
+        "title": "Omni LLM ASR 模型加载器",
+        "inputs": {
+            "mmproj": "多模态投影"
+        },
+        "widgets": {
+            "asr_model": "ASR模型",
+            "n_gpu_layers": "GPU层数",
+            "language": "语言",
+            "task": "任务",
+            "enable_timestamps": "启用时间戳",
+            "n_ctx": "上下文窗口大小"
+        },
+        "outputs": {
+            "asr_model": "ASR模型"
+        },
+        "description": "基于 llama-cpp-python 0.4.0 MTMD 的 ASR 模型加载器\n使用 Qwen3ASRChatHandler 调用 llama.cpp 原生音频推理"
+    },
+    "omni_llm_clean_states": {
+        "title": "Omni LLM 状态清理",
+        "inputs": {
+            "any": "任意"
+        },
+        "widgets": {
+            "state_uid": "状态UID",
+            "clean_llm": "清理LLM",
+            "clean_asr": "清理ASR",
+            "clean_tts": "清理TTS",
+            "unload_all_comfyui_models": "卸载所有ComfyUI模型"
+        },
+        "outputs": {
+            "any": "任意"
+        },
+        "description": ""
+    },
+    "omni_llm_model_loader": {
+        "title": "Omni LLM 模型加载器",
+        "inputs": {},
+        "widgets": {
+            "model": "模型",
+            "enable_mmproj": "启用多模态投影",
+            "mmproj": "多模态投影",
+            "mtp_mode": "MTP模式",
+            "n_ctx": "上下文窗口大小",
+            "n_gpu_layers": "GPU层数",
+            "vram_limit": "VRAM限制",
+            "image_max_tokens": "图像最大token数",
+            "attention_type": "注意力类型",
+            "tensor_split": "张量拆分"
+        },
+        "outputs": {
+            "llama_model": "Llama模型"
+        },
+        "description": ""
+    },
+    "omni_llm_parameters": {
+        "title": "Omni LLM 参数",
+        "inputs": {},
+        "widgets": {
+            "max_tokens": "最大token数",
+            "top_k": "Top K",
+            "top_p": "Top P",
+            "min_p": "Min P",
+            "typical_p": "典型P",
+            "temperature": "温度",
+            "repeat_penalty": "重复惩罚",
+            "frequency_penalty": "频率惩罚",
+            "presence_penalty": "存在惩罚",
+            "mirostat_mode": "Mirostat模式",
+            "mirostat_eta": "Mirostat 学习率",
+            "mirostat_tau": "Mirostat 目标熵",
+            "seed": "随机种子",
+            "state_uid": "状态UID",
+            "reasoning_budget": "推理预算"
+        },
+        "outputs": {
+            "parameters": "参数"
+        },
+        "description": ""
+    },
+    "omni_llm_multi_image_input": {
+        "title": "Omni LLM 多图像输入",
+        "inputs": {
+            "image1": "图像1",
+            "image2": "图像2",
+            "image3": "图像3",
+            "image4": "图像4",
+            "image5": "图像5",
+            "image6": "图像6",
+            "image7": "图像7",
+            "image8": "图像8",
+            "image9": "图像9"
+        },
+        "widgets": {
+            "mode": "模式",
+            "story_type": "故事类型",
+            "story_length": "故事长度",
+            "language": "语言",
+            "max_size": "最大尺寸",
+            "custom_prompt": "自定义提示词",
+            "include_image_descriptions": "包含图像描述",
+            "story_theme": "故事主题",
+            "narrative_style": "叙事风格",
+            "content_focus": "内容重点",
+            "target_audience": "目标受众",
+            "video_model": "视频模型"
+        },
+        "outputs": {
+            "images": "图像",
+            "prompt": "提示词"
+        },
+        "description": "多图像输入节点\n- 支持输入多张图像进行分析（最多9张）\n- 支持无图像模式，通过选项设置生成提示词\n- 自动预处理和编码\n- 输出可直接连接到llama_cpp_unified_inference节点的批次内的所有图和custom_prompt\n- 专为Wan2.2/LTX2.5/MiniMax-H3视频生成优化\n- 支持多图反推，弥补推理节点只能输入单张图像的限制"
+    },
+    "omni_llm_realtime_chat": {
+        "title": "Omni LLM 实时对话",
+        "inputs": {
+            "llama_model": "Llama模型",
+            "api_config": "API配置",
+            "parameters": "参数",
+            "skill_loader": "技能加载器",
+            "system_prompt_preset": "系统提示词预设"
+        },
+        "widgets": {
+            "user_message": "用户消息",
+            "chat_history_json": "聊天历史JSON",
+            "request_id": "请求ID",
+            "current_images_json": "当前图像JSON",
+            "flow_state_json": "流程状态JSON",
+            "options_json": "选项JSON",
+            "system_prompt": "系统提示词",
+            "native_video": "原生视频",
+            "save_conversation": "保存对话",
+            "session_id": "会话ID"
+        },
+        "outputs": {},
+        "description": "Omni LLM 实时对话（内嵌聊天窗 + Skill 多阶段协议）"
+    },
+    "omni_llm_skill_loader": {
+        "title": "Omni LLM 技能加载器",
+        "inputs": {
+            "skill": "技能"
+        },
+        "widgets": {
+            "language": "语言"
+        },
+        "outputs": {
+            "skill_loader": "技能加载器"
+        },
+        "description": "技能加载器：自动选择或固定选择一个技能"
+    },
+    "omni_llm_tts_loader": {
+        "title": "Omni LLM TTS 模型加载器",
+        "inputs": {
+            "mmproj": "多模态投影"
+        },
+        "widgets": {
+            "tts_model": "TTS模型",
+            "n_gpu_layers": "GPU层数",
+            "language": "语言",
+            "n_ctx": "上下文窗口大小",
+            "ref_audio_path": "参考音频路径"
+        },
+        "outputs": {
+            "tts_model": "TTS模型"
+        },
+        "description": "TTS 模型加载器（llama-cpp MTMD），选择目录内的具体模型文件"
+    },
+    "omni_llm_unified_inference": {
+        "title": "Omni LLM 统一推理",
+        "inputs": {
+            "image_model": "图像模型",
+            "video_model": "视频模型",
+            "llama_model": "Llama模型",
+            "api_config": "API配置",
+            "asr_model": "ASR模型",
+            "tts_model": "TTS模型",
+            "parameters": "参数",
+            "images": "图像",
+            "video": "视频",
+            "audio": "音频",
+            "queue_handler": "队列处理器"
+        },
+        "widgets": {
+            "inference_mode": "推理模式",
+            "preset_prompt": "预设提示词",
+            "system_prompt": "系统提示词",
+            "text_input": "文本输入",
+            "prompt_language": "提示词语言",
+            "response_language": "响应语言",
+            "output_format": "输出格式",
+            "enable_constraints": "启用约束",
+            "enable_negative_prompts": "启用负面提示词",
+            "audio_model": "音频模型",
+            "video_max_frames": "视频最大帧数",
+            "video_sampling": "视频采样",
+            "video_manual_indices": "视频手动索引",
+            "video_audio": "视频音频",
+            "image_max_size": "图像最大尺寸",
+            "batch_combination": "批次组合",
+            "force_offload": "强制卸载"
+        },
+        "outputs": {
+            "output": "输出",
+            "output_list": "输出列表",
+            "state_uid": "状态UID",
+            "audio": "音频"
+        },
+        "description": "统一推理节点 - 支持VL模型\n自动检测模型类型并使用对应推理方式\n支持ASR+VL组合处理音频"
+    },
+    "omni_llm_video_loader": {
+        "title": "Omni LLM 视频加载器",
+        "inputs": {
+            "video": "视频"
+        },
+        "widgets": {
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "skip_first_frames": "跳过前N帧",
+            "select_every_nth": "每N帧选1帧"
+        },
+        "outputs": {
+            "images": "图像",
+            "video": "视频",
+            "audio": "音频"
+        },
+        "description": "视频加载节点\n- 无输入端口\n- 输出端口：图像序列、视频、音频\n- 支持视频文件选择和上传\n- 支持自定义帧率、分辨率、帧数限制等参数"
+    }
+}
