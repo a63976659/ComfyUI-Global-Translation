@@ -45,15 +45,15 @@
         "title": "逆采样器",
         "inputs": {
             "model": "模型",
-            "positive": "正向提示词词",
-            "negative": "负向提示词词",
-            "latent_image": "latent 图像"
+            "positive": "正向提示词",
+            "negative": "负向提示词",
+            "latent_image": "Latent"
         },
         "widgets": {
             "steps": "step 总数",
             "end_at_step": "终止step",
-            "cfg": "CFG 值",
-            "sampler_name": "采样器名称",
+            "cfg": "CFG",
+            "sampler_name": "采样器",
             "scheduler": "调度器",
             "normalize": "标准化"
         },
@@ -68,13 +68,13 @@
             "scheduler_func_opt": "调度器函数"
         },
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪"
+            "denoise": "去噪强度"
         },
         "outputs": {
             "BASIC_PIPE": "基础节点束",
@@ -91,17 +91,17 @@
             "scheduler_func_opt": "调度器函数"
         },
         "widgets": {
-            "add_noise": "添加噪波",
-            "noise_seed": "随机种",
+            "add_noise": "添加噪声",
+            "noise_seed": "噪声种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
-            "start_at_step": "开始降噪步数",
-            "end_at_step": "结束降噪步数",
-            "return_with_leftover_noise": "返回噪波"
+            "denoise": "去噪强度",
+            "start_at_step": "开始去噪步数",
+            "end_at_step": "结束去噪步数",
+            "return_with_leftover_noise": "返回噪声"
         },
         "outputs": {
             "BASIC_PIPE": "基础节点束",
@@ -347,7 +347,7 @@
         },
         "widgets": {
             "kernel_size": "大小",
-            "sigma": "Sigma"
+            "sigma": "标准差"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -372,7 +372,7 @@
         },
         "widgets": {
             "kernel_size": "大小",
-            "sigma": "Sigma"
+            "sigma": "标准差"
         },
         "outputs": {
             "SEGS": "Seg"
@@ -416,7 +416,7 @@
         "description": "在使用Clip空间的 遮罩辑器 功能时，此自定义节点可以与图像桥接器一起使用。"
     },
     "PreviewBridgeLatent": {
-        "title": "桥接预览Latent",
+        "title": "桥接预览 Latent",
         "inputs": {
             "latent": "Latent",
             "vae_opt": "VAE选择"
@@ -431,7 +431,7 @@
             "LATENT": "Latent",
             "MASK": "遮罩"
         },
-        "description": "这个自定义节点可以在使用 Clip空间 的 遮罩辑器 功能时，与桥接器一起用于潜空间。\n 如果输入提供了一个带有遮罩的潜空间变量，它会显示该遮罩。此外，遮罩输出提供了潜空间变量中设置的遮罩。\n 如果输入没有遮罩的潜空间，它会直接输出原始潜空间，但遮罩输出会输出一个整个区域都设置为遮罩的结果。\n 当通过 遮罩辑器 设置遮罩时，一个遮罩应用于潜空间，并且输出包括存储的遮罩。相同的遮罩也作为遮罩输出。\n 当连接到VAE选择时，它比 预览方法 具有更高的优先级。\n"
+        "description": "这个自定义节点可以在使用 Clip空间 的 遮罩辑器 功能时，与桥接器一起用于 Latent。\n 如果输入提供了一个带有遮罩的 Latent 变量，它会显示该遮罩。此外，遮罩输出提供了 Latent 变量中设置的遮罩。\n 如果输入没有遮罩的 Latent，它会直接输出原始 Latent，但遮罩输出会输出一个整个区域都设置为遮罩的结果。\n 当通过 遮罩辑器 设置遮罩时，一个遮罩应用于 Latent，并且输出包括存储的遮罩。相同的遮罩也作为遮罩输出。\n 当连接到VAE选择时，它比 预览方法 具有更高的优先级。\n"
     },
     "ImageSender": {
         "title": "图像发送",
@@ -460,19 +460,19 @@
         "description": "由 图像发送 生成的图像会自动通过相同的 连接ID 发送到 图像接收 。"
     },
     "LatentSender": {
-        "title": "Latent发送",
+        "title": "Latent 发送",
         "inputs": {
-            "samples": "Latent"
+            "samples": "采样"
         },
         "widgets": {
             "filename_prefix": "文件名前缀",
             "preview_method": "预览方法",
             "link_id": "连接ID"
         },
-        "description": "在 Latent发送 中生成的潜空间会自动通过相同的 连接ID 发送到 Latent接收。\n 此外，Latent发送 通过 预览Latent 实现，它将Latent以有效负载的形式存储在图像缩略图中。\n 由于ComfyUI的当前结构，它无法区分SDXL潜空间和SD1.5/SD2.1潜空间。因此，它通过使用SD1.5方法解码它们来生成缩略图。"
+        "description": "在 Latent 发送 中生成的 Latent 会自动通过相同的 连接ID 发送到 Latent 接收。\n 此外，Latent 发送 通过 预览 Latent 实现，它将 Latent 以有效负载的形式存储在图像缩略图中。\n 由于ComfyUI的当前结构，它无法区分SDXLLatent 和SD1.5/SD2.1Latent。因此，它通过使用SD1.5方法解码它们来生成缩略图。"
     },
     "LatentReceiver": {
-        "title": "Latent接收",
+        "title": "Latent 接收",
         "widgets": {
             "latent": "Latent",
             "trigger_always": "总是触发",
@@ -481,27 +481,27 @@
         "outputs": {
             "LATENT": "Latent"
         },
-        "description": "在 Latent发送 中生成的潜空间会自动通过相同的 连接ID 发送到 Latent接收。\n 此外，Latent发送 通过 预览Latent 实现，它将Latent以有效负载的形式存储在图像缩略图中。\n 由于ComfyUI的当前结构，它无法区分SDXL潜空间和SD1.5/SD2.1潜空间。因此，它通过使用SD1.5方法解码它们来生成缩略图。"
+        "description": "在 Latent 发送 中生成的 Latent 会自动通过相同的 连接ID 发送到 Latent 接收。\n 此外，Latent 发送 通过 预览 Latent 实现，它将 Latent 以有效负载的形式存储在图像缩略图中。\n 由于ComfyUI的当前结构，它无法区分SDXLLatent 和SD1.5/SD2.1Latent。因此，它通过使用SD1.5方法解码它们来生成缩略图。"
     },
     "ImageMaskSwitch": {
         "title": "图像遮罩切换",
         "inputs": {
             "images1": "图像1",
-            "mask1": "遮罩1",
+            "mask1": "遮罩 1",
             "images2": "图像2",
-            "mask2": "遮罩2",
+            "mask2": "遮罩 2",
             "images3": "图像3",
-            "mask3": "遮罩3",
+            "mask3": "遮罩 3",
             "images4": "图像4",
-            "mask4": "遮罩4",
+            "mask4": "遮罩 4",
             "select": "选择",
-            "mask1_opt": "遮罩1",
+            "mask1_opt": "遮罩 1",
             "images2_opt": "图像2",
-            "mask2_opt": "遮罩2",
+            "mask2_opt": "遮罩 2",
             "images3_opt": "图像3",
-            "mask3_opt": "遮罩3",
+            "mask3_opt": "遮罩 3",
             "images4_opt": "图像4",
-            "mask4_opt": "遮罩4"
+            "mask4_opt": "遮罩 4"
         },
         "widgets": {
             "select": "选择",
@@ -514,13 +514,13 @@
         "description": "在多个输入中，它选择由选择器指定的输入并输出。第一个输入必须提供，而其他输入是可选的。然而，如果选择器指定的输入未连接，可能会发生错误。"
     },
     "LatentSwitch": {
-        "title": "Latent切换",
+        "title": "Latent 切换",
         "inputs": {
             "input1": "输入1",
-            "latent1": "Latent1",
-            "latent2_opt": "Latent2",
-            "latent3_opt": "Latent3",
-            "latent4_opt": "Latent4"
+            "latent1": "Latent 1",
+            "latent2_opt": "Latent 2",
+            "latent3_opt": "Latent 3",
+            "latent4_opt": "Latent 4"
         },
         "widgets": {
             "select": "选择",
@@ -644,9 +644,9 @@
         "description": "提供从输入的SEGS中选择特定SEGS的功能。"
     },
     "ReencodeLatent": {
-        "title": "重编码Latent",
+        "title": "重编码 Latent",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "input_vae": "解码VAE",
             "output_vae": "编码VAE"
         },
@@ -660,9 +660,9 @@
         }
     },
     "ReencodeLatentPipe": {
-        "title": "重编码Latent(节点束)",
+        "title": "重编码 Latent(节点束)",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "input_basic_pipe": "解码节点束",
             "output_basic_pipe": "编码节点束"
         },
@@ -706,16 +706,16 @@
     "ImpactCombineConditionings": {
         "title": "合并条件",
         "inputs": {
-            "conditioning1": "条件1",
-            "conditioning2": "条件2",
-            "conditioning3": "条件3",
-            "conditioning4": "条件4",
-            "conditioning5": "条件5",
-            "conditioning6": "条件6",
-            "conditioning7": "条件7",
-            "conditioning8": "条件8",
-            "conditioning9": "条件9",
-            "conditioning10": "条件10"
+            "conditioning1": "条件 1",
+            "conditioning2": "条件 2",
+            "conditioning3": "条件 3",
+            "conditioning4": "条件 4",
+            "conditioning5": "条件 5",
+            "conditioning6": "条件 6",
+            "conditioning7": "条件 7",
+            "conditioning8": "条件 8",
+            "conditioning9": "条件 9",
+            "conditioning10": "条件 10"
         },
         "outputs": {
             "CONDITIONING": "条件"
@@ -806,8 +806,8 @@
     "BitwiseAndMask": {
         "title": "遮罩交集",
         "inputs": {
-            "mask1": "遮罩1",
-            "mask2": "遮罩2"
+            "mask1": "遮罩 1",
+            "mask2": "遮罩 2"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -816,8 +816,8 @@
     "SubtractMask": {
         "title": "遮罩相减",
         "inputs": {
-            "mask1": "遮罩1",
-            "mask2": "遮罩2"
+            "mask1": "遮罩 1",
+            "mask2": "遮罩 2"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -826,8 +826,8 @@
     "AddMask": {
         "title": "遮罩相加",
         "inputs": {
-            "mask1": "遮罩1",
-            "mask2": "遮罩2"
+            "mask1": "遮罩 1",
+            "mask2": "遮罩 2"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -944,7 +944,7 @@
         "outputs": {
             "MASK": "遮罩"
         },
-        "description": "将生成的具有0到255之间α值的掩码分离为0和255。非零部分始终设置为255。"
+        "description": "将生成的具有0到255之间α值的遮罩分离为0和255。非零部分始终设置为255。"
     },
     "MasksToMaskList": {
         "title": "遮罩到遮罩列表",
@@ -989,9 +989,9 @@
         }
     },
     "RemoveNoiseMask": {
-        "title": "移除噪波遮罩",
+        "title": "移除噪声遮罩",
         "inputs": {
-            "samples": "Latent"
+            "samples": "采样"
         },
         "outputs": {
             "LATENT": "Latent"
@@ -1005,8 +1005,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "scheduler_func_opt": "调度器函数",
             "detailer_hook": "优化约束"
         },
@@ -1014,19 +1014,19 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "wildcard": "提示词",
@@ -1045,8 +1045,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "scheduler_func_opt": "调度器函数",
             "detailer_hook": "优化约束"
         },
@@ -1054,19 +1054,19 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "wildcard": "提示词",
@@ -1090,20 +1090,20 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
             "wildcard": "提示词",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "refiner_ratio": "优化比率"
@@ -1125,8 +1125,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "scheduler_func_opt": "调度器函数",
             "detailer_hook": "优化约束"
         },
@@ -1134,19 +1134,19 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "wildcard": "提示词"
@@ -1174,20 +1174,20 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
             "wildcard": "提示词",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "refiner_ratio": "优化比率"
@@ -1217,13 +1217,13 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask_feather": "噪声遮罩羽化",
             "refiner_ratio": "优化比率"
@@ -1237,11 +1237,11 @@
         "description": "基于检测区域信息集合(Seg)中的各个区域，以引导尺寸为基础进行放大后通过修复(inpainting)的方式增强优化。\n此节点是专为AnimateDiff等视频优化改善设计的特殊优化增强节点，能够处理Seg中包含的跨多帧的批量遮罩情况。"
     },
     "NoiseInjectionDetailerHookProvider": {
-        "title": "插入噪波优化约束器",
+        "title": "插入噪声优化约束器",
         "widgets": {
             "schedule_for_cycle": "周期时间表",
             "source": "生成设备",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "start_strength": "开始强度",
             "end_strength": "结束强度",
@@ -1263,12 +1263,12 @@
         "description": "CoreML 仅支持 512x512、512x768、768x512、768x768 尺寸采样。\n CoreML优化约束器精确地将裁剪区域的放大倍数固定到这个尺寸。\n 使用此钩子时，它将始终选择此尺寸，无论 引导尺寸 如何。然而，如果 引导尺寸 太小，将会发生跳过。"
     },
     "NoiseInjectionHookProvider": {
-        "title": "插入噪波约束器",
+        "title": "插入噪声约束器",
         "widgets": {
             "scheduler": "调度器",
             "schedule_for_iteration": "调度循环",
             "source": "生成设备",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "start_strength": "开始强度",
             "end_strength": "结束强度"
@@ -1276,14 +1276,14 @@
         "outputs": {
             "PK_HOOK": "约束"
         },
-        "description": "在每次 迭代放大 迭代中，噪声会注入到潜在空间中，并根据时间表调整强度。\n 你需要安装BlenderNeko/ComfyUI_Noise 节点扩展。\n 种子作为生成噪声所需的初始值，并且在每次迭代中随过程展开递增1。\n 源确定要配置的CPU噪声和GPU噪声的类型。\n 目前，只有一个简单的计划可用，在每次迭代的过程中，噪声的强度从 开始强度 变化到 结束强度。"
+        "description": "在每次 迭代放大 迭代中，噪声会注入到 Latent 中，并根据时间表调整强度。\n 你需要安装BlenderNeko/ComfyUI_Noise 节点扩展。\n 种子作为生成噪声所需的初始值，并且在每次迭代中随过程展开递增1。\n 源确定要配置的CPU噪声和GPU噪声的类型。\n 目前，只有一个简单的计划可用，在每次迭代的过程中，噪声的强度从 开始强度 变化到 结束强度。"
     },
     "UnsamplerDetailerHookProvider": {
         "title": "逆采样优化约束器",
         "inputs": {
             "model": "模型",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "widgets": {
             "steps": "步数",
@@ -1301,15 +1301,15 @@
         "description": "在每个周期应用逆采样器。要使用此节点，必须安装ComfyUI_Noise。"
     },
     "DenoiseSchedulerDetailerHookProvider": {
-        "title": "降噪调度优化约束器",
+        "title": "去噪调度优化约束器",
         "widgets": {
             "schedule_for_cycle": "调度循环",
-            "target_denoise": "目标降噪"
+            "target_denoise": "目标去噪"
         },
         "outputs": {
             "DETAILER_HOOK": "优化约束"
         },
-        "description": "在周期进行过程中，去噪器的优化会改变到 目标降噪。"
+        "description": "在周期进行过程中，去噪器的优化会改变到 目标去噪。"
     },
     "SEGSDetailer": {
         "title": "Seg优化",
@@ -1324,19 +1324,19 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
-            "batch_size": "批量大小",
+            "batch_size": "批次大小",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "refiner_ratio": "优化比率"
         },
         "outputs": {
@@ -1359,13 +1359,13 @@
             "guide_size": "引导大小",
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "noise_mask_feather": "噪声遮罩羽化",
             "refiner_ratio": "优化比率"
         },
@@ -1633,8 +1633,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "segm_detector_opt": "Segm检测",
@@ -1645,13 +1645,13 @@
             "guide_size": "引导大小",
             "max_size": "最大尺寸",
             "guide_size_for": "引导目标",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
@@ -1667,7 +1667,7 @@
             "drop_size": "最小尺寸",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码"
         },
@@ -1692,13 +1692,13 @@
             "guide_size": "引导大小",
             "max_size": "最大尺寸",
             "guide_size_for": "引导目标",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "noise_mask": "仅生成遮罩",
             "force_inpaint": "强制重绘",
@@ -1715,7 +1715,7 @@
             "refiner_ratio": "优化比率",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码"
         },
@@ -1744,20 +1744,20 @@
             "guide_size_for": "引导目标",
             "max_size": "最大尺寸",
             "mask_mode": "遮罩模式",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "羽化",
             "crop_factor": "裁剪系数",
             "drop_size": "最小尺寸",
             "refiner_ratio": "优化比率",
             "cycle": "循环次数",
             "inpaint_model": "修复模型",
-            "noise_mask_feather": "噪波遮罩羽化",
+            "noise_mask_feather": "噪声遮罩羽化",
             "tiled_encode": "分块编码",
             "tiled_decode": "分块解码",
             "bbox_fill": "bbox填补",
@@ -1779,8 +1779,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "segm_detector_opt": "Segm检测",
@@ -1801,8 +1801,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "refiner_model": "模型(Refiner)",
             "refiner_clip": "CLIP(Refiner)",
             "refiner_positive": "正面条件(Refiner)",
@@ -1831,8 +1831,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "segm_detector_opt": "Segm检测",
@@ -1850,8 +1850,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "segm_detector_opt": "Segm检测",
@@ -1869,8 +1869,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "segm_detector_opt": "Segm检测",
@@ -1889,8 +1889,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "sam_model": "SAM模型",
@@ -1938,8 +1938,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "outputs": {
             "BASIC_PIPE": "基础节点束",
@@ -1956,8 +1956,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "description": "这些节点用于将模型、剪辑、VAE、正向条件和负向条件捆绑到一个 基础节点束 中，或者从 基础节点束 中提取每个元素。"
     },
@@ -1973,8 +1973,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "description": "这些节点用于将多个输入（如模型和VAE等）捆绑到一个 优化节点束 中，或从 优化节点束 中提取捆绑的元素。\n比上一代多一个额外的输出，直接导出输入管道。在 编辑基础束 和 编辑优化束 时非常有用。"
     },
@@ -1986,8 +1986,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "outputs": {
             "BASIC_PIPE": "基础节点束",
@@ -2044,8 +2044,8 @@
             "model": "模型",
             "clip": "CLIP",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "bbox_detector": "BBox检测",
             "sam_model_opt": "SAM模型",
             "sam_model": "SAM模型",
@@ -2068,9 +2068,9 @@
         "description": "这些节点用于替换 基础节点束 或 优化节点束 中的一些元素。"
     },
     "LatentPixelScale": {
-        "title": "Latent像素缩放",
+        "title": "Latent 像素缩放",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "vae": "VAE",
             "upscale_model_opt": "放大模型"
         },
@@ -2083,35 +2083,35 @@
             "LATENT": "Latent",
             "IMAGE": "图像"
         },
-        "description": " 该节点将潜在空间转换为像素空间，放大它，然后将其转换回潜在空间。\n 如果提供了 放大模型，它将使用该模型放大像素，然后使用在 缩放方法 中提供的插值方法将其缩小到目标分辨率。"
+        "description": " 该节点将 Latent 转换为像素空间，放大它，然后将其转换回 Latent。\n 如果提供了 放大模型，它将使用该模型放大像素，然后使用在 缩放方法 中提供的插值方法将其缩小到目标分辨率。"
     },
     "PixelKSampleUpscalerProvider": {
         "title": "K采样像素缩放器",
         "inputs": {
             "model": "模型",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "upscale_model_opt": "放大模型",
             "scheduler_func_opt": "调度器函数",
             "pk_hook_opt": "约束"
         },
         "widgets": {
             "scale_method": "缩放方法",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "use_tiled_vae": "使用分块VAE",
             "tile_size": "分块尺寸"
         },
         "outputs": {
             "UPSCALER": "缩放"
         },
-        "description": " 提供了一个k采样器，该k采样器使用 VAE解码 将潜在变量转换为像素，进行放大，然后使用 VAE编码 将其转换回潜在变量，最后进行k采样。\n 这个上采样器可以附加到节点上，例如 Latent迭代缩放 以便使用。\n 类似于Latent像素缩放，如果提供 放大模型，它将使用模型进行像素放大。"
+        "description": " 提供了一个k采样器，该k采样器使用 VAE解码 将 Latent 转换为像素，进行放大，然后使用 VAE编码 将其转换回 Latent，最后进行k采样。\n 这个上采样器可以附加到节点上，例如 Latent 迭代缩放 以便使用。\n 类似于 Latent 像素缩放，如果提供 放大模型，它将使用模型进行像素放大。"
     },
     "PixelKSampleUpscalerProviderPipe": {
         "title": "K采样像素缩放器(节点束)",
@@ -2124,13 +2124,13 @@
         },
         "widgets": {
             "scale_method": "缩放方法",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "use_tiled_vae": "使用分块VAE",
             "tile_size": "分块尺寸",
             "tile_cnet_strength": "平铺分块ControlNet强度"
@@ -2140,9 +2140,9 @@
         }
     },
     "IterativeLatentUpscale": {
-        "title": "Latent迭代缩放",
+        "title": "Latent 迭代缩放",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "upscaler": "缩放"
         },
         "widgets": {
@@ -2154,7 +2154,7 @@
         "outputs": {
             "latent": "Latent"
         },
-        "description": " 获取输入缩放并将 缩放系数 拆分为步骤，然后迭代地执行 缩放。这以 潜空间 作为输入，输出 潜空间作 为结果。"
+        "description": " 获取输入缩放并将 缩放系数 拆分为步骤，然后迭代地执行 缩放。这以 Latent 作为输入，输出 Latent 作 为结果。"
     },
     "IterativeImageUpscale": {
         "title": "图像迭代缩放",
@@ -2172,28 +2172,28 @@
         "outputs": {
             "image": "图像"
         },
-        "description": " 获取输入 缩放 并将 缩放系数 拆分为步骤，，然后迭代地执行 缩放。它以图像作为输入，输出图像作为结果。\n 内部，此节点使用 迭代缩放（潜空间）"
+        "description": " 获取输入 缩放 并将 缩放系数 拆分为步骤，，然后迭代地执行 缩放。它以图像作为输入，输出图像作为结果。\n 内部，此节点使用 迭代缩放（Latent）"
     },
     "PixelTiledKSampleUpscalerProvider": {
         "title": "K采样像素缩放器(分块)",
         "inputs": {
             "model": "模型",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "upscale_model_opt": "放大模型",
             "pk_hook_opt": "约束",
             "tile_cnet_opt": "平铺分块ControlNet选择"
         },
         "widgets": {
             "scale_method": "缩放方法",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "tile_width": "分块宽度",
             "tile_height": "分块高度",
             "tiling_strategy": "分块策略",
@@ -2212,8 +2212,8 @@
             "segs": "Seg",
             "model": "模型",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "upscale_model_opt": "放大模型",
             "upscaler_hook_opt": "高级约束选择",
             "scheduler_func_opt": "调度器函数"
@@ -2223,13 +2223,13 @@
             "resampling_method": "重采样方法",
             "supersample": "超级采样",
             "rounding_modulus": "舍入模数",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "分块宽度",
             "inpaint_model": "分块高度",
             "noise_mask_feather": "噪声遮罩羽化"
@@ -2246,8 +2246,8 @@
             "basic_pipe": "基本束",
             "model": "模型",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "upscale_model_opt": "放大模型",
             "upscaler_hook_opt": "高级约束选择",
             "scheduler_func_opt": "调度器函数"
@@ -2257,13 +2257,13 @@
             "resampling_method": "重采样方法",
             "supersample": "超级采样",
             "rounding_modulus": "舍入模数",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "feather": "分块宽度",
             "inpaint_model": "分块高度",
             "noise_mask_feather": "噪声遮罩羽化"
@@ -2277,8 +2277,8 @@
         "inputs": {
             "model": "模型",
             "vae": "VAE",
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "upscale_model_opt": "放大模型",
             "pk_hook_opt": "约束",
             "basic_pipe": "基础节点束",
@@ -2286,13 +2286,13 @@
         },
         "widgets": {
             "scale_method": "缩放方法",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "tile_width": "分块宽度",
             "tile_height": "分块高度",
             "tiling_strategy": "分块策略",
@@ -2372,15 +2372,15 @@
         "description": "这用于连接两个 像素K采样器约束 。约束1先执行，然后执行约束2。"
     },
     "DenoiseScheduleHookProvider": {
-        "title": "降噪约束器",
+        "title": "去噪约束器",
         "widgets": {
             "schedule_for_iteration": "调度循环",
-            "target_denoise": "目标降噪"
+            "target_denoise": "目标去噪"
         },
         "outputs": {
             "PK_HOOK": "约束"
         },
-        "description": "迭代放大 提供了一个约束，随着迭代步的推进，逐渐将 去噪 调整为 目标降噪。\n 如果你想同时更改cfg和去噪，你可以将 CFG约束器 和 像素K采样器约束组合 的 约束 结合起来。 "
+        "description": "迭代放大 提供了一个约束，随着迭代步的推进，逐渐将 去噪 调整为 目标去噪。\n 如果你想同时更改cfg和去噪，你可以将 CFG约束器 和 像素K采样器约束组合 的 约束 结合起来。 "
     },
     "CfgScheduleHookProvider": {
         "title": "CFG约束器",
@@ -2419,8 +2419,8 @@
         "title": "逆采样约束器",
         "inputs": {
             "model": "模型",
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "widgets": {
             "steps": "步数",
@@ -2444,13 +2444,13 @@
             "scheduler_func_opt": "调度器函数"
         },
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪"
+            "denoise": "去噪强度"
         },
         "outputs": {
             "KSAMPLER": "K采样器"
@@ -2468,7 +2468,7 @@
         "outputs": {
             "LATENT": "Latent"
         },
-        "description": "该节点可以根据遮罩区域应用两种采样器。基础采样器 应用于遮罩为0的区域，而 遮罩采样器 应用于遮罩为1的区域。\n 注意：通过 VAE内补编码器 编码的潜空间编码无法使用。"
+        "description": "该节点可以根据遮罩区域应用两种采样器。基础采样器 应用于遮罩为0的区域，而 遮罩采样器 应用于遮罩为1的区域。\n 注意：通过 VAE内补编码器 编码的 Latent 编码无法使用。"
     },
     "TiledKSamplerProvider": {
         "title": "K采样提供器(分块节点束)",
@@ -2476,13 +2476,13 @@
             "basic_pipe": "基础节点束"
         },
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
             "cfg": "CFG",
             "sampler_name": "采样器",
             "scheduler": "调度器",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "tile_width": "分块宽度",
             "tile_height": "分块高度",
             "tiling_strategy": "分块策略"
@@ -2513,16 +2513,16 @@
     "TwoAdvancedSamplersForMask": {
         "title": "双采样器(高级)",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "base_sampler": "基础采样器",
             "mask_sampler": "遮罩采样器",
             "mask": "遮罩"
         },
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "overlap_factor": "覆盖系数"
         },
         "outputs": {
@@ -2536,7 +2536,7 @@
             "wildcard_text": "提示文本",
             "populated_text": "输入文本",
             "mode": "是否输入",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "Select to add Wildcard": "选择添加提示词"
         },
@@ -2555,7 +2555,7 @@
             "wildcard_text": "提示文本",
             "populated_text": "输入文本",
             "mode": "是否输入",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "Select to add Wildcard": "选择添加提示词",
             "Select to add LoRA": "添加LoRA"
@@ -2599,20 +2599,20 @@
     "RegionalSampler": {
         "title": "区域采样器",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "base_sampler": "K采样器(高级)",
             "regional_prompts": "区域提示词"
         },
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "seed_2nd": "第二随机种",
             "seed_2nd_mode": "第二随机种模式",
             "steps": "步数",
             "base_only_steps": "仅基本步",
-            "denoise": "降噪",
+            "denoise": "去噪强度",
             "overlap_factor": "覆盖系数",
-            "restore_latent": "临时Latent",
+            "restore_latent": "临时 Latent",
             "additional_mode": "附加模式",
             "additional_sampler": "附加采样器",
             "additional_sigma_ratio": "附加sigma比率"
@@ -2620,27 +2620,27 @@
         "outputs": {
             "LATENT": "Latent"
         },
-        "description": "该节点使用基础采样器和区域提示进行采样。基础采样器在每一步执行采样，而每个区域的采样是通过绑定在每个区域的采样器进行的。\n 覆盖系数 - 指定每个区域的重叠量，以便与掩码外部的区域良好融合。\n 临时Latent- 在对每个区域进行采样时，将遮罩外的区域恢复到基础潜空间，以防止在区域采样过程中在遮罩外引入额外的噪声。"
+        "description": "该节点使用基础采样器和区域提示进行采样。基础采样器在每一步执行采样，而每个区域的采样是通过绑定在每个区域的采样器进行的。\n 覆盖系数 - 指定每个区域的重叠量，以便与遮罩外部的区域良好融合。\n 临时 Latent- 在对每个区域进行采样时，将遮罩外的区域恢复到基础 Latent，以防止在区域采样过程中在遮罩外引入额外的噪声。"
     },
     "RegionalSamplerAdvanced": {
         "title": "区域采样器(高级)",
         "inputs": {
-            "samples": "Latent",
+            "samples": "采样",
             "latent_image": "Latent",
             "base_sampler": "K采样器(高级)",
             "regional_prompts": "区域提示词"
         },
         "widgets": {
-            "add_noise": "添加噪波",
-            "seed": "随机种",
-            "noise_seed": "随机种",
+            "add_noise": "添加噪声",
+            "seed": "随机种子",
+            "noise_seed": "噪声种子",
             "control_after_generate": "运行后操作",
             "steps": "步数",
-            "start_at_step": "开始降噪步数",
-            "end_at_step": "结束降噪步数",
+            "start_at_step": "开始去噪步数",
+            "end_at_step": "结束去噪步数",
             "overlap_factor": "覆盖系数",
-            "restore_latent": "临时Latent",
-            "return_with_leftover_noise": "返回噪波",
+            "restore_latent": "临时 Latent",
+            "return_with_leftover_noise": "返回噪声",
             "additional_mode": "附加模式",
             "additional_sampler": "附加采样器",
             "additional_sigma_ratio": "附加sigma比率"
@@ -2648,12 +2648,12 @@
         "outputs": {
             "LATENT": "Latent"
         },
-        "description": "这是区域采样器的高级版本。您可以使用 步数 来控制它，而不是 降噪。\n 注意：sde采样器和uni_pc采样器在采样过程的每一步都会引入额外的噪声。为了减轻这一问题，当对每个区域进行采样时，uni_pc采样器应用额外的dpmpp_fast，而sde采样器将dpmpp_2m采样器作为额外的措施。 "
+        "description": "这是区域采样器的高级版本。您可以使用 步数 来控制它，而不是 去噪。\n 注意：sde采样器和uni_pc采样器在采样过程的每一步都会引入额外的噪声。为了减轻这一问题，当对每个区域进行采样时，uni_pc采样器应用额外的dpmpp_fast，而sde采样器将dpmpp_2m采样器作为额外的措施。 "
     },
     "ImpactConcatConditionings": {
         "title": "条件合并",
         "inputs": {
-            "conditioning1": "条件1"
+            "conditioning1": "条件 1"
         },
         "outputs": {
             "CONDITIONING": "条件"
@@ -2673,7 +2673,7 @@
         }
     },
     "ImpactLatentInfo": {
-        "title": "Latent信息",
+        "title": "Latent 信息",
         "inputs": {
             "value": "Latent"
         },
@@ -3067,7 +3067,7 @@
             "weight": "权重",
             "noise": "噪声",
             "weight_type": "权重类型",
-            "seed": "随机种",
+            "seed": "随机种子",
             "start_at": "开始步数",
             "end_at": "结束步数",
             "cfg": "CFG",
@@ -3138,7 +3138,7 @@
     "ImpactMakeMaskList": {
         "title": "制作遮罩列表",
         "inputs": {
-            "mask1": "遮罩1"
+            "mask1": "遮罩 1"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -3148,7 +3148,7 @@
     "ImpactMakeMaskBatch": {
         "title": "批量制作遮罩",
         "inputs": {
-            "mask1": "遮罩1"
+            "mask1": "遮罩 1"
         },
         "outputs": {
             "MASK": "遮罩"
@@ -3324,7 +3324,7 @@
         "title": "GITS调度器函数提供器",
         "widgets": {
             "coeff": "系数",
-            "denoise": "降噪强度"
+            "denoise": "去噪强度"
         },
         "outputs": {
             "SCHEDULER_FUNC": "调度程序函数"
@@ -3334,7 +3334,7 @@
     "VariationNoiseDetailerHookProvider": {
         "title": "变体噪声优化增强器约束提供器",
         "widgets": {
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "strength": "强度"
         },
@@ -3370,8 +3370,8 @@
             "filter_out_segs_opt": "过滤掉Seg选项"
         },
         "widgets": {
-            "ckpt_name": "ckpt名字",
-            "Positive prompt": "正向提示词",
+            "ckpt_name": "模型检查点",
+            "Positive prompt": "正面提示词",
             "Negative prompt": "负面提示词",
             "filter_segs_dilation": "分割区域膨胀过滤",
             "mask_irregularity": "遮罩不规则度",
@@ -3389,7 +3389,7 @@
             "filter_out_segs_opt": "过滤掉Seg选项"
         },
         "widgets": {
-            "ckpt_name": "ckpt名字",
+            "ckpt_name": "模型检查点",
             "text": "文本",
             "CLIPTextEncode text": "CLIP文本编码文本",
             "vae_name": "VAE名字",

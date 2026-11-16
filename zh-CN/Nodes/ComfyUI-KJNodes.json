@@ -37,7 +37,7 @@
             "tokens": "词元",
             "breakdown": "分解"
         },
-        "description": "计算MiniMax H3生成时在不采样情况下运行的打包序列长度。根据AV潜在变量以及条件信息（包括文本长度、关键帧和参考块），构建与模型相同的[文本 | 关键帧/参考 | 音频 | 视频]布局。"
+        "description": "计算MiniMax H3生成时在不采样情况下运行的打包序列长度。根据AVLatent 以及条件信息（包括文本长度、关键帧和参考块），构建与模型相同的[文本 | 关键帧/参考 | 音频 | 视频]布局。"
     },
     "MiniMaxLowVRAMAttention": {
         "title": "MiniMaX H3 低显存注意力",
@@ -242,7 +242,7 @@
         "title": "Leapfusion混元图生视频 (KJ)",
         "inputs": {
             "model": "模型",
-            "latent": "隐变量"
+            "latent": "Latent"
         },
         "widgets": {
             "index": "索引",
@@ -268,7 +268,7 @@
         "description": "通过加权平均合并两个VAE的权重。比例是偏向VAE_2的权重（0.0 = 纯VAE_1，1.0 = 纯VAE_2）。两个VAE必须共享相同的架构（匹配的状态字典键和形状）"
     },
     "LatentInpaintTTM": {
-        "title": "Latent遮罩修复TTM (KJ)",
+        "title": "Latent 遮罩修复TTM (KJ)",
         "inputs": {
             "model": "模型",
             "mask": "遮罩"
@@ -374,9 +374,9 @@
     "DecodeAndSaveVideo": {
         "title": "解码并保存视频 (KJ)",
         "inputs": {
-            "video_latent": "视频Latent",
+            "video_latent": "视频 Latent",
             "video_vae": "视频 VAE 模型",
-            "audio_latent": "音频Latent",
+            "audio_latent": "音频 Latent",
             "audio_vae": "音频 VAE 模型"
         },
         "widgets": {
@@ -390,7 +390,7 @@
             "video": "解码后的视频",
             "filename": "保存后的文件名"
         },
-        "description": "该节点用于将视频潜在空间（Video Latent）解码为实际视频文件并保存。它支持同时解码音频。用户可以在这里配置帧率（FPS）、文件名前缀、输出格式（如 MP4, MOV 等）、视频编解码器（如 H.264, H.265）以及是否启用分块处理（Tiling）以处理大视频。"
+        "description": "该节点用于将视频 Latent（Video Latent）解码为实际视频文件并保存。它支持同时解码音频。用户可以在这里配置帧率（FPS）、文件名前缀、输出格式（如 MP4, MOV 等）、视频编解码器（如 H.264, H.265）以及是否启用分块处理（Tiling）以处理大视频。"
     },
     "EncodeVideoComponents": {
         "title": "编码视频组件 (KJ)",
@@ -411,7 +411,7 @@
             "fps": "帧率",
             "frame_count": "帧数"
         },
-        "description": "该节点用于将视频帧编码为潜在空间（Latent）表示，通常用于视频生成或处理流程中。它接受视频流和 VAE 模型作为输入，并输出编码后的潜在空间数据、音频流、帧率信息以及总帧数。用户还可以在此设置输出的分辨率（宽度和高度）、限制最大帧数、选择图像放大方法（如 Lanczos）以及是否保持原始宽高比。"
+        "description": "该节点用于将视频帧编码为 Latent（Latent）表示，通常用于视频生成或处理流程中。它接受视频流和 VAE 模型作为输入，并输出编码后的 Latent 数据、音频流、帧率信息以及总帧数。用户还可以在此设置输出的分辨率（宽度和高度）、限制最大帧数、选择图像放大方法（如 Lanczos）以及是否保持原始宽高比。"
     },
     "ColorMatchV2": {
         "title": "颜色匹配 V2 (KJ)",
@@ -604,7 +604,7 @@
             "zero_mask_images_out": "零图像",
             "zero_mask_images_out_indexes": "非零遮罩图像索引"
         },
-        "description": "过滤掉mask中的所有空掩码（即全部为零）\n如果提供的话，还可以通过索引过滤掉\n original_images中所有相应的图像\n original_images（可选）：如果提供，需要具有与mask相同的长度。"
+        "description": "过滤掉mask中的所有空遮罩（即全部为零）\n如果提供的话，还可以通过索引过滤掉\n original_images中所有相应的图像\n original_images（可选）：如果提供，需要具有与mask相同的长度。"
     },
     "InsertImageBatchByIndexes": {
         "title": "按索引插入图像批次",
@@ -904,19 +904,19 @@
         "description": "扩展不同的值列表/系列，并根据需要进行转换"
     },
     "FloatToSigmas": {
-        "title": "浮点到Sigmas",
+        "title": "浮点到噪声级别",
         "inputs": {
             "float_list": "浮点列表"
         },
         "outputs": {
-            "SIGMAS": "Sigmas"
+            "SIGMAS": "噪声级别（Sigmas）"
         },
-        "description": "从浮点列表创建sigmas tensor"
+        "description": "从浮点列表创建噪声级别 tensor"
     },
     "SigmasToFloat": {
-        "title": "Sigmas到浮点",
+        "title": "噪声级别到浮点",
         "inputs": {
-            "sigmas": "sigmas"
+            "sigmas": "噪声级别（Sigmas）"
         },
         "outputs": {
             "float": "浮点"
@@ -962,7 +962,7 @@
         },
         "outputs": {
             "tracking": "跟踪",
-            "prompt": "提示",
+            "prompt": "提示词",
             "width": "宽度",
             "height": "高度",
             "bbox_width": "bbox宽度",
@@ -981,7 +981,7 @@
         },
         "outputs": {
             "tracking": "跟踪",
-            "prompt": "提示"
+            "prompt": "提示词"
         },
         "description": "附加跟踪数据与实例扩散使用：https://github.com/logtd/ComfyUI-InstanceDiffusion"
     },
@@ -1369,8 +1369,8 @@
         "title": "ICLora图像准备",
         "inputs": {
             "reference_image": "参考图像",
-            "latent_image": "Latent图像",
-            "latent_mask": "Latent遮罩",
+            "latent_image": "Latent",
+            "latent_mask": "Latent 遮罩",
             "reference_mask": "参考遮罩"
         },
         "widgets": {
@@ -1479,7 +1479,7 @@
             "images": "图像"
         },
         "widgets": {
-            "seed": "随机种"
+            "seed": "随机种子"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -1503,7 +1503,7 @@
         "description": "根据输入图像批次以及参数，创建新图像批次。"
     },
     "GetLatentRangeFromBatch": {
-        "title": "获取Latent范围",
+        "title": "获取 Latent 范围",
         "inputs": {
             "latents": "Latent"
         },
@@ -1516,7 +1516,7 @@
         }
     },
     "Insert_Latent_To_Index": {
-        "title": "插入Latent到索引",
+        "title": "插入 Latent 到索引",
         "inputs": {
             "source": "源",
             "destination": "目标"
@@ -2021,7 +2021,7 @@
         "outputs": {
             "MASK": "遮罩"
         },
-        "description": "将选定的RGB值转换为掩码。对于批处理输入，**per_batch**控制一次处理的图像数量。"
+        "description": "将选定的RGB值转换为遮罩。对于批处理输入，**per_batch**控制一次处理的图像数量。"
     },
     "CreateFluidMask": {
         "title": "流体遮罩",
@@ -2084,7 +2084,7 @@
         "outputs": {
             "MASK": "遮罩"
         },
-        "description": "创建一组在给定帧和值之间插值的掩码。使用与 Fizz的 BatchValueSchedule 相同的语法。第一个值是帧索引(不是从0开始，而是从1开始)括号内的第二个值是掩码在0.0-1.0范围内的浮点数值。\n例如，默认值:\n0:(0.0)\n7:(1.0)\n15:(0.0)\n将创建一个16帧的遮罩批次，从黑色开始，通过选择曲线插值到第8帧完全白色，然后从那里插值到第16完全黑色。"
+        "description": "创建一组在给定帧和值之间插值的遮罩。使用与 Fizz的 BatchValueSchedule 相同的语法。第一个值是帧索引(不是从0开始，而是从1开始)括号内的第二个值是遮罩在0.0-1.0范围内的浮点数值。\n例如，默认值:\n0:(0.0)\n7:(1.0)\n15:(0.0)\n将创建一个16帧的遮罩批次，从黑色开始，通过选择曲线插值到第8帧完全白色，然后从那里插值到第16完全黑色。"
     },
     "CreateFadeMaskAdvanced": {
         "title": "渐隐遮罩(高级)",
@@ -2106,7 +2106,7 @@
             "frames": "帧数",
             "depth": "深度",
             "distortion": "畸变",
-            "seed": "随机种",
+            "seed": "随机种子",
             "control_after_generate": "运行后操作",
             "fixed": "固定",
             "increment": "增加",
@@ -2184,7 +2184,7 @@
             "flip_input": "反转输入",
             "use_cuda": "使用CUDA",
             "blur_radius": "模糊半径",
-            "sigma": "Sigma",
+            "sigma": "标准差",
             "lerp_alpha": "线性透明",
             "decay_factor": "腐蚀系数",
             "fill_holes": "填补"
@@ -2198,16 +2198,16 @@
     "MaskBatchMulti": {
         "title": "遮罩组合批次（多重）",
         "inputs": {
-            "mask_1": "遮罩_1",
-            "mask_2": "遮罩_2",
-            "mask_3": "遮罩_3",
-            "mask_4": "遮罩_4",
-            "mask_5": "遮罩_5",
-            "mask_6": "遮罩_6",
-            "mask_7": "遮罩_7",
-            "mask_8": "遮罩_8",
-            "mask_9": "遮罩_9",
-            "mask_10": "遮罩_10"
+            "mask_1": "遮罩 1",
+            "mask_2": "遮罩 2",
+            "mask_3": "遮罩 3",
+            "mask_4": "遮罩 4",
+            "mask_5": "遮罩 5",
+            "mask_6": "遮罩 6",
+            "mask_7": "遮罩 7",
+            "mask_8": "遮罩 8",
+            "mask_9": "遮罩 9",
+            "mask_10": "遮罩 10"
         },
         "widgets": {
             "inputcount": "输入数量",
@@ -2318,7 +2318,7 @@
         "title": "大模型加载器(KJ)",
         "inputs": {},
         "widgets": {
-            "ckpt_name": "模型名称",
+            "ckpt_name": "模型检查点",
             "weight_dtype": "权重数据类型",
             "compute_dtype": "计算数据类型",
             "patch_cublaslinear": "CUBlas线性补丁",
@@ -2537,7 +2537,7 @@
         "title": "Wan视频增强(KJ)",
         "inputs": {
             "model": "模型",
-            "latent": "latent"
+            "latent": "Latent"
         },
         "widgets": {
             "weight": "权重"
@@ -2672,12 +2672,12 @@
         }
     },
     "GetLatentsFromBatchIndexed": {
-        "title": "按索引获取Latent",
+        "title": "按索引获取 Latent",
         "inputs": {
             "latents": "Latent"
         },
         "widgets": {
-            "latent_format": "latent格式"
+            "latent_format": "Latent 格式"
         },
         "outputs": {
             "LATENT": "Latent"
@@ -2686,26 +2686,26 @@
     "ConditioningMultiCombine": {
         "title": "条件合并(多重)",
         "inputs": {
-            "conditioning_1": "条件_1",
-            "conditioning_2": "条件_2",
-            "conditioning_3": "条件_3",
-            "conditioning_4": "条件_4",
-            "conditioning_5": "条件_5",
-            "conditioning_6": "条件_6",
-            "conditioning_7": "条件_7",
-            "conditioning_8": "条件_8",
-            "conditioning_9": "条件_9",
-            "conditioning_10": "条件_10",
-            "conditioning_11": "条件_11",
-            "conditioning_12": "条件_12",
-            "conditioning_13": "条件_13",
-            "conditioning_14": "条件_14",
-            "conditioning_15": "条件_15",
-            "conditioning_16": "条件_16",
-            "conditioning_17": "条件_17",
-            "conditioning_18": "条件_18",
-            "conditioning_19": "条件_19",
-            "conditioning_20": "条件_20"
+            "conditioning_1": "条件 1",
+            "conditioning_2": "条件 2",
+            "conditioning_3": "条件 3",
+            "conditioning_4": "条件 4",
+            "conditioning_5": "条件 5",
+            "conditioning_6": "条件 6",
+            "conditioning_7": "条件 7",
+            "conditioning_8": "条件 8",
+            "conditioning_9": "条件 9",
+            "conditioning_10": "条件 10",
+            "conditioning_11": "条件 11",
+            "conditioning_12": "条件 12",
+            "conditioning_13": "条件 13",
+            "conditioning_14": "条件 14",
+            "conditioning_15": "条件 15",
+            "conditioning_16": "条件 16",
+            "conditioning_17": "条件 17",
+            "conditioning_18": "条件 18",
+            "conditioning_19": "条件 19",
+            "conditioning_20": "条件 20"
         },
         "widgets": {
             "inputcount": "输入数量",
@@ -2769,12 +2769,12 @@
     "CondPassThrough": {
         "title": "条件传递",
         "inputs": {
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "outputs": {
-            "positive": "正面条件",
-            "negative": "负面条件"
+            "positive": "正向条件",
+            "negative": "负向条件"
         }
     },
     "ModelPassThrough": {
@@ -2794,8 +2794,8 @@
             "negative_1": "负面条件_1",
             "positive_2": "正面条件_2",
             "negative_2": "负面条件_2",
-            "mask_1": "遮罩_1",
-            "mask_2": "遮罩_2"
+            "mask_1": "遮罩 1",
+            "mask_2": "遮罩 2"
         },
         "widgets": {
             "mask_1_strength": "遮罩_1_强度",
@@ -2808,7 +2808,7 @@
             "combined_positive": "正面条件",
             "combined_negative": "负面条件"
         },
-        "description": "捆绑多个调理掩码并将节点组合成一个，功能是与ComfyUI本地节点相同"
+        "description": "捆绑多个调理遮罩并将节点组合成一个，功能是与ComfyUI本地节点相同"
     },
     "ConditioningSetMaskAndCombine3": {
         "title": "条件设置遮罩(合并3)",
@@ -2819,9 +2819,9 @@
             "negative_2": "负面条件_2",
             "positive_3": "正面条件_3",
             "negative_3": "负面条件_3",
-            "mask_1": "遮罩_1",
-            "mask_2": "遮罩_2",
-            "mask_3": "遮罩_3"
+            "mask_1": "遮罩 1",
+            "mask_2": "遮罩 2",
+            "mask_3": "遮罩 3"
         },
         "widgets": {
             "mask_1_strength": "遮罩_1_强度",
@@ -2835,7 +2835,7 @@
             "combined_positive": "正面条件",
             "combined_negative": "负面条件"
         },
-        "description": "捆绑多个调理掩码并将节点组合成一个，功能是与ComfyUI本地节点相同"
+        "description": "捆绑多个调理遮罩并将节点组合成一个，功能是与ComfyUI本地节点相同"
     },
     "ConditioningSetMaskAndCombine4": {
         "title": "条件设置遮罩(合并4)",
@@ -2848,10 +2848,10 @@
             "negative_3": "负面条件_3",
             "positive_4": "正面条件_4",
             "negative_4": "负面条件_4",
-            "mask_1": "遮罩_1",
-            "mask_2": "遮罩_2",
-            "mask_3": "遮罩_3",
-            "mask_4": "遮罩_4"
+            "mask_1": "遮罩 1",
+            "mask_2": "遮罩 2",
+            "mask_3": "遮罩 3",
+            "mask_4": "遮罩 4"
         },
         "widgets": {
             "mask_1_strength": "遮罩_1_强度",
@@ -2866,7 +2866,7 @@
             "combined_positive": "合并正面条件",
             "combined_negative": "合并负面条件"
         },
-        "description": "捆绑多个调理掩码并将节点组合成一个，功能是与ComfyUI本地节点相同"
+        "description": "捆绑多个调理遮罩并将节点组合成一个，功能是与ComfyUI本地节点相同"
     },
     "ConditioningSetMaskAndCombine5": {
         "title": "条件设置遮罩(合并5)",
@@ -2881,11 +2881,11 @@
             "negative_4": "负面条件_4",
             "positive_5": "正面条件_5",
             "negative_5": "负面条件_5",
-            "mask_1": "遮罩_1",
-            "mask_2": "遮罩_2",
-            "mask_3": "遮罩_3",
-            "mask_4": "遮罩_4",
-            "mask_5": "遮罩_5"
+            "mask_1": "遮罩 1",
+            "mask_2": "遮罩 2",
+            "mask_3": "遮罩 3",
+            "mask_4": "遮罩 4",
+            "mask_5": "遮罩 5"
         },
         "widgets": {
             "mask_1_strength": "遮罩_1_强度",
@@ -2901,7 +2901,7 @@
             "combined_positive": "合并正面条件",
             "combined_negative": "合并负面条件"
         },
-        "description": "捆绑多个调理掩码并将节点组合成一个，功能是与ComfyUI本地节点相同"
+        "description": "捆绑多个调理遮罩并将节点组合成一个，功能是与ComfyUI本地节点相同"
     },
     "VRAM_Debug": {
         "title": "VRAM清理",
@@ -2951,7 +2951,7 @@
         }
     },
     "EmptyLatentImagePresets": {
-        "title": "空Latent图像预设",
+        "title": "空 Latent 图像预设",
         "widgets": {
             "dimensions": "尺寸",
             "invert": "反转",
@@ -2964,7 +2964,7 @@
         }
     },
     "EmptyLatentImageCustomPresets": {
-        "title": "自定义Latent图像预设",
+        "title": "自定义 Latent 图像预设",
         "widgets": {
             "dimensions": "尺寸",
             "invert": "反转",
@@ -2994,7 +2994,7 @@
         }
     },
     "DummyOut": {
-        "title": "虚拟Latent输出",
+        "title": "虚拟 Latent 输出",
         "inputs": {
             "any_input": "任何输入"
         },
@@ -3003,9 +3003,9 @@
         }
     },
     "FlipSigmasAdjusted": {
-        "title": "调整反转Sigmas",
+        "title": "调整反转噪声级别",
         "inputs": {
-            "sigmas": "Sigmas"
+            "sigmas": "噪声级别（Sigmas）"
         },
         "widgets": {
             "divide_by_last_sigma": "除以最后一个Sigma",
@@ -3013,20 +3013,20 @@
             "offset_by": "偏移量"
         },
         "outputs": {
-            "SIGMAS": "Sigmas",
-            "sigmas_string": "sigmas字符串"
+            "SIGMAS": "噪声级别（Sigmas）",
+            "sigmas_string": "噪声级别字符串"
         }
     },
     "CustomSigmas": {
-        "title": "自定义Sigmas",
+        "title": "自定义噪声级别",
         "widgets": {
-            "sigmas_string": "Sigmas字符串",
+            "sigmas_string": "噪声级别字符串",
             "interpolate_to_steps": "插值步数",
             "t_steps": "T步数",
             "num_steps": "步数"
         },
         "outputs": {
-            "SIGMAS": "Sigmas"
+            "SIGMAS": "噪声级别（Sigmas）"
         }
     },
     "StringToFloatList": {
@@ -3039,7 +3039,7 @@
         }
     },
     "InjectNoiseToLatent": {
-        "title": "注入噪声到Latent",
+        "title": "注入噪声到 Latent",
         "inputs": {
             "latents": "Latent",
             "noise": "噪声",
@@ -3050,7 +3050,7 @@
             "normalize": "标准化",
             "average": "平均",
             "mix_randn_amount": "随机噪声混合强度",
-            "seed": "种子"
+            "seed": "随机种子"
         },
         "outputs": {
             "LATENT": "Latent"
@@ -3083,7 +3083,7 @@
         "title": "生成噪声",
         "inputs": {
             "model": "模型",
-            "sigmas": "Sigmas"
+            "sigmas": "噪声级别（Sigmas）"
         },
         "widgets": {
             "width": "宽度",
@@ -3098,7 +3098,7 @@
             "multiplier": "乘数",
             "constant_batch_noise": "恒定批次噪声",
             "normalize": "标准化",
-            "latent_channels": "latent渠道",
+            "latent_channels": "Latent 通道",
             "shape": "形状"
         },
         "outputs": {
@@ -3126,8 +3126,8 @@
             "elevation_points_string": "仰角点"
         },
         "outputs": {
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "latent": "Latent"
         },
         "description": "输入单张图片，批量生成多视角一致图像（如0°、90°、180°），支持显存优化调度."
@@ -3148,8 +3148,8 @@
             "elevation_points_string": "仰角点"
         },
         "outputs": {
-            "positive": "正面条件",
-            "negative": "负面条件",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "latent": "Latent"
         },
         "description": "使用插值调度安排 SV3D 的方位角和仰角数值。\n\n注意 SV3D 是视频模型，所以调度值必须递进。\n\nhttps://huggingface.co/stabilityai/sv3d"
@@ -3169,7 +3169,7 @@
     "Superprompt": {
         "title": "超级提示",
         "inputs": {
-            "prompt": "提示"
+            "prompt": "提示词"
         },
         "widgets": {
             "instruction_prompt": "指令提示",
@@ -3212,7 +3212,7 @@
             "image": "图像"
         },
         "widgets": {
-            "prompt": "提示",
+            "prompt": "提示词",
             "n_prompt": "负面提示",
             "seed": "随机种子",
             "control_before_generate": "生成前控制",
@@ -3385,11 +3385,11 @@
         "title": "调度式CFG引导",
         "inputs": {
             "model": "模型",
-            "positive": "正向提示",
-            "negative": "负向提示"
+            "positive": "正向条件",
+            "negative": "负向条件"
         },
         "widgets": {
-            "cfg": "CFG值",
+            "cfg": "CFG",
             "start_percent": "起始百分比",
             "end_percent": "结束百分比"
         },
@@ -3481,7 +3481,7 @@
         "description": "图像缩放2代。尺寸可由输入指定，最终输出优先级按以下规则排列：\n- 参考图像尺寸 \n- 宽度-输入 和 高度-输入 \n- 宽度 和 高度 \n \n固定宽高比会按最高尺寸固定宽高比。"
     },
     "InsertLatentToIndexed": {
-        "title": "插入Latent索引",
+        "title": "插入 Latent 索引",
         "inputs": {
             "source": "源",
             "destination": "目标"
@@ -3493,7 +3493,7 @@
             "LATENT": "Latent",
             "latent": "Latent"
         },
-        "description": "将指定索引处的Latent插入到原始Latent批中。"
+        "description": "将指定索引处的 Latent 插入到原始 Latent 批中。"
     },
     "DiTBlockLoraLoader": {
         "title": "DiT块Lora加载器",
@@ -3643,7 +3643,7 @@
         }
     },
     "GetLatentSizeAndCount": {
-        "title": "获取Latent大小及数量",
+        "title": "获取 Latent 大小及数量",
         "inputs": {
             "latent": "Latent"
         },
@@ -3823,7 +3823,7 @@
             "vae": "VAE"
         },
         "widgets": {
-            "overlap_latent_frames": "重复Latent图像"
+            "overlap_latent_frames": "重复 Latent 图像"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -3851,7 +3851,7 @@
         },
         "widgets": {
             "strength": "强度",
-            "seed": "种子",
+            "seed": "随机种子",
             "noise_x_ratio": "噪声x 比率",
             "noise_y_ratio": "噪声y 比率",
             "noise_temporal_ratio": "噪声时间 比率"
@@ -3863,18 +3863,18 @@
     "WanImageToVideoSVIPro": {
         "title": "Wan 图转视频SVI专业版(KJ)",
         "inputs": {
-            "positive": "正向提示",
-            "negative": "负向提示",
-            "anchor_samples": "锚点 采样",
-            "prev_samples": "前 采样"
+            "positive": "正向条件",
+            "negative": "负向条件",
+            "anchor_samples": "锚点采样",
+            "prev_samples": "前序采样"
         },
         "widgets": {
             "length": "长度",
-            "motion_latent_count": "运动Latent 次数"
+            "motion_latent_count": "运动 Latent 次数"
         },
         "outputs": {
-            "positive": "正向提示",
-            "negative": "负向提示",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "latent": "Latent"
         }
     },
@@ -3934,14 +3934,14 @@
     "VisualizeSigmasKJ": {
         "title": "可视化sigma值(KJ)",
         "inputs": {
-            "sigmas": "sigma值"
+            "sigmas": "噪声级别（Sigmas）"
         },
         "widgets": {
             "start_step": "起始步数",
             "end_step": "结束步数"
         },
         "outputs": {
-            "sigmas_out": "sigma输出",
+            "sigmas_out": "噪声级别输出",
             "image": "图像"
         },
         "description": ""
@@ -3950,7 +3950,7 @@
         "title": "LTX2采样预览覆盖(KJ)",
         "inputs": {
             "model": "模型",
-            "latent_upscale_model": "Latent放大模型",
+            "latent_upscale_model": "Latent 放大模型",
             "vae": "VAE"
         },
         "widgets": {
@@ -3976,10 +3976,10 @@
             "negative": "负面引导",
             "latent": "Latent"
         },
-        "description": "会将一批中的多个引导图像按照对应的帧索引添加到Latent图像中。批次中的非黑色图像将被用作引导图像。"
+        "description": "会将一批中的多个引导图像按照对应的帧索引添加到 Latent 图像中。批次中的非黑色图像将被用作引导图像。"
     },
     "LTX2AudioLatentNormalizingSampling": {
-        "title": "LTX2音频Latent标准化采样(KJ)",
+        "title": "LTX2音频 Latent 标准化采样(KJ)",
         "inputs": {
             "model": "模型"
         },
@@ -3987,10 +3987,10 @@
             "audio_normalization_factors": "音频标准化因素"
         },
         "outputs": {},
-        "description": "通过在指定的采样步骤对音频Latent进行标准化处理，提高了 LTX2 生成的音频质量。"
+        "description": "通过在指定的采样步骤对音频 Latent 进行标准化处理，提高了 LTX2 生成的音频质量。"
     },
     "PreviewLatentNoiseMask": {
-        "title": "预览Latent噪声遮罩(KJ)",
+        "title": "预览 Latent 噪声遮罩(KJ)",
         "inputs": {
             "latent": "Latent"
         },
@@ -3998,7 +3998,7 @@
         "outputs": {
             "mask": "遮罩"
         },
-        "description": "预览Latent噪声遮罩"
+        "description": "预览 Latent 噪声遮罩"
     },
     "WanChunkFeedForward": {
         "title": "Wan视频 分块前馈(KJ)",
@@ -4071,13 +4071,13 @@
         "outputs": {
             "latent": "Latent"
         },
-        "description": "将视频的Latent帧替换为编码后的输入图像，使用 动态组合 功能，该功能需要 ComfyUI 0.8.1 版本及前端 1.33.4 或更高版本。"
+        "description": "将视频的 Latent 帧替换为编码后的输入图像，使用 动态组合 功能，该功能需要 ComfyUI 0.8.1 版本及前端 1.33.4 或更高版本。"
     },
     "LTXVAudioVideoMask": {
         "title": "音频和视频遮罩(KJ)",
         "inputs": {
-            "video_latent": "视频Latent",
-            "audio_latent": "音频Latent"
+            "video_latent": "视频 Latent",
+            "audio_latent": "音频 Latent"
         },
         "widgets": {
             "video_fps": "视频帧率",
@@ -4088,10 +4088,10 @@
             "max_length": "最大长度"
         },
         "outputs": {
-            "video_latent": "视频Latent",
-            "audio_latent": "音频Latent"
+            "video_latent": "视频 Latent",
+            "audio_latent": "音频 Latent"
         },
-        "description": "根据指定的时间范围为视频和音频的Latent内容创建噪音遮罩。在这些被遮罩的区域中会生成新的内容。"
+        "description": "根据指定的时间范围为视频和音频的 Latent 内容创建噪音遮罩。在这些被遮罩的区域中会生成新的内容。"
     },
     "LTX2AttentionTunerPatch": {
         "title": "LTX2 注意力调整补丁(KJ)",
@@ -4196,11 +4196,11 @@
         "title": "混元视频 首尾帧编码到条件(KJ)",
         "inputs": {
             "model": "模型",
-            "positive": "正向提示",
+            "positive": "正向条件",
             "vae": "VAE",
             "start_frame": "起始帧",
             "end_frame": "结束帧",
-            "negative": "负向提示"
+            "negative": "负向条件"
         },
         "widgets": {
             "num_frames": "帧数",
@@ -4211,8 +4211,8 @@
         },
         "outputs": {
             "model": "模型",
-            "positive": "正向提示词",
-            "negative": "负面提示词",
+            "positive": "正向条件",
+            "negative": "负向条件",
             "latent": "Latent"
         }
     }

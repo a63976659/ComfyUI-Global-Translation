@@ -143,7 +143,7 @@
             "ref_image": "参考图像",
             "lora_name": "LoRA名称",
             "guide_frames": "引导帧",
-            "ref_temporal_offset_latents": "参考时间偏移Latent"
+            "ref_temporal_offset_latents": "参考时间偏移 Latent"
         },
         "widgets": {
             "resize_mode": "缩放模式",
@@ -162,7 +162,7 @@
             "latent": "Latent",
             "ref_image_preview": "参考图像预览"
         },
-        "description": "用于视频转视频参考AdaLN LoRA的统一编辑任意内容条件生成。在单个节点中应用来自单个LoRA检查点的全部3种条件信号：① IC-LoRA序列 对参考图像和可选引导视频进行编码，将它们作为干净的条件帧附加到Latent中。在Transformer中的布局：[目标标记 | 参考标记 @ t=-1 | 引导标记 @ t=0..T] ② 角色嵌入（role_embedding.embedding.权重[0]） 在patchify_proj之前，向参考图像标记添加学习到的128维指纹，以便模型通过自注意力区分@参考图和引导帧。③ AdaLN条件生成（ref_adaln_proj: fc1 → SiLU → proj） 使用LoRA中保存的投影器形状池化参考图像Latent，通过2层MLP投影到AdaLN时间步空间，并将其添加到每个Transformer块的时间步偏置中——这是一个持久的全局外观锚点。连接在标准LoRA加载器之后，KSampler之前。"
+        "description": "用于视频转视频参考AdaLN LoRA的统一编辑任意内容条件生成。在单个节点中应用来自单个LoRA检查点的全部3种条件信号：① IC-LoRA序列 对参考图像和可选引导视频进行编码，将它们作为干净的条件帧附加到 Latent 中。在Transformer中的布局：[目标标记 | 参考标记 @ t=-1 | 引导标记 @ t=0..T] ② 角色嵌入（role_embedding.embedding.权重[0]） 在patchify_proj之前，向参考图像标记添加学习到的128维指纹，以便模型通过自注意力区分@参考图和引导帧。③ AdaLN条件生成（ref_adaln_proj: fc1 → SiLU → proj） 使用LoRA中保存的投影器形状池化参考图像 Latent，通过2层MLP投影到AdaLN时间步空间，并将其添加到每个Transformer块的时间步偏置中——这是一个持久的全局外观锚点。连接在标准LoRA加载器之后，KSampler之前。"
     },
     "LTXVApplyNeutralMask": {
         "title": "LTXV应用中性遮罩",
@@ -205,7 +205,7 @@
             "vae": "VAE",
             "noise": "噪声",
             "sampler": "采样器",
-            "sigmas": "西格玛",
+            "sigmas": "噪声级别（Sigmas）",
             "guider": "引导器",
             "positive": "正向条件",
             "negative": "负向条件",
@@ -237,7 +237,7 @@
             "ref_init_seed": "参考初始化随机种子",
             "ref_attn_lora_strength": "参考注意力LORA强度",
             "debug_ea": "调试EA",
-            "ref_temporal_offset_latents": "参考时间偏移Latent"
+            "ref_temporal_offset_latents": "参考时间偏移 Latent"
         },
         "outputs": {
             "denoised_output": "去噪输出",
@@ -247,10 +247,10 @@
         "description": "时间循环采样器，每个块都带有完整的编辑任意内容条件。\n\n与LTXVEditAnythingApply类似，但会在时间上对视频进行切片，并在每个块中重新应用参考+引导IC-LoRA令牌（通过LTXVAddGuide.append_keyframe）、角色嵌入和AdaLN。每个块对应引导视频的一个切片。\n\n输入为明确的正向/负向条件；GUIDER输入仅提供采样机制（CFG/STG参数），其条件会通过guider.set_conds在每个块中被覆盖。"
     },
     "LTXVLatentDiffMetrics": {
-        "title": "LTXVLatent差异指标",
+        "title": "LTXVLatent 差异指标",
         "inputs": {
-            "latent_a": "LatentA",
-            "latent_b": "LatentB"
+            "latent_a": "Latent A",
+            "latent_b": "Latent B"
         },
         "widgets": {
             "label": "标签",
@@ -259,13 +259,13 @@
         },
         "outputs": {
             "metrics": "指标",
-            "latent_a": "LatentA",
+            "latent_a": "Latent A",
             "mse": "MSE",
             "psnr": "PSNR",
             "l1": "L1",
             "cosine": "余弦相似度"
         },
-        "description": "比较两个Latent并报告MSE/RMSE/L1/PSNR/余弦相似度。\n\n用于A/B测试切换项：使用配置A运行采样器，保存Latent→使用配置B运行→将SaveLatent.A和新输出连接到此节点。输出既包含用于UI/控制台的格式化字符串，也包含单独的浮点数，以便您可以链接到绘图器或另存为文本节点。\n\n如果两个Latent形状不同（例如因VAE差异导致空间不匹配），则会回退到比较重叠子区域。"
+        "description": "比较两个 Latent 并报告MSE/RMSE/L1/PSNR/余弦相似度。\n\n用于A/B测试切换项：使用配置A运行采样器，保存 Latent→使用配置B运行→将SaveLatent.A和新输出连接到此节点。输出既包含用于UI/控制台的格式化字符串，也包含单独的浮点数，以便您可以链接到绘图器或另存为文本节点。\n\n如果两个 Latent 形状不同（例如因VAE差异导致空间不匹配），则会回退到比较重叠子区域。"
     },
     "LTXVImageDiffMetrics": {
         "title": "LTXV图像差异指标",
@@ -332,7 +332,7 @@
             "id_strength": "身份强度",
             "arcface_mode": "ArcFace模式",
             "debug_log": "调试日志",
-            "reference_temporal_offset_latents": "参考时间偏移Latent"
+            "reference_temporal_offset_latents": "参考时间偏移 Latent"
         },
         "outputs": {
             "model": "模型",
@@ -361,7 +361,7 @@
             "crop_anchor": "裁剪锚点",
             "layout": "布局",
             "reference_guidance_scale": "参考引导强度",
-            "reference_temporal_offset_latents": "参考时间偏移Latent"
+            "reference_temporal_offset_latents": "参考时间偏移 Latent"
         },
         "outputs": {
             "model": "模型",
@@ -392,7 +392,7 @@
             "crop_anchor": "裁剪锚点",
             "layout": "布局",
             "reference_guidance_scale": "参考引导强度",
-            "reference_temporal_offset_latents": "参考时间偏移Latent"
+            "reference_temporal_offset_latents": "参考时间偏移 Latent"
         },
         "outputs": {
             "model": "模型",
@@ -444,7 +444,7 @@
             "crop_anchor": "裁剪锚点",
             "reference_guidance_scale": "参考引导缩放",
             "debug_log": "调试日志",
-            "identity_temporal_offset_latents": "身份时间偏移Latent"
+            "identity_temporal_offset_latents": "身份时间偏移 Latent"
         },
         "outputs": {
             "model": "模型",
