@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "ICLight 모델 로드",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "model_path": "모델"
+        },
+        "outputs": {
+            "MODEL": "모델"
+        },
+        "description": "IC-Light 모델을 읽는, 조금 불편하지만 효과적인 방법입니다.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nICLight 조건 노드와 함께 사용합니다."
+    },
+    "ICLightConditioning": {
+        "title": "ICLight 조건 적용",
+        "inputs": {
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "vae": "VAE",
+            "foreground": "전경 Latent",
+            "opt_background": "배경 Latent(선택적)"
+        },
+        "widgets": {
+            "multiplier": "곱수"
+        },
+        "outputs": {
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "empty_latent": "빈 Latent"
+        },
+        "description": "IC-Light 모델용 조건 노드입니다. \"배경 Latent\"을 사용하려면 IC-Light 모델을 \"fbc\" 버전으로 전환해야 합니다."
+    },
+    "LightSource": {
+        "title": "간이 광원",
+        "inputs": {
+            "prev_image": "이전 이미지"
+        },
+        "widgets": {
+            "light_position": "조명 위치",
+            "multiplier": "명도",
+            "start_color": "시작 색상",
+            "end_color": "종료 색상",
+            "width": "너비",
+            "height": "높이",
+            "batch_size": "배치 크기"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "간이 광원에 사용할 수 있는 그라데이션 그레이스케일 이미지를 생성합니다. RGB 또는 HEX로 색상을 지정할 수 있습니다."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "법선 계산",
+        "inputs": {
+            "images": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "입력 범위 중심"
+        },
+        "outputs": {
+            "divided": "구분자",
+            "normal": "법선 이미지"
+        },
+        "description": "다른 각도의 이미지에서 법선을 계산합니다.\n좌, 우, 하, 상 4장의 이미지로 구성된 이미지 배치가 필요합니다."
+    },
+    "LoadHDRImage": {
+        "title": "HDR 이미지 로드",
+        "widgets": {
+            "image": "이미지",
+            "exposure": "노출",
+            "exposures": "노출"
+        },
+        "outputs": {
+            "IMAGE": "이미지",
+            "MASK": "마스크"
+        },
+        "description": "input 폴더에서 .hdr 이미지를 로드합니다.\nLDR 이미지 배치를 출력합니다."
+    },
+    "BackgroundScaler": {
+        "title": "배경 그레이스케일",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "scale": "축소·확대",
+            "invert": "반전"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "마스크 영역을 그레이스케일 이미지로 조정"
+    },
+    "DetailTransfer": {
+        "title": "디테일 이식",
+        "inputs": {
+            "target": "대상 이미지",
+            "source": "참조 이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "mode": "모드",
+            "blur_sigma": "블러 Sigma",
+            "blend_factor": "혼합 계수"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    }
+}

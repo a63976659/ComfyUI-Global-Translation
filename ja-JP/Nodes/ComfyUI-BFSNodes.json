@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "BFS AMVガイダンス生成器",
+        "inputs": {
+            "video": "動画",
+            "images": "画像",
+            "audio": "音声"
+        },
+        "widgets": {
+            "mode": "モード",
+            "length": "長さ",
+            "hold": "ホールド",
+            "fill": "充填",
+            "placement": "配置",
+            "fps": "フレームレート",
+            "indices": "インデックス",
+            "scene_threshold": "シーン閾値"
+        },
+        "outputs": {
+            "guide": "ガイダンス",
+            "debug": "デバッグ"
+        },
+        "description": "AMVガイダンス（キーフレーム＋空白フレーム）を生成します。external_imagesを使うと、画像を音楽ビートの位置に自動配置できます（placementをaudio_beatsに設定）。`ガイダンス`にVAEまたは参考モジュールを入力します。"
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "BFS Berniniアニメ→リアル条件生成",
+        "inputs": {
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "vae": "VAE",
+            "guide_video": "ガイダンス動画"
+        },
+        "widgets": {
+            "length": "長さ"
+        },
+        "outputs": {
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "latent": "Latent",
+            "debug": "デバッグ"
+        },
+        "description": "Bernini-Rアニメ→リアルLoRA向けの、純粋な動画→動画（v2v）アニメ→リアル条件生成です。guide_videoはsource_id 1（アニメキャンバス）に対応し、出力はsource_id 0（実写写真）に対応します。参考モジュールはありません。ガイダンスはポジティブとネガティブの両方に適用されるため、CFGは参考ではなくテキストプロンプト（実写写真スタイル）のみを強調します。中程度のCFGを使用してください。ガイダンスは動き/レイアウトを保持します。このLoRAを顔交換ノードと併用しないでください：source_id 2トークンを注入しますが、アニメ→リアルLoRAは学習でこのトークンを見たことがありません。"
+    },
+    "LTXColorMask": {
+        "title": "LTXカラーマスク",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "color": "色",
+            "style": "スタイル",
+            "marker_radius_frac": "マーカー半径比率",
+            "custom_r": "カスタムR",
+            "custom_g": "カスタムG",
+            "custom_b": "カスタムB",
+            "background_black": "黒背景"
+        },
+        "outputs": {
+            "colored_mask": "カラーマスク"
+        },
+        "description": "純白/二値のSAM2スタイルマスクを、scail2v2の学習規約に再彩色します。'silhouette'はガイダンスマスクスロットに、'flat_marker'（小さな色点、形状なし）はアイデンティティマスクスロットに使用します——各入力のヒントを確認すれば、この2点が異なる理由が分かります。"
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "BFS Bernini顔交換条件生成",
+        "inputs": {
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "vae": "VAE",
+            "guide_video": "ガイダンス動画",
+            "head_image": "頭部画像"
+        },
+        "widgets": {
+            "length": "長さ",
+            "amplify_reference": "参照拡大"
+        },
+        "outputs": {
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "latent": "Latent",
+            "debug": "デバッグ"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "BFS顔交換LoRAデバッグ",
+        "inputs": {
+            "model": "モデル"
+        },
+        "outputs": {
+            "model": "モデル",
+            "debug": "デバッグ"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV任意編集LoRA分割",
+        "inputs": {
+            "lora_name": "LoRA名"
+        },
+        "widgets": {
+            "overwrite": "上書き"
+        },
+        "outputs": {
+            "standard_lora_name": "標準LoRA名",
+            "editanything_module_name": "任意編集モジュール名"
+        },
+        "description": "任意編集チェックポイントを標準LoRAと補助モジュールに分割します。"
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV任意編集モジュールローダー",
+        "widgets": {
+            "module_name": "モジュール名"
+        },
+        "outputs": {
+            "editanything_module": "任意編集モジュール"
+        },
+        "description": "LTXV任意編集のLoRA分割で生成された補助モジュールを読み込みます。"
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV任意編集LoRAローダー",
+        "inputs": {
+            "model": "モデル",
+            "lora_name": "LoRA名"
+        },
+        "widgets": {
+            "strength_model": "モデル強度"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "任意編集チェックポイント用のLoRAローダー。"
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV任意編集適用",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "参考画像",
+            "lora_name": "LoRA名",
+            "guide_frames": "ガイダンスフレーム",
+            "ref_temporal_offset_latents": "参考時間オフセットLatent"
+        },
+        "widgets": {
+            "resize_mode": "スケール モード",
+            "guide_strength": "ガイダンス強度",
+            "ref_strength": "参考強度",
+            "role_strength": "キャラクター強度",
+            "adaln_scale": "AdaLNスケール",
+            "enable_adaln": "AdaLN有効",
+            "enable_role_embedding": "キャラクター埋め込み有効",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ",
+            "negative": "ネガティブ",
+            "latent": "Latent",
+            "ref_image_preview": "参考画像プレビュー"
+        },
+        "description": "動画→動画参考AdaLN LoRA向けの統一任意編集条件生成です。1つのノードで、単一のLoRAチェックポイントからの全3種の条件信号を適用します：① IC-LoRAシリーズ 参考画像と任意のガイダンス動画をエンコードし、クリーンな条件フレームとしてLatentに追加します。Transformer内のレイアウト：[ターゲットトークン | 参考トークン @ t=-1 | ガイダンストークン @ t=0..T] ② キャラクター埋め込み（role_embedding.embedding.重み[0]） patchify_projの前に、参考画像トークンへ学習された128次元の指紋を追加し、モデルがセルフアテンションで@参考画像とガイダンスフレームを区別できるようにします。③ AdaLN条件生成（ref_adaln_proj: fc1 → SiLU → proj） LoRAに保存されたプロジェクターで形状プーリングした参考画像Latentを、2層MLPでAdaLNタイムステップ空間へ射影し、各Transformerブロックのタイムステップバイアスに追加します——永続的なグローバル外観アンカーです。標準LoRAローダーの後、KSamplerの前に接続してください。"
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "LTXVニュートラルマスク適用",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "background": "背景",
+            "hard_edges": "ハードエッジ"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "マスクで覆われた画像/動画領域を、クリーンな単色背景に置き換えます。参考画像やガイダンスフレームをLTXV条件生成に入力する前に有用です。"
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXVマスク基準で参照サイズ調整",
+        "inputs": {
+            "ref_image": "参考画像",
+            "size_mask": "サイズマスク",
+            "ref_mask": "参考マスク"
+        },
+        "widgets": {
+            "fit": "適合",
+            "background": "背景",
+            "padding": "充填",
+            "hard_edges": "ハードエッジ"
+        },
+        "outputs": {
+            "image": "画像",
+            "object_mask": "オブジェクトマスク"
+        },
+        "description": "マスクのバウンディングボックスをターゲットオブジェクトのサイズとして使用し、クリーンなキャンバス上で参照オブジェクトのサイズを変更します。マスクの位置は無視され、幅と高さのみが目標スケール比率を定義します。"
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV任意編集ループサンプラー",
+        "inputs": {
+            "model": "モデル",
+            "vae": "VAE",
+            "noise": "ノイズ",
+            "sampler": "サンプラー",
+            "sigmas": "シグマ",
+            "guider": "ガイダンス",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latents": "Latent",
+            "editanything_module": "任意編集モジュール",
+            "ref_image": "参考画像",
+            "guide_frames": "ガイダンスフレーム"
+        },
+        "widgets": {
+            "temporal_tile_size": "時間ブロックサイズ",
+            "temporal_overlap": "時間オーバーラップ",
+            "blend_overlap": "混合オーバーラップ",
+            "lora_name": "LoRA名",
+            "ref_resize_mode": "参考スケールモード",
+            "ref_strength": "参考強度",
+            "guide_strength": "ガイダンス強度",
+            "role_strength": "キャラクター強度",
+            "adaln_scale": "AdaLNスケール",
+            "enable_ic_lora": "IC-LORA有効",
+            "enable_role_embedding": "キャラクター埋め込み有効",
+            "enable_adaln": "AdaLN有効",
+            "reapply_per_chunk": "各ブロックで再適用",
+            "enable_visual_crossattn": "ビジュアルクロスアテンション有効",
+            "ref_context_scale": "参考コンテキストスケール",
+            "ref_token_scale": "参考トークンスケール",
+            "ref_start_block": "参考開始ブロック",
+            "ref_end_block": "参考終了ブロック",
+            "ref_init_from": "参考初期化ソース",
+            "ref_init_seed": "参考初期化ランダムシード",
+            "ref_attn_lora_strength": "参考アテンションLoRA強度",
+            "debug_ea": "EAデバッグ",
+            "ref_temporal_offset_latents": "参考時間オフセットLatent"
+        },
+        "outputs": {
+            "denoised_output": "ノイズ除去出力",
+            "ref_image_preview": "参考画像プレビュー",
+            "diff_vs_previous_run": "前回の実行との差分"
+        },
+        "description": "各ブロックに完全な任意編集条件を持つ時間ループサンプラー。\n\nLTXVEditAnythingApplyに類似しますが、動画を時間軸でスライスし、各ブロックで参考+ガイダンスIC-LoRAトークン（LTXVAddGuide.append_keyframeを介して）、キャラクター埋め込み、AdaLNを再適用します。各ブロックはガイダンス動画の1スライスに対応します。\n\n入力は明示的なポジティブ/ネガティブ条件です。GUIDER入力はサンプリング機構（CFG/STGパラメータ）のみを提供し、その条件はguider.set_condsにより各ブロックで上書きされます。"
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "LTXVLatent差分指標",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "ラベル",
+            "print_console": "コンソールに出力",
+            "compare_noise_mask": "比較ノイズマスク"
+        },
+        "outputs": {
+            "metrics": "指標",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "コサイン類似度"
+        },
+        "description": "2つのLatentを比較し、MSE/RMSE/L1/PSNR/コサイン類似度をレポートします。\n\nA/Bテストの切替項目に使用します。設定Aでサンプラーを実行し、Latentを保存→設定Bで実行→SaveLatent.Aと新しい出力を本ノードに接続してください。出力にはUI/コンソール用のフォーマット済み文字列と、個別の浮動小数点数の両方が含まれるため、ドローヤーやテキストとして保存するノードにリンクできます。\n\n2つのLatentの形状が異なる場合（例えばVAEの違いにより空間的に不一致の場合）、オーバーラップする部分領域の比較にフォールバックします。"
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "LTXV画像差分指標",
+        "inputs": {
+            "image_a": "画像A",
+            "image_b": "画像B"
+        },
+        "widgets": {
+            "label": "ラベル",
+            "print_console": "コンソールに出力"
+        },
+        "outputs": {
+            "metrics": "指標",
+            "image_a": "画像A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "LTXVLatentDiffMetricsに類似しますが、デコード後の画像（VAE後）に適用されます——PSNRは[0,1]ピクセル範囲を使用します。2回の実行でデコード後、視覚的に関連するピクセル誤差を比較するのに非常に有用です。"
+    },
+    "LTXIdentityCAN": {
+        "title": "LTXアイデンティティCAN",
+        "inputs": {
+            "model": "モデル",
+            "reference_image": "参考画像",
+            "can_weights": "CAN重み"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "LTXアイデンティティGemmaビジョン",
+        "inputs": {
+            "clip": "クリップ",
+            "reference_image": "参考画像"
+        },
+        "widgets": {
+            "prompt": "プロンプト"
+        },
+        "outputs": {
+            "conditioning": "条件"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "LTXマルチビューアイデンティティ",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "参考正面の顔",
+            "reference_back_head": "参照後頭部",
+            "reference_body_front": "参照正面ボディ",
+            "reference_side_profile": "参照横顔シルエット"
+        },
+        "widgets": {
+            "identity_projector": "アイデンティティプロジェクター",
+            "phase_scale": "位相スケール",
+            "id_strength": "アイデンティティ強度",
+            "arcface_mode": "ArcFaceモード",
+            "debug_log": "デバッグログ",
+            "reference_temporal_offset_latents": "参考時間オフセットLatent"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "Latent",
+            "debug": "デバッグ"
+        },
+        "description": "マルチビューのアイデンティティ転送：正面の顔（必須）＋任意の後頭部/ボディ/サイドの参考ビューを、それぞれ独立したオーバーラップ＋ソース位相セグメント（source_id 2/3/4/5）として注入し、マルチビュー学習に合わせます。先にMODELへマルチビューLoRAを読み込んでください。"
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "LTXオーバーラップアイデンティティ条件",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "参考画像"
+        },
+        "widgets": {
+            "source_id": "ソースID",
+            "phase_scale": "位相スケール",
+            "ref_resize_mode": "参考スケールモード",
+            "debug_log": "デバッグログ",
+            "crop_anchor": "クロップアンカー",
+            "layout": "レイアウト",
+            "reference_guidance_scale": "参考ガイダンス強度",
+            "reference_temporal_offset_latents": "参考時間オフセットLatent"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "Latent",
+            "debug": "デバッグ",
+            "ref_preview": "参照プレビュー",
+            "crop_overlay": "クロップオーバーレイ"
+        },
+        "description": "モデルパッチ経由のオーバーラップ/st_drc/strata ＋ ソース位相参考条件。実験的な参考の時間オフセットのみで、フレーム0の合成リークを低減します。参考は独立トークン（I2Vではなく）で、顔に限らずあらゆる被写体に適用できます。スタック参考で学習されたチェックポイント（レイアウト='strata'）では画像バッチを受け付けます。先にMODELへLoRAを読み込んでください。ref_preview/crop_overlay出力は、エンコードされる内容と、match_targetに対して参考のうちクロップ後に保持される部分（緑の枠）および破棄される部分を正確に表示します。"
+    },
+    "LTXIdentityTransfer": {
+        "title": "LTX アイデンティティ転送",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "参考画像"
+        },
+        "widgets": {
+            "source_id": "ソースID",
+            "phase_scale": "位相スケール",
+            "ref_resize_mode": "参考スケールモード",
+            "debug_log": "デバッグログ",
+            "crop_anchor": "クロップアンカー",
+            "layout": "レイアウト",
+            "reference_guidance_scale": "参考ガイダンス強度",
+            "reference_temporal_offset_latents": "参考時間オフセットLatent"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "Latent",
+            "debug": "デバッグ",
+            "ref_preview": "参照プレビュー",
+            "crop_overlay": "クロップオーバーレイ"
+        },
+        "description": "モデルパッチ経由のオーバーラップ/st_drc/strata ＋ ソース位相参考条件。実験的な参考の時間オフセットのみで、フレーム0の合成リークを低減します。参考は独立トークン（画像から動画ではなく）で、顔に限らずあらゆる被写体に適用できます。スタック参考で学習されたチェックポイント（レイアウト='strata'）では画像バッチを受け付けます。先にMODELへLoRAを読み込んでください。ref_preview/crop_overlay出力は、エンコードされる内容と、match_targetに対して参考のうちクロップ後に保持される部分（緑の枠）および破棄される部分を正確に表示します。"
+    },
+    "LTXMultipleControls": {
+        "title": "LTXマルチ制御",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "ガイダンス動画",
+            "mask_video": "マスク動画",
+            "identity_image": "アイデンティティ画像",
+            "identity_mask_image": "アイデンティティマスク画像"
+        },
+        "widgets": {
+            "guide_source_id": "ガイダンスソースID",
+            "guide_phase_scale": "ガイダンス位相スケール",
+            "guide_layout": "ガイダンスレイアウト",
+            "guide_ref_resize_mode": "ガイダンス参照画像スケールモード",
+            "guide_downscale_factor": "ガイダンスダウンサンプリング係数",
+            "mask_source_id": "マスクソースID",
+            "mask_phase_scale": "マスク位相スケール",
+            "mask_layout": "マスクレイアウト",
+            "mask_ref_resize_mode": "マスク参照画像スケールモード",
+            "mask_downscale_factor": "マスクダウンサンプリング係数",
+            "auto_mask_guide": "自動マスクガイダンス",
+            "mask_white_thresh": "マスク白閾値",
+            "identity_source_id": "アイデンティティソースID",
+            "identity_phase_scale": "アイデンティティ位相スケール",
+            "identity_layout": "アイデンティティレイアウト",
+            "identity_ref_resize_mode": "アイデンティティ参考画像スケールモード",
+            "identity_downscale_factor": "アイデンティティダウンサンプリング係数",
+            "identity_mask_source_id": "アイデンティティマスクソースID",
+            "identity_mask_phase_scale": "アイデンティティマスク位相スケール",
+            "identity_mask_layout": "アイデンティティマスクレイアウト",
+            "identity_mask_ref_resize_mode": "アイデンティティマスク参考画像スケールモード",
+            "identity_mask_downscale_factor": "アイデンティティマスクダウンサンプリング係数",
+            "crop_anchor": "クロップアンカー",
+            "reference_guidance_scale": "参考ガイダンススケール",
+            "debug_log": "デバッグログ",
+            "identity_temporal_offset_latents": "アイデンティティ時間オフセットLatent"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "Latent",
+            "debug": "デバッグ情報"
+        },
+        "description": "1つのノード呼び出しで、ガイダンス、マスク、アイデンティティ、アイデンティティマスクの参考条件を統合します。そのため、アクティブなスロットすべてのRoPE参考仕様は実際にマージされます（LTXIdentityOverlapConditioningノードのチェーン呼び出しではマージされません——呼び出しごとに前回の仕様が上書きされます）。各スロットは任意で、それぞれ自身のソースID/位相スケール/レイアウト/参考スケールモードを持ちます——ハードコードはなく、デフォルトのみがscail2v2_r128_v13に一致します（ガイダンス=0、マスク=0、いずれも位相なし；アイデンティティ=2、位相あり）。ガイダンス動画は置換領域に自動的に黒いマスク（auto_mask_guide）を適用し、v13の学習方法に合わせます——これはアイデンティティ転送を実際に機能させるための修正です。identity_maskはv13では使用されません（空のまま接続しないでください）；旧チェックポイントとの互換性のため保持しています。"
+    },
+    "LTXMultishotPrompt": {
+        "title": "LTXマルチショットプロンプト",
+        "inputs": {
+            "image_1": "参照画像1",
+            "image_2": "参照画像2",
+            "image_3": "参照画像3",
+            "image_4": "参照画像4"
+        },
+        "widgets": {
+            "shot_modifier_1": "レンズ補正1",
+            "shot_size_1": "レンズサイズ1",
+            "camera_move_1": "カメラ移動1",
+            "shot_modifier_2": "レンズ補正2",
+            "shot_size_2": "レンズサイズ2",
+            "camera_move_2": "カメラ移動2",
+            "shot_modifier_3": "レンズ補正3",
+            "shot_size_3": "レンズサイズ3",
+            "camera_move_3": "カメラ移動3",
+            "shot_modifier_4": "レンズ補正4",
+            "shot_size_4": "レンズサイズ4",
+            "camera_move_4": "カメラ移動4"
+        },
+        "outputs": {
+            "prompt": "プロンプト",
+            "references": "参照",
+            "num_shots": "レンズ数"
+        },
+        "description": "ShotPlan形式のマルチショットプロンプトと、マルチショット階層LoRAに必要な、順序付けされたグレー充填の参考バッチを生成します。`references`をLTXアイデンティティ転送に接続し（レイアウト='strata'、ソースID=2、位相スケール=1.0）、`プロンプト`をLTXテキストエンコードノードに接続してください。"
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX先頭フレームクロップ",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "trim": "クロップフレーム数"
+        },
+        "outputs": {
+            "images": "画像"
+        },
+        "description": "動画（画像バッチ）の先頭Nフレームを削除——参考フレーム0のリーク問題を解消します。"
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "BFS多参照画像シート作成器",
+        "inputs": {
+            "ref_image_1": "参照画像1",
+            "ref_image_2": "参照画像2",
+            "ref_image_3": "参照画像3",
+            "ref_image_4": "参照画像4",
+            "ref_image_5": "参照画像5"
+        },
+        "widgets": {
+            "fit_mode": "適合モード"
+        },
+        "outputs": {
+            "sheet": "シート画像",
+            "n_refs": "参照画像数",
+            "debug": "デバッグ情報"
+        },
+        "description": "接続された1〜5枚の参考画像を、多参考LoRA学習用の固定1536x1024シート画像に統合します。スロットを空にすると参考画像の枚数が減ります。空スロットはそのままスキップされ、空白内容で充填されません。"
+    },
+    "BFSEntitySheet2x2": {
+        "title": "実体2x2シート画像",
+        "inputs": {
+            "person": "人物",
+            "clothing": "衣装",
+            "object_or_person2": "物体/人物2",
+            "scene": "シーン"
+        },
+        "outputs": {
+            "sheet": "シート画像",
+            "n_refs": "参照画像数",
+            "debug": "デバッグ情報"
+        },
+        "description": "humoset_sheets_v7の多参考LoRA学習用の、固定1536x1024の2x2実体シート画像を生成します。象限の意味は固定（左上：人物、右上：衣装、左下：物体/人物2、右下：シーン）で、入力を空にすると該当象限は白になります。LTXIdentityOverlapConditioningと併用してください：レイアウト=オーバーラップ度、ソースID=2、位相スケール=1.0、参考スケールモード=native_resolution。"
+    },
+    "FrameRangedFaceLoader": {
+        "title": "フレーム範囲顔ローダー",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "frame_start": "開始フレーム",
+            "frame_end": "終了フレーム"
+        },
+        "outputs": {
+            "face_sequence": "顔シーケンス"
+        },
+        "description": "1枚の顔画像をフレーム範囲[開始フレーム, 終了フレーム]としてラップします。顔シーケンス——ReservedRegionFrameComposerが使用する辞書リストを返します。終了フレーム=-1は「最後のフレームまで」（上限なし）を意味します。"
+    },
+    "FaceSequenceBatch": {
+        "title": "顔シーケンスバッチ処理",
+        "inputs": {
+            "face_sequence_a": "顔シーケンスA",
+            "face_sequence_b": "顔シーケンスB"
+        },
+        "outputs": {
+            "face_sequence": "顔シーケンス"
+        },
+        "description": "2つの顔シーケンスリストを1つに統合します。複数のノードをチェーン接続すると、複数の範囲を含むバッチを作成できます。"
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "リザーブ領域フレーム合成器",
+        "inputs": {
+            "frames": "フレーム",
+            "face_sequence": "顔シーケンス",
+            "face_images": "顔画像"
+        },
+        "widgets": {
+            "region_position": "領域位置",
+            "region_size_px": "領域ピクセルサイズ",
+            "face_distribution": "顔分布",
+            "interval_frames": "間隔フレーム数",
+            "overflow_mode": "オーバーフローモード",
+            "stack_direction": "重ね方向",
+            "face_scale_pct": "顔スケール率",
+            "face_padding_px": "顔ピクセルマージン",
+            "face_gap_px": "顔ピクセル間隔",
+            "face_align_main": "顔メイン整列",
+            "face_align_cross": "顔クロス整列",
+            "chroma_r": "クロマR",
+            "chroma_g": "クロマG",
+            "chroma_b": "クロマB"
+        },
+        "outputs": {
+            "frames_out": "出力フレーム"
+        },
+        "description": "ComfyUIノード。各フレームでリザーブ領域（左/右/上/下）を合成し、元の出力フレームサイズを維持します。主な特徴：- 最終出力解像度を元フレームの解像度と一致- 動画コンテンツを裁剪なしで残り領域に適合- リザーブ領域をクロマ色で充填- 該領域に1枚以上の顔画像を配置- 顔バッチ（画像入力）の時間分布モードに対応- 顔シーケンス入力でフレームごとの範囲を設定"
+    }
+}

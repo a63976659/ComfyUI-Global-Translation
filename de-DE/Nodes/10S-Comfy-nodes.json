@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪LTX Gesichtsaufmerksamkeits-Anker",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "face_bbox_norm": "Gesichts-Bounding-Box normalisiert",
+            "strength": "Intensität",
+            "inject_mode": "Injektionsmodus",
+            "anchor_frame": "Ankerbild",
+            "anchor_upsample": "Anker-Hochskalierung",
+            "track_threshold": "Tracking-Schwellenwert",
+            "face_threshold": "Gesichts-Schwellenwert",
+            "identity_threshold": "Identitäts-Schwellenwert",
+            "depth_curve": "Tiefenkurve",
+            "spatial_prior": "Räumlicher Prior",
+            "block_index_filter": "Blockindex-Filter",
+            "bypass": "Umgehen",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modell",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: Identitätsanker im Gesichtsbereich. Der Merkmals-Cache wurde in den Knoten LTXLatentAnchor verschoben (Szenen-Stabilität). Dieser Knoten bleibt auf Gesichtsziele ausgerichtet.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "LTX-Latent-Anker",
+        "inputs": {
+            "model": "Modell",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "cache_at_step": "Cache-Schritt",
+            "similarity_threshold": "Ähnlichkeits-Schwellenwert",
+            "decay_with_distance": "Abnahme mit der Entfernung",
+            "bypass": "Umgehen",
+            "advanced_mode": "Erweiterter Modus",
+            "cache_mode": "Cachemodus",
+            "forwards_per_step": "Vorwärtsdurchläufe pro Schritt",
+            "cache_warmup": "Cache-Aufwärmung",
+            "anchor_frame": "Ankerbild",
+            "depth_curve": "Tiefenkurve",
+            "block_index_filter": "Blockindex-Filter",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Ganzen-Szenen-Latent-Anker für LTX2.x. Hält Prompt, Bedingungen und physikbewusste Kräfte über lange Sampling-Vorgänge hinweg konsistent. SIGMAS verbinden, um vorhersagbare Cache-Zeitpunkte zu erhalten. Wechseln Sie in den erweiterten Modus, um auf Forschungsparameter zuzugreifen."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "Bewusster LTX-Latent-Anker",
+        "inputs": {
+            "model": "Modell",
+            "reference_image": "Referenzbild",
+            "vae": "VAE",
+            "energy_latent": "Energie-Latent",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "cache_at_step": "Cache-Schritt",
+            "similarity_threshold": "Ähnlichkeits-Schwellenwert",
+            "decay_with_distance": "Abnahme mit der Entfernung",
+            "energy_threshold": "Energie-Schwellenwert",
+            "bypass": "Umgehen",
+            "debug": "Debugging",
+            "advanced_mode": "Erweiterter Modus",
+            "cache_mode": "Cachemodus",
+            "forwards_per_step": "Vorwärtsdurchläufe pro Schritt",
+            "cache_warmup": "Cache-Aufwärmung",
+            "anchor_frame": "Ankerbild",
+            "depth_curve": "Tiefenkurve",
+            "block_index_filter": "Blockindex-Filter"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Latent-Anker mit optionaler räumlicher Energie-Steuerung aus externer Referenz. Das Referenzbild (oder der Latent-Eingang) liefert die räumliche Gewichtung; für den Abgleich wird das laufende Latent verwendet (korrekter Merkmalsraum)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "LTX-Textaufmerksamkeits-Verstärker",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "text_amplification": "Textaufmerksamkeits-Verstärkung",
+            "spatial_focus": "Räumlicher Fokus",
+            "block_index_filter": "Blockindex-Filter",
+            "bypass": "Umgehen",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Verstärkt die Text-Kreuzattention (attn2) in LTX2 pro Block, um die Bedingungsverwässerung bei hoher Token-Anzahl nach dem Upscaling auszugleichen. In der Upscaling-Phase verwenden, um Prompt-Treue und Farbkonstanz wiederherzustellen."
+    },
+    "LTXTiledSampler": {
+        "title": "LTX-Kachel-Sampler",
+        "inputs": {
+            "noise": "Rauschen",
+            "guider": "Guider (Anleitungsmodul)",
+            "sampler": "Sampler (Stichprobenverfahren)",
+            "sigmas": "sigma",
+            "latent_image": "Latent-Eingabebild"
+        },
+        "widgets": {
+            "bypass_tiling": "Kachelung überspringen",
+            "tile_axis": "Kachelachse",
+            "n_tiles": "Kachelanzahl",
+            "tile_overlap": "Kachelüberlappung",
+            "max_size_for_no_tile": "Maximale Größe ohne Kachelung",
+            "audio_pass": "Audio-Durchleitung",
+            "audio_carrier_tile": "Audio-Trägerkachel",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "output": "Ausgabe",
+            "denoised_output": "Entrauschte Ausgabe"
+        },
+        "description": "Gekachelter Drop-in-Ersatz für SamplerCustomAdvanced zur leichten Verfeinerung in der LTX2-Upscaling-Phase. Jede Kachel führt ein vollständiges Sampling mit der trainierten Token-Anzahl aus, danach wird kosinusgemischt. Nur für leichtes Entrauschen verwenden. Audio standardmäßig durchgeschaltet; audio_carrier_tile führt das Audio-Sampling parallel zu einer ausgewählten Kachel aus (ohne zusätzliche Schritte). Setzen Sie bypass_tiling=true, um als transparenter Durchlauf für ein Standard-Single-Pass-Sampling zu arbeiten – nützlich beim Debuggen oder wenn Kachelung nicht benötigt wird."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "LTXV-Latent-Upsampler (Kachelversion)",
+        "inputs": {
+            "samples": "Samples (Stichproben)",
+            "upscale_model": "Superauflösungsmodell",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "Kachelgröße",
+            "overlap": "Überlappung",
+            "max_size_for_no_tile": "Maximale Größe ohne Kachelung",
+            "rotate_for_landscape": "Für Querformat drehen",
+            "debug": "Debugging"
+        },
+        "description": "Gekachelte Drop-in-Alternative zum LTXVLatentUpsampler. Führt das Upscaling in räumlichen Kacheln aus und blendet die Überlappungen mit kosinusförmigem Fenster, was Farbabweichungen und Verzerrungen bei extremen Seitenverhältnissen vermeidet. Bei sicheren Seitenverhältnissen ist die Ausgabe nahezu identisch mit der Nicht-Kachelversion; in Extremfällen vermeidet sie die Instabilität des Superauflösungsmodells."
+    },
+    "LTXModelInspector": {
+        "title": "LTX-Modellinspektor",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "name_filter": "Namensfilter",
+            "focus_path": "Fokuspfad",
+            "max_modules_listed": "Maximale Anzahl angezeigter Module",
+            "trace_path_contains": "Verfolgungspfad enthält",
+            "max_modules_traced": "Maximale Anzahl verfolgter Module",
+            "trace_calls_per_module": "Verfolgte Aufrufe pro Modul",
+            "print_top_level": "Top-Level-Informationen ausgeben"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Überprüft das Diffusionsmodell: Top-Level-Struktur, Namensfilter, Fokuspfad und Verfolgungshooks."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Auto-Verkettung mit Latent-Kreuzblende",
+        "inputs": {
+            "frames_0": "Frame_0",
+            "frames_1": "Frame_1"
+        },
+        "widgets": {
+            "match_spatial": "Räumlicher Abgleich",
+            "interpolate_mode": "Interpolationsmodus",
+            "cross_fade_frames": "Kreuzblenden-Frames",
+            "fade_curve": "Blendenkurve"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Automatischer räumlicher Abgleich plus zeitliche Verkettung mit optionaler Kreuzblende."
+    },
+    "AudioLatentStretch": {
+        "title": "Audio-Latent-Streckung",
+        "inputs": {
+            "audio_latent": "Audio-Latent"
+        },
+        "widgets": {
+            "source_fps": "Quell-FPS",
+            "target_fps": "Ziel-FPS",
+            "interp_mode": "Interpolationsmodus"
+        },
+        "outputs": {
+            "audio_latent": "Audio-Latent"
+        },
+        "description": "Resampelt das Audio-Latent auf das Ziel-FPS. Hermite-Modus empfohlen."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Latent-zeitlicher-Upsampler",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Quell-FPS",
+            "target_fps": "Ziel-FPS",
+            "interp_mode": "Interpolationsmodus",
+            "auto_retime": "Automatisches Retime",
+            "motion_scale": "Bewegungsanteil",
+            "spatial_sharpen": "Räumliche Schärfung",
+            "ltx_safe": "LTX-sicher",
+            "override_frames": "Frames überschreiben"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Hermite-basiertes zeitliches Upscaling mit automatischer Takt-Korrektur."
+    },
+    "LatentMotionSharpener": {
+        "title": "Latent-Bewegungsschärfer",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "Grundscharfzeichnung",
+            "motion_sharpen": "Bewegungsscharfzeichnung",
+            "motion_thresh": "Bewegungs-Schwellenwert",
+            "temporal_smooth_mask": "Zeitglättungsmaske"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Schärft adaptiv anhand der Bewegungsstärke zwischen den Frames."
+    },
+    "LatentMotionRetime": {
+        "title": "Latent-Bewegungs-Retime",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Quell-FPS",
+            "target_fps": "Ziel-FPS",
+            "strength": "Intensität",
+            "manual_scale": "Manuelle Skalierung"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Verkleinert die Bewegungsstärke, um den Takt von 24 auf 30 fps für hochskalierte Latents zu korrigieren."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Latent-zeitlicher Inpainter",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "Anker-Sigma",
+            "ghost_sigma": "Geist-Sigma",
+            "score_gamma": "Score-Gamma",
+            "anchor_blend": "Anker-Mischung",
+            "seed": "Zufalls-Seed",
+            "debug_scores": "Scores debuggen"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Geist-Erkennung pro Frame plus gezieltes Rauschen. Verankert echte Anker-Frames. Danach mit KSampler bei 0,3–0,45 entrauschen."
+    },
+    "LTXActionAmplifier": {
+        "title": "LTX-Aktionsverstärker",
+        "inputs": {
+            "model": "Modell",
+            "clip": "clip",
+            "positive": "Positiv-Bedingung"
+        },
+        "widgets": {
+            "amplification_strength": "Verstärkungsintensität",
+            "action_vocabulary_text": "Aktionsvokabular (Text)",
+            "scale_ceiling": "Skalierungs-Obergrenze",
+            "auto_threshold": "Automatischer Schwellenwert",
+            "similarity_threshold": "Ähnlichkeits-Schwellenwert",
+            "similarity_sharpness": "Ähnlichkeits-Schärfe",
+            "amplification_floor": "Verstärkungs-Untergrenze",
+            "top_k": "Top-K",
+            "bypass": "Umgehen",
+            "debug": "Debugging"
+        },
+        "description": "Verstärkt selektiv Aktions-/Bewegungs-Tokens im Positiv-Prompt, erhöht die K/V-Amplitude passender Verb-Tokens und lässt beschreibende Tokens unangetastet. Genau gegenläufig zu LikenessSemanticClamp und ersetzt den pauschalen Skalierungsansatz von TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "LTX-Gesichtserkennungs-Detektor",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "padding": "Füllung",
+            "fallback_bbox": "Ausweich-Bounding-Box",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "face_bbox": "Gesichts-Bounding-Box"
+        },
+        "description": "Erkennt Gesichter im Bild und gibt eine normalisierte Bounding-Box-Zeichenkette aus. Verbinden Sie die Ausgabe mit face_bbox_within_reference von LikenessGuide, override_face_bbox/frame_0_bbox von LikenessAnchor oder face_bbox_norm von face_anchor. Entkoppelt die Erkennung von der Knotenlogik, damit mehrere Knoten dieselbe Bounding-Box nutzen können."
+    },
+    "LTXLikenessAnchor": {
+        "title": "LTX-Ähnlichkeits-Anker",
+        "inputs": {
+            "model": "Modell",
+            "reference_info": "Referenzinformation"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "reference_source": "Referenzquelle",
+            "frame_0_bbox": "Frame-0-Bounding-Box",
+            "similarity_threshold": "Ähnlichkeits-Schwellenwert",
+            "decay_with_distance": "Abnahme mit der Entfernung",
+            "bypass": "Umgehen",
+            "debug": "Debugging",
+            "advanced_mode": "Erweiterter Modus",
+            "depth_curve": "Tiefenkurve",
+            "block_index_filter": "Blockindex-Filter",
+            "similarity_sharpness": "Ähnlichkeits-Schärfe",
+            "override_face_bbox": "Gesichts-Bounding-Box überschreiben",
+            "skip_when_sigma_above": "Überspringen wenn Sigma darüber",
+            "pull_mode": "Zieh-Modus",
+            "late_block_falloff": "Abfall in späten Blöcken"
+        },
+        "description": "Zieht die Attention pro Block in Richtung der Referenzmerkmale, um die Identität konsistent zu halten. Zwei Modi: (1) Referenzinformation von LikenessGuide beziehen und dessen angehängtes Referenzbild nutzen; (2) ohne Referenzinformation verwendet der Knoten Frame 0 des Latents als Referenz – geeignet für i2v-Workflows, in denen Frame 0 das Bedingungs-Bild ist. v1.2 nutzt gerichteten Zieh-Modus (erhält die Farben bei)."
+    },
+    "LTXLikenessGuide": {
+        "title": "LTX-Ähnlichkeits-Guidance",
+        "inputs": {
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "Referenzbild"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "placement_mode": "Platzierungsmodus",
+            "face_detect": "Gesichtserkennung",
+            "reference_mask_mode": "Referenzmasken-Modus",
+            "face_padding": "Gesichtspolsterung",
+            "crf": "CRF",
+            "blur_radius": "Unschärferadius",
+            "interpolation": "Interpolationsmethode",
+            "crop": "Zuschneiden",
+            "attention_strength": "Attention-Intensität",
+            "face_bbox_within_reference": "Gesichtsbox innerhalb der Referenz",
+            "emit_latent": "Latent ausgeben",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latent": "latent",
+            "reference_info": "Referenzinformation"
+        },
+        "description": "Hängt das Ähnlichkeits-Referenzbild an die Conditionings, um die Identität zu bewahren. Gibt geänderte Positiv-/Negitiv-Bedingungen (für den Guider) und die Referenzinformations-Metadaten (für LikenessAnchor) aus. Standardmäßig ist die Latent-Ausgabe eine Durchleitung des Eingangs – keine Erweiterung und kein Zuschneiden nötig. Der Wert der Guidance kommt aus der Interaktion mit dem Modell und den BBox-Metadaten, nicht aus einer Latent-Änderung."
+    },
+    "LTXLikenessCrop": {
+        "title": "LTX-Ähnlichkeits-Zuschnitt",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "Referenzinformation"
+        },
+        "widgets": {
+            "debug": "Debugging"
+        },
+        "description": "Schneidet die Ähnlichkeits-Referenz-Frames vor dem VAE-Dekodieren aus dem Latent heraus. Kehrt den emit_latent=Erweiterung-Modus von LTXLikenessGuide um. Nur verwenden, wenn der Guide ein erweitertes Latent ausgibt. Arbeitet der Guide im Durchleitungsmodus (Standard), ist dieser Knoten nicht nötig – das Latent kann direkt mit dem VAE-Dekoder verbunden werden."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "LTX-Ähnlichkeits-Semantik-Begrenzer",
+        "inputs": {
+            "model": "Modell",
+            "clip": "clip",
+            "positive": "Positiv-Bedingung",
+            "reference_info": "Referenzinformation"
+        },
+        "widgets": {
+            "suppression_strength": "Unterdrückungsintensität",
+            "face_modifier_text": "Gesichts-Modifikatorentext",
+            "similarity_threshold": "Ähnlichkeits-Schwellenwert",
+            "auto_threshold": "Automatischer Schwellenwert",
+            "similarity_sharpness": "Ähnlichkeits-Schärfe",
+            "suppression_floor": "Unterdrückungs-Untergrenze",
+            "top_k": "top_k",
+            "soft_edge_frac": "Anteil weicher Rand",
+            "override_face_bbox": "Gesichts-Bounding-Box überschreiben",
+            "bypass": "Umgehen",
+            "debug": "Debugging"
+        },
+        "description": "Semantische Token-Unterdrückung im Bounding-Box-Bereich der attn2-Region. Erkennt Gesichts-Modifikator-Tokens im Prompt über die Zuordnung im Einbettungsraum zum Modifikator-Vokabular und unterdrückt deren Attention in diesem Bereich selektiv. Ersetzt die einheitliche Amplituden-Skalierung des verworfenen LikenessClamp."
+    }
+}

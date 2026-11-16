@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "ICLight-Modell laden",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "model_path": "Modell"
+        },
+        "outputs": {
+            "MODEL": "Modell"
+        },
+        "description": "Etwas umständliche, aber funktionierende Methode zum Laden der IC-Light-Modelle.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nZusammen mit dem ICLight-Bedingungsknoten verwenden."
+    },
+    "ICLightConditioning": {
+        "title": "ICLight-Bedingung anwenden",
+        "inputs": {
+            "positive": "Positive Bedingung",
+            "negative": "Negative Bedingung",
+            "vae": "VAE",
+            "foreground": "Vordergrund-Latent",
+            "opt_background": "Hintergrund-Latent (optional)"
+        },
+        "widgets": {
+            "multiplier": "Multiplikator"
+        },
+        "outputs": {
+            "positive": "Positive Bedingung",
+            "negative": "Negative Bedingung",
+            "empty_latent": "Leeres Latent"
+        },
+        "description": "Bedingungsknoten für IC-Light-Modelle. Um das „Hintergrund-Latent“ zu verwenden, muss das IC-Light-Modell auf die Version „fbc“ gewechselt werden."
+    },
+    "LightSource": {
+        "title": "Einfache Lichtquelle",
+        "inputs": {
+            "prev_image": "Vorheriges Bild"
+        },
+        "widgets": {
+            "light_position": "Lichtquellenposition",
+            "multiplier": "Helligkeit",
+            "start_color": "Startfarbe",
+            "end_color": "Endfarbe",
+            "width": "Breite",
+            "height": "Höhe",
+            "batch_size": "Stapelgröße"
+        },
+        "outputs": {
+            "IMAGE": "Bild"
+        },
+        "description": "Erzeugt ein Verlaufs-Graustufenbild, das als einfache Lichtquelle verwendet werden kann. Die Farbe kann per RGB oder HEX angegeben werden."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Normalen berechnen",
+        "inputs": {
+            "images": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Eingabebereich  Zentrum"
+        },
+        "outputs": {
+            "divided": "Trennzeichen",
+            "normal": "Normalenbild"
+        },
+        "description": "Berechnet Normalen aus Bildern unterschiedlicher Blickrichtungen.\nErforderlich ist ein Bild-Batch mit 4 Bildern: links, rechts, unten, oben"
+    },
+    "LoadHDRImage": {
+        "title": "HDR-Bild laden",
+        "widgets": {
+            "image": "Bild",
+            "exposure": "Belichtung",
+            "exposures": "Belichtung"
+        },
+        "outputs": {
+            "IMAGE": "Bild",
+            "MASK": "Maske"
+        },
+        "description": "Lädt .hdr-Bilder aus dem Ordner input.\nGibt ein LDR-Bild-Batch aus."
+    },
+    "BackgroundScaler": {
+        "title": "Hintergrund-Graustufe",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "scale": "Zoom",
+            "invert": "Umkehren"
+        },
+        "outputs": {
+            "IMAGE": "Bild"
+        },
+        "description": "Passt den Maskenbereich als Graustufenbild an"
+    },
+    "DetailTransfer": {
+        "title": "Detail-Transfer",
+        "inputs": {
+            "target": "Zielbild",
+            "source": "Referenzbild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "blur_sigma": "Unschärfe-Sigma",
+            "blend_factor": "Mischungsfaktor"
+        },
+        "outputs": {
+            "IMAGE": "Bild"
+        }
+    }
+}

@@ -1,0 +1,742 @@
+{
+    "Pixaroma3D": {
+        "title": "Pixaroma 3D",
+        "widgets": {
+            "Open 3D Builder": "3D-Builder öffnen"
+        },
+        "outputs": {
+            "image": "Gerenderte 3D-Szene",
+            "width": "Bildbreite (Pixel)",
+            "height": "Bildhöhe (Pixel)"
+        },
+        "description": "3D-Builder Pixaroma – ein vollständiger 3D-Szenen-Editor, der innerhalb von ComfyUI läuft. Öffne den Vollbild-Editor auf dem Knoten, um Primitive (Würfel, Kugel, Zylinder, Torus, Blob, Gelände, Felsen, Teekanne, hohler Behälter), zusammengesetzte Assets (Bäume, Häuser, Möbel, Blumen) hinzuzufügen oder deine eigenen .glb/.obj-Modelle zu importieren.\n\nIntegrierte Kamerasteuerung (Orbit, Schwenk, Zoom), realistische Beleuchtung, Rückgängig/Wiederholen und Echtzeitvorschau. Die Tastenkürzel verwenden das Blender-Layout (G Greifen, S Skalieren, R Rotieren, Shift+D Duplizieren, Ziffernblock 1/3/7 für Ansichts-Presets).\n\nGibt das finale Renderergebnis als IMAGE aus, zusammen mit seiner Breite und Höhe, sodass du es direkt mit ControlNet (ideal für Tiefenkarten, Line Art, Normalmaps) oder jedem img2img-Workflow verbinden kannst.\n\nDie Eingänge sind dynamische Platzhalter-Slots, die der Editor erstellt, wenn du Hintergrundbild-Ebenen hinzufügst; ihre Hinweise befinden sich auf der JS-Seite."
+    },
+    "PixaromaAudioStudio": {
+        "title": "Pixaroma Audio-Studio",
+        "inputs": {
+            "image": "Bild",
+            "audio": "Audio (Ton)"
+        },
+        "widgets": {
+            "Open AudioReact": "Audiospur öffnen"
+        },
+        "outputs": {
+            "video_frames": "Videoframe-Sequenz",
+            "audio": "Audio (Ton)",
+            "fps": "Bildrate"
+        },
+        "description": "Pixaroma Audio-Reaktiv – Wandelt ein einzelnes Bild in ein audioreaktives Video um. Öffne den Vollbild-Editor auf dem Knoten, um die Audio-Timeline zu ziehen, einen Bewegungsmodus zu wählen (15 Optionen: Puls-Zoom, Kamerawackeln, Glitch, Schrumpfen, Welle, Neigung, Pixelierung, RGB-Split usw.) und bis zu 8 Effekte zu überlagern (Chroma-Verschiebung, Glow, Vignette, Farbtonverschiebung, Kino-Teal-and-Orange-Grading, Letterbox-Effekt, Scanlines, Filmkorn). Die Echtzeit-WebGL-Vorschau reagiert beim Ziehen live auf den Beat.\n\nKeine zusätzlichen Modelle nötig. Kann mit dem Pixaroma MP4-speichern-Knoten kombiniert werden, um das Ergebnis direkt als MP4 zu kodieren und das Audio wiederzuverwenden. Erfordert WebGL2-Unterstützung.\n\nBeide Eingänge sind optional – du kannst Upstream-IMAGE/AUDIO von einer beliebigen Quelle verbinden oder inline im Editor laden (Drag-and-Drop oder Dateiauswahl). Die Inline-Auswahl überschreibt die Upstream-Verbindung, bis du den Inline-Pin-Schalter ausschaltest."
+    },
+    "PixaromaCombine": {
+        "title": "Pixaroma Kombinieren",
+        "inputs": {
+            "any1": "Beliebig 1",
+            "any2": "Beliebig 2"
+        },
+        "outputs": {
+            "batch": "Stapel"
+        },
+        "description": "Führt zwei Eingänge zu einem Stapel zusammen. Verbinde zwei beliebige Inhalte mit Beliebig 1 und Beliebig 2; der Knoten fasst sie zusammen: Bilder und Videoframes werden zu einem Stapel gestapelt, Latents werden als Batch verarbeitet, Zahlen und Texte werden als Listen gesammelt. Ist eine Seite leer, wird die andere Seite direkt durchgereicht, sodass er sicher als Akkumulator innerhalb einer Schleife verwendet werden kann (in Runde 1 gibt es noch nichts hinzuzufügen). Funktioniert mit jedem Verbindungstyp."
+    },
+    "PixaromaCompare": {
+        "title": "Pixaroma Vergleich",
+        "inputs": {
+            "image1": "Bild 1",
+            "image2": "Bild 2"
+        },
+        "description": "Pixaroma Bildvergleich – Der einfachste Weg, die Unterschiede zwischen zwei Bildern zu sehen. Verbinde zwei beliebige IMAGE-Ausgänge mit Bild 1 und Bild 2 (z. B. vor/nach dem Upscaling, Original/nach Inpainting, zwei Checkpoint-Varianten) und führe den Workflow aus.\n\nDer Viewer auf dem Knoten bietet drei Modi: Nebeneinander mit ziehbarem Regler, Überlagern mit einstellbarer Deckkraft oder “Differenz”, das die konkreten Änderungen zwischen den beiden Bildern hervorhebt. Der Startmodus neuer Vergleichsknoten kann in den Einstellungen dieses Knotens festgelegt werden, die über das Zahnrad-Symbol in der Knoten-Werkzeugleiste oder per Rechtsklick auf den Knoten geöffnet werden.\n\nBeide Eingänge sind optional. Ist nur ein Bild verbunden (z. B. wenn der mit einem der Eingänge verbundene Zweig stummgeschaltet oder überbrückt ist), zeigt der Knoten nur dieses Bild; ist keines verbunden, erscheint ein kurzer Hinweis – er wirft niemals einen Systemfehler und kann daher sicher in Workflows bleiben, die zwischen Text zu Bild und Bild zu Bild wechseln."
+    },
+    "PixaromaImageComposition": {
+        "title": "Pixaroma Bildkomposition",
+        "widgets": {
+            "Open Image Composer": "Bild-Compositor öffnen"
+        },
+        "outputs": {
+            "image": "Komponiertes Bild",
+            "width": "Bildbreite (Pixel)",
+            "height": "Bildhöhe (Pixel)"
+        },
+        "description": "Pixaroma Bildkomposition – Kombiniere und ordne mehrere Bilder auf einer mehrschichtigen Leinwand an. Ziehe ein Bild auf den geschlossenen Knotenkörper, um es als neue Ebene hinzuzufügen (der Editor öffnet sich und das abgelegte Bild wird über den vorhandenen Ebenen gestapelt, niemals ersetzt). Im Vollbild-Editor kannst du Ebenen auch per Drag-and-Drop, durch Einfügen aus der Zwischenablage oder durch Verbinden eines Upstream-IMAGE-Eingangs mit einem Platzhalter-Slot hinzufügen, sie dann über Griffe verschieben/skalieren/drehen und Effekte pro Ebene anwenden: Deckkraft, Mischmodus (Normal, Multiplizieren, Negativ multiplizieren, Ineinanderkopieren, Abdunkeln, Aufhellen, Farbig abwedeln, Farbig nachbelichten, Hartes Licht, Weiches Licht, Differenz, Ausschluss, Farbton, Sättigung, Farbe, Luminanz), Gaußsche Unschärfe sowie AI-Hintergrundentfernung (angetrieben von rembg, wählt automatisch das beste installierte Modell: birefnet -> isnet -> u2net).\n\nDas Radiergummi-Werkzeug erlaubt es, jede Ebene nicht-destruktiv zu maskieren. Die Unschärfe pro Ebene verwendet eine quadratische Kurve (Regler 0-100 → 0-50 Pixel), sodass niedrige Werte eine feine Steuerung ermöglichen. Shift+Scrollen auf der ausgewählten Ebene skaliert sie an Ort und Stelle.\n\nGibt das endgültige Kompositionsergebnis als IMAGE aus, zusammen mit seiner Breite und Höhe.\n\nDie Eingaben sind dynamische Platzhalter-Slots, die der Editor erstellt, wenn du Platzhalter-Ebenen hinzufügst – verbinde jede Upstream-IMAGE-Quelle mit dem passenden Slot. Ihre Tooltip-Informationen liegen auf der JS-Seite."
+    },
+    "PixaromaCrop": {
+        "title": "Pixaroma Zuschneiden",
+        "widgets": {
+            "Open Crop": "Zuschneiden öffnen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "crop_info": "Zuschneide-Informationen",
+            "width": "Breite (Pixel)",
+            "height": "Höhe (Pixel)"
+        },
+        "description": "Pixaroma Bild zuschneiden – Schneidet beliebige Bilder visuell zu, ohne Pixelkoordinaten eingeben zu müssen. Drei Wege, das Quellbild bereitzustellen: verbinde ein beliebiges Upstream-Bild mit dem Eingangs-Slot (Bild laden, VAE-Decoding, ControlNet-Ausgabe usw.), ziehe eine Bilddatei auf den Knotenkörper oder füge sie mit Ctrl+V aus der Zwischenablage ein. Drag-and-Drop und Einfügen trennen automatisch die Upstream-Verbindung und verwenden das manuell geladene Bild.\n\nFelder Breite/Höhe/X/Y/Verhältnis/Ausrichtung im Knotenpanel – Zahlenfelder unterstützen mathematische Ausdrücke wie '1024+512' oder '512*2'. Eine andere Ausrichtung als „Frei“ zentriert den Zuschneiderahmen automatisch relativ zum Quellbild neu; wenn du also bei mittigem Zuschnitt Breite oder Höhe auf 512 änderst, werden X/Y automatisch auf den Zentrier-Offset ausgerichtet. Der Vollbild-Editor zeigt ein ziehbares Zuschneide-Rechteck mit Griffen, dazu Standard-Preset-Verhältnisse (1:1, 16:9, 9:16 usw.) für Social Media sowie eine Bild-laden-Schaltfläche, mit der du das Quellbild im Editor wechseln kannst (trennt ebenfalls automatisch die Upstream-Verbindung).\n\nAusgegeben werden das zugeschnittene Bild, die passende Zuschneide-Maske (verbinde den Maskeneingang, z. B. den Maskenausgang von Bild laden, um die Zuschneide-Transparenz mit demselben Rahmen durchzureichen), die neue Breite und Höhe sowie die 'crop_info'-Verbindung. Speise crop_info in Pixaroma Uncrop ein, um den bearbeiteten Ausschnitt exakt an seine ursprüngliche Position im Originalbild zurückzukleben (zuschneiden, Inpainting/Upscaling, zurücklegen).\n\nDer Eingang 'Bild' ist optional – du kannst ein Upstream-Bild verbinden oder das Bild direkt per Drag-and-Drop, Einfügen mit Ctrl+V oder über die Bild-laden-Schaltfläche des Editors laden (dies überschreibt die Verbindung)"
+    },
+    "PixaromaFindReplace": {
+        "title": "Pixaroma Suchen und Ersetzen",
+        "inputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Suchen und Ersetzen – Platziere diesen Knoten auf der Verbindung zwischen einer Textquelle (LLM-Knoten, Text anzeigen, Pixaroma Text, eine beliebige Zeichenfolgen-Ausgabe) und dem Knoten, der diesen Text verwendet. Er fängt den Text ab, wendet Suchen-/Ersetzen-Regeln an und reicht das bearbeitete Ergebnis weiter. Außerdem zeigt er auf dem Knoten eine Vorher-Nachher-Vorschau.\n\nFüge für jede Bearbeitung eine Regel hinzu: Gib ein, was gesucht werden soll, und womit es ersetzt wird. Bleibt die Ersetzen-Seite leer, wird der gefundene Text gelöscht. Schalte eine Regel aus, um sie zu überspringen, ohne sie zu löschen; Ziehen am Griff ändert die Reihenfolge. Die Regeln werden von oben nach unten angewendet.\n\nGlobale Schalter: Groß-/Kleinschreibung (exakte Übereinstimmung der Schreibweise), Ganzes Wort (nur vollständige Wörter, sodass 'art' nicht 'artist' trifft), Regulärer Ausdruck (behandelt den Suchtext als regulären Ausdruck), Aufräumen (fasst nach der Bearbeitung doppelte Leerzeichen zusammen und korrigiert überzählige oder doppelte Kommas)"
+    },
+    "PixaromaGroupSwitch": {
+        "title": "Pixaroma Gruppen-Umschalter",
+        "description": "Pixaroma Gruppen-Umschalter – Ein kompaktes Schaltpanel für Pixaroma-Gruppen. Jeder Schalter kann alle Knoten in der Gruppe stummschalten oder umgehen, sodass du ganze Abschnitte des Workflows ohne Verkabelung ein-/ausschalten kannst.\n\nÖffne das Panel (Zahnrad-Symbol oder Rechtsklick auf den Knoten), um zu wählen, ob dieser Schalter stummschaltet oder umgeht, welche Gruppen er steuert (alle oder eine manuell ausgewählte, durchsuchbare und sortierte Gruppenmenge) und die Umschaltregel (beliebige Anzahl an, nur einer an, oder immer genau einer an).\n\nFüge mehrere solcher Knoten für verschiedene Aufgaben hinzu – einen zum Stummschalten, einen zum Umgehen. Sie synchronisieren sich gegenseitig und mit den Titelschaltflächen der Gruppen selbst, da sie alle den Live-Zustand der Gruppen lesen und setzen"
+    },
+    "PixaromaImageInfo": {
+        "title": "Pixaroma Bildinformationen",
+        "inputs": {
+            "image_info": "Bildinformationen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite (Pixel)",
+            "height": "Höhe (Pixel)",
+            "filename": "Dateiname"
+        },
+        "description": "Pixaroma Bildinformationen – Packt das Bildinformations-Paket des Pixaroma Mini-Loaders in die Ausgaben Bild, Maske, Breite, Höhe und Dateiname aus. Verbinde es nur, wenn du diese zusätzlichen Informationen brauchst, damit der Loader kompakt bleibt. Breite, Höhe und Dateiname werden auch auf der Knotenoberfläche angezeigt"
+    },
+    "PixaromaImageResize": {
+        "title": "Pixaroma Bildgröße ändern",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite",
+            "height": "Höhe",
+            "longest_side": "längste Seite"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite (Pixel)",
+            "height": "Höhe (Pixel)",
+            "longest_side": "längste Seite"
+        },
+        "description": "Ändert die Größe eines Bildes (und seiner Maske) im Workflow. Wähle einen Modus - Aus, Max. Megapixel, längste Seite, proportional skalieren, einpassen, zuschneiden und füllen, Seitenverhältnis anpassen oder Füllen (Rahmen für Outpainting hinzufügen). Optional können Breite/Höhe verbunden werden (z. B. von Pixaroma Auflösung), um die Größe zu steuern, oder eine einzelne längste Seite, um die längere Kante auf diesen Wert zu skalieren (Hoch- oder Querformat, ohne Richtungsauswahl). Gibt Bild, Maske, Breite und Höhe aus"
+    },
+    "PixaromaInpaintCrop": {
+        "title": "Pixaroma Img2Img-Zuschneiden",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "size_mode": "Größenmodus",
+            "blend_mode": "Mischmodus",
+            "target": "Ziel",
+            "multiple": "Multiplikator",
+            "context_px": "Kontext px",
+            "mask_grow": "Maske erweitern",
+            "mask_blur": "Masken-Unschärfe",
+            "softness": "Weichheit",
+            "invert_mask": "Maske umkehren",
+            "Open mask editor": "Maskeneditor öffnen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "crop_info": "Zuschneide-Informationen",
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Pixaroma Img2Img-Zuschneiden: Der einfache Weg, Img2Img einzurichten. Öffne den Vollbild-Editor und male eine Maske über den Bereich, der bearbeitet werden soll (Pinsel, Radieren, Leeren, Umkehren und Pinselgröße werden unterstützt). Der Knoten erkennt automatisch den Bereich um die Maske, fügt Kontextrand hinzu und schneidet einen modellgerechten Ausschnitt zu (Größe als Vielfaches von 8, auf das Ziel skaliert, damit auch kleine Maskenbereiche genug Auflösung haben).\n\nAktiviere invert_mask, um die Maske umzukehren und Img2Img auf den gegenteiligen Bereich anzuwenden (z. B. den Hintergrund statt des freigestellten Motivs), ohne einen zusätzlichen Maske-umkehren-Knoten.\n\nVerbinde das zugeschnittene Bild und die Maske mit deinem Img2Img-Modell (KSampler, Flux, Bearbeitungsmodell) und crop_info mit dem Pixaroma Img2Img-Zusammenfügen-Knoten, um das Ergebnis präzise an die ursprüngliche Position zurückzukleben.\n\nAusgegeben werden das zugeschnittene Bild, die zugehörige Maske, die Zuschneide-Info-Leitung sowie Breite/Höhe des Ausschnitts (praktisch für Leeres Latent). Die Zuschneide-Info-Leitung hat denselben Typ wie beim Bild-zuschneiden-Knoten; beide sind austauschbar."
+    },
+    "PixaromaInpaintStitch": {
+        "title": "Pixaroma Img2Img-Zusammenfügen",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "crop_info": "Zuschneide-Informationen"
+        },
+        "widgets": {
+            "softness": "Weichheit",
+            "blend_mode": "Mischmodus",
+            "color_match": "Farbanpassung"
+        },
+        "outputs": {
+            "image": "Bild.",
+            "original": "Originalbild"
+        },
+        "description": "Pixaroma Img2Img-Zusammenfügen: Fügt das Img2Img-Zuschneideergebnis präzise an seine Ursprungsposition im Originalbild zurück und beseitigt nach dem Verschmelzen die Nahtstellen.\n\nVerbinde den crop_info-Ausgang des Pixaroma Img2Img-Zuschneiden-Knotens mit crop_info hier und verbinde dann das Img2Img-Zuschneideergebnis (nach der Modellverarbeitung) mit Bild. Der Knoten passt den zugeschnittenen Bereich standardmäßig wieder an die Originalposition an, verschmilzt nur den gezeichneten Bereich, und der Inhalt außerhalb der Maske bleibt pixelgenau.\n\nNahtweichheit und Mischmodus stammen vom Img2Img-Zuschneiden-Knoten auf crop_info, können hier aber überschrieben werden (bei softness=-1 werden die Einstellungen des Zuschneiden-Knotens verwendet). Da dieser Knoten nach dem Sampler liegt, wird bei Änderung von Weichheit, Mischmodus oder Farbanpassung nur dieser Knoten neu ausgeführt – der Sampler cached den fixierten Zufalls-Seed, sodass du die Verschmelzung sofort feinjustieren kannst, ohne neu zu generieren. Die Farbanpassung korrigiert vom Modell eingeführte Farb-/Tonverschiebungen.\n\nGibt das vollständige fertige Bild und das originale, unbeschnittene Bild aus; beide können zusammen mit dem Pixaroma Bildvergleich-Knoten verbunden werden, für einen sofortigen Vorher-Nachher-Vergleich."
+    },
+    "KreaLoraConvertPixaroma": {
+        "title": "Krea-LoRA zu Pixaroma konvertieren",
+        "widgets": {
+            "lora_name": "lora-Name",
+            "output_name": "Ausgabename",
+            "overwrite": "Überschreiben"
+        },
+        "description": "Konvertiert ein auf fal.ai trainiertes Krea 2 LoRA in eine ComfyUI-kompatible Datei. Krea 2 LoRAs von fal.ai verwenden Schichtnamen, die ComfyUI nicht erkennt, und lassen sich daher nicht laden; dieser Knoten benennt diese Schichten um und speichert eine neue Kopie in deinem loras-Ordner, die jeder LoRA-Loader verwenden kann. Die Gewichte werden vollständig kopiert, das Ergebnis ist exakt identisch – der einzige Unterschied ist, dass es geladen werden kann. Wähle ein LoRA, sieh dir die Werte an und klicke auf Konvertieren. Er liest nur deine Datei und schreibt eine neue: Die Originaldatei wird nie verändert und es wird nichts heruntergeladen. Eigenständiges Werkzeug, nicht mit Krea oder fal.ai verbunden oder von ihnen gebilligt."
+    },
+    "PixaromaLabel": {
+        "title": "Pixaroma Label",
+        "widgets": {
+            "label_json": "Label-JSON"
+        },
+        "description": "Pixaroma Label: Ein einfaches Textlabel zur Workflow-Dokumentation. Klicke auf den Knoten, um den Vollbild-Editor zu öffnen, in dem du Textinhalt, Schriftart, Schriftgröße (maximal 256 Pixel), Textfarbe und Hintergrundfarbe festlegen kannst.\n\nReine Annotationsfunktion: keine Bildverarbeitung, keine Eingangsverbindungen nötig, keine Ausgangskette. Das gestaltete Label wird direkt auf dem Knotenkörper gerendert und mit dem Workflow gespeichert und wiederhergestellt."
+    },
+    "PixaromaLoadImage": {
+        "title": "Pixaroma Bild laden",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite (Pixel)",
+            "height": "Höhe (Pixel)",
+            "filename": "Dateiname",
+            "original_width": "Originalbildbreite",
+            "original_height": "Originalbildhöhe"
+        },
+        "description": "Pixaroma Bild laden: natives Bildladen (Hochladen, Drag-and-Drop, Einfügen, mehrere Frames, Alpha zu Maske) plus Inline-Anpassungen: Max. Megapixel, längste Seite, proportional skalieren, innen einpassen, füllend zuschneiden, Seitenverhältnis anpassen. Unterstützt Ausrichtungs-Chips, Resampling-Auswahl und Schutz der Auflösung beim Hochskalieren. Ausgaben: Bild, Maske, Breite, Höhe, Dateiname, Originalbreite, Originalhöhe. In den meisten Workflows entfällt damit die nachgeschaltete Kombination aus Bildgröße abrufen + Bild skalieren + Bild zuschneiden."
+    },
+    "PixaromaLoadImagesFolder": {
+        "title": "Pixaroma Bilder aus Ordner laden",
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite",
+            "height": "Höhe",
+            "filename": "Dateiname",
+            "index": "Indexwert",
+            "total": "Gesamt"
+        },
+        "description": "Lädt mehrere Bilder aus einem beliebigen Ordner auf der Festplatte und schickt sie einzeln durch den Workflow – jedes Bild erzeugt ein Ergebnis. Wähle alle, die ersten N oder bestimmte Bilder manuell in der Miniatur-Galerie aus. Die Anpassungsoptionen sind dieselben wie beim Pixaroma Bild laden-Knoten (Max. Megapixel, längste Seite, proportional skalieren, innen einpassen, füllend zuschneiden, Seitenverhältnis anpassen). Die Ausgaben sind Listen: Bild, Maske, Breite, Höhe, Dateiname, Index, Gesamt. Verbinde Dateiname mit einem Speicherknoten, um den Originalnamen jedes Ergebnisses zu behalten, und Breite/Höhe mit Leeres Latent, um die Größe jedes Bildes zu übernehmen. Klicke einmal auf Ausführen; die Stapelanzahl bleibt 1."
+    },
+    "PixaromaLoadImageMini": {
+        "title": "Pixaroma Mini-Bild laden",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "image": "Bild",
+            "image_info": "Bildinformationen"
+        },
+        "description": "Pixaroma Mini-Bild-laden – Ein kompakter Bild-laden-Knoten. Unterstützt Hochladen, Drag-and-Drop, Einfügen oder Dateiauswahl; dieselben Inline-Größenoptionen wie bei Bild laden (Max. Megapixel, längste Seite, proportional skalieren, einpassen, zuschneiden und füllen, Verhältnis anpassen) befinden sich im Einstellungspanel, sodass die Knotenoberfläche minimal bleibt. Maskeneditor und Kopieren/Einfügen (Clipspace) funktionieren wie gewohnt.\n\nGibt nur das Bild und ein kleines image_info-Datenpaket aus. Wenn du Maske, Breite, Höhe oder Dateiname brauchst, verbinde image_info mit dem Pixaroma Bildinformationen-Knoten – so bleibt der Loader klein."
+    },
+    "PixaromaLoadVideo": {
+        "title": "Pixaroma Video laden",
+        "widgets": {
+            "video": "Video (Bewegtbild)",
+            "max_frames": "Maximale Frameanzahl",
+            "force_fps": "Framerate erzwingen",
+            "skip_first_frames": "Erste Frames überspringen",
+            "custom_width": "Benutzerdefinierte Breite",
+            "custom_height": "Benutzerdefinierte Höhe"
+        },
+        "outputs": {
+            "video_frames": "Video-Sequenzframes",
+            "audio": "Audio (Ton)",
+            "frame_count": "Anzahl der Frames",
+            "fps": "Bildrate",
+            "width": "Breite",
+            "height": "Höhe",
+            "duration": "Dauer (Sekunden)"
+        },
+        "description": "Pixaroma Video laden – Lädt ein Video hoch oder wählt es aus und dekodiert es in einen Frame-Stapel; der Knoten enthält eine Videovorschau, sodass du das Quellvideo ansehen kannst, ohne ComfyUI zu verlassen.\n\nAusgaben: video_frames (Video als Bildstapel), Audio, Anzahl der Frames, Bildrate, Breite, Höhe und Dauer – ein separater Videoinformations-Knoten ist daher meist unnötig. Passt zum Pixaroma MP4 speichern-Knoten: verbinde video_frames und Audio direkt.\n\nLadesteuerung: Maximale Frameanzahl legt fest, wie viele Frames ab dem Anfang geladen werden (Sicherheitsmechanismus für lange Videos); „Erste Frames überspringen“ schneidet den Anfang ab; Framerate erzwingen resampelt auf eine stabile Framerate; benutzerdefinierte Breite/Höhe passt jeden Frame an (werden beide gesetzt, wird füllend auf diese Größe zugeschnitten, ohne zu stretchen).\n\nZum Lesen wird bevorzugt PyAV verwendet, sonst 图像io; Audio wird über ffmpeg extrahiert. Die meisten ComfyUI-Installationen benötigen keine zusätzliche Einrichtung."
+    },
+    "PixaromaLoadVideoFrame": {
+        "title": "Pixaroma Videoframes laden",
+        "widgets": {
+            "video": "Video (Bewegtbild)",
+            "choose video to upload": "Video zum Hochladen auswählen",
+            "frame": "Bildnummer"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "frame_count": "Gesamte Frameanzahl",
+            "fps": "Bildrate",
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Pixaroma Videoframes laden – Lädt ein Video und wählt einen Frame als Bild für den Workflow aus. Ähnlich wie der Bild-laden-Knoten, aber für Videos.\n\nDer Knoten hat eine Vorschau mit Schieberegler: Ziehe den Regler an eine beliebige Position, verwende die Pfeil-Schaltflächen, um Frame für Frame zurück oder vor zu gehen, oder gib eine genaue Frame-Nummer ein. Die gesamte Frameanzahl wird automatisch gelesen, sodass der Regler weiß, wie viele Frames das Video hat.\n\nAusgaben: Bild (der gewählte Frame), Maske, Frameanzahl, Bildrate, Breite und Höhe. Die Frame-Nummerierung beginnt bei 0, daher ist 0 der erste Frame.\n\nZum Lesen wird bevorzugt PyAV verwendet, andernfalls 图像io. Das Greifen eines Frames tief in einem langen Video bleibt schnell, da direkt zu diesem Frame gesprungen wird, statt das gesamte Video zu lesen."
+    },
+    "PixaromaLoopStart": {
+        "title": "Pixaroma Schleifenstart",
+        "widgets": {
+            "total": "Gesamt"
+        },
+        "description": "Die Startmarkierung der Schleife. Platziere den Knoten zwischen Schleifenstart und Schleifenende; der gesamte Abschnitt wird wiederholt ausgeführt. Setze 'Gesamt' auf die Anzahl der Schleifendurchläufe. 'Index' zählt die Durchläufe ab 0. Die Wert-Slots dienen dazu, Inhalte von einer Runde zur nächsten mitzuführen (z. B. die bisher erzeugten Frames oder einen Laufzähler) – verbinde die entsprechenden Wert-Slots des Schleifenendes zurück, damit jede Runde dort weitermacht, wo die vorherige aufgehört hat. Muss die Schleife nichts mitführen, bleiben die Wert-Slots leer."
+    },
+    "PixaromaLoopEnd": {
+        "title": "Pixaroma Schleifenende",
+        "description": "Die Endmarkierung der Schleife. Verbinde 'loop' vom Schleifenstart. Lege die Werte, die in die nächste Runde mitgeführt werden sollen, in die Wert-Slots (z. B. ein Kombinieren-Knoten, um die Frames jeder Runde anzusammeln). Sind alle Schleifendurchläufe abgeschlossen, geben die Wert-Slots die endgültig mitgeführten Werte aus. Alles zwischen Schleifenstart und Schleifenende wird wiederholt ausgeführt."
+    },
+    "PixaromaLoopEngine": {
+        "title": "Pixaroma Schleifen-Engine",
+        "inputs": {
+            "loop": "Anzahl der Schleifen",
+            "index_in": "Aktueller Index",
+            "total": "Gesamtanzahl"
+        },
+        "description": "Interner rekursiver Treiber für Loop Start / Loop End. Benutzer müssen diesen Knoten nicht manuell platzieren – Loop End erzeugt ihn automatisch. In jeder Runde prüft er, ob eine weitere Schleifenrunde nötig ist (Index+1 < Gesamt); wenn ja, klont er den Schleifenkörper und sich selbst und führt sie mit dem nächsten Index und den aktualisierten mitgeführten Werten erneut aus; andernfalls gibt er die endgültigen mitgeführten Werte aus."
+    },
+    "PixaromaLoraLoader": {
+        "title": "Pixaroma LoRA-Loader",
+        "inputs": {
+            "model": "Modell",
+            "clip": "CLIP-Encoder"
+        },
+        "outputs": {
+            "MODEL": "Modell",
+            "triggers": "Triggerwort"
+        },
+        "description": "Staple beliebig viele LoRAs in einem einzigen Knoten. Jedes LoRA hat einen eigenen Schalter und eine eigene Stärke; du kannst Modell und CLIP-Encoder durch mehrere solcher Knoten ketten. Klicke auf das 「i」 in einer Zeile, um LoRA-Informationen anzuzeigen und seine Triggerwörter auszuwählen; aktivierte Triggerwörter werden als Klartext über triggers ausgegeben und in deinen Prompt eingespeist. Die Triggerwörter werden direkt aus der Datei gelesen und funktionieren ohne Netzwerk; die optionale Civitai-Suche pro LoRA holt auf Wunsch die offiziellen Triggerwörter und Vorschauen. Nach dem Hinzufügen eines LoRA befinden sich alle Schalter und Einstellungen in der Mitte des Knotens; ein Rechtsklick auf eine Zeile verschiebt, dupliziert oder löscht sie."
+    },
+    "PixaromaMuteSwitch": {
+        "title": "Pixaroma Stummschalter",
+        "outputs": {
+            "out": "Stumme Daten"
+        },
+        "description": "Pixaroma Stummschalter – Schaltet ganze Workflow-Zweige mit einem einzigen Knoten ein oder aus. Verbinde den letzten Knoten jeder Szene (meist KSampler) mit einer Zeile; ein Klick auf die Pille dieser Zeile überspringt oder aktiviert die Szene beim nächsten Durchlauf. Die Pille oben links wechselt zwischen Einzelmodus (nur eine Szene läuft gleichzeitig, wie Optionsfelder) und Mehrfachmodus (beliebige Kombinationen von Szenen können laufen). Die Pille oben rechts wechselt zwischen Stumm (die Szene läuft gar nicht) und Bypass (jeder Knoten der Szene reicht seine Eingaben unverändert weiter). Teilen sich mehrere Szenen Upstream-Knoten, wird ein Knoten erst stummgeschaltet, wenn alle Szenen, die von ihm abhängen, ausgeschaltet sind – du unterbrichst also nie versehentlich eine Szene, die noch läuft."
+    },
+    "PixaromaNote": {
+        "title": "Pixaroma Notiz",
+        "widgets": {
+            "note_json": "Notiz-JSON"
+        },
+        "description": "Pixaroma Notiz – Ein Rich-Text-Annotationseditor auf der Leinwand. Öffne den Vollbild-Editor, um mehrabsätzige Notizen zu verfassen, mit Unterstützung für Fett/Kursiv/Unterstrichen/Durchgestrichen, Überschriften (H1/H2/H3), Aufzählungs- und nummerierte Listen, Codeblöcke (mit Kopieren-Schaltfläche), Inline-Symbole (CLIP, LoRA, GGUF, Modellversionen und 30+ weitere), Tabellen, Trennlinien, benutzerdefinierte Farbschaltflächen (Herunterladen/Seite ansehen/Weiterlesen/Normal), Ordner-Hinweise sowie vorgestaltete YouTube- und Discord-Pillen. Jeder Block hat eine eigene Farbe, ausgewählt aus einem zentrierten Modal, das über der Leinwand erscheint. Die Codeansicht erlaubt die manuelle Bearbeitung des zugrunde liegenden HTML; der eingebettete LLM-Prompt in assets/note-pixaroma-llm-prompt.txt lässt ChatGPT oder Gemini für dich codeansicht-kompatibles HTML erzeugen. Reine Annotation – keine Bildverarbeitung, keine Eingangsverkabelung, keine Ausgangskette. Deine Formatierung bleibt beim Speichern und Wiederherstellen vollständig erhalten."
+    },
+    "NotifyPixaroma": {
+        "title": "Pixaroma Benachrichtigung",
+        "inputs": {
+            "any": "Beliebiges Signal"
+        },
+        "widgets": {
+            "enabled": "Aktivieren",
+            "volume": "Lautstärke",
+            "label": "Beschriftung",
+            "sound": "Soundeffekt",
+            "Preview": "Vorschau"
+        },
+        "description": "Spielt einen Benachrichtigungston ab, wenn der Workflow diesen Knoten erreicht. Platziere ihn am Ende des Workflows, um beim Fertigstellen des Renderings einen Hinweis zu hören, oder an einem beliebigen Knotenzweig im Graphen, um an einem Checkpoint erinnert zu werden. Sehr nützlich, wenn du während der Ausführung von ComfyUI in einem anderen Browser-Tab oder einer anderen Anwendung bist. Die Sounddateien werden automatisch aus assets/sounds/ aufgelistet – lege .mp3-, .wav- oder .ogg-Dateien dort ab, um weitere hinzuzufügen (starte ComfyUI neu, damit neue Dateien geladen werden). Jeder Knoten ist zugleich ein Checkpoint-Timer: bei jedem Durchlauf misst er, wie lange der Workflow bis zu diesem Knoten braucht, zeigt diese Zeit am Knoten an und führt eine per Rechtsklick öffnende Historie pro Knoten (Benachrichtigungs-Zeitverlauf). Zeitmessung und Sound sind unabhängig (die Messung läuft auch bei ausgeschaltetem Sound) und lassen sich pro Knoten im Rechtsklick-Menü deaktivieren. Der kleine Pfeil auf der Uhrzeile klappt den Knoten so ein, dass nur die Uhr sichtbar ist (Kompaktmodus), und wieder aus (im Rechtsklick-Menü: Einklappen/Ausklappen). Jeder Knoten hat einen eigenen Sound-Schalter, und es gibt einen Haupt-Sound-Schalter, der alle Benachrichtigungsknoten gleichzeitig überschreibt – er befindet sich in den Einstellungen dieses Knotens, die du über die Zahnrad-Schaltfläche in der Knoten-Werkzeugleiste oder per Rechtsklick auf den Knoten öffnest; im Rechtsklick-Menü lautet er „Mute all notification sounds“. Die Vorschau-Schaltfläche umgeht beide Schalter, denn ein Klick darauf ist die manuelle Anforderung, den Sound sofort zu hören."
+    },
+    "PixaromaNumber": {
+        "title": "Pixaroma Zahl",
+        "widgets": {
+            "value": "Wert"
+        },
+        "outputs": {
+            "int": "Ganzzahl",
+            "float": "Gleitkommazahl"
+        },
+        "description": "Pixaroma Zahl – Ein kleiner Knoten mit einem Zahlenfeld. Gibt denselben Wert zweimal aus: einmal als INT (auf die nächste Ganzzahl gerundet) und einmal als FLOAT (mit Nachkommastellen). Nützlich, wenn ein Downstream-Knoten INT und ein anderer FLOAT braucht, oder wenn du mitten im Workflow eine Dezimalzahl sauber in eine Ganzzahl umwandeln willst. Das Zahlenfeld akzeptiert Ganzzahlen (42), Dezimalzahlen (3.14) und mathematische Ausdrücke (1024+64, 1024/3, 512*2). Bei der Umwandlung von FLOAT zu INT wird auf die nächste Ganzzahl gerundet: aus 3.5 wird 4, aus 3.4 wird 3, aus -2.5 wird -2."
+    },
+    "PixaromaOutpaint": {
+        "title": "Pixaroma Outpainting",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "image": "Bild",
+            "width": "Breite",
+            "height": "Höhe",
+            "outpaint_info": "Outpainting-Informationen"
+        },
+        "description": "Füllt die Bildränder mit einer Volltonfarbe, damit das Outpainting-Modell die neuen Bereiche füllen kann; anschließend kann das Ergebnis optional auf ein Megapixel-Limit skaliert und die endgültige Größe ausgegeben werden.\n\nMittelgrau ist die Standard-Füllfarbe; jede Farbe ist möglich, aber eine zu dunkle Füllung färbt das erzeugte Bild insgesamt ab, weil das Modell, das darauf trainiert ist, diese Füllung zu ersetzen, Farbe und Form zugleich lernt. Grau ist neutral, sodass kein Farbstich entsteht.\n\nDas Bild wird proportional auf die Zielform erweitert; der Anker bestimmt, auf welcher Seite der neue Platz entsteht. Im Modus Pro Kante lässt sich für jede Kante eine genaue Pixelzahl festlegen. Das Megapixel-Limit ist optional: Ist es aus, behält das Bild die Größe nach dem Füllen.\n\nDie Ausgänge Breite und Höhe melden die endgültige Größe und können daher direkt in ein Leeres Latent eingespeist werden."
+    },
+    "PixaromaOutpaintStitch": {
+        "title": "Pixaroma Outpainting-Zusammenfügen",
+        "inputs": {
+            "image": "Bild",
+            "outpaint_info": "Outpainting-Informationen"
+        },
+        "widgets": {
+            "feather": "Kantenweichzeichnung",
+            "color_match": "Farbanpassung"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "Legt das Originalbild zurück in das Outpainting-Ergebnis und behält nur die vom Modell neu erzeugten Teile. Verwende es nach Pixaroma Outpainting, wenn du ein großes Bild für das Modell verkleinern musstest: der Originalteil kommt in voller Qualität zurück, statt als vom Modell weichgezeichnete, verkleinerte Version.\n\nVerbinde den 'outpaint_info'-Ausgang von Pixaroma Outpainting mit 'outpaint_info' hier und das fertige Bild (nach dem VAE-Decoding) mit 'Bild'. Der Knoten skaliert das Ergebnis auf die volle aufgefüllte Größe zurück, legt das Originalbild exakt an seine alte Position und verschmilzt die Nahtstellen.\n\n'Kantenweichzeichnung' mildert die Naht zwischen Originalbild und neuem Bereich. Die Naht kann nicht völlig unsichtbar werden, weil der neue Bereich mit einer neu kodierten Kopie des Originalbildes verschmolzen wird und nicht mit dem Originalbild selbst; etwas Kantenweichzeichnung wirkt daher meist am besten. Nur die an den neuen Bereich angrenzenden Kanten werden weichgezeichnet; die echten Bildränder bleiben scharf.\n\n'颜色 match' korrigiert die gelegentlichen Tonwertsprünge an der Grenze zwischen neuem Bereich und Originalbild, indem es die Farben des Originalbildes entlang der Naht in den neuen Bereich hinein fortsetzt. Es folgt dem Hintergrund bereichsweise und kann so eine Szene mit heller Wand / dunklem Boden ausgleichen, nicht nur eine einzelne Volltonfarbe. 0 ist aus, 100 ist vollständige Anpassung (meist der beste Wert), über 100 wird überangepasst – für seltene, hartnäckige Sprünge. Es gleicht nur den Tonwert an, ohne Textur oder Details zu beeinflussen, daher entstehen keine Artefakte.\n\nAusgegeben werden das neu zusammengesetzte Bild in voller Auflösung sowie eine Maske, die den neu erzeugten Bereich (weiß) und den unveränderten Originalbereich (schwarz) markiert – praktisch, wenn du später nur den neuen Teil leicht nachbearbeiten willst."
+    },
+    "PixaromaPaint": {
+        "title": "Pixaroma Zeichnen",
+        "widgets": {
+            "Open Paint": "Zeichenbrett öffnen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "width": "Bildbreite (Pixel)",
+            "height": "Bildhöhe (Pixel)"
+        },
+        "description": "Pixaroma Zeichnen – Ein schneller, einfacher Mal-Editor mit Ebenen. Ziehst du ein Bild auf den geschlossenen Knotenkörper, wird es als neue oberste Ebene hinzugefügt (der Editor öffnet sich und stapelt das abgelegte Bild über dem automatisch erzeugten Hintergrund; vorhandene Ebenen werden nie ersetzt). Öffne den Vollbild-Editor, um mit Bleistift/Pinsel/Radiergummi/Verwischen/Füllen/Formen/Pipette auf gestapelten Ebenen zu malen, mit Bedienelementen im Photoshop-Stil (Reihenfolge per Ziehen, Deckkraft, Mischmodus, Zusammenfügen, Auf eine Ebene reduzieren). Die Pinsel-Engine unterstützt eigene Härte/Deckkraft, das Verwischen-Werkzeug ermöglicht weiche Farbübergänge.\n\nDie Schaltfläche „KI-Hintergrund entfernen“ auf der Bildquell-Ebene (basierend auf rembg) stellt das Motiv mit einem Klick frei. Über ein Kontrollkästchen in der Werkzeugleiste lässt sich das Bild direkt mit transparentem Hintergrund auf die Festplatte speichern.\n\nAusgegeben werden das fertig komponierte Bild sowie seine Breite und Höhe. Im Editor kannst du weitere Bilder per Drag-and-Drop als zusätzliche Ebenen hinzufügen oder eine beliebige Upstream-Bildquelle mit den vom Editor erzeugten optionalen Eingangs-Slots verbinden.\n\nDie Eingänge sind dynamische Platzhalter-Slots, die der Editor erzeugt; ihre Tooltip-Informationen liegen auf der JS-Seite."
+    },
+    "PixaromaPauseImage": {
+        "title": "Pixaroma Bild-Pause",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Pixaroma Bild-Pause – Ein internes Gate, das den Workflow an dieser Stelle anhalten kann, um das Bild zu prüfen, bevor nachfolgende teure Schritte (Upscaling, zweite Durchläufe, Nachbearbeitung) ausgeführt werden. Schließe eine beliebige Bildquelle an den Eingang an und den nächsten Knoten an den Ausgang.\n\nWenn der Umschalter auf 'Pause' steht, stoppt 'Ausführen' hier und zeigt das Bild an; der restliche Workflow läuft nicht. 'Fortsetzen' führt nur den Downstream-Fluss aus und verwendet genau das Bild, das du siehst – Modell, Sampler und Dekodierung werden übersprungen, daher ist es schnell. 'Neu generieren' erzeugt hier ein neues Bild (wenn der Zufalls-Seed des Samplers auf zufällig steht, wird ein anderes Bild erzeugt). Stelle den Umschalter auf 'Durchleitung', um den gesamten Workflow in einem Durchlauf auszuführen.\n\nDer Schnappschuss wird im temporären Ordner von ComfyUI gespeichert und beim Neustart von ComfyUI gelöscht, daher musst du nach einem Neustart erst einmal pausieren, bevor du 'Fortsetzen' verwendest."
+    },
+    "PixaromaPauseText": {
+        "title": "Pixaroma Text-Pause",
+        "inputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Text-Pause – Ein internes Gate, das den Workflow hier anhält, damit du den Text lesen und ändern kannst, bevor der nachfolgende Ablauf ausgeführt wird. Geeignet für Text aus Sprachmodellen, dessen genauer Inhalt sich nicht kontrollieren lässt. Verbinde deine Textquelle mit dem Eingang und den nächsten Knoten mit dem Ausgang.\n\nSteht der Umschalter auf Pause, stoppt ein Klick auf Ausführen hier und zeigt den vom Modell erzeugten Text; der restliche Workflow läuft nicht. Nach dem Bearbeiten des Textes klickst du auf Fortsetzen, und nur der Downstream-Ablauf läuft mit dem von dir bestätigten Text – das Modell wird übersprungen, daher ist es schnell. Ein Klick auf Neu generieren holt neuen Text: Der Knoten verfolgt die Verbindungen zurück, findet die Quelle, die den Text erzeugt hat, und würfelt deren 随机随机种子 auf einen neuen Zufallswert, sodass ein anderes Ergebnis entsteht. Der Umschalter auf Durchleitung führt den gesamten Workflow in einem Durchlauf aus. Der Umschalter auf Behalten verwendet bei jedem Durchlauf den aktuellen Text wieder – das Modell wird übersprungen, und jeder Durchlauf erzeugt ein neues Bild auf Basis desselben Prompts, sodass du schnell stapelweise Varianten erzeugen und dabei deine Bearbeitungen behalten kannst."
+    },
+    "PixaromaPortraitLandscape": {
+        "title": "Pixaroma Hoch-/Querformat-Umschaltung",
+        "widgets": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "outputs": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Gibt Breite und Höhe in der von dir gewählten Ausrichtung aus. Gib zwei Größen ein (oder verbinde die Eingaben von anderen Knoten) und klicke dann auf Hochformat oder Querformat. Der Hochformat-Modus ordnet vertikal an (der kleinere Wert als Breite), der Querformat-Modus horizontal (der größere Wert als Breite). Ein Klick wechselt die Ausrichtung, ohne dass du zwei WH-Knoten und einen Umschalter gleichzeitig behalten musst. Die Reihenfolge der beiden eingegebenen Werte beeinflusst das Ergebnis nicht. Gibt Breite und Höhe aus."
+    },
+    "PixaromaPreview": {
+        "title": "Pixaroma Vorschau",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "filename_prefix": "Dateiname-Präfix",
+            "save_mode": "Speichermodus"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Pixaroma Bildvorschau – Inline-Bildvorschau mit den Schaltflächen Auf Datenträger speichern, In Ausgabe speichern, Kopieren und Öffnen, mit Stapelunterstützung. Verbinde eine beliebige IMAGE-Quelle mit dem Eingang. Alle Stapel-Frames werden im Knotenkörper gerendert; klicke auf ein beliebiges Miniaturbild, um es inline aufzuklappen. Die Pfeiltasten wechseln zwischen den Stapeln, ein Klick auf eine beliebige Stelle des geöffneten Bildes blättert weiter, Esc oder X klappt es wieder ein. Über das kleine Symbol oben rechts im Vorschaubereich wechselst du zwischen Raster-/Streifenlayout.\n\nAuf Datenträger speichern lässt dich einen beliebigen Ordner auf deinem Computer wählen; der vorgeschlagene Dateiname wird bei jedem Klick automatisch hochgezählt. In Ausgabe speichern schreibt in den output/-Ordner von ComfyUI. Kopieren legt den ausgewählten Frame als PNG in die Systemzwischenablage, direkt einfügbar in andere Knoten, Zeichenprogramme, Nachrichten usw. Öffnen öffnet den ausgewählten Frame in einem neuen Browser-Tab, zur Vollbildansicht oder zum Vergleich mehrerer Bilder nebeneinander. Alle vier Schaltflächen wirken auf den aktuell ausgewählten Frame; Auf Datenträger speichern und In Ausgabe speichern betten den Workflow in die PNG ein, sodass du sie später zurück nach ComfyUI ziehen kannst.\n\nStelle den save_mode auf 'save', und der Knoten kann SaveImage direkt ersetzen: Bei jedem Durchlauf werden alle Stapel-Frames automatisch nach output/ geschrieben und mit Workflow-Metadaten versehen. Die Vorschau bleibt auch nach dem Wechsel des Workflow-Tabs erhalten, sodass du bei einem bestimmten Frame anhalten und später zurückkehren kannst.\n\nDas Feld Dateiname-Präfix unterstützt Unterordner-Syntax mit '/' (z. B. 'SDXL/portrait'), Datums-Marker im VHS/VideoHelperSuite-Stil (z. B. '%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png') sowie native ComfyUI-Marker (%year%, %month%, %day%, %hour%, %minute%, %second%, %width%, %height%). Die Datumsformatcodes sind yyyy, yy, MM, dd, HH, mm, ss. Auch Knotenreferenz-Marker wie %Seed Pixaroma.seed% (oder %KSampler.seed%) werden unterstützt, mit denen du Feldwerte anderer Knoten in den Dateinamen einfügen kannst, ähnlich dem nativen SaveImage-Knoten. Sieh dir die Projekt-README für die vollständige Marker-Referenz an.\n\nEin Rechtsklick auf den Knoten öffnet die Einstellungen für das Vorschaubild. Civitai-Generierungsinformationen hinzufügen schreibt die Einstellungen zusätzlich in einem für Civitai lesbaren Format, sodass hier veröffentlichte Bilder Checkpoint, LoRAs und ihre Stärken anzeigen, plus Schritte, Zufalls-Seed, Sampler und Größe. Die Werte stammen automatisch aus deinem Workflow, keine zusätzlichen Verbindungen nötig. Standardmäßig aus."
+    },
+    "PixaromaPrompt": {
+        "title": "Pixaroma Prompt",
+        "inputs": {
+            "text_in": "Eingabetext"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Prompt – Ein Prompt-Feld mit einem einzelnen Textausgang, plus einer persönlichen Bibliothek wiederverwendbarer @tags und einem optionalen Texteingang, der zusammengeführt werden kann.\n\nGib deinen Prompt ein und ziehe @tags für wiederverwendbare Teile hinein. Speichere einen Tag namens oilpainting, dessen vollständiger Text die lange Zeichenfolge 'oil painting, thick brush strokes, Rembrandt lighting, ...' ist, danach genügt die Eingabe von @oilpainting. Gib @ im Feld ein, um eine durchsuchbare, nach Kategorien gruppierte Liste zu sehen; bekannte Tags werden hervorgehoben, unbekannte Tags weisen auf Tippfehler hin. Jeder @tag wird zur Laufzeit durch den vollständigen Text ersetzt, sodass das Feld kurz bleibt. Aktiviere 'Expansion anzeigen', um den gesendeten Inhalt vorab zu sehen.\n\nVerbindest du einen Prompt mit dem Texteingang, wird er mit deinem Prompt zusammengeführt – wähle 'Mein Prompt zuerst' oder 'Verbundener Prompt zuerst' sowie das Trennzeichen. Ohne Verbindung ist die Ausgabe nur dein Prompt.\n\nVerwalte Tags über die Tags-Schaltfläche: eine Vollbild-Bibliothek mit Kategorien. Deine Bibliothek wird in den ComfyUI-Einstellungen gespeichert, ist also privat für dich und bleibt auch bei Plugin-Updates erhalten; über Export/Import kannst du sie mit anderen teilen."
+    },
+    "PixaromaPromptFromList": {
+        "title": "Pixaroma Prompt-Listen-Auswahl",
+        "inputs": {
+            "prompts": "Prompt-Liste"
+        },
+        "widgets": {
+            "index": "Indexwert"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Prompt-Listen-Auswahl – Ein kleines Auswahlwerkzeug. Empfängt die `提示词s`-Ausgabe eines Pixaroma Prompt-Multiknotens (auf Listenmodus eingestellt) und wählt daraus über die Indexnummer einen Prompt als Ausgabe aus.\n\nPlatziere mehrere solcher Knoten im Workflow (alle mit demselben Prompt-Multiknoten verbunden), damit Szene 1 Prompt 1 erhält, Szene 2 Prompt 2 usw. – ohne zu viele Ausgangspunkte am Bibliotheksknoten zu stapeln.\n\nDer Index zählt ab 1: 1 wählt den ersten Prompt aus der Bibliothek. Liegt der Index außerhalb des Bereichs, ist die Ausgabe eine leere Zeichenfolge."
+    },
+    "PixaromaPromptMulti": {
+        "title": "Pixaroma Prompt-Multiknoten",
+        "outputs": {
+            "text": "Text (Zeichenkette)",
+            "prompts": "Prompt"
+        },
+        "description": "Pixaroma Prompt-Multiknoten – Ein einzelner Knoten, der über die oberen Schaltflächen zwischen zwei Betriebsmodi wechselt.\n\nWarteschlangenmodus: Nach einem Klick auf Ausführen läuft der Workflow einmal pro aktiviertem Prompt. Leere Zeilen werden automatisch übersprungen. Jeder Prompt wird im Warteschlangen-Panel zu einem eigenen Eintrag, sodass er einzeln abgebrochen werden kann. Verbinde die `Text`-Ausgabe mit CLIP Text Encode. Verwende diesen Modus, wenn du verschiedene Prompt-Varianten vergleichen willst (ein Bild pro Prompt).\n\nListenmodus: Nach einem Klick auf Ausführen sendet der Knoten alle aktivierten Prompts als Liste (keine Warteschlangenschleife). Verbinde die `提示词s`-Ausgabe mit einem oder mehreren Pixaroma Prompt-Listen-Auswahl-Knoten downstream; jeder Knoten wählt über seine Nummer einen anderen Prompt aus. Verwende diesen Modus, wenn verschiedene Teile desselben Workflows (Szene 1, Szene 2 …) jeweils unterschiedliche Prompts aus derselben Bibliothek holen sollen, ohne überall zusätzliche Knoten einzufügen.\n\nBeide Ausgänge sind immer sichtbar – die Modus-Schaltfläche steuert nur, ob die Warteschlange schleift. Klicke auf 「+ Add 提示词」, um eine Zeile hinzuzufügen. Der Umschalter nimmt die Zeile auf bzw. schließt sie aus. Ziehen am linken Griff ändert die Reihenfolge. Prompts leeren löscht den Text, behält aber die Zeilen. Zurücksetzen stellt den Zustand mit zwei leeren Zeilen wieder her."
+    },
+    "PixaromaPromptPack": {
+        "title": "Pixaroma Prompt-Paket",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Prompt-Paket – Füge einen Prompt-Text ein, jeder Prompt entspricht einem Workflow-Warteschlangen-Durchlauf.\n\nWähle über die oberen Schaltflächen die Aufteilungsart: Absätze (Standard, Aufteilung nach Leerzeilen, geeignet für lange Prompts) oder Zeilen (Aufteilung nach jedem Zeilenumbruch, geeignet für kurze Prompt-Listen).\n\nDer Zähler unten rechts im Textfeld zeigt die Gesamtzahl der Prompts. Während des Durchlaufs wechselt er zu 「Aktuell/Gesamt», um den Fortschritt anzuzeigen.\n\nLeere Prompts (nur Leerzeichen) werden automatisch übersprungen. Wenn das Textfeld beim Klick auf Ausführen leer ist, wird nichts in die Warteschlange aufgenommen und ein Hinweis wird angezeigt."
+    },
+    "PixaromaPromptReader": {
+        "title": "Pixaroma Prompt-Leser",
+        "inputs": {
+            "image": "Bild",
+            "filename": "Dateiname"
+        },
+        "outputs": {
+            "text": "Bild-Prompt-Informationen"
+        },
+        "description": "Pixaroma Prompt-Leser – Lädt ein von ComfyUI (oder Automatic1111/Forge) erzeugtes Bild und liest den in seinen PNG-Metadaten gespeicherten Positiv-Prompt. Keine Bildvorschau, nur Text. Gibt den Prompt als Zeichenfolge aus, die mit CLIPTextEncode oder anderen Texteingabe-Knoten zur Wiederverwendung verbunden werden kann. Ziehe eine PNG auf den Knoten, klicke auf Bild hochladen oder wähle eine Datei aus der Datei-Combobox. Nach der Auswahl wird der angezeigte Inhalt sofort aktualisiert, sodass du den Prompt prüfen kannst, bevor der Workflow läuft. Hat das Bild keinen eingebetteten Prompt (JPG, Screenshot oder PNG mit verlorenen Metadaten), zeigt der Inhalt einen kurzen Hinweis an, und die Zeichenfolgen-Ausgabe trägt denselben Hinweis, damit Downstream-Verbindungen nicht abreißen. Unterstützt ComfyUI-Workflows mit verketteten Textknoten (ConditioningCombine, StringConcatenate, SDXL-Doppel-Textencoder) sowie das 'parameters'-Format von Automatic1111/Forge. Du kannst den Dateinamen auch mit dem optionalen 'filename'-Eingang verbinden (z. B. mit der 'filename'-Ausgabe des Pixaroma Bild-laden-Knotens) – ist er verbunden, ignoriert der Knoten seinen eigenen Auswähler und liest den Prompt stattdessen aus diesem Bild. Auswählen, Hochladen oder Ablegen einer Datei übernimmt die Führung, die Verbindung wird automatisch getrennt."
+    },
+    "PixaromaPromptStack": {
+        "title": "Pixaroma Prompt-Stapel",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Prompt-Stapel – Speichert eine geordnete Liste von Prompt-Blöcken, mit Aktivieren/Deaktivieren, Labels und Reihenfolge. Alle aktivierten Blöcke werden mit dem gewählten Trennzeichen zu einer einzigen Zeichenfolge als Ausgabe verkettet (Standard ist Komma plus Leerzeichen, änderbar in den Knoteneinstellungen, die über das Zahnrad-Symbol in der Knoten-Werkzeugleiste oder per Rechtsklick auf den Knoten geöffnet werden).\n\nKlicke auf 「+ Add row」, um einen Block hinzuzufügen. Klicke auf die Umschaltfläche, um einen Block stummzuschalten/die Stummschaltung aufzuheben. Ziehe am linken Griff, um die Reihenfolge zu ändern."
+    },
+    "PixaromaReferenceNode": {
+        "title": "Pixaroma Referenzknoten",
+        "outputs": {
+            "output": "Ausgabe"
+        },
+        "description": "Beispielknoten zum Erstellen von Test-DOM-HTML-Objekten in Knoten"
+    },
+    "Pixaroma_VueReferenceNode": {
+        "title": "Pixaroma Vue-Referenzknoten",
+        "widgets": {
+            "image": "Bild",
+            "count": "Anzahl",
+            "prompt": "Hinweis",
+            "mode": "Modus",
+            "mask": "Maske",
+            "pixaroma_data": "pixaroma-Daten"
+        },
+        "description": "Neuer Pixaroma Vue-Referenzknoten, kompatibel mit Nodes 2.0"
+    },
+    "PixaromaRemoveBackground": {
+        "title": "Pixaroma Hintergrundentfernung",
+        "inputs": {
+            "image": "Bild",
+            "model": "Modell"
+        },
+        "outputs": {
+            "image": "Bild mit Alphakanal",
+            "mask": "Maske",
+            "inverted_mask": "Maske umkehren"
+        },
+        "description": "Entfernt den Bildhintergrund mit dem BiRefNet-Modell und gibt in einem Knoten das freigestellte Bild (RGBA), die Vordergrundmaske und die umgekehrte Maske zurück.\n\nDas Modell wird aus ComfyUI/models/background_removal/ geladen. Der Dateiname steuert die Vorverarbeitungsauflösung: Enthält der Name 'matt' oder 'hr' (Groß-/Kleinschreibung egal), wird mit 2048 Auflösung vorverarbeitet, alle anderen mit 1024. Empfohlene Dateinamen: birefnet.safetensors (Standard), birefnet-hr.safetensors (hohe Auflösung), birefnet-matting.safetensors (hochauflösendes Matting für Haare/Fell).\n\nDownload-Adressen:\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/background_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
+    },
+    "PixaromaResizeCrop": {
+        "title": "Pixaroma Größe ändern und zuschneiden",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Schneidet das Bild auf die angegebene exakte Breite und Höhe zu. Das Bild wird skaliert, um die Zielgröße vollständig zu füllen, dann wird der Überstand von der Mitte aus weggeschnitten, sodass das Ergebnis immer genau die eingestellte Breite/Höhe hat, ohne Dehnung oder Letterbox-Effekt. Kleinere Bilder werden zum Füllen vergrößert. Du kannst die Größe in die Felder Breite und Höhe eingeben oder von anderen Knoten verbinden (z. B. Pixaroma Auflösung-Knoten oder Zahlenknoten). Eine optionale Maske wird auf dieselbe Weise zugeschnitten. Gibt Bild, Maske, Breite und Höhe aus – geeignet, um Bilder oder Videoframes auf eine feste Größe wie 512×896 oder 704×1280 zu zwingen."
+    },
+    "PixaromaResolution": {
+        "title": "Pixaroma Auflösung",
+        "outputs": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Pixaroma Auflösung – Ein-Klick-Auflösungswähler. Die Knoten-UI zeigt ein 3×3-Raster aus Seitenverhältnis-Chips (1:1, 16:9, 9:16, 2:1, 3:2, 2:3, 4:3, 3:4, 4:5), jedes Verhältnis enthält die 8 gängigsten Größen. Deckt SDXL-, AI-Video- und Social-Media-angepasste Größen ab. Chip anklicken, Größe wählen, fertig.\n\nDer Modus für benutzerdefinierte Verhältnisse erlaubt die Eingabe beliebiger Seitenverhältnisse (21:9, 16:10 usw.) und berechnet automatisch AI-freundliche Größen. Der Modus für benutzerdefinierte Auflösung erlaubt die Eingabe exakter Größen; die Felder Breite/Höhe unterstützen mathematische Ausdrücke wie '1024+128' oder '512*2'. Die Ausrichtungs-Chips (16/32/64/keine Ausrichtung) runden die Ausgabe auf ein vom VAE-Encoder bevorzugtes Vielfaches.\n\nGibt Breite und Höhe als Ganzzahlen aus. Der Zustand wird mit dem Workflow gespeichert und wiederhergestellt.\n\nDie gesamte UI liegt auf der JS-Seite; die einzige Python-Eingabe ist eine versteckte serialisierte Zustandszeichenfolge, die bei der Ausführung injiziert wird."
+    },
+    "PixaromaRunLog": {
+        "title": "Pixaroma Ausführungsprotokoll",
+        "description": "Pixaroma Ausführungsprotokoll – Das Gegenstück zum Ausführungstimer; zeigt am Knoten die letzten 10 Ausführungszeiten des aktuellen Workflows. Bei jedem Klick auf Ausführen misst es den gesamten Workflow und fügt die Fertigstellungszeit oben an der Liste hinzu (das Neueste zuerst), sodass du sehen kannst, ob der Workflow schneller wird oder plötzlich langsamer.\n\nDer letzte Durchlauf wird hervorgehoben, der schnellste markiert. Ein Doppelklick auf eine Zeile fügt eine kurze Notiz zu diesem Durchlauf hinzu, z. B. verwendetes Stil-LoRA oder 随机随机种子 12345, damit du die Zeiten unterscheiden kannst; die Notiz wird mit dem jeweiligen Durchlauf gespeichert, und neue Durchläufe schieben sie nach unten in der Liste. Die Liste gilt nur für den aktuellen Workflow. Ein Rechtsklick auf den Knoten kopiert die Zeit oder leert die Liste.\n\nEr muss mit keinem Knoten verbunden werden. Die Liste wird mit dem Workflow gespeichert und bleibt daher nach einem Tab-Wechsel, einem Neuladen der Seite oder einem Neustart von ComfyUI erhalten. Es werden nur abgeschlossene Durchläufe protokolliert; gestoppte oder fehlgeschlagene Durchläufe werden übersprungen."
+    },
+    "PixaromaRunTimer": {
+        "title": "Pixaroma Ausführungstimer",
+        "description": "Pixaroma Ausführungstimer – Eine Uhr, die die Dauer des Workflows misst. Beim Klick auf Ausführen wird sie auf null zurückgesetzt, läuft während der Workflow-Ausführung, friert beim Abschluss die Gesamtzeit ein und spielt dann einen Signalton ab, sodass du auch in einem anderen Tab mitbekommst, dass es fertig ist.\n\nDer Knoten zeigt nur die Uhr. Ein Rechtsklick auf den Knoten öffnet die Einstellungen: Signalton ein- oder ausschalten, Klang und Lautstärke wählen (mit Vorschau-Schaltfläche), die Anzahl der angezeigten Dezimalstellen festlegen und die Uhrfarbe einstellen.\n\nDie Signalton-Bibliothek ist dieselbe wie bei Pixaroma Benachrichtigung – lege .mp3-, .wav- oder .ogg-Dateien mit einfachen Namen (Buchstaben, Zahlen, Bindestriche) in assets/sounds/, um weitere Signaltöne hinzuzufügen (wirksam nach einem Neustart von ComfyUI). Die globale Stummschaltung für alle Ausführungstimer-Signaltöne befindet sich oben in den Knoteneinstellungen, die du über die Zahnrad-Schaltfläche in der Knoten-Werkzeugleiste oder per Rechtsklick auf den Knoten öffnest."
+    },
+    "PixaromaSaveImage": {
+        "title": "Pixaroma Bild speichern",
+        "inputs": {
+            "images": "Bild",
+            "name": "Bezeichnung"
+        },
+        "description": "Pixaroma Bild speichern – Speichert Bilder in einem beliebigen Ordner auf deinem Computer, nicht nur im Ausgabeordner von ComfyUI. Du kannst einen Pfad eingeben oder einfügen oder auf Durchsuchen klicken, um den Ordner über einen normalen Windows-Dialog auszuwählen; leer lassen verwendet den Ausgabeordner. Das Feld Dateiname unterstützt Marker und zeigt live eine Vorschau der Datei, die gleich gespeichert wird. Marker sind: %input% (der Name-Eingang der Verbindung, z. B. der Dateiname von Pixaroma Bild laden), %date:yyyy-MM-dd% (und jedes beliebige Datums-/Zeitformat), %counter% (automatisch hochzählend, überschreibt nie), %width%, %height%, %batch_num% sowie Knotenreferenzen wie %Seed Pixaroma.seed%. Ein / im Namen erstellt Unterordner. Format ist PNG (verlustfrei, bettet den Workflow ein, sodass die Datei zurück nach ComfyUI gezogen werden kann) oder JPG (kleiner, Qualitätseinstellung im Rechtsklickmenü; ComfyUI kann den Workflow nicht aus JPG neu laden). Ein Rechtsklick auf den Knoten erlaubt Einstellungen für Datumsstil, Ziffernstellen des Zählers, JPG-Qualität, Workflow-Einbettung und Civitai-Generierungsinformationen. Beim Speichern eines Stapels wird der Zähler mit jedem Frame hochgezählt.\n\nCivitai-Generierungsinformationen hinzufügen (Rechtsklick) schreibt die Einstellungen zusätzlich in einem für Civitai lesbaren Format, sodass auf dieser Plattform hochgeladene Bilder Checkpoint, LoRAs und ihre Gewichte, Schritte, 随机随机种子, Sampler und Größe anzeigen. Die Werte werden automatisch aus dem Workflow gelesen, ohne dass sie mit diesem Knoten verbunden werden müssen. Das erste Speichern nach dem Hinzufügen eines neuen Modells pausiert kurz, um dessen Fingerabdruck zu erfassen; danach wird das Modell gemerkt.\n\nDie gespeicherten Bilder werden als große Vorschau auf dem Knoten angezeigt: Ein einzelnes Bild füllt den Bereich, ein Stapel wird als Raster angezeigt. Ein Klick auf ein Bild im Raster vergrößert es, Pfeile beim Klicken oder Hover blättern weiter, die X-Taste kehrt zum Raster zurück. Kopieren legt das angezeigte Bild in die Zwischenablage, Öffnen zeigt es in einem neuen Browser-Tab. Die Knotengröße ändern vergrößert die Vorschau. Der Modus-Umschalter wechselt zwischen “Speichern” (schreibt bei jedem Durchlauf eine Datei) und “Vorschau” (Bild wird auf dem Knoten angezeigt, nicht in einen Ordner geschrieben), sodass er auch als Vorschau-Knoten dienen kann. Ordner öffnen zeigt den Speicherort im Datei-Explorer; das Fenster kann in der Taskleiste erscheinen."
+    },
+    "PixaromaSaveMp4": {
+        "title": "Pixaroma MP4 speichern",
+        "inputs": {
+            "video_frames": "Videoframes",
+            "audio": "Audio (Ton)"
+        },
+        "widgets": {
+            "fps": "Bildrate",
+            "filename_prefix": "Dateiname-Präfix",
+            "save_mode": "Speichermodus",
+            "trim_to_audio": "Auf Audio zuschneiden"
+        },
+        "description": "Pixaroma MP4 speichern – Kodiert einen Bildstapel (und optional Audio) in eine einzelne MP4-Datei im H.264-Format; der Knotenkörper enthält eine <视频>-Vorschau, sodass du das Ergebnis ansehen kannst, ohne ComfyUI zu verlassen.\n\nFrames werden direkt an die Standardeingabe von ffmpeg gestreamt (keine temporären PNG-Dateien); Audio wird als AAC 192k gemultiplext. Funktioniert mit dem Pixaroma Audio-Reaktiv-Knoten, aber auch mit jeder Quelle, die Frames + Audio erzeugt.\n\nDer Workflow wird in die gespeicherte MP4 eingebettet (als Kommentar-Metadaten), sodass du das Video zurück in ComfyUI ziehen kannst, um den Graphen wiederherzustellen – zum Lesen muss ein Video-Paket wie VideoHelperSuite installiert sein.\n\nDie ffmpeg-Binärdatei wird automatisch gefunden: bevorzugt die mit imageio-ffmpeg gebündelte exe (keine Systeminstallation nötig – führe 'pip install imageio-ffmpeg' aus), danach ffmpeg aus PATH. yuv420p erfordert gerade Breite/Höhe; bei ungeraden Abmessungen zeigt der Knoten eine klare Fehlermeldung statt eines kryptischen ffmpeg-Absturzes.\n\nDer Encoder ist fest auf libx264 / Preset medium / CRF 19 eingestellt. Falls dein Workflow eine Steuerung pro Segment braucht, kannst du diese Parameter in INPUT_TYPES verschieben."
+    },
+    "PixaromaSeed": {
+        "title": "Pixaroma Zufalls-Seed",
+        "outputs": {
+            "seed": "Zufalls-Seed"
+        },
+        "description": "Pixaroma Zufalls-Seed – Eine Zufalls-Seed-Quelle, die an KSampler (oder jeden Knoten mit einem Zufalls-Seed-Eingang) angeschlossen werden kann. Ein Zufalls-Seed-Knoten kann mehrere Sampler gleichzeitig speisen, sodass sie denselben Zufalls-Seed teilen.\n\nZwei Modi: Der Zufallsmodus erzeugt bei jedem Durchlauf einen neuen Zufalls-Seed; der Fixiermodus behält denselben Zufalls-Seed für reproduzierbare Ergebnisse. Schaltflächen: Neu fixieren erzeugt einen neuen Zufalls-Seed und fixiert ihn; Letzten Seed verwenden stellt den Zufalls-Seed des vorherigen Durchlaufs wieder her; Kopieren kopiert den aktuellen Zufalls-Seed in die Zwischenablage. Im Zufallsmodus zeigt die Zeile “Letzter Durchlauf” den Zufalls-Seed, der tatsächlich das letzte Bild erzeugt hat.\n\nGibt den Zufalls-Seed als Ganzzahl aus. Der Zustand wird mit dem Workflow gespeichert und wiederhergestellt.\n\nUm den Zufalls-Seed in den gespeicherten Dateinamen zu schreiben, gib im Dateinamen-Feld der Knoten Pixaroma Bild speichern, Pixaroma MP4 speichern oder Pixaroma Bildvorschau %Seed Pixaroma.seed% ein (verwende den Namen dieses Knotens, nicht den des Samplers; das Umbenennen des Knotens ändert den Marker)."
+    },
+    "PixaromaSetNode": {
+        "title": "Pixaroma Knoten setzen",
+        "inputs": {
+            "value": "Wert"
+        },
+        "widgets": {
+            "name": "Bezeichnung"
+        },
+        "outputs": {
+            "*": "Beliebig"
+        },
+        "description": "Speichert eine beliebige Verbindung unter einem Namen, die später an jeder Stelle über einen Pixaroma Knoten abrufen gelesen werden kann. Das ist eine drahtlose Leitung und hält die Leinwand aufgeräumt. Sie hat auch einen Durchreich-Ausgang, sodass nahe Knoten direkt angeschlossen werden können, während entfernte Knoten über den Abruf-Knoten lesen. Sie existiert nur im Editor: zur Laufzeit fließt der Wert direkt aus der Originalquelle, daher ändert sich weder das Ergebnis noch die Geschwindigkeit. Schließe Beliebiges an, gib einen Namen ein und lass den Knoten eingeklappt, damit es ordentlich bleibt."
+    },
+    "PixaromaGetNode": {
+        "title": "Pixaroma Knoten abrufen",
+        "outputs": {
+            "*": "Beliebige Übereinstimmung"
+        },
+        "description": "Liest ohne Verkabelung den Wert, den ein Pixaroma Knoten setzen unter einem Namen gespeichert hat. Wähle den Namen im Dropdown-Menü; die Ausgabe führt den Wert dieses Set-Knotens mit passendem Typ. Wie der Pixaroma Knoten setzen existiert er nur im Editor und wird zur Laufzeit direkt auf die Originalquelle aufgelöst, daher kein zusätzlicher Aufwand. Du kannst beliebig viele Abruf-Knoten für denselben Namen hinzufügen, um einen Wert zu verteilen."
+    },
+    "PixaromaShowText": {
+        "title": "Pixaroma Text anzeigen",
+        "inputs": {
+            "source": "Quelle"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Text-anzeigen-Knoten – Prüfe den Inhalt, der durch den Knoten fließt, in einem schreibgeschützten Textfeld, in dem du auswählen und kopieren kannst. Verbinde Beliebiges mit dem source-Eingang – Zeichenfolgen, Ganzzahlen, Gleitkommazahlen, Latent, IMAGE-Tensoren, sogar unbekannte Typen – der Knoten gibt ein kompaktes, gut lesbares Format aus:\n\n- Tensor: Form, Datentyp, Minimalwert, Maximalwert\n- Latent: Sample-Form\n- Alles andere: str(Wert)\n\nDie Knotengröße ist frei anpassbar; langer Text scrollt mit einem Scrollbalken, statt den Knoten zu vergrößern. Dieselbe Zeichenfolge wird auch an den 'Text'-Zeichenfolgenausgang weitergegeben, sodass du sie mit anderen Knoten verketten kannst (nützlich, um Prompts zu prüfen, bevor sie weitergegeben werden)."
+    },
+    "PixaromaSizes": {
+        "title": "Pixaroma Größen",
+        "outputs": {
+            "width": "Gewählte Breite (Pixel)",
+            "height": "Gewählte Höhe (Pixel)"
+        },
+        "description": "Pixaroma Größen – Deine eigene Liste häufig verwendeter Auflösungen. Füge die genauen Breite×Höhe-Größen hinzu, die du benutzt, wähle eine aus der Liste, und sie werden als Ganzzahlen für Breite und Höhe ausgegeben.\n\nDie Hochformat-/Querformat-Schaltflächen drehen die gewählte Größe, sodass du eine Größe wie 1024×1536 nur einmal hinzufügen musst und sie in beiden Ausrichtungen wiederverwenden kannst (quadratische Größen bleiben unverändert). Neue Knoten starten standardmäßig mit 1024×1024; öffne die Einstellungen (Zahnrad-Symbol), um Größen hinzuzufügen, zu löschen und neu zu ordnen, einen Satz gängiger Größen zu laden oder Breite und Höhe auf Vielfache von 8, 16, 32 oder 64 auszurichten, damit sie VAE-freundlich sind.\n\nDer Zustand wird mit dem Workflow gespeichert und wiederhergestellt."
+    },
+    "PixaromaSliders": {
+        "title": "Pixaroma Schieberegler",
+        "description": "Pixaroma Schieberegler – Ein Bedienpanel, das die Regler, Schalter und Einstellungen, die dir wichtig sind, in einem Knoten sammelt und jeden direkt an seine Zielstelle anschließt. Füge ein Bedienelement hinzu, gib ihm einen Namen und verbinde seinen Ausgang mit einem beliebigen Eingang. Jedes Bedienelement wird passend zu dem, was du anschließt, zum entsprechenden Typ: ein Schieberegler für Zahlen (Schritte, CFG, Denoise, LoRA-Stärke), ein Schalter für Boolean-Einstellungen, ein Dropdown für Auswahlfelder (Sampler, Scheduler, Checkpoint), das du auf die wirklich verwendeten Optionen kürzen kannst, ein Zufalls-Seed mit Randomisierung oder ein Textfeld für Prompts. Beim Neuverbinden passt sich das Bedienelement automatisch an. Ein Rechtsklick auf den Knoten öffnet die Einstellungen. Du findest ihn über die Suche nach Bedienpanel, Schieberegler, Schalter, Umschalter, Dropdown, Combobox, Zufalls-Seed oder Text."
+    },
+    "PixaromaSwitch": {
+        "title": "Pixaroma Umschalter",
+        "outputs": {
+            "output": "Unverändert durchreichen"
+        },
+        "description": "Pixaroma Umschalter – Ein Durchleitungs-Umschalter, mit dem du einen von mehreren verbundenen Eingängen auswählen kannst, damit er zum Ausgang durchfließt. Verbinde beliebig viele Upstream-Knoten (bis zu 32) mit den Zeilen und klicke dann auf die Umschaltfläche einer Zeile, um sie zu aktivieren. Die Leitung der aktiven Zeile fließt unverändert heraus – geeignet für jeden Leitungstyp (MODEL, CLIP, IMAGE, STRING, AUDIO usw.).\n\nDer Knoten wächst automatisch, wenn Leitungen verbunden werden: Unten wartet immer eine leere letzte Zeile auf die nächste Verbindung. Das Trennen einer Leitung entfernt die zugehörige Zeile. Jede Zeile hat ein anklickbares Label, das du umbenennen kannst, um dir zu merken, welchem Inhalt jeder Eingang entspricht."
+    },
+    "PixaromaSwitchSource": {
+        "title": "Pixaroma Quelle umschalten",
+        "description": "Pixaroma Quelle umschalten – Mit einer einzigen Umschaltfläche wird eine ganze Gruppe von Leitungen zwischen zwei Quellen (A und B) umgeschaltet. Jede Zeile hat einen A-Eingang und einen B-Eingang und leitet einen von beiden an den Ausgang der Zeile weiter; die A/B-Umschaltfläche wählt die Seite für alle Zeilen auf einmal. Verbinde deine “Lokal”-Knoten mit den A-Eingängen und deine “API”-Knoten mit den B-Eingängen (oder zwei beliebige Setups) und wechsle dann mit einem einzigen Klick zwischen ihnen, ohne mehrere einzelne Umschalter betätigen zu müssen.\n\nLege im Feld Zeilenanzahl fest, wie viele Zeilen du brauchst. Funktioniert mit jedem Leitungstyp (MODEL, CLIP, VAE, IMAGE, Latent, STRING usw.). Die aktive Seite ist die einzige, die ausgeführt wird – die Upstream-Knoten der anderen Seite werden übersprungen. Die Schaltflächen unterhalb des A/B-Umschalters bestimmen, was passiert, wenn eine Zeile auf der aktiven Seite keine Leitung hat: “Leer zulassen” lässt diesen Ausgang still leer (praktisch bei asymmetrischen Leitungen, z. B. wenn Seite B 3 Verbindungen hat und Seite A nur 1); “Fehler anzeigen” wirft einen klaren Fehler, wenn die andere Seite verbunden ist (fängt ab, wenn du eine Leitung versehentlich auf die falsche Seite gezogen hast)."
+    },
+    "PixaromaSwitchWH": {
+        "title": "Pixaroma Breite/Höhe umschalten",
+        "inputs": {
+            "width_a": "Breite a",
+            "height_a": "Höhe a",
+            "width_b": "Breite b",
+            "height_b": "Höhe b"
+        },
+        "outputs": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Pixaroma Breite/Höhe umschalten – Wählt mit einem einzigen Klick Breite/Höhe aus zwei Eingangsquellen. Verbinde zwei Breiten/Höhen-Paare (z. B. Breite/Höhe von Load Image Pixaroma und Breite/Höhe von Resolution Pixaroma) mit den Eingängen A und B und klicke dann am Knoten auf A oder B, um festzulegen, welches Paar zum Ausgang fließt. So wechselst du zwischen der Originalgröße des Quellbildes und einer manuell gewählten Auflösung, ohne neu verkabeln zu müssen.\n\nIst nur ein Paar verbunden, wird dieses unabhängig vom Zustand der Umschaltfläche verwendet – du kannst den ungenutzten Eingang also beim frühen Einrichten des Workflows getrennt lassen."
+    },
+    "PixaromaText": {
+        "title": "Pixaroma Text",
+        "widgets": {
+            "text": "Text (Zeichenkette)"
+        },
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Pixaroma Text – Ein mehrzeiliges Textfeld mit STRING-Ausgabe. Geeignet für Prompts und jeden anderen langen Text, der an einer Stelle geschrieben und an mehrere Downstream-Knoten weitergereicht werden soll (Positiv-Prompts, Negativ-Prompts, Untertitel, Beschreibungen usw.).\n\nDas Textfeld wächst mit dem Knoten: Bei langen Prompts kannst du die untere rechte Ecke ziehen, um Höhe oder Breite des Textfelds zu vergrößern.\n\nSchalter für dynamische Prompts (standardmäßig aus): Im ausgeschalteten Zustand wird der Text genau wie eingegeben gesendet und alle geschweiften Klammern bleiben erhalten, was für JSON-Prompts erforderlich ist. Eingeschaltet aktiviert er {a|b}-Wildcards (pro Warteschlangendurchlauf wird zufällig eine Option gewählt, frei verschachtelbar wie {a|{b|c}}), verwendet \\{ und \\} für wörtliche geschweifte Klammern und entfernt Kommentare (// bis zum Zeilenende und /* ... */-Blöcke)."
+    },
+    "_TextJoinBase": {
+        "title": "_Textverbindungs-Basisklasse",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Gemeinsame Logik der Two/Three/Four-Knoten. Unterklassen setzen N (Anzahl der Felder) sowie ihre eigenen DESCRIPTION/OUTPUT_TOOLTIPS. Eingänge und Ausgaben werden aus N aufgebaut, daher werden text_1 bis text_N als Schlüsselwortargumente an join()/IS_CHANGED() übergeben."
+    },
+    "PixaromaTextOverlay": {
+        "title": "Pixaroma Text-Overlay",
+        "inputs": {
+            "image": "Bild",
+            "text": "Text (Zeichenkette)"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Fügt ein einzelnes gestaltetes Text-Overlay oben auf das Eingabebild ein. Schriftart, Größe, Schriftstärke, Kursiv, Ausrichtung, Zeilenhöhe, Zeichenabstand, Deckkraft, Drehwinkel, Position, Textfarbe sowie ein optionaler Hintergrundbalken können direkt am Knoten angepasst werden. Klicke auf “Texteditor öffnen”, um eine Vollbild-Leinwand mit Verschieben durch Ziehen, Skalieren durch Ziehen der Eckpunkte, Drehen durch Ziehen der Griffe, Ausrichtungshilfslinien, Leinwand-Ausrichtungsschaltflächen, An Breite anpassen/An Höhe anpassen, Rückgängig/Wiederholen und Auf Datenträger speichern zu öffnen. Verbinde den optionalen “Text”-Eingang, um den Panel-Text mit einer beliebigen Upstream-Zeichenfolgenquelle zu überschreiben. Bei der ersten Ausführung eines neuen Knotens wird der Text automatisch auf die tatsächliche Bildgröße zentriert."
+    },
+    "PixaromaTextWatermark": {
+        "title": "Pixaroma Text-Wasserzeichen",
+        "inputs": {
+            "image": "Bild",
+            "text": "Text (Zeichenkette)"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Fügt einem einzelnen Bild oder einem ganzen Bildstapel ein gestaltetes Text-Wasserzeichen hinzu. Wähle einen 9-Punkt-Anker (Ecke, Kante oder Mitte) plus Innenabstand; unabhängig von der Bildgröße sitzt das Wasserzeichen auf jedem Bild an derselben Stelle. Die Größe kann ein fester Pixelwert oder ein Prozentsatz der Breite jedes Bildes sein, sodass Stapel mit gemischten Größen optisch konsistent bleiben. Schriftart, Strichstärke, Kursiv, Farbe, Deckkraft, Drehwinkel und ein optionaler Hintergrundbalken lassen sich auf dem Knoten anpassen. Verbinde den optionalen “Text”-Eingang, um den Wasserzeichen-Text aus einer Upstream-Zeichenfolgenquelle zu steuern. Kein Vollbild-Editor – dies ist ein Knoten zum Konfigurieren und Ausführen."
+    },
+    "PixaromaUncrop": {
+        "title": "Pixaroma Uncrop",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "crop_info": "Zuschneide-Informationen"
+        },
+        "widgets": {
+            "feather": "Kantenweichzeichnung"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "crop_info": "Zuschneide-Informationen"
+        },
+        "description": "Pixaroma Uncrop – Fügt den bearbeiteten zugeschnittenen Bereich wieder an seine Ursprungsposition im Originalbild ein; der klassische Workflow Zuschneiden, Inpainting oder Upscaling und Zurücklegen.\n\nVerbinde den Ausgang “Zuschneide-Informationen” von “Bild zuschneiden Pixaroma” mit “Zuschneide-Informationen” hier und verbinde den bearbeiteten zugeschnittenen Bereich (alles nach Upscaling, Inpainting, Farbbearbeitung usw.) mit “Bild”. Der Knoten passt den bearbeiteten Bereich bei Bedarf an die Größe des ursprünglichen Zuschnitts an und komponiert ihn in das vollständige Originalbild; alles außerhalb des Zuschnitts bleibt unverändert.\n\nTransparenz wird über den gesamten Frame durchgereicht: Der “Maske”-Ausgang ist die Originalmaske mit aktualisiertem Zuschnittsbereich. Das direkte Verbinden der Maske von Bild zuschneiden erhält daher die Transparenz des gesamten Bildes (oder verbinde die Maske des bearbeiteten Bereichs, um nur diesen Bereich zu ändern). “Kantenweichzeichnung” mildert die Nahtstellen für eine nahtlose Verschmelzung.\n\nGibt das neu zusammengesetzte vollständige Bild sowie die Maske über den gesamten Frame aus."
+    },
+    "PixaromaVersionCheck": {
+        "title": "Pixaroma Versionsprüfung",
+        "description": "Pixaroma Versionsprüfung – Ein kleines Leinwand-Panel, das die wichtigsten Versionen für einen Bug-Report anzeigt: ComfyUI-Version (Backend), ComfyUI-Frontend-Version, die aktuell aktive Knotenoberfläche (Nodes 2.0 / Legacy) und die installierte Pixaroma-Version. Die Kopieren-Schaltfläche kopiert alle vier Textzeilen, sodass du sie direkt in einen Bug-Report einfügen kannst.\n\nReine Diagnose – keine Eingänge zu verbinden, keine Ausgänge zu ketten, keine Python-Operationen zur Laufzeit. Beim Umschalten von Einstellungen aktualisieren sich die UI-Zeilen des Knotens in Echtzeit."
+    },
+    "PixaromaWH": {
+        "title": "Pixaroma Breite/Höhe",
+        "widgets": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "outputs": {
+            "width": "Breite",
+            "height": "Höhe"
+        },
+        "description": "Pixaroma Breite/Höhe – Ein kleiner Knoten mit nur zwei Zahlenfeldern für Breite und Höhe sowie den passenden Breiten-/Höhen-Ausgaben. Keine Eingänge. Gib die gewünschte Größe direkt am Knoten ein.\n\nVerwende ihn, wenn du eine Zielauflösung manuell eingeben und in einen Knoten wie „Pixaroma Breite/Höhe umschalten“ speisen willst, um zwischen manuellen Werten und den von anderen Knoten ausgegebenen Größen (z. B. den Breiten-/Höhen-Ausgaben von Bild laden) zu wechseln."
+    },
+    "PixaromaTextJoinTwo": {
+        "title": "Pixaroma Zwei Texte verbinden",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Führt zwei Texte zu einem zusammen. Gib in jedes Feld etwas ein oder verbinde den Text eines anderen Knotens über dessen Punkt-Symbol (beim Verbinden durch die Leitung festgelegt). Zwischen den Segmenten wird ein Trennzeichen eingefügt (Komma, Leerzeichen, Zeilenumbruch, kein Trennzeichen oder ein benutzerdefiniertes Trennzeichen)\n\nLeere Segmente werden übersprungen, sodass keine überzähligen Trennzeichen entstehen. Ein Rechtsklick auf den Knoten mit den Trennzeichen-Einstellungen erlaubt das Überspringen leerer Segmente."
+    },
+    "PixaromaTextJoinThree": {
+        "title": "Pixaroma Drei Texte verbinden",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Führt drei Textabschnitte zu einem zusammen. Tippe in jedes Feld etwas ein oder verbinde den Text eines anderen Knotens mit dessen Punkt (bei Verbindung gewinnt der Punkt). Zwischen den Abschnitten kann ein Trennzeichen stehen (Komma, Leerzeichen, neue Zeile, kein Trennzeichen oder ein benutzerdefiniertes Trennzeichen); leere Abschnitte werden übersprungen, sodass keine überzähligen Trennzeichen entstehen.\n\n Ein Rechtsklick auf den Knoten mit den Trennzeichen-Einstellungen legt fest, ob leere Abschnitte übersprungen werden."
+    },
+    "PixaromaTextJoinFour": {
+        "title": "Pixaroma Vier Texte verbinden",
+        "outputs": {
+            "text": "Text (Zeichenkette)"
+        },
+        "description": "Führt vier Textabschnitte zu einem zusammen. Tippe in jede Spalte, oder verbinde den Text eines anderen Knotens mit dessen Punkt (bei Verbindung gewinnt der Punkt). Zwischen den Abschnitten wird ein Trennzeichen eingefügt (Komma, Leerzeichen, neue Zeile, kein Trennzeichen oder benutzerdefiniertes Trennzeichen), und leere Abschnitte werden übersprungen, sodass keine überflüssigen Trennzeichen entstehen.\n\n Rechtsklick auf den Knoten mit den Trennzeichen-Einstellungen ermöglicht das Überspringen leerer Abschnitte."
+    },
+    "PixaromaXYPlot": {
+        "title": "Pixaroma XY-Diagramm",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "filename_prefix": "Dateiname-Präfix"
+        },
+        "outputs": {
+            "grid": "Netz"
+        },
+        "description": "Pixaroma XY-Diagramm – Einstellungen auf einen Blick vergleichen. Platziere diesen Knoten am Ende des Workflows und verbinde das finale Bild damit, genau wie bei einem Vorschau-Knoten. Wähle im Knotenkörper über die Dropdown-Menüs der bereits im Graphen vorhandenen Knoten aus, was entlang der X-Achse (horizontal) und der Y-Achse (vertikal) variiert werden soll – keine zusätzlichen Verbindungen nötig. Die Wertfelder passen sich der Auswahl an: Zahlen ergeben einen Bereich “Start/Ende/Schritte”, Dropdown-Menüs (Sampler, Modell) ergeben eine Auswahlliste mit Häkchen, Prompts ergeben Suchen und Ersetzen. Klicke einmal auf Ausführen: Der Workflow läuft für jede Kombination, und die Ergebnisse füllen das beschriftete Raster im Knoten, mit den Schaltflächen “Auf Datenträger speichern”/“In Ausgabe speichern”/“Kopieren”/“Öffnen”. Der Zufalls-Seed bleibt zwischen den Zellen fixiert (es sei denn, du plottest den Zufalls-Seed selbst), sodass der einzige Unterschied, den du siehst, genau das ist, was du testest."
+    }
+}

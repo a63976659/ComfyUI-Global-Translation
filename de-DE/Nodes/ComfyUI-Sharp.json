@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "Bildattribute zu PLY konvertieren",
+        "inputs": {
+            "gaussian_attrs": "Gauß-Attribute",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "output_prefix": "Ausgabeprefix",
+            "focal_length_px": "Brennweite (Pixel)"
+        },
+        "outputs": {
+            "ply_path": "PLY-Dateipfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Erzeugt aus einem 14-Kanal-MULTIBAND_IMAGE pro Pixel (z. B. der Ausgabe der Gauss-Attribute der ersten Ebene von SharpPredictGaussianAttrs) plus den passenden Kamera-Extrinsisch-/Intrinsisch-Werten eine 3D-Gauss-Punktwolke als PLY-Datei. Das Multiband speichert NDC-Positionen; dieser Knoten wandelt sie über Sharps unproject_gaussians vor dem Speichern in Weltkoordinaten um."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp-Panorama-Würfelaufteilung",
+        "widgets": {
+            "panorama": "Panoramabild",
+            "image_w": "Bildbreite",
+            "image_h": "Bildhöhe",
+            "fov_x_deg": "X-Sichtfeldwinkel",
+            "fov_y_deg": "Y-Sichtfeldwinkel",
+            "rot_deg": "Drehwinkel",
+            "pitch_up": "Neigungswinkel aufwärts",
+            "pitch_down": "Neigungswinkel abwärts"
+        },
+        "outputs": {
+            "face_images": "Flächenbilder",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "fov_x_deg": "Sichtfeldwinkel der X-Achse",
+            "num_faces": "Flächenanzahl"
+        },
+        "description": "Erzeugt N Perspektiv-Crops aus einem kugelförmigen Panorama im Seitenverhältnis 2:1 über ein festes Netz aus Neige- und Schwenkwinkeln (standardmäßig 3 Neigungen x 3 Schwenks = 27 Ansichten). Die Geometrie passt zu WorldStereoPanoramaCubeSplit – als Eingabestufe des Tiefenmodells pro Seite können die Ausgaben über SharpDepthMerge wieder aneinandergefügt werden.\n\nAnders als Sharps SamplePanorama (dieses leitet das Netz aus FOV + Überlappung ab und gibt Quadrate aus) verwendet dieser Knoten ein festes Neigungsnetz und ein rechteckiges Seitenverhältnis (standardmäßig 832x480) und folgt der Kamera-/intrinsischen Konvention von WorldStereos pano_bank."
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp-Vordergrundvorhersage",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "focal_length_mm": "Brennweite (mm)",
+            "output_prefix": "Ausgabeprefix"
+        },
+        "outputs": {
+            "ply_path": "PLY-Dateipfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Erzeugt mit Sharp aus dem Bild eine 3D-Gauss-Punktwolke als PLY-Datei, behält nur die Gauss-Punkte der sichtbaren Oberfläche und verwirft verdeckte Bereiche. Halb so viele Gauss-Punkte pro Bild wie bei SharpPredict. Eine Batch-Eingabe erzeugt einen nummerierten Ordner mit PLY-Dateien."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "Gauss-Punktwolke aus metrischer Tiefe vorhersagen",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "metric_depth_layer0": "Metrische Tiefe Ebene 0",
+            "metric_depth_layer1": "Metrische Tiefe Ebene 1",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "focal_length_mm": "Brennweite (mm)",
+            "output_prefix": "Ausgabeprefix",
+            "save_background_layer": "Hintergrundebene speichern",
+            "snap_to_external_depth": "An externe Tiefe anpassen",
+            "depth_convention": "Tiefenkonvention",
+            "edge_crop": "Kantenzuschnitt"
+        },
+        "outputs": {
+            "ply_path": "PLY-Dateipfad",
+            "ply_folder": "PLY-Ordnerpfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Führt Sharps Gauss-Dekoder mit der extern bereitgestellten metrischen Tiefe als Ausrichtungsziel aus. Die externe Tiefe wird zu einem konsistenten geometrischen Gerüst für die `init_Modell`-Gauss-Basiswerte, sodass die Gauss-Punktwolken über mehrere Ansichten hinweg konsistente Oberflächen teilen – das behebt die Nahtprobleme pro Seite.\n\nSpeichert PLY-Dateien (einzelnes Bild -> eine .ply; Batch -> Ordner mit N NNN.ply). Über die MergeGaussians-Pipeline zu einer einzigen PLY-Datei kombiniert."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp-Vorhersage der Gauss-Attribute",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "focal_length_mm": "Brennweite (mm)"
+        },
+        "outputs": {
+            "metric_depth": "Metrische Tiefe",
+            "extrinsics_mdepth": "Extrinsische Parameter_metrische Tiefe",
+            "intrinsics_mdepth": "Intrinsische Parameter_metrische Tiefe",
+            "first_layer_depth_refined": "Verfeinerte Tiefe der ersten Ebene",
+            "first_layer_gaussian_attrs": "Gauß-Attribute der ersten Ebene",
+            "second_layer_depth_refined": "Verfeinerte Tiefe der zweiten Ebene",
+            "second_layer_gaussian_attrs": "Gauß-Attribute der zweiten Ebene",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Führe Sharp-Inferenz aus und exposeiere die Gaussian-Decoder-Ausgabe jedes Pixels als strukturierte geschichtete Tensoren (Tiefe + alle Gaussian-Attribute als MULTIBAND_IMAGE), statt sie in eine PLY-Datei zu flatten.\n\nNutze die Tiefenausgabe, um AlignDepthMaps anzusteuern und den Maßstab pro Fläche wiederherzustellen, und multipliziere den Maßstab dann in den Multiband-Positions-Channel, bevor die PLY-Datei rekonstruiert wird."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp-Vorhersage metrischer Tiefe",
+        "widgets": {
+            "model": "Modell",
+            "image": "Bild",
+            "focal_length_mm": "Brennweite (mm)",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "Ebene 0 metrische Tiefe",
+            "layer_1_metric_depth": "Ebene 1 metrische Tiefe",
+            "extrinsics_mdepth": "Extrinsische Parameter_metrische Tiefe",
+            "intrinsics_mdepth": "Intrinsische Parameter_metrische Tiefe",
+            "layer_0_points_raw": "Ebene 0 Rohpunktewolke",
+            "layer_1_points_raw": "Ebene 1 Rohpunktewolke"
+        },
+        "description": "Führt nur Sharps Encoder + Verschiebungs-Head aus (überspringt den Gauss-Dekoder). Gibt die metrische Tiefe pro Pixel samt der zugehörigen extrinsischen/intrinsischen Parameter aus. Wenn Sie nur die Tiefe benötigen, ist dies etwa doppelt so schnell wie SharpPredictGaussianAttrs. Mit SharpDepthMerge verbinden für ein sauberes kugelförmiges Tiefen-Merging."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "Verfeinerte Tiefe aus Gauß-Verteilung holen",
+        "inputs": {
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "ply_path": "PLY-Pfad",
+            "out_size": "Ausgabegröße"
+        },
+        "outputs": {
+            "depth_maps": "Tiefenkarte",
+            "valid_mask": "Gültige Maske",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Die von Sharp vorhergesagten PLY-Gaußpunkte werden zurück in den Kameraraum jeder Fläche projiziert, um die verfeinerte pixelgenaue Tiefe wiederherzustellen (tatsächlich die vom Decoder erzeugten Z-Werte, nicht der vorab verfeinerte Parallax-Head). Minimale Tiefe pro Pixel = Ebene 0 (sichtbare Oberfläche).\n\nGib die Tiefenkarten an AlignDepthMaps weiter, um sie logarithmisch auszurichten, und wende den resultierenden Flächenskalierungsfaktor auf die Gaußpunkte an, bevor sie zusammengeführt werden."
+    },
+    "ScaleImageValues": {
+        "title": "Bildwerte anpassen",
+        "widgets": {
+            "image": "Bild"
+        },
+        "description": "Alle Werte eines Bildes linear auf das Intervall [0, 1] neu abbilden. Nützlich bei der Vorschau von Tiefenkarten (Tiefenkarten können Einheiten wie Meter enthalten, während ComfyUIs PreviewImage Werte im Bereich [0, 1] erwartet). Jedes Stapel-Element wird unabhängig anhand seines eigenen Minimums/Maximums über (H, W, C) skaliert. Bilder mit konstantem Wert werden zu lauter Nullen (statt zu NaN durch Division durch Null)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "Strahl-zu-ebener-Tiefe-Konverter",
+        "inputs": {
+            "image": "Bild",
+            "intrinsics": "Intrinsische Parameter",
+            "extrinsics": "Extrinsische Parameter"
+        },
+        "outputs": {
+            "image": "Bild",
+            "intrinsics": "Intrinsische Parameter",
+            "extrinsics": "Extrinsische Parameter"
+        },
+        "description": "Konverter für die Flächen-Tiefen-Konvention. Erzeugt die ebene Z-Tiefe, die Sharp-Gaussian-Decoder und Rückprojektion erwarten, indem er die Strahlentfernungs-Tiefe mit einer flächenweisen Kosinus-Karte (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)) multipliziert. Zwischen die Panorama-Split-Tiefenquelle (PanoramaSplit auf einem Iso-Tiefen-Panorama) und die Sharp-Vorhersageknoten einfügen. Falls Intrinsics normalisiert übergeben werden, wird auf Pixel-K-Einheiten umskaliert, damit alle nachgelagerten Knoten konsistente Einheiten sehen."
+    },
+    "AlignDepthMaps": {
+        "title": "Tiefenkarten ausrichten",
+        "inputs": {
+            "depth_maps": "Tiefenkarte",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "reference_view": "Referenzansicht",
+            "method": "Methode"
+        },
+        "outputs": {
+            "aligned_depth_maps": "Ausgerichtete Tiefenkarten",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "alignment_info": "Ausrichtungsinformationen"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "Bild mit EXIF-Informationen laden",
+        "widgets": {
+            "image": "Bild",
+            "default_focal_mm": "Standardbrennweite (mm)"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "focal_length_mm": "Brennweite（mm）"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "Sharp-Modell laden",
+        "widgets": {
+            "precision": "Genauigkeit",
+            "checkpoint_path": "Checkpoint-Pfad"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "Gauß-Verteilungen zusammenführen",
+        "widgets": {
+            "ply_folder": "PLY-Ordner",
+            "output_prefix": "Ausgabeprefix",
+            "max_depth": "maximale Tiefe",
+            "min_opacity": "Minimale Transparenz"
+        },
+        "outputs": {
+            "ply_path": "PLY-Pfad",
+            "num_gaussians": "Anzahl der Gauß-Verteilungen"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp-Vorhersage",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "focal_length_mm": "Brennweite（mm）",
+            "output_prefix": "Ausgabeprefix"
+        },
+        "outputs": {
+            "ply_path": "PLY-Pfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp-Tiefenvorhersage",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "reference_depth": "Referenztiefe"
+        },
+        "outputs": {
+            "depth_maps": "Tiefenkarte",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "alignment_maps": "Ausrichtungskarten"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "Tiefe auf Panorama projizieren",
+        "inputs": {
+            "depth_maps": "Tiefenkarte",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "panorama_width": "Panoramabreite",
+            "show_borders": "Ränder anzeigen",
+            "disagreement_scale": "Abweichungs-Skalierung",
+            "blend_mode": "Mischmodus",
+            "border_color": "Rahmenfarbe"
+        },
+        "outputs": {
+            "panoramic_depth": "Panoramatiefe",
+            "debug_overlay": "Debug-Overlay",
+            "disagreement_heatmap": "Abweichungs-Heatmap"
+        },
+        "description": "Kategorie: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "Panorama abtasten",
+        "inputs": {
+            "panorama": "Panoramabild"
+        },
+        "widgets": {
+            "fov_degrees": "Sichtfeld (Grad)",
+            "overlap_percent": "Überlappungsprozent",
+            "output_size": "Ausgabegröße",
+            "skip_poles": "Pole überspringen"
+        },
+        "outputs": {
+            "images": "Bild",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter",
+            "num_horizontal": "Anzahl horizontal",
+            "num_vertical": "Anzahl vertikal"
+        },
+        "description": "Kategorie: Sharp"
+    }
+}

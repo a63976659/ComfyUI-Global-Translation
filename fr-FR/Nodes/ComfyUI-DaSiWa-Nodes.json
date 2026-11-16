@@ -1,0 +1,592 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_Fusion vidéo améliorée",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "frame_rate": "Fréquence d'images",
+            "codec": "Format d'encodage",
+            "container": "Format de conteneur",
+            "bit_depth": "Profondeur de bits",
+            "quality": "Qualité",
+            "log_level": "Niveau de journal",
+            "pingpong": "Mode ping-pong",
+            "save_metadata": "Enregistrer les métadonnées",
+            "filename_prefix": "Préfixe du nom de fichier",
+            "save_output": "Enregistrer la sortie",
+            "pass_frames": "Transmettre les trames",
+            "crop_to_audio": "Recadrer sur l'audio",
+            "audio_codec": "Encodage audio",
+            "audio_bitrate": "Débit audio",
+            "save_first_frame": "Enregistrer la première image",
+            "save_last_frame": "Enregistrer la dernière image"
+        },
+        "outputs": {
+            "frames": "Trame",
+            "filename": "Nom de fichier"
+        },
+        "description": "Fusionne un lot d'images en vidéo de haute qualité avec sélection automatique NVENC/GPU, lecture ping-pong facultative, métadonnées du flux de travail ComfyUI et solution de repli MP4."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_Préparation du recadrage de retouche",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "target_width": "Largeur cible",
+            "target_height": "Hauteur cible",
+            "mask_blur": "Flou du masque",
+            "mask_min": "Valeur minimale du masque",
+            "mask_max": "Valeur maximale du masque",
+            "grow_px": "Extension en pixels",
+            "can_shrink": "Réduction possible"
+        },
+        "outputs": {
+            "cropped_image": "Image recadrée",
+            "cropped_mask": "Masque après recadrage",
+            "bbox_x": "Coordonnée X de la boîte englobante",
+            "bbox_y": "Coordonnée Y de la boîte englobante",
+            "bbox_w": "Largeur de la boîte englobante",
+            "bbox_h": "Hauteur de la boîte englobante"
+        },
+        "description": "Prépare l'image et le masque en vue de la retouche : extraction des limites, recadrage, mise à l'échelle."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_Composition de retouche",
+        "inputs": {
+            "destination": "Cible",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "x": "Coordonnée X",
+            "y": "Coordonnée Y",
+            "w": "Largeur",
+            "h": "Hauteur",
+            "correction_method": "Méthode de correction"
+        },
+        "description": "Compose le patch de retouche dans l'image originale, avec prise en charge de la correction des couleurs."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_Sélecteur de modèle LLM",
+        "widgets": {
+            "model": "Modèle",
+            "custom_path": "Chemin personnalisé",
+            "hf_repo_id": "ID du dépôt HF",
+            "hf_revision": "Révision HF",
+            "download_if_missing": "Télécharger si manquant",
+            "task": "Tâche",
+            "device": "Appareil",
+            "dtype": "Type de données",
+            "quantization": "Quantification",
+            "cache_mode": "Mode de cache",
+            "trust_remote_code": "Faire confiance au code distant",
+            "attention_implementation": "Implémentation de l'attention",
+            "kv_cache_implementation": "Implémentation du cache KV",
+            "kv_cache_quant_backend": "Backend de quantification du cache KV",
+            "kv_cache_nbits": "Nombre de bits du cache KV",
+            "kv_cache_residual_length": "Longueur résiduelle du cache KV",
+            "llama_n_ctx": "Fenêtre de contexte Llama",
+            "llama_n_gpu_layers": "Nombre de couches GPU Llama",
+            "llama_n_threads": "Nombre de threads Llama",
+            "llama_chat_format": "Format de chat Llama",
+            "ollama_model": "Modèle Ollama",
+            "ollama_url": "Adresse Ollama",
+            "ollama_timeout": "Délai d'expiration Ollama"
+        },
+        "outputs": {
+            "llm_config": "Configuration LLM"
+        },
+        "description": "Sélecteur de modèle LLM DaSiWa : choisit un dossier LLM/VLM transformers local dans ComfyUI/models/llm et configure le cache, le type de données, l'appareil et le comportement de déchargement."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_Analyse LLM",
+        "inputs": {
+            "llm_config": "Configuration LLM",
+            "images": "Image",
+            "text_input": "Entrée de texte"
+        },
+        "widgets": {
+            "system_prompt_preset": "Préréglage de prompt système",
+            "system_prompt": "Prompt système",
+            "max_new_tokens": "Nombre maximal de nouveaux jetons",
+            "max_input_tokens": "Nombre maximal de jetons d'entrée",
+            "temperature": "Température",
+            "top_p": "Top_p",
+            "repetition_penalty": "Pénalité de répétition",
+            "use_kv_cache": "Utiliser le cache KV",
+            "seed": "Graine aléatoire",
+            "max_frames": "Nombre max. de trames",
+            "frame_stride": "Pas de trame",
+            "frame_strategy": "Stratégie de trames",
+            "resize_max_px": "Pixels maximaux d'ajustement",
+            "resize_algorithm": "Algorithme d'ajustement",
+            "memory_cleanup": "Nettoyage de mémoire"
+        },
+        "outputs": {
+            "response": "Réponse",
+            "info": "Informations"
+        },
+        "description": "Analyse LLM DaSiWa : exécute un modèle de langage ou de vision-langage local sur un lot de textes, d'images ou de trames VHS/vidéo connectés, et renvoie une réponse sous forme de chaîne."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_Chargeur LoRA LTX2",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "Empiler les données",
+            "model_type": "Type de modèle",
+            "use_cache": "Activer le cache des fichiers LoRA",
+            "available_loras": "Liste des LoRA disponibles"
+        },
+        "outputs": {
+            "MODEL": "Modèle",
+            "CLIP": "CLIP"
+        },
+        "description": "Chargeur LoRA avancé DaSiWa : empile des LoRA d'image/vidéo classiques ou des LoRA vidéo/audio LTX-2.3. La séparation audio est réservée à LTX-2.3."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_Configuration des métadonnées",
+        "inputs": {
+            "node_positive": "Nœud positif",
+            "node_negative": "Nœud négatif",
+            "node_model": "Nœud du modèle",
+            "node_latent": "Nœud Latent",
+            "node_noise": "Nœud de bruit",
+            "node_sigmas": "Nœud Sigma",
+            "node_sampler": "Nœud de l'échantillonneur",
+            "extra_metadata": "Métadonnées supplémentaires",
+            "text_positive": "Texte positif",
+            "text_negative": "Texte négatif",
+            "text_steps": "Texte du nombre de pas",
+            "text_cfg": "CFG de texte",
+            "text_sampler": "Texte de l'échantillonneur",
+            "text_scheduler": "Texte du planificateur",
+            "text_seed": "Texte de la graine aléatoire",
+            "text_model": "Texte du modèle",
+            "save_output": "Enregistrer la sortie"
+        },
+        "widgets": {
+            "save_workflow": "Enregistrer le flux de travail",
+            "model_hash": "Empreinte du modèle"
+        },
+        "outputs": {
+            "config": "Configuration"
+        },
+        "description": "Configuration des métadonnées DaSiWa : regroupe les réglages des métadonnées du flux de travail et les liens de détection automatique facultatifs dans une sortie de configuration compacte, utilisée par l'enregistreur d'images."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_Enregistreur d'images à métadonnées",
+        "inputs": {
+            "images": "Image",
+            "metadata_config": "Configuration des métadonnées",
+            "extra_metadata": "Métadonnées supplémentaires"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "file_format": "Format de fichier",
+            "save_output": "Enregistrer la sortie"
+        },
+        "outputs": {
+            "filename": "Nom de fichier",
+            "metadata": "Métadonnées"
+        },
+        "description": "Enregistreur d'images à métadonnées DaSiWa : enregistre des images PNG ou WebP contenant les données du flux de travail ComfyUI et les métadonnées de génération compatibles A1111/Civitai."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_Enregistreur d'images à métadonnées - Version complète",
+        "inputs": {
+            "images": "Groupe d'images",
+            "metadata_config": "Configuration des métadonnées",
+            "extra_metadata": "Métadonnées supplémentaires",
+            "node_positive": "Nœud positif",
+            "node_negative": "Nœud négatif",
+            "node_model": "Nœud du modèle",
+            "node_latent": "Nœud Latent",
+            "node_noise": "Nœud de bruit",
+            "node_sigmas": "Nœud Sigma",
+            "node_sampler": "Nœud de l'échantillonneur",
+            "text_positive": "Prompt positif",
+            "text_negative": "Prompt négatif",
+            "text_steps": "Nombre de pas",
+            "text_cfg": "Valeur CFG",
+            "text_sampler": "Échantillonneur",
+            "text_scheduler": "Planificateur",
+            "text_seed": "Graine aléatoire",
+            "text_model": "Modèle de texte"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "file_format": "Format de fichier",
+            "compression": "Niveau de compression",
+            "save_output": "Enregistrer la sortie",
+            "save_workflow": "Enregistrer le flux de travail",
+            "model_hash": "Empreinte du modèle"
+        },
+        "outputs": {
+            "filename": "Nom de fichier",
+            "metadata": "Métadonnées"
+        },
+        "description": "Enregistreur d'images à métadonnées DaSiWa - Version complète : variante avancée de l'enregistreur, avec la détection des métadonnées et les ports de remplacement manuel exposés directement sur le nœud."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_Création de métadonnées supplémentaires",
+        "inputs": {
+            "extra_metadata": "Métadonnées supplémentaires"
+        },
+        "widgets": {
+            "key": "Clé",
+            "value": "Valeur"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "Métadonnées supplémentaires"
+        },
+        "description": "Création de métadonnées supplémentaires DaSiWa : crée ou enrichit des paires clé-valeur de métadonnées personnalisées pour l'enregistreur d'images."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_Sélecteur de chaînes aléatoires",
+        "inputs": {
+            "text": "Texte"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Sélecteur de chaînes aléatoires DaSiWa : transmet le texte en remplaçant chaque groupe {A|B|C} par une option tirée au sort"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_Agrandissement et affinage",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "denoise": "Débruitage",
+            "deblur": "Anti-flou",
+            "scale": "Mise à l'échelle",
+            "megapixels": "Mégapixels",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "device_id": "ID de l'appareil",
+            "empty_cache": "Vider le cache",
+            "denoise_quality": "Qualité de débruitage",
+            "deblur_quality": "Qualité de l'anti-flou",
+            "upscale": "Agrandir",
+            "upscale_quality": "Qualité d'agrandissement",
+            "resize_type": "Type de redimensionnement",
+            "divisible_by": "Divisible par",
+            "ratio_preset": "Préréglage de ratio",
+            "resize_method": "Méthode de redimensionnement",
+            "use_mmap": "Utiliser le mappage disque",
+            "auto_unload_models": "Déchargement automatique du modèle"
+        },
+        "outputs": {
+            "images": "Image"
+        },
+        "description": "Agrandisseur et optimiseur DaSiWa RTX : nœud à trois passes haute performance. 1. Phase d'optimisation : s'exécute à la résolution source et nettoie le bruit ou le flou grâce aux effets visuels NVIDIA RTX. 2. Phase d'agrandissement : agrandit l'image 4 fois en mode VSR ou à haut débit binaire. Traitement trame par trame pour maintenir une faible consommation de VRAM"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_Calculateur de mise à l'échelle de la résolution",
+        "widgets": {
+            "resolution_preset": "Préréglage de résolution",
+            "aspect_preset_when_not_image": "Préréglage de ratio si ce n'est pas une image",
+            "no_scale": "Sans mise à l'échelle",
+            "scale_from_image": "Mise à l'échelle depuis l'image",
+            "swap_aspect_when_not_image": "Inverser le ratio si ce n'est pas une image",
+            "custom_aspect_width": "Largeur de ratio personnalisée",
+            "custom_aspect_height": "Hauteur de ratio personnalisée",
+            "custom_divisor": "Diviseur personnalisé"
+        },
+        "outputs": {
+            "width_int": "Largeur entière",
+            "height_int": "Hauteur entière",
+            "width_float": "Largeur flottante",
+            "height_float": "Hauteur flottante"
+        },
+        "description": "Calculateur de mise à l'échelle de la résolution DaSiWa : calcule des résolutions mathématiquement exactes à partir de la cible en mégapixels. - Mode standard : mise à l'échelle purement mathématique. - Mode WAN/LTX : alignement sur des limites de 32 pixels (indispensable pour le VAE WAN/LTX). - Sans mise à l'échelle : ignore tous les calculs et renvoie directement les dimensions de l'image source"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_Redimensionnement Torch",
+        "widgets": {
+            "size_mode": "Mode de taille",
+            "aspect_mode": "Mode de ratio",
+            "target_width": "Largeur cible",
+            "target_height": "Hauteur cible",
+            "scale_multiplier": "Facteur d'échelle",
+            "gamma_correct": "Correction gamma",
+            "divisible_by": "Divisible par",
+            "pad_color": "Couleur de remplissage",
+            "crop_position": "Position de recadrage",
+            "batch_size": "Taille du lot",
+            "max_batch_megapixels": "Mégapixels maximaux du lot",
+            "cache_size": "Taille du cache"
+        },
+        "description": "Outil de redimensionnement par lot sans dépendance, basé sur PyTorch, pour les images ComfyUI. Prend en charge le rééchantillonnage au pixel près : plus proche voisin, bilinéaire, bicubique, régional et Lanczos séparable avec cache"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_Bascule d'état du nœud",
+        "widgets": {
+            "enabled": "Activer",
+            "trigger_on": "Condition de déclenchement",
+            "action": "Opération"
+        },
+        "outputs": {
+            "enabled_out": "Sortie d'activation"
+        },
+        "description": "Bascule d'état du nœud DaSiWa : coupe le son ou contourne le nœud cible connecté selon l'état booléen, avec une sortie d'activation pour chaîner les interrupteurs"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_Filigrane",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "watermark_path": "Chemin du filigrane",
+            "scale": "Mise à l'échelle",
+            "resampling": "Rééchantillonnage",
+            "transparency": "Transparence",
+            "padding_x": "Remplissage de l'axe X",
+            "padding_y": "Remplissage de l'axe Y",
+            "optical_padding": "Remplissage optique",
+            "optical_strength": "Intensité optique",
+            "random_switches": "Interrupteurs aléatoires",
+            "fade": "Fondu enchaîné",
+            "fade_margin": "Marge du fondu enchaîné",
+            "randomize_position": "Position aléatoire",
+            "random_seed": "Graine aléatoire"
+        },
+        "description": "Filigrane DaSiWa : nœud de superposition de filigrane de niveau professionnel avec une composition CPU stable. Stocke le lot de sortie en RAM, démarre le fondu depuis la trame source initialisée pour éviter le scintillement, et prend en charge la mise à l'échelle bicubique/Lanczos, la rotation et le « remplissage optique » pour un alignement visuel parfait"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_Constructeur de prompts par préréglage de prompt",
+        "inputs": {
+            "positive_input": "Entrée positive",
+            "negative_input": "Entrée négative"
+        },
+        "widgets": {
+            "seed": "Graine aléatoire",
+            "token_budget": "Budget de jetons",
+            "selection_state": "État de la sélection",
+            "reroll": "Re-tirer",
+            "auto_reroll": "Re-tirage automatique"
+        },
+        "outputs": {
+            "positive_prompt": "Prompt positif",
+            "negative_prompt": "Prompt négatif"
+        },
+        "description": "Construit le prompt positif et le prompt négatif à partir d'une bibliothèque intégrée de deux styles. Les sélections et les poids sont enregistrés dans le flux de travail"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_Controlleur de graine indépendant",
+        "description": "Nœud de contrôle de graine indépendant qui reprend l'expérience d'interaction du MiniMax H3 Director : mode aléatoire/fixe, graine non signée 64 bits, re-tirage/restauration de la dernière graine, 10 graines récentes et sortie d'un objet NOISE utilisable directement par l'échantillonneur en aval.",
+        "inputs": {
+            "seed": "Entrée de graine externe"
+        },
+        "widgets": {
+            "seed_value": "Valeur de graine locale",
+            "seed_control_state": "État du contrôle de graine",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "Valeur de graine locale, modifiée par le panneau frontal ; laissez le contrôle natif masqué.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "État persistant du contrôle de graine (JSON) : mode, dernière graine et liste des graines récentes.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "Entrée de graine externe facultative : une fois connectée, les contrôles locaux sont désactivés et la valeur connectée est transmise directement."
+        },
+        "outputs": {
+            "seed": "Graine",
+            "noise": "Bruit"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Correctif d'attention INT8 Comfy Kitchen",
+        "description": "Applique un correctif au modèle pour utiliser l'implémentation d'attention INT8 de Comfy Kitchen à l'exécution afin d'économiser la mémoire vidéo. Repli sur l'attention par défaut de ComfyUI si Comfy Kitchen est indisponible.",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "outputs": {
+            "MODEL": "Modèle"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_Réalisateur MiniMax H3",
+        "description": "Nœud réalisateur de génération vidéo/audio MiniMax H3 : regroupe la timeline, les médias de référence et la construction des prompts, et fournit une configuration de réalisation contenant toutes les consignes, destinée au nœud MiniMax H3 Director Guide.",
+        "inputs": {
+            "fl2va_model": "Modèle FL2VA",
+            "ref2va_model": "Modèle REF2VA",
+            "external_width_overwrite": "Remplacement externe de la largeur",
+            "external_height_overwrite": "Remplacement externe de la hauteur",
+            "external_prompt_overwrite": "Remplacement externe du prompt"
+        },
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur",
+            "duration": "Durée",
+            "ref_image_size": "Taille de l'image de référence",
+            "frame_rate": "Fréquence d'images"
+        },
+        "outputs": {
+            "guide": "Guide du réalisateur",
+            "duration": "Durée",
+            "positive_prompt": "Prompt positif",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "model": "Modèle",
+            "fl2va_requested": "FL2VA demandé",
+            "inpaint_requested": "Réparation demandée",
+            "frame_rate": "Fréquence d'images"
+        },
+        "ui": {
+            "Model Mode:": "Mode de modèle :",
+            "Image Inpaint": "Réparation d'image",
+            "Prompt Mode:": "Mode de prompt :",
+            "Simple": "Simplifié",
+            "Structured": "Structuré",
+            "Use the simple prompt editor": "Utiliser l'éditeur de prompts simplifié",
+            "Use the structured prompt editor": "Utiliser l'éditeur de prompts structuré",
+            "One image reference; output exactly one frame through Get Image from Batch.": "Une seule référence d'image ; sortie d'exactement une trame via « Récupérer l'image depuis le lot ».",
+            "Remove": "Retirer",
+            "Clear": "Effacer",
+            "Remove all media and prompts": "Supprimer tous les médias et prompts",
+            "Nothing to clear yet": "Rien à effacer pour le moment",
+            "Nothing to clear.": "Rien à effacer.",
+            "Open MiniMax H3 Director documentation on GitHub": "Ouvrir la documentation du réalisateur MiniMax H3 sur GitHub",
+            "T2VA · no input frame": "T2VA · Aucune trame d'entrée",
+            "I2VA · one opening-frame slot": "I2VA · Un emplacement de trame de début",
+            "FL2VA · opening and closing-frame slots": "FL2VA · Emplacements des trames de début et de fin",
+            "L2VA · one closing-frame slot": "L2VA · Un emplacement de trame de fin",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "Réparation d'image · exactement une image · sortie d'une trame via « Récupérer l'image depuis le lot » · sans vidéo/audio",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · jusqu'à 9 emplacements d'images, 3 de vidéos et 3 d'audio · 12 fichiers au total maximum",
+            "ASPECT": "Format",
+            "RESOLUTION": "Résolution",
+            "INPUT SCALING": "Mise à l'échelle des entrées",
+            "Auto": "Automatique",
+            "CUSTOM": "Personnalisé",
+            "Native (ShortEdge 768px)": "Natif (petit côté 768 px)",
+            "Off": "Désactivé",
+            "Native (ShortEdge 2048px)": "Natif (petit côté 2048 px)",
+            "Target · Selected Aspect & Resolution": "Cible · Format et résolution sélectionnés",
+            "Fit": "Ajuster",
+            "Fill and crop": "Remplir et recadrer",
+            "Fit and pad": "Ajuster et remplir les bords",
+            "Long side with divisible crop": "Long côté aligné avec recadrage divisible",
+            "0.26 MP - Preview": "0.26 MP - Aperçu",
+            "0.36 MP - Small": "0.36 MP - Petit",
+            "0.52 MP - SD": "0.52 MP - Définition standard",
+            "0.65 MP - Balanced": "0.65 MP - Équilibré",
+            "0.83 MP - HD": "0.83 MP - Haute définition",
+            "1.05 MP - HD+": "1.05 MP - Haute définition+",
+            "1.20 MP - HD++": "1.20 MP - Haute définition++",
+            "1.35 MP - 2K lite": "1.35 MP - 2K léger",
+            "1.75 MP - QHD": "1.75 MP - Ultra haute définition",
+            "2.10 MP - FHD": "2.10 MP - Full HD",
+            "3.30 MP - QHD+": "3.30 MP - Ultra haute définition+",
+            "8.30 MP - UHD": "8.30 MP - Ultra HD",
+            "General": "Général",
+            "Horizontal": "Paysage",
+            "Square": "Carré",
+            "Vertical": "Portrait",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "Ignore la mise à l'échelle des entrées — les médias de référence sont envoyés à MiniMax à leur taille d'origine.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "Réduit la taille uniquement si le petit côté du média de référence dépasse 2048 pixels ; les entrées plus petites passent telles quelles, sans traitement.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "Ajuste les médias de référence au format et à la boîte de résolution sélectionnés (étirement, ratio d'aspect non conservé).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "Mettre à l'échelle les médias de référence pour qu'ils s'adaptent au cadre cible en conservant leur ratio d'aspect.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "Mettre à l'échelle les médias de référence pour couvrir le cadre cible en conservant le ratio d'aspect, puis recadrer le débordement.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "Mettre à l'échelle les médias de référence pour qu'ils tiennent dans le cadre cible en conservant le ratio d'aspect, puis remplir les bords vides.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "Met à l'échelle de façon à aligner le long côté sur la cible, puis recadre vers une taille cible exacte et divisible.",
+            "RATIO W": "Ratio L",
+            "Megapixels": "Mégapixels",
+            "Fixed pixels": "Pixels fixes",
+            "WIDTH": "Largeur",
+            "HEIGHT": "Hauteur",
+            "External width/height overwrite · Director sizing and input scaling disabled": "Remplacement externe de la largeur et de la hauteur · dimensionnement du réalisateur et mise à l'échelle des entrées désactivés",
+            "Image/Video": "Image/Vidéo",
+            "Image/Video · selected": "Image/Vidéo · sélectionné",
+            "audio · selected": "Audio · sélectionné",
+            "Video only": "Vidéo uniquement",
+            "Audio only": "Audio uniquement",
+            "Video + embedded audio": "Vidéo + audio intégré",
+            "Full source-duration scale": "Mise à l'échelle de la durée source complète",
+            "Full audio waveform; crop markers show the selected reference window": "Forme d'onde audio complète ; les repères de recadrage indiquent la fenêtre de référence sélectionnée",
+            "Decoding audio waveform…": "Décodage de la forme d'onde audio…",
+            "Open preview and details": "Ouvrir l'aperçu et les détails",
+            "T2VA prompt builder": "Constructeur de prompts T2VA",
+            "I2VA prompt builder": "Constructeur de prompts I2VA",
+            "FL2VA prompt builder": "Constructeur de prompts FL2VA",
+            "L2VA prompt builder": "Constructeur de prompts L2VA",
+            "REF2VA prompt builder": "Constructeur de prompts REF2VA",
+            "Image Inpaint prompt builder": "Constructeur de prompts de réparation d'image",
+            "T2VA simple prompt": "Prompt simplifié T2VA",
+            "I2VA simple prompt": "Prompt simplifié I2VA",
+            "FL2VA simple prompt": "Prompt simplifié FL2VA",
+            "L2VA simple prompt": "Prompt simplifié L2VA",
+            "REF2VA simple prompt": "Prompt simplifié REF2VA",
+            "Image Inpaint simple prompt": "Prompt simplifié de réparation d'image",
+            "REF2VA prompt builder — write freely; headers are added automatically": "Constructeur de prompts REF2VA — écrivez librement, les titres des champs sont ajoutés automatiquement",
+            "Insert [Shot N]": "Insérer [Shot N]",
+            "Prefill Labels & Summary": "Préremplir les étiquettes et le résumé",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "Génère les étiquettes Sujet/Image/Vidéo/Audio à partir des médias insérés et remplit le modèle de résumé",
+            "Preview Prompt": "Aperçu du prompt",
+            "Show the full prompt that will be sent upstream": "Afficher le prompt complet qui sera envoyé en amont",
+            "External prompt detected — builder fields are disabled.": "Prompt externe détecté — les champs du constructeur sont désactivés.",
+            "Write the complete MiniMax H3 prompt...": "Rédigez ici le prompt MiniMax H3 complet…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] Commencez ici la description de votre scène…",
+            "Describe ambient sounds, dialogue, effects...": "Décrivez l'ambiance sonore, les dialogues et les effets sonores…",
+            "N/A or describe background score...": "Renseigner N/A, ou décrire la musique de fond…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> est la femme présente dans <Picture 1>, aux cheveux courts foncés et vêtue d'un manteau rouge.\n<Picture 1> est le point d'ancrage de la première trame de [Shot 1].\n<Subject 2> est le mouvement de marche issu de <Video 1>.\n<Video 1> fournit le trajet de la caméra et la structure rythmique.\n<Audio 1> est la référence de timbre pour <Subject 1>.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] Utilise <Subject 1> présent dans <Picture 1>, les mouvements et le rythme de <Video 1>, ainsi que les caractéristiques vocales de <Audio 1>.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> (présent dans [Shot 1], [Shot 2]) : fully_preserved - l'identité et les vêtements restent cohérents.\n<Picture 1> (première trame de [Shot 1]) : fully_preserved - point d'ancrage de la composition d'ouverture.\n<Subject 2> (mouvement transféré vers <Subject 1>) : attribute_transfer - le rythme de marche est appliqué à <Subject 1>.\n<Video 1> (structure rythmique) : weak_reference - le calendrier général et le rythme de caméra sont conservés.\n<Audio 1> : reference - le timbre et le débit sont suivis sans copier le signal.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] À 00:04.500, ……",
+            "Audio environment description...": "Description de l'ambiance audio…",
+            "N/A or background score...": "Renseigner N/A, ou décrire la musique de fond…",
+            "Close and save (Escape or click outside)": "Fermer et enregistrer (Échap ou clic à l'extérieur)",
+            "Start:": "Début :",
+            "End:": "Fin :",
+            "▶ Play crop": "▶ Lecture de l'extrait recadré",
+            "Playing crop…": "Lecture du recadrage en cours…",
+            "Play only the current crop range": "Lire uniquement l'intervalle de recadrage actuel",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "Faites glisser la zone de recadrage en surbrillance pour la déplacer ; faites glisser les repères aux extrémités pour la redimensionner.",
+            "Save": "Enregistrer",
+            "Cancel": "Annuler",
+            "Full media preview": "Aperçu média complet",
+            "Done": "Terminé",
+            "Copy": "Copier",
+            "All media and prompts cleared.": "Tous les médias et prompts ont été effacés.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA ne prend en charge que les références d'image ; la vidéo et l'audio ne sont pas disponibles.",
+            "This media type is not available in the selected MiniMax mode.": "Ce type de média n'est pas pris en charge par le mode MiniMax sélectionné.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA ne prend en charge que les références d'image ; veuillez sélectionner la piste Image/Vidéo.",
+            "Upload failed": "Échec du téléversement",
+            "T2VA has no input lanes.": "T2VA n'a aucune piste d'entrée.",
+            "This mode does not support audio references.": "Ce mode ne prend pas en charge les références audio.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "Piste Audio sélectionnée. Vous pouvez coller des fichiers ici avec Ctrl+V.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "Piste Image/Vidéo sélectionnée. Vous pouvez coller des fichiers ici avec Ctrl+V."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_Exécuteur du réalisateur MiniMax H3",
+        "description": "Convertit le guide du réalisateur en appels natifs aux nœuds MiniMax H3 : selon le mode du guide, appelle MiniMaxH3ImageToVideo ou MiniMaxH3ReferenceToVideo et produit le conditioning et le latent.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "Guide du réalisateur",
+            "audio_vae": "VAE audio"
+        },
+        "outputs": {
+            "positive": "Conditioning positif",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_Cache résiduel MiniMax H3",
+        "description": "Ajoute un cache résiduel approximatif par bloc complet au modèle MiniMax H3 : réutilise la sortie de la pile de blocs précédente sur la plage de pas sélectionnée et évite des recalculs coûteux pour gagner en vitesse. Plus le seuil est élevé, plus il y a de sauts, ce qui peut réduire la fidélité.",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "widgets": {
+            "reuse_threshold": "Seuil de réutilisation",
+            "start_percent": "Pourcentage de départ",
+            "end_percent": "Pourcentage de fin",
+            "max_steps": "Nombre maximal de pas sautés",
+            "device": "Appareil",
+            "verbose": "Journal détaillé"
+        },
+        "outputs": {
+            "MODEL": "Modèle"
+        }
+    }
+}

@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪لنگر توجه چهرهٔ LTX",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "face_bbox_norm": "نرمال‌سازی جعبهٔ مرزی چهره",
+            "strength": "شدت",
+            "inject_mode": "حالت تزریق",
+            "anchor_frame": "فریم لنگر",
+            "anchor_upsample": "بزرگ‌نمایی لنگر",
+            "track_threshold": "آستانهٔ ردیابی",
+            "face_threshold": "آستانهٔ چهره",
+            "identity_threshold": "آستانهٔ هویت",
+            "depth_curve": "منحنی عمق",
+            "spatial_prior": "پیشینهٔ فضایی",
+            "block_index_filter": "فیلتر نمایهٔ بلوک",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "model": "مدل",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: لنگر هویت برای ناحیهٔ چهره. ویژگی‌های حافظهٔ نهان به گرۀ LTXLatentAnchor منتقل شده‌اند (پایداری در سطح صحنه). این گره همچنان برای هدف‌های چهره‌ای کار می‌کند.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "لنگر Latent LTX",
+        "inputs": {
+            "model": "مدل",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "cache_at_step": "حافظهٔ نهان در گام",
+            "similarity_threshold": "آستانه شباهت",
+            "decay_with_distance": "کاهش با فاصله",
+            "bypass": "دور زدن",
+            "advanced_mode": "حالت پیشرفته",
+            "cache_mode": "حالت حافظهٔ نهان",
+            "forwards_per_step": "تعداد عبور رو به جلو به‌ازای هر گام",
+            "cache_warmup": "گرم‌کردن حافظهٔ نهان",
+            "anchor_frame": "فریم لنگر",
+            "depth_curve": "منحنی عمق",
+            "block_index_filter": "فیلتر نمایهٔ بلوک",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "لنگر Latent برای کل صحنه در LTX2.x. پایداری شرط‌های پرامپت و نیروهای آگاه از فیزیک را در طول نمونه‌برداری‌های بلند یکدست نگه می‌دارد. برای زمان‌بندی قابل پیش‌بینیِ حافظهٔ نهان، SIGMAS را وصل کنید. برای دسترسی به پارامترهای پژوهشی به حالت پیشرفته بروید."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "لنگر آگاه Latent LTX",
+        "inputs": {
+            "model": "مدل",
+            "reference_image": "تصویر مرجع",
+            "vae": "VAE",
+            "energy_latent": "Latent انرژی",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "cache_at_step": "حافظهٔ نهان در گام",
+            "similarity_threshold": "آستانه شباهت",
+            "decay_with_distance": "کاهش با فاصله",
+            "energy_threshold": "آستانهٔ انرژی",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی",
+            "advanced_mode": "حالت پیشرفته",
+            "cache_mode": "حالت حافظهٔ نهان",
+            "forwards_per_step": "تعداد عبور رو به جلو به‌ازای هر گام",
+            "cache_warmup": "گرم‌کردن حافظهٔ نهان",
+            "anchor_frame": "فریم لنگر",
+            "depth_curve": "منحنی عمق",
+            "block_index_filter": "فیلتر نمایهٔ بلوک"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "لنگر Latent با تنظیم اختیاری انرژی فضایی از مرجع بیرونی. تصویر مرجع (یا ورودی Latent) وزن‌های فضایی را فراهم می‌کند؛ برای تطبیق با خود، از Latent در حال اجرا استفاده می‌شود (فضای ویژگی صحیح)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "تقویت‌کنندهٔ توجه متنی LTX",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "text_amplification": "تقویت توجه متنی",
+            "spatial_focus": "کانون فضایی",
+            "block_index_filter": "فیلتر نمایهٔ بلوک",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "توجه متقابل متنی LTX2 (attn2) را در هر بلوک تقویت می‌کند تا رقیق‌شدن شرط‌ها را در شمار زیاد توکن‌ها جبران کند. در مرحلهٔ افزایش نمونه، پیروی از پرامپت و پایداری رنگ را بازمی‌گرداند."
+    },
+    "LTXTiledSampler": {
+        "title": "نمونه‌گیر تکه‌ای LTX",
+        "inputs": {
+            "noise": "نویز",
+            "guider": "هدایت‌گر",
+            "sampler": "نمونه‌گیر",
+            "sigmas": "sigma",
+            "latent_image": "تصویر Latent"
+        },
+        "widgets": {
+            "bypass_tiling": "رد کردن تکه‌کاری",
+            "tile_axis": "محور تکه",
+            "n_tiles": "تعداد تکه",
+            "tile_overlap": "هم‌پوشانی تکه",
+            "max_size_for_no_tile": "بیشینهٔ اندازه بدون تکه",
+            "audio_pass": "عبور صدا",
+            "audio_carrier_tile": "تکهٔ حامل صدا",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "output": "خروجی",
+            "denoised_output": "خروجی حذف نویز"
+        },
+        "description": "جایگزین تکه‌ای و مستقیم SamplerCustomAdvanced برای ظریف‌کاری سبک در مرحلهٔ افزایش نمونهٔ LTX2. هر تکه با شمار توکنِ توزیع آموزش‌دیده نمونه‌برداری می‌شود و سپس با هم‌پوشانی کسینوسی ترکیب می‌گردد. فقط برای حذف نویز سبک به‌کار برید. عبور صدا به‌طور پیش‌فرض فعال است؛ audio_carrier_tile نمونه‌برداری صدا را هم‌زمان با یک تکهٔ برگزیده اجرا می‌کند (بدون گام افزوده). با bypass_tiling=true مانند یک نمونه‌برداری معمولی تک‌عبوری عمل می‌کند؛ مناسب اشکال‌زدایی یا حالت‌هایی که تکه‌کاری لازم نیست."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "افزایش‌دهندهٔ نمونهٔ زمانی Latent LTXV (تکه‌ای)",
+        "inputs": {
+            "samples": "نمونه",
+            "upscale_model": "مدل افزایش وضوح",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "اندازهٔ تکه",
+            "overlap": "هم‌پوشانی",
+            "max_size_for_no_tile": "بیشینهٔ اندازه بدون تکه",
+            "rotate_for_landscape": "چرخش برای افقی",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "جایگزین تکه‌ای و مستقیم LTXVLatentUpsampler. افزایش نمونه روی تکه‌های فضایی با هم‌پوشانی پنجرهٔ کسینوسی، پرش رنگی و اعوجاج را در نسبت ابعاد افراطی برطرف می‌کند. در نسبت‌های ایمن خروجی تقریباً همان نسخهٔ غیرتکه‌ای است و در حالت‌های افراطی از ناپایداری مدل افزایش وضوح می‌کاهد."
+    },
+    "LTXModelInspector": {
+        "title": "بررسی‌کنندهٔ مدل LTX",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "name_filter": "فیلتر نام",
+            "focus_path": "مسیر تمرکز",
+            "max_modules_listed": "بیشینهٔ ماژول‌های فهرست‌شده",
+            "trace_path_contains": "مسیر ردیابی حاوی",
+            "max_modules_traced": "بیشینهٔ ماژول‌های ردیابی‌شده",
+            "trace_calls_per_module": "تعداد فراخوانی‌های ردیابی به‌ازای هر ماژول",
+            "print_top_level": "چاپ اطلاعات سطح بالا"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "بررسی مدل انتشار: ساختار سطح بالا، فیلتر نام، مسیر تمرکز و قلاب‌های ردیابی."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "الحاق خودکار محو متقابل Latent",
+        "inputs": {
+            "frames_0": "فریم_0",
+            "frames_1": "فریم_1"
+        },
+        "widgets": {
+            "match_spatial": "تطبیق فضایی",
+            "interpolate_mode": "حالت درون‌یابی",
+            "cross_fade_frames": "فریم‌های محو متقابل",
+            "fade_curve": "منحنی محو"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "تطبیق فضایی خودکار + الحاق زمانی، با محو متقابل اختیاری."
+    },
+    "AudioLatentStretch": {
+        "title": "کشش Latent صوتی",
+        "inputs": {
+            "audio_latent": "Latent صوت"
+        },
+        "widgets": {
+            "source_fps": "FPS مبدأ",
+            "target_fps": "FPS هدف",
+            "interp_mode": "حالت درون‌یابی"
+        },
+        "outputs": {
+            "audio_latent": "Latent صوت"
+        },
+        "description": "بازنمونه‌برداری Latent صوتی به FPS هدف. حالت Hermite توصیه می‌شود."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "افزایش‌دهندهٔ نمونهٔ زمانی Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS مبدأ",
+            "target_fps": "FPS هدف",
+            "interp_mode": "حالت درون‌یابی",
+            "auto_retime": "زمان‌بندی مجدد خودکار",
+            "motion_scale": "نسبت حرکت",
+            "spatial_sharpen": "تیزکردن فضایی",
+            "ltx_safe": "LTX ایمن",
+            "override_frames": "بازنویسی تعداد فریم"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "افزایش نمونهٔ زمانی بر پایهٔ Hermite با اصلاح خودکار ریتم."
+    },
+    "LatentMotionSharpener": {
+        "title": "تیزکنندهٔ حرکت Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "تیزکردن پایه",
+            "motion_sharpen": "تیزکردن حرکت",
+            "motion_thresh": "آستانهٔ حرکت",
+            "temporal_smooth_mask": "ماسک همواری زمانی"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "تیزکردن خودتنظیم بر پایهٔ دامنهٔ حرکت میان فریم‌ها."
+    },
+    "LatentMotionRetime": {
+        "title": "زمان‌بندی مجدد حرکت Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS مبدأ",
+            "target_fps": "FPS هدف",
+            "strength": "شدت",
+            "manual_scale": "مقیاس دستی"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "کاهش دامنهٔ حرکت برای اصلاح ریتم 24->30fps در Latent افزایش‌یافته."
+    },
+    "LatentTemporalInpainter": {
+        "title": "ترمیم‌کنندهٔ زمانی Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "σ لنگر",
+            "ghost_sigma": "σ شبح",
+            "score_gamma": "γ امتیاز",
+            "anchor_blend": "ترکیب لنگر",
+            "seed": "بذر",
+            "debug_scores": "امتیازهای اشکال‌زدایی"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "تشخیص شبح به‌ازای هر فریم + نویز هدف. فریم‌های لنگر واقعی را قفل می‌کند و سپس با KSampler به مقدار 0.3-0.45 نویززدایی می‌کند."
+    },
+    "LTXActionAmplifier": {
+        "title": "تقویت‌کنندهٔ حرکت LTX",
+        "inputs": {
+            "model": "مدل",
+            "clip": "clip",
+            "positive": "پرامپت مثبت"
+        },
+        "widgets": {
+            "amplification_strength": "شدت تقویت",
+            "action_vocabulary_text": "متن واژگان حرکت",
+            "scale_ceiling": "بیشینهٔ مقیاس",
+            "auto_threshold": "آستانهٔ خودکار",
+            "similarity_threshold": "آستانه شباهت",
+            "similarity_sharpness": "تیزی شباهت",
+            "amplification_floor": "کمینهٔ تقویت",
+            "top_k": "Top-K",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "به‌طور گزینشی توکن‌های حرکتیِ متن را در پرامپت مثبت تقویت می‌کند؛ دامنهٔ K/V فعل‌های منطبق را بالا می‌برد و توکن‌های توصیفی را دست‌نخورده نگه می‌دارد. در تقابل تقارنی با LikenessSemanticClamp قرار دارد و جایگزین تغییر مقیاس یکدست TextAmplifier شده است."
+    },
+    "LTXFaceDetector": {
+        "title": "تشخیص‌دهندهٔ چهرهٔ LTX",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "padding": "پرکردن",
+            "fallback_bbox": "جعبهٔ مرزی ذخیره",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "face_bbox": "جعبهٔ مرزی چهره"
+        },
+        "description": "چهره‌ها را در تصویر تشخیص می‌دهد و رشتهٔ جعبهٔ مرزی نرمال‌شده را خروجی می‌کند. خروجی را به face_bbox_within_reference در LikenessGuide، یا override_face_bbox/frame_0_bbox در LikenessAnchor، یا face_bbox_norm در face_anchor وصل کنید. تشخیص را از منطق گره جدا می‌کند تا چند گره یک جعبه را مشترکاً استفاده کنند."
+    },
+    "LTXLikenessAnchor": {
+        "title": "لنگر شباهت LTX",
+        "inputs": {
+            "model": "مدل",
+            "reference_info": "اطلاعات مرجع"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "reference_source": "منبع مرجع",
+            "frame_0_bbox": "جعبهٔ مرزی فریم 0",
+            "similarity_threshold": "آستانه شباهت",
+            "decay_with_distance": "کاهش با فاصله",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی",
+            "advanced_mode": "حالت پیشرفته",
+            "depth_curve": "منحنی عمق",
+            "block_index_filter": "فیلتر نمایهٔ بلوک",
+            "similarity_sharpness": "تیزی شباهت",
+            "override_face_bbox": "بازنویسی جعبهٔ مرزی چهره",
+            "skip_when_sigma_above": "رد شدن هنگام فراتر رفتن sigma",
+            "pull_mode": "حالت کشش",
+            "late_block_falloff": "افت بلوک‌های پایانی"
+        },
+        "description": "توجه هر بلوک را به ویژگی‌های مرجع نزدیک می‌کند تا هویت یکدست بماند. دو حالت: (1) گرفتن اطلاعات مرجع از LikenessGuide و استفاده از فریم مرجع ضمیم آن؛ (2) بدون اتصال اطلاعات مرجع، گره فریم 0ِ Latent را به‌عنوان مرجع به‌کار می‌بَرَد — مناسب گردش‌کارهای i2v که در آن‌ها فریم 0 تصویر شرطِ شروع است. نسخهٔ v1.2 از حالت کشش جهت‌دار استفاده می‌کند (رنگ‌ها حفظ می‌شوند)."
+    },
+    "LTXLikenessGuide": {
+        "title": "هدایت شباهت LTX",
+        "inputs": {
+            "positive": "پرامپت مثبت",
+            "negative": "پرامپت منفی",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "تصویر مرجع"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "placement_mode": "حالت جای‌گذاری",
+            "face_detect": "تشخیص چهره",
+            "reference_mask_mode": "حالت ماسک مرجع",
+            "face_padding": "حاشیهٔ چهره",
+            "crf": "CRF",
+            "blur_radius": "شعاع محو",
+            "interpolation": "درون‌یابی",
+            "crop": "برش",
+            "attention_strength": "شدت توجه",
+            "face_bbox_within_reference": "جعبهٔ مرزی چهره در مرجع",
+            "emit_latent": "گسیل Latent",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "positive": "پرامپت مثبت",
+            "negative": "پرامپت منفی",
+            "latent": "latent",
+            "reference_info": "اطلاعات مرجع"
+        },
+        "description": "تصویر مرجع شباهت را به تنظیمات شرط می‌افزاید تا هویت حفظ شود. شرط‌های مثبت/منفی تغییریافته (برای Guider) و فرادادهٔ اطلاعات مرجع (برای LikenessAnchor) را گسیل می‌کند. به‌طور پیش‌فرض خروجی latent یک عبور ساده از ورودی است — نه گسترش و نه برش. ارزش هدایت از تعامل آن با مدل و فرادادهٔ bbox می‌آید، نه از تغییر latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "برش شباهت LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "اطلاعات مرجع"
+        },
+        "widgets": {
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "فریم مرجع شباهت را پیش از رمزگشایی VAE از Latent می‌بُرد. حالت emit_latent=گسترشِ LTXLikenessGuide را بازمی‌گرداند. تنها زمانی استفاده کنید که هدایت، Latent گسترشیافته گسیل کند. اگر هدایت در حالت عبور (پیش‌فرض) است، به این گره نیازی نیست — Latent را مستقیم به رمزگشای VAE وصل کنید."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "محدودکنندهٔ معنایی شباهت LTX",
+        "inputs": {
+            "model": "مدل",
+            "clip": "clip",
+            "positive": "پرامپت مثبت",
+            "reference_info": "اطلاعات مرجع"
+        },
+        "widgets": {
+            "suppression_strength": "شدت سرکوب",
+            "face_modifier_text": "متن تغییردهندهٔ چهره",
+            "similarity_threshold": "آستانه شباهت",
+            "auto_threshold": "آستانهٔ خودکار",
+            "similarity_sharpness": "تیزی شباهت",
+            "suppression_floor": "کمینهٔ سرکوب",
+            "top_k": "top_k",
+            "soft_edge_frac": "نسبت لبهٔ نرم",
+            "override_face_bbox": "بازنویسی جعبهٔ مرزی چهره",
+            "bypass": "دور زدن",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "سرکوب گزینشی توکن‌های متنی بر پایهٔ معنا، درون ناحیهٔ جعبهٔ مرزی چهره در attn2. با تطبیق فضای جاسازی با واژگان صفت‌ها، توکن‌های تغییردهندهٔ چهره را در پرامپت شناسایی کرده و توجه آن‌ها را به این ناحیه سرکوب می‌کند. جایگزین مقیاس‌دهی یکدست دامنه، یعنی LikenessClamp منسوخ‌شده، شده است."
+    }
+}

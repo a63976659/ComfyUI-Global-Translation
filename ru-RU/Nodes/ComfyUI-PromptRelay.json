@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "Кодирование Prompt Relay",
+        "inputs": {
+            "model": "Модель",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Пустой Latent видео — размеры считываются из его формы.",
+            "global_prompt": "Глобальный промпт",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Задаёт условие для всего видео. Фиксирует постоянных персонажей, объекты и фон сцены.",
+            "local_prompts": "Промпты по сегментам",
+            "Ordered prompts for each temporal segment, separated by |": "Упорядоченные промпты для каждого временного сегмента, разделённые |",
+            "segment_lengths": "Длина сегмента",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "Количество кадров в пиксельном пространстве для каждого сегмента, через запятую. Оставьте пустым для автоматического равномерного распределения.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Параметр спада штрафа. Любое значение ниже примерно 0.1 даёт резкие границы (в статье по умолчанию 0.001). Для более мягких переходов попробуйте 0.5 и выше.",
+            "relay_options": "Параметры Prompt Relay",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "Необязательные расширенные настройки на уровне потока. Подключите узел расширенных опций Prompt Relay."
+        },
+        "outputs": {
+            "model": "Модель",
+            "positive": "Положительное условие"
+        },
+        "description": "Кодирует глобальный промпт вместе с промптами временных сегментов и применяет к модели патч временного управления Prompt Relay. Промпты сегментов разделяются символом |. Для негативного промпта используйте стандартный узел кодирования текста CLIP."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "Кодирование Prompt Relay (таймлайн)",
+        "inputs": {
+            "model": "Модель",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Пустой Latent видео — размеры считываются из его формы.",
+            "global_prompt": "Глобальный промпт",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Задаёт условие для всего видео. Фиксирует постоянных персонажей, объекты и фон сцены.",
+            "max_frames": "Максимальное число кадров",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "Общая длина таймлайна (количество кадров в пиксельном пространстве). Используется только для визуального масштаба редактора.",
+            "timeline_data": "Данные таймлайна",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "JSON-состояние редактора таймлайна (управляется автоматически, не редактируйте вручную).",
+            "local_prompts": "Промпты по сегментам",
+            "Auto-populated from the timeline editor.": "Автоматически заполняется из редактора таймлайна.",
+            "segment_lengths": "Длина сегмента",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "Автоматически заполняется из редактора таймлайна (количество кадров в пиксельном пространстве).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Параметр спада штрафа. Любое значение ниже примерно 0.1 даёт резкие границы (в статье по умолчанию 0.001). Для более мягких переходов попробуйте 0.5 и выше.",
+            "fps": "Частота кадров",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "Кадров в секунду — влияет на отображение времени в редакторе таймлайна, только если time_units установлен в 'Секунды'.",
+            "time_units": "Единицы времени",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "Отображает шкалу, диапазоны сегментов, поля ввода длины и итоги в кадрах или секундах. Внутри всегда хранится количество кадров в пиксельном пространстве.",
+            "relay_options": "Параметры Prompt Relay",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "Необязательные расширенные настройки на уровне потока. Подключите узел расширенных опций Prompt Relay."
+        },
+        "widgets": {
+            "max_frames": "Максимальное число кадров",
+            "fps": "Частота кадров",
+            "time_units": "Единицы времени",
+            "frames": "Кадр",
+            "seconds": "Секунды"
+        },
+        "outputs": {
+            "model": "Модель",
+            "positive": "Положительное условие"
+        },
+        "description": "То же, что «Кодирование Prompt Relay», но промпты по сегментам и длины сегментов редактируются наглядно, как перетаскиваемые блоки на таймлайне. Вход max_frames задаёт только масштаб таймлайна (в пиксельном пространстве) — фактическое количество кадров по-прежнему считывается из latent."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "Кодирование Prompt Relay (умное)",
+        "inputs": {
+            "model": "Модель",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "Глобальный промпт",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "Задаёт условие для всего видео. Если оставить пустым, в качестве глобального якоря автоматически используется первый сегмент, разобранный в smart_prompt.",
+            "smart_prompt": "Интеллектуальный промпт",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Вводите промпты с помощью умного синтаксиса:\n1. В строку: 'первый текст [0-50] | второй текст [50-100]'\n2. Блоками: 'Первый сегмент:\nтекст первого сегмента\nВторой сегмент:\nтекст второго сегмента'\nСинтаксис автоматически удаляется и нормализуется равномерно или пропорционально.",
+            "normalize_by_tokens": "Нормализация по Token",
+            "If true, scales the calculated length of each segment by its token count.": "Если истинно, длина вычисляется с масштабированием по числу token каждого сегмента.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Нормализация по Token"
+        },
+        "outputs": {
+            "model": "Модель",
+            "positive": "Положительное условие"
+        },
+        "description": "Разбирает синтаксис вида [0-50] или заголовков блоков (например, 'Первый сегмент:') и автоматически вычисляет длину сегментов."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "Тест интеллектуального кодирования Prompt Relay",
+        "inputs": {
+            "smart_prompt": "Интеллектуальный промпт",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Вводите промпты с помощью умного синтаксиса:\n1. В строку: 'первый текст [0-50] | второй текст [50-100]'\n2. Блоками: 'Первый сегмент:\nтекст первого сегмента\nВторой сегмент:\nтекст второго сегмента'\nСинтаксис автоматически удаляется и нормализуется равномерно или пропорционально.",
+            "normalize_by_tokens": "Нормализация по Token",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Нормализация по Token"
+        },
+        "outputs": {
+            "parsed_output": "Выход разбора"
+        },
+        "description": "Выводит разобранный синтаксис для целей тестирования."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "Расширенные параметры Prompt Relay",
+        "inputs": {
+            "video_strength": "Интенсивность видео",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "Множитель временного штрафа видео. 0 отключает сегментацию видео. Наиболее полезен в диапазоне 0-1, где смягчает границы; значения >1 быстро насыщаются при epsilon по умолчанию (1e-3), поскольку отклонение уже достаточно велико, чтобы обнулять далёкие token. Чтобы >1 давало заметный эффект, повысьте epsilon примерно до 0.1 или выше.",
+            "video_window_scale": "Масштаб окна видео",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Масштабирует плоскую зону якоря (по умолчанию L/2 - 2 кадра). <1 начинает мягкий спад раньше; >1 расширяет жёсткую зону. 0 сжимает якорь в точку — спад сразу начинается из середины сегмента (резче обычного, а не мягче).",
+            "audio_epsilon": "Эпсилон аудио",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "epsilon аудиопотока. 0 = наследует основной epsilon энкодера.",
+            "audio_strength": "Интенсивность аудио",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "Множитель временного штрафа аудио. 0 позволяет аудио «протекать» через визуальные переключения. Наиболее полезен в диапазоне 0-1; значения >1 быстро насыщаются при epsilon по умолчанию (1e-3) — нужно поднять audio_epsilon примерно до 0.1 или выше, чтобы >1 давало заметный эффект.",
+            "audio_window_scale": "Масштаб аудиоокна",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Масштабирует ширину плоской зоны привязки аудиопотока. <1 заставляет мягкий спад начинаться раньше; >1 расширяет жёсткую зону. 0 сжимает привязку в точку — спад начинается сразу от середины сегмента (резче, чем по умолчанию, а не мягче)."
+        },
+        "widgets": {
+            "video_strength": "Интенсивность видео",
+            "video_window_scale": "Масштаб окна видео",
+            "audio_epsilon": "Эпсилон аудио",
+            "audio_strength": "Интенсивность аудио",
+            "audio_window_scale": "Масштаб аудиоокна"
+        },
+        "outputs": {
+            "relay_options": "Параметры Prompt Relay"
+        },
+        "description": "Необязательная корректировка временного штрафа на уровне потока. Подключается к входу параметров Relay кодировщика Prompt Relay. Поля аудио влияют только на LTX2."
+    }
+}

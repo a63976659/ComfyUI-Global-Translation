@@ -1,0 +1,612 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_強化動画結合",
+        "inputs": {
+            "images": "画像",
+            "audio": "音声"
+        },
+        "widgets": {
+            "frame_rate": "フレームレート",
+            "codec": "エンコード形式",
+            "container": "コンテナ形式",
+            "bit_depth": "ビット深度",
+            "quality": "品質",
+            "log_level": "ログレベル",
+            "pingpong": "ピンポンモード",
+            "save_metadata": "メタデータ保存",
+            "filename_prefix": "ファイル名プレフィックス",
+            "save_output": "出力保存",
+            "pass_frames": "フレームパススルー",
+            "crop_to_audio": "音声に合わせてクロップ",
+            "audio_codec": "音声エンコード",
+            "audio_bitrate": "音声ビットレート",
+            "save_first_frame": "先頭フレーム保存",
+            "save_last_frame": "末尾フレーム保存"
+        },
+        "outputs": {
+            "frames": "フレーム",
+            "filename": "ファイル名"
+        },
+        "description": "画像バッチを高品質な動画に結合します。NVENC/GPU を自動選択し、ピンポン再生、ComfyUI ワークフローメタデータ、MP4 へのフォールバックにオプションで対応します。"
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_インペイントクロップ準備",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "target_width": "目標幅",
+            "target_height": "目標高さ",
+            "mask_blur": "マスクぼかし",
+            "mask_min": "マスク最小値",
+            "mask_max": "マスク最大値",
+            "grow_px": "拡張ピクセル",
+            "can_shrink": "縮小を許可"
+        },
+        "outputs": {
+            "cropped_image": "クロップ後画像",
+            "cropped_mask": "クロップ後マスク",
+            "bbox_x": "バウンディングボックスX座標",
+            "bbox_y": "バウンディングボックスY座標",
+            "bbox_w": "バウンディングボックス幅",
+            "bbox_h": "バウンディングボックス高さ"
+        },
+        "description": "インペイント用に画像とマスクを準備します：境界の抽出、クロップ、スケール。"
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_インペイント合成",
+        "inputs": {
+            "destination": "ターゲット",
+            "source": "ソース",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "x": "X座標",
+            "y": "Y座標",
+            "w": "幅",
+            "h": "高さ",
+            "correction_method": "補正手法"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "インペイント後のパッチを元画像に合成します。色補正に対応しています。"
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_LLMモデルセレクター",
+        "widgets": {
+            "model": "モデル",
+            "custom_path": "カスタムパス",
+            "hf_repo_id": "HFリポジトリID",
+            "hf_revision": "HFリビジョン",
+            "download_if_missing": "存在しない場合はダウンロード",
+            "backend": "バックエンド",
+            "task": "タスク",
+            "device": "デバイス",
+            "dtype": "データ型",
+            "quantization": "量子化",
+            "cache_mode": "キャッシュモード",
+            "trust_remote_code": "リモートコードを信頼",
+            "attention_implementation": "アテンション実装",
+            "kv_cache_implementation": "KVキャッシュ実装",
+            "kv_cache_quant_backend": "KVキャッシュ量子化バックエンド",
+            "kv_cache_nbits": "KVキャッシュビット数",
+            "kv_cache_residual_length": "KVキャッシュ残差長",
+            "llama_n_ctx": "Llamaコンテキストウィンドウ",
+            "llama_n_gpu_layers": "Llama GPU層数",
+            "llama_n_threads": "Llamaスレッド数",
+            "llama_chat_format": "Llamaチャット形式",
+            "ollama_model": "Ollamaモデル",
+            "ollama_url": "Ollamaアドレス",
+            "ollama_timeout": "Ollamaタイムアウト時間"
+        },
+        "outputs": {
+            "llm_config": "LLM設定"
+        },
+        "description": "DaSiWa LLMモデルセレクター：ComfyUI/models/llmからローカルのtransformers LLM/VLMフォルダを選択し、キャッシュ、データ型、デバイス、アンロード動作を設定します。"
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_LLM分析",
+        "inputs": {
+            "llm_config": "LLM設定",
+            "images": "画像",
+            "text_input": "txt_in."
+        },
+        "widgets": {
+            "system_prompt_preset": "システムプロンプトプリセット",
+            "system_prompt": "システムプロンプト",
+            "prompt": "プロンプト",
+            "max_new_tokens": "最大新規トークン",
+            "max_input_tokens": "最大入力トークン",
+            "temperature": "温度",
+            "top_p": "Top_p",
+            "repetition_penalty": "繰り返しペナルティ",
+            "use_kv_cache": "KVキャッシュを使用",
+            "seed": "ランダムシード",
+            "max_frames": "最大フレーム数",
+            "frame_stride": "フレームステップ",
+            "frame_strategy": "フレーム戦略",
+            "resize_max_px": "最大リサイズピクセル",
+            "resize_algorithm": "リサイズアルゴリズム",
+            "memory_cleanup": "メモリクリーンアップ"
+        },
+        "outputs": {
+            "response": "レスポンス",
+            "info": "情報"
+        },
+        "description": "DaSiWa LLM分析：接続されたテキスト、画像、またはVHS/動画フレームバッチに対し、ローカルのテキストモデルまたはビジュアル言語モデルを実行して文字列レスポンスを返します。"
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_LTX2 LoRAローダー",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "スタックデータ",
+            "model_type": "モデルタイプ",
+            "use_cache": "LoRAファイルキャッシュ有効",
+            "available_loras": "利用可能な LoRA リスト"
+        },
+        "outputs": {
+            "MODEL": "モデル",
+            "CLIP": "CLIP"
+        },
+        "description": "DaSiWa高度なLoRAローダー：通常の画像/動画LoRA、またはLTX-2.3の動画/音声LoRAをスタックします。音声分離はLTX-2.3のみ対応。"
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_メタデータ設定",
+        "inputs": {
+            "node_positive": "ポジティブノード",
+            "node_negative": "ネガティブノード",
+            "node_model": "モデルノード",
+            "node_latent": "Latentノード",
+            "node_noise": "ノイズノード",
+            "node_sigmas": "シグマノード",
+            "node_sampler": "サンプラーノード",
+            "extra_metadata": "追加メタデータ",
+            "text_positive": "ポジティブテキスト",
+            "text_negative": "ネガティブテキスト",
+            "text_steps": "ステップ数テキスト",
+            "text_cfg": "CFGテキスト",
+            "text_sampler": "サンプラーテキスト",
+            "text_scheduler": "スケジューラテキスト",
+            "text_seed": "ランダムシードテキスト",
+            "text_model": "モデルテキスト",
+            "save_output": "出力保存"
+        },
+        "widgets": {
+            "save_workflow": "ワークフロー保存",
+            "model_hash": "モデルハッシュ"
+        },
+        "outputs": {
+            "config": "設定"
+        },
+        "description": "DaSiWaメタデータ設定：ワークフローメタデータ設定と任意の自動検出リンクを、コンパクトな設定出力としてまとめ、画像保存器で使用します。"
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_メタデータ画像保存器",
+        "inputs": {
+            "images": "画像",
+            "metadata_config": "メタデータ設定",
+            "extra_metadata": "追加メタデータ"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_format": "ファイル形式",
+            "compression": "圧縮",
+            "save_output": "出力保存"
+        },
+        "outputs": {
+            "filename": "ファイル名",
+            "metadata": "メタデータ"
+        },
+        "description": "DaSiWaメタデータ画像保存器：ComfyUIワークフローデータおよびA1111/Civitai互換の生成メタデータを含むPNGまたはWebP画像を保存します。"
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_メタデータ画像保存器完全版",
+        "inputs": {
+            "images": "画像バッチ",
+            "metadata_config": "メタデータ設定",
+            "extra_metadata": "追加メタデータ",
+            "node_positive": "ポジティブノード",
+            "node_negative": "ネガティブノード",
+            "node_model": "モデルノード",
+            "node_latent": "Latentノード",
+            "node_noise": "ノイズノード",
+            "node_sigmas": "シグマノード",
+            "node_sampler": "サンプラーノード",
+            "text_positive": "ポジティブプロンプト",
+            "text_negative": "ネガティブプロンプト",
+            "text_steps": "ステップ数",
+            "text_cfg": "CFG 値",
+            "text_sampler": "サンプラー",
+            "text_scheduler": "スケジューラ",
+            "text_seed": "ランダムシード",
+            "text_model": "テキストモデル"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_format": "ファイル形式",
+            "compression": "圧縮レベル",
+            "save_output": "出力保存",
+            "save_workflow": "ワークフロー保存",
+            "model_hash": "モデルハッシュ"
+        },
+        "outputs": {
+            "filename": "ファイル名",
+            "metadata": "メタデータ"
+        },
+        "description": "DaSiWaメタデータ画像保存器完全版：高度な保存器バリアント。すべてのメタデータ検出と手動上書きポートをノードに直接公開しています。"
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_追加メタデータ作成",
+        "inputs": {
+            "extra_metadata": "追加メタデータ"
+        },
+        "widgets": {
+            "key": "キー",
+            "value": "値"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "追加メタデータ"
+        },
+        "description": "DaSiWa追加メタデータ作成：画像保存器用のカスタムメタデータキーと値のペアを作成、または拡張します。"
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_ランダム文字列セレクター",
+        "inputs": {
+            "text": "テキスト"
+        },
+        "outputs": {
+            "text": "テキスト"
+        },
+        "description": "DaSiWaランダム文字列セレクター：テキストをそのまま通しつつ、各{A|B|C}グループをランダムに選択したオプションに置換します"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_アップスケールリファイナ",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "denoise": "ノイズ除去",
+            "deblur": "ぼかし除去",
+            "scale": "スケール",
+            "megapixels": "メガピクセル",
+            "width": "幅",
+            "height": "高さ",
+            "device_id": "デバイスID",
+            "empty_cache": "キャッシュ削除",
+            "denoise_quality": "ノイズ除去品質",
+            "deblur_quality": "ぼかし除去品質",
+            "upscale": "アップスケール",
+            "upscale_quality": "アップスケール品質",
+            "resize_type": "リサイズタイプ",
+            "divisible_by": "割り切れる数",
+            "ratio_preset": "比率プリセット",
+            "resize_method": "リサイズ手法",
+            "use_mmap": "ディスクマップを使用",
+            "auto_unload_models": "モデル自動アンロード"
+        },
+        "outputs": {
+            "images": "画像"
+        },
+        "description": "DaSiWa RTXアップスケール＆リファイナ：高性能の3段階処理ノード。1. 最適化ステージ：元解像度で実行し、NVIDIA RTXビジュアルエフェクトでノイズやぼかしを除去。2. アップスケールステージ：VSRまたは高ビットレートモードで画像を4倍に拡大。フレーム単位の処理により、動画バッチでのVRAM使用量を低く抑えます"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_解像度スケール計算機",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution_preset": "解像度プリセット",
+            "aspect_preset_when_not_image": "画像でない場合の比率プリセット",
+            "no_scale": "スケールなし",
+            "scale_from_image": "画像からスケール",
+            "swap_aspect_when_not_image": "画像でない場合は比率を交換",
+            "custom_aspect_width": "カスタム比率の幅",
+            "custom_aspect_height": "カスタム比率の高さ",
+            "mode": "モード",
+            "custom_divisor": "カスタム除数"
+        },
+        "outputs": {
+            "width_int": "整数幅",
+            "height_int": "整数高さ",
+            "width_float": "浮動小数点幅",
+            "height_float": "浮動小数点高さ"
+        },
+        "description": "DaSiWa解像度スケール計算機：目標メガピクセル面積に基づき、数学的に正確な解像度を計算します。- 標準モード：純粋な数学的スケール。- WAN/LTXモード：32ピクセル境界に整列（WAN/LTX VAEに必須）。- スケールなし：すべての計算を上書きし、元画像サイズを直接出力"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_Torchリサイズ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "size_mode": "サイズモード",
+            "aspect_mode": "比率モード",
+            "target_width": "目標幅",
+            "target_height": "目標高さ",
+            "scale_multiplier": "スケール倍率",
+            "interpolation": "補間",
+            "gamma_correct": "ガンマ補正",
+            "divisible_by": "割り切れる数",
+            "pad_color": "塗り色",
+            "crop_position": "クロップ位置",
+            "batch_size": "バッチサイズ",
+            "max_batch_megapixels": "バッチ最大メガピクセル",
+            "cache_size": "キャッシュサイズ"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "ComfyUI 画像向けの依存関係なしの PyTorch バッチリサイズツールです。ピクセル単位で正確な 最近傍、バイリニア、バイキュービック、エリア、およびキャッシュ式分離 Lanczos リサンプリングに対応します"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_ノード状態切替",
+        "widgets": {
+            "enabled": "有効",
+            "trigger_on": "トリガー条件",
+            "action": "操作"
+        },
+        "outputs": {
+            "enabled_out": "出力有効"
+        },
+        "description": "DaSiWaノード状態スイッチ：ブール状態に応じて接続された対象ノードをミュート、またはバイパスします。スイッチのチェーン接続用に有効化出力を備えます"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_透かし",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "watermark_path": "透かしパス",
+            "position": "位置",
+            "scale": "スケール",
+            "resampling": "リサンプリング",
+            "transparency": "不透明度",
+            "rotation": "回転",
+            "padding_x": "X軸パディング",
+            "padding_y": "Y軸パディング",
+            "optical_padding": "光学パディング",
+            "optical_strength": "光学強度",
+            "random_switches": "ランダムスイッチ",
+            "fade": "フェードインアウト",
+            "fade_margin": "フェードインアウトマージン",
+            "randomize_position": "ランダム位置",
+            "random_seed": "ランダムシード"
+        },
+        "description": "DaSiWa透かし：プロ仕様レベルの透かしオーバーレイノード。安定したCPU合成機能を搭載。出力バッチをRAMに保存し、初期化された元フレームからブレンドしてフリッカーを防止。バイキュービック/Lanczosスケール、回転、および「光学パディング」に対応し、完璧な視覚整合を実現"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_プロンプトプリセット構築器",
+        "inputs": {
+            "positive_input": "ポジティブ入力",
+            "negative_input": "ネガティブ入力"
+        },
+        "widgets": {
+            "style": "スタイル",
+            "seed": "ランダムシード",
+            "token_budget": "トークンバジェット",
+            "selection_state": "選択状態",
+            "reroll": "再ランダム",
+            "auto_reroll": "自動再ランダム"
+        },
+        "outputs": {
+            "positive_prompt": "ポジティブプロンプト",
+            "negative_prompt": "ネガティブプロンプト"
+        },
+        "description": "内蔵のデュアルスタイルプロンプトライブラリからポジティブとネガティブのプロンプトを構築します。選択項目と重みはワークフローに保存されます"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_独立シードコントローラー",
+        "description": "シード制御の独立ノードです。MiniMax H3 Director のシード操作体験を再利用します: ランダム/固定モード、64 ビット符号なしシード、再ランダム/前回シードの復元、直近 10 件の履歴、および下流のサンプラーで直接使える NOISE オブジェクトの出力。",
+        "inputs": {
+            "seed": "外部シード入力"
+        },
+        "widgets": {
+            "seed_value": "ローカルシード値",
+            "seed_control_state": "シード制御状態",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "ローカルのシード値です。フロントエンドのパネルで編集するため、ネイティブのコントロールは非表示のままにしてください。",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "永続化されるシード制御の状態（JSON）: モード、前回のシード、最近使用したシードのリスト。",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "オプションの外部シード入力です。接続するとローカルコントロールは無効になり、接続値がそのまま通過します。"
+        },
+        "outputs": {
+            "seed": "シード",
+            "noise": "ノイズ"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Comfy Kitchen INT8 アテンションパッチ",
+        "description": "モデルにパッチを適用し、実行時に Comfy Kitchen INT8 アテンション実装を使用してVRAMを節約します。Comfy Kitchen が利用できない場合は ComfyUI のデフォルトのアテンションにフォールバックします。",
+        "inputs": {
+            "model": "モデル"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_MiniMax H3 ディレクター",
+        "description": "MiniMax H3 動画/音声生成ディレクターノード：タイムライン、参考メディア、プロンプト構築を統合し、完全なガイダンス情報を含むディレクター設定を出力します。MiniMax H3 Director Guide ノードで使用してください。",
+        "inputs": {
+            "fl2va_model": "FL2VA モデル",
+            "ref2va_model": "REF2VA モデル",
+            "external_width_overwrite": "外部幅上書き",
+            "external_height_overwrite": "外部高さ上書き",
+            "external_prompt_overwrite": "外部プロンプト上書き"
+        },
+        "widgets": {
+            "mode": "モード",
+            "prompt": "プロンプト",
+            "width": "幅",
+            "height": "高さ",
+            "duration": "再生時間",
+            "ref_image_size": "参照画像サイズ",
+            "frame_rate": "フレームレート"
+        },
+        "outputs": {
+            "guide": "ディレクターガイド",
+            "duration": "再生時間",
+            "positive_prompt": "ポジティブプロンプト",
+            "width": "幅",
+            "height": "高さ",
+            "model": "モデル",
+            "fl2va_requested": "FL2VA をリクエスト",
+            "inpaint_requested": "インペイントをリクエスト",
+            "frame_rate": "フレームレート"
+        },
+        "ui": {
+            "Model Mode:": "モデルモード：",
+            "Image Inpaint": "画像インペイント",
+            "Prompt Mode:": "プロンプトモード：",
+            "Simple": "簡易",
+            "Structured": "構造化",
+            "Use the simple prompt editor": "簡易プロンプトエディタを使用",
+            "Use the structured prompt editor": "構造化プロンプトエディタを使用",
+            "One image reference; output exactly one frame through Get Image from Batch.": "単一画像参照；「バッチから画像を取得」でフレームを正確に1枚出力します。",
+            "Remove": "削除",
+            "Clear": "クリア",
+            "Remove all media and prompts": "すべてのメディアとプロンプトを削除",
+            "Nothing to clear yet": "クリアできる内容がありません",
+            "Nothing to clear.": "クリアできる内容がありません。",
+            "Open MiniMax H3 Director documentation on GitHub": "MiniMax H3 ディレクターのドキュメントを GitHub で開く",
+            "T2VA · no input frame": "T2VA · 入力フレームなし",
+            "I2VA · one opening-frame slot": "I2VA · 先頭フレーム 1 スロット",
+            "FL2VA · opening and closing-frame slots": "FL2VA · 先頭フレームと末尾フレームのスロット",
+            "L2VA · one closing-frame slot": "L2VA · 末尾フレーム 1 スロット",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "画像インペイント · 画像1枚のみ · 「バッチから画像を取得」で1フレーム出力 · 動画/音声なし",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · 画像 9、動画 3、音声 3 スロットまで · 合計最大 12 ファイル",
+            "ASPECT": "アスペクト比",
+            "RESOLUTION": "解像度",
+            "INPUT SCALING": "入力スケール",
+            "Auto": "自動",
+            "CUSTOM": "カスタム",
+            "Native (ShortEdge 768px)": "ネイティブ（短辺 768px）",
+            "Off": "オフ",
+            "Native (ShortEdge 2048px)": "ネイティブ（短辺 2048px）",
+            "Target · Selected Aspect & Resolution": "ターゲット · 選択中のアスペクト比と解像度",
+            "Fit": "フィット",
+            "Fill and crop": "パディングしてクロップ",
+            "Fit and pad": "フィットしてパディング",
+            "Long side with divisible crop": "長辺整列で割り切れるクロップ",
+            "0.26 MP - Preview": "0.26 MP - プレビュー",
+            "0.36 MP - Small": "0.36 MP - 小",
+            "0.65 MP - Balanced": "0.65 MP - バランス",
+            "1.35 MP - 2K lite": "1.35 MP - 2K ライト",
+            "General": "一般",
+            "Horizontal": "横向き",
+            "Square": "正方形",
+            "Vertical": "縦向き",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "入力スケールをスキップします——参照素材は元のサイズのまま MiniMax に送信されます。",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "参考素材の短辺が 2048 ピクセルを超える場合のみ縮小します。それより小さい入力はそのまま、処理なしで通過します。",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "参照素材を選択中のアスペクト比と解像度のボックスに合わせます（引き伸ばし、アスペクト比は維持しません）。",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "参照素材をスケールし、アスペクト比を維持したままターゲットボックスに収まるようにします。",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "アスペクト比を維持したまま参照素材でターゲットボックスを覆うようにスケールし、オーバーフローをクロップします。",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "アスペクト比を維持したまま参照素材をターゲットボックス内にスケールし、余白をパディングします。",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "長辺がターゲットと一致するようにスケールし、その後、正確で割り切れる目標サイズにクロップします。",
+            "RATIO W": "比率 幅",
+            "RATIO H": "比率 高さ",
+            "Megapixels": "メガピクセル",
+            "Fixed pixels": "固定ピクセル",
+            "WIDTH": "幅",
+            "HEIGHT": "高さ",
+            "External width/height overwrite · Director sizing and input scaling disabled": "外部幅・高さ上書き · ディレクターのサイズ設定と入力スケールは無効です",
+            "Image/Video": "画像/動画",
+            "Image/Video · selected": "画像/動画 · 選択中",
+            "audio": "音声",
+            "audio · selected": "音声 · 選択中",
+            "Video only": "動画のみ",
+            "Audio only": "音声のみ",
+            "Video + embedded audio": "動画 + 埋め込み音声",
+            "Full source-duration scale": "ソース全長スケール",
+            "Full audio waveform; crop markers show the selected reference window": "音声全体の波形；クロップマーカーは選択中の参照区間を示します",
+            "Decoding audio waveform…": "音声波形をデコード中…",
+            "Open preview and details": "プレビューと詳細を開く",
+            "T2VA prompt builder": "T2VA プロンプト構築器",
+            "I2VA prompt builder": "I2VA プロンプト構築器",
+            "FL2VA prompt builder": "FL2VA プロンプト構築器",
+            "L2VA prompt builder": "L2VA プロンプト構築器",
+            "REF2VA prompt builder": "REF2VA プロンプト構築器",
+            "Image Inpaint prompt builder": "画像インペイントプロンプト構築器",
+            "T2VA simple prompt": "T2VA 簡易プロンプト",
+            "I2VA simple prompt": "I2VA 簡易プロンプト",
+            "FL2VA simple prompt": "FL2VA 簡易プロンプト",
+            "L2VA simple prompt": "L2VA 簡易プロンプト",
+            "REF2VA simple prompt": "REF2VA 簡易プロンプト",
+            "Image Inpaint simple prompt": "画像インペイント簡易プロンプト",
+            "REF2VA prompt builder — write freely; headers are added automatically": "REF2VA プロンプト構築器——自由に記述してください、フィールド見出しは自動で追加されます",
+            "Prompt": "プロンプト",
+            "Insert [Shot N]": "[Shot N] を挿入",
+            "Prefill Labels & Summary": "ラベルと要約を事前入力",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "挿入済みのメディアから被写体/画像/動画/音声ラベルを生成し、要約テンプレートを埋めます",
+            "Preview Prompt": "プロンプトプレビュー",
+            "Show the full prompt that will be sent upstream": "アップストリームに送信される予定の完全なプロンプトを表示します",
+            "External prompt detected — builder fields are disabled.": "外部プロンプトが検出されました——ビルダーの入力フィールドは無効です。",
+            "Write the complete MiniMax H3 prompt...": "ここで MiniMax H3 の完全なプロンプトを入力してください…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] ここからシーンの説明を開始してください…",
+            "Describe ambient sounds, dialogue, effects...": "環境音、セリフ、効果音を説明してください…",
+            "N/A or describe background score...": "N/A を入力、またはBGMを説明…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> は <Picture 1> の女性で、黒のショートヘアに赤いコートを着用。\n<Picture 1> は [Shot 1] の先頭フレームのアンカーです。\n<Subject 2> は <Video 1> から取得した歩行動作です。\n<Video 1> はカメラワークのパスとリズム構造を提供します。\n<Audio 1> は <Subject 1> の音色参考です。",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] <Picture 1> の <Subject 1>、<Video 1> の動作とリズム、および <Audio 1> の声質を使用します。",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1>（[Shot 1]、[Shot 2] に登場）：fully_preserved - アイデンティティと衣装の整合を維持。\n<Picture 1>（[Shot 1] 先頭フレーム）：fully_preserved - 冒頭の構図アンカー。\n<Subject 2>（動作を <Subject 1> に転送）：attribute_transfer - 歩行リズムを <Subject 1> に適用。\n<Video 1>（リズム構造）：weak_reference - およそのタイミングとカメラリズムを保持。\n<Audio 1>：reference - 音色と話し方に従い、元の信号はコピーしません。",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] 00:04.500 で、……",
+            "Audio environment description...": "音声環境の説明…",
+            "N/A or background score...": "N/A を入力、またはBGMを説明…",
+            "Close and save (Escape or click outside)": "閉じて保存（Esc または外側をクリック）",
+            "Start:": "開始：",
+            "End:": "終了：",
+            "▶ Play crop": "▶ クロップ区間を再生",
+            "Playing crop…": "クロップ区間を再生中…",
+            "Play only the current crop range": "現在のクロップ範囲のみを再生",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "強調表示されたクロップをドラッグして移動、両端のマーカーをドラッグしてサイズを変更できます。",
+            "Save": "保存",
+            "Cancel": "キャンセル",
+            "Full media preview": "メディア全体のプレビュー",
+            "Done": "完了",
+            "Copy": "コピー",
+            "All media and prompts cleared.": "すべてのメディアとプロンプトをクリアしました。",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VAは画像参考のみ対応し、動画と音声は使用できません。",
+            "This media type is not available in the selected MiniMax mode.": "選択中の MiniMax モードではこのメディアタイプは利用できません。",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VAは画像参考のみ対応しています。画像/動画トラックを選択してください。",
+            "Upload failed": "アップロード失敗",
+            "T2VA has no input lanes.": "T2VAには入力トラックがありません。",
+            "This mode does not support audio references.": "このモードでは音声参照はサポートされていません。",
+            "Audio lane selected. Paste files here with Ctrl+V.": "音声トラックが選択されています。ここで Ctrl+V でファイルを貼り付けできます。",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "画像/動画トラックが選択されています。ここで Ctrl+V でファイルを貼り付けできます。"
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_MiniMax H3 ディレクター実行器",
+        "description": "ディレクターガイドをネイティブの MiniMax H3 ノード呼び出しに変換します。ガイドのモードに応じて MiniMaxH3ImageToVideo または MiniMaxH3ReferenceToVideo を呼び出し、conditioning と latent を生成します。",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "ディレクターガイド",
+            "audio_vae": "音声 VAE"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_MiniMax H3 残差キャッシュ",
+        "description": "MiniMax H3 モデルに近似ブロック全体の残差キャッシュを追加します。選択したステップ数範囲内で前回の block-stack 出力を再利用し、重い再計算をスキップして速度を向上させます。閾値を高くするほどスキップが増え、忠実度が低下する可能性があります。",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "reuse_threshold": "再利用閾値",
+            "start_percent": "開始率",
+            "end_percent": "終了率",
+            "max_steps": "最大スキップステップ数",
+            "device": "デバイス",
+            "verbose": "詳細ログ"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        }
+    }
+}

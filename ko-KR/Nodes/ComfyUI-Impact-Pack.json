@@ -1,0 +1,3409 @@
+{
+    "ONNXDetectorForEach": {
+        "title": "프레임별 ONNX 감지기",
+        "inputs": {
+            "onnx_detector": "ONNX 검출기",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창 계수",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 크기 필터 임계값"
+        },
+        "description": ""
+    },
+    "ImpactIntConstSender": {
+        "title": "Impact 정수 상수 전송기",
+        "inputs": {
+            "signal": "신호"
+        },
+        "widgets": {
+            "value": "값",
+            "link_id": "링크 ID"
+        },
+        "description": ""
+    },
+    "ImagePasteMasked": {
+        "title": "마스크 포함 이미지 붙여넣기",
+        "inputs": {
+            "destination": "대상 이미지",
+            "source": "원본 이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "x": "X 좌표",
+            "y": "Y 좌표",
+            "resize_source": "소스 이미지 크기 조정"
+        },
+        "description": ""
+    },
+    "Unsampler": {
+        "title": "역 샘플러",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 프롬프트",
+            "negative": "부정 프롬프트",
+            "latent_image": "latent 이미지"
+        },
+        "widgets": {
+            "steps": "step 총 개수",
+            "end_at_step": "종료 step",
+            "cfg": "CFG 값",
+            "sampler_name": "샘플러 이름",
+            "scheduler": "스케줄러",
+            "normalize": "정규화"
+        },
+        "description": ""
+    },
+    "ImpactKSamplerBasicPipe": {
+        "title": "KSampler(노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "KSampler의 노드 번들 버전입니다.\n 스케줄러 위젯을 입력으로 변환할 때는 호환성 문제 해결을 위해 스케줄 어댑터 노드를 참조하세요."
+    },
+    "ImpactKSamplerAdvancedBasicPipe": {
+        "title": "KSampler(고급 노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "add_noise": "노이즈 추가",
+            "noise_seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "start_at_step": "노이즈 제거 시작 스텝",
+            "end_at_step": "노이즈 제거 종료 스텝",
+            "return_with_leftover_noise": "노이즈 반환"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "KSampler의 고급 노드 번들 버전입니다.\n 스케줄러 위젯을 입력으로 변환할 때는 호환성 문제 해결을 위해 스케줄 어댑터 노드를 참조하세요."
+    },
+    "CLIPSegDetectorProvider": {
+        "title": "CLIPSeg 검출기",
+        "widgets": {
+            "text": "텍스트",
+            "blur": "블러",
+            "threshold": "임계값",
+            "dilation_factor": "팽창"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox 감지"
+        },
+        "description": "BBox 검출을 위한 CLIPSeg 래퍼입니다."
+    },
+    "SEGSOrderedFilterDetailerHookProvider": {
+        "title": "Seg 순서 필터 옵티마이저 훅",
+        "widgets": {
+            "target": "대상",
+            "order": "순서대로",
+            "take_start": "시작 번호",
+            "take_count": "수량"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "Seg 범위 필터 옵티마이저 훅, Seg 라벨 필터 옵티마이저 훅 - 최적화 제약을 생성하여 Seg 필터 노드를 제공하는 래퍼 노드가 존재하며, 안면 최적화 또는 검출기에 적용할 수 있습니다."
+    },
+    "SEGSRangeFilterDetailerHookProvider": {
+        "title": "Seg 범위 필터 옵티마이저 훅",
+        "widgets": {
+            "target": "대상",
+            "mode": "모드",
+            "min_value": "최솟값",
+            "max_value": "최댓값"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        }
+    },
+    "SEGSLabelFilterDetailerHookProvider": {
+        "title": "Seg 라벨 필터 옵티마이저 훅",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "프리셋",
+            "labels": "태그"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        }
+    },
+    "CustomSamplerDetailerHookProvider": {
+        "title": "커스텀 샘플링 최적화 제약기",
+        "inputs": {
+            "sampler": "샘플러"
+        },
+        "widgets": {
+            "preset": "프리셋",
+            "labels": "태그"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        }
+    },
+    "LamaRemoverDetailerHookProvider": {
+        "title": "LaMa 복원 알고리즘 옵티마이저 훅",
+        "inputs": {
+            "sampler": "샘플러"
+        },
+        "widgets": {
+            "mask_threshold": "마스크 임계값",
+            "gaussblur_radius": "가우시안 블러 반경",
+            "skip_sampling": "샘플링 스킵"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        }
+    },
+    "EmptySegs": {
+        "title": "빈 Seg",
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "빈 Seg를 제공합니다."
+    },
+    "SetDefaultImageForSEGS": {
+        "title": "Seg 기본 이미지 설정",
+        "inputs": {
+            "segs": "Seg",
+            "image": "이미지"
+        },
+        "widgets": {
+            "override": "오버라이드"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "최적화 향상기를 거치지 않으면 SEGS에는 검출 영역 정보만 포함되고 이미지가 없습니다. 이 노드는 SEGS에 기본 이미지를 설정합니다."
+    },
+    "RemoveImageFromSEGS": {
+        "title": "Seg 이미지 제거",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactControlNetApplySEGS": {
+        "title": "ControlNet 적용 Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Seg 전처리",
+            "control_image": "ControlNet 이미지"
+        },
+        "widgets": {
+            "strength": "강도"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Seg에 ControlNet을 적용하려면 Inspire Pack의 Preprocessor Provider 노드를 사용하여 이 노드를 활용해야 합니다.\n Seg 전처리와 ControlNet 이미지를 선택적으로 적용할 수 있습니다. ControlNet 이미지를 지정하면 Seg 전처리는 무시됩니다.\n ControlNet 이미지로 설정한 경우, Seg 미리보기(ControlNet 이미지)로 크롭된 중심 이미지를 미리볼 수 있습니다. Seg 전처리에서 생성된 이미지는 각 옵티마이저의 ControlNet 이미지 출력으로 확인해야 합니다.\n Seg 전처리는 옵티마이저 처리 중 크롭 이미지를 실시간으로 전처리하여 실행되며, ControlNet 이미지는 크롭되어 ControlNet이 적용된 Seg의 입력으로 사용됩니다."
+    },
+    "ImpactControlNetApplyAdvancedSEGS": {
+        "title": "ControlNet 적용(고급)Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Seg 전처리",
+            "control_image": "이미지"
+        },
+        "widgets": {
+            "strength": "강도",
+            "start_percent": "시작 시간",
+            "end_percent": "종료 시간"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Seg에 ControlNet을 적용하려면 Inspire Pack의 Preprocessor Provider 노드를 사용하여 이 노드를 활용해야 합니다.\n Seg 전처리와 ControlNet 이미지를 선택적으로 적용할 수 있습니다. ControlNet 이미지를 지정하면 Seg 전처리는 무시됩니다.\n ControlNet 이미지로 설정한 경우, Seg 미리보기(ControlNet 이미지)로 크롭된 중심 이미지를 미리볼 수 있습니다. Seg 전처리에서 생성된 이미지는 각 옵티마이저의 ControlNet 이미지 출력으로 확인해야 합니다.\n Seg 전처리는 옵티마이저 처리 중 크롭 이미지를 실시간으로 전처리하여 실행되며, ControlNet 이미지는 크롭되어 ControlNet이 적용된 Seg의 입력으로 사용됩니다."
+    },
+    "ImpactControlNetClearSEGS": {
+        "title": "ControlNet 제거 Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Seg에 적용된 ControlNet 지우기"
+    },
+    "ImpactDecomposeSEGS": {
+        "title": "Seg 분해",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS_HEADER": "Seg 헤더 정보",
+            "SEG_ELT": "Seg_요소"
+        }
+    },
+    "ImpactAssembleSEGS": {
+        "title": "Seg 조합",
+        "inputs": {
+            "seg_header": "Seg 헤더 정보",
+            "seg_elt": "Seg_요소"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactFrom_SEG_ELT": {
+        "title": "Seg 요소에서",
+        "inputs": {
+            "seg_elt": "Seg_요소"
+        },
+        "outputs": {
+            "seg_elt": "Seg_요소",
+            "cropped_image": "크롭 이미지",
+            "cropped_mask": "크롭 마스크",
+            "crop_region": "크롭 영역",
+            "BBox": "Seg 요소_BBox",
+            "Seg_ELT_bbox": "Seg 요소 BBox",
+            "control_net_wrapper": "ControlNet 치환",
+            "confidence": "신뢰도",
+            "label": "태그"
+        }
+    },
+    "ImpactEdit_SEG_ELT": {
+        "title": "Seg_요소 편집",
+        "inputs": {
+            "seg_elt": "Seg_요소",
+            "cropped_image_opt": "크롭 이미지",
+            "cropped_mask_opt": "크롭 마스크",
+            "crop_region_opt": "크롭 영역",
+            "bbox_opt": "BBox 선택",
+            "control_net_wrapper_opt": "ControlNet 치환",
+            "confidence_opt": "신뢰도",
+            "label_opt": "태그"
+        },
+        "outputs": {
+            "Seg_ELT": "Seg_요소",
+            "SEG_ELT": "Seg_요소"
+        }
+    },
+    "ImpactDilate_Mask_SEG_ELT": {
+        "title": "Seg 요소 팽창",
+        "inputs": {
+            "seg_elt": "Seg_요소"
+        },
+        "widgets": {
+            "dilation": "팽창"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_요소"
+        }
+    },
+    "ImpactDilateMask": {
+        "title": "마스크 팽창",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "dilation": "팽창"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "ImpactGaussianBlurMask": {
+        "title": "마스크 가우시안 블러",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "kernel_size": "크기",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "ImpactDilateMaskInSEGS": {
+        "title": "Seg 마스크 팽창",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "dilation": "팽창"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactGaussianBlurMaskInSEGS": {
+        "title": "Seg 마스크 가우시안 블러",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "kernel_size": "크기",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactScaleBy_BBOX_SEG_ELT": {
+        "title": "Seg 요소 배율",
+        "inputs": {
+            "seg": "Seg"
+        },
+        "widgets": {
+            "scale_by": "계수"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_요소"
+        }
+    },
+    "ImpactSEGSToMaskBatch": {
+        "title": "Seg를 마스크 그룹으로",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "PreviewBridge": {
+        "title": "브리지 미리보기 이미지",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "image": "이미지",
+            "block": "블록",
+            "restore_mask": "마스크 복원"
+        },
+        "outputs": {
+            "IMAGE": "이미지",
+            "MASK": "마스크"
+        },
+        "description": "Clip 공간의 마스크 편집기 기능을 사용할 때, 이 커스텀 노드는 이미지 브리지와 함께 사용할 수 있습니다."
+    },
+    "PreviewBridgeLatent": {
+        "title": "브리지 미리보기 Latent",
+        "inputs": {
+            "latent": "Latent",
+            "vae_opt": "VAE 선택"
+        },
+        "widgets": {
+            "image": "이미지",
+            "block": "블록",
+            "restore_mask": "마스크 복원",
+            "preview_method": "프리뷰 방식"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "MASK": "마스크"
+        },
+        "description": "이 커스텀 노드는 Clip 공간의 마스크 에디터 기능을 사용할 때 브리지와 함께 Latent 공간에서 사용할 수 있습니다.\n 입력에 마스크가 포함된 Latent 변수가 제공되면 해당 마스크를 표시합니다. 또한 마스크 출력은 Latent 변수에 설정된 마스크를 제공합니다.\n 입력에 마스크가 없는 Latent이면 원본 Latent을 그대로 출력하지만, 마스크 출력은 전체 영역이 마스크로 설정된 결과를 출력합니다.\n 마스크 에디터로 마스크를 설정하면 마스크가 Latent 공간에 적용되고 출력에 저장된 마스크가 포함됩니다. 동일한 마스크가 마스크 출력으로도 제공됩니다.\n VAE 선택에 연결되면 미리보기 방법보다 우선순위가 높습니다."
+    },
+    "ImageSender": {
+        "title": "이미지 전송",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "link_id": "연결 ID"
+        },
+        "description": "이미지 전송으로 생성된 이미지는 동일한 연결 ID를 통해 자동으로 이미지 수신으로 전송됩니다."
+    },
+    "ImageReceiver": {
+        "title": "이미지 수신",
+        "widgets": {
+            "image": "이미지",
+            "save_to_workflow": "워크플로우에 저장",
+            "image_data": "이미지 데이터",
+            "trigger_always": "항상 트리거",
+            "link_id": "연결 ID"
+        },
+        "outputs": {
+            "IMAGE": "이미지",
+            "MASK": "마스크"
+        },
+        "description": "이미지 전송으로 생성된 이미지는 동일한 연결 ID를 통해 자동으로 이미지 수신으로 전송됩니다."
+    },
+    "LatentSender": {
+        "title": "Latent 전송",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "preview_method": "프리뷰 방식",
+            "link_id": "연결 ID"
+        },
+        "description": "Latent 전송에서 생성된 잠재 공간은 동일한 연결 ID를 통해 Latent 수신으로 자동으로 전송됩니다.\n  또한 Latent 전송은 Latent 미리보기로 구현되며, Latent를 페이로드 형태로 이미지 섬네일에 저장합니다.\n  ComfyUI의 현재 구조상 SDXL 잠재 공간과 SD1.5/SD2.1 잠재 공간을 구분할 수 없습니다. 따라서 SD1.5 방식으로 디코딩하여 섬네일을 생성합니다."
+    },
+    "LatentReceiver": {
+        "title": "Latent 수신",
+        "widgets": {
+            "latent": "Latent",
+            "trigger_always": "항상 트리거",
+            "link_id": "연결 ID"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Latent 전송에서 생성된 잠재 공간은 동일한 연결 ID를 통해 Latent 수신으로 자동으로 전송됩니다.\n  또한 Latent 전송은 Latent 미리보기로 구현되며, Latent를 페이로드 형태로 이미지 섬네일에 저장합니다.\n  ComfyUI의 현재 구조상 SDXL 잠재 공간과 SD1.5/SD2.1 잠재 공간을 구분할 수 없습니다. 따라서 SD1.5 방식으로 디코딩하여 섬네일을 생성합니다."
+    },
+    "ImageMaskSwitch": {
+        "title": "이미지 마스크 전환",
+        "inputs": {
+            "images1": "이미지1",
+            "mask1": "마스크1",
+            "images2": "이미지2",
+            "mask2": "마스크2",
+            "images3": "이미지3",
+            "mask3": "마스크3",
+            "images4": "이미지4",
+            "mask4": "마스크4",
+            "select": "선택",
+            "mask1_opt": "마스크1",
+            "images2_opt": "이미지2",
+            "mask2_opt": "마스크2",
+            "images3_opt": "이미지3",
+            "mask3_opt": "마스크3",
+            "images4_opt": "이미지4",
+            "mask4_opt": "마스크4"
+        },
+        "widgets": {
+            "select": "선택",
+            "sel_mode": "모드 선택"
+        },
+        "outputs": {
+            "IMAGE": "이미지",
+            "MASK": "마스크"
+        },
+        "description": "여러 입력 중 셀렉터가 지정한 입력을 선택하여 출력합니다. 첫 번째 입력은 반드시 제공해야 하며, 나머지는 선택적입니다. 단, 셀렉터가 지정한 입력이 연결되어 있지 않으면 오류가 발생할 수 있습니다."
+    },
+    "LatentSwitch": {
+        "title": "Latent 전환",
+        "inputs": {
+            "input1": "입력 1",
+            "latent1": "Latent1",
+            "latent2_opt": "Latent2",
+            "latent3_opt": "Latent3",
+            "latent4_opt": "Latent4"
+        },
+        "widgets": {
+            "select": "선택",
+            "sel_mode": "모드 선택"
+        },
+        "outputs": {
+            "selected_index": "지수 선택",
+            "selected_value": "값 선택",
+            "selected_label": "라벨 선택"
+        },
+        "description": "여러 입력 중 셀렉터가 지정한 입력을 선택하여 출력합니다. 첫 번째 입력은 반드시 제공해야 하며, 나머지는 선택적입니다. 단, 셀렉터가 지정한 입력이 연결되어 있지 않으면 오류가 발생할 수 있습니다."
+    },
+    "SEGSSwitch": {
+        "title": "Seg 전환",
+        "inputs": {
+            "input1": "입력 1",
+            "Seg": "Seg1",
+            "segs2_opt": "Seg2",
+            "segs3_opt": "Seg3",
+            "segs4_opt": "Seg4"
+        },
+        "widgets": {
+            "select": "선택",
+            "sel_mode": "모드 선택"
+        },
+        "outputs": {
+            "selected_index": "지수 선택",
+            "selected_value": "값 선택",
+            "selected_label": "라벨 선택"
+        },
+        "description": "여러 입력 중 셀렉터가 지정한 입력을 선택하여 출력합니다. 첫 번째 입력은 반드시 제공해야 하며, 나머지는 선택적입니다. 단, 셀렉터가 지정한 입력이 연결되어 있지 않으면 오류가 발생할 수 있습니다."
+    },
+    "ImpactSwitch": {
+        "title": "전환",
+        "inputs": {
+            "input1": "입력 1",
+            "input2": "입력 2",
+            "input3": "입력 3",
+            "input4": "입력 4"
+        },
+        "widgets": {
+            "select": "선택",
+            "sel_mode": "모드 선택",
+            "select_on_execution": "실행 시",
+            "select_on_prompt": "프롬프트"
+        },
+        "outputs": {
+            "selected_index": "지수 선택",
+            "selected_value": "값 선택",
+            "selected_label": "라벨 선택"
+        }
+    },
+    "ImpactInversedSwitch": {
+        "title": "반전 전환",
+        "inputs": {
+            "input": "입력"
+        },
+        "widgets": {
+            "sel_mode": "모드 선택",
+            "select": "선택"
+        },
+        "outputs": {
+            "*": "출력"
+        },
+        "description": "목록 생성(임의)과 달리, 입력을 하나 받아 그중 하나를 출력합니다"
+    },
+    "ImpactInversedSwtich": {
+        "title": "반전 전환",
+        "inputs": {
+            "input": "입력"
+        },
+        "widgets": {
+            "select": "선택"
+        },
+        "outputs": {
+            "output1": "출력1"
+        }
+    },
+    "SEGSToImageList": {
+        "title": "Seg를 이미지 목록으로",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "예비 이미지"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "ImpactSEGSToMaskList": {
+        "title": "Seg를 마스크 목록으로",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "ImpactSEGSConcat": {
+        "title": "Seg 병합",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSPicker": {
+        "title": "Seg 선택",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "예비 이미지"
+        },
+        "widgets": {
+            "picks": "선택",
+            "pick": "선택"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "입력된 SEGS에서 특정 SEGS를 선택하는 기능을 제공합니다."
+    },
+    "ReencodeLatent": {
+        "title": "Latent 재인코딩",
+        "inputs": {
+            "samples": "Latent",
+            "input_vae": "디코딩 VAE",
+            "output_vae": "인코딩 VAE"
+        },
+        "widgets": {
+            "overlap": "중첩 영역",
+            "tile_mode": "청킹 모드",
+            "tile_size": "청크 크기"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ReencodeLatentPipe": {
+        "title": "Latent 재인코딩(노드 묶음)",
+        "inputs": {
+            "samples": "Latent",
+            "input_basic_pipe": "디코딩 노드 번들",
+            "output_basic_pipe": "인코딩 노드 번들"
+        },
+        "widgets": {
+            "tile_mode": "청킹 모드"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ImpactImageBatchToImageList": {
+        "title": "이미지 배치→이미지 목록",
+        "inputs": {
+            "image": "이미지"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "이미지 배치를 이미지 목록으로 변환합니다.\n  여러 배치에서 생성된 이미지를 사용하여 처리할 수 있습니다."
+    },
+    "ImpactMakeImageList": {
+        "title": "이미지 목록 생성",
+        "inputs": {
+            "image1": "이미지"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "여러 이미지를 하나의 이미지 목록으로 변환합니다."
+    },
+    "ImpactMakeImageBatch": {
+        "title": "이미지 배치 생성",
+        "inputs": {
+            "image1": "이미지"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "여러 이미지를 하나의 이미지 배치로 변환합니다.\n  이미지 입력은 필요에 따라 확대할 수 있습니다."
+    },
+    "ImpactCombineConditionings": {
+        "title": "조건 병합",
+        "inputs": {
+            "conditioning1": "컨디셔닝 1",
+            "conditioning2": "컨디셔닝 2",
+            "conditioning3": "컨디셔닝3",
+            "conditioning4": "컨디셔닝4",
+            "conditioning5": "조건5",
+            "conditioning6": "조건 6",
+            "conditioning7": "조건 7",
+            "conditioning8": "조건 8",
+            "conditioning9": "조건 9",
+            "conditioning10": "조건 10"
+        },
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "여러 조건 입력을 받아 하나의 조건으로 병합합니다."
+    },
+    "ImpactSEGSLabelFilter": {
+        "title": "Seg 라벨 필터",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "프리셋",
+            "labels": "태그"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "마스킹 Seg",
+            "remained_SEGS": "나머지 Seg"
+        }
+    },
+    "ImpactSEGSRangeFilter": {
+        "title": "Seg 범위 필터",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "대상",
+            "min_value": "최솟값",
+            "max_value": "최댓값",
+            "mode": "모드"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "마스킹 Seg",
+            "remained_SEGS": "나머지 Seg"
+        }
+    },
+    "ImpactSEGSOrderedFilter": {
+        "title": "Seg 순서 필터",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "대상",
+            "order": "순서대로",
+            "take_start": "시작 번호",
+            "take_count": "수량"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "마스킹 Seg",
+            "remained_SEGS": "나머지 Seg"
+        }
+    },
+    "ImpactStringSelector": {
+        "title": "문자열 선택",
+        "widgets": {
+            "strings": "문자열",
+            "multiline": "여러 줄 텍스트",
+            "select": "선택"
+        },
+        "outputs": {
+            "STRING": "문자열"
+        },
+        "description": "문자열의 일부를 선택하여 반환합니다. 멀티라인 텍스트 모드가 비활성화되면 셀렉터가 가리킨 줄의 문자열을 그대로 반환합니다. 멀티라인 텍스트 모드가 활성화되면 #으로 시작하는 줄을 기준으로 문자열을 분할하여 반환합니다. 선택 값이 항목 수를 초과하면 첫 줄부터 다시 센 뒤 그에 맞게 반환합니다."
+    },
+    "BitwiseAndMaskForEach": {
+        "title": "Seg 교집합",
+        "inputs": {
+            "base_segs": "기본 seg",
+            "mask_segs": "마스크 seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "SubtractMaskForEach": {
+        "title": "Seg 빼기",
+        "inputs": {
+            "base_segs": "기본 seg",
+            "mask_segs": "마스크 seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BitwiseAndMask": {
+        "title": "마스크 교집합",
+        "inputs": {
+            "mask1": "마스크1",
+            "mask2": "마스크2"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "SubtractMask": {
+        "title": "마스크 뺄셈",
+        "inputs": {
+            "mask1": "마스크1",
+            "mask2": "마스크2"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "AddMask": {
+        "title": "마스크 덧셈",
+        "inputs": {
+            "mask1": "마스크1",
+            "mask2": "마스크2"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "ImpactSegsAndMask": {
+        "title": "Seg 마스크",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "마스크"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSegsAndMaskForEach": {
+        "title": "Seg 마스크(배치)",
+        "inputs": {
+            "segs": "Seg",
+            "masks": "마스크"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask": {
+        "title": "Seg 마스크",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "마스크"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask ForEach": {
+        "title": "Seg 마스크(배치)",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "마스크",
+            "masks": "마스크 묶음"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "MediaPipeFaceMeshToSEGS": {
+        "title": "MediaPipe 페이스 메시 to Seg",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "crop_factor": "크롭 배수",
+            "bbox_fill": "BBox 채우기",
+            "crop_min_size": "크롭 최소 크기",
+            "drop_size": "최소 사이즈",
+            "dilation": "팽창",
+            "face": "얼굴",
+            "mouth": "입",
+            "left_eyebrow": "왼쪽 눈썹",
+            "left_eye": "왼쪽 눈",
+            "left_pupil": "왼쪽 동공",
+            "right_eyebrow": "오른쪽 눈썹",
+            "right_eye": "오른쪽 눈",
+            "right_pupil": "오른쪽 동공"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "MediaPipe 페이스 메쉬 이미지에서 각 랜드마크를 분리하여 라벨이 있는 Seg를 만듭니다.\n  일반적으로 MediaPipe 페이스 메쉬 전처리기로 생성된 이미지는 크기가 축소됩니다.\n  처리 중에 크기를 맞추기 위해 MediaPipe 페이스 메쉬 이미지를 주어진 참고 이미지 선택의 원래 크기로 조정합니다."
+    },
+    "MaskToSEGS_for_AnimateDiff": {
+        "title": "마스크를 Seg으로(동적 확산)",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "crop_factor": "크롭 배수",
+            "combined": "병합 여부",
+            "bbox_fill": "BBox 채우기",
+            "drop_size": "최소 사이즈",
+            "contour_fill": "윤곽선 채우기"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "마스크를 기반으로 다이내믹 디퓨전용 Seg를 생성합니다."
+    },
+    "MaskToSEGS": {
+        "title": "마스크를 Seg으로",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "crop_factor": "크롭 배수",
+            "combined": "병합 여부",
+            "bbox_fill": "BBox 채우기",
+            "drop_size": "최소 사이즈",
+            "contour_fill": "윤곽선 채우기"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "마스크를 기반으로 Seg를 생성합니다."
+    },
+    "ToBinaryMask": {
+        "title": "마스크 이진화",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "threshold": "임계값"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "0~255 사이의 알파 값을 가진 마스크를 0과 255로 분리합니다. 0이 아닌 부분은 항상 255로 설정됩니다."
+    },
+    "MasksToMaskList": {
+        "title": "마스크를 마스크 리스트로",
+        "inputs": {
+            "masks": "마스크"
+        },
+        "widgets": {
+            "threshold": "임계값"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "이 노드는 배치 형태의 마스크를 개별 마스크 목록으로 변환합니다."
+    },
+    "MaskListToMaskBatch": {
+        "title": "마스크 리스트를 마스크로",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "이 노드는 마스크 목록을 마스크 배치 형식으로 변환합니다."
+    },
+    "ImageListToImageBatch": {
+        "title": "이미지 목록→이미지 배치",
+        "inputs": {
+            "images": "이미지"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "이미지 리스트를 이미지 배치로 변환합니다."
+    },
+    "SegsToCombinedMask": {
+        "title": "Seg를 마스크로",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "RemoveNoiseMask": {
+        "title": "노이즈 마스크 제거",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "DetailerForEach": {
+        "title": "지역 최적화",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "scheduler_func_opt": "스케줄러 함수",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "wildcard": "프롬프트",
+            "max_retries": "최대 재시도 횟수"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS) 내 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅을 수행하여 최적화 향상을 진행합니다.\n  프롬프트는 '프롬프트 인코더 (Impact)'와 유사한 기능을 제공하며, 프롬프트와 LoRA 로딩을 지원합니다. 또한 검출 영역마다 다른 프롬프트를 적용하는 기능도 지원합니다.\n자세한 내용은 튜토리얼 페이지를 참고하세요.\n참고: 이 입력을 비워 두면 해당 입력이 무시됩니다."
+    },
+    "DetailerForEachAutoRetry": {
+        "title": "옵티마이저(SEGS) 자동 재시도 지원",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "scheduler_func_opt": "스케줄러 함수",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "wildcard": "프롬프트",
+            "max_retries": "최대 재시도 횟수"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "DetailerForEachPipe": {
+        "title": "지역 최적화(노드 번들)",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "detailer_hook": "옵티마이저 훅",
+            "scheduler_func_opt": "스케줄러 함수",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷 선택"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "wildcard": "프롬프트",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "refiner_ratio": "옵티마이저 비율"
+        },
+        "outputs": {
+            "IMAGE": "이미지",
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS) 내 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅을 수행하여 최적화 향상을 진행합니다."
+    },
+    "DetailerForEachDebug": {
+        "title": "지역 최적화(고급)",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "scheduler_func_opt": "스케줄러 함수",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "wildcard": "프롬프트"
+        },
+        "outputs": {
+            "image": "이미지",
+            "cropped": "크롭 이미지",
+            "cropped_refined": "옵티마이저 이미지",
+            "cropped_refined_alpha": "옵티마이저 채널",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS) 내 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅을 수행하여 최적화 향상을 진행합니다."
+    },
+    "DetailerForEachDebugPipe": {
+        "title": "지역 최적화(고급 노드 번들)",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "detailer_hook": "옵티마이저 훅",
+            "scheduler_func_opt": "스케줄러 함수",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷 선택"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "wildcard": "프롬프트",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "refiner_ratio": "옵티마이저 비율"
+        },
+        "outputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "cropped": "크롭 이미지",
+            "cropped_refined": "옵티마이저 이미지",
+            "cropped_refined_alpha": "옵티마이저 채널",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS) 내 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅을 수행하여 최적화 향상을 진행합니다."
+    },
+    "DetailerForEachPipeForAnimateDiff": {
+        "title": "AnimatedDiff 부분 최적화(노드 번들)",
+        "inputs": {
+            "image_frames": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "detailer_hook": "옵티마이저 훅",
+            "scheduler_func_opt": "스케줄러 함수",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask_feather": "노이즈 마스크 페더",
+            "refiner_ratio": "옵티마이저 비율"
+        },
+        "outputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(Seg)의 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅(inpainting) 방식으로 최적화 향상을 진행합니다.\n이 노드는 AnimateDiff 등 영상의 최적화 개선 전용으로 설계된 특수 최적화 향상 노드로, Seg에 포함된 다중 프레임의 일괄 마스크 상황을 처리할 수 있습니다."
+    },
+    "NoiseInjectionDetailerHookProvider": {
+        "title": "노이즈 삽입 최적화 제약기",
+        "widgets": {
+            "schedule_for_cycle": "주기 스케줄",
+            "source": "생성 장치",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "start_strength": "시작 강도",
+            "end_strength": "종료 강도",
+            "strength": "강도"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "옵티마이저 훅은 옵티마이저의 훅 종류 중 하나로, 각 Seg를 처리할 때 노이즈를 주입합니다."
+    },
+    "CoreMLDetailerHookProvider": {
+        "title": "CoreML 옵티마이저 훅",
+        "widgets": {
+            "mode": "모드"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "CoreML은 512x512, 512x768, 768x512, 768x768 크기의 샘플링만 지원합니다.\n CoreML 옵티마이저 훅은 크롭 영역의 업스케일 배수를 이 크기로 정확하게 고정합니다.\n 이 훅을 사용하면 가이드 크기와 관계없이 항상 이 크기를 선택합니다. 단, 가이드 크기가 너무 작으면 건너뛰기가 발생합니다."
+    },
+    "NoiseInjectionHookProvider": {
+        "title": "노이즈 삽입 제약기",
+        "widgets": {
+            "scheduler": "스케줄러",
+            "schedule_for_iteration": "스케줄 순환",
+            "source": "생성 장치",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "start_strength": "시작 강도",
+            "end_strength": "종료 강도"
+        },
+        "outputs": {
+            "PK_HOOK": "PK 후크"
+        },
+        "description": "반복 업스케일의 각 반복에서 잠재 공간에 노이즈를 주입하고 스케줄에 따라 강도를 조정합니다.\n  BlenderNeko/ComfyUI_Noise 노드 확장을 설치해야 합니다.\n  시드는 노이즈 생성에 필요한 초기 값이며, 각 반복에서 진행과 함께 1씩 증가합니다.\n  소스는 설정할 CPU 노이즈와 GPU 노이즈의 타입을 결정합니다.\n  현재, 각 반복 과정에서 노이즈 강도가 시작 강도에서 종료 강도로 변화는 단순한 스케줄 하나만 사용할 수 있습니다."
+    },
+    "UnsamplerDetailerHookProvider": {
+        "title": "역샘플링 최적화 제약기",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "widgets": {
+            "steps": "스텝 수",
+            "start_end_at_step": "시작/종료 스텝",
+            "end_end_at_step": "종료 스텝",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "normalize": "규격화",
+            "schedule_for_cycle": "스케줄 순환"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "각 주기에서 역샘플러를 적용합니다. 이 노드를 사용하려면 ComfyUI_Noise를 설치해야 합니다."
+    },
+    "DenoiseSchedulerDetailerHookProvider": {
+        "title": "노이즈 제거 스케줄 최적화 제약기",
+        "widgets": {
+            "schedule_for_cycle": "스케줄 순환",
+            "target_denoise": "타겟 노이즈 제거"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "주기가 진행되는 동안 노이즈 제거 최적화가 타겟 노이즈 제거로 변경됩니다."
+    },
+    "SEGSDetailer": {
+        "title": "Seg 최적화",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "scheduler_func_opt": "스케줄러 함수",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "batch_size": "배치 크기",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "refiner_ratio": "옵티마이저 비율"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "segs": "Seg",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS)의 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅(inpainting) 방식으로 최적화 향상을 진행합니다.\n  이 노드는 원본 이미지 대신 SEGS에 직접 적용되며, 원본 이미지에 적용하려면 'SEGS 붙여넣기' 노드를 사용하세요."
+    },
+    "SEGSDetailerForAnimateDiff": {
+        "title": "Seg 최적화 동적 확산",
+        "inputs": {
+            "image_frames": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 파이프라인",
+            "scheduler_func_opt": "스케줄러 함수",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "noise_mask_feather": "노이즈 마스크 페더",
+            "refiner_ratio": "옵티마이저 비율"
+        },
+        "outputs": {
+            "segs": "Seg",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 영역 정보 집합(SEGS)의 각 영역에 대해 가이드 크기를 기준으로 확대한 뒤 인페인팅(inpainting) 방식으로 최적화 향상을 진행합니다.\n  이 노드는 원본 이미지 대신 SEGS에 직접 적용되며, 원본 이미지에 적용하려면 'SEGS 붙여넣기' 노드를 사용하세요.\n  이 노드는 AnimateDiff 등 영상의 최적화 개선 전용으로 설계된 특수 최적화 향상 노드로, SEGS에 포함된 다중 프레임의 일괄 마스크 상황을 처리할 수 있습니다."
+    },
+    "SEGSPaste": {
+        "title": "Seg 붙여넣기",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "ref_image_opt": "참조 이미지"
+        },
+        "widgets": {
+            "feather": "페더링"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        },
+        "description": "SEGS 최적화 향상기로 최적화된 SEGS를 원본 이미지에 다시 붙여넣는 기능을 제공하는 노드입니다."
+    },
+    "SEGSPreview": {
+        "title": "Seg 미리보기",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "예비 이미지"
+        },
+        "widgets": {
+            "alpha_mode": "alpha 모드",
+            "min_alpha": "최소값 alpha"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "SEGSPreviewCNet": {
+        "title": "Seg 미리보기(CNet)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "SAMDetectorCombined": {
+        "title": "SAM 검출 병합",
+        "inputs": {
+            "sam_model": "SAM 모델",
+            "segs": "Seg",
+            "images": "이미지",
+            "image": "이미지"
+        },
+        "widgets": {
+            "detection_hint": "검출 프롬프트",
+            "dilation": "팽창",
+            "threshold": "임계값",
+            "bbox_expansion": "BBox 확장",
+            "mask_hint_threshold": "마스크 감지 임계값",
+            "mask_hint_use_negative": "부정 마스크 프롬프트"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "SAM 기법을 사용해 입력 Seg가 가리키는 위치의 조각을 입력 이미지에서 추출하고 이를 하나의 마스크로 출력합니다."
+    },
+    "SAMDetectorSegmented": {
+        "title": "SAM 검출 분할",
+        "inputs": {
+            "sam_model": "SAM 모델",
+            "segs": "Seg",
+            "images": "이미지",
+            "image": "이미지"
+        },
+        "widgets": {
+            "detection_hint": "검출 프롬프트",
+            "dilation": "팽창",
+            "threshold": "임계값",
+            "bbox_expansion": "BBox 확장",
+            "mask_hint_threshold": "마스크 감지 임계값",
+            "mask_hint_use_negative": "부정 마스크 프롬프트"
+        },
+        "outputs": {
+            "combined_mask": "마스크 병합",
+            "batch_masks": "마스크 묶음"
+        },
+        "description": "SAM 검출 병합과 유사하지만 검출된 세그먼트를 분리하여 출력합니다. 동일한 검출 영역에서 여러 세그먼트가 발견될 수 있으며, 현재는 임의로 세 개의 그룹으로 묶는 방식을 사용합니다. 이 부분은 향후 개선될 예정입니다.\n  따라서 하나의 마스크인 병합 마스크와, 배치 형태로 묶인 여러 마스크인 마스크 그룹을 출력합니다.\n  마스크 그룹은 완전히 분리되지 않을 수 있지만 일정 수준의 분할 기능을 제공합니다."
+    },
+    "ImpactSAM2VideoDetectorSEGS": {
+        "title": "SAM2 비디오 감지 Seg",
+        "inputs": {
+            "sam2_model": "SAM 모델",
+            "segs": "Seg",
+            "bbox_detector": "BBox 감지",
+            "image_frames": "프레임 이미지"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox 임계값",
+            "sam2_threshold": "sam2 임계값",
+            "crop_factor": "초점 거리 계수",
+            "drop_size": "드롭 크기"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "간이 Seg 검출과 유사하지만 SAM2의 영상 추적 기술을 활용해 여러 마스크가 포함된 SEGS 객체를 생성합니다.\n  이 노드를 사용하려면 SAMLoader에서 SAM2 모델을 선택해야 합니다."
+    },
+    "BboxDetectorSEGS": {
+        "title": "BBox 감지 Seg",
+        "inputs": {
+            "bbox_detector": "BBox 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "임계값: 복원 폭을 제어하며, 임계값이 작을수록 복원 효과가 커집니다\n ."
+    },
+    "SegmDetectorSEGS": {
+        "title": "Segm 감지 Seg",
+        "inputs": {
+            "segm_detector": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ONNXDetectorSEGS": {
+        "title": "ONNX 감지 Seg",
+        "inputs": {
+            "bbox_detector": "BBox 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS_for_AD": {
+        "title": "간이 Seg 검출 다이내믹 디퓨전",
+        "inputs": {
+            "bbox_detector": "BBox 감지",
+            "image_frames": "이미지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox 임계값",
+            "bbox_dilation": "BBox 팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈",
+            "sub_threshold": "보조 임계값",
+            "sub_dilation": "보조 팽창",
+            "sub_bbox_expansion": "보조 BBox 확장",
+            "sam_mask_hint_threshold": "SAM 마스크 감지 임계값",
+            "masking_mode": "마스킹 모드",
+            "segs_pivot": "주 Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS": {
+        "title": "간이 Seg 검출",
+        "inputs": {
+            "bbox_detector": "BBox 감지",
+            "image": "이미지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox 임계값",
+            "bbox_dilation": "BBox 팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈",
+            "sub_threshold": "보조 임계값",
+            "sub_dilation": "보조 팽창",
+            "sub_bbox_expansion": "보조 BBox 확장",
+            "sam_mask_hint_threshold": "SAM 마스크 감지 임계값",
+            "post_dilation": "팽창 후"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "주로 BBox 검출을 사용하며 SAM 모델 또는 Segm 검출을 추가로 제공합니다. 이 노드는 BBox와 윤곽선에서 마스크 연산을 수행해 내부에서 개선된 Seg를 생성합니다.\n약간 복잡한 워크플로를 단순화해 주는 편리한 도구입니다."
+    },
+    "ImpactSimpleDetectorSEGSPipe": {
+        "title": "간이 Seg 검출(노드 번들)",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "image": "이미지"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox 임계값",
+            "bbox_dilation": "BBox 팽창",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈",
+            "sub_threshold": "보조 임계값",
+            "sub_dilation": "보조 팽창",
+            "sub_bbox_expansion": "보조 BBox 확장",
+            "sam_mask_hint_threshold": "SAM 마스크 감지 임계값",
+            "post_dilation": "팽창 후"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BboxDetectorCombined_v2": {
+        "title": "BBox 검출기 v2",
+        "inputs": {
+            "bbox_detector": "BBox 감지",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "바운딩 박스를 검출하고 입력 이미지에서 마스크를 반환합니다."
+    },
+    "SegmDetectorCombined_v2": {
+        "title": "Segm 검출기 v2",
+        "inputs": {
+            "segm_detector": "Segm 감지",
+            "image": "이미지"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "dilation": "팽창"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "분할을 검출하고 입력 이미지에서 마스크를 반환합니다."
+    },
+    "FaceDetailer": {
+        "title": "얼굴 최적화",
+        "inputs": {
+            "image": "이미지",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "max_size": "최대 크기",
+            "guide_size_for": "가이드 대상",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "bbox_threshold": "BBox 임계값",
+            "bbox_dilation": "BBox 팽창",
+            "bbox_crop_factor": "BBox 크롭 계수",
+            "sam_detection_hint": "SAM 감지 힌트",
+            "sam_dilation": "SAM 팽창",
+            "sam_threshold": "SAM 임계값",
+            "sam_bbox_expansion": "SAM BBox 확장",
+            "sam_mask_hint_threshold": "SAM 마스크 감지 임계값",
+            "sam_mask_hint_use_negative": "SAM 부정 마스크 힌트",
+            "drop_size": "최소 사이즈",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩"
+        },
+        "outputs": {
+            "image": "이미지",
+            "cropped_refined": "옵티마이저 이미지",
+            "cropped_enhanced_alpha": "옵티마이저 부분",
+            "mask": "마스크",
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 모델(bbox, segm, sam)로 입력 이미지에서 특정 대상을 자동 검출하고, 가이드 크기를 기준으로 검출 영역을 확대해 복원함으로써 옵티마이저를 강화합니다.\n사용자가 자주 사용하는 안면 최적화 강화 워크플로를 단순화하기 위해 설계된 노드이지만, 검출 모델에 따라 다양한 자동 복원 용도로도 사용할 수 있습니다."
+    },
+    "FaceDetailerPipe": {
+        "title": "얼굴 최적화(노드 묶음)",
+        "inputs": {
+            "image": "이미지",
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "max_size": "최대 크기",
+            "guide_size_for": "가이드 대상",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "noise_mask": "마스크만 생성",
+            "force_inpaint": "강제 인페인팅",
+            "bbox_threshold": "BBox 임계값",
+            "bbox_dilation": "BBox 팽창",
+            "bbox_crop_factor": "BBox 크롭 계수",
+            "sam_detection_hint": "SAM 감지 힌트",
+            "sam_dilation": "SAM 팽창",
+            "sam_threshold": "SAM 임계값",
+            "sam_bbox_expansion": "SAM BBox 확장",
+            "sam_mask_hint_threshold": "SAM 마스크 감지 임계값",
+            "sam_mask_hint_use_negative": "SAM 부정 마스크 힌트",
+            "drop_size": "최소 사이즈",
+            "refiner_ratio": "옵티마이저 비율",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩"
+        },
+        "outputs": {
+            "image": "이미지",
+            "cropped_refined": "옵티마이저 이미지",
+            "cropped_enhanced_alpha": "옵티마이저 부분",
+            "mask": "마스크",
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "cnet_images": "제어 이미지"
+        },
+        "description": "검출 모델(bbox, segm, sam)로 입력 이미지에서 특정 대상을 자동 검출하고, 가이드 크기를 기준으로 검출 영역을 확대해 복원함으로써 옵티마이저를 강화합니다.\n사용자가 자주 사용하는 안면 최적화 강화 워크플로를 단순화하기 위해 설계된 노드이지만, 검출 모델에 따라 다양한 자동 복원 용도로도 사용할 수 있습니다."
+    },
+    "MaskDetailerPipe": {
+        "title": "마스크 최적화(노드 묶음)",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "basic_pipe": "기본 파이프라인",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷",
+            "scheduler_func_opt": "스케줄러 함수",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "guide_size": "가이드 크기",
+            "guide_size_for": "가이드 대상",
+            "max_size": "최대 크기",
+            "mask_mode": "마스크 모드",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "페더링",
+            "crop_factor": "크롭 배수",
+            "drop_size": "최소 사이즈",
+            "refiner_ratio": "옵티마이저 비율",
+            "cycle": "반복 횟수",
+            "inpaint_model": "복원 모델",
+            "noise_mask_feather": "노이즈 마스크 페더링",
+            "tiled_encode": "분할 인코딩",
+            "tiled_decode": "타일 디코딩",
+            "bbox_fill": "bbox 채움",
+            "contour_fill": "윤곽선 채우기",
+            "batch_size": "배치 크기"
+        },
+        "outputs": {
+            "image": "이미지",
+            "cropped_refined": "옵티마이저 이미지",
+            "cropped_enhanced_alpha": "옵티마이저 부분",
+            "basic_pipe": "기본 파이프라인",
+            "refiner_basic_pipe_opt": "옵티마이저 기본 노드 버킷"
+        },
+        "description": "이 최적화 향상 노드는 마스크로 지정된 영역을 확대하고 가이드 크기를 기준으로 확대 인페인팅을 수행하여 최적화 향상을 진행합니다."
+    },
+    "ToDetailerPipe": {
+        "title": "옵티마이저 버킷으로",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "Select to add LoRA": "LoRA 추가",
+            "Select to add Wildcard": "추가할 프롬프트 선택"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "ToDetailerPipeSDXL": {
+        "title": "옵티마이저 버킷(SDXL)으로",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "refiner_model": "모델(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "긍정 조건(Refiner)",
+            "refiner_negative": "부정 조건(Refiner)",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "Select to add LoRA": "LoRA 추가",
+            "Select the LoRA to add to the text": "LoRA 선택",
+            "Select to add Wildcard": "추가할 프롬프트 선택"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "FromDetailerPipe": {
+        "title": "옵티마이저 버킷에서",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "outputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "FromDetailerPipe_v2": {
+        "title": "옵티마이저 버킷 v2에서",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다.\n 이전 세대보다 출력이 하나 더 있어 입력 파이프라인을 그대로 내보냅니다. 기본 묶음 편집과 최적화 묶음 편집 시에 매우 유용합니다."
+    },
+    "FromDetailerPipeSDXL": {
+        "title": "옵티마이저 버킷(SDXL)에서",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "refiner_model": "모델(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "긍정 조건(Refiner)",
+            "refiner_negative": "부정 조건(Refiner)"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "EditDetailerPipe": {
+        "title": "최적화 번들 편집",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "sam_model": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "segm_detector": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "Select to add Wildcard": "추가할 프롬프트 선택",
+            "Select the LoRA to add to the text": "LoRA 선택",
+            "Select to add LoRA": "LoRA 추가"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 기본 노드 묶음 또는 최적화 노드 묶음의 일부 요소를 교체합니다."
+    },
+    "DetailerPipeToBasicPipe": {
+        "title": "옵티마이저 버킷 to 기본 버킷",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "base_basic_pipe": "기본 파이프라인",
+            "refiner_basic_pipe": "옵티마이저 기본 노드 버킷"
+        },
+        "description": "이 노드들은 모델, CLIP, VAE, 긍정 조건과 부정 조건을 하나의 기본 노드 묶음으로 묶거나, 기본 노드 묶음에서 각 요소를 추출합니다."
+    },
+    "AnyPipeToBasic": {
+        "title": "임의 버킷 to 기본 버킷",
+        "inputs": {
+            "any_pipe": "임의의 버킷"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인",
+            "refiner_basic_pipe": "옵티마이저 기본 노드 버킷"
+        },
+        "description": "이 노드들은 모델, CLIP, VAE, 긍정 조건과 부정 조건을 하나의 기본 노드 묶음으로 묶거나, 기본 노드 묶음에서 각 요소를 추출합니다."
+    },
+    "ToBasicPipe": {
+        "title": "기본 버킷으로",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인"
+        },
+        "description": "이 노드들은 모델, CLIP, VAE, 긍정 조건과 부정 조건을 하나의 기본 노드 묶음으로 묶거나, 기본 노드 묶음에서 각 요소를 추출합니다."
+    },
+    "FromBasicPipe": {
+        "title": "기본 버킷에서",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인"
+        },
+        "outputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "description": "이 노드들은 모델, CLIP, VAE, 긍정 조건과 부정 조건을 하나의 기본 노드 묶음으로 묶거나, 기본 노드 묶음에서 각 요소를 추출합니다."
+    },
+    "FromBasicPipe_v2": {
+        "title": "기본 버킷 v2에서",
+        "inputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다.\n 이전 세대보다 출력이 하나 더 있어 입력 파이프라인을 그대로 내보냅니다. 기본 묶음 편집과 최적화 묶음 편집 시에 매우 유용합니다."
+    },
+    "EditBasicPipe": {
+        "title": "기본 번들 편집",
+        "inputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "outputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인"
+        },
+        "description": "이 노드들은 기본 노드 묶음 또는 최적화 노드 묶음의 일부 요소를 교체합니다."
+    },
+    "BasicPipeToDetailerPipe": {
+        "title": "기본 번들에서 최적화 번들로",
+        "inputs": {
+            "BASIC_PIPE": "기본 파이프라인",
+            "basic_pipe": "기본 파이프라인",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "Select to add Wildcard": "추가할 프롬프트 선택",
+            "Select the LoRA to add to the text": "LoRA 선택",
+            "Select to add LoRA": "LoRA 추가"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "옵티마이저 노드 버킷",
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "BasicPipeToDetailerPipeSDXL": {
+        "title": "기본 번들에서 최적화 번들로(SDXL)",
+        "inputs": {
+            "base_basic_pipe": "기본 기본 노드 번들",
+            "refiner_basic_pipe": "옵티마이저 기본 노드 버킷",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅"
+        },
+        "widgets": {
+            "Select to add Wildcard": "추가할 프롬프트 선택",
+            "Select the LoRA to add to the text": "LoRA 선택",
+            "Select to add LoRA": "LoRA 추가"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "옵티마이저 노드 버킷",
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 모델과 VAE 등 여러 입력을 하나의 최적화 노드 묶음으로 묶거나, 최적화 노드 묶음에서 묶인 요소를 추출합니다."
+    },
+    "EditDetailerPipeSDXL": {
+        "title": "최적화 번들 편집(SDXL)",
+        "inputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷",
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "bbox_detector": "BBox 감지",
+            "sam_model_opt": "SAM 모델",
+            "sam_model": "SAM 모델",
+            "segm_detector_opt": "Segm 감지",
+            "segm_detector": "Segm 감지",
+            "detailer_hook": "옵티마이저 훅",
+            "refiner_model": "모델(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "긍정 조건(Refiner)",
+            "refiner_negative": "부정 조건(Refiner)"
+        },
+        "widgets": {
+            "Select to add Wildcard": "추가할 프롬프트 선택",
+            "Select the LoRA to add to the text": "LoRA 선택",
+            "Select to add LoRA": "LoRA 추가"
+        },
+        "outputs": {
+            "detailer_pipe": "옵티마이저 노드 버킷"
+        },
+        "description": "이 노드들은 기본 노드 묶음 또는 최적화 노드 묶음의 일부 요소를 교체합니다."
+    },
+    "LatentPixelScale": {
+        "title": "Latent 픽셀 배율",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAE",
+            "upscale_model_opt": "업스케일 모델"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "scale_factor": "스케일 계수",
+            "use_tiled_vae": "분할 VAE 사용"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "IMAGE": "이미지"
+        },
+        "description": "이 노드는 잠재 영역을 픽셀 영역으로 변환한 뒤 업스케일링하고 다시 잠재 영역으로 되돌립니다.\n 업스케일 모델을 제공하면 해당 모델로 픽셀을 업스케일링한 후, 배율 방법에서 지정한 보간법으로 대상 해상도로 다운스케일링합니다."
+    },
+    "PixelKSampleUpscalerProvider": {
+        "title": "K샘플 픽셀 배율기",
+        "inputs": {
+            "model": "모델",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "upscale_model_opt": "업스케일 모델",
+            "scheduler_func_opt": "스케줄러 함수",
+            "pk_hook_opt": "PK 후크"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "use_tiled_vae": "분할 VAE 사용",
+            "tile_size": "청크 크기"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        },
+        "description": "VAE 디코더로 잠재 표현을 픽셀로 변환하고, 업스케일링한 뒤, VAE 인코더로 다시 잠재 표현으로 환원하여 K샘플링을 수행하는 KSampler를 제공합니다.\n 이 업스케일러는 Latent 반복 배율 같은 노드에 연결하여 사용할 수 있습니다.\n Latent 픽셀 배율과 마찬가지로, 업스케일 모델을 제공하면 모델로 픽셀 업스케일링을 수행합니다."
+    },
+    "PixelKSampleUpscalerProviderPipe": {
+        "title": "K샘플 픽셀 배율기(노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인",
+            "upscale_model_opt": "업스케일 모델",
+            "scheduler_func_opt": "스케줄러 함수",
+            "tile_cnet_opt": "타일 분할 ControlNet 선택",
+            "pk_hook_opt": "PK 후크"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "use_tiled_vae": "분할 VAE 사용",
+            "tile_size": "청크 크기",
+            "tile_cnet_strength": "타일 분할 ControlNet 강도"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        }
+    },
+    "IterativeLatentUpscale": {
+        "title": "Latent 반복 배율",
+        "inputs": {
+            "samples": "Latent",
+            "upscaler": "축소·확대"
+        },
+        "widgets": {
+            "upscale_factor": "스케일 계수",
+            "steps": "스텝 수",
+            "temp_prefix": "접두사",
+            "step_mode": "스텝 모드"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "입력 배율을 가져와 배율 계수를 단계로 분리한 후 배율을 반복 실행합니다. 잠재 영역을 입력으로 받아 잠재 영역을 결과로 출력합니다."
+    },
+    "IterativeImageUpscale": {
+        "title": "이미지 반복 스케일",
+        "inputs": {
+            "pixels": "이미지",
+            "upscaler": "축소·확대",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "upscale_factor": "스케일 계수",
+            "steps": "스텝 수",
+            "temp_prefix": "접두사",
+            "step_mode": "스텝 모드"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "입력 배율을 가져와 배율 계수를 단계로 분리한 후 배율을 반복 실행합니다. 이미지를 입력으로 받아 이미지를 결과로 출력합니다.\n 내부적으로 이 노드는 반복 배율(잠재 영역)을 사용합니다"
+    },
+    "PixelTiledKSampleUpscalerProvider": {
+        "title": "K샘플 픽셀 배율기(분할)",
+        "inputs": {
+            "model": "모델",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "upscale_model_opt": "업스케일 모델",
+            "pk_hook_opt": "PK 후크",
+            "tile_cnet_opt": "타일 분할 ControlNet 선택"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "tile_width": "타일 너비",
+            "tile_height": "타일 높이",
+            "tiling_strategy": "분할 전략",
+            "tile_cnet_strength": "타일 분할 ControlNet 강도",
+            "overlap": "중첩 영역"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        },
+        "description": "K샘플러 픽셀 스케일러와 유사하지만, 타일 분할 K샘플러와 타일 분할 VAE 디코더/인코더를 사용해 고해상도에서 GPU VRAM 문제를 방지합니다.\n  BlenderNeko/ComfyUI_TiledKSampler 노드 확장을 설치해야 합니다."
+    },
+    "SEGSUpscaler": {
+        "title": "고급(Seg)",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "model": "모델",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "upscale_model_opt": "업스케일 모델",
+            "upscaler_hook_opt": "고급 제약 선택",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "rescale_factor": "스케일 방법",
+            "resampling_method": "리샘플 방법",
+            "supersample": "슈퍼 샘플링",
+            "rounding_modulus": "반올림 모듈로",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "타일 너비",
+            "inpaint_model": "타일 높이",
+            "noise_mask_feather": "노이즈 마스크 페더"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "SEGSUpscalerPipe": {
+        "title": "고급(Seg 묶음)",
+        "inputs": {
+            "image": "이미지",
+            "segs": "Seg",
+            "basic_pipe": "기본 번들",
+            "model": "모델",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "upscale_model_opt": "업스케일 모델",
+            "upscaler_hook_opt": "고급 제약 선택",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "rescale_factor": "스케일 방법",
+            "resampling_method": "리샘플 방법",
+            "supersample": "슈퍼 샘플링",
+            "rounding_modulus": "반올림 모듈로",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "feather": "타일 너비",
+            "inpaint_model": "타일 높이",
+            "noise_mask_feather": "노이즈 마스크 페더"
+        },
+        "outputs": {
+            "IMAGE": "이미지"
+        }
+    },
+    "PixelTiledKSampleUpscalerProviderPipe": {
+        "title": "K샘플 픽셀 배율기(분할 노드 번들)",
+        "inputs": {
+            "model": "모델",
+            "vae": "VAE",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "upscale_model_opt": "업스케일 모델",
+            "pk_hook_opt": "PK 후크",
+            "basic_pipe": "기본 파이프라인",
+            "tile_cnet_opt": "타일 분할 ControlNet 선택"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "tile_width": "타일 너비",
+            "tile_height": "타일 높이",
+            "tiling_strategy": "분할 전략",
+            "tile_cnet_strength": "타일 분할 ControlNet 강도"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProvider": {
+        "title": "더블 샘플 스케일러",
+        "inputs": {
+            "base_sampler": "기본 샘플러",
+            "mask_sampler": "마스크 샘플러",
+            "mask": "마스크",
+            "vae": "VAE",
+            "full_sampler_opt": "전역 샘플러",
+            "upscale_model_opt": "업스케일 모델",
+            "pk_hook_base_opt": "기본 제약",
+            "pk_hook_mask_opt": "마스크 제약",
+            "pk_hook_full_opt": "전역 훅"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "nearest-exact": "인접-정확",
+            "bilinear": "바이리니어 보간",
+            "area": "지역",
+            "full_sample_schedule": "샘플 스케줄러",
+            "interleave1": "인터리브1",
+            "interleave2": "인터리브2",
+            "interleave3": "인터리브3",
+            "last1": "연속1",
+            "last2": "연속2",
+            "interleave1+last1": "인터리브1+연속1",
+            "interleave2+last1": "인터리브2+연속1",
+            "interleave3+last1": "인터리브3+연속1",
+            "use_tiled_vae": "분할 VAE 사용",
+            "tile_size": "청크 크기"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProviderPipe": {
+        "title": "더블 샘플 스케일러(노드 버킷)",
+        "inputs": {
+            "base_sampler": "기본 샘플러",
+            "mask_sampler": "마스크 샘플러",
+            "mask": "마스크",
+            "basic_pipe": "기본 파이프라인",
+            "full_sampler_opt": "전역 샘플러",
+            "upscale_model_opt": "업스케일 모델",
+            "pk_hook_base_opt": "기본 제약",
+            "pk_hook_mask_opt": "마스크 제약",
+            "pk_hook_full_opt": "전역 훅"
+        },
+        "widgets": {
+            "scale_method": "스케일 방법",
+            "full_sample_schedule": "샘플 스케줄러",
+            "use_tiled_vae": "분할 VAE 사용",
+            "tile_size": "청크 크기"
+        },
+        "outputs": {
+            "UPSCALER": "축소·확대"
+        },
+        "description": "이 샘플러는 이중 샘플러를 확장하여 반복 업스케일에 사용합니다.\n 이중 샘플링 스케일러(노드 묶음) - 이중 샘플링 스케일러의 노드 묶음 버전."
+    },
+    "PixelKSampleHookCombine": {
+        "title": "픽셀 KSampler 훅 조합",
+        "inputs": {
+            "hook1": "제약 1",
+            "hook2": "제약 2"
+        },
+        "outputs": {
+            "PK_HOOK": "픽셀 KSampler 훅"
+        },
+        "description": "이것은 두 개의 픽셀 K 샘플러 제약을 연결합니다. 제약 1이 먼저 실행된 후 제약 2가 실행됩니다."
+    },
+    "DenoiseScheduleHookProvider": {
+        "title": "노이즈 제거 제약기",
+        "widgets": {
+            "schedule_for_iteration": "스케줄 순환",
+            "target_denoise": "타겟 노이즈 제거"
+        },
+        "outputs": {
+            "PK_HOOK": "PK 후크"
+        },
+        "description": "반복 업스케일은 반복 단계가 진행됨에 따라 노이즈 제거를 목표 노이즈 제거량으로 점차 조정하는 제약을 제공합니다.\n cfg와 노이즈 제거를 동시에 변경하려면 CFG 제약기와 픽셀 K 샘플러 제약 결합의 제약을 함께 결합할 수 있습니다."
+    },
+    "CfgScheduleHookProvider": {
+        "title": "CFG 옵티마이저 훅",
+        "widgets": {
+            "schedule_for_iteration": "스케줄 순환",
+            "target_cfg": "타깃 CFG"
+        },
+        "outputs": {
+            "PK_HOOK": "PK 후크"
+        },
+        "description": "반복 업스케일은 반복 단계가 진행됨에 따라 cfg를 목표 cfg로 점차 조정하는 제약을 제공합니다."
+    },
+    "StepsScheduleHookProvider": {
+        "title": "스텝 스케줄 제약 제공자",
+        "widgets": {
+            "schedule_for_iteration": "스케줄 순환",
+            "target_steps": "타겟 스텝 수"
+        },
+        "outputs": {
+            "PK_HOOK": "PK 후크"
+        },
+        "description": "반복 업스케일은 반복 단계가 진행됨에 따라 샘플링 단계 수를 목표 단계 수로 점차 조정하는 제약을 제공합니다."
+    },
+    "DetailerHookCombine": {
+        "title": "옵티마이저 훅 병합",
+        "inputs": {
+            "hook1": "제약 1",
+            "hook2": "제약 2"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "이것은 두 개의 최적화 제약을 연결합니다.\n 픽셀 K 샘플러 제약 결합과 유사합니다."
+    },
+    "UnsamplerHookProvider": {
+        "title": "역샘플링 제약기",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "widgets": {
+            "steps": "스텝 수",
+            "start_end_at_step": "시작 단계 수",
+            "end_end_at_step": "종료 스텝",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "normalize": "규격화",
+            "schedule_for_iteration": "스케줄 순환"
+        },
+        "outputs": {
+            "PK_HOOK": "PK 후크"
+        },
+        "description": "매 반복에서 역샘플러를 적용합니다. 이 노드를 사용하려면 ComfyUI_Noise를 설치해야 합니다."
+    },
+    "KSamplerProvider": {
+        "title": "K샘플 제공자(노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거"
+        },
+        "outputs": {
+            "KSAMPLER": "K 샘플러"
+        },
+        "description": "이 샘플러는 K 샘플러를 이중 샘플러와 이중 샘플링 스케일러에서 사용할 수 있게 합니다."
+    },
+    "TwoSamplersForMask": {
+        "title": "더블 샘플러",
+        "inputs": {
+            "latent_image": "Latent",
+            "base_sampler": "기본 샘플러",
+            "mask_sampler": "마스크 샘플러",
+            "mask": "마스크"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "이 노드는 마스크 영역에 따라 두 가지 샘플러를 적용할 수 있습니다. 기본 샘플러는 마스크가 0인 영역에, 마스크 샘플러는 마스크가 1인 영역에 적용됩니다.\n  참고: VAE 인페인팅 인코더로 인코딩한 잠재 공간 인코딩은 사용할 수 없습니다."
+    },
+    "TiledKSamplerProvider": {
+        "title": "K샘플 제공자(분할 노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "denoise": "노이즈 제거",
+            "tile_width": "타일 너비",
+            "tile_height": "타일 높이",
+            "tiling_strategy": "분할 전략"
+        },
+        "outputs": {
+            "KSAMPLER": "K 샘플러"
+        },
+        "description": "ComfyUI_TiledKSampler는 KSampler를 제공하는 샘플러입니다.\n BlenderNeko/ComfyUI_TiledKSampler 노드 확장을 설치해야 합니다."
+    },
+    "KSamplerAdvancedProvider": {
+        "title": "K샘플 제공자(고급 노드 번들)",
+        "inputs": {
+            "basic_pipe": "기본 파이프라인",
+            "sampler_opt": "샘플러 선택",
+            "scheduler_func_opt": "스케줄러 함수"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "sampler_name": "샘플러",
+            "scheduler": "스케줄러",
+            "sigma_factor": "sigma 계수"
+        },
+        "outputs": {
+            "KSAMPLER_ADVANCED": "K샘플러 (고급)"
+        },
+        "description": "이 샘플러는 K 샘플러를 이중 샘플러(고급)와 영역 샘플러에서 사용할 수 있게 합니다.\n 노이즈 제거 스케줄에 sigma 계수를 곱하여, 설정된 노이즈 제거량에 따라 제거 정도를 조정할 수 있습니다"
+    },
+    "TwoAdvancedSamplersForMask": {
+        "title": "더블 샘플러(고급)",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "기본 샘플러",
+            "mask_sampler": "마스크 샘플러",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "denoise": "노이즈 제거",
+            "overlap_factor": "오버레이 계수"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "더블 샘플러는 더블 샘플러(고급)과 유사하지만 동작이 다릅니다. 더블 샘플러는 기본 영역의 샘플링을 모두 마친 뒤에야 마스크 영역에서 샘플링을 수행합니다.\n 반면 더블 샘플러(고급)는 각 단계마다 기본 영역과 마스크 영역에서 순서대로 샘플링합니다."
+    },
+    "ImpactWildcardProcessor": {
+        "title": "프롬프트 프로세서",
+        "widgets": {
+            "wildcard_text": "프롬프트 텍스트",
+            "populated_text": "입력 텍스트",
+            "mode": "입력 여부",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "Select to add Wildcard": "추가할 프롬프트 선택"
+        },
+        "outputs": {
+            "processed text": "텍스트 처리"
+        },
+        "description": "이 노드는 프롬프트 문법으로 작성된 텍스트 프롬프트를 처리하여 처리된 텍스트 프롬프트를 출력합니다.\n텍스트는 텍스트 처리의 프롬프트로 생성됩니다. 모드를 '채우기'로 설정하면 실행 때마다 동적 프롬프트가 생성되어 두 번째 텍스트 상자에 채워집니다. 모드를 '고정'으로 설정하면 두 번째 텍스트 상자 내용이 그대로 유지됩니다.\n  '고정' 모드로 이미지를 생성하면 해당 생성에 사용된 프롬프트가 메타데이터에 저장됩니다."
+    },
+    "ImpactWildcardEncode": {
+        "title": "프롬프트 인코딩",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "wildcard_text": "프롬프트 텍스트",
+            "populated_text": "입력 텍스트",
+            "mode": "입력 여부",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "Select to add Wildcard": "추가할 프롬프트 선택",
+            "Select to add LoRA": "LoRA 추가"
+        },
+        "outputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "populated_text": "텍스트 채우기",
+            "conditioning": "컨디셔닝"
+        },
+        "description": "프롬프트 처리기와 유사하며 LoRA 로드 기능을 제공합니다.\n(예: <lora:some_awesome_lora:0.7:1.2>). 채워진 프롬프트는 모든 LoRA 로드가 완료된 후 clip으로 인코딩됩니다.\n 'Inspire Pack'을 설치하면 LBW(LoRA 블록 가중치) 문법을 적용할 수 있습니다.\n <lora:chunli:1.0:1.0:LBW=B11:0,0,0,0,0,0,0,0,0,0,A,0,0,0,0,0,0;A=0.;>, \n <lora:chunli:1.0:1.0:LBW=0,0,0,0,0,0,0,0,0,0,A,B,0,0,0,0,0;A=0.5;B=0.2;>,\n <lora:chunli:1.0:1.0:LBW=SD-MIDD;>"
+    },
+    "RegionalPrompt": {
+        "title": "영역 프롬프트",
+        "inputs": {
+            "mask": "마스크",
+            "advanced_sampler": "K샘플러 (고급)"
+        },
+        "widgets": {
+            "variation_seed": "변화 시드",
+            "variation_strength": "강도 변화",
+            "variation_method": "변화 방법"
+        },
+        "outputs": {
+            "regional_prompts": "영역 프롬프트",
+            "REGIONAL_PROMPTS": "영역 프롬프트"
+        },
+        "description": "이 노드는 영역 지정용 마스크와 영역별 샘플러를 결합하여 영역 프롬프트를 만듭니다."
+    },
+    "CombineRegionalPrompts": {
+        "title": "영역 프롬프트 병합",
+        "inputs": {
+            "regional_prompts1": "영역 프롬프트1",
+            "regional_prompts2": "영역 프롬프트2"
+        },
+        "outputs": {
+            "REGIONAL_PROMPTS": "영역 프롬프트"
+        },
+        "description": "여러 영역 프롬프트를 하나의 영역 프롬프트로 병합합니다."
+    },
+    "RegionalSampler": {
+        "title": "영역 샘플러",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "K샘플러 (고급)",
+            "regional_prompts": "영역 프롬프트"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "seed_2nd": "제2 랜덤 시드",
+            "seed_2nd_mode": "제2 랜덤 시드 모드",
+            "steps": "스텝 수",
+            "base_only_steps": "기본 단계만",
+            "denoise": "노이즈 제거",
+            "overlap_factor": "오버레이 계수",
+            "restore_latent": "임시 Latent",
+            "additional_mode": "추가 모드",
+            "additional_sampler": "추가 샘플러",
+            "additional_sigma_ratio": "추가 sigma 비율"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "이 노드는 기본 샘플러와 영역 프롬프트로 샘플링합니다. 기본 샘플러는 모든 스텝에서 실행되며, 각 영역의 샘플링은 영역에 바인딩된 샘플러로 수행됩니다.\n  오버레이 계수 - 마스크 밖의 영역과 잘 혼합되도록 각 영역의 중복량을 지정합니다.\n  임시 Latent- 각 영역을 샘플링할 때 마스크 밖의 영역을 기본 잠재 공간으로 복원하여 영역 샘플링 중 마스크 밖으로 추가 노이즈가 유입되는 것을 방지합니다."
+    },
+    "RegionalSamplerAdvanced": {
+        "title": "영역 샘플러(고급)",
+        "inputs": {
+            "samples": "Latent",
+            "latent_image": "Latent",
+            "base_sampler": "K샘플러 (고급)",
+            "regional_prompts": "영역 프롬프트"
+        },
+        "widgets": {
+            "add_noise": "노이즈 추가",
+            "seed": "랜덤 시드",
+            "noise_seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "steps": "스텝 수",
+            "start_at_step": "노이즈 제거 시작 스텝",
+            "end_at_step": "노이즈 제거 종료 스텝",
+            "overlap_factor": "오버레이 계수",
+            "restore_latent": "임시 Latent",
+            "return_with_leftover_noise": "노이즈 반환",
+            "additional_mode": "추가 모드",
+            "additional_sampler": "추가 샘플러",
+            "additional_sigma_ratio": "추가 sigma 비율"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "이것은 영역 샘플러의 고급 버전입니다. 노이즈 제거 대신 단계 수로 제어할 수 있습니다.\n 주의: sde 샘플러와 uni_pc 샘플러는 샘플링 과정의 각 단계에서 추가 노이즈를 유입합니다. 이 문제를 완화하기 위해 각 영역을 샘플링할 때 uni_pc 샘플러는 추가 dpmpp_fast를 적용하고, sde 샘플러는 추가 조치로 dpmpp_2m 샘플러를 사용합니다."
+    },
+    "ImpactConcatConditionings": {
+        "title": "컨디셔닝 병합",
+        "inputs": {
+            "conditioning1": "컨디셔닝 1"
+        },
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "여러 조건 입력을 받아 하나의 조건으로 연결합니다."
+    },
+    "ImpactImageInfo": {
+        "title": "이미지 정보",
+        "inputs": {
+            "value": "이미지"
+        },
+        "outputs": {
+            "batch": "배치 크기",
+            "height": "높이",
+            "width": "너비",
+            "channel": "채널"
+        }
+    },
+    "ImpactLatentInfo": {
+        "title": "Latent 정보",
+        "inputs": {
+            "value": "Latent"
+        },
+        "outputs": {
+            "batch": "배치 크기",
+            "height": "높이",
+            "width": "너비",
+            "channel": "채널"
+        }
+    },
+    "ImpactMinMax": {
+        "title": "극값 계산",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "mode": "모드"
+        },
+        "outputs": {
+            "INT": "정수"
+        }
+    },
+    "ImpactQueueTrigger": {
+        "title": "큐 트리거",
+        "inputs": {
+            "signal": "신호"
+        },
+        "widgets": {
+            "mode": "모드"
+        },
+        "outputs": {
+            "signal_opt": "신호"
+        },
+        "description": "이 노드가 실행되면 반복 작업을 돕기 위해 새 큐를 추가합니다. 신호 상태가 변경될 때만 실행됩니다."
+    },
+    "ImpactQueueTriggerCountdown": {
+        "title": "큐 트리거(횟수)",
+        "inputs": {
+            "signal": "신호"
+        },
+        "widgets": {
+            "total": "합계",
+            "mode": "모드",
+            "count": "개수"
+        },
+        "outputs": {
+            "total": "합계",
+            "signal_opt": "신호",
+            "count": "개수"
+        },
+        "description": "큐 트리거와 유사하게 큐를 하나 추가하지만, 큐의 크기가 1 이하이면 추가하지 않습니다. 실행할 때마다 카운트가 1씩 줄어듭니다."
+    },
+    "ImpactSetWidgetValue": {
+        "title": "컴포넌트 값 설정",
+        "inputs": {
+            "signal": "신호",
+            "boolean_value": "불리언",
+            "int_value": "정수",
+            "float_value": "부동소수점",
+            "string_value": "문자열"
+        },
+        "widgets": {
+            "node_id": "노드 ID",
+            "widget_name": "위젯 이름"
+        },
+        "outputs": {
+            "signal_opt": "신호"
+        },
+        "description": "이 노드는 선택적 입력을 지정된 노드의 컨트롤로 설정합니다. 타입이 맞지 않으면 오류가 발생할 수 있습니다."
+    },
+    "ImpactNodeSetMuteState": {
+        "title": "노드 비활성화",
+        "inputs": {
+            "signal": "신호"
+        },
+        "widgets": {
+            "node_id": "노드 ID",
+            "set_state": "상태"
+        },
+        "outputs": {
+            "signal_opt": "신호"
+        },
+        "description": "이 노드는 특정 노드의 뮤트 상태를 변경합니다."
+    },
+    "ImpactSleep": {
+        "title": "대기",
+        "inputs": {
+            "signal": "신호"
+        },
+        "widgets": {
+            "seconds": "초 수"
+        },
+        "outputs": {
+            "signal_opt": "신호"
+        },
+        "description": "지정된 시간(초 단위) 대기"
+    },
+    "ImpactRemoteBoolean": {
+        "title": "원격 불리언",
+        "widgets": {
+            "node_id": "노드 ID",
+            "widget_name": "위젯 이름",
+            "value": "값"
+        },
+        "description": "프롬프트 시작 시 이 노드는 컴포넌트 이름의 노드 ID를 강제로 설정합니다. 대상 컴포넌트 타입이 다르면 무시됩니다."
+    },
+    "ImpactRemoteInt": {
+        "title": "원격 정수",
+        "widgets": {
+            "node_id": "노드 ID",
+            "widget_name": "위젯 이름",
+            "value": "값"
+        },
+        "description": "프롬프트 시작 시 이 노드는 컴포넌트 이름의 노드 ID를 강제로 설정합니다. 대상 컴포넌트 타입이 다르면 무시됩니다."
+    },
+    "ImpactControlBridge": {
+        "title": "컨트롤 브리지",
+        "inputs": {
+            "value": "값"
+        },
+        "widgets": {
+            "mode": "모드"
+        },
+        "outputs": {
+            "value": "값"
+        },
+        "description": "이 노드는 모드와 동작에 따라 연결된 컨트롤 노드의 상태를 변경합니다. 변경할 노드가 있으면 현재 실행이 일시 정지되고 뮤트 상태가 업데이트된 뒤 새 프롬프트 큐가 삽입됩니다.\n  모드가 Active일 때는 연결된 컨트롤 노드의 동작과 관계없이 활성 상태로 만듭니다.\n  모드가 바이패스/뮤트일 때는 동작이 바이패스인지 뮤트인지에 따라 연결된 노드의 상태를 변경합니다.\n  제한: 이 특성 때문에 배치 수가 1을 넘으면 정상 동작하지 않습니다. 또한 시드가 랜덤화되었거나 노드 상태가 큐 트리거, 컴포넌트 값 설정, 노드 비활성화 등으로 변경된 경우 컨트롤 브리지 앞에서는 정상 동작을 보장하지 않습니다.\n  이 노드를 사용할 때는 큐 트리거, 컴포넌트 값 설정, 노드 비활성화 및 유사한 작업이 워크플로우 마지막에 실행되도록 구성하세요.\n  매 반복마다 시드 값을 변경하려면 랜덤화 대신 컨트롤 값 설정을 워크플로우 마지막에 실행하세요.\n  컨트롤 브리지 이후에만 랜덤화를 수행하면 시드가 변경되어도 문제가 없습니다."
+    },
+    "ImpactCompare": {
+        "title": "비교",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "cmp": "비교 방법"
+        },
+        "outputs": {
+            "BOOLEAN": "불리언"
+        }
+    },
+    "ImpactConditionalBranchSelMode": {
+        "title": "조건 분기 전환 모드",
+        "inputs": {
+            "tt_value": "참",
+            "ff_value": "거짓"
+        },
+        "widgets": {
+            "cond": "컨디셔닝"
+        },
+        "outputs": {
+            "*": "출력"
+        }
+    },
+    "ImpactConditionalBranch": {
+        "title": "조건 전환",
+        "inputs": {
+            "tt_value": "참",
+            "ff_value": "거짓"
+        },
+        "widgets": {
+            "cond": "컨디셔닝"
+        },
+        "outputs": {
+            "*": "출력"
+        }
+    },
+    "ImpactIfNone": {
+        "title": "없을 경우",
+        "inputs": {
+            "signal": "신호",
+            "any_input": "임의 입력"
+        },
+        "widgets": {
+            "cond": "컨디셔닝"
+        },
+        "outputs": {
+            "signal_opt": "신호 선택",
+            "bool": "불리언 값"
+        },
+        "description": "입력 중 하나라도 None이면 참(True)을 반환하고, 모두 None이 아니면 거짓(False)을 반환합니다."
+    },
+    "ImpactBoolean": {
+        "title": "불리언",
+        "inputs": {
+            "signal": "신호",
+            "any_input": "임의 입력"
+        },
+        "widgets": {
+            "value": "값"
+        },
+        "outputs": {
+            "signal_opt": "신호 선택",
+            "BOOLEAN": "불리언"
+        }
+    },
+    "ImpactConvertDataType": {
+        "title": "데이터 타입 변환",
+        "inputs": {
+            "value": "값"
+        },
+        "widgets": {
+            "cond": "컨디셔닝"
+        },
+        "outputs": {
+            "STRING": "문자열",
+            "FLOAT": "부동소수점",
+            "INT": "정수",
+            "BOOLEAN": "불리언"
+        }
+    },
+    "ImpactLogicalOperators": {
+        "title": "논리 연산자",
+        "inputs": {
+            "bool_a": "불리언 a",
+            "bool_b": "불리언 b"
+        },
+        "widgets": {
+            "operator": "연산"
+        },
+        "outputs": {
+            "STRING": "문자열",
+            "FLOAT": "부동소수점",
+            "INT": "정수",
+            "BOOLEAN": "불리언"
+        }
+    },
+    "ImpactInt": {
+        "title": "정수",
+        "widgets": {
+            "value": "값"
+        },
+        "outputs": {
+            "INT": "정수"
+        }
+    },
+    "ImpactFloat": {
+        "title": "부동소수점",
+        "widgets": {
+            "value": "값"
+        },
+        "outputs": {
+            "FLOAT": "부동소수점"
+        }
+    },
+    "ImpactValueSender": {
+        "title": "값 전송",
+        "inputs": {
+            "value": "값",
+            "signal_opt": "신호 선택"
+        },
+        "widgets": {
+            "link_id": "연결 ID"
+        },
+        "outputs": {
+            "signal": "신호"
+        }
+    },
+    "ImpactValueReceiver": {
+        "title": "수신 값",
+        "widgets": {
+            "typ": "유형",
+            "value": "값",
+            "link_id": "연결 ID"
+        },
+        "outputs": {
+            "*": "출력"
+        }
+    },
+    "ImpactNeg": {
+        "title": "반전값",
+        "inputs": {
+            "value": "값"
+        },
+        "outputs": {
+            "BOOLEAN": "불리언"
+        }
+    },
+    "ImpactConditionalStopIteration": {
+        "title": "조건 반복 중지",
+        "inputs": {
+            "cond": "컨디셔닝"
+        }
+    },
+    "ImpactIsNotEmptySEGS": {
+        "title": "비어있지 않은 Seg 여부",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "BOOLEAN": "불리언"
+        },
+        "description": "이 노드는 입력 Seg가 비어 있지 않은 경우에만 true를 반환합니다"
+    },
+    "ImpactLogger": {
+        "title": "출력 로그",
+        "inputs": {
+            "data": "데이터"
+        }
+    },
+    "ImpactDummyInput": {
+        "title": "가상 입력",
+        "outputs": {
+            "*": "출력"
+        }
+    },
+    "ImpactHFTransformersClassifierProvider": {
+        "title": "HFTransformer 분류기",
+        "widgets": {
+            "preset_repo_id": "프리셋 저장소 ID",
+            "manual_repo_id": "수동 저장소 ID",
+            "device_mode": "장치 모드"
+        },
+        "outputs": {
+            "TRANSFORMERS_CLASSIFIER": "TF 분류기"
+        },
+        "description": "HuggingFace의 transformers 모델이 제공하는 분류기 기반 노드입니다.\n \"저장소 ID\" 매개변수에는 HuggingFace 저장소 ID를 입력해야 합니다. 프리셋 저장소 ID를 수동 저장소 ID로 설정하면 수동 저장소 ID에 직접 입력한 저장소 ID가 사용됩니다.\n 예를 들어 'rizvandwiki/gender-classification-2'는 성별 분류 모델을 제공하는 저장소입니다."
+    },
+    "ImpactSEGSClassify": {
+        "title": "Seg 분류",
+        "inputs": {
+            "classifier": "분류기",
+            "segs": "Seg",
+            "ref_image_opt": "참조 이미지"
+        },
+        "widgets": {
+            "preset_expr": "프리셋 표현식",
+            "manual_expr": "수동식"
+        },
+        "outputs": {
+            "filtered_SEGS": "마스킹 Seg",
+            "remained_SEGS": "나머지 Seg",
+            "detected_labels": "검출 라벨"
+        },
+        "description": "이 노드는 TF 분류기로 로드한 \"HFTransformer 분류기\"를 사용해 Seg를 분류합니다.\n \"수식\"은 label > number 같은 형식을 사용할 수 있으며, 프리셋 수식이 Manual expr일 때는 manual_expr에 입력한 수식을 사용합니다.\n 예를 들어 male <= 0.4인 경우, 분류 결과에서 male 라벨 점수가 0.4 이하이면 마스크 Seg로, 그렇지 않으면 나머지 Seg로 분류됩니다.\n 지원 라벨은 해당 HuggingFace 저장소의 config.json을 참조하세요.\n #Female과 #Male은 female, women, woman 같은 여러 라벨을 묶기 위한 기호로, 단일 라벨이 아닌 그룹을 편리하게 사용하기 위한 것입니다."
+    },
+    "SAMLoader": {
+        "title": "SAM 로더",
+        "widgets": {
+            "model_name": "모델 이름",
+            "device_mode": "장치 모드"
+        },
+        "outputs": {
+            "SAM_MODEL": "SAM 모델"
+        },
+        "description": "SAM 모델 로드"
+    },
+    "ONNXDetectorProvider": {
+        "title": "ONNX 로더",
+        "widgets": {
+            "model_name": "모델 이름"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox 감지",
+            "ONNX_DETECTOR": "ONNX 감지"
+        },
+        "description": "ONNX 검출을 제공하기 위해 ONNX 모델을 로드합니다."
+    },
+    "PreviewDetailerHookProvider": {
+        "title": "미리보기 최적화 증강기 제약 프로바이더",
+        "widgets": {
+            "quality": "품질"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅",
+            "UPSCALER_HOOK": "초해상도 제약"
+        },
+        "description": "이 제약 노드를 연결하면 SEGS 최적화 작업이 끝난 뒤 미리보기를 확인하는 데 도움이 됩니다.\n 타일 분할 Seg 생성처럼 많은 Seg를 처리할 때 최적화가 단계적으로 개선되어 가는 과정을 모니터링할 수 있습니다.\n 원본 이미지에 붙여넣는 제약에 적용되는 것이므로 Seg 최적화 같은 노드에는 영향을 주지 않습니다."
+    },
+    "BlackPatchRetryHookProvider": {
+        "title": "검은색 패치 재시도 훅 프로바이더",
+        "widgets": {
+            "mean_thresh": "평균 임계값",
+            "var_thresh": "변화 임계값"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅",
+            "UPSCALER_HOOK": "초해상도 제약"
+        }
+    },
+    "ImpactIPAdapterApplySEGS": {
+        "title": "IPAdapter(Seg) 적용",
+        "inputs": {
+            "segs": "Seg",
+            "ipadapter_pipe": "ipadapter 버킷",
+            "neg_image": "원본 이미지",
+            "reference_image": "참고 이미지"
+        },
+        "widgets": {
+            "weight": "가중치",
+            "noise": "노이즈",
+            "weight_type": "가중치 유형",
+            "seed": "랜덤 시드",
+            "start_at": "시작 단계 수",
+            "end_at": "종료 스텝",
+            "cfg": "CFG",
+            "unfold_batch": "배치 전개",
+            "faceid_v2": "FaceID_V2",
+            "weight_v2": "가중치_v2",
+            "context_crop_factor": "컨텍스트 크롭 계수",
+            "combine_embeds": "융합 임베딩"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Seg에 IPAdapter를 적용하려면 Inspire Pack의 Preprocessor Provider 노드를 사용하여 이 노드를 활용해야 합니다."
+    },
+    "ImpactFrom_SEG_ELT_bbox": {
+        "title": "SEG 요소 bbox에서",
+        "inputs": {
+            "bbox": "BBox"
+        },
+        "outputs": {
+            "left": "왼쪽",
+            "top": "위",
+            "right": "오른쪽",
+            "bottom": "아래"
+        }
+    },
+    "ImpactFrom_SEG_ELT_crop_region": {
+        "title": "SEG 요소 크롭 영역에서",
+        "inputs": {
+            "crop_region": "크롭 영역"
+        },
+        "outputs": {
+            "left": "왼쪽",
+            "top": "위",
+            "right": "오른쪽",
+            "bottom": "아래"
+        }
+    },
+    "ImpactSEGSMerge": {
+        "title": "Seg 병합",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "BBoxSeg에 여러 seg가 포함되어 있습니다. Seg 병합은 여러 Seg를 하나의 병합된 Seg로 통합합니다. 라벨은 \"병합\"으로 바뀌고 신뢰도는 최소 신뢰도가 됩니다. 적용된 ControlNet과 크롭된 이미지는 삭제됩니다."
+    },
+    "ImpactCount_Elts_in_SEGS": {
+        "title": "SEGS로 요소 수 계산",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "INT": "정수"
+        }
+    },
+    "ImpactMakeAnyList": {
+        "title": "목록 생성(임의)",
+        "inputs": {
+            "value1": "값1"
+        },
+        "outputs": {
+            "INT": "정수"
+        },
+        "description": "임의의 값들을 담은 목록을 생성합니다. 개수 제한 없이 입력을 받아 출력 하나를 생성하며, 유형은 노드에 연결될 때 결정되고 입력을 연결하면 사용 가능한 슬롯이 늘어납니다."
+    },
+    "ImpactMakeMaskList": {
+        "title": "마스크 목록 생성",
+        "inputs": {
+            "mask1": "마스크1"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "이미지 목록 노드와 동일한 기능을 하지만 이미지 대신 마스크를 입력으로 사용합니다."
+    },
+    "ImpactMakeMaskBatch": {
+        "title": "일괄 마스크 제작",
+        "inputs": {
+            "mask1": "마스크1"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "이미지 목록 노드와 동일한 기능을 하지만 이미지 대신 마스크를 입력으로 사용합니다."
+    },
+    "ImpactSelectNthItemOfAnyList": {
+        "title": "n번째 항목 선택(임의 리스트)",
+        "inputs": {
+            "any_list": "임의 목록"
+        },
+        "widgets": {
+            "index": "지수"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "목록에서 N번째 요소를 선택합니다. 인덱스가 범위를 벗어나면 목록의 마지막 요소를 반환합니다."
+    },
+    "ImpactSEGSLabelAssign": {
+        "title": "Seg 할당(라벨)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSIntersectionFilter": {
+        "title": "Seg 필터(교집합)",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "widgets": {
+            "iou_threshold": "iou 임계값",
+            "ioa_threshold": "ioa 임계값"
+        },
+        "outputs": {
+            "filtered_SEGS": "필터링된 Seg"
+        }
+    },
+    "ImpactSEGSNMSFilter": {
+        "title": "Seg 필터(비최대 억제)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "iou_threshold": "iou 임계값"
+        },
+        "outputs": {
+            "filtered_SEGS": "필터링된 Seg"
+        }
+    },
+    "StringListToString": {
+        "title": "문자열 목록에서 문자열로",
+        "inputs": {
+            "string_list": "문자열 목록"
+        },
+        "widgets": {
+            "join_with": "추가"
+        },
+        "outputs": {
+            "STRING": "문자열"
+        },
+        "description": "문자열 목록을 문자열로 변환합니다."
+    },
+    "WildcardPromptFromString": {
+        "title": "문자열에서 프롬프트 생성",
+        "inputs": {
+            "string": "문자열"
+        },
+        "widgets": {
+            "delimiter": "구분자",
+            "prefix_all": "모든 접두사",
+            "postfix_all": "접미사 전체",
+            "restrict_to_tags": "라벨로 제한",
+            "exclude_tags": "제외 라벨"
+        },
+        "outputs": {
+            "wildcard": "프롬프트",
+            "segs_labels": "Seg 라벨"
+        },
+        "description": "문자열에서 세부 정보로 라벨이 지정된 프롬프트를 생성합니다.\n 이 노드는 타일 분할 Seg 생성과 함께 사용할 때 잘 동작합니다."
+    },
+    "ImpactExecutionOrderController": {
+        "title": "실행 명령 컨트롤러",
+        "inputs": {
+            "signal": "신호",
+            "value": "값"
+        },
+        "outputs": {
+            "signal": "신호",
+            "value": "값"
+        },
+        "description": "노드 실행 순서를 강제로 제어하도록 돕는 보조 노드입니다.\n 먼저 실행할 노드의 출력을 signal에 연결하고, 나중에 실행할 노드의 입력을 이 노드를 통과시키세요."
+    },
+    "ImpactListBridge": {
+        "title": "목록 브리지",
+        "inputs": {
+            "list_input": "목록 입력"
+        },
+        "outputs": {
+            "list_output": "목록 출력"
+        },
+        "description": "리스트 출력이 이 노드를 통과하면 데이터를 수집하고 정리한 뒤 전달하므로, 이전 단계의 서브 워크플로우가 완료되었음을 보장합니다."
+    },
+    "ImpactSchedulerAdapter": {
+        "title": "스케줄 어댑터",
+        "widgets": {
+            "scheduler": "스케줄러",
+            "extra_scheduler": "추가 스케줄러"
+        },
+        "outputs": {
+            "scheduler": "스케줄러"
+        },
+        "description": "Impact Pack과 Inspire Pack의 스케줄러에 AYS가 추가되면서, 기존 스케줄러 위젯이 입력으로 변환될 때 호환성 문제가 발생합니다. 스케줄러 어댑터를 사용하면 간접 연결이 가능합니다."
+    },
+    "ImpactFlattenMask": {
+        "title": "마스크 리스트를 마스크로",
+        "inputs": {
+            "masks": "마스크"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        },
+        "description": "이미지 목록 노드와 동일한 기능을 하지만 이미지 대신 마스크를 입력으로 사용합니다."
+    },
+    "MaskRectArea": {
+        "title": "마스크 사각형 면적",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "width": "너비",
+            "height": "높이",
+            "w": "너비",
+            "h": "높이",
+            "image_width": "이미지 너비",
+            "image_height": "이미지 높이",
+            "blur_radius": "블러 반경",
+            "extra_scheduler": "추가 스케줄러"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "MaskRectAreaAdvanced": {
+        "title": "마스크 사각형 면적(고급)",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "width": "너비",
+            "height": "높이",
+            "image_width": "이미지 너비",
+            "image_height": "이미지 높이",
+            "blur_radius": "블러 반경",
+            "extra_scheduler": "추가 스케줄러"
+        },
+        "outputs": {
+            "MASK": "마스크"
+        }
+    },
+    "ImpactNegativeConditioningPlaceholder": {
+        "title": "부정 조건 플레이스홀더",
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "FLUX.1과 같은 모델은 부정 조건을 사용하지 않습니다. 이는 이를 위한 자리표시자 노드입니다. KSampler(Impact), KSampler(Inspire), 옵티마이저에서 사용하는 부정 조건을 이 노드로 교체하면 FLUX.1을 사용할 수 있습니다."
+    },
+    "GITSSchedulerFuncProvider": {
+        "title": "GITS 스케줄러 함수 제공자",
+        "widgets": {
+            "coeff": "계수",
+            "denoise": "노이즈 제거 강도"
+        },
+        "outputs": {
+            "SCHEDULER_FUNC": "스케줄링 함수"
+        },
+        "description": "GITS 스케줄러용 스케줄러 함수를 제공합니다."
+    },
+    "VariationNoiseDetailerHookProvider": {
+        "title": "버리에이션 노이즈 옵티마이저 증강 훅 제공자",
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "strength": "강도"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "옵티마이저 훅"
+        },
+        "description": "베리에이션 시드를 최적화 프로세서에 적용합니다. 여러 단계를 조합하여 적용할 수 있습니다."
+    },
+    "ImpactMakeTileSEGS": {
+        "title": "타일 분할 Seg 생성",
+        "inputs": {
+            "images": "이미지",
+            "filter_in_segs_opt": "Seg 옵션의 필터",
+            "filter_out_segs_opt": "Seg 제외 옵션"
+        },
+        "widgets": {
+            "bbox_size": "BBox 크기",
+            "crop_factor": "크롭 배수",
+            "min_overlap": "최소 중복량",
+            "filter_segs_dilation": "분할 영역 팽창 필터",
+            "mask_irregularity": "마스크 불규칙도",
+            "irregular_mask_mode": "비정형 마스크 모드"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "workflow>Impact::MAKE_BASIC_PIPE": {
+        "title": "Impact:기본 버킷 생성",
+        "inputs": {
+            "images": "이미지",
+            "filter_in_segs_opt": "Seg 옵션의 필터",
+            "filter_out_segs_opt": "Seg 제외 옵션"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt 이름",
+            "Positive prompt": "긍정 프롬프트",
+            "Negative prompt": "부정 프롬프트",
+            "filter_segs_dilation": "분할 영역 팽창 필터",
+            "mask_irregularity": "마스크 불규칙도",
+            "irregular_mask_mode": "비정형 마스크 모드"
+        },
+        "outputs": {
+            "basic_pipe": "기본 번들"
+        }
+    },
+    "workflow>MAKE_BASIC_PIPE": {
+        "title": "기본 버킷 생성",
+        "inputs": {
+            "images": "이미지",
+            "filter_in_segs_opt": "Seg 옵션의 필터",
+            "filter_out_segs_opt": "Seg 제외 옵션"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt 이름",
+            "text": "텍스트",
+            "CLIPTextEncode text": "CLIP 텍스트 인코딩 텍스트",
+            "vae_name": "VAE 이름",
+            "mask_irregularity": "마스크 불규칙도",
+            "irregular_mask_mode": "비정형 마스크 모드"
+        },
+        "outputs": {
+            "basic_pipe": "기본 번들"
+        }
+    },
+    "UltralyticsDetectorProvider": {
+        "title": "검출 로더",
+        "widgets": {
+            "model_name": "모델 이름"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox 감지",
+            "SEGM_DETECTOR": "SEGM 감지"
+        }
+    }
+}

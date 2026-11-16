@@ -1,0 +1,442 @@
+{
+    "WanVideoAnimateEmbeds": {
+        "title": "WanAnimate embeddings d'animation",
+        "description": "Nœud central d'embeddings de WanAnimate, prend en charge images de référence, pose, visage, arrière-plan, prefix_frames et transition_video",
+        "inputs": {
+            "vae": "Modèle VAE",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "num_frames": "Nombre total de trames",
+            "force_offload": "Déchargement forcé",
+            "frame_window_size": "Taille de la fenêtre de contexte",
+            "colormatch": "Correspondance des couleurs",
+            "pose_strength": "Intensité de la pose",
+            "face_strength": "Intensité du visage",
+            "clip_embeds": "Embedding de vision CLIP",
+            "ref_images": "Image de référence",
+            "pose_images": "Images de pose",
+            "face_images": "Images de visage",
+            "bg_images": "Image d'arrière-plan",
+            "mask": "Masque",
+            "start_ref_image": "Image de référence initiale",
+            "transition_video": "Trames vidéo de transition",
+            "prefix_frames": "Trames de référence en préfixe",
+            "tiled_vae": "Encodage VAE par tuiles"
+        },
+        "outputs": {
+            "image_embeds": "Embedding d'image"
+        }
+    },
+    "WanVideoSampler": {
+        "title": "WanAnimate échantillonneur",
+        "description": "Échantillonneur vidéo WanAnimate, avec guidage CFG/APG/APG enchaîné",
+        "inputs": {
+            "model": "Modèle WanVideo",
+            "image_embeds": "Embedding d'image",
+            "steps": "Pas d'échantillonnage",
+            "cfg": "Échelle CFG",
+            "shift": "Décalage du bruit",
+            "seed": "Graine aléatoire",
+            "force_offload": "Déchargement forcé",
+            "scheduler": "Planificateur",
+            "riflex_freq_index": "Index de fréquence RIFLEX",
+            "text_embeds": "Embedding de texte",
+            "samples": "Variables latentes initiales",
+            "denoise_strength": "Intensité de débruitage",
+            "feta_args": "Paramètres Enhance-A-Video",
+            "context_options": "Options de contexte",
+            "cache_args": "Paramètres de cache",
+            "flowedit_args": "Paramètres FlowEdit",
+            "batched_cfg": "CFG par lot",
+            "slg_args": "Paramètres SLG",
+            "rope_function": "Fonction RoPE",
+            "loop_args": "Paramètres de la boucle",
+            "experimental_args": "Paramètres expérimentaux",
+            "sigmas": "Valeurs Sigma",
+            "unianimate_poses": "Pose UniAnimate",
+            "fantasytalking_embeds": "Embedding FantasyTalking",
+            "uni3c_embeds": "Embedding Uni3C",
+            "multitalk_embeds": "Embedding MultiTalk",
+            "freeinit_args": "Paramètres FreeInit",
+            "start_step": "Pas initial",
+            "end_step": "Pas final",
+            "add_noise_to_samples": "Ajouter du bruit aux échantillons",
+            "guidance_mode": "Mode de guidage",
+            "apg_eta": "Valeur eta APG",
+            "apg_momentum": "Moment APG",
+            "apg_norm_threshold": "Seuil de norme APG",
+            "apg_omega": "Valeur omega APG",
+            "apg_omega_I": "Valeur omega_I APG",
+            "apg_omega_TI": "Valeur omega_TI APG",
+            "chain_omega_V": "Valeur omega_V du CFG enchaîné",
+            "chain_omega_I": "Valeur omega_I du CFG enchaîné",
+            "chain_omega_TI": "Valeur omega_TI du CFG enchaîné"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "Échantillons après débruitage"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "WanAnimate échantillonneur v2",
+        "description": "Échantillonneur WanAnimate version v2",
+        "inputs": {
+            "model": "Modèle WanVideo",
+            "image_embeds": "Embedding d'image",
+            "steps": "Pas d'échantillonnage",
+            "cfg": "Échelle CFG",
+            "shift": "Décalage du bruit",
+            "seed": "Graine aléatoire",
+            "force_offload": "Déchargement forcé",
+            "scheduler": "Planificateur",
+            "text_embeds": "Embedding de texte",
+            "samples": "Variables latentes initiales",
+            "denoise_strength": "Intensité de débruitage",
+            "context_options": "Options de contexte",
+            "cache_args": "Paramètres de cache",
+            "batched_cfg": "CFG par lot",
+            "slg_args": "Paramètres SLG",
+            "rope_function": "Fonction RoPE",
+            "loop_args": "Paramètres de la boucle",
+            "experimental_args": "Paramètres expérimentaux",
+            "sigmas": "Valeurs Sigma",
+            "start_step": "Pas initial",
+            "end_step": "Pas final"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "Échantillons après débruitage"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "WanAnimate planificateur",
+        "description": "Planificateur de bruit WanAnimate",
+        "inputs": {
+            "steps": "Pas d'échantillonnage",
+            "shift": "Décalage du bruit",
+            "scheduler": "Type de planificateur",
+            "start_percent": "Pourcentage de départ",
+            "end_percent": "Pourcentage de fin"
+        },
+        "outputs": {
+            "sample_scheduler": "Planificateur d'échantillonnage",
+            "timesteps": "Pas temporel"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "WanAnimate planificateur v2",
+        "description": "Planificateur WanAnimate version v2",
+        "inputs": {
+            "steps": "Pas d'échantillonnage",
+            "shift": "Décalage du bruit",
+            "scheduler": "Type de planificateur"
+        },
+        "outputs": {
+            "sample_scheduler": "Planificateur d'échantillonnage",
+            "timesteps": "Pas temporel"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "WanAnimate réglages d'échantillonneur",
+        "description": "Emballe les paramètres d'échantillonnage dans un objet de réglages réutilisable",
+        "inputs": {
+            "steps": "Pas d'échantillonnage",
+            "cfg": "Échelle CFG",
+            "shift": "Décalage du bruit",
+            "scheduler": "Planificateur",
+            "riflex_freq_index": "Index de fréquence RIFLEX",
+            "guidance_mode": "Mode de guidage",
+            "apg_eta": "Valeur eta APG",
+            "apg_momentum": "Moment APG",
+            "apg_norm_threshold": "Seuil de norme APG"
+        },
+        "outputs": {
+            "sampler_settings": "Réglages d'échantillonneur"
+        }
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "WanAnimate échantillonner depuis les réglages",
+        "description": "Échantillonner avec les réglages d'échantillonneur prédéfinis",
+        "inputs": {
+            "model": "Modèle WanVideo",
+            "image_embeds": "Embedding d'image",
+            "sampler_settings": "Réglages d'échantillonneur",
+            "seed": "Graine aléatoire",
+            "force_offload": "Déchargement forcé",
+            "text_embeds": "Embedding de texte",
+            "samples": "Variables latentes initiales",
+            "denoise_strength": "Intensité de débruitage",
+            "context_options": "Options de contexte",
+            "cache_args": "Paramètres de cache",
+            "batched_cfg": "CFG par lot",
+            "slg_args": "Paramètres SLG",
+            "rope_function": "Fonction RoPE",
+            "loop_args": "Paramètres de la boucle",
+            "experimental_args": "Paramètres expérimentaux",
+            "sigmas": "Valeurs Sigma",
+            "start_step": "Pas initial",
+            "end_step": "Pas final"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "Échantillons après débruitage"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "WanAnimate encodage VAE",
+        "description": "Encode les images/vidéos en variables latentes",
+        "inputs": {
+            "vae": "Modèle VAE",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "num_frames": "Nombre total de trames",
+            "noise_aug_strength": "Intensité du renforcement par bruit",
+            "start_latent_strength": "Intensité de la variable latente initiale",
+            "end_latent_strength": "Intensité de la variable latente de fin",
+            "force_offload": "Déchargement forcé",
+            "start_image": "Image de départ",
+            "end_image": "Image de fin",
+            "clip_embeds": "Embedding de vision CLIP",
+            "control_embeds": "Embeddings de contrôle",
+            "fun_or_fl2v_model": "Modèle Fun/FL2V",
+            "temporal_mask": "Masque temporel",
+            "extra_latents": "Variables latentes supplémentaires",
+            "tiled_vae": "Encodage VAE par tuiles",
+            "add_cond_latents": "Variables latentes de condition supplémentaires",
+            "augment_empty_frames": "Renforcer les trames vides",
+            "empty_frame_pad_image": "Image de remplissage des trames vides"
+        },
+        "outputs": {
+            "image_embeds": "Embedding d'image"
+        }
+    },
+    "WanVideoDecode": {
+        "title": "WanAnimate décodage VAE",
+        "description": "Décode les variables latentes en pixels vidéo",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "Modèle VAE",
+            "enable_tiling": "Activer la mise en tuiles",
+            "force_offload": "Déchargement forcé"
+        },
+        "outputs": {
+            "images": "Image"
+        }
+    },
+    "WanVideoModelLoader": {
+        "title": "WanAnimate chargeur de modèle",
+        "description": "Charge le modèle de génération vidéo Wan Animate",
+        "inputs": {
+            "model_path": "Chemin du modèle",
+            "precision": "Précision",
+            "attention_mode": "Mode d'attention",
+            "load_device": "Appareil de chargement",
+            "enable_5b": "Activer le modèle 5B"
+        },
+        "outputs": {
+            "model": "Modèle WanVideo"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "WanAnimate chargeur de VAE",
+        "description": "Charger le modèle VAE",
+        "inputs": {
+            "model_path": "Chemin du modèle"
+        },
+        "outputs": {
+            "vae": "Modèle VAE"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "WanAnimate options de contexte",
+        "description": "Configurer les paramètres d'échantillonnage de la fenêtre de contexte",
+        "inputs": {
+            "context_schedule": "Planification du contexte",
+            "context_frames": "Nombre de trames de contexte",
+            "context_stride": "Pas du contexte",
+            "context_overlap": "Chevauchement du contexte",
+            "freenoise": "FreeNoise",
+            "verbose": "Sortie détaillée"
+        },
+        "outputs": {
+            "context_options": "Options de contexte"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "WanAnimate encodage de texte (cache)",
+        "description": "Encode le prompt texte en embeddings, avec cache disque et extension par LLM Qwen",
+        "inputs": {
+            "model_name": "Nom du modèle",
+            "precision": "Précision",
+            "positive_prompt": "Prompt positif",
+            "negative_prompt": "Prompt négatif",
+            "quantization": "Méthode de quantification",
+            "use_disk_cache": "Utiliser le cache disque",
+            "device": "Appareil d'exécution",
+            "extender_args": "Paramètres d'extension du prompt"
+        },
+        "outputs": {
+            "text_embeds": "Embedding de texte",
+            "negative_text_embeds": "Embedding de texte négatif",
+            "positive_prompt": "Prompt positif"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "WanAnimate encodage de vision CLIP",
+        "description": "Encode l'image de référence avec le modèle de vision CLIP",
+        "inputs": {
+            "clip_vision": "Modèle de vision CLIP",
+            "image_1": "Image 1",
+            "strength_1": "Intensité 1",
+            "strength_2": "Intensité 2",
+            "crop": "Mode de recadrage",
+            "combine_embeds": "Mode de combinaison des embeddings",
+            "force_offload": "Déchargement forcé",
+            "image_2": "Image 2",
+            "negative_image": "Image négative",
+            "tiles": "Nombre de blocs",
+            "ratio": "Proportion de tuiles"
+        },
+        "outputs": {
+            "image_embeds": "Embedding d'image"
+        }
+    },
+    "WanVideoLoraSelect": {
+        "title": "WanAnimate sélection de LoRA",
+        "description": "Sélectionne un seul modèle LoRA et configure son poids",
+        "inputs": {
+            "model_path": "Chemin du modèle",
+            "strength": "Poids"
+        },
+        "outputs": {
+            "lora": "Configuration LoRA"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "WanAnimate sélection de plusieurs LoRA",
+        "description": "Sélectionne plusieurs modèles LoRA et configure le poids de chacun",
+        "inputs": {
+            "lora_1": "LoRA 1",
+            "strength_1": "Poids 1",
+            "lora_2": "LoRA 2",
+            "strength_2": "Poids 2",
+            "lora_3": "LoRA 3",
+            "strength_3": "Poids 3",
+            "lora_4": "LoRA 4",
+            "strength_4": "Poids 4"
+        },
+        "outputs": {
+            "loras": "Liste de LoRA"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "WanAnimate appliquer les LoRA",
+        "description": "Applique les configurations LoRA au modèle vidéo",
+        "inputs": {
+            "model": "Modèle WanVideo",
+            "lora": "Configuration LoRA",
+            "loras": "Liste de LoRA"
+        },
+        "outputs": {
+            "model": "Modèle WanVideo"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "WanAnimate configuration de bascule de blocs",
+        "description": "Configure la stratégie de bascule de blocs du modèle pour économiser la mémoire vidéo",
+        "inputs": {
+            "blocks_to_swap": "Nombre de blocs à échanger",
+            "use_non_blocking": "Utiliser le transfert non bloquant",
+            "vace_blocks_to_swap": "Nombre de blocs à échanger VACE",
+            "prefetch_blocks": "Nombre de blocs préchargés",
+            "block_swap_debug": "Débogage de la bascule de blocs",
+            "offload_img_emb": "Décharger l'embedding d'image",
+            "offload_txt_emb": "Décharger l'embedding de texte"
+        },
+        "outputs": {
+            "block_swap_args": "Paramètres de bascule de blocs"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "WanAnimate appliquer la bascule de blocs",
+        "description": "Applique la configuration de bascule de blocs au modèle",
+        "inputs": {
+            "model": "Modèle WanVideo",
+            "block_swap_args": "Paramètres de bascule de blocs"
+        },
+        "outputs": {
+            "model": "Modèle WanVideo"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "WanAnimate réglages de compilation Torch",
+        "description": "Configure torch.compile pour accélérer l'inférence du modèle",
+        "inputs": {
+            "compile_mode": "Mode de compilation",
+            "fullgraph": "Graphe de calcul complet",
+            "dynamic": "Formes dynamiques",
+            "backend": "Backend de traitement",
+            "options": "Option de traitement"
+        },
+        "outputs": {
+            "compile_args": "Paramètres de compilation"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "WanAnimate chargeur de ControlNet Uni3C",
+        "description": "Charger le modèle Uni3C ControlNet",
+        "inputs": {
+            "model_path": "Chemin du modèle"
+        },
+        "outputs": {
+            "uni3c_controlnet": "Uni3C ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "WanAnimate embedding Uni3C",
+        "description": "Génère les embeddings de contrôle Uni3C ControlNet",
+        "inputs": {
+            "uni3c_controlnet": "Uni3C ControlNet",
+            "control_images": "Image de contrôle",
+            "strength": "Intensité de contrôle",
+            "start_percent": "Pourcentage de départ",
+            "end_percent": "Pourcentage de fin"
+        },
+        "outputs": {
+            "uni3c_embeds": "Embedding Uni3C"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "WanAnimate paramètres supplémentaires de l'échantillonneur",
+        "description": "Configure les paramètres supplémentaires de l'échantillonneur (CFG facultatif, décalage de bruit facultatif, etc.)",
+        "inputs": {
+            "optional_cfg": "CFG facultatif",
+            "optional_noise_offset": "Décalage de bruit facultatif",
+            "optional_cfg_scale": "Échelle CFG facultative",
+            "optional_sigma_max": "Valeur maximale Sigma facultative",
+            "optional_sigma_min": "Valeur minimale Sigma facultative"
+        },
+        "outputs": {
+            "sampler_extra_args": "Paramètres supplémentaires de l'échantillonneur"
+        }
+    },
+    "WanAnimatePlusBernini": {
+        "title": "Génération de conditions WanAnimate Bernini",
+        "description": "Génération de conditions du modèle Bernini, prend en charge les tâches v2v/rv2v/r2v/t2v",
+        "inputs": {
+            "vae": "Modèle VAE",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "num_frames": "Nombre total de trames",
+            "source_video": "Vidéo source",
+            "reference_video": "Vidéo de référence",
+            "reference_images": "Image de référence",
+            "ref_max_size": "Longueur de bord maximale du média de référence",
+            "force_offload": "Déchargement forcé",
+            "tiled_vae": "Encodage VAE par tuiles"
+        },
+        "outputs": {
+            "image_embeds": "Embedding d'image"
+        }
+    }
+}

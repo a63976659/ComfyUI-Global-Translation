@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "K-сэмплер Flux2Klein (экспериментальный)",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивное условие",
+            "latent_image": "Latent-изображение",
+            "negative": "Обратное условие"
+        },
+        "widgets": {
+            "steps": "Количество шагов",
+            "seed": "Случайное зерно",
+            "denoise": "Интенсивность шумоподавления",
+            "base_shift": "Базовое смещение",
+            "max_shift": "Максимальное смещение",
+            "cfg_scale": "Масштаб CFG",
+            "guidance_embed": "Направляющие эмбеддинги"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Якорь цвета Flux2Klein",
+        "inputs": {
+            "model": "Модель",
+            "conditioning": "Управление условиями"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "ramp_curve": "Кривая градиента",
+            "ref_index": "Индекс ссылки",
+            "channel_weights": "Веса каналов",
+            "debug": "Режим отладки"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Усилитель Flux2Klein",
+        "inputs": {
+            "conditioning": "Управление условиями",
+            "device": "Устройство выполнения"
+        },
+        "widgets": {
+            "active_scale": "Масштаб активной области",
+            "per_token_whiten": "Побелка по токенам",
+            "norm_equalize": "Балансировка нормы",
+            "early_layer_scale": "Коэффициент масштабирования ранних слоёв",
+            "mid_layer_scale": "Коэффициент масштабирования средних слоёв",
+            "late_layer_scale": "Коэффициент масштабирования поздних слоёв",
+            "preserve_original": "Сохранить исходные данные",
+            "active_end_override": "Переопределение точки конца активности",
+            "debug": "Режим отладки"
+        },
+        "description": "Выполняет чистые скалярные/побелочные операции над активной областью условия Klein и предоставляет специфичное для Klein слоистое масштабирование Qwen3."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Контроллер деталей Flux2Klein",
+        "inputs": {
+            "conditioning": "Управление условиями",
+            "device": "Устройство выполнения"
+        },
+        "widgets": {
+            "front_mult": "Множитель раздела передней части",
+            "mid_mult": "Множитель раздела средней части",
+            "end_mult": "Множитель раздела задней части",
+            "emphasis_start": "Позиция начала акцента",
+            "emphasis_end": "Позиция окончания акцента",
+            "emphasis_mult": "Множитель акцента",
+            "preserve_original": "Сохранить исходные данные",
+            "debug": "Режим отладки"
+        },
+        "description": "Регулятор множителя сегментированных эмбеддингов.\n\nРеальный режим (рекомендуется): работает вместе с сегментированным энкодером. Энкодер создаёт диапазоны токенов сегментов как метаданные управления условием (`meta[\"klein_sections\"]`); этот узел масштабирует активные эмбеддинги в соответствующих диапазонах согласно коэффициентам, заданным пользователем.\n\nРежим совместимости (старый / не рекомендуется): если метаданные сегментов отсутствуют, узел автоматически делит активную область в фиксированном соотношении 25%/50%/25%. Границы деления произвольны — у токенов Qwen3 нет фиксированной позиционной семантики — в этом режиме версия v1 узла практически не даёт эффекта. Режим сохранён для совместимости со старыми воркфлоу; рекомендуется перейти на сегментированный энкодер, чтобы получить осмысленное масштабирование с учётом сегментов."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Контроллер ссылочной маски Flux2Klein",
+        "inputs": {
+            "conditioning": "Управление условиями",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "invert_mask": "Инвертировать маску",
+            "feather": "Размывание маски",
+            "reference_index": "Индекс ссылки",
+            "debug": "Режим отладки"
+        },
+        "description": "Пространственное затухание ссылочных Latent с использованием нарисованной маски.\n\nСсылочный Latent умножается на по-пиксельный скаляр, сгенерированный маской. Latent управления условием изменяется прямо на месте (заменяется meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Контроллер ссылочных Latent Flux2Klein",
+        "inputs": {
+            "model": "Модель",
+            "conditioning": "Управление условиями"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "reference_index": "Индекс ссылки",
+            "spatial_fade": "Пространственное затухание",
+            "spatial_fade_strength": "Интенсивность пространственного затухания",
+            "debug": "Режим отладки"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Балансир текста и ссылок Flux2Klein",
+        "inputs": {
+            "model": "Модель",
+            "conditioning": "Управление условиями"
+        },
+        "widgets": {
+            "balance": "Коэффициент балансировки",
+            "debug": "Режим отладки"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Регулятор весов ссылочных Latent Flux2Klein",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "reference_index": "Индекс ссылки",
+            "weight": "Вес"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Усилитель текста Flux2Klein",
+        "inputs": {
+            "conditioning": "Управление условиями"
+        },
+        "widgets": {
+            "magnitude": "Глобальная амплитуда",
+            "contrast": "Контраст",
+            "normalize_strength": "Интенсивность нормализации",
+            "skip_bos": "Пропуск начального токена",
+            "debug": "Режим отладки"
+        },
+        "description": "Изменение токенов управления текстовым условием.\n\nПорядок операций:\n1. Нормализация: выравнивание амплитуды токенов\n2. Контраст: усиление/ослабление различий между токенами\n3. Амплитуда: глобальное масштабирование"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Сегментированный энкодер Flux2Klein",
+        "inputs": {
+            "clip": "Клип",
+            "separator": "Разделитель"
+        },
+        "widgets": {
+            "front_text": "Текст передней части",
+            "mid_text": "Текст средней части",
+            "end_text": "Текст задней части",
+            "combined_prompt": "Объединённый промпт",
+            "show_preview": "Показывать предпросмотр",
+            "debug": "Режим отладки"
+        },
+        "outputs": {
+            "conditioning": "Управление условиями",
+            "front_section": "Сегмент передней части",
+            "mid_section": "Сегмент средней части",
+            "end_section": "Сегмент задней части",
+            "full_prompt": "Полный промпт"
+        },
+        "description": "Токенизирует трёхчастный промпт и создаёт диапазоны токенов сегментов как метаданные управления условием, считываемые контроллером деталей."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "Перенос идентичности",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_block": "Начальный блок",
+            "end_block": "Конечный блок",
+            "mode": "Режим",
+            "top_k_percent": "Процент Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "Перенос идентичности (расширенный)",
+        "inputs": {
+            "model": "Модель",
+            "subject_mask": "Маска объекта"
+        },
+        "widgets": {
+            "reference_index": "Индекс ссылки",
+            "mode": "Режим",
+            "top_k_percent": "Процент Top K",
+            "double_enable": "Включить двойной перенос",
+            "double_strength": "Интенсивность двойного переноса",
+            "double_start": "Начало двойного переноса",
+            "double_end": "Конец двойного переноса",
+            "single_enable": "Включить одинарный перенос",
+            "single_strength": "Интенсивность одинарного переноса",
+            "single_start": "Начало одинарного переноса",
+            "single_end": "Конец одинарного переноса",
+            "block_schedule": "Планирование блоков",
+            "sim_floor": "Нижний порог сходства",
+            "mask_threshold": "Порог маски"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "Перенос идентичности V3",
+        "inputs": {
+            "model": "Модель",
+            "subject_mask": "Маска объекта"
+        },
+        "widgets": {
+            "preset": "Пресеты",
+            "reference_index": "Индекс ссылки",
+            "double_schedule": "Расписание двойного переноса",
+            "single_schedule": "Расписание одинарного переноса",
+            "double_sim": "Сходство двойного переноса",
+            "single_sim": "Сходство одинарного переноса",
+            "commit_margin": "Запас фиксации",
+            "commit_confirm": "Подтверждение фиксации",
+            "commit_anchor": "Якорь фиксации",
+            "mask_threshold": "Порог маски",
+            "debug": "Режим отладки"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "Финальный перенос идентичности",
+        "inputs": {
+            "model": "Модель",
+            "subject_mask_1": "Маска объекта 1",
+            "subject_mask_2": "Маска объекта 2",
+            "subject_mask_3": "Маска объекта 3",
+            "subject_mask_4": "Маска объекта 4",
+            "subject_mask_5": "Маска объекта 5",
+            "subject_mask_6": "Маска объекта 6",
+            "subject_mask_7": "Маска объекта 7",
+            "subject_mask_8": "Маска объекта 8"
+        },
+        "widgets": {
+            "preset": "Пресеты",
+            "enabled": "Включено",
+            "reference_index": "Индекс ссылки",
+            "reference_indices": "Список индексов ссылок",
+            "similarity_floor": "Нижний порог сходства",
+            "softmax_temperature": "Температурный коэффициент Softmax",
+            "mask_threshold": "Порог маски",
+            "double_blocks": "Диапазон двойных модулей",
+            "single_blocks": "Диапазон одинарных модулей",
+            "total_sampling_steps": "Общее число шагов сэмплирования",
+            "debug": "Режим отладки"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "Направление по идентичности",
+        "inputs": {
+            "model": "Модель",
+            "identity_latent": "Latent идентичности"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Начальный процент действия",
+            "end_percent": "Процент окончания действия",
+            "mode": "Режим"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Обработка нескольких ссылочных Latent Flux2 Klein",
+        "inputs": {
+            "conditioning": "Управление условиями",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "Управление условиями"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "K-сэмплер FLUX.2 Klein",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "latent_image": "Latent изображения"
+        },
+        "widgets": {
+            "steps": "Количество шагов",
+            "guidance_scale": "Масштаб направления",
+            "seed": "Зерно",
+            "denoise": "Очищено от шума",
+            "base_shift": "Базовый сдвиг",
+            "max_shift": "Максимальный сдвиг"
+        },
+        "description": "Узел FLUX.2 Klein KSampler предназначен для генерации изображений в Latent-пространстве."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Усилитель Flux2 Klein",
+        "inputs": {
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "magnitude": "Амплитуда",
+            "contrast": "Контраст",
+            "normalize_strength": "Интенсивность нормализации",
+            "preserve_original": "Сохранить оригинал",
+            "preserve_mode": "Режим сохранения",
+            "edit_text_weight": "Вес редактируемого текста",
+            "active_end_override": "Переопределение завершения активности",
+            "low_vram": "Низкая видеопамять",
+            "device": "Устройство",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "CONDITIONING": "Условие"
+        },
+        "description": "Усилитель условия FLUX. .Klein.\n\nОперации:\n- Амплитуда: прямое масштабирование эмбеддингов активной области\n- Контраст: усиление различий между маркерами\n- Нормализация: выравнивание размеров маркеров\n- Сохранить оригинал: смешивание обратно с исходными эмбеддингами в нескольких режимах\n\nВсе операции изменяют только активную текстовую область (заполнение не затрагивается).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Контроллер деталей Flux2 Klein",
+        "inputs": {
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "front_mult": "Множитель передней части",
+            "mid_mult": "Множитель средней части",
+            "end_mult": "Множитель окончания",
+            "emphasis_start": "Начало акцента",
+            "emphasis_end": "Конец акцента",
+            "emphasis_mult": "Множитель акцента",
+            "preserve_original": "Сохранить оригинал",
+            "preserve_mode": "Режим сохранения",
+            "low_vram": "Низкая видеопамять",
+            "device": "Устройство",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "CONDITIONING": "Условие"
+        },
+        "description": "Областное управление условием FLUX. .Klein.\n\nАктивные маркеры делятся на области:\n- Передняя: тема/основная концепция\n- Средняя: детали/модификаторы\n- Окончание: стиль/термины качества",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Контроллер ссылочных Latent Flux2 Klein",
+        "inputs": {
+            "model": "Модель",
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "reference_index": "Индекс ссылки",
+            "spatial_fade": "Пространственное растворение",
+            "spatial_fade_strength": "Интенсивность пространственного растворения",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "MODEL": "Модель",
+            "CONDITIONING": "Условие"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Баланс текста и ссылок Flux2 Klein",
+        "inputs": {
+            "model": "Модель",
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "balance": "Сбалансированный",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "MODEL": "Модель",
+            "CONDITIONING": "Условие"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Усилитель текста Flux2 Klein",
+        "inputs": {
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "magnitude": "Амплитуда",
+            "contrast": "Контраст",
+            "normalize_strength": "Интенсивность нормализации",
+            "skip_bos": "Пропуск начального символа",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "CONDITIONING": "Условие"
+        },
+        "description": "Изменение маркеров текстового условия.\n\nПорядок операций:\n1. Нормализация: выравнивание размеров маркеров\n2. Контраст: усиление/ослабление различий между маркерами\n3. Амплитуда: глобальное масштабирование",
+        "api_version": "V1"
+    }
+}

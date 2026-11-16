@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "Начало цикла тензоров",
+        "inputs": {
+            "initial_value": "Начальное значение"
+        },
+        "widgets": {
+            "mode": "Режим",
+            "iterations": "Количество итераций"
+        },
+        "outputs": {
+            "flow_control": "Управление потоком",
+            "accumulated_count": "Накопленное количество",
+            "previous_value": "Предыдущее значение",
+            "current_iteration": "Текущее количество итераций"
+        },
+        "description": "Открывает цикл для сбора выходов. Поддерживаются два режима:\n- Количество итераций: выполнить фиксированное число итераций\n- Общее количество кадров: выполнять, пока накопленное не достигнет целевого числа кадров\nПодключите flow_control к TensorLoopClose, используйте `previous_value` как вход для генерации, а выход генерации подключите к TensorLoopClose.processed.\nПоддерживаются типы изображений, масок и Latent."
+    },
+    "TensorLoopClose": {
+        "title": "Конец цикла тензоров",
+        "widgets": {
+            "flow_control": "Управление потоком",
+            "processed": "Обработано",
+            "accumulate": "Накапливать",
+            "overlap": "Наложение",
+            "stop": "Стоп"
+        },
+        "outputs": {
+            "output": "Выход"
+        },
+        "description": "Закрывает цикл, открытый узлом TensorLoopOpen.\nПодключения:\n  - flow_control от TensorLoopOpen\n  - processed: выход, сгенерированный на текущей итерации\nПоддерживаются типы изображений, масок и Latent."
+    },
+    "_AccumulateNode": {
+        "title": "Узел накопления",
+        "widgets": {
+            "to_add": "К добавлению",
+            "accumulation": "Накопленное значение"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "Начало цикла условий",
+        "widgets": {
+            "condition": "Условие"
+        },
+        "outputs": {
+            "flow_control": "Управление потоком"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "Конец условного цикла",
+        "widgets": {
+            "flow_control": "Управление потоком",
+            "condition": "Условие"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "Арифметика целых чисел",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "Операция"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "Накопление в батч изображений",
+        "widgets": {
+            "accumulation": "Накопленное значение",
+            "overlap_frames": "Количество перекрывающихся кадров",
+            "overlap_mode": "Режим наложения"
+        },
+        "outputs": {
+            "result": "Результат"
+        },
+        "description": "Склеивает накопленные значения тензоров изображений/масок или словарей Latent в один батч."
+    },
+    "_ConditionalSelect": {
+        "title": "Выбор условия",
+        "widgets": {
+            "condition": "Условие",
+            "value_if_true": "Значение при истинном условии",
+            "value_if_false": "Значение при ложном условии"
+        },
+        "outputs": {
+            "result": "Результат"
+        },
+        "description": "Возвращает value_if_true, если условие True, иначе value_if_false.\nИспользует ленивое вычисление: разбирается только выбранная ветвь."
+    },
+    "_ImageAccumStatePack": {
+        "title": "Упаковка состояния накопления изображений",
+        "widgets": {
+            "remaining": "Оставшееся количество",
+            "accum": "Накопленное значение",
+            "previous_value": "Предыдущее значение",
+            "count": "Количество",
+            "open_node_id": "ID начального узла",
+            "total_frames": "общее количество кадров",
+            "prev_accumulated_count": "Предыдущее накопленное количество",
+            "blend_overlap": "Перекрытие смешивания"
+        },
+        "outputs": {
+            "loop_state": "Состояние цикла",
+            "should_continue": "Продолжить?"
+        },
+        "description": "Упаковывает состояние цикла в один словарь для использования в initial_value0 узла TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "Распаковка состояния накопления изображений",
+        "widgets": {
+            "loop_state": "Состояние цикла"
+        },
+        "outputs": {
+            "remaining": "Оставшееся количество",
+            "accumulation": "Накопленное значение",
+            "previous_value": "Предыдущее значение",
+            "accumulated_count": "Накопленное количество",
+            "count": "Количество",
+            "open_node_id": "ID начального узла",
+            "total_frames": "общее количество кадров"
+        },
+        "description": "Распаковывает состояние цикла из TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "Операции с пакетами",
+        "widgets": {
+            "batch": "Пакет",
+            "operation": "Операция",
+            "amount": "Количество",
+            "batch_b": "Пакет B"
+        },
+        "outputs": {
+            "output": "Выход"
+        },
+        "description": "Операции нарезки, обрезки и склейки пакетов."
+    }
+}

@@ -1,0 +1,3409 @@
+{
+    "ONNXDetectorForEach": {
+        "title": "Détecteur ONNX image par image",
+        "inputs": {
+            "onnx_detector": "Détecteur ONNX",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Coefficient de dilatation",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Seuil de filtrage de taille minimale"
+        },
+        "description": ""
+    },
+    "ImpactIntConstSender": {
+        "title": "Impact Émetteur de constantes entières",
+        "inputs": {
+            "signal": "Signal de commande"
+        },
+        "widgets": {
+            "value": "Valeur",
+            "link_id": "ID du lien"
+        },
+        "description": ""
+    },
+    "ImagePasteMasked": {
+        "title": "Collage d'image avec masque",
+        "inputs": {
+            "destination": "Image cible",
+            "source": "Image source",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "x": "Coordonnée X",
+            "y": "Coordonnée Y",
+            "resize_source": "Redimensionner l'image source"
+        },
+        "description": ""
+    },
+    "Unsampler": {
+        "title": "Échantillonneur inverse",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Prompt positif",
+            "negative": "Prompt négatif",
+            "latent_image": "Image latent"
+        },
+        "widgets": {
+            "steps": "Nombre total de steps",
+            "end_at_step": "Step de terminaison",
+            "cfg": "Valeur CFG",
+            "sampler_name": "Nom de l'échantillonneur",
+            "scheduler": "Planificateur",
+            "normalize": "Normalisation"
+        },
+        "description": ""
+    },
+    "ImpactKSamplerBasicPipe": {
+        "title": "Échantillonneur K (groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Version en groupe de nœuds de l'Échantillonneur K.\n Lors de la conversion du widget du planificateur en entrée, reportez-vous au nœud Adaptateur de planification pour résoudre les problèmes de compatibilité."
+    },
+    "ImpactKSamplerAdvancedBasicPipe": {
+        "title": "Échantillonneur K (avancé, groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "add_noise": "Ajouter du bruit",
+            "noise_seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "start_at_step": "Pas de début de débruitage",
+            "end_at_step": "Pas de fin de débruitage",
+            "return_with_leftover_noise": "Retourner le bruit"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Version avancée en groupe de nœuds de l'Échantillonneur K.\n Lors de la conversion du widget du planificateur en entrée, reportez-vous au nœud Adaptateur de planification pour résoudre les problèmes de compatibilité."
+    },
+    "CLIPSegDetectorProvider": {
+        "title": "Détecteur CLIPSeg",
+        "widgets": {
+            "text": "Texte",
+            "blur": "Flou",
+            "threshold": "Seuil",
+            "dilation_factor": "Dilatation"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Détection BBox"
+        },
+        "description": "Enveloppe CLIPSeg afin de fournir une détection BBox."
+    },
+    "SEGSOrderedFilterDetailerHookProvider": {
+        "title": "Contrainte d'optimisation de filtrage par ordre Seg",
+        "widgets": {
+            "target": "Cible",
+            "order": "Ordre",
+            "take_start": "Numéro de départ",
+            "take_count": "Quantité"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "Contrainte d'optimisation de filtrage par plage Seg, Contrainte d'optimisation de filtrage par étiquette Seg - il existe un nœud d'enveloppement qui fournit un nœud Filtre Seg en créant une Contrainte d'optimisation, afin de l'appliquer dans l'Optimisation faciale ou le Détecteur."
+    },
+    "SEGSRangeFilterDetailerHookProvider": {
+        "title": "Contrainte d'optimisation de filtrage par plage Seg",
+        "widgets": {
+            "target": "Cible",
+            "mode": "Mode (sélection)",
+            "min_value": "Valeur minimale",
+            "max_value": "Valeur maximale"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        }
+    },
+    "SEGSLabelFilterDetailerHookProvider": {
+        "title": "Contrainte d'optimisation de filtrage par étiquette Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "Préréglage",
+            "labels": "Étiquette"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        }
+    },
+    "CustomSamplerDetailerHookProvider": {
+        "title": "Contrainte d'optimisation d'échantillonnage personnalisée",
+        "inputs": {
+            "sampler": "Échantillonneur"
+        },
+        "widgets": {
+            "preset": "Préréglage",
+            "labels": "Étiquette"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        }
+    },
+    "LamaRemoverDetailerHookProvider": {
+        "title": "Contrainte d'optimisation de l'algorithme de retouche LaMa",
+        "inputs": {
+            "sampler": "Échantillonneur"
+        },
+        "widgets": {
+            "mask_threshold": "Seuil du masque",
+            "gaussblur_radius": "Rayon de flou gaussien",
+            "skip_sampling": "Passer l'échantillonnage"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        }
+    },
+    "EmptySegs": {
+        "title": "Seg vide",
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Fournit un Seg vide."
+    },
+    "SetDefaultImageForSEGS": {
+        "title": "Définir l'image par défaut des Seg",
+        "inputs": {
+            "segs": "Seg",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "override": "Écraser"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Sans passage par l'améliorateur d'optimisation, les SEGS ne contiennent que les informations de zones détectées, sans images. Ce nœud définit une image par défaut pour les SEGS."
+    },
+    "RemoveImageFromSEGS": {
+        "title": "Supprimer l'image Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactControlNetApplySEGS": {
+        "title": "Appliquer ControlNet Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Prétraitement Seg",
+            "control_image": "Image ControlNet"
+        },
+        "widgets": {
+            "strength": "Intensité"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Pour appliquer un ControlNet à un Seg, vous devez utiliser le nœud Fournisseur de préprocesseur du Inspire Pack pour exploiter ce nœud.\n Prétraitement Seg et Image ControlNet peuvent être appliqués de façon facultative. Si une Image ControlNet  est fournie, le Prétraitement Seg est ignoré.\n Si l'option est réglée sur Image ControlNet, vous pouvez prévisualiser l'image centrale recadrée via Aperçu Seg (Image ControlNet). Les images générées par le Prétraitement Seg doivent être vérifiées par la sortie Image ControlNet de chaque processeur d'optimisation.\n Ce Prétraitement Seg s'exécute pendant le traitement d'optimisation en prétraitant les images recadrées en temps réel, tandis que l'image ControlNet est recadrée puis utilisée comme entrée de Appliquer ControlNet Seg."
+    },
+    "ImpactControlNetApplyAdvancedSEGS": {
+        "title": "Appliquer ControlNet (avancé) Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Prétraitement Seg",
+            "control_image": "Image"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "start_percent": "Heure de début",
+            "end_percent": "Heure de fin"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Pour appliquer un ControlNet à un Seg, vous devez utiliser le nœud Fournisseur de préprocesseur du Inspire Pack pour exploiter ce nœud.\n Prétraitement Seg et Image ControlNet peuvent être appliqués de façon facultative. Si une Image ControlNet  est fournie, le Prétraitement Seg est ignoré.\n Si l'option est réglée sur Image ControlNet, vous pouvez prévisualiser l'image centrale recadrée via Aperçu Seg (Image ControlNet). Les images générées par le Prétraitement Seg doivent être vérifiées par la sortie Image ControlNet de chaque processeur d'optimisation.\n Ce Prétraitement Seg s'exécute pendant le traitement d'optimisation en prétraitant les images recadrées en temps réel, tandis que l'image ControlNet est recadrée puis utilisée comme entrée de Appliquer ControlNet Seg."
+    },
+    "ImpactControlNetClearSEGS": {
+        "title": "Supprimer le ControlNet du Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Efface le ControlNet appliqué au Seg"
+    },
+    "ImpactDecomposeSEGS": {
+        "title": "Décomposition Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS_HEADER": "Informations d'en-tête Seg",
+            "SEG_ELT": "Seg_élément"
+        }
+    },
+    "ImpactAssembleSEGS": {
+        "title": "Combinaison Seg",
+        "inputs": {
+            "seg_header": "Informations d'en-tête Seg",
+            "seg_elt": "Seg_élément"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactFrom_SEG_ELT": {
+        "title": "Depuis l'élément Seg",
+        "inputs": {
+            "seg_elt": "Seg_élément"
+        },
+        "outputs": {
+            "seg_elt": "Seg_élément",
+            "cropped_image": "Image recadrée",
+            "cropped_mask": "Masque de recadrage",
+            "crop_region": "Zone de recadrage",
+            "BBox": "Seg élément_BBox",
+            "Seg_ELT_bbox": "BBox de l'élément Seg",
+            "control_net_wrapper": "Permutation ControlNet",
+            "confidence": "Confiance",
+            "label": "Étiquette"
+        }
+    },
+    "ImpactEdit_SEG_ELT": {
+        "title": "Éditer Seg_élément",
+        "inputs": {
+            "seg_elt": "Seg_élément",
+            "cropped_image_opt": "Image recadrée",
+            "cropped_mask_opt": "Masque de recadrage",
+            "crop_region_opt": "Zone de recadrage",
+            "bbox_opt": "Sélection BBox",
+            "control_net_wrapper_opt": "Permutation ControlNet",
+            "confidence_opt": "Confiance",
+            "label_opt": "Étiquette"
+        },
+        "outputs": {
+            "Seg_ELT": "Seg_élément",
+            "SEG_ELT": "Seg_élément"
+        }
+    },
+    "ImpactDilate_Mask_SEG_ELT": {
+        "title": "Dilatation de l'élément Seg",
+        "inputs": {
+            "seg_elt": "Seg_élément"
+        },
+        "widgets": {
+            "dilation": "Dilatation"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_élément"
+        }
+    },
+    "ImpactDilateMask": {
+        "title": "Dilatation du masque",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "dilation": "Dilatation"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "ImpactGaussianBlurMask": {
+        "title": "Flou gaussien du masque",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "kernel_size": "Taille",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "ImpactDilateMaskInSEGS": {
+        "title": "Dilatation du masque Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "dilation": "Dilatation"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactGaussianBlurMaskInSEGS": {
+        "title": "Flou gaussien du masque Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "kernel_size": "Taille",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactScaleBy_BBOX_SEG_ELT": {
+        "title": "Mise à l'échelle de l'élément Seg",
+        "inputs": {
+            "seg": "Seg"
+        },
+        "widgets": {
+            "scale_by": "Coefficient"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_élément"
+        }
+    },
+    "ImpactSEGSToMaskBatch": {
+        "title": "Seg vers groupe de masques",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "PreviewBridge": {
+        "title": "Aperçu d'image par pont",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "image": "Image (entrée)",
+            "block": "Blocs",
+            "restore_mask": "Restaurer le masque"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)",
+            "MASK": "Masque"
+        },
+        "description": "Lors de l'utilisation de l'Éditeur de masques de l'espace Clip, ce nœud personnalisé peut être employé avec le pont d'images."
+    },
+    "PreviewBridgeLatent": {
+        "title": "Aperçu Latent par pont",
+        "inputs": {
+            "latent": "Latent",
+            "vae_opt": "Sélection VAE"
+        },
+        "widgets": {
+            "image": "Image (entrée)",
+            "block": "Blocs",
+            "restore_mask": "Restaurer le masque",
+            "preview_method": "Méthode d'aperçu"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "MASK": "Masque"
+        },
+        "description": "Lors de l'utilisation de l'Éditeur de masques de l'espace Clip, ce nœud personnalisé peut être employé avec le pont d'images dans l'espace latent.\n Si l'entrée fournit un latent contenant un masque, ce masque est affiché. De plus, la sortie Masque fournit le masque défini dans le latent.\n Si l'entrée est un latent sans masque, le latent original est renvoyé tel quel, mais la sortie Masque renvoie un résultat où la zone entière est définie comme masque.\n Lorsqu'un masque est défini via l'Éditeur de masques, ce masque est appliqué au latent et la sortie inclut le masque enregistré. Le même masque est également renvoyé par la sortie Masque.\n Lors de la connexion à Sélection VAE, il est prioritaire sur la Méthode d'aperçu."
+    },
+    "ImageSender": {
+        "title": "Envoi d'image",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "link_id": "ID de connexion"
+        },
+        "description": "Les images produites par Envoi d'image  sont automatiquement transmises à Réception d'image  via le même ID de connexion."
+    },
+    "ImageReceiver": {
+        "title": "Réception d'image",
+        "widgets": {
+            "image": "Image (entrée)",
+            "save_to_workflow": "Enregistrer dans le flux de travail",
+            "image_data": "Données d'image",
+            "trigger_always": "Déclencher systématiquement",
+            "link_id": "ID de connexion"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)",
+            "MASK": "Masque"
+        },
+        "description": "Les images produites par Envoi d'image  sont automatiquement transmises à Réception d'image  via le même ID de connexion."
+    },
+    "LatentSender": {
+        "title": "Envoi de Latent",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "preview_method": "Méthode d'aperçu",
+            "link_id": "ID de connexion"
+        },
+        "description": "Le latent généré par Envoi de Latent  est automatiquement transmis à Réception de Latent  via le même ID de connexion.\n  De plus, Envoi de Latent  s'appuie sur Aperçu Latent, qui stocke le latent comme charge utile dans une vignette d'image.\n  À cause de la structure actuelle de ComfyUI, il ne peut pas distinguer les latents SDXL des latents SD1.5/SD2.1. Il les décode donc avec la méthode SD1.5 pour générer les vignettes."
+    },
+    "LatentReceiver": {
+        "title": "Réception de Latent",
+        "widgets": {
+            "latent": "Latent",
+            "trigger_always": "Déclencher systématiquement",
+            "link_id": "ID de connexion"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Le latent généré par Envoi de Latent  est automatiquement transmis à Réception de Latent  via le même ID de connexion.\n  De plus, Envoi de Latent  s'appuie sur Aperçu Latent, qui stocke le latent comme charge utile dans une vignette d'image.\n  À cause de la structure actuelle de ComfyUI, il ne peut pas distinguer les latents SDXL des latents SD1.5/SD2.1. Il les décode donc avec la méthode SD1.5 pour générer les vignettes."
+    },
+    "ImageMaskSwitch": {
+        "title": "Bascule du masque d'image",
+        "inputs": {
+            "images1": "Image 1",
+            "mask1": "Masque 1",
+            "images2": "Image 2",
+            "mask2": "Masque 2",
+            "images3": "Image 3",
+            "mask3": "Masque 3",
+            "images4": "Image 4",
+            "mask4": "Masque 4",
+            "select": "Sélectionner",
+            "mask1_opt": "Masque 1",
+            "images2_opt": "Image 2",
+            "mask2_opt": "Masque 2",
+            "images3_opt": "Image 3",
+            "mask3_opt": "Masque 3",
+            "images4_opt": "Image 4",
+            "mask4_opt": "Masque 4"
+        },
+        "widgets": {
+            "select": "Sélectionner",
+            "sel_mode": "Mode de sélection"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)",
+            "MASK": "Masque"
+        },
+        "description": "Parmi plusieurs entrées, il sélectionne et renvoie celle indiquée par le sélecteur. La première entrée est obligatoire, les autres sont facultatives. Toutefois, si l'entrée désignée par le sélecteur n'est pas connectée, une erreur peut survenir."
+    },
+    "LatentSwitch": {
+        "title": "Bascule de Latent",
+        "inputs": {
+            "input1": "Entrée 1",
+            "latent1": "Latent1",
+            "latent2_opt": "Latent2",
+            "latent3_opt": "Latent3",
+            "latent4_opt": "Latent4"
+        },
+        "widgets": {
+            "select": "Sélectionner",
+            "sel_mode": "Mode de sélection"
+        },
+        "outputs": {
+            "selected_index": "Index sélectionné",
+            "selected_value": "Valeur sélectionnée",
+            "selected_label": "Étiquette sélectionnée"
+        },
+        "description": "Parmi plusieurs entrées, il sélectionne et renvoie celle indiquée par le sélecteur. La première entrée est obligatoire, les autres sont facultatives. Toutefois, si l'entrée désignée par le sélecteur n'est pas connectée, une erreur peut survenir."
+    },
+    "SEGSSwitch": {
+        "title": "Bascule Seg",
+        "inputs": {
+            "input1": "Entrée 1",
+            "Seg": "Seg1",
+            "segs2_opt": "Seg2",
+            "segs3_opt": "Seg3",
+            "segs4_opt": "Seg4"
+        },
+        "widgets": {
+            "select": "Sélectionner",
+            "sel_mode": "Mode de sélection"
+        },
+        "outputs": {
+            "selected_index": "Index sélectionné",
+            "selected_value": "Valeur sélectionnée",
+            "selected_label": "Étiquette sélectionnée"
+        },
+        "description": "Parmi plusieurs entrées, il sélectionne et renvoie celle indiquée par le sélecteur. La première entrée est obligatoire, les autres sont facultatives. Toutefois, si l'entrée désignée par le sélecteur n'est pas connectée, une erreur peut survenir."
+    },
+    "ImpactSwitch": {
+        "title": "Interrupteur",
+        "inputs": {
+            "input1": "Entrée 1",
+            "input2": "Entrée 2",
+            "input3": "Entrée 3",
+            "input4": "Entrée 4"
+        },
+        "widgets": {
+            "select": "Sélectionner",
+            "sel_mode": "Mode de sélection",
+            "select_on_execution": "Sélection à l'exécution",
+            "select_on_prompt": "Prompt"
+        },
+        "outputs": {
+            "selected_index": "Index sélectionné",
+            "selected_value": "Valeur sélectionnée",
+            "selected_label": "Étiquette sélectionnée"
+        }
+    },
+    "ImpactInversedSwitch": {
+        "title": "Bascule d'inversion",
+        "inputs": {
+            "input": "Entrée"
+        },
+        "widgets": {
+            "sel_mode": "Mode de sélection",
+            "select": "Sélectionner"
+        },
+        "outputs": {
+            "*": "Sortie"
+        },
+        "description": "Contrairement à Créer une liste (n'importe quoi), ce nœud accepte une seule entrée et renvoie l'un des éléments multiples"
+    },
+    "ImpactInversedSwtich": {
+        "title": "Bascule d'inversion",
+        "inputs": {
+            "input": "Entrée"
+        },
+        "widgets": {
+            "select": "Sélectionner"
+        },
+        "outputs": {
+            "output1": "Sortie 1"
+        }
+    },
+    "SEGSToImageList": {
+        "title": "Seg vers liste d'images",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Image de secours"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "ImpactSEGSToMaskList": {
+        "title": "Seg vers liste de masques",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "ImpactSEGSConcat": {
+        "title": "Fusion Seg",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSPicker": {
+        "title": "Sélection Seg",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Image de secours"
+        },
+        "widgets": {
+            "picks": "Sélectionner",
+            "pick": "Sélectionner"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Permet de sélectionner des SEGS précis parmi les SEGS fournis en entrée."
+    },
+    "ReencodeLatent": {
+        "title": "Réencodage Latent",
+        "inputs": {
+            "samples": "Latent",
+            "input_vae": "VAE de décodage",
+            "output_vae": "VAE d'encodage"
+        },
+        "widgets": {
+            "overlap": "Zone de chevauchement",
+            "tile_mode": "Mode de découpage en blocs",
+            "tile_size": "Taille des blocs"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ReencodeLatentPipe": {
+        "title": "Réencodage Latent (groupe de nœuds)",
+        "inputs": {
+            "samples": "Latent",
+            "input_basic_pipe": "Groupe de nœuds de décodage",
+            "output_basic_pipe": "Groupe de nœuds d'encodage"
+        },
+        "widgets": {
+            "tile_mode": "Mode de découpage en blocs"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ImpactImageBatchToImageList": {
+        "title": "Lot d'images vers liste d'images",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Convertit un lot d'images en liste d'images.\n Vous pouvez ainsi utiliser et traiter les images générées dans plusieurs lots."
+    },
+    "ImpactMakeImageList": {
+        "title": "Créer une liste d'images",
+        "inputs": {
+            "image1": "Image"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Convertit plusieurs images en une seule liste d'images."
+    },
+    "ImpactMakeImageBatch": {
+        "title": "Créer un lot d'images",
+        "inputs": {
+            "image1": "Image"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Convertit plusieurs images en un seul lot d'images.\n  Le nombre d'images d'entrée peut être augmenté selon les besoins."
+    },
+    "ImpactCombineConditionings": {
+        "title": "Fusionner les conditions",
+        "inputs": {
+            "conditioning1": "Condition 1",
+            "conditioning2": "Condition 2",
+            "conditioning3": "Condition 3",
+            "conditioning4": "Condition 4",
+            "conditioning5": "Condition 5",
+            "conditioning6": "Condition 6",
+            "conditioning7": "Condition 7",
+            "conditioning8": "Condition 8",
+            "conditioning9": "Condition 9",
+            "conditioning10": "Condition 10"
+        },
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Il accepte plusieurs entrées de condition et les fusionne en une seule condition."
+    },
+    "ImpactSEGSLabelFilter": {
+        "title": "Filtrage par étiquette Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "Préréglage",
+            "labels": "Étiquette"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg masqué",
+            "remained_SEGS": "Seg restant"
+        }
+    },
+    "ImpactSEGSRangeFilter": {
+        "title": "Filtrage par plage Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "Cible",
+            "min_value": "Valeur minimale",
+            "max_value": "Valeur maximale",
+            "mode": "Mode (sélection)"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg masqué",
+            "remained_SEGS": "Seg restant"
+        }
+    },
+    "ImpactSEGSOrderedFilter": {
+        "title": "Filtrage par ordre Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "Cible",
+            "order": "Ordre",
+            "take_start": "Numéro de départ",
+            "take_count": "Quantité"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg masqué",
+            "remained_SEGS": "Seg restant"
+        }
+    },
+    "ImpactStringSelector": {
+        "title": "Sélection de chaîne",
+        "widgets": {
+            "strings": "Chaîne",
+            "multiline": "Texte multiligne",
+            "select": "Sélectionner"
+        },
+        "outputs": {
+            "STRING": "Chaîne"
+        },
+        "description": "Il sélectionne et renvoie une partie de la chaîne. Lorsque le mode Texte multiligne  est désactivé, il renvoie simplement la chaîne de la ligne indiquée par le sélecteur. Lorsque le mode Texte multiligne  est activé, il découpe la chaîne à partir des lignes commençant par # et les renvoie. Si la valeur de Sélection  dépasse le nombre d'éléments, le comptage repart de la première ligne et renvoie la ligne correspondante."
+    },
+    "BitwiseAndMaskForEach": {
+        "title": "Intersection Seg",
+        "inputs": {
+            "base_segs": "seg de base",
+            "mask_segs": "Masque Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "SubtractMaskForEach": {
+        "title": "Soustraction Seg",
+        "inputs": {
+            "base_segs": "seg de base",
+            "mask_segs": "Masque Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BitwiseAndMask": {
+        "title": "Intersection de masques",
+        "inputs": {
+            "mask1": "Masque 1",
+            "mask2": "Masque 2"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "SubtractMask": {
+        "title": "Soustraction de masques",
+        "inputs": {
+            "mask1": "Masque 1",
+            "mask2": "Masque 2"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "AddMask": {
+        "title": "Addition de masques",
+        "inputs": {
+            "mask1": "Masque 1",
+            "mask2": "Masque 2"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "ImpactSegsAndMask": {
+        "title": "Masque Seg",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Masque"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSegsAndMaskForEach": {
+        "title": "Masque Seg (par lot)",
+        "inputs": {
+            "segs": "Seg",
+            "masks": "Masque"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask": {
+        "title": "Masque Seg",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Masque"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask ForEach": {
+        "title": "Masque Seg (par lot)",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Masque",
+            "masks": "Groupe de masques"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "MediaPipeFaceMeshToSEGS": {
+        "title": "Grille faciale MediaPipe vers Seg",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "crop_factor": "Coefficient de recadrage",
+            "bbox_fill": "Remplir la BBox",
+            "crop_min_size": "Taille minimale de recadrage",
+            "drop_size": "Taille minimale",
+            "dilation": "Dilatation",
+            "face": "Visage",
+            "mouth": "Bouche",
+            "left_eyebrow": "Sourcil gauche",
+            "left_eye": "Œil gauche",
+            "left_pupil": "Pupille gauche",
+            "right_eyebrow": "Sourcil droit",
+            "right_eye": "Œil droit",
+            "right_pupil": "Pupille droite"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Sépare chaque point repère de l'image de grille faciale mediapipe afin de créer des Seg étiquetés.\n  En général, les images produites par le Préprocesseur de grille faciale MediaPipe sont réduites en taille.\n  Ce nœud ramène l'image de grille faciale MediaPipe aux dimensions d'origine indiquées par la  Sélection d'image de référence  pour que les tailles correspondent pendant le traitement."
+    },
+    "MaskToSEGS_for_AnimateDiff": {
+        "title": "Masque vers Seg (diffusion dynamique)",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "crop_factor": "Coefficient de recadrage",
+            "combined": "Fusionner ou non",
+            "bbox_fill": "Remplir la BBox",
+            "drop_size": "Taille minimale",
+            "contour_fill": "Remplissage de contour"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Génère des Seg pour la diffusion dynamique à partir du masque."
+    },
+    "MaskToSEGS": {
+        "title": "Masque vers Seg",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "crop_factor": "Coefficient de recadrage",
+            "combined": "Fusionner ou non",
+            "bbox_fill": "Remplir la BBox",
+            "drop_size": "Taille minimale",
+            "contour_fill": "Remplissage de contour"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Génère des Seg à partir du masque."
+    },
+    "ToBinaryMask": {
+        "title": "Binarisation du masque",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "threshold": "Seuil"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Sépare le masque généré, dont les valeurs alpha sont comprises entre 0 et 255, en 0 et 255. Les parties non nulles sont toujours mises à 255."
+    },
+    "MasksToMaskList": {
+        "title": "Masque vers liste de masques",
+        "inputs": {
+            "masks": "Masque"
+        },
+        "widgets": {
+            "threshold": "Seuil"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Ce nœud convertit un masque au format lot en liste de masques individuels."
+    },
+    "MaskListToMaskBatch": {
+        "title": "Liste de masques vers masque",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Ce nœud convertit une liste de masques au format lot de masques."
+    },
+    "ImageListToImageBatch": {
+        "title": "Liste d'images vers lot d'images",
+        "inputs": {
+            "images": "Image"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Convertit une liste d'images en lot d'images."
+    },
+    "SegsToCombinedMask": {
+        "title": "Seg vers masque",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "RemoveNoiseMask": {
+        "title": "Supprimer le masque de bruit",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "DetailerForEach": {
+        "title": "Optimisation locale",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "wildcard": "Prompt",
+            "max_retries": "Nombre maximal de tentatives"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Pour chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit à partir de la taille de guidage puis effectue une retouche, ce qui renforce l'optimisation.\n  Le Prompt  offre des fonctions proches de l'Encodeur de prompt (Impact), avec prise en charge des prompts et du chargement de LoRA. Il permet aussi d'appliquer des prompts différents à différentes zones détectées.\nReportez-vous à la page du tutoriel pour plus d'informations.\nRemarque : laisser cette entrée de prompt vide désactive cette entrée."
+    },
+    "DetailerForEachAutoRetry": {
+        "title": "Optimisation (segs) avec nouvelle tentative automatique",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "wildcard": "Prompt",
+            "max_retries": "Nombre maximal de tentatives"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "DetailerForEachPipe": {
+        "title": "Optimisation locale (groupe de nœuds)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "detailer_hook": "Contrainte d'optimisation",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "refiner_basic_pipe_opt": "Sélection d'optimisation du groupe de nœuds de base"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "wildcard": "Prompt",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "refiner_ratio": "Ratio d'optimisation"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)",
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "Pour chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit à partir de la taille de guidage puis effectue une retouche, ce qui renforce l'optimisation."
+    },
+    "DetailerForEachDebug": {
+        "title": "Optimisation locale (avancée)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "wildcard": "Prompt"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "cropped": "Image recadrée",
+            "cropped_refined": "Image optimisée",
+            "cropped_refined_alpha": "Canal d'optimisation",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "Pour chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit à partir de la taille de guidage puis effectue une retouche, ce qui renforce l'optimisation."
+    },
+    "DetailerForEachDebugPipe": {
+        "title": "Optimisation locale (avancée, groupe de nœuds)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "detailer_hook": "Contrainte d'optimisation",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "refiner_basic_pipe_opt": "Sélection d'optimisation du groupe de nœuds de base"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "wildcard": "Prompt",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "refiner_ratio": "Ratio d'optimisation"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "cropped": "Image recadrée",
+            "cropped_refined": "Image optimisée",
+            "cropped_refined_alpha": "Canal d'optimisation",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "Pour chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit à partir de la taille de guidage puis effectue une retouche, ce qui renforce l'optimisation."
+    },
+    "DetailerForEachPipeForAnimateDiff": {
+        "title": "Optimisation locale AnimatedDiff (groupe de nœuds)",
+        "inputs": {
+            "image_frames": "Image",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "detailer_hook": "Contrainte d'optimisation",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "refiner_basic_pipe_opt": "Optimisation du groupe de nœuds de base"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "refiner_ratio": "Ratio d'optimisation"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "À partir de chaque zone de l'ensemble d'informations de zones détectées (Seg), agrandit sur la base de la taille de guidage puis améliore par retouche (inpainting), ce qui renforce l'optimisation.\nCe nœud est un améliorateur d'optimisation spécial conçu pour l'amélioration de vidéos telles qu'AnimateDiff ; il sait gérer les masques par lot s'étendant sur plusieurs trames au sein des Seg."
+    },
+    "NoiseInjectionDetailerHookProvider": {
+        "title": "Contrainte d'optimisation par injection de bruit",
+        "widgets": {
+            "schedule_for_cycle": "Planning cyclique",
+            "source": "Appareil de génération",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "start_strength": "Intensité de départ",
+            "end_strength": "Intensité de fin",
+            "strength": "Intensité"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "La Contrainte d'optimisation est une  contrainte  de l' Optimisation  qui injecte du bruit lors du traitement de chaque Seg."
+    },
+    "CoreMLDetailerHookProvider": {
+        "title": "Contrainte d'optimisation CoreML",
+        "widgets": {
+            "mode": "Mode (sélection)"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "CoreML ne prend en charge l'échantillonnage que dans les tailles 512x512, 512x768, 768x512 et 768x768.\n La contrainte d'optimisation CoreML fige exactement le facteur d'agrandissement de la zone recadrée sur cette taille.\n Lors de l'utilisation de ce hook, cette taille est toujours sélectionnée, quelle que soit la Taille de guidage. Toutefois, si la Taille de guidage est trop petite, un saut se produira."
+    },
+    "NoiseInjectionHookProvider": {
+        "title": "Contrainte d'injection de bruit",
+        "widgets": {
+            "scheduler": "Planificateur",
+            "schedule_for_iteration": "Planification du cycle",
+            "source": "Appareil de génération",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "start_strength": "Intensité de départ",
+            "end_strength": "Intensité de fin"
+        },
+        "outputs": {
+            "PK_HOOK": "Contraintes"
+        },
+        "description": "Lors de chaque itération de Mise à l'échelle itérative, du bruit est injecté dans l'espace latent et son intensité est ajustée selon un calendrier.\n  Vous devez installer l'extension de nœuds BlenderNeko/ComfyUI_Noise.\n  La graine sert de valeur initiale à la génération du bruit et augmente de 1 à chaque itération au fil du processus.\n  La source détermine le type de bruit CPU et de bruit GPU à configurer.\n  Actuellement, un seul planning simple est disponible : au fil des itérations, l'intensité du bruit évolue de l'Intensité de départ vers l'Intensité de fin."
+    },
+    "UnsamplerDetailerHookProvider": {
+        "title": "Contrainte d'optimisation d'échantillonnage inverse",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "widgets": {
+            "steps": "Nombre de pas",
+            "start_end_at_step": "Début et fin en nombre de pas",
+            "end_end_at_step": "Pas final",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "normalize": "Normalisation",
+            "schedule_for_cycle": "Planification du cycle"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "Applique un échantillonneur inverse à chaque cycle. Ce nœud nécessite l'installation de ComfyUI_Noise."
+    },
+    "DenoiseSchedulerDetailerHookProvider": {
+        "title": "Contrainte d'optimisation de planification du débruitage",
+        "widgets": {
+            "schedule_for_cycle": "Planification du cycle",
+            "target_denoise": "Débruitage cible"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "Au fur et à mesure que le cycle avance, l'optimisation du débruiteur évolue jusqu'au Débruitage cible."
+    },
+    "SEGSDetailer": {
+        "title": "Optimisation Seg",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "refiner_basic_pipe_opt": "Optimisation du groupe de nœuds de base"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "batch_size": "Taille du lot",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "refiner_ratio": "Ratio d'optimisation"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "segs": "Seg",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "À partir de chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit sur la base de la taille de guidage puis améliore par retouche (inpainting), ce qui renforce l'optimisation.\n  Ce nœud agit directement sur les SEGS et non sur l'image d'origine ; pour l'appliquer à l'image d'origine, utilisez le nœud 'Coller SEGS'."
+    },
+    "SEGSDetailerForAnimateDiff": {
+        "title": "Optimisation Seg diffusion dynamique",
+        "inputs": {
+            "image_frames": "Image",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de nœuds de base",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "refiner_basic_pipe_opt": "Optimisation du groupe de nœuds de base"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "refiner_ratio": "Ratio d'optimisation"
+        },
+        "outputs": {
+            "segs": "Seg",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "À partir de chaque zone de l'ensemble d'informations de zones détectées (SEGS), agrandit sur la base de la taille de guidage puis améliore par retouche (inpainting), ce qui renforce l'optimisation.\n  Ce nœud agit directement sur les SEGS et non sur l'image d'origine ; pour l'appliquer à l'image d'origine, utilisez le nœud 'Coller SEGS'.\n  Ce nœud est un améliorateur d'optimisation spécial conçu pour l'amélioration de vidéos telles qu'AnimateDiff ; il sait gérer les masques par lot s'étendant sur plusieurs trames au sein des SEGS."
+    },
+    "SEGSPaste": {
+        "title": "Collage Seg",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "ref_image_opt": "Image de référence"
+        },
+        "widgets": {
+            "feather": "Adoucissement"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Nœud permettant de recoller dans l'image d'origine les SEGS traités par l'améliorateur d'optimisation SEGS."
+    },
+    "SEGSPreview": {
+        "title": "Aperçu Seg",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Image de secours"
+        },
+        "widgets": {
+            "alpha_mode": "Mode alpha",
+            "min_alpha": "Valeur minimale alpha"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "SEGSPreviewCNet": {
+        "title": "Aperçu Seg (CNet)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "SAMDetectorCombined": {
+        "title": "Fusion des détections SAM",
+        "inputs": {
+            "sam_model": "Modèle SAM",
+            "segs": "Seg",
+            "images": "Image",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "detection_hint": "Indice de détection",
+            "dilation": "Dilatation",
+            "threshold": "Seuil",
+            "bbox_expansion": "Extension BBox",
+            "mask_hint_threshold": "Seuil de détection du masque",
+            "mask_hint_use_negative": "Indice de masque négatif"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Utilise la technologie SAM pour extraire de l'image d'entrée le segment de l'emplacement indiqué par le Seg fourni, et le renvoie sous forme de masque unifié."
+    },
+    "SAMDetectorSegmented": {
+        "title": "Segmentation par détection SAM",
+        "inputs": {
+            "sam_model": "Modèle SAM",
+            "segs": "Seg",
+            "images": "Image",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "detection_hint": "Indice de détection",
+            "dilation": "Dilatation",
+            "threshold": "Seuil",
+            "bbox_expansion": "Extension BBox",
+            "mask_hint_threshold": "Seuil de détection du masque",
+            "mask_hint_use_negative": "Indice de masque négatif"
+        },
+        "outputs": {
+            "combined_mask": "Fusionner le masque",
+            "batch_masks": "Groupe de masques"
+        },
+        "description": "Semblable à Fusion des détections SAM, mais il sépare et renvoie les segments détectés. Pour une même zone détectée, plusieurs segments peuvent être trouvés ; actuellement, une règle les regroupe arbitrairement en trois ensembles. Ce point devrait s'améliorer à l'avenir.\n  Il renvoie donc Masque fusionné, un masque unifié, et Groupe de masques, plusieurs masques regroupés sous forme de lot.\n  Même si le  Groupe de masques  ne parvient pas toujours à une séparation complète, il fournit une fonction de segmentation d'un certain niveau."
+    },
+    "ImpactSAM2VideoDetectorSEGS": {
+        "title": "Détection vidéo SAM2 vers Seg",
+        "inputs": {
+            "sam2_model": "Modèle SAM",
+            "segs": "Seg",
+            "bbox_detector": "Détection BBox",
+            "image_frames": "Trames"
+        },
+        "widgets": {
+            "bbox_threshold": "Seuil BBox",
+            "sam2_threshold": "Seuil sam2",
+            "crop_factor": "Facteur de focale",
+            "drop_size": "Taille de suppression"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Semblable à Détection Seg simplifiée, mais utilise la technologie de suivi vidéo SAM2 pour produire un objet SEGS contenant plusieurs masques.\n  Pour employer ce nœud, vous devez sélectionner un modèle SAM2 dans SAMLoader."
+    },
+    "BboxDetectorSEGS": {
+        "title": "Détection BBox vers Seg",
+        "inputs": {
+            "bbox_detector": "Détection BBox",
+            "detailer_hook": "Contrainte d'optimisation",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Dilatation",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Seuil : contrôle l'amplitude de la correction ; plus le seuil est petit, plus la correction est importante\n ."
+    },
+    "SegmDetectorSEGS": {
+        "title": "Détection Segm vers Seg",
+        "inputs": {
+            "segm_detector": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Dilatation",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ONNXDetectorSEGS": {
+        "title": "Détection ONNX vers Seg",
+        "inputs": {
+            "bbox_detector": "Détection BBox",
+            "detailer_hook": "Contrainte d'optimisation",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Dilatation",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS_for_AD": {
+        "title": "Détection Seg simplifiée diffusion dynamique",
+        "inputs": {
+            "bbox_detector": "Détection BBox",
+            "image_frames": "Image",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm"
+        },
+        "widgets": {
+            "bbox_threshold": "Seuil BBox",
+            "bbox_dilation": "Dilatation BBox",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale",
+            "sub_threshold": "Seuil secondaire",
+            "sub_dilation": "Dilatation secondaire",
+            "sub_bbox_expansion": "Extension BBox secondaire",
+            "sam_mask_hint_threshold": "Seuil de détection du masque SAM",
+            "masking_mode": "Mode masqué",
+            "segs_pivot": "Seg principal"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS": {
+        "title": "Détection Seg simplifiée",
+        "inputs": {
+            "bbox_detector": "Détection BBox",
+            "image": "Image (entrée)",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm"
+        },
+        "widgets": {
+            "bbox_threshold": "Seuil BBox",
+            "bbox_dilation": "Dilatation BBox",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale",
+            "sub_threshold": "Seuil secondaire",
+            "sub_dilation": "Dilatation secondaire",
+            "sub_bbox_expansion": "Extension BBox secondaire",
+            "sam_mask_hint_threshold": "Seuil de détection du masque SAM",
+            "post_dilation": "Après dilatation"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Utilisant principalement la détection BBox, avec en complément un modèle SAM  ou la détection Segm, ce nœud génère en interne un Seg amélioré en appliquant des opérations de masque sur la BBox  et le  contour.\nIl sert d'outil pratique pour simplifier un flux légèrement complexe."
+    },
+    "ImpactSimpleDetectorSEGSPipe": {
+        "title": "Détection Seg simplifiée (groupe de nœuds)",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "bbox_threshold": "Seuil BBox",
+            "bbox_dilation": "Dilatation BBox",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale",
+            "sub_threshold": "Seuil secondaire",
+            "sub_dilation": "Dilatation secondaire",
+            "sub_bbox_expansion": "Extension BBox secondaire",
+            "sam_mask_hint_threshold": "Seuil de détection du masque SAM",
+            "post_dilation": "Après dilatation"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BboxDetectorCombined_v2": {
+        "title": "Détecteur BBox v2",
+        "inputs": {
+            "bbox_detector": "Détection BBox",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Dilatation"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Détecte les boîtes englobantes, puis renvoie un masque depuis l'image d'entrée."
+    },
+    "SegmDetectorCombined_v2": {
+        "title": "Détecteur Segm v2",
+        "inputs": {
+            "segm_detector": "Détection Segm",
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Dilatation"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Détecte et segmente, puis renvoie un masque depuis l'image d'entrée."
+    },
+    "FaceDetailer": {
+        "title": "Optimisation faciale",
+        "inputs": {
+            "image": "Image (entrée)",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "max_size": "Taille maximale",
+            "guide_size_for": "Cible du guidage",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "bbox_threshold": "Seuil BBox",
+            "bbox_dilation": "Dilatation BBox",
+            "bbox_crop_factor": "Coefficient de recadrage BBox",
+            "sam_detection_hint": "Indice de détection SAM",
+            "sam_dilation": "Dilatation SAM",
+            "sam_threshold": "Seuil SAM",
+            "sam_bbox_expansion": "Extension BBox SAM",
+            "sam_mask_hint_threshold": "Seuil de détection du masque SAM",
+            "sam_mask_hint_use_negative": "Indice de masque négatif SAM",
+            "drop_size": "Taille minimale",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "cropped_refined": "Image optimisée",
+            "cropped_enhanced_alpha": "Partie d'optimisation",
+            "mask": "Masque",
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "Détecte automatiquement des objets précis dans l'image d'entrée à l'aide du modèle de détection (bbox, segm, sam), puis agrandit la zone détectée à partir de la taille de guidage pour la retoucher, ce qui renforce l'optimisation.\nBien que ce nœud ait été conçu pour simplifier le flux habituel d'amélioration des visages, il peut aussi servir à divers travaux de retouche automatique selon le modèle de détection employé."
+    },
+    "FaceDetailerPipe": {
+        "title": "Optimisation faciale (groupe de nœuds)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "max_size": "Taille maximale",
+            "guide_size_for": "Cible du guidage",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "noise_mask": "Générer uniquement le masque",
+            "force_inpaint": "Forcer le redessin",
+            "bbox_threshold": "Seuil BBox",
+            "bbox_dilation": "Dilatation BBox",
+            "bbox_crop_factor": "Coefficient de recadrage BBox",
+            "sam_detection_hint": "Indice de détection SAM",
+            "sam_dilation": "Dilatation SAM",
+            "sam_threshold": "Seuil SAM",
+            "sam_bbox_expansion": "Extension BBox SAM",
+            "sam_mask_hint_threshold": "Seuil de détection du masque SAM",
+            "sam_mask_hint_use_negative": "Indice de masque négatif SAM",
+            "drop_size": "Taille minimale",
+            "refiner_ratio": "Ratio d'optimisation",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "cropped_refined": "Image optimisée",
+            "cropped_enhanced_alpha": "Partie d'optimisation",
+            "mask": "Masque",
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "cnet_images": "Image de contrôle"
+        },
+        "description": "Détecte automatiquement des objets précis dans l'image d'entrée à l'aide du modèle de détection (bbox, segm, sam), puis agrandit la zone détectée à partir de la taille de guidage pour la retoucher, ce qui renforce l'optimisation.\nBien que ce nœud ait été conçu pour simplifier le flux habituel d'amélioration des visages, il peut aussi servir à divers travaux de retouche automatique selon le modèle de détection employé."
+    },
+    "MaskDetailerPipe": {
+        "title": "Optimisation du masque (groupe de nœuds)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque",
+            "basic_pipe": "Groupe de nœuds de base",
+            "refiner_basic_pipe_opt": "Optimisation du groupe de nœuds de base",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "guide_size": "Taille du guidage",
+            "guide_size_for": "Cible du guidage",
+            "max_size": "Taille maximale",
+            "mask_mode": "Mode de masque",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Adoucissement",
+            "crop_factor": "Coefficient de recadrage",
+            "drop_size": "Taille minimale",
+            "refiner_ratio": "Ratio d'optimisation",
+            "cycle": "Nombre de boucles",
+            "inpaint_model": "Modèle de restauration",
+            "noise_mask_feather": "Adoucissement du masque de bruit",
+            "tiled_encode": "Encodage en tuiles",
+            "tiled_decode": "Décodage par tuiles",
+            "bbox_fill": "Remplissage bbox",
+            "contour_fill": "Remplissage de contour",
+            "batch_size": "Taille du lot"
+        },
+        "outputs": {
+            "image": "Image (entrée)",
+            "cropped_refined": "Image optimisée",
+            "cropped_enhanced_alpha": "Partie d'optimisation",
+            "basic_pipe": "Groupe de nœuds de base",
+            "refiner_basic_pipe_opt": "Optimisation du groupe de nœuds de base"
+        },
+        "description": "Cet améliorateur d'optimisation renforce le traitement en agrandissant les zones désignées par le masque, puis en les retouchant à partir de la taille de guidage."
+    },
+    "ToDetailerPipe": {
+        "title": "Vers le groupe d'optimisation",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "Select to add LoRA": "Ajouter un LoRA",
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "ToDetailerPipeSDXL": {
+        "title": "Vers le groupe d'optimisation (SDXL)",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "refiner_model": "Modèle (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condition positive (Refiner)",
+            "refiner_negative": "Condition négative (Refiner)",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "Select to add LoRA": "Ajouter un LoRA",
+            "Select the LoRA to add to the text": "Sélectionner le LoRA",
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "FromDetailerPipe": {
+        "title": "Depuis le groupe d'optimisation",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "FromDetailerPipe_v2": {
+        "title": "Depuis le groupe d'optimisation v2",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés.\n Ils offrent une sortie supplémentaire par rapport à la génération précédente, qui exporte directement le pipeline d'entrée. Très utile pour Modifier un Groupe de base et Modifier un Groupe d'optimisation."
+    },
+    "FromDetailerPipeSDXL": {
+        "title": "Depuis le groupe d'optimisation (SDXL)",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation",
+            "refiner_model": "Modèle (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condition positive (Refiner)",
+            "refiner_negative": "Condition négative (Refiner)"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "EditDetailerPipe": {
+        "title": "Éditer le groupe d'optimisation",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "sam_model": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "segm_detector": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt",
+            "Select the LoRA to add to the text": "Sélectionner le LoRA",
+            "Select to add LoRA": "Ajouter un LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à remplacer certains éléments d'un Groupe de nœuds de base ou d'un Groupe de nœuds d'optimisation."
+    },
+    "DetailerPipeToBasicPipe": {
+        "title": "Groupe d'optimisation vers groupe de base",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "base_basic_pipe": "Groupe de nœuds de base",
+            "refiner_basic_pipe": "Optimisation du groupe de nœuds de base"
+        },
+        "description": "Ces nœuds servent à regrouper le modèle, le CLIP, le VAE, la condition positive et la condition négative dans un Groupe de nœuds de base, ou à en extraire chaque élément."
+    },
+    "AnyPipeToBasic": {
+        "title": "Groupe quelconque vers groupe de base",
+        "inputs": {
+            "any_pipe": "Groupe quelconque"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base",
+            "refiner_basic_pipe": "Optimisation du groupe de nœuds de base"
+        },
+        "description": "Ces nœuds servent à regrouper le modèle, le CLIP, le VAE, la condition positive et la condition négative dans un Groupe de nœuds de base, ou à en extraire chaque élément."
+    },
+    "ToBasicPipe": {
+        "title": "Vers le groupe de base",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base"
+        },
+        "description": "Ces nœuds servent à regrouper le modèle, le CLIP, le VAE, la condition positive et la condition négative dans un Groupe de nœuds de base, ou à en extraire chaque élément."
+    },
+    "FromBasicPipe": {
+        "title": "Depuis le groupe de base",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "description": "Ces nœuds servent à regrouper le modèle, le CLIP, le VAE, la condition positive et la condition négative dans un Groupe de nœuds de base, ou à en extraire chaque élément."
+    },
+    "FromBasicPipe_v2": {
+        "title": "Depuis le groupe de base v2",
+        "inputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés.\n Ils offrent une sortie supplémentaire par rapport à la génération précédente, qui exporte directement le pipeline d'entrée. Très utile pour Modifier un Groupe de base et Modifier un Groupe d'optimisation."
+    },
+    "EditBasicPipe": {
+        "title": "Éditer le groupe de base",
+        "inputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base"
+        },
+        "description": "Ces nœuds servent à remplacer certains éléments d'un Groupe de nœuds de base ou d'un Groupe de nœuds d'optimisation."
+    },
+    "BasicPipeToDetailerPipe": {
+        "title": "Groupe de base vers groupe d'optimisation",
+        "inputs": {
+            "BASIC_PIPE": "Groupe de nœuds de base",
+            "basic_pipe": "Groupe de nœuds de base",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt",
+            "Select the LoRA to add to the text": "Sélectionner le LoRA",
+            "Select to add LoRA": "Ajouter un LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "Groupe de nœuds d'optimisation",
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "BasicPipeToDetailerPipeSDXL": {
+        "title": "Groupe de base vers groupe d'optimisation (SDXL)",
+        "inputs": {
+            "base_basic_pipe": "Groupe de nœuds de base de base",
+            "refiner_basic_pipe": "Optimisation du groupe de nœuds de base",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt",
+            "Select the LoRA to add to the text": "Sélectionner le LoRA",
+            "Select to add LoRA": "Ajouter un LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "Groupe de nœuds d'optimisation",
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à regrouper plusieurs entrées (comme le modèle et le VAE) dans un Groupe de nœuds d'optimisation, ou à en extraire les éléments regroupés."
+    },
+    "EditDetailerPipeSDXL": {
+        "title": "Éditer le groupe d'optimisation (SDXL)",
+        "inputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation",
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "bbox_detector": "Détection BBox",
+            "sam_model_opt": "Modèle SAM",
+            "sam_model": "Modèle SAM",
+            "segm_detector_opt": "Détection Segm",
+            "segm_detector": "Détection Segm",
+            "detailer_hook": "Contrainte d'optimisation",
+            "refiner_model": "Modèle (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condition positive (Refiner)",
+            "refiner_negative": "Condition négative (Refiner)"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt",
+            "Select the LoRA to add to the text": "Sélectionner le LoRA",
+            "Select to add LoRA": "Ajouter un LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "Groupe de nœuds d'optimisation"
+        },
+        "description": "Ces nœuds servent à remplacer certains éléments d'un Groupe de nœuds de base ou d'un Groupe de nœuds d'optimisation."
+    },
+    "LatentPixelScale": {
+        "title": "Mise à l'échelle en pixels du Latent",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAE",
+            "upscale_model_opt": "Modèle d'agrandissement"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "scale_factor": "Coefficient d'échelle",
+            "use_tiled_vae": "Utiliser un VAE en tuiles"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Ce nœud convertit l'espace latent en espace de pixels, l'agrandit, puis le reconvertit en espace latent.\n Si un Modèle d'agrandissement est fourni, il est utilisé pour agrandir les pixels, puis le résultat est réduit à la résolution cible avec la méthode d'interpolation indiquée dans Méthode de mise à l'échelle."
+    },
+    "PixelKSampleUpscalerProvider": {
+        "title": "Échantillonneur K avec mise à l'échelle en pixels",
+        "inputs": {
+            "model": "Modèle",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "pk_hook_opt": "Contraintes"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "use_tiled_vae": "Utiliser un VAE en tuiles",
+            "tile_size": "Taille des blocs"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        },
+        "description": "Fournit un échantillonneur K qui convertit le latent en pixels via le Décodage VAE, l'agrandit, puis le reconvertit en latent via l'Encodage VAE avant l'échantillonnage K.\n Cet agrandisseur peut être rattaché à des nœuds tels que Mise à l'échelle itérative du Latent pour être utilisé.\n Comme la Mise à l'échelle en pixels du Latent, si un Modèle d'agrandissement est fourni, le modèle est utilisé pour l'agrandissement des pixels."
+    },
+    "PixelKSampleUpscalerProviderPipe": {
+        "title": "Échantillonneur K avec mise à l'échelle en pixels (groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "scheduler_func_opt": "Fonction de planificateur",
+            "tile_cnet_opt": "Sélection ControlNet en tuiles",
+            "pk_hook_opt": "Contraintes"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "use_tiled_vae": "Utiliser un VAE en tuiles",
+            "tile_size": "Taille des blocs",
+            "tile_cnet_strength": "Intensité ControlNet en tuiles"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        }
+    },
+    "IterativeLatentUpscale": {
+        "title": "Mise à l'échelle itérative du Latent",
+        "inputs": {
+            "samples": "Latent",
+            "upscaler": "Mise à l'échelle"
+        },
+        "widgets": {
+            "upscale_factor": "Coefficient d'échelle",
+            "steps": "Nombre de pas",
+            "temp_prefix": "Préfixe",
+            "step_mode": "Mode de pas"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Récupère la Mise à l'échelle d'entrée et découpe le Facteur d'échelle en étapes, puis exécute la Mise à l'échelle de façon itérative. Ce processus prend l'espace latent en entrée et produit l'espace latent en résultat."
+    },
+    "IterativeImageUpscale": {
+        "title": "Mise à l'échelle itérative d'images",
+        "inputs": {
+            "pixels": "Image",
+            "upscaler": "Mise à l'échelle",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "upscale_factor": "Coefficient d'échelle",
+            "steps": "Nombre de pas",
+            "temp_prefix": "Préfixe",
+            "step_mode": "Mode de pas"
+        },
+        "outputs": {
+            "image": "Image (entrée)"
+        },
+        "description": "Récupère la Mise à l'échelle d'entrée et découpe le Facteur d'échelle en étapes, puis exécute la Mise à l'échelle de façon itérative. Il prend des images en entrée et produit des images en résultat.\n  En interne, ce nœud utilise Mise à l'échelle itérative (espace latent)"
+    },
+    "PixelTiledKSampleUpscalerProvider": {
+        "title": "Échantillonneur K avec mise à l'échelle en pixels (en tuiles)",
+        "inputs": {
+            "model": "Modèle",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "pk_hook_opt": "Contraintes",
+            "tile_cnet_opt": "Sélection ControlNet en tuiles"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "tile_width": "Largeur de tuile",
+            "tile_height": "Hauteur de tuile",
+            "tiling_strategy": "Stratégie de découpage en tuiles",
+            "tile_cnet_strength": "Intensité ControlNet en tuiles",
+            "overlap": "Zone de chevauchement"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        },
+        "description": "Il ressemble à l'Échantillonneur K avec mise à l'échelle en pixels, mais utilise l'Échantillonneur K en tuiles  et le Décodeur/Encodeur VAE  en tuiles afin d'éviter les problèmes de VRAM GPU en haute résolution.\n  Vous devez installer l'extension de nœuds BlenderNeko/ComfyUI_TiledKSampler."
+    },
+    "SEGSUpscaler": {
+        "title": "Avancé (Seg)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "model": "Modèle",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "upscaler_hook_opt": "Sélection avancée de contrainte",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "rescale_factor": "Méthode de mise à l'échelle",
+            "resampling_method": "Méthode de rééchantillonnage",
+            "supersample": "Suréchantillonnage",
+            "rounding_modulus": "Modulo d'arrondi",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Largeur de tuile",
+            "inpaint_model": "Hauteur de tuile",
+            "noise_mask_feather": "Adoucissement du masque de bruit"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "SEGSUpscalerPipe": {
+        "title": "Avancé (groupe Seg)",
+        "inputs": {
+            "image": "Image (entrée)",
+            "segs": "Seg",
+            "basic_pipe": "Groupe de base",
+            "model": "Modèle",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "upscaler_hook_opt": "Sélection avancée de contrainte",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "rescale_factor": "Méthode de mise à l'échelle",
+            "resampling_method": "Méthode de rééchantillonnage",
+            "supersample": "Suréchantillonnage",
+            "rounding_modulus": "Modulo d'arrondi",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "feather": "Largeur de tuile",
+            "inpaint_model": "Hauteur de tuile",
+            "noise_mask_feather": "Adoucissement du masque de bruit"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    },
+    "PixelTiledKSampleUpscalerProviderPipe": {
+        "title": "Échantillonneur K avec mise à l'échelle en pixels (en tuiles, groupe de nœuds)",
+        "inputs": {
+            "model": "Modèle",
+            "vae": "VAE",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "pk_hook_opt": "Contraintes",
+            "basic_pipe": "Groupe de nœuds de base",
+            "tile_cnet_opt": "Sélection ControlNet en tuiles"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "tile_width": "Largeur de tuile",
+            "tile_height": "Hauteur de tuile",
+            "tiling_strategy": "Stratégie de découpage en tuiles",
+            "tile_cnet_strength": "Intensité ControlNet en tuiles"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProvider": {
+        "title": "Double échantillonneur à mise à l'échelle",
+        "inputs": {
+            "base_sampler": "Échantillonneur de base",
+            "mask_sampler": "Échantillonneur du masque",
+            "mask": "Masque",
+            "vae": "VAE",
+            "full_sampler_opt": "Échantillonneur global",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "pk_hook_base_opt": "Contrainte de base",
+            "pk_hook_mask_opt": "Contrainte de masque",
+            "pk_hook_full_opt": "Contrainte globale"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "nearest-exact": "Plus proche-exact",
+            "bilinear": "Interpolation bilinéaire",
+            "area": "Région",
+            "full_sample_schedule": "Planificateur d'échantillonnage",
+            "interleave1": "Entrelacé 1",
+            "interleave2": "Entrelacé 2",
+            "interleave3": "Entrelacé 3",
+            "last1": "Continu 1",
+            "last2": "Continu 2",
+            "interleave1+last1": "Entrelacé 1 + continu 1",
+            "interleave2+last1": "Entrelacé 2 + continu 1",
+            "interleave3+last1": "Entrelacé 3 + continu 1",
+            "use_tiled_vae": "Utiliser un VAE en tuiles",
+            "tile_size": "Taille des blocs"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProviderPipe": {
+        "title": "Double échantillonneur à mise à l'échelle (groupe de nœuds)",
+        "inputs": {
+            "base_sampler": "Échantillonneur de base",
+            "mask_sampler": "Échantillonneur du masque",
+            "mask": "Masque",
+            "basic_pipe": "Groupe de nœuds de base",
+            "full_sampler_opt": "Échantillonneur global",
+            "upscale_model_opt": "Modèle d'agrandissement",
+            "pk_hook_base_opt": "Contrainte de base",
+            "pk_hook_mask_opt": "Contrainte de masque",
+            "pk_hook_full_opt": "Contrainte globale"
+        },
+        "widgets": {
+            "scale_method": "Méthode de mise à l'échelle",
+            "full_sample_schedule": "Planificateur d'échantillonnage",
+            "use_tiled_vae": "Utiliser un VAE en tuiles",
+            "tile_size": "Taille des blocs"
+        },
+        "outputs": {
+            "UPSCALER": "Mise à l'échelle"
+        },
+        "description": "Échantillonneur qui étend le Double échantillonneur pour la Mise à l'échelle itérative.\n Double échantillonneur à mise à l'échelle (groupe de nœuds) - version en groupe de nœuds du Double échantillonneur à mise à l'échelle."
+    },
+    "PixelKSampleHookCombine": {
+        "title": "Combinaison de contraintes d'échantillonneur K en pixels",
+        "inputs": {
+            "hook1": "Contrainte 1",
+            "hook2": "Contrainte 2"
+        },
+        "outputs": {
+            "PK_HOOK": "Contrainte d'échantillonneur K en pixels"
+        },
+        "description": "Sert à combiner deux Contraintes d'échantillonneur K en pixels. La contrainte 1 est exécutée en premier, puis la contrainte 2."
+    },
+    "DenoiseScheduleHookProvider": {
+        "title": "Contrainte de débruitage",
+        "widgets": {
+            "schedule_for_iteration": "Planification du cycle",
+            "target_denoise": "Débruitage cible"
+        },
+        "outputs": {
+            "PK_HOOK": "Contraintes"
+        },
+        "description": "La Mise à l'échelle itérative fournit une contrainte qui ajuste progressivement le débruitage vers le Débruitage cible au fil des pas d'itération.\n Pour modifier à la fois le cfg et le débruitage, vous pouvez combiner les Contraintes de la Contrainte CFG et de la Combinaison de contraintes d'échantillonneur K en pixels."
+    },
+    "CfgScheduleHookProvider": {
+        "title": "Contrainte CFG",
+        "widgets": {
+            "schedule_for_iteration": "Planification du cycle",
+            "target_cfg": "CFG cible"
+        },
+        "outputs": {
+            "PK_HOOK": "Contraintes"
+        },
+        "description": "La Mise à l'échelle itérative fournit une contrainte qui ajuste progressivement le cfg vers le CFG cible au fil des pas d'itération."
+    },
+    "StepsScheduleHookProvider": {
+        "title": "Fournisseur de contrainte de planification du nombre de pas",
+        "widgets": {
+            "schedule_for_iteration": "Planification du cycle",
+            "target_steps": "Nombre de pas cible"
+        },
+        "outputs": {
+            "PK_HOOK": "Contraintes"
+        },
+        "description": "La Mise à l'échelle itérative fournit une contrainte qui ajuste progressivement le nombre de pas d'échantillonnage vers le Nombre de pas cible au fil des pas d'itération."
+    },
+    "DetailerHookCombine": {
+        "title": "Fusion des contraintes d'optimisation",
+        "inputs": {
+            "hook1": "Contrainte 1",
+            "hook2": "Contrainte 2"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "Sert à combiner deux Contraintes d'optimisation.\n Semblable à la Combinaison de contraintes d'échantillonneur K en pixels."
+    },
+    "UnsamplerHookProvider": {
+        "title": "Contrainte d'échantillonnage inverse",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "widgets": {
+            "steps": "Nombre de pas",
+            "start_end_at_step": "Pas de départ",
+            "end_end_at_step": "Pas final",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "normalize": "Normalisation",
+            "schedule_for_iteration": "Planification du cycle"
+        },
+        "outputs": {
+            "PK_HOOK": "Contraintes"
+        },
+        "description": "Applique un anti-échantillonneur à chaque itération. Ce nœud nécessite l'installation de ComfyUI_Noise."
+    },
+    "KSamplerProvider": {
+        "title": "Fournisseur d'échantillonnage K (groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage"
+        },
+        "outputs": {
+            "KSAMPLER": "Échantillonneur K"
+        },
+        "description": "Échantillonneur qui permet d'utiliser l'échantillonnage K dans le Double échantillonneur et le Double échantillonneur à mise à l'échelle."
+    },
+    "TwoSamplersForMask": {
+        "title": "Double échantillonneur",
+        "inputs": {
+            "latent_image": "Latent",
+            "base_sampler": "Échantillonneur de base",
+            "mask_sampler": "Échantillonneur du masque",
+            "mask": "Masque"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Ce nœud peut appliquer deux échantillonneurs selon les zones du masque. L' Échantillonneur de base  s'applique aux zones où le masque vaut 0, tandis que l' Échantillonneur de masque  s'applique aux zones où le masque vaut 1.\n  Remarque : les encodages latents produits par l' Encodeur d'inpainting VAE  ne peuvent pas être utilisés."
+    },
+    "TiledKSamplerProvider": {
+        "title": "Fournisseur d'échantillonnage K (en tuiles, groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "denoise": "Débruitage",
+            "tile_width": "Largeur de tuile",
+            "tile_height": "Hauteur de tuile",
+            "tiling_strategy": "Stratégie de découpage en tuiles"
+        },
+        "outputs": {
+            "KSAMPLER": "Échantillonneur K"
+        },
+        "description": "ComfyUI_TiledKSampler est une extension qui fournit l'Échantillonneur K.\n Vous devez installer l'extension de nœuds BlenderNeko/ComfyUI_TiledKSampler."
+    },
+    "KSamplerAdvancedProvider": {
+        "title": "Fournisseur d'échantillonnage K (avancé, groupe de nœuds)",
+        "inputs": {
+            "basic_pipe": "Groupe de nœuds de base",
+            "sampler_opt": "Sélection de l'échantillonneur",
+            "scheduler_func_opt": "Fonction de planificateur"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "sigma_factor": "Coefficient sigma"
+        },
+        "outputs": {
+            "KSAMPLER_ADVANCED": "Échantillonneur K (avancé)"
+        },
+        "description": "Échantillonneur qui permet d'utiliser l'échantillonnage K dans le Double échantillonneur (avancé) et l'Échantillonneur régional.\n En multipliant le plan de débruitage par le Coefficient sigma, vous ajustez l'intensité du débruitage selon la quantité de débruitage configurée"
+    },
+    "TwoAdvancedSamplersForMask": {
+        "title": "Double échantillonneur (avancé)",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "Échantillonneur de base",
+            "mask_sampler": "Échantillonneur du masque",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "overlap_factor": "Facteur de recouvrement"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Le Double échantillonneur  ressemble au  Double échantillonneur (avancé), mais leur fonctionnement diffère. Le Double échantillonneur  n'échantillonne la zone du masque qu'après l'achèvement de tous les échantillonnages de la zone de base.\n En revanche, le Double échantillonneur (avancé)  échantillonne successivement la zone de base et la zone du masque à chaque pas."
+    },
+    "ImpactWildcardProcessor": {
+        "title": "Processeur de prompts",
+        "widgets": {
+            "wildcard_text": "Texte du prompt",
+            "populated_text": "Texte d'entrée",
+            "mode": "Entrée ou non",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt"
+        },
+        "outputs": {
+            "processed text": "Texte traité"
+        },
+        "description": "Ce nœud traite une invite texte écrite avec la syntaxe de prompt et renvoie l'invite texte traitée.\nLe texte est généré par le prompt du nœud Traiter le texte. Si le mode est réglé sur « Remplissage », une invite dynamique est générée à chaque exécution et l'entrée est injectée dans la seconde zone de texte. Si le mode est réglé sur « Fixe », le contenu de la seconde zone de texte reste inchangé.\n  Lors d'une génération en mode « Fixe », le prompt utilisé pour cette génération précise est consigné dans les métadonnées."
+    },
+    "ImpactWildcardEncode": {
+        "title": "Encodage du prompt",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "wildcard_text": "Texte du prompt",
+            "populated_text": "Texte d'entrée",
+            "mode": "Entrée ou non",
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "Select to add Wildcard": "Sélectionner pour ajouter un prompt",
+            "Select to add LoRA": "Ajouter un LoRA"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "populated_text": "Texte de remplissage",
+            "conditioning": "Condition"
+        },
+        "description": "Semblable au processeur de prompt, il assure le chargement des LoRA.\n (par exemple <lora:some_awesome_lora:0.7:1.2>). Le prompt complété est encodé par clip une fois tous les LoRA chargés.\n Une fois 'Inspire Pack' installé, la syntaxe LBW (poids par bloc LoRA) est disponible.\n <lora:chunli:1.0:1.0:LBW=B11:0,0,0,0,0,0,0,0,0,0,A,0,0,0,0,0,0;A=0.;>, \n <lora:chunli:1.0:1.0:LBW=0,0,0,0,0,0,0,0,0,0,A,B,0,0,0,0,0;A=0.5;B=0.2;>,\n <lora:chunli:1.0:1.0:LBW=SD-MIDD;>"
+    },
+    "RegionalPrompt": {
+        "title": "Prompt de région",
+        "inputs": {
+            "mask": "Masque",
+            "advanced_sampler": "Échantillonneur K (avancé)"
+        },
+        "widgets": {
+            "variation_seed": "Graine de variation",
+            "variation_strength": "Variation d'intensité",
+            "variation_method": "Méthode de variation"
+        },
+        "outputs": {
+            "regional_prompts": "Prompt de région",
+            "REGIONAL_PROMPTS": "Prompt de région"
+        },
+        "description": "Ce nœud associe un masque désignant les régions et un échantillonneur appliqué à chaque région afin de créer un  Prompt régional."
+    },
+    "CombineRegionalPrompts": {
+        "title": "Fusionner les prompts régionaux",
+        "inputs": {
+            "regional_prompts1": "Prompt régional 1",
+            "regional_prompts2": "Prompt régional 2"
+        },
+        "outputs": {
+            "REGIONAL_PROMPTS": "Prompt de région"
+        },
+        "description": "Fusionne plusieurs  Prompts régionaux  en un seul Prompt régional."
+    },
+    "RegionalSampler": {
+        "title": "Échantillonneur régional",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "Échantillonneur K (avancé)",
+            "regional_prompts": "Prompt de région"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "seed_2nd": "Seconde graine aléatoire",
+            "seed_2nd_mode": "Mode de seconde graine aléatoire",
+            "steps": "Nombre de pas",
+            "base_only_steps": "Pas de base uniquement",
+            "denoise": "Débruitage",
+            "overlap_factor": "Facteur de recouvrement",
+            "restore_latent": "Latent temporaire",
+            "additional_mode": "Mode additionnel",
+            "additional_sampler": "Échantillonneur supplémentaire",
+            "additional_sigma_ratio": "Ratio sigma supplémentaire"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Ce nœud échantillonne à l'aide de l'échantillonneur de base et des prompts régionaux. L'échantillonneur de base s'exécute à chaque pas, tandis que l'échantillonnage de chaque région est effectué par l'échantillonneur lié à cette région.\n  Facteur de recouvrement - indique le chevauchement de chaque région afin qu'il se fusionne bien avec les zones extérieures au masque.\n  Latent temporaire - lors de l'échantillonnage de chaque région, les zones hors masque sont rétablies dans l'espace latent de base, afin d'éviter d'introduire du bruit supplémentaire hors masque pendant l'échantillonnage régional."
+    },
+    "RegionalSamplerAdvanced": {
+        "title": "Échantillonneur régional (avancé)",
+        "inputs": {
+            "samples": "Latent",
+            "latent_image": "Latent",
+            "base_sampler": "Échantillonneur K (avancé)",
+            "regional_prompts": "Prompt de région"
+        },
+        "widgets": {
+            "add_noise": "Ajouter du bruit",
+            "seed": "Graine",
+            "noise_seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "steps": "Nombre de pas",
+            "start_at_step": "Pas de début de débruitage",
+            "end_at_step": "Pas de fin de débruitage",
+            "overlap_factor": "Facteur de recouvrement",
+            "restore_latent": "Latent temporaire",
+            "return_with_leftover_noise": "Retourner le bruit",
+            "additional_mode": "Mode additionnel",
+            "additional_sampler": "Échantillonneur supplémentaire",
+            "additional_sigma_ratio": "Ratio sigma supplémentaire"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Version avancée de l'Échantillonneur régional. Vous pouvez la contrôler avec le paramètre Pas plutôt que le Débruitage.\n Remarque : les échantillonneurs sde et uni_pc introduisent un bruit supplémentaire à chaque pas du processus d'échantillonnage. Pour atténuer ce problème, lors de l'échantillonnage de chaque région, l'échantillonneur uni_pc applique un dpmpp_fast supplémentaire, tandis que l'échantillonneur sde utilise l'échantillonneur dpmpp_2m comme mesure complémentaire."
+    },
+    "ImpactConcatConditionings": {
+        "title": "Fusion des conditions",
+        "inputs": {
+            "conditioning1": "Condition 1"
+        },
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Il accepte plusieurs entrées de condition et les concatène en une seule condition."
+    },
+    "ImpactImageInfo": {
+        "title": "Informations sur l'image",
+        "inputs": {
+            "value": "Image"
+        },
+        "outputs": {
+            "batch": "Taille du lot",
+            "height": "Hauteur",
+            "width": "Largeur",
+            "channel": "Canal"
+        }
+    },
+    "ImpactLatentInfo": {
+        "title": "Informations Latent",
+        "inputs": {
+            "value": "Latent"
+        },
+        "outputs": {
+            "batch": "Taille du lot",
+            "height": "Hauteur",
+            "width": "Largeur",
+            "channel": "Canal"
+        }
+    },
+    "ImpactMinMax": {
+        "title": "Recherche des extrema",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)"
+        },
+        "outputs": {
+            "INT": "Entier"
+        }
+    },
+    "ImpactQueueTrigger": {
+        "title": "Déclencheur de file d'attente",
+        "inputs": {
+            "signal": "Signal de commande"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)"
+        },
+        "outputs": {
+            "signal_opt": "Signal de commande"
+        },
+        "description": "Lorsque ce nœud s'exécute, il ajoute une nouvelle file d'attente pour aider à l'exécution de tâches répétitives. Il ne s'exécute que lorsque l'état du signal change."
+    },
+    "ImpactQueueTriggerCountdown": {
+        "title": "Déclencheur de file d'attente (comptage)",
+        "inputs": {
+            "signal": "Signal de commande"
+        },
+        "widgets": {
+            "total": "Somme totale",
+            "mode": "Mode (sélection)",
+            "count": "Nombre"
+        },
+        "outputs": {
+            "total": "Somme totale",
+            "signal_opt": "Signal de commande",
+            "count": "Nombre"
+        },
+        "description": "Comme le Déclencheur de file, il ajoute une file d'attente, mais ne le fait pas si la taille de la file est inférieure ou égale à 1. Le compteur diminue de un à chaque exécution."
+    },
+    "ImpactSetWidgetValue": {
+        "title": "Définir la valeur du composant",
+        "inputs": {
+            "signal": "Signal de commande",
+            "boolean_value": "Booléen",
+            "int_value": "Entier",
+            "float_value": "Flottant",
+            "string_value": "Chaîne"
+        },
+        "widgets": {
+            "node_id": "ID du nœud",
+            "widget_name": "Nom du widget"
+        },
+        "outputs": {
+            "signal_opt": "Signal de commande"
+        },
+        "description": "Ce nœud relie une entrée facultative à la commande d'un nœud désigné. Si les types ne correspondent pas, une erreur peut survenir."
+    },
+    "ImpactNodeSetMuteState": {
+        "title": "Désactiver le nœud",
+        "inputs": {
+            "signal": "Signal de commande"
+        },
+        "widgets": {
+            "node_id": "ID du nœud",
+            "set_state": "État"
+        },
+        "outputs": {
+            "signal_opt": "Signal de commande"
+        },
+        "description": "Ce nœud modifie l'état de mise en sourdine d'un nœud précis."
+    },
+    "ImpactSleep": {
+        "title": "Mise en veille",
+        "inputs": {
+            "signal": "Signal de commande"
+        },
+        "widgets": {
+            "seconds": "Nombre de secondes"
+        },
+        "outputs": {
+            "signal_opt": "Signal de commande"
+        },
+        "description": "Attend la durée indiquée (en secondes)"
+    },
+    "ImpactRemoteBoolean": {
+        "title": "Booléen distant",
+        "widgets": {
+            "node_id": "ID du nœud",
+            "widget_name": "Nom du widget",
+            "value": "Valeur"
+        },
+        "description": "Au début du prompt, ce nœud force l'ID de nœud du  Nom du composant . Si le type du composant cible est différent, l'opération est ignorée."
+    },
+    "ImpactRemoteInt": {
+        "title": "Entier distant",
+        "widgets": {
+            "node_id": "ID du nœud",
+            "widget_name": "Nom du widget",
+            "value": "Valeur"
+        },
+        "description": "Au début du prompt, ce nœud force l'ID de nœud du Nom du composant. Si le type du composant cible est différent, l'opération est ignorée."
+    },
+    "ImpactControlBridge": {
+        "title": "Pont de contrôle",
+        "inputs": {
+            "value": "Valeur"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)"
+        },
+        "outputs": {
+            "value": "Valeur"
+        },
+        "description": "Ce nœud modifie l'état des nœuds de commande raccordés selon le  Mode  et le  Comportement . S'il faut modifier des nœuds, l'exécution en cours est suspendue, l'état de sourdine est mis à jour et une nouvelle file de prompts est insérée.\n  Lorsque le  Mode  est Active, les nœuds de commande raccordés deviennent actifs, quel que soit leur comportement.\n  Lorsque le  Mode  est  Contourner/Sourdine , l'état des nœuds raccordés change selon que le comportement est  Contourner  ou  Sourdine .\n  Limites : à cause de ce mécanisme, le nœud ne fonctionne pas correctement lorsque le nombre de lots dépasse 1. De plus, quand la graine est randomisée ou que l'état des nœuds est modifié par des opérations telles que Déclencheur de file, Définir la valeur du composant ou Désactiver le nœud, le bon fonctionnement n'est pas garanti avant le pont de contrôle.\n  Lors de l'emploi de ce nœud, structurez le flux de sorte que Déclencheur de file, Définir la valeur du composant, Désactiver le nœud et les opérations analogues soient exécutés en fin de flux.\n  Si vous voulez changer la valeur de la graine à chaque itération, exécutez Définir la valeur du composant en fin de flux au lieu d'utiliser la randomisation.\n  Tant que la randomisation intervient après la partie pont de contrôle, un changement de graine ne pose pas de problème."
+    },
+    "ImpactCompare": {
+        "title": "Comparaison",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "cmp": "Méthode de comparaison"
+        },
+        "outputs": {
+            "BOOLEAN": "Booléen"
+        }
+    },
+    "ImpactConditionalBranchSelMode": {
+        "title": "Mode de bascule des branches conditionnelles",
+        "inputs": {
+            "tt_value": "Vrai",
+            "ff_value": "Faux"
+        },
+        "widgets": {
+            "cond": "Condition"
+        },
+        "outputs": {
+            "*": "Sortie"
+        }
+    },
+    "ImpactConditionalBranch": {
+        "title": "Bascule de condition",
+        "inputs": {
+            "tt_value": "Vrai",
+            "ff_value": "Faux"
+        },
+        "widgets": {
+            "cond": "Condition"
+        },
+        "outputs": {
+            "*": "Sortie"
+        }
+    },
+    "ImpactIfNone": {
+        "title": "Sinon",
+        "inputs": {
+            "signal": "Signal de commande",
+            "any_input": "Entrée quelconque"
+        },
+        "widgets": {
+            "cond": "Condition"
+        },
+        "outputs": {
+            "signal_opt": "Sélection du signal",
+            "bool": "Valeur booléenne"
+        },
+        "description": "Renvoie Vrai si l'une des entrées est None, sinon renvoie Faux si elle n'est pas None."
+    },
+    "ImpactBoolean": {
+        "title": "Booléen",
+        "inputs": {
+            "signal": "Signal de commande",
+            "any_input": "Entrée quelconque"
+        },
+        "widgets": {
+            "value": "Valeur"
+        },
+        "outputs": {
+            "signal_opt": "Sélection du signal",
+            "BOOLEAN": "Booléen"
+        }
+    },
+    "ImpactConvertDataType": {
+        "title": "Convertir le type de données",
+        "inputs": {
+            "value": "Valeur"
+        },
+        "widgets": {
+            "cond": "Condition"
+        },
+        "outputs": {
+            "STRING": "Chaîne",
+            "FLOAT": "Flottant",
+            "INT": "Entier",
+            "BOOLEAN": "Booléen"
+        }
+    },
+    "ImpactLogicalOperators": {
+        "title": "Opérateur logique",
+        "inputs": {
+            "bool_a": "booléen a",
+            "bool_b": "booléen b"
+        },
+        "widgets": {
+            "operator": "Opération"
+        },
+        "outputs": {
+            "STRING": "Chaîne",
+            "FLOAT": "Flottant",
+            "INT": "Entier",
+            "BOOLEAN": "Booléen"
+        }
+    },
+    "ImpactInt": {
+        "title": "Entier",
+        "widgets": {
+            "value": "Valeur"
+        },
+        "outputs": {
+            "INT": "Entier"
+        }
+    },
+    "ImpactFloat": {
+        "title": "Flottant",
+        "widgets": {
+            "value": "Valeur"
+        },
+        "outputs": {
+            "FLOAT": "Flottant"
+        }
+    },
+    "ImpactValueSender": {
+        "title": "Envoyer la valeur",
+        "inputs": {
+            "value": "Valeur",
+            "signal_opt": "Sélection du signal"
+        },
+        "widgets": {
+            "link_id": "ID de connexion"
+        },
+        "outputs": {
+            "signal": "Signal de commande"
+        }
+    },
+    "ImpactValueReceiver": {
+        "title": "Valeur reçue",
+        "widgets": {
+            "typ": "Type",
+            "value": "Valeur",
+            "link_id": "ID de connexion"
+        },
+        "outputs": {
+            "*": "Sortie"
+        }
+    },
+    "ImpactNeg": {
+        "title": "Valeur inversée",
+        "inputs": {
+            "value": "Valeur"
+        },
+        "outputs": {
+            "BOOLEAN": "Booléen"
+        }
+    },
+    "ImpactConditionalStopIteration": {
+        "title": "Arrêt itératif par condition",
+        "inputs": {
+            "cond": "Condition"
+        }
+    },
+    "ImpactIsNotEmptySEGS": {
+        "title": "Est un Seg non vide",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "BOOLEAN": "Booléen"
+        },
+        "description": "Ce nœud ne renvoie true que si le Seg d'entrée n'est pas vide"
+    },
+    "ImpactLogger": {
+        "title": "Journaliser la sortie",
+        "inputs": {
+            "data": "Données"
+        }
+    },
+    "ImpactDummyInput": {
+        "title": "Entrée factice",
+        "outputs": {
+            "*": "Sortie"
+        }
+    },
+    "ImpactHFTransformersClassifierProvider": {
+        "title": "Classifieur HFTransformer",
+        "widgets": {
+            "preset_repo_id": "ID du dépôt de préréglages",
+            "manual_repo_id": "ID de dépôt manuel",
+            "device_mode": "Mode d'appareil"
+        },
+        "outputs": {
+            "TRANSFORMERS_CLASSIFIER": "Classifieur TF"
+        },
+        "description": "Ce nœud repose sur un classifieur fourni par un modèle transformers HuggingFace.\n Le paramètre « Identifiant du dépôt » doit contenir l'identifiant du dépôt HuggingFace. Lorsque l'Identifiant de dépôt prédéfini est réglé sur Identifiant de dépôt manuel, l'identifiant saisi manuellement dans Identifiant de dépôt manuel est utilisé.\n Par exemple, 'rizvandwiki/gender-classification-2' est un dépôt qui fournit un modèle de classification de genre."
+    },
+    "ImpactSEGSClassify": {
+        "title": "Classification Seg",
+        "inputs": {
+            "classifier": "Classifieur",
+            "segs": "Seg",
+            "ref_image_opt": "Image de référence"
+        },
+        "widgets": {
+            "preset_expr": "Expression de préréglage",
+            "manual_expr": "Expression manuelle"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg masqué",
+            "remained_SEGS": "Seg restant",
+            "detected_labels": "Étiquettes détectées"
+        },
+        "description": "Ce nœud utilise le « Classifieur HFTransformer » chargé par le Classifieur TF pour classer les Seg.\n L'« Expression » accepte des formes du type label > number, et lorsque l'Expression prédéfinie vaut Manual expr, l'expression saisie dans manual_expr est utilisée.\n Par exemple, avec male <= 0.4, si le score de l'étiquette male dans le résultat de classification est inférieur ou égal à 0.4, le Seg est classé comme Seg masqué, sinon il est classé comme Seg restant.\n Pour connaître les étiquettes prises en charge, consultez le dépôt HuggingFace correspondant de config.json.\n #Female et #Male sont des symboles servant à regrouper plusieurs étiquettes (par ex. Female, women, woman, ...) pour faciliter l'emploi, et non des étiquettes individuelles."
+    },
+    "SAMLoader": {
+        "title": "Chargeur SAM",
+        "widgets": {
+            "model_name": "Nom du modèle",
+            "device_mode": "Mode d'appareil"
+        },
+        "outputs": {
+            "SAM_MODEL": "Modèle SAM"
+        },
+        "description": "Charger le modèle SAM"
+    },
+    "ONNXDetectorProvider": {
+        "title": "Chargeur ONNX",
+        "widgets": {
+            "model_name": "Nom du modèle"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Détection BBox",
+            "ONNX_DETECTOR": "Détection ONNX"
+        },
+        "description": "Charge un modèle ONNX afin de fournir la détection ONNX."
+    },
+    "PreviewDetailerHookProvider": {
+        "title": "Fournisseur de contrainte d'amélioration de l'optimisation de prévisualisation",
+        "widgets": {
+            "quality": "Qualité"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation",
+            "UPSCALER_HOOK": "Contrainte de super-résolution"
+        },
+        "description": "Le raccordement de ce nœud de contrainte facilite la prévisualisation une fois la tâche d'optimisation SEGS terminée.\n Lors du traitement d'un grand nombre de Seg, par exemple avec Générer des Seg en tuiles, il permet de suivre l'état au fur et à mesure que l'amélioration progresse.\n Comme cette contrainte s'applique au collage dans l'image d'origine, elle n'a aucun effet sur des nœuds tels que Optimisation Seg."
+    },
+    "BlackPatchRetryHookProvider": {
+        "title": "Fournisseur de hook de nouvelle tentative du patch noir",
+        "widgets": {
+            "mean_thresh": "Seuil moyen",
+            "var_thresh": "Seuil de variation"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation",
+            "UPSCALER_HOOK": "Contrainte de super-résolution"
+        }
+    },
+    "ImpactIPAdapterApplySEGS": {
+        "title": "Appliquer IPAdapter (Seg)",
+        "inputs": {
+            "segs": "Seg",
+            "ipadapter_pipe": "Groupe ipadapter",
+            "neg_image": "Image négative",
+            "reference_image": "Image de référence"
+        },
+        "widgets": {
+            "weight": "Poids",
+            "noise": "Bruit",
+            "weight_type": "Type de poids",
+            "seed": "Graine",
+            "start_at": "Pas de départ",
+            "end_at": "Pas final",
+            "cfg": "CFG",
+            "unfold_batch": "Déplier le lot",
+            "faceid_v2": "FaceID_V2",
+            "weight_v2": "Poids_v2",
+            "context_crop_factor": "Facteur de recadrage du contexte",
+            "combine_embeds": "Fusion d'embeddings"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Pour appliquer IPAdapter à un Seg, vous devez utiliser le nœud Fournisseur de préprocesseur du Inspire Pack pour exploiter ce nœud."
+    },
+    "ImpactFrom_SEG_ELT_bbox": {
+        "title": "Depuis la bbox de l'élément SEG",
+        "inputs": {
+            "bbox": "BBox"
+        },
+        "outputs": {
+            "left": "Gauche",
+            "top": "Haut",
+            "right": "Droite",
+            "bottom": "Bas"
+        }
+    },
+    "ImpactFrom_SEG_ELT_crop_region": {
+        "title": "Depuis la zone recadrée de l'élément SEG",
+        "inputs": {
+            "crop_region": "Zone de recadrage"
+        },
+        "outputs": {
+            "left": "Gauche",
+            "top": "Haut",
+            "right": "Droite",
+            "bottom": "Bas"
+        }
+    },
+    "ImpactSEGSMerge": {
+        "title": "Fusion Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Un BBoxSeg peut contenir plusieurs Seg. La fusion Seg regroupe plusieurs Seg en un seul Seg fusionné. L'étiquette devient « Fusion » et la confiance devient la confiance minimale. Le ControlNet appliqué et l'image recadrée sont supprimés."
+    },
+    "ImpactCount_Elts_in_SEGS": {
+        "title": "Comptage d'éléments en SEGS",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "INT": "Entier"
+        }
+    },
+    "ImpactMakeAnyList": {
+        "title": "Créer une liste (n'importe quoi)",
+        "inputs": {
+            "value1": "Valeur_1"
+        },
+        "outputs": {
+            "INT": "Entier"
+        },
+        "description": "Crée une liste contenant des valeurs quelconques ; il accepte un nombre illimité d'entrées et produit une seule sortie. Son type est déterminé lors du raccordement à un nœud, et chaque entrée connectée ajoute un emplacement de connexion disponible."
+    },
+    "ImpactMakeMaskList": {
+        "title": "Créer une liste de masques",
+        "inputs": {
+            "mask1": "Masque 1"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Il offre les mêmes fonctions que le nœud Créer une liste d'images, mais utilise un masque en entrée au lieu d'une image."
+    },
+    "ImpactMakeMaskBatch": {
+        "title": "Créer des masques par lot",
+        "inputs": {
+            "mask1": "Masque 1"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Il offre les mêmes fonctions que le nœud Créer une liste d'images, mais utilise un masque en entrée au lieu d'une image."
+    },
+    "ImpactSelectNthItemOfAnyList": {
+        "title": "Sélectionner le n-ième élément (liste quelconque)",
+        "inputs": {
+            "any_list": "Liste de valeurs quelconques"
+        },
+        "widgets": {
+            "index": "Exposant"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Sélectionne le Nième élément d'une liste. Si l'indice est hors plage, le dernier élément de la liste est renvoyé."
+    },
+    "ImpactSEGSLabelAssign": {
+        "title": "Attribution Seg (étiquette)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSIntersectionFilter": {
+        "title": "Filtre Seg (intersection)",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "widgets": {
+            "iou_threshold": "Seuil iou",
+            "ioa_threshold": "Seuil ioa"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg filtrés"
+        }
+    },
+    "ImpactSEGSNMSFilter": {
+        "title": "Filtre Seg (suppression non maximale)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "iou_threshold": "Seuil iou"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg filtrés"
+        }
+    },
+    "StringListToString": {
+        "title": "Liste de chaînes vers chaîne",
+        "inputs": {
+            "string_list": "Liste de chaînes"
+        },
+        "widgets": {
+            "join_with": "Joindre"
+        },
+        "outputs": {
+            "STRING": "Chaîne"
+        },
+        "description": "Convertit une liste de chaînes en une chaîne."
+    },
+    "WildcardPromptFromString": {
+        "title": "Invite de prompt générée depuis une chaîne",
+        "inputs": {
+            "string": "Chaîne"
+        },
+        "widgets": {
+            "delimiter": "Séparateur",
+            "prefix_all": "Tous les préfixes",
+            "postfix_all": "Tous les suffixes",
+            "restrict_to_tags": "Limiter aux étiquettes",
+            "exclude_tags": "Étiquettes exclues"
+        },
+        "outputs": {
+            "wildcard": "Prompt",
+            "segs_labels": "Étiquette Seg"
+        },
+        "description": "Crée à partir d'une chaîne un prompt étiqueté destiné aux détails.\n Ce nœud fonctionne bien lorsqu'il est utilisé avec Générer des Seg en tuiles."
+    },
+    "ImpactExecutionOrderController": {
+        "title": "Contrôleur d'instructions d'exécution",
+        "inputs": {
+            "signal": "Signal de commande",
+            "value": "Valeur"
+        },
+        "outputs": {
+            "signal": "Signal de commande",
+            "value": "Valeur"
+        },
+        "description": "Nœud utilitaire qui permet de forcer l'ordre d'exécution des nœuds.\n Connectez la sortie du nœud à exécuter en premier au signal et faites passer l'entrée du nœud à exécuter ensuite par ce nœud."
+    },
+    "ImpactListBridge": {
+        "title": "Pont de liste",
+        "inputs": {
+            "list_input": "Entrée de liste"
+        },
+        "outputs": {
+            "list_output": "Sortie de liste"
+        },
+        "description": "Quand une sortie de liste transite par ce nœud, il collecte et organise les données avant de les transférer, ce qui garantit que le sous-flux de la phase précédente est terminé."
+    },
+    "ImpactSchedulerAdapter": {
+        "title": "Adaptateur de planification",
+        "widgets": {
+            "scheduler": "Planificateur",
+            "extra_scheduler": "Planificateur supplémentaire"
+        },
+        "outputs": {
+            "scheduler": "Planificateur"
+        },
+        "description": "Depuis l'ajout d'AYS aux planificateurs d'Impact Pack et d'Inspire Pack, des incompatibilités apparaissent lorsque le widget Planificateur existant est converti en entrée. L'Adaptateur de planificateur permet une connexion indirecte."
+    },
+    "ImpactFlattenMask": {
+        "title": "Liste de masques vers masque",
+        "inputs": {
+            "masks": "Masque"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        },
+        "description": "Il offre les mêmes fonctions que le nœud Créer une liste d'images, mais utilise un masque en entrée au lieu d'une image."
+    },
+    "MaskRectArea": {
+        "title": "Aire rectangulaire du masque",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur",
+            "w": "Largeur",
+            "h": "Hauteur",
+            "image_width": "Largeur de l'image",
+            "image_height": "Hauteur de l'image",
+            "blur_radius": "Rayon de flou",
+            "extra_scheduler": "Planificateur supplémentaire"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "MaskRectAreaAdvanced": {
+        "title": "Aire rectangulaire du masque (avancé)",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur",
+            "image_width": "Largeur de l'image",
+            "image_height": "Hauteur de l'image",
+            "blur_radius": "Rayon de flou",
+            "extra_scheduler": "Planificateur supplémentaire"
+        },
+        "outputs": {
+            "MASK": "Masque"
+        }
+    },
+    "ImpactNegativeConditioningPlaceholder": {
+        "title": "Espace réservé de condition négative",
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Les modèles comme FLUX.1 n'utilisent pas de condition négative. Ceci est leur nœud d'espace réservé. Vous pouvez utiliser FLUX.1 en remplaçant par ce nœud la condition négative employée par l'Échantillonneur K Impact, l'Échantillonneur K (Inspire) et l'Optimisation."
+    },
+    "GITSSchedulerFuncProvider": {
+        "title": "Fournisseur de fonction de planificateur GITS",
+        "widgets": {
+            "coeff": "Coefficient",
+            "denoise": "Intensité de débruitage"
+        },
+        "outputs": {
+            "SCHEDULER_FUNC": "Fonction du planificateur"
+        },
+        "description": "Fournit une fonction de planificateur destinée au planificateur GITS"
+    },
+    "VariationNoiseDetailerHookProvider": {
+        "title": "Fournisseur de contrainte de l'améliorateur d'optimisation par bruit de variante",
+        "widgets": {
+            "seed": "Graine",
+            "control_after_generate": "Action après exécution",
+            "strength": "Intensité"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Contrainte d'optimisation"
+        },
+        "description": "Applique la graine de variante au processeur d'optimisation. Elle peut être appliquée en plusieurs étapes grâce à des combinaisons."
+    },
+    "ImpactMakeTileSEGS": {
+        "title": "Générer des Seg en tuiles",
+        "inputs": {
+            "images": "Image",
+            "filter_in_segs_opt": "Filtres dans les options Seg",
+            "filter_out_segs_opt": "Filtrer les options Seg"
+        },
+        "widgets": {
+            "bbox_size": "Taille BBox",
+            "crop_factor": "Coefficient de recadrage",
+            "min_overlap": "Chevauchement minimal",
+            "filter_segs_dilation": "Filtrage par dilatation des zones segmentées",
+            "mask_irregularity": "Irrégularité du masque",
+            "irregular_mask_mode": "Mode de masque irrégulier"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "workflow>Impact::MAKE_BASIC_PIPE": {
+        "title": "Impact : Créer un groupe de base",
+        "inputs": {
+            "images": "Image",
+            "filter_in_segs_opt": "Filtres dans les options Seg",
+            "filter_out_segs_opt": "Filtrer les options Seg"
+        },
+        "widgets": {
+            "ckpt_name": "Nom du ckpt",
+            "Positive prompt": "Prompt positif",
+            "Negative prompt": "Prompt négatif",
+            "filter_segs_dilation": "Filtrage par dilatation des zones segmentées",
+            "mask_irregularity": "Irrégularité du masque",
+            "irregular_mask_mode": "Mode de masque irrégulier"
+        },
+        "outputs": {
+            "basic_pipe": "Groupe de base"
+        }
+    },
+    "workflow>MAKE_BASIC_PIPE": {
+        "title": "Créer un groupe de base",
+        "inputs": {
+            "images": "Image",
+            "filter_in_segs_opt": "Filtres dans les options Seg",
+            "filter_out_segs_opt": "Filtrer les options Seg"
+        },
+        "widgets": {
+            "ckpt_name": "Nom du ckpt",
+            "text": "Texte",
+            "CLIPTextEncode text": "Texte à encoder CLIP",
+            "vae_name": "Nom du VAE",
+            "mask_irregularity": "Irrégularité du masque",
+            "irregular_mask_mode": "Mode de masque irrégulier"
+        },
+        "outputs": {
+            "basic_pipe": "Groupe de base"
+        }
+    },
+    "UltralyticsDetectorProvider": {
+        "title": "Chargeur de détection",
+        "widgets": {
+            "model_name": "Nom du modèle"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Détection BBox",
+            "SEGM_DETECTOR": "Détection SEGM"
+        }
+    }
+}

@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "Textur in Netz backen",
+        "inputs": {
+            "reference_images": "Referenzbild",
+            "reference_masks": "Referenzmaske",
+            "reference_orbit_camera_poses": "Referenz-Orbitkamera-Posen",
+            "mesh": "Netz"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Referenz-Orbitkamera-Sichtfeld",
+            "mesh_albedo_width": "Netz-Albedo-Breite",
+            "mesh_albedo_height": "Netz-Albedo-Höhe",
+            "training_iterations": "Trainingsiterationen",
+            "batch_size": "Stapelgröße",
+            "texture_learning_rate": "Textur-Lernrate",
+            "train_mesh_geometry": "Netzgeometrie trainieren",
+            "geometry_learning_rate": "Geometrie-Lernrate",
+            "ms_ssim_loss_weight": "MS-SSIM-Verlustgewicht",
+            "force_cuda_rasterize": "CUDA-Rasterisierung erzwingen"
+        },
+        "outputs": {
+            "trained_mesh": "Netz",
+            "baked_texture": "Textur"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "CRM CCMs MVDiffusion-Modell",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion-Sampler",
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske",
+            "multiview_images": "Multiview-Ansichten"
+        },
+        "widgets": {
+            "prompt": "Positiv-Prompt",
+            "prompt_neg": "Negativ-Prompt",
+            "seed": "Zufalls-Seed",
+            "control_after_generate": "Aktion nach der Ausführung",
+            "mv_guidance_scale": "MV-Guidance-Skala",
+            "num_inference_steps": "Inferenz-Schritte"
+        },
+        "outputs": {
+            "multiview_CCMs": "CCMs-Multiview"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "CRM-Bild MVDiffusion-Modell",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion-Sampler",
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske"
+        },
+        "widgets": {
+            "prompt": "Positiv-Prompt",
+            "prompt_neg": "Negativ-Prompt",
+            "seed": "Zufalls-Seed",
+            "control_after_generate": "Aktion nach der Ausführung",
+            "mv_guidance_scale": "MV-Guidance-Skala",
+            "num_inference_steps": "Inferenz-Schritte"
+        },
+        "outputs": {
+            "multiview_images": "Multiview-Ansichten"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "3DGS mit NeRF und Marching Cubes in ein Netz umwandeln",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "Gaussian-Einstellungen",
+            "force_cuda_rast": "CUDA-Rasterisierung erzwingen"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "Konvolutions-Rekonstruktionsmodell",
+        "inputs": {
+            "crm_model": "CRM-Modell",
+            "multiview_images": "Multiview-Ansichten",
+            "multiview_CCMs": "CCMs-Multiview"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "Marching-Tetraeder aus Tiefe",
+        "inputs": {
+            "reference_points_cloud": "Referenz-Punktwolke",
+            "reference_images": "Referenzbild",
+            "reference_masks": "Referenzmaske"
+        },
+        "widgets": {
+            "training_iterations": "Trainingsiterationen",
+            "points_cloud_fitting_weight": "Gewicht der Punktwolkenfilterung",
+            "mesh_smoothing_weight": "Netz-Glättungsgewicht",
+            "chamfer_faces_sample_scale": "Skalierung der Chamfer-Flächenabtastung",
+            "mesh_scale": "Netz-Skalierung",
+            "grid_resolution": "Rasterauflösung",
+            "geometry_learning_rate": "Geometrie-Lernrate",
+            "positional_encoding_multires": "Mehrfache Positionsverschlüsselung",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "Mehransichten-Netz-Anpassung",
+        "inputs": {
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske",
+            "reference_orbit_camera_poses": "Referenz-Orbitkamera-Posen",
+            "mesh": "Netz"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Referenz-Orbitkamera-Sichtfeld",
+            "mesh_albedo_height": "Netz-Albedo-Höhe",
+            "mesh_albedo_width": "Netz-Albedo-Breite",
+            "training_iterations": "Trainingsiterationen",
+            "batch_size": "Stapelgröße",
+            "texture_learning_rate": "Textur-Lernrate",
+            "train_mesh_geometry": "Netzgeometrie trainieren",
+            "geometry_learning_rate": "Geometrie-Lernrate",
+            "ms_ssim_loss_weight": "MS-SSIM-Verlustgewicht",
+            "remesh_after_n_iteration": "Netz alle N Iterationen rekonstruieren",
+            "force_cuda_rasterize": "CUDA-Rasterisierung erzwingen"
+        },
+        "outputs": {
+            "trained_mesh": "Netz",
+            "baked_texture": "Textur"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "Referenz-Tiefenbilder",
+            "reference_normal_maps": "Referenz-Normalenbilder",
+            "reference_masks": "Referenzmaske",
+            "reference_orbit_camera_poses": "Referenz-Orbitkamera-Posen"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Referenz-Orbitkamera-Sichtfeld",
+            "training_iterations": "Trainingsiterationen",
+            "batch_size": "Stapelgröße",
+            "learning_rate": "Lernrate",
+            "voxel_grids_resolution": "Voxel-Rasterauflösung",
+            "depth_min_distance": "Minimale Tiefendistanz",
+            "depth_max_distance": "Maximale Tiefendistanz",
+            "mask_loss_weight": "Masken-Verlustgewicht",
+            "depth_loss_weight": "Gewicht des Tiefenverlusts",
+            "normal_loss_weight": "Normalen-Verlustgewicht",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "CUDA-Rasterisierung erzwingen"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "Gaussian-Splatting",
+        "inputs": {
+            "reference_images": "Referenzbild",
+            "reference_masks": "Referenzmaske",
+            "reference_orbit_camera_poses": "Referenz-Orbitkamera-Posen",
+            "points_cloud_to_initialize_gaussian": "Gaussian-Punktwolke initialisieren",
+            "ply_to_initialize_gaussian": "gs_ply initialisieren",
+            "mesh_to_initialize_gaussian": "Gaussian-Netz initialisieren"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Referenz-Orbitkamera-Sichtfeld",
+            "training_iterations": "Trainingsiterationen",
+            "batch_size": "Stapelgröße",
+            "ms_ssim_loss_weight": "MS-SSIM-Verlustgewicht",
+            "alpha_loss_weight": "Gewicht des Alpha-Verlusts",
+            "offset_loss_weight": "Gewicht des Versatzverlusts",
+            "offset_opacity_loss_weight": "Gewicht des Versatz-Deckkraftverlusts",
+            "invert_background_probability": "Wahrscheinlichkeit für umgekehrten Hintergrund",
+            "feature_learning_rate": "Feature-Lernrate",
+            "opacity_learning_rate": "Deckkraft-Lernrate",
+            "scaling_learning_rate": "Skalierungs-Lernrate",
+            "rotation_learning_rate": "Rotations-Lernrate",
+            "position_learning_rate_init": "Positions-Lernrate (Anfangswert)",
+            "position_learning_rate_final": "Positions-Lernrate (Endwert)",
+            "position_learning_rate_delay_mult": "Verzögerung der Positions-Lernrate",
+            "position_learning_rate_max_steps": "Maximale Schrittanzahl der Positions-Lernrate",
+            "initial_gaussians_num": "Anfangsanzahl der Gaussian",
+            "K_nearest_neighbors": "Anzahl der K nächsten Nachbarn",
+            "percent_dense": "Dichte-Prozentsatz",
+            "density_start_iterations": "Startanzahl der Iterationen (Dichte)",
+            "density_end_iterations": "Endanzahl der Iterationen (Dichte)",
+            "densification_interval": "Verdichtungsintervall",
+            "opacity_reset_interval": "Intervall für Deckkraft-Reset",
+            "densify_grad_threshold": "Schwellenwert des Dichtegradienten",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske",
+            "reference_orbit_camera_poses": "Referenz-Orbitkamera-Posen"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Referenz-Orbitkamera-Sichtfeld",
+            "training_iterations": "Trainingsiterationen",
+            "training_resolution": "Trainingsauflösung",
+            "marching_cude_threshold": "Marching-Cubes-Schwellenwert",
+            "marching_cude_grids_resolution": "Marching-Cubes-Rasterauflösung",
+            "marching_cude_grids_batch_size": "Marching-Cubes-Raster-Batchgröße",
+            "texture_resolution": "Texturauflösung",
+            "force_cuda_rast": "CUDA-Rasterisierung erzwingen"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "Großes Mehransichten-Gaussian-Modell (LGM)",
+        "inputs": {
+            "multiview_images": "Multiview-Ansichten",
+            "lgm_model": "LGM-Modell"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "MVDream-Modell",
+        "inputs": {
+            "mvdream_pipe": "MVDream-Knotenbündel",
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske"
+        },
+        "widgets": {
+            "prompt": "Prompt (Eingabetext)",
+            "prompt_neg": "Negativ-Prompt",
+            "seed": "Zufalls-Seed",
+            "control_after_generate": "Aktion nach der Ausführung",
+            "mv_guidance_scale": "MV-Guidance-Skala",
+            "num_inference_steps": "Inferenz-Schritte",
+            "elevation": "Neigungswinkel"
+        },
+        "outputs": {
+            "multiview_images": "Multiview-Ansichten"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske",
+            "reference_normals": "Referenz-Normalenbilder"
+        },
+        "widgets": {
+            "training_iterations": "Trainingsiterationen",
+            "batch_size": "Stapelgröße",
+            "learning_rate": "Lernrate",
+            "learning_rate_alpha": "Lernrate Alpha",
+            "color_loss_weight": "Gewicht des Farbverlusts",
+            "mesh_smoothing_weight": "Netz-Glättungsgewicht",
+            "mask_loss_weight": "Masken-Verlustgewicht",
+            "normal_loss_weight": "Normalen-Verlustgewicht",
+            "sparse_loss_weight": "Gewicht des Sparse-Verlusts",
+            "warm_up_end": "Ende des Warm-ups",
+            "anneal_end": "Annealing-Ende",
+            "use_white_background": "Weißen Hintergrund verwenden",
+            "geometry_extract_resolution": "Geometrie-Extraktionsauflösung",
+            "marching_cude_threshold": "Marching-Cubes-Schwellenwert"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske",
+            "tgs_model": "TGS-Modell"
+        },
+        "widgets": {
+            "cam_dist": "Kamerabstand"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "TSR-Modell",
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "Geometrie-Extraktionsauflösung",
+            "marching_cude_threshold": "Marching-Cubes-Schwellenwert"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "Wonder3D-MVDiffusion-Modell",
+        "inputs": {
+            "mvdiffusion_pipe": "MVDiffusion-Knotenbündel",
+            "reference_image": "Referenzbild",
+            "reference_mask": "Referenzmaske"
+        },
+        "widgets": {
+            "seed": "Zufalls-Seed",
+            "control_after_generate": "Aktion nach der Ausführung",
+            "mv_guidance_scale": "MV-Guidance-Skala",
+            "num_inference_steps": "Inferenz-Schritte"
+        },
+        "outputs": {
+            "multiview_images": "Multiview-Ansichten",
+            "multiview_normals": "Mehransichten-Normalen"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "3DGS zu Punktwolke",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "Punktwolke"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "Netz zu Punktwolke",
+        "inputs": {
+            "mesh": "Netz"
+        },
+        "outputs": {
+            "points_cloud": "Punktwolke"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "Gaussian-Splatting-Orbitrenderer",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "Orbitkamera-Posen"
+        },
+        "widgets": {
+            "render_image_width": "Breite",
+            "render_iamge_height": "Höhe",
+            "render_orbit_camera_fovy": "Objektiv der Orbitkamera",
+            "render_background_r": "Hintergrund R",
+            "render_background_g": "Hintergrund G",
+            "render_background_b": "Hintergrund B"
+        },
+        "outputs": {
+            "rendered_gs_images": "Bild",
+            "rendered_gs_masks": "Maske"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "Orbitkameraposen erzeugen",
+        "inputs": {
+            "reference_images": "Referenzbild"
+        },
+        "widgets": {
+            "generate_pose_commnad": "Befehl erzeugen"
+        },
+        "outputs": {
+            "orbit_camposes": "Orbitkamera-Posen"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "Orbitkameraposen stapeln",
+        "widgets": {
+            "orbit_radius_start": "Orbitradius-Start",
+            "orbit_radius_stop": "Orbitradius-Ende",
+            "orbit_radius_step": "Orbitradius-Schrittweite",
+            "elevation_start": "Neigungswinkel-Start",
+            "elevation_stop": "Neigungswinkel-Ende",
+            "elevation_step": "Neigungswinkel-Schrittweite",
+            "azimuth_start": "Azimut-Start",
+            "azimuth_stop": "Azimut-Ende",
+            "azimuth_step": "Azimut-Schrittweite",
+            "orbit_center_X_start": "Orbitzentrum-X-Start",
+            "orbit_center_X_stop": "Orbitzentrum-X-Ende",
+            "orbit_center_X_step": "Orbitzentrum-X-Schrittweite",
+            "orbit_center_Y_start": "Orbitzentrum-Y-Start",
+            "orbit_center_Y_stop": "Orbitzentrum-Y-Ende",
+            "orbit_center_Y_step": "Orbitzentrum-Y-Schrittweite",
+            "orbit_center_Z_start": "Orbitzentrum-Z-Start",
+            "orbit_center_Z_stop": "Orbitzentrum-Z-Ende",
+            "orbit_center_Z_step": "Orbitzentrum-Z-Schrittweite"
+        },
+        "outputs": {
+            "orbit_camposes": "Orbitkamera-Posen",
+            "orbit_radius_list": "Orbitradiusliste",
+            "elevation_list": "Neigungswinkelliste",
+            "azimuth_list": "Azimutliste",
+            "orbit_center_X_list": "Orbitzentrum-X-Liste",
+            "orbit_center_Y_list": "Orbitzentrum-Y-Liste",
+            "orbit_center_Z_list": "Orbitzentrum-Z-Liste"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "3DGS-Achsen vertauschen",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "Achse X nach",
+            "axis_y_to": "Achse Y nach",
+            "axis_z_to": "Achse Z nach"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "Netz-Achsen vertauschen",
+        "inputs": {
+            "mesh": "Netz"
+        },
+        "widgets": {
+            "axis_x_to": "Achse X nach",
+            "axis_y_to": "Achse Y nach",
+            "axis_z_to": "Achse Z nach"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "3DGS laden",
+        "widgets": {
+            "gs_file_path": "GS-Dateipfad"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "3D-Netz laden",
+        "widgets": {
+            "mesh_file_path": "Netz-Dateipfad",
+            "resize": "Erneut skalieren",
+            "renormal": "Normalen neu abbilden",
+            "retex": "Textur neu anpassen",
+            "optimizable": "Optimierbar"
+        },
+        "outputs": {
+            "mesh": "Netz"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "CRM-MVDiffusion-Modell laden",
+        "widgets": {
+            "model_name": "Modellname",
+            "crm_config_path": "CRM-Konfigurationspfad"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion-Sampler"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "Konvolutions-Rekonstruktionsmodell laden",
+        "widgets": {
+            "model_name": "Modellname"
+        },
+        "outputs": {
+            "crm_model": "CRM-Modell"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "Diffusers-Pipeline laden",
+        "widgets": {
+            "diffusers_pipeline_name": "Pipeline-Bezeichnung"
+        },
+        "outputs": {
+            "pipe": "Pipe-Knoten"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "Großes Mehransichten-Gaussian-Modell (LGM) laden",
+        "widgets": {
+            "model_name": "Modellname",
+            "lgb_config": "LGB-Einstellungen"
+        },
+        "outputs": {
+            "lgm_model": "LGM-Modell"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "Triplane-Gaussian-Transformers-Modell (TGS) laden",
+        "widgets": {
+            "model_name": "Modellname"
+        },
+        "outputs": {
+            "tgs_model": "TGS-Modell"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "TripoSR-Modell (TSR) laden",
+        "widgets": {
+            "model_name": "Modellname",
+            "chunk_size": "Blockgröße"
+        },
+        "outputs": {
+            "tsr_model": "TSR-Modell"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "3DGS speichern",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "Speicherpfad"
+        },
+        "outputs": {
+            "save_path": "Speicherpfad"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "3D-Netz speichern",
+        "inputs": {
+            "mesh": "Netz"
+        },
+        "widgets": {
+            "save_path": "Speicherpfad"
+        },
+        "outputs": {
+            "save_path": "Speicherpfad"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "3DGS-Vorschau",
+        "widgets": {
+            "gs_file_path": "GS-Dateipfad"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "3D-Netz-Vorschau",
+        "widgets": {
+            "mesh_file_path": "Netz-Dateipfad"
+        }
+    }
+}

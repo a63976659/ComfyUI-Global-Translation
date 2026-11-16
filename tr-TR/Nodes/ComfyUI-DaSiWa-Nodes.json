@@ -1,0 +1,606 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_Güçlendirilmiş Video Birleştirmesi",
+        "inputs": {
+            "images": "Görsel",
+            "audio": "Ses"
+        },
+        "widgets": {
+            "frame_rate": "Kare hızı",
+            "codec": "Kodlama biçimi",
+            "container": "Konteyner biçimi",
+            "bit_depth": "Bit derinliği",
+            "quality": "Kalite",
+            "log_level": "Günlük düzeyi",
+            "pingpong": "Ping Pong modu",
+            "save_metadata": "Üstveriyi kaydet",
+            "filename_prefix": "Dosya adı ön eki",
+            "save_output": "Çıkışı kaydet",
+            "pass_frames": "Kareleri geçir",
+            "crop_to_audio": "Ses uzunluğuna kırp",
+            "audio_codec": "Ses kodlama",
+            "audio_bitrate": "Ses bit hızı",
+            "save_first_frame": "İlk kareyi kaydet",
+            "save_last_frame": "Son kareyi kaydet"
+        },
+        "outputs": {
+            "frames": "Kare",
+            "filename": "Dosya adı"
+        },
+        "description": "Görsel yığınını yüksek kaliteli videoya birleştirir, NVENC/GPU'yu otomatik seçer; isteğe bağlı ping pong oynatma, ComfyUI çalışma üstverisi ve MP4 yedek planını destekler."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_Onarım Kırpma Hazırlığı",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "target_width": "Hedef genişlik",
+            "target_height": "Hedef yükseklik",
+            "mask_blur": "Maske bulanıklığı",
+            "mask_min": "Maske minimumu",
+            "mask_max": "Maske maksimumu",
+            "grow_px": "Genişletme pikseli",
+            "can_shrink": "Küçültülebilir"
+        },
+        "outputs": {
+            "cropped_image": "Kırpılmış görsel",
+            "cropped_mask": "Kırpılmış maske",
+            "bbox_x": "Sınır kutusu X koordinatı",
+            "bbox_y": "Sınır kutusu Y koordinatı",
+            "bbox_w": "Sınır kutusu genişliği",
+            "bbox_h": "Sınır kutusu yüksekliği"
+        },
+        "description": "Onarım için görseli ve maskeyi hazırlar: sınırları çıkarır, kırpma yapar, ölçekler."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_Onarım Birleştirme",
+        "inputs": {
+            "destination": "Hedef",
+            "source": "Kaynak",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "x": "X koordinatı",
+            "y": "Y koordinatı",
+            "w": "Genişlik",
+            "h": "Yükseklik",
+            "correction_method": "Düzeltme yöntemi"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Onarılan parçayı, renk düzeltmesi desteğiyle orijinal görselin içine yeniden kompozitler."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_LLM Model Seçici",
+        "widgets": {
+            "custom_path": "Özel yol",
+            "hf_repo_id": "HF depo kimliği",
+            "hf_revision": "HF revizyonu",
+            "download_if_missing": "Eksikse indir",
+            "backend": "Arka uç",
+            "task": "Görev",
+            "device": "Aygıt",
+            "dtype": "Veri türü",
+            "quantization": "Niceleme",
+            "cache_mode": "Önbellek modu",
+            "trust_remote_code": "Uzak kodu güvenilir say",
+            "attention_implementation": "Dikkat uygulaması",
+            "kv_cache_implementation": "KV önbellek uygulaması",
+            "kv_cache_quant_backend": "KV önbellek niceleme arka ucu",
+            "kv_cache_nbits": "KV önbellek bit sayısı",
+            "kv_cache_residual_length": "KV önbellek artık uzunluğu",
+            "llama_n_ctx": "Llama bağlam penceresi",
+            "llama_n_gpu_layers": "Llama GPU katman sayısı",
+            "llama_n_threads": "Llama iş parçacığı sayısı",
+            "llama_chat_format": "Llama sohbet biçimi",
+            "ollama_model": "Ollama modeli",
+            "ollama_url": "Ollama adresi",
+            "ollama_timeout": "Ollama zaman aşımı süresi"
+        },
+        "outputs": {
+            "llm_config": "LLM yapılandırması"
+        },
+        "description": "DaSiWa LLM Model Seçici: ComfyUI/models/llm altındaki yerel transformers LLM/VLM klasörlerini seçer; önbelleği, veri türünü, aygıtı ve aktarma davranışını yapılandırır."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_LLM Analizi",
+        "inputs": {
+            "llm_config": "LLM yapılandırması",
+            "images": "Görsel",
+            "text_input": "Metin girişi"
+        },
+        "widgets": {
+            "system_prompt_preset": "Sistem istemi ön ayarı",
+            "system_prompt": "Sistem istemi",
+            "prompt": "İstem",
+            "max_new_tokens": "Maksimum yeni token",
+            "max_input_tokens": "Maksimum giriş tokenı",
+            "temperature": "Sıcaklık",
+            "top_p": "Top_p",
+            "repetition_penalty": "Tekrar cezası",
+            "use_kv_cache": "KV önbelleği kullan",
+            "seed": "Rastgele tohum",
+            "max_frames": "Maks kare sayısı",
+            "frame_stride": "Kare adım aralığı",
+            "frame_strategy": "Kare stratejisi",
+            "resize_max_px": "Maksimum ayarlama pikseli",
+            "resize_algorithm": "Ayarlama algoritması",
+            "memory_cleanup": "Bellek temizliği"
+        },
+        "outputs": {
+            "response": "Yanıt",
+            "info": "Bilgi"
+        },
+        "description": "DaSiWa LLM Analizi: Bağlı metin, görsel veya VHS/video karesi yığını üzerinde yerel bir metin ya da görsel-dil modeli çalıştırır ve dize yanıt döndürür."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_LTX2 LoRA Yükleyici",
+        "inputs": {
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "Yığılmış veri",
+            "model_type": "Model türü",
+            "use_cache": "LoRA dosya önbelleğini etkinleştir",
+            "available_loras": "Kullanılabilir LoRA listesi"
+        },
+        "outputs": {
+            "CLIP": "CLIP"
+        },
+        "description": "DaSiWa Gelişmiş LoRA Yükleyici: Normal görsel/video LoRA'larını veya LTX-2.3 video/ses LoRA'larını yığar. Ses ayrımı yalnızca LTX-2.3 için geçerlidir."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_Üstveri Yapılandırması",
+        "inputs": {
+            "node_positive": "Olumlu düğümü",
+            "node_negative": "Olumsuz düğümü",
+            "node_model": "Model düğümü",
+            "node_latent": "Latent düğümü",
+            "node_noise": "Gürültü düğümü",
+            "node_sigmas": "Sigma düğümü",
+            "node_sampler": "Örneklemeleyici düğümü",
+            "extra_metadata": "Ek üstveri",
+            "text_positive": "Olumlu metin",
+            "text_negative": "Olumsuz metin",
+            "text_steps": "Adım sayısı metni",
+            "text_cfg": "CFG metni",
+            "text_sampler": "Örneklemeleyici metni",
+            "text_scheduler": "Zamanlayıcı metni",
+            "text_seed": "Rastgele tohum metni",
+            "text_model": "Model metni",
+            "save_output": "Çıkışı kaydet"
+        },
+        "widgets": {
+            "save_workflow": "Çalışmayı kaydet",
+            "model_hash": "Model hash değeri"
+        },
+        "outputs": {
+            "config": "Yapılandırma"
+        },
+        "description": "DaSiWa Üstveri Yapılandırması: Çalışma üstveri ayarlarını ve isteğe bağlı otomatik algılama bağlantılarını, görsel kaydedicilerce kullanılan kompakt bir yapılandırma çıkışında toplar."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_Üstveri Görsel Kaydedicisi",
+        "inputs": {
+            "images": "Görsel",
+            "metadata_config": "Üstveri yapılandırması",
+            "extra_metadata": "Ek üstveri"
+        },
+        "widgets": {
+            "filename_prefix": "Dosya adı ön eki",
+            "file_format": "Dosya biçimi",
+            "compression": "Sıkıştırma",
+            "save_output": "Çıkışı kaydet"
+        },
+        "outputs": {
+            "filename": "Dosya adı",
+            "metadata": "Üstveri"
+        },
+        "description": "DaSiWa Üstveri Görsel Kaydedicisi: ComfyUI çalışma verisi ve A1111/Civitai uyumlu üretim üstverisi içeren PNG veya WebP görselleri kaydeder."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_Üstveri Görsel Kaydedicisi Tam Sürüm",
+        "inputs": {
+            "images": "Görsel kümesi",
+            "metadata_config": "Üstveri yapılandırması",
+            "extra_metadata": "Ek üstveri",
+            "node_positive": "Olumlu düğümü",
+            "node_negative": "Olumsuz düğümü",
+            "node_model": "Model düğümü",
+            "node_latent": "Latent düğümü",
+            "node_noise": "Gürültü düğümü",
+            "node_sigmas": "Sigma düğümü",
+            "node_sampler": "Örneklemeleyici düğümü",
+            "text_positive": "Olumlu istem",
+            "text_negative": "Olumsuz istem",
+            "text_steps": "Adım sayısı",
+            "text_cfg": "CFG değeri",
+            "text_sampler": "Örneklemeleyici",
+            "text_scheduler": "Zamanlayıcı",
+            "text_seed": "Rastgele tohum",
+            "text_model": "Metin modeli"
+        },
+        "widgets": {
+            "filename_prefix": "Dosya adı ön eki",
+            "file_format": "Dosya biçimi",
+            "compression": "Sıkıştırma düzeyi",
+            "save_output": "Çıkışı kaydet",
+            "save_workflow": "Çalışmayı kaydet",
+            "model_hash": "Model hash değeri"
+        },
+        "outputs": {
+            "filename": "Dosya adı",
+            "metadata": "Üstveri"
+        },
+        "description": "DaSiWa Üstveri Görsel Kaydedicisi Tam Sürümü: Gelişmiş kaydedici varyantı; tüm üstveri algılama ve elle geçersiz kılma portları doğrudan düğümde görünür."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_Ek Üstveri Oluştur",
+        "inputs": {
+            "extra_metadata": "Ek üstveri"
+        },
+        "widgets": {
+            "key": "Anahtar",
+            "value": "Değer"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "Ek üstveri"
+        },
+        "description": "DaSiWa Ek Üstveri Oluşturma: Görsel kaydedici için özel üstveri anahtar-değer çiftleri oluşturur veya genişletir."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_Rastgele Dize Seçici",
+        "inputs": {
+            "text": "Metin"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "DaSiWa Rastgele Dize Seçici: Metni olduğu gibi geçirir ve her {A|B|C} grubunu rastgele seçilen bir seçenekle değiştirir"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_Büyütme İyileştirme",
+        "inputs": {
+            "images": "Görsel"
+        },
+        "widgets": {
+            "denoise": "Gürültü giderme",
+            "deblur": "Bulanıklık giderme",
+            "scale": "Ölçek",
+            "megapixels": "Megapiksel",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "device_id": "Aygıt kimliği",
+            "empty_cache": "Önbelleği temizle",
+            "denoise_quality": "Gürültü giderme kalitesi",
+            "deblur_quality": "Bulanıklık giderme kalitesi",
+            "upscale": "Büyütme",
+            "upscale_quality": "Büyütme kalitesi",
+            "resize_type": "Boyut ayarlama türü",
+            "divisible_by": "Tam bölünebilir değer",
+            "ratio_preset": "Oran ön ayarı",
+            "resize_method": "Boyut ayarlama yöntemi",
+            "use_mmap": "Disk eşlemeyi kullan",
+            "auto_unload_models": "Modeli otomatik aktar"
+        },
+        "outputs": {
+            "images": "Görsel"
+        },
+        "description": "DaSiWa RTX Büyütme ve İyileştirici: Yüksek performanslı 3 aşamalı düğüm. 1. İyileştirme aşaması: Kaynak çözünürlükte çalışır ve NVIDIA RTX görsel efektleriyle gürültüyü veya bulanıklığı temizler. 2. Büyütme aşaması: VSR veya yüksek bit hızı modu kullanarak görseli 4 kat büyütür. Video yığınlarında düşük VRAM kullanımı sağlamak için kare kare işler"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_Çözünürlük Ölçek Hesaplayıcısı",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "resolution_preset": "Çözünürlük ön ayarı",
+            "aspect_preset_when_not_image": "Görsel olmadığında oran ön ayarı",
+            "no_scale": "Ölçekleme yok",
+            "scale_from_image": "Görselden ölçekle",
+            "swap_aspect_when_not_image": "Görsel değilken oranı değiştir",
+            "custom_aspect_width": "Özel oran genişliği",
+            "custom_aspect_height": "Özel oran yüksekliği",
+            "mode": "Mod",
+            "custom_divisor": "Özel bölen"
+        },
+        "outputs": {
+            "width_int": "Tamsayı genişliği",
+            "height_int": "Tamsayı yüksekliği",
+            "width_float": "Ondalık genişlik",
+            "height_float": "Ondalık yükseklik"
+        },
+        "description": "DaSiWa Çözünürlük Ölçek Hesaplayıcısı: Hedef megapiksel alanına göre matematiksel olarak hassas çözünürlükler hesaplar. - Standart mod: Saf matematiksel ölçekleme. - WAN/LTX modu: 32 piksel sınırlarına hizalar (WAN/LTX VAE için zorunlu). - Ölçekleme yok: Tüm hesaplamaları geçersiz kılar ve kaynak görsel boyutlarını doğrudan verir"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_Torch Boyut Ayarlama",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "size_mode": "Boyut modu",
+            "aspect_mode": "Oran modu",
+            "target_width": "Hedef genişlik",
+            "target_height": "Hedef yükseklik",
+            "scale_multiplier": "Ölçek katı",
+            "interpolation": "Enterpolasyon",
+            "gamma_correct": "Gama düzeltmesi",
+            "divisible_by": "Tam bölünebilir değer",
+            "pad_color": "Dolgu rengi",
+            "crop_position": "KırpmA konumu",
+            "batch_size": "Yığın boyutu",
+            "max_batch_megapixels": "Maksimum yığın megapikseli",
+            "cache_size": "Önbellek boyutu"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "ComfyUI görselleri için bağımlılıksız PyTorch toplu boyut ayarlama aracı. Piksel düzeyinde hassas en yakın komşu, bilineer, bikübik, alan ve önbellekli ayrılabilir Lanczos yeniden örnekleme destekler"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_Düğüm Durumu Değiştirme",
+        "widgets": {
+            "enabled": "Etkinleştir",
+            "trigger_on": "Tetikleme koşulu",
+            "action": "İşlem"
+        },
+        "outputs": {
+            "enabled_out": "Etkinleştirme çıkışı"
+        },
+        "description": "DaSiWa Düğüm Durumu Değiştirici: Mantıksal duruma göre bağlı hedef düğümü susturur veya baypas eder; etkinleştirme çıkışı anahtarların zincirlenmesini sağlar"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_Filigran",
+        "inputs": {
+            "images": "Görsel"
+        },
+        "widgets": {
+            "watermark_path": "Filigran yolu",
+            "position": "Konum",
+            "scale": "Ölçek",
+            "resampling": "Yeniden örnekleme",
+            "transparency": "Saydamlık",
+            "rotation": "Döndürme",
+            "padding_x": "X ekseni dolgusu",
+            "padding_y": "Y ekseni dolgusu",
+            "optical_padding": "Optik dolgu",
+            "optical_strength": "Optik şiddet",
+            "random_switches": "Rastgele anahtarlar",
+            "fade": "Belirip kaybolma",
+            "fade_margin": "Yumuşak geçiş kenar boşluğu",
+            "randomize_position": "Rastgele konum",
+            "random_seed": "Rastgele tohum"
+        },
+        "description": "DaSiWa Filigran: Kararlı CPU kompozisyonuna sahip profesyonel düzeyde filigran bindirme düğümü. Çıkış yığınını RAM'de saklar, titreşimi önlemek için başlatılan kaynak kareden itibaren harmanlar; mükemmel görsel hizalama için bikübik/Lanczos ölçekleme, döndürme ve “optik dolgu” destekler"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_İstem Ön Ayarı İstem Oluşturucu",
+        "inputs": {
+            "positive_input": "Olumlu girdi",
+            "negative_input": "Olumsuz girdi"
+        },
+        "widgets": {
+            "style": "Stil",
+            "seed": "Rastgele tohum",
+            "token_budget": "Token bütçesi",
+            "selection_state": "Seçim durumu",
+            "reroll": "Yeniden rastgelele",
+            "auto_reroll": "Otomatik yeniden rastgeleleme"
+        },
+        "outputs": {
+            "positive_prompt": "Olumlu istem",
+            "negative_prompt": "Olumsuz istem"
+        },
+        "description": "Yerleşik çift stilli istem havuzundan olumlu ve olumsuz istemler oluşturur. Seçimler ve ağırlıklar çalışmada saklanır"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_Bağımsız Tohum Denetleyicisi",
+        "description": "MiniMax H3 Director'ın tohum etkileşim deneyimini yeniden kullanan bağımsız tohum denetimi düğümü: rastgele/sabit mod, 64 bit işaretsiz tohum, yeniden rastgelele/son tohumu geri yükle, son 10 kayıt geçmişi ve alt akıştaki örneklemeleyicilerin doğrudan kullanabilmesi için NOISE nesnesi çıkışı.",
+        "inputs": {
+            "seed": "Harici tohum girişi"
+        },
+        "widgets": {
+            "seed_value": "Yerel tohum değeri",
+            "seed_control_state": "Tohum denetimi durumu",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "Arayüz panelinin düzenlediği yerel tohum değeri; yerel kontrol gizli kalmalı.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "Kalıcı tohum denetimi durumu (JSON): mod, son tohum ve geçmiş tohum listesi.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "İsteğe bağlı harici tohum girişi: bağlandığında yerel kontroller devre dışı bırakılır ve bağlı değer doğrudan geçirilir."
+        },
+        "outputs": {
+            "seed": "Tohum",
+            "noise": "Gürültü"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Comfy Kitchen INT8 Dikkat Yaması",
+        "description": "Modeli yamalar ve çalışma zamanında VRAM tasarrufu için Comfy Kitchen INT8 dikkat uygulamasını kullanır. Comfy Kitchen kullanılamazsa ComfyUI varsayılan dikkat uygulamasına geri döner."
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_MiniMax H3 Yönetmen",
+        "description": "MiniMax H3 Video/Ses Üretim Yönetmeni Düğümü: Zaman çizelgesini, referans medyayı ve istem oluşturmayı birleştirir; MiniMax H3 Director Guide düğümünün kullandığı, tüm yönlendirme bilgilerini içeren bir yönetmen yapılandırması üretir.",
+        "inputs": {
+            "fl2va_model": "FL2VA modeli",
+            "ref2va_model": "REF2VA modeli",
+            "external_width_overwrite": "Harici genişlik geçersiz kılması",
+            "external_height_overwrite": "Harici yükseklik geçersiz kılması",
+            "external_prompt_overwrite": "Harici istem geçersiz kılması"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "prompt": "İstem",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "duration": "Süre",
+            "ref_image_size": "Referans görsel boyutu",
+            "frame_rate": "Kare hızı"
+        },
+        "outputs": {
+            "guide": "Yönetmen Rehberi",
+            "duration": "Süre",
+            "positive_prompt": "Olumlu istem",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "fl2va_requested": "FL2VA isteği",
+            "inpaint_requested": "Onarım isteği",
+            "frame_rate": "Kare hızı"
+        },
+        "ui": {
+            "Model Mode:": "Model Modu:",
+            "Image Inpaint": "Görsel Onarımı",
+            "Prompt Mode:": "İstem Modu:",
+            "Simple": "Basit",
+            "Structured": "Yapılandırılmış",
+            "Use the simple prompt editor": "Basit istem düzenleyiciyi kullan",
+            "Use the structured prompt editor": "Yapılandırılmış istem düzenleyiciyi kullan",
+            "One image reference; output exactly one frame through Get Image from Batch.": "Tek görsel referansı; \"Yığından Görsel Al\" üzerinden tam olarak bir kare verir.",
+            "Remove": "Kaldır",
+            "Clear": "Temizle",
+            "Remove all media and prompts": "Tüm medya ve istemleri kaldır",
+            "Nothing to clear yet": "Henüz temizlenecek içerik yok",
+            "Nothing to clear.": "Temizlenecek içerik yok.",
+            "Open MiniMax H3 Director documentation on GitHub": "MiniMax H3 Yönetmen belgelerini GitHub'da aç",
+            "T2VA · no input frame": "T2VA · giriş karesi yok",
+            "I2VA · one opening-frame slot": "I2VA · bir açılış karesi yuvası",
+            "FL2VA · opening and closing-frame slots": "FL2VA · açılış ve kapanış karesi yuvaları",
+            "L2VA · one closing-frame slot": "L2VA · bir kapanış karesi yuvası",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "Görsel Onarımı · tam olarak bir görsel · \"Yığından Görsel Al\" üzerinden bir kare verir · video/ses yok",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · en fazla 9 görsel, 3 video ve 3 ses yuvası · toplamda en fazla 12 dosya",
+            "ASPECT": "EN-BOY",
+            "RESOLUTION": "Çözünürlük",
+            "INPUT SCALING": "GİRDİ ÖLÇEKLEME",
+            "Auto": "Otomatik",
+            "CUSTOM": "Özel",
+            "Native (ShortEdge 768px)": "Yerel (kısa kenar 768px)",
+            "Off": "Kapalı",
+            "Native (ShortEdge 2048px)": "Yerel (kısa kenar 2048px)",
+            "Target · Selected Aspect & Resolution": "Hedef · Seçilen En-boy ve Çözünürlük",
+            "Fit": "Sığdır",
+            "Fill and crop": "Doldur ve kırp",
+            "Fit and pad": "Sığdır ve dolgula",
+            "Long side with divisible crop": "Uzun kenar hizalamalı tam bölünebilir kırpma",
+            "0.26 MP - Preview": "0.26 MP - Önizleme",
+            "0.36 MP - Small": "0.36 MP - Küçük",
+            "0.52 MP - SD": "0.52 MP - Standart çözünürlük",
+            "0.65 MP - Balanced": "0.65 MP - Dengeli",
+            "0.83 MP - HD": "0.83 MP - Yüksek çözünürlük",
+            "1.05 MP - HD+": "1.05 MP - Yüksek çözünürlük+",
+            "1.20 MP - HD++": "1.20 MP - Yüksek çözünürlük++",
+            "1.35 MP - 2K lite": "1.35 MP - 2K Hafif",
+            "1.75 MP - QHD": "1.75 MP - Ultra çözünürlük",
+            "2.10 MP - FHD": "2.10 MP - Tam yüksek çözünürlük",
+            "3.30 MP - QHD+": "3.30 MP - Ultra çözünürlük+",
+            "4.75 MP - 2K Pro": "4.75 MP - 2K Profesyonel",
+            "6.50 MP - Production": "6.50 MP - Prodüksiyon",
+            "8.30 MP - UHD": "8.30 MP - Ultra yüksek çözünürlük",
+            "General": "Genel",
+            "Horizontal": "Yatay",
+            "Square": "Kare",
+            "Vertical": "Dikey",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "Girdi ölçeklemeyi atla — referans materyalleri MiniMax'e orijinal boyutlarında gönderilir.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "Yalnızca referans materyalinin kısa kenarı 2048 pikseli aştığında küçültün; daha küçük girdiler olduğu gibi geçer, işleme tabi tutulmaz.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "Referans materyallerini seçilen en-boy ve çözünürlük kutusuna göre boyutlandırır (uzatır, en-boy oranı korunmaz).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "Referans materyallerini, en-boy oranını koruyarak hedef kutusuna sığacak şekilde ölçekler.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "Referans materyallerini, en-boy oranını koruyarak hedef kutusunu tamamen dolduracak şekilde ölçekleyin, ardından taşan kısmı kırpın.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "Referans materyallerini, en-boy oranını koruyarak hedef kutusuna sığacak şekilde ölçekleyin, ardından boş kenarları doldurun.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "Uzun kenarı hedefle eşleşecek şekilde ölçekleyin, ardından birebir ve tam bölünebilir hedef boyuta kırpın.",
+            "RATIO W": "ORAN GENİŞ",
+            "RATIO H": "ORAN YÜKSEK",
+            "Megapixels": "Megapiksel",
+            "Fixed pixels": "Sabit pikseller",
+            "WIDTH": "Genişlik",
+            "HEIGHT": "Yükseklik",
+            "External width/height overwrite · Director sizing and input scaling disabled": "Harici en-boy geçersiz kılması · Yönetmen boyutlandırma ve girdi ölçekleme devre dışı",
+            "Image/Video": "Görsel/Video",
+            "Image/Video · selected": "Görsel/Video · seçildi",
+            "audio": "Ses",
+            "audio · selected": "Ses · seçildi",
+            "Video only": "Yalnızca video",
+            "Audio only": "Yalnızca ses",
+            "Video + embedded audio": "Video + gömülü ses",
+            "Full source-duration scale": "Tam kaynak süre ölçeklemesi",
+            "Full audio waveform; crop markers show the selected reference window": "Tam ses dalga biçimi; kırpma işaretleri seçilen referans aralığını gösterir",
+            "Decoding audio waveform…": "Ses dalga biçimi çözülüyor…",
+            "Open preview and details": "Önizleme ve ayrıntıları aç",
+            "T2VA prompt builder": "T2VA istem oluşturucu",
+            "I2VA prompt builder": "I2VA istem oluşturucu",
+            "FL2VA prompt builder": "FL2VA istem oluşturucu",
+            "L2VA prompt builder": "L2VA istem oluşturucu",
+            "REF2VA prompt builder": "REF2VA istem oluşturucu",
+            "Image Inpaint prompt builder": "Görsel Onarımı istem oluşturucu",
+            "T2VA simple prompt": "T2VA basit istem",
+            "I2VA simple prompt": "I2VA basit istem",
+            "FL2VA simple prompt": "FL2VA basit istem",
+            "L2VA simple prompt": "L2VA basit istem",
+            "REF2VA simple prompt": "REF2VA basit istem",
+            "Image Inpaint simple prompt": "Görsel Onarımı basit istem",
+            "REF2VA prompt builder — write freely; headers are added automatically": "REF2VA istem oluşturucu — serbest yazın, alan başlıkları otomatik eklenir",
+            "Prompt": "İstem",
+            "Insert [Shot N]": "[Shot N] Ekle",
+            "Prefill Labels & Summary": "Etiketleri ve Özeti Ön Doldur",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "Eklenen medyadan Subject/Picture/Video/Audio etiketlerini üret ve özet şablonunu doldur",
+            "Preview Prompt": "İstem Önizleme",
+            "Show the full prompt that will be sent upstream": "Yukarı akışa gönderilecek tam istemi görüntüle",
+            "External prompt detected — builder fields are disabled.": "Harici istem algılandı — oluşturucu alanları devre dışı bırakıldı.",
+            "Write the complete MiniMax H3 prompt...": "Tam MiniMax H3 istemini buraya yazın…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] Sahne açıklamanızı buradan başlatın…",
+            "Describe ambient sounds, dialogue, effects...": "Ortam seslerini, diyaloğu ve ses efektlerini açıklayın…",
+            "N/A or describe background score...": "N/A yazın veya arka plan müziğini açıklayın…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1>, <Picture 1> içindeki siyah kısa saçlı ve kırmızı ceketli kadındır.\n<Picture 1>, [Shot 1] açılış karesi çapasıdır.\n<Subject 2>, <Video 1>'dan alınan yürüyüş hareketidir.\n<Video 1>, kamera yolunu ve tempo yapısını sağlar.\n<Audio 1>, <Subject 1> için ses rengi referansıdır.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] <Picture 1> içindeki <Subject 1>'ı, <Video 1>'in hareket ve temposunu ve <Audio 1>'in ses özelliklerini kullan.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> ([Shot 1] ve [Shot 2] içinde görünür): fully_preserved - kimlik ve kıyafet tutarlı kalır.\n<Picture 1> ([Shot 1] ilk karesi): fully_preserved - açılış kompozisyonu çapası.\n<Subject 2> (hareket <Subject 1>'e aktarılır): attribute_transfer - yürüyüş ritmi <Subject 1>'e uygulanır.\n<Video 1> (tempo yapısı): weak_reference - genel zamanlama ve çekim ritmi korunur.\n<Audio 1>: reference - ses rengi ve ifade tarzı takip edilir, orijinal sinyal kopyalanmaz.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] … [Shot 2] 00:04.500'da, …",
+            "Audio environment description...": "Ses ortamı açıklaması…",
+            "N/A or background score...": "N/A yazın veya arka plan müziğini açıklayın…",
+            "Close and save (Escape or click outside)": "Kapat ve kaydet (Esc veya dışarı tıklayın)",
+            "Start:": "Başlangıç:",
+            "End:": "Bitiş:",
+            "▶ Play crop": "▶ Kırpılmış Kliyi Oynat",
+            "Playing crop…": "Kırpılmış klip oynatılıyor…",
+            "Play only the current crop range": "Yalnızca geçerli kırpma aralığını oynat",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "Vurgulanan kırpma bölgesini taşımak için sürükleyin; boyutlandırmak için uçlardaki işaretlerden birini sürükleyin.",
+            "Save": "Kaydet",
+            "Cancel": "İptal",
+            "Full media preview": "Tam medya önizlemesi",
+            "Done": "Tamam",
+            "Copy": "Kopyala",
+            "All media and prompts cleared.": "Tüm medya ve istemler temizlendi.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA yalnızca görsel referanslarını destekler; video ve ses kullanılamaz.",
+            "This media type is not available in the selected MiniMax mode.": "Bu medya türü, seçilen MiniMax modunda desteklenmiyor.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA yalnızca görsel referanslarını destekler; lütfen Görsel/Video şeridini seçin.",
+            "Upload failed": "Yükleme başarısız",
+            "T2VA has no input lanes.": "T2VA'nın giriş şeridi yok.",
+            "This mode does not support audio references.": "Bu mod ses referanslarını desteklemiyor.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "Ses şeridi seçildi. Buraya Ctrl+V ile dosya yapıştırabilirsiniz.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "Görsel/Video şeridi seçildi. Buraya Ctrl+V ile dosya yapıştırabilirsiniz."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_MiniMax H3 Yönetmen Çalıştırıcısı",
+        "description": "Yönetmen rehberini yerel MiniMax H3 düğüm çağrılarına dönüştürür: rehberin moduna göre MiniMaxH3ImageToVideo veya MiniMaxH3ReferenceToVideo çağırır ve conditioning ile latent üretir.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "Yönetmen Rehberi",
+            "audio_vae": "Ses VAE"
+        },
+        "outputs": {
+            "positive": "Olumlu conditioning",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_MiniMax H3 Artık Önbelleği",
+        "description": "MiniMax H3 modeline yaklaşık tam-blok artık önbelleği ekler: seçilen adım aralığında bir önceki block-stack çıkışını yeniden kullanır, hız için maliyetli yeniden hesaplamayı atlar. Eşik yükseldikçe daha fazla adım atlanır, sadakat düşebilir.",
+        "widgets": {
+            "reuse_threshold": "Yeniden kullanım eşiği",
+            "start_percent": "Başlangıç yüzdesi",
+            "end_percent": "Bitiş yüzdesi",
+            "max_steps": "Maksimum atlama adımı",
+            "device": "Aygıt",
+            "verbose": "Ayrıntılı günlük"
+        }
+    }
+}

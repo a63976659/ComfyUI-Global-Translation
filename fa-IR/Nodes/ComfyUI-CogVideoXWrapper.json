@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "دانلود و بارگذاری مدل CogVideo",
+        "inputs": {
+            "block_edit": "ویرایش بلوک",
+            "lora": "مدل Lora",
+            "compile_args": "پارامترهای کامپایل"
+        },
+        "widgets": {
+            "model": "مدل",
+            "precision": "دقت",
+            "quantization": "کمی‌سازی",
+            "enable_sequential_cpu_offload": "فعال‌سازی تخلیه به CPU ترتیبی",
+            "attention_mode": "حالت توجه",
+            "load_device": "دستگاه بارگذاری",
+            "compile": "کامپایل"
+        },
+        "outputs": {
+            "model": "مدل",
+            "cogvideomodel": "مدل CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "رمزگذاری تصویر CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "تصویر",
+            "vae": "VAE",
+            "start_image": "تصویر شروع",
+            "end_image": "تصویر پایان"
+        },
+        "widgets": {
+            "enable_tiling": "فعال‌سازی تکه‌بندی",
+            "noise_aug_strength": "شدت تقویت نویز",
+            "strength": "شدت",
+            "start_percent": "درصد شروع",
+            "end_percent": "درصد پایان"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "رمزگشایی CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "فعال‌سازی تکه‌بندی VAE",
+            "tile_sample_min_height": "کمینه ارتفاع نمونه تکه",
+            "tile_sample_min_width": "کمینه عرض نمونه تکه",
+            "tile_overlap_factor_height": "ضریب ارتفاع هم‌پوشانی تکه",
+            "tile_overlap_factor_width": "ضریب عرض هم‌پوشانی تکه",
+            "auto_tile_size": "اندازه تکه خودکار",
+            "pipeline": "بسته گره"
+        },
+        "outputs": {
+            "images": "تصویر"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "رمزگذاری متن CogVideo",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "پرامپت",
+            "strength": "شدت",
+            "force_offload": "تخلیه اجباری"
+        },
+        "outputs": {
+            "conditioning": "شرط",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "نمونه‌گیر CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "samples": "Latent",
+            "model": "مدل",
+            "image_cond_latents": "Latent شرط تصویر",
+            "context_options": "گزینه‌های زمینه",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "مسیر Tora",
+            "fastercache": "حافظه نهان سریع",
+            "feta_args": "پارامترهای تقویت ویدیو",
+            "teacache_args": "پارامترهای حافظه نهان Tea"
+        },
+        "widgets": {
+            "width": "عرض",
+            "height": "ارتفاع",
+            "num_frames": "تعداد فریم",
+            "fps": "نرخ فریم",
+            "steps": "تعداد گام",
+            "cfg": "CFG",
+            "seed": "بذر",
+            "control_after_generate": "عملیات پس از اجرا",
+            "scheduler": "زمان‌بند",
+            "t_tile_length": "طول تکه",
+            "t_tile_overlap": "هم‌پوشانی تکه",
+            "denoise_strength": "حذف نویز"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "انتخاب‌کننده Lora CogVideo",
+        "inputs": {
+            "lora": "مدل Lora",
+            "strength": "شدت",
+            "prev_lora": "Lora قبلی",
+            "fuse_lora": "آمیزش Lora"
+        },
+        "widgets": {
+            "lora": "مدل Lora",
+            "strength": "شدت",
+            "prev_lora": "Lora قبلی",
+            "fuse_lora": "آمیزش Lora"
+        },
+        "outputs": {
+            "lora": "Lora CogVideo"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "انتخاب‌کننده Lora CogVideo (نسخه Comfy)",
+        "inputs": {
+            "lora": "مدل Lora",
+            "strength": "شدت",
+            "prev_lora": "Lora قبلی",
+            "fuse_lora": "آمیزش Lora"
+        },
+        "widgets": {
+            "lora": "مدل Lora",
+            "strength": "شدت",
+            "prev_lora": "Lora قبلی",
+            "fuse_lora": "آمیزش Lora"
+        },
+        "outputs": {
+            "lora": "Lora CogVideo"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "دانلود و بارگذاری مدل GGUF CogVideo",
+        "inputs": {
+            "block_edit": "ویرایش بلوک"
+        },
+        "widgets": {
+            "model": "مدل",
+            "vae_precision": "دقت VAE",
+            "fp8_fastmode": "حالت سریع FP8",
+            "load_device": "دستگاه بارگذاری",
+            "enable_sequential_cpu_offload": "فعال‌سازی تخلیه به CPU ترتیبی",
+            "attention_mode": "حالت توجه",
+            "compile_args": "پارامترهای کامپایل"
+        },
+        "outputs": {
+            "model": "مدل",
+            "cogvideomodel": "مدل CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "بارگذار مدل CogVideoX",
+        "inputs": {
+            "model": "مدل",
+            "base_precision": "دقت پایه",
+            "quantization": "کمی‌سازی",
+            "load_device": "دستگاه بارگذاری",
+            "enable_sequential_cpu_offload": "فعال‌سازی تخلیه به CPU ترتیبی",
+            "block_edit": "ویرایش بلوک",
+            "lora": "مدل Lora",
+            "compile_args": "پارامترهای کامپایل",
+            "attention_mode": "حالت توجه"
+        },
+        "outputs": {
+            "cogvideomodel": "مدل CogVideo"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "بارگذار VAE CogVideoX",
+        "inputs": {
+            "model_name": "نام مدل",
+            "precision": "دقت",
+            "compile_args": "پارامترهای کامپایل"
+        },
+        "widgets": {
+            "model_name": "نام مدل",
+            "precision": "دقت",
+            "compile_args": "پارامترهای کامپایل"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "دانلود و بارگذاری مدل Tora",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "model": "مدل"
+        },
+        "outputs": {
+            "tora_model": "مدل Tora"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "دانلود و بارگذاری ControlNet CogVideo",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "model": "مدل"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "مدل ControlNet CogVideo"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "تقویت CogVideo",
+        "widgets": {
+            "weight": "وزن",
+            "start_percent": "درصد شروع",
+            "end_percent": "درصد پایان"
+        },
+        "outputs": {
+            "feta_args": "پارامترهای تقویت ویدیو"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "گزینه‌های زمینه CogVideo",
+        "inputs": {
+            "freenoise": "نویز آزاد"
+        },
+        "widgets": {
+            "context_schedule": "برنامه زمینه",
+            "context_frames": "تعداد فریم زمینه",
+            "context_stride": "گام زمینه",
+            "context_overlap": "هم‌پوشانی زمینه",
+            "freenoise": "نویز آزاد"
+        },
+        "outputs": {
+            "context_options": "گزینه‌های زمینه"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "ویرایش Transformer CogVideo",
+        "inputs": {
+            "remove_blocks": "برداشتن بلوک"
+        },
+        "outputs": {
+            "block_list": "فهرست مسدودشده",
+            "transformerblocks": "بلوک Transformer"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "تنظیمات کامپایل Torch CogVideo",
+        "widgets": {
+            "backend": "بک‌اند",
+            "fullgraph": "گراف کامل",
+            "mode": "حالت",
+            "dynamic": "پویا",
+            "dynamo_cache_size_limit": "محدودیت اندازه حافظه نهان Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "پارامترهای کامپایل Torch",
+            "compileargs": "پارامترهای کامپایل"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "ادغام رمزگذاری متن CogVideo",
+        "inputs": {
+            "conditioning_1": "شرط 1",
+            "conditioning_2": "شرط 2"
+        },
+        "widgets": {
+            "combination_mode": "حالت ادغام",
+            "weighted_average_ratio": "نسبت میانگین وزنی"
+        },
+        "outputs": {
+            "conditioning": "شرط"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "رمزگذاری مسیر Tora",
+        "inputs": {
+            "tora_model": "مدل Tora",
+            "vae": "VAE",
+            "coordinates": "مختصات"
+        },
+        "widgets": {
+            "width": "عرض",
+            "height": "ارتفاع",
+            "num_frames": "تعداد فریم",
+            "strength": "شدت",
+            "start_percent": "درصد شروع",
+            "end_percent": "درصد پایان",
+            "enable_tiling": "فعال‌سازی تکه‌بندی"
+        },
+        "outputs": {
+            "tora_trajectory": "مسیر Tora",
+            "video_flow_images": "تصویر جریان ویدیو"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "رمزگذاری جریان نوری Tora",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "مدل Tora",
+            "optical_flow": "جریان نوری"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "start_percent": "درصد شروع",
+            "end_percent": "درصد پایان"
+        },
+        "outputs": {
+            "tora_trajectory": "مسیر Tora"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "رمزگذاری تصویر CogVideo FunInP",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "تصویر شروع",
+            "end_image": "تصویر پایان"
+        },
+        "widgets": {
+            "num_frames": "تعداد فریم",
+            "enable_tiling": "فعال‌سازی پردازش تکه‌ای",
+            "noise_aug_strength": "شدت تقویت نویز"
+        },
+        "outputs": {
+            "image_cond_latents": "Latent شرط تصویر"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "حافظه نهان سریع CogVideoX",
+        "inputs": {
+            "num_blocks_to_cache": "تعداد بلوک‌های حافظه نهان"
+        },
+        "widgets": {
+            "start_step": "گام شروع",
+            "hf_step": "گام پرفرکانس",
+            "lf_step": "گام کم‌فرکانس",
+            "cache_device": "دستگاه حافظه نهان",
+            "num_blocks_to_cache": "تعداد بلوک‌های حافظه نهان"
+        },
+        "outputs": {
+            "fastercache": "حافظه نهان سریع"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "حافظه نهان Tea CogVideoX",
+        "widgets": {
+            "rel_l1_thresh": "آستانه L1 نسبی"
+        },
+        "outputs": {
+            "teacache_args": "پارامترهای حافظه نهان Tea"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "ControlNet CogVideo",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "تصویر"
+        },
+        "widgets": {
+            "control_strength": "شدت کنترل",
+            "control_start_percent": "درصد شروع کنترل",
+            "control_end_percent": "درصد پایان کنترل"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "ControlNet CogVideo"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "تنظیم هوشمند CogVideoX به نزدیک‌ترین اندازه سطل",
+        "inputs": {
+            "images": "تصویر"
+        },
+        "widgets": {
+            "base_resolution": "وضوح پایه",
+            "upscale_method": "روش بزرگ‌نمایی",
+            "crop": "برش"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "images": "تصویر",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "int": "عدد صحیح"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "پیش‌نمایش Latent CogVideo",
+        "inputs": {
+            "samples": "نمونه‌گیری"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "min_val": "کمینه",
+            "max_val": "بیشینه",
+            "r_bias": "انحراف R",
+            "g_bias": "انحراف G",
+            "b_bias": "انحراف B"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "images": "تصویر",
+            "latent_rgb_factors": "ضریب RGB Latent",
+            "string": "رشته"
+        }
+    }
+}

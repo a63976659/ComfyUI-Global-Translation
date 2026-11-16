@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "SUPIR 모델 로더",
+        "widgets": {
+            "supir_model": "SUPIR 모델",
+            "sdxl_model": "SDXL 모델",
+            "fp8_unet": "FP8 UNet 정밀도",
+            "diffusion_dtype": "프루닝 유형"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR 모델",
+            "SUPIR_model": "SUPIR 모델",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "오래된 로더로 권장하지 않습니다.\n\nSUPIR 모델과 SDXL 모델을 로드한 뒤 융합합니다."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "SUPIR 모델 로더_V2",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR 모델",
+            "fp8_unet": "FP8 UNet 정밀도",
+            "diffusion_dtype": "프루닝 유형",
+            "high_vram": "대용량 VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR 모델",
+            "SUPIR_model": "SUPIR 모델",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR 모델과 SDXL 모델을 로드한 뒤 융합합니다.\n\n프루닝 유형은 모델 로드 시 오류가 발생하지 않는 한 자동 옵션을 유지해야 합니다.\n\nfp8_unet： torch.float8_e4m3fn으로 UNet을 호출하여 VRAM 요구 사항은 낮추지만 품질에 약간의 영향을 줍니다.\n\n고VRAM： Accelerate로 모델을 GPU에 로드하여 로드 속도가 약간 빨라집니다."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "SUPIR 모델 로더_V2（CLIP）",
+        "inputs": {
+            "model": "모델",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR 모델",
+            "fp8_unet": "FP8 UNet 정밀도",
+            "diffusion_dtype": "프루닝 유형",
+            "high_vram": "대용량 VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR 모델",
+            "SUPIR_model": "SUPIR 모델",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR 모델과 SDXL 모델을 로드한 뒤 융합합니다.\n\n프루닝 유형은 모델 로드 시 오류가 발생하지 않는 한 자동 옵션을 유지해야 합니다.\n\nfp8_unet： torch.float8_e4m3fn으로 UNet을 호출하여 VRAM 요구 사항은 낮추지만 품질에 약간의 영향을 줍니다.\n\n고VRAM： Accelerate로 모델을 GPU에 로드하여 로드 속도가 약간 빨라집니다."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR 인코딩",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "이미지"
+        },
+        "widgets": {
+            "use_tiled_vae": "타일링 VAE",
+            "encoder_tile_size": "인코딩 타일 크기",
+            "encoder_dtype": "인코딩 프루닝"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR 디코딩",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "타일링 VAE",
+            "decoder_tile_size": "디코딩 타일 크기"
+        },
+        "outputs": {
+            "image": "이미지"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR 1단계",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "이미지"
+        },
+        "widgets": {
+            "use_tiled_vae": "타일링 VAE",
+            "encoder_tile_size": "인코딩 타일 크기",
+            "decoder_tile_size": "디코딩 타일 크기",
+            "encoder_dtype": "인코딩 프루닝"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "이미지",
+            "denoised_latents": "Latent"
+        },
+        "description": "SUPIR의 「1단계」입니다. SUPIR의 denoise_encoder로 이미지를 인코딩 및 디코딩하여 압축 아티팩트를 복원하지만 이미지가 흐려질 수 있습니다.\n\n다른 샘플러/흐림 처리로 교체하거나 이 노드를 사용하지 않아도 됩니다."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR 조건",
+        "inputs": {
+            "SUPIR_MODEL": "SUPIR 모델",
+            "SUPIR_model": "SUPIR 모델",
+            "latents": "Latent",
+            "captions": "제목/자막"
+        },
+        "widgets": {
+            "positive_prompt": "긍정 프롬프트",
+            "negative_prompt": "부정 프롬프트"
+        },
+        "outputs": {
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "description": "샘플러용 조건을 생성합니다.\n 캡션 입력은 선택 사항이며, 캡션을 받으면 긍정 프롬프트에 추가합니다\n 단일 입력 이미지에 캡션 목록을 제공하면 캡션 수는 타일 수와 일치해야 합니다\n SUPIR 분할 이미지를 참고하세요\n 캡션 목록을 제공하여 들어오는 이미지 배치와 일치시키면 각 이미지에 해당 캡션이 사용됩니다"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR 샘플링",
+        "inputs": {
+            "SUPIR_model": "SUPIR 모델",
+            "latents": "Latent",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_before_generate": "생성 전 제어",
+            "steps": "스텝 수",
+            "cfg_scale_start": "시작 CFG 스케일",
+            "cfg_scale_end": "종료 CFG 스케일",
+            "EDM_s_churn": "EDM 랜덤 교란",
+            "s_noise": "노이즈 양",
+            "DPMPP_eta": "DPMPP 스텝 크기 파라미터",
+            "control_scale_start": "시작 컨트롤 스케일",
+            "control_scale_end": "종료 컨트롤 스케일",
+            "restore_cfg": "복원 CFG",
+            "keep_model_loaded": "모델 로드 유지",
+            "sampler": "샘플러",
+            "sampler_tile_size": "샘플러 타일 크기",
+            "sampler_tile_stride": "샘플러 타일 스트라이드"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\n샘플링에 사용할 Latent입니다. SUPIR Latent을 사용하면 이 항목은 노이즈 형태에만 영향을 줍니다.\n\n그 외에는 ComfyUI 기본값과 동일합니다. \n\nLatent 입력이 있으면 입력이 우선됩니다.\n\n- **CFG：**\n\n선형 보간으로 CFG를 제어하며, 시작 CFG 스케일을 초기 값으로 사용하여 종료 CFG 스케일 값까지 선형으로 스케일링합니다.\n\n두 항목을 같은 값으로 설정하면 보간 스케일이 비활성화됩니다.\n\n- **EDM_s_churn：**\n\n샘플링 과정이 Latent 노이즈 변화에 적응하는 속도를 제어합니다.\n\nDPMPP 샘플러에는 효과가 없습니다.\n\n- **노이즈 양 s_noise：**\n\n샘플링 과정의 각 단계에서 Latent에 추가되는 노이즈 양을 제어합니다. \n\n- **DPMPP_eta：**\n\n노이즈 저감 과정이 시간 경과에 따른 노이즈 수준 변화에 적응하는 방식을 조정하여 확산 과정에 영향을 주는 배율 계수입니다.\n\nEDM 샘플러에는 효과가 없습니다. \n\n- **제어 스케일 control_scale：**\n\nSUPIR 제어 모델의 강도로, 시작부터 종료까지 선형 보간으로 강도를 제어합니다.\n\n값이 작을수록 제어 강도가 작아집니다.\n\n- **복원 CFG restore_cfg：**\n\n샘플링 과정에서 원본 이미지를 복원하는 정도를 제어합니다.\n\n샘플링 과정을 미세 조정하는 데 사용합니다.\n\n- **샘플러：**\n\nEDM은 많은 스텝 수가 필요하지만 보통 품질이 더 좋습니다.\n\nDPMPP는 낮은 스텝 수로 충분하며 Lighting 모델에 적합합니다.\n\n분할 샘플러는 타일 분할 샘플링을 사용하며 속도가 매우 느리지만 낮은 VRAM으로 더 높은 해상도를 얻을 수 있습니다.\n\n분할 이미지 처리 전에 분할 크기를 결정해야 하며, 분할 스트라이드는 각 분할의 겹침 크기에 영향을 줍니다. 분할 기능은 SUPIR 분할 이미지 노드를 참고하세요."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR 분할 이미지",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "tile_size": "청크 크기",
+            "tile_stride": "타일 스트라이드"
+        },
+        "outputs": {
+            "image_tiles": "타일 이미지",
+            "tile_size": "청크 크기",
+            "tile_stride": "타일 스트라이드"
+        },
+        "description": "분할 샘플러와 같은 방식으로 이미지를 분할합니다.\n\n분할 미리보기 및 각 분할 역추론용（이 기능은 아직 개발 중입니다)."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR 업스케일",
+        "inputs": {
+            "image": "이미지",
+            "captions": "제목/자막"
+        },
+        "widgets": {
+            "supir_model": "SUPIR 모델",
+            "sdxl_model": "SDXL 모델",
+            "seed": "랜덤 시드",
+            "control_before_generate": "생성 전 제어",
+            "resize_method": "스케일 방법",
+            "scale_by": "스케일 계수",
+            "steps": "스텝 수",
+            "restoration_scale": "복원 스케일",
+            "cfg_scale": "CFG 스케일",
+            "a_prompt": "긍정 프롬프트",
+            "n_prompt": "부정 프롬프트",
+            "s_churn": "노이즈 감쇠 계수",
+            "s_noise": "노이즈 양",
+            "control_scale": "제어 스케일",
+            "cfg_scale_start": "CFG 가이드 시작 강도",
+            "control_scale_start": "ControlNet 시작 가중치",
+            "color_fix_type": "색상 보정 유형",
+            "keep_model_loaded": "모델 로드 유지",
+            "use_tiled_vae": "타일링 VAE",
+            "encoder_tile_size": "인코딩 타일 크기",
+            "encoder_tile_size_pixels": "디코딩 타일 크기 픽셀",
+            "decoder_tile_size": "디코딩 타일 크기",
+            "decoder_tile_size_latent": "디코딩 타일 크기 Latent",
+            "diffusion_dtype": "프루닝 유형",
+            "encoder_dtype": "인코딩 프루닝",
+            "batch_size": "배치 크기",
+            "use_tiled_sampling": "분할 샘플링 사용",
+            "used_tiled_sampling": "분할 샘플링 사용",
+            "sampler_tile_size": "샘플러 타일 크기",
+            "sampler_tile_stride": "샘플러 타일 스트라이드",
+            "fp8_unet": "FP8 UNet 정밀도",
+            "fp8_vae": "fp8_vae",
+            "sampler": "샘플러"
+        },
+        "outputs": {
+            "upscaled_image": "이미지"
+        }
+    }
+}

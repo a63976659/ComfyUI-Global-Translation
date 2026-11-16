@@ -1,4 +1,500 @@
 {
+    "AdvancedVAEDecoderX21": {
+        "title": "高级VAE解码器 ^G2.1",
+        "inputs": {},
+        "widgets": {
+            "samples": "样本",
+            "vae": "VAE",
+            "allow_extended_range": "允许扩展范围",
+            "low_vram_mode": "低VRAM模式"
+        },
+        "outputs": {},
+        "description": "ComfyUI原生VAEDecode节点的实验性替代方案。它提供了绕过标准输出钳位的选项，使像素可以超出[0.0, 1.0]范围，还支持强制分块解码以减少大图像的VRAM占用。"
+    },
+    "BasicImageFilters": {
+        "title": "基础图像滤镜",
+        "inputs": {},
+        "widgets": {
+            "images": "图像",
+            "enable_auto_contrast": "启用自动对比度",
+            "enable_filters": "启用滤镜",
+            "divider1": "分隔线1",
+            "filter_1": "滤镜1",
+            "filter_1_control": "滤镜1控制",
+            "divider2": "分隔线2",
+            "filter_2": "滤镜2",
+            "filter_2_control": "滤镜2控制",
+            "divider3": "分隔线3",
+            "filter_3": "滤镜3",
+            "filter_3_control": "滤镜3控制"
+        },
+        "outputs": {},
+        "description": ""
+    },
+    "CustomStylePromptEncoderX21": {
+        "title": "自定义风格+提示词编码器 ^G2.1",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "custom_styles": "自定义风格",
+            "custom_style": "自定义风格",
+            "palette": "调色板",
+            "prompt": "提示词"
+        },
+        "outputs": {
+            "PROMPT": "提示词",
+            "style_name": "风格名称",
+            "palette_name": "调色板名称",
+            "original_prompt": "原始提示词"
+        },
+        "description": "将文本提示词编码为嵌入向量，自动适配所选的自定义风格（以及可选的调色板），随后由CLIP模型处理生成引导图像生成的条件。⚠️由于此节点为实验性功能，其参数、行为或存在形式可能会在无预先通知的情况下更改或完全移除。"
+    },
+    "EmptyZImageLatentImage": {
+        "title": "空Z-ImageLatent图像",
+        "inputs": {},
+        "widgets": {
+            "orientation": "方向",
+            "ratio": "比例",
+            "size": "尺寸",
+            "batch_size": "批次大小"
+        },
+        "outputs": {},
+        "description": "创建一批新的空Latent图像，用作Z-Image模型去噪的起点。"
+    },
+    "ImageGridBuilder": {
+        "title": "图像网格生成器",
+        "inputs": {},
+        "widgets": {
+            "images": "图像",
+            "banner": "横幅",
+            "banner_height": "横幅高度",
+            "text": "文本",
+            "text_color": "文本颜色",
+            "lines_color": "线条颜色",
+            "banner_color": "横幅颜色",
+            "font_name": "字体名称",
+            "font_size": "字体大小",
+            "columns": "列数",
+            "image_scale": "图像缩放",
+            "image_spacing": "图像间距"
+        },
+        "outputs": {},
+        "description": "生成包含所有输入图像的网格。"
+    },
+    "ImageLabeler": {
+        "title": "图像标注器",
+        "inputs": {},
+        "widgets": {
+            "image": "图像",
+            "text": "文本",
+            "text_color": "文本颜色",
+            "background_color": "背景颜色",
+            "font_name": "字体名称",
+            "font_size": "字体大小",
+            "font_scale": "字体缩放",
+            "label_position": "标注位置",
+            "label_padding": "标注内边距",
+            "min_label_width": "最小标注宽度",
+            "min_label_height": "最小标注高度"
+        },
+        "outputs": {},
+        "description": "为图像添加带有自定义文本的标注。"
+    },
+    "LoadQwen34bModel": {
+        "title": "加载Qwen3-4B模型（safetensors / gguf）",
+        "inputs": {},
+        "widgets": {
+            "checkpoint": "检查点",
+            "file_filter": "文件过滤器",
+            "run_on_gpu": "在GPU上运行"
+        },
+        "outputs": {},
+        "description": "以safetensor和GGUF格式加载Z-Image文本编码器（Qwen3-4B）。"
+    },
+    "LoadZImageModel": {
+        "title": "加载Z-Image模型（safetensors / gguf）",
+        "inputs": {},
+        "widgets": {
+            "checkpoint": "检查点",
+            "file_filter": "文件过滤器"
+        },
+        "outputs": {},
+        "description": "以safetensors和GGUF格式加载Z-Image扩散模型。"
+    },
+    "MyTop10Styles": {
+        "title": "我的Top10风格",
+        "inputs": {},
+        "widgets": {
+            "input": "输入",
+            "top_styles": "Top风格",
+            "style_1": "风格1",
+            "style_2": "风格2",
+            "style_3": "风格3",
+            "style_4": "风格4",
+            "style_5": "风格5",
+            "style_6": "风格6",
+            "style_7": "风格7",
+            "style_8": "风格8",
+            "style_9": "风格9",
+            "style_10": "风格10",
+            "divider": "分隔线",
+            "control_after_generate": "生成后控制",
+            "output_to": "输出到"
+        },
+        "outputs": {
+            "output": "输出"
+        },
+        "description": "允许你从个性化的Top10列表中选择视觉风格。此节点依赖「我的Top10风格编辑器」来提供你喜爱的风格列表。"
+    },
+    "MyTop10StylesEditor": {
+        "title": "我的Top10风格（编辑器）",
+        "inputs": {},
+        "widgets": {
+            "style_1": "风格1",
+            "gallery_1": "画廊1",
+            "spacer_1": "间隔符1",
+            "style_2": "风格2",
+            "gallery_2": "画廊2",
+            "spacer_2": "间隔符2",
+            "style_3": "风格3",
+            "gallery_3": "画廊3",
+            "spacer_3": "间隔符3",
+            "style_4": "风格4",
+            "gallery_4": "画廊4",
+            "spacer_4": "间隔符4",
+            "style_5": "风格5",
+            "gallery_5": "画廊5",
+            "spacer_5": "间隔符5",
+            "style_6": "风格6",
+            "gallery_6": "画廊6",
+            "spacer_6": "间隔符6",
+            "style_7": "风格7",
+            "gallery_7": "画廊7",
+            "spacer_7": "间隔符7",
+            "style_8": "风格8",
+            "gallery_8": "画廊8",
+            "spacer_8": "间隔符8",
+            "style_9": "风格9",
+            "gallery_9": "画廊9",
+            "spacer_9": "间隔符9",
+            "style_10": "风格10",
+            "gallery_10": "画廊10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Top风格"
+        },
+        "description": "允许你创建个性化的Top10视觉风格列表，从所有可用选项中选择以构建理想的风格集合。此节点旨在与「我的Top10风格」配合使用，以定义和使用你偏好的风格。"
+    },
+    "SaveImage": {
+        "title": "保存图像",
+        "inputs": {},
+        "widgets": {
+            "images": "图像",
+            "filename_prefix": "文件名前缀",
+            "civitai_compatible_metadata": "兼容Civitai的元数据"
+        },
+        "outputs": {},
+        "description": ""
+    },
+    "StylePromptEncoder2": {
+        "title": "风格与提示词编码器",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "customization": "自定义",
+            "style": "风格",
+            "gallery": "画廊",
+            "spacer": "间隔符",
+            "text": "文本"
+        },
+        "outputs": {},
+        "description": "将文本提示词转换为嵌入向量，自动适配提示词以匹配所选风格。此节点接收提示词，根据所选选项调整其视觉风格，随后使用提供的文本编码器（剪辑）进行编码，生成用于引导图像生成的嵌入向量。"
+    },
+    "StylePromptEncoderX21": {
+        "title": "风格与提示词编码器 ^G2.1",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "customization": "自定义设置",
+            "style": "风格",
+            "palette": "调色板",
+            "text": "文本"
+        },
+        "outputs": {
+            "PROMPT": "提示词",
+            "style_name": "风格名称",
+            "palette_name": "调色板名称",
+            "original_prompt": "原始提示词"
+        },
+        "description": "将文本提示词转换为嵌入向量，自动调整提示词以匹配所选风格，还可选择应用指定调色板。该节点接收提示词，根据所选选项调整其视觉风格（若提供调色板则应用），随后使用提供的CLIP模型对其进行编码，生成用于引导图像生成的嵌入向量。由于此节点为实验性功能，其参数、行为或存在形式可能会在无预先通知的情况下发生变更或完全移除。"
+    },
+    "StyleStringInjector2": {
+        "title": "风格字符串注入器",
+        "inputs": {},
+        "widgets": {
+            "style": "风格",
+            "gallery": "图库",
+            "string": "字符串"
+        },
+        "outputs": {},
+        "description": "向你的提示词中注入风格。该节点接收文本提示词，并根据所选风格对其进行修改。"
+    },
+    "VAEEncodeSoftInpainting": {
+        "title": "VAE编码（用于软遮罩修复）",
+        "inputs": {},
+        "widgets": {
+            "pixels": "像素",
+            "vae": "VAE",
+            "mask": "遮罩",
+            "output_size": "输出尺寸",
+            "mask_blur_pixels": "遮罩模糊像素"
+        },
+        "outputs": {},
+        "description": "使用VAE模型将输入图像及其修复遮罩编码至Latent。"
+    },
+    "ZSamplerTurbo2": {
+        "title": "Z采样器 Turbo ^G2（扩展版）",
+        "inputs": {},
+        "widgets": {
+            "latent_input": "Latent输入",
+            "model": "模型",
+            "positive": "正向条件",
+            "positive_stg2": "正向STG2",
+            "positive_stg3": "正向STG3",
+            "seed": "随机种子",
+            "steps": "步数",
+            "denoise": "去噪",
+            "divider": "分隔符",
+            "initial_sample_size": "初始采样尺寸",
+            "divider2": "分隔符2",
+            "intensity": "强度",
+            "intensity_bias": "强度偏移",
+            "turbo_creativity": "Turbo创造力"
+        },
+        "outputs": {},
+        "description": "使用专为\"Z-Image Turbo\"优化的流程高效对Latent图像进行去噪。该节点接收Z-Image Turbo模型、初始Latent图像及条件参数，生成可解码为最终图像的去噪Latent输出。"
+    },
+    "ZSamplerTurbo2Advanced": {
+        "title": "Z采样器 Turbo ^G2（高级版）",
+        "inputs": {},
+        "widgets": {
+            "latent_input": "Latent输入",
+            "model": "模型",
+            "positive": "正向条件",
+            "positive_stg2": "正向STG2",
+            "positive_stg3": "正向STG3",
+            "add_noise": "添加噪声",
+            "seed": "随机种子",
+            "steps": "步数",
+            "start_at_step": "起始步数",
+            "end_at_step": "结束步数",
+            "force_final_denoising": "强制最终去噪",
+            "divider": "分隔符",
+            "initial_sample_size": "初始采样尺寸",
+            "divider2": "分隔符2",
+            "intensity": "强度",
+            "intensity_bias": "强度偏移",
+            "turbo_creativity": "Turbo创造力"
+        },
+        "outputs": {},
+        "description": "使用专为\"Z-Image Turbo\"优化的流程高效对Latent图像进行去噪。该节点接收Z-Image Turbo模型、初始Latent图像及条件参数，生成可解码为最终图像的去噪Latent输出。此高级版本包含额外参数，用于更精确地控制采样器及实现采样器链。"
+    },
+    "ZSamplerTurbo2Simple": {
+        "title": "Z采样器 Turbo ^G2（简易版）",
+        "inputs": {},
+        "widgets": {
+            "latent_input": "Latent输入",
+            "model": "模型",
+            "positive": "正向条件",
+            "positive_stg2": "正向STG2",
+            "positive_stg3": "正向STG3",
+            "seed": "随机种子",
+            "steps": "步数",
+            "ibias": "强度偏移",
+            "divider": "分隔符",
+            "turbo_creativity": "Turbo创造力",
+            "old_scheduler": "旧调度器",
+            "noise_injection": "噪声注入",
+            "alternative_refiner": "替代细化器"
+        },
+        "outputs": {},
+        "description": "Z采样器 Turbo（第二代）的简易版本，提供简化界面以便快速便捷使用，同时保留其所有功能与特性。该节点接收Z-Image Turbo模型、初始Latent图像及提示词/条件，生成可解码为最终图像的去噪Latent输出。"
+    },
+    "ZSamplerTurboX21": {
+        "title": "Z采样器 Turbo ^G2.1",
+        "inputs": {},
+        "widgets": {
+            "latent_input": "Latent输入",
+            "model": "模型",
+            "positive": "正向条件",
+            "positive_stg2": "正向STG2",
+            "positive_stg3": "正向STG3",
+            "seed": "随机种子",
+            "divider1": "分隔符1",
+            "steps": "步数",
+            "ibias": "强度偏移",
+            "spectral_tilt": "光谱倾斜",
+            "turbo_creativity": "Turbo创造力",
+            "detailed_refiner": "细节细化器",
+            "new_scheduler": "新调度器"
+        },
+        "outputs": {},
+        "description": "Z采样器 Turbo的实验性新版本。该节点接收Z-Image Turbo模型、初始Latent图像及提示词/条件，生成可解码为最终图像的去噪Latent输出。由于此节点为实验性功能，其参数、行为或存在形式可能会在无预先通知的情况下发生变更或完全移除。"
+    },
+    "ZSamplerTurboX21Advanced": {
+        "title": "Z采样器 Turbo ^G2.1（高级版）",
+        "inputs": {},
+        "widgets": {
+            "latent_input": "Latent输入",
+            "model": "模型",
+            "positive": "正向条件",
+            "positive_stg2": "正向STG2",
+            "positive_stg3": "正向STG3",
+            "seed": "随机种子",
+            "steps": "步数",
+            "ibias": "强度偏移",
+            "divider1": "分隔符1",
+            "turbo_creativity": "Turbo创造力",
+            "alternative_refiner": "替代细化器",
+            "disable_ibias": "禁用强度偏移",
+            "old_scheduler": "旧调度器",
+            "divider2": "分隔符2",
+            "spectral_tilt": "光谱倾斜",
+            "spectral_tilt_start": "光谱倾斜起始",
+            "spectral_tilt_end": "光谱倾斜结束",
+            "spectral_tilt_sharpness": "光谱倾斜锐度"
+        },
+        "outputs": {},
+        "description": "Z采样器 Turbo的实验性新版本。该节点接收Z-Image Turbo模型、初始Latent图像及提示词/条件，生成可解码为最终图像的去噪Latent输出。由于此节点为实验性功能，其参数、行为或存在形式可能会在无预先通知的情况下发生变更或完全移除。"
+    },
+    "IllustrationStylePromptEncoder": {
+        "title": "插画风格提示编码器",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "customization": "自定义设置",
+            "style_to_apply": "应用风格",
+            "text": "文本"
+        },
+        "outputs": {},
+        "description": "将文本提示转换为适配所选插画风格的嵌入向量。该节点接收提示，根据所选选项调整其视觉风格，再通过提供的文本编码器进行编码，生成用于引导图像生成的嵌入向量。"
+    },
+    "PhotoStylePromptEncoder": {
+        "title": "照片风格提示编码器",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "customization": "自定义设置",
+            "style_to_apply": "应用风格",
+            "text": "文本"
+        },
+        "outputs": {},
+        "description": "将文本提示转换为适配所选摄影风格的嵌入向量。该节点接收提示，根据所选选项调整其视觉风格，再通过提供的文本编码器进行编码，生成用于引导图像生成的嵌入向量。"
+    },
+    "StylePromptEncoder": {
+        "title": "风格与提示编码器（旧版本）",
+        "inputs": {},
+        "widgets": {
+            "clip": "剪辑",
+            "customization": "自定义设置",
+            "category": "类别",
+            "style": "风格",
+            "text": "文本"
+        },
+        "outputs": {},
+        "description": "将文本提示转换为嵌入向量，自动适配所选风格。该节点接收提示，根据所选选项调整其视觉风格，再通过提供的文本编码器（剪辑）进行编码，生成用于引导图像生成的嵌入向量。"
+    },
+    "StyleStringInjector": {
+        "title": "风格字符串注入器（旧版本）",
+        "inputs": {},
+        "widgets": {
+            "category": "类别",
+            "style": "风格",
+            "string": "字符串"
+        },
+        "outputs": {},
+        "description": "向你的提示中注入风格。该节点接收文本提示，并根据所选风格对其进行修改。"
+    },
+    "ZSamplerTurbo": {
+        "title": "Z-快速采样器 Turbo ^g1",
+        "inputs": {},
+        "widgets": {
+            "model": "模型",
+            "positive": "正向条件",
+            "latent_input": "Latent输入",
+            "seed": "随机种子",
+            "steps": "步数",
+            "denoise": "去噪",
+            "divider": "分隔符",
+            "initial_noise_calibration": "初始噪声校准",
+            "lowres_bias": "低分辨率偏差"
+        },
+        "outputs": {},
+        "description": "高效对Latent图像进行去噪，专门针对\"Z-Image Turbo\"模型优化。该节点接收Z-Image Turbo模型、初始Latent图像和条件参数，生成可用于后续处理或解码的去噪输出。"
+    },
+    "ZSamplerTurboAdvanced": {
+        "title": "Z-快速采样器 Turbo ^g1（高级版）",
+        "inputs": {},
+        "widgets": {
+            "model": "模型",
+            "positive": "正向条件",
+            "latent_input": "Latent输入",
+            "seed": "随机种子",
+            "steps": "步数",
+            "denoise": "去噪",
+            "divider": "分隔符",
+            "initial_noise_calibration": "初始噪声校准",
+            "noise_bias_estimation": "噪声偏差估计",
+            "noise_bias_sample_size": "噪声偏差样本量",
+            "noise_bias_scale": "噪声偏差比例",
+            "noise_overdose": "噪声过量"
+        },
+        "outputs": {},
+        "description": "高效对Latent图像进行去噪，专门针对\"Z-Image Turbo\"模型优化。该节点接收Z-Image Turbo模型、初始Latent图像和条件参数，生成可用于后续处理或解码的去噪输出。"
+    },
+    "ZSamplerTurbo2Laboratory": {
+        "title": "Z-快速采样器 Turbo ^G2（实验室版）",
+        "inputs": {},
+        "widgets": {
+            "model": "模型",
+            "positive": "正向条件",
+            "latent_input": "Latent输入",
+            "seed": "随机种子",
+            "steps": "步数",
+            "denoise": "去噪",
+            "divider1": "分隔符1",
+            "initial_noise_bias_level": "初始噪声偏差等级",
+            "initial_noise_overdose": "初始噪声过量",
+            "noise_est_sample_size": "噪声估计样本量",
+            "divider2": "分隔符2",
+            "extra_noise_freq1": "额外噪声频率1",
+            "extra_noise_scale1": "额外噪声比例1",
+            "extra_noise_freq2": "额外噪声频率2",
+            "extra_noise_scale2": "额外噪声比例2",
+            "extra_noise_freq3": "额外噪声频率3",
+            "extra_noise_scale3": "额外噪声比例3",
+            "divider3": "分隔符3",
+            "scramble_left_count": "左侧打乱数量",
+            "scramble_top_count": "顶部打乱数量",
+            "scramble_right_count": "右侧打乱数量",
+            "scramble_bottom_count": "底部打乱数量",
+            "stage2_preproc_steps": "阶段2预处理步数",
+            "divider4": "分隔符4",
+            "sigma_preset_name": "σ预设名称",
+            "sigma1_off": "sigma1关闭",
+            "sigma2_off": "sigma2关闭",
+            "sigma3_off": "sigma3关闭",
+            "sigma4_off": "sigma4关闭",
+            "sigma5_off": "sigma5关闭",
+            "sigma6_off": "sigma6关闭",
+            "sigma7_off": "sigma7关闭",
+            "sigma8_off": "sigma8关闭",
+            "sigma9_off": "sigma9关闭",
+            "sigma10_off": "sigma10关闭"
+        },
+        "outputs": {},
+        "description": "高效对Latent图像进行去噪，专门针对\"Z-Image Turbo\"模型优化。该节点允许直接修改zsample_turbo_core(...)方法中的内部参数，在开发过程中用于测试和校准。"
+    },
     "ZSamplerTurbo2Simple //ZImagePowerNodes": {
         "title": "⚡| Z-采样器 Turbo ^G2 (简单版)",
         "inputs": {

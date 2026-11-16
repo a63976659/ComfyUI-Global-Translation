@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "ترميز ترحيل الموجّهات",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "فيديو Latent فارغ — تُقرأ الأبعاد من شكله.",
+            "global_prompt": "الموجّه العام",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "يضبط الشرط للفيديو بأكمله. ويثبّت الشخصيات والأجسام وخلفيات المشاهد المستمرة.",
+            "local_prompts": "موجّهات المقاطع",
+            "Ordered prompts for each temporal segment, separated by |": "موجّهات مرتبة لكل مقطع زمني، مفصولة بـ |",
+            "segment_lengths": "طول المقطع",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "عدد الإطارات في فضاء البكسل لكل مقطع، مفصولة بفواصل. اتركه فارغًا للتوزيع التلقائي بالتساوي.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "معامل تلاشي العقوبة. أي قيمة أقل من نحو 0.1 تُنتج حدودًا حادة (القيمة الافتراضية في الورقة 0.001). ولانتقالات أنعم جرّب 0.5 أو أعلى.",
+            "relay_options": "خيارات المرحّل",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "ضبط متقدم اختياري على مستوى التدفق. وصّل عقدة الخيارات المتقدمة لمرحّل الموجّهات."
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب"
+        },
+        "description": "يرمّز الموجّه العام مع الموجّهات المقطعية الزمنية معًا، ويطبّق على النموذج رقعة تحكّم زمني بترحيل الموجّهات. تُفصل الموجّهات المقطعية بـ |. استعمل عقدة ترميز نص CLIP القياسية للموجّه السلبي."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "ترميز ترحيل الموجّهات (المخطط الزمني)",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "فيديو Latent فارغ — تُقرأ الأبعاد من شكله.",
+            "global_prompt": "الموجّه العام",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "يضبط الشرط للفيديو بأكمله. ويثبّت الشخصيات والأجسام وخلفيات المشاهد المستمرة.",
+            "max_frames": "أقصى عدد إطارات",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "الطول الإجمالي للخط الزمني (عدد الإطارات في فضاء البكسل). يستعمله المحرر للمقياس البصري فقط.",
+            "timeline_data": "بيانات المخطط الزمني",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "حالة JSON لمحرّر المخطط الزمني (تُدار تلقائيًا؛ لا تحرّرها يدويًا).",
+            "local_prompts": "موجّهات المقاطع",
+            "Auto-populated from the timeline editor.": "يُملأ تلقائيًا من محرّر المخطط الزمني.",
+            "segment_lengths": "طول المقطع",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "يُملأ تلقائيًا من محرر الخط الزمني (عدد الإطارات في فضاء البكسل).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "معامل تلاشي العقوبة. أي قيمة أقل من نحو 0.1 تُنتج حدودًا حادة (القيمة الافتراضية في الورقة 0.001). ولانتقالات أنعم جرّب 0.5 أو أعلى.",
+            "fps": "معدل الإطارات",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "عدد الإطارات في الثانية — يؤثر فقط على كيفية عرض الوقت في محرر الخط الزمني عندما تكون time_units مضبوطة على 'ثانية'.",
+            "time_units": "وحدات الوقت",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "يعرض المسطرة ونطاقات المقاطع ومدخلات الطول والإجمالي بالإطارات أو الثواني. ويكون التخزين الداخلي دائمًا بعدد الإطارات في فضاء البكسل.",
+            "relay_options": "خيارات المرحّل",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "ضبط متقدم اختياري على مستوى التدفق. وصّل عقدة الخيارات المتقدمة لمرحّل الموجّهات."
+        },
+        "widgets": {
+            "max_frames": "أقصى عدد إطارات",
+            "fps": "معدل الإطارات",
+            "time_units": "وحدات الوقت",
+            "frames": "إطار",
+            "seconds": "ثانية"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب"
+        },
+        "description": "مطابق لترميز مرحّل الموجّهات، لكن موجّهات المقاطع وأطوال المقاطع تُحرَّر بصريًا ككتل قابلة للسحب على الخط الزمني. مدخل max_frames يحدّد مقياس الخط الزمني فقط (فضاء البكسل) — أما عدد الإطارات الفعلي فيُقرأ من latent."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "ترميز مرحّل الموجّهات (ذكي)",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "الموجّه العام",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "يضبط الشرط للفيديو بأكمله. وإذا تُرك فارغًا، يُستعمل تلقائيًا أول مقطع يُحلَّل من smart_prompt كمرساة عامة.",
+            "smart_prompt": "الموجّه الذكي",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "أدخل الموجّهات باستعمال الصيغة الذكية:\n1. النمط المضمّن: 'نص المقطع الأول [0-50] | نص المقطع الثاني [50-100]'\n2. نمط الكتل: 'المقطع الأول:\nنص المقطع الأول\nالمقطع الثاني:\nنص المقطع الثاني'\nتُزال الصيغة تلقائيًا وتُطبَّع بالتساوي أو بالتناسب.",
+            "normalize_by_tokens": "التطبيع حسب Token",
+            "If true, scales the calculated length of each segment by its token count.": "في حال الصحة، يُحسب الطول متناسبًا مع عدد الـ token في كل مقطع.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "التطبيع حسب Token"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب"
+        },
+        "description": "يحلّل صيغًا مثل [0-50] أو عناوين الكتل (مثل 'المقطع الأول:') ويحسب أطوال المقاطع تلقائيًا."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "اختبار الترميز الذكي لمرحّل الموجّهات",
+        "inputs": {
+            "smart_prompt": "الموجّه الذكي",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "أدخل الموجّهات باستعمال الصيغة الذكية:\n1. النمط المضمّن: 'نص المقطع الأول [0-50] | نص المقطع الثاني [50-100]'\n2. نمط الكتل: 'المقطع الأول:\nنص المقطع الأول\nالمقطع الثاني:\nنص المقطع الثاني'\nتُزال الصيغة تلقائيًا وتُطبَّع بالتساوي أو بالتناسب.",
+            "normalize_by_tokens": "التطبيع حسب Token",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "التطبيع حسب Token"
+        },
+        "outputs": {
+            "parsed_output": "مخرج التحليل"
+        },
+        "description": "يخرج الصيغة بعد التحليل لأغراض الاختبار."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "خيارات ترحيل الموجّهات المتقدّمة",
+        "inputs": {
+            "video_strength": "شدة الفيديو",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "مضاعف عقوبة التوقيت للفيديو. 0 يعطّل تقسيم الفيديو. وهو أنفع ما يكون في النطاق 0-1 لتنعيم الحدود؛ أما القيم >1 فتتشبع سريعًا عند epsilon الافتراضية (1e-3)، لأن الانحياز يكون بالفعل كبيرًا بما يكفي لتصفير الـ token البعيدة. ولجعل >1 ذا أثر ملحوظ، ارفع epsilon إلى نحو 0.1 أو أعلى.",
+            "video_window_scale": "تحجيم نافذة الفيديو",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "تحجيم منطقة التثبيت المسطّحة (الافتراضي L/2 - إطاران). القيم <1 تبدأ التلاشي الناعم مبكرًا، و>1 توسّع المنطقة الصلبة، و0 تُقلّص التثبيت إلى نقطة فيبدأ التلاشي من منتصف المقطع مباشرة (أحدّ من الافتراضي لا أنعم).",
+            "audio_epsilon": "epsilon الصوت",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "قيمة epsilon لتدفق الصوت. 0 = يرث epsilon الرئيسي للمُرمِّز.",
+            "audio_strength": "شدة الصوت",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "مضاعف العقوبة الزمنية للصوت. 0 يسمح بتسرّب الصوت عبر الانتقالات البصرية. الأكثر فائدة في النطاق 0-1؛ والقيم >1 تتشبّع سريعًا عند epsilon الافتراضي (1e-3) — يلزم رفع audio_epsilon إلى نحو 0.1 أو أعلى ليصبح لـ >1 أثر ملحوظ.",
+            "audio_window_scale": "تحجيم نافذة الصوت",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "يحدّد مقياس عرض منطقة التثبيت المسطحة لتدفق الصوت. <1 يبدأ التلاشي الناعم أبكر؛ >1 يوسّع المنطقة الصلبة. 0 يقلّص التثبيت إلى نقطة — يبدأ التلاشي فورًا من منتصف المقطع (أحدّ من الافتراضي، وليس أنعم)."
+        },
+        "widgets": {
+            "video_strength": "شدة الفيديو",
+            "video_window_scale": "تحجيم نافذة الفيديو",
+            "audio_epsilon": "epsilon الصوت",
+            "audio_strength": "شدة الصوت",
+            "audio_window_scale": "تحجيم نافذة الصوت"
+        },
+        "outputs": {
+            "relay_options": "خيارات المرحّل"
+        },
+        "description": "ضبط اختياري لعقوبة التوقيت على مستوى كل تدفق. وصله بمدخل خيارات المرحّل في مُرمِّز مرحّل الموجّهات. حقول الصوت تؤثر على LTX2 فقط."
+    }
+}

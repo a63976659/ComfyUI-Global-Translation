@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "Carica il modello ICLight",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "model_path": "Modello"
+        },
+        "outputs": {
+            "MODEL": "Modello"
+        },
+        "description": "Metodo scomodo ma efficace per caricare i modelli IC-Light.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nDa usare con il nodo di condizione ICLight."
+    },
+    "ICLightConditioning": {
+        "title": "Applica condizione ICLight",
+        "inputs": {
+            "positive": "Condizione positiva",
+            "negative": "Condizione negativa",
+            "vae": "VAE",
+            "foreground": "Latent del primo piano",
+            "opt_background": "Latent sfondo(opzionale)"
+        },
+        "widgets": {
+            "multiplier": "Moltiplicatore"
+        },
+        "outputs": {
+            "positive": "Condizione positiva",
+            "negative": "Condizione negativa",
+            "empty_latent": "Latent vuoto"
+        },
+        "description": "Nodo di condizione per i modelli IC-Light. Se vuoi usare lo “Sfondo Latent” devi passare il modello IC-Light alla versione “fbc”."
+    },
+    "LightSource": {
+        "title": "Sorgente luminosa semplice",
+        "inputs": {
+            "prev_image": "Immagine precedente"
+        },
+        "widgets": {
+            "light_position": "Posizione della luce",
+            "multiplier": "Luminosità",
+            "start_color": "Colore iniziale",
+            "end_color": "Colore finale",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "batch_size": "Dimensione batch"
+        },
+        "outputs": {
+            "IMAGE": "Immagine"
+        },
+        "description": "Genera un'immagine in scala di grigi con gradiente utilizzabile come sorgente luminosa semplice. Il colore può essere specificato in RGB o HEX."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Calcola normali",
+        "inputs": {
+            "images": "Immagine",
+            "mask": "Maschera"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Centro intervallo di input"
+        },
+        "outputs": {
+            "divided": "Separatore",
+            "normal": "Immagine normale"
+        },
+        "description": "Calcola le normali da immagini scattate da angolazioni diverse.\nRichiede un batch di 4 immagini: sinistra, destra, basso, alto"
+    },
+    "LoadHDRImage": {
+        "title": "Carica immagine HDR",
+        "widgets": {
+            "image": "Immagine",
+            "exposure": "Esposizione",
+            "exposures": "Esposizione"
+        },
+        "outputs": {
+            "IMAGE": "Immagine",
+            "MASK": "Maschera"
+        },
+        "description": "Carica le immagini .hdr dalla cartella input.\nOutput: batch di immagini LDR."
+    },
+    "BackgroundScaler": {
+        "title": "Scala di grigi dello sfondo",
+        "inputs": {
+            "image": "Immagine",
+            "mask": "Maschera"
+        },
+        "widgets": {
+            "scale": "Scala",
+            "invert": "Inverti"
+        },
+        "outputs": {
+            "IMAGE": "Immagine"
+        },
+        "description": "Ridimensiona l'area della maschera in un'immagine in scala di grigi"
+    },
+    "DetailTransfer": {
+        "title": "Trasferimento dettagli",
+        "inputs": {
+            "target": "Immagine di destinazione",
+            "source": "Immagine di riferimento",
+            "mask": "Maschera"
+        },
+        "widgets": {
+            "mode": "Modalità",
+            "blur_sigma": "Sigma di sfocatura",
+            "blend_factor": "Coefficiente di miscelazione"
+        },
+        "outputs": {
+            "IMAGE": "Immagine"
+        }
+    }
+}

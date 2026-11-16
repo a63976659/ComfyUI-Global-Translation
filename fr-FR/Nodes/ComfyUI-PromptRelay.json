@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "Encodage du relais de prompts",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Latent vidéo vide — les dimensions sont lues depuis sa forme.",
+            "global_prompt": "Prompt global",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Définit la condition pour l'ensemble de la vidéo. Ancre les personnages, objets et arrière-plans de scène persistants.",
+            "local_prompts": "Prompts segmentés",
+            "Ordered prompts for each temporal segment, separated by |": "Prompts ordonnés pour chaque segment temporel, séparés par |",
+            "segment_lengths": "Longueur du segment",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "Nombre de trames en espace pixel par segment, séparées par des virgules. Laissez vide pour une répartition uniforme automatique.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Paramètre d'atténuation de la pénalité. Toute valeur inférieure à environ 0.1 produit des frontières nettes (valeur par défaut de l'article : 0.001). Pour des transitions plus douces, essayez 0.5 ou plus.",
+            "relay_options": "Options du relais",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "Réglages avancés facultatifs par flux. Connectez le nœud Options avancées du relais de prompts."
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive"
+        },
+        "description": "Encode le prompt global combiné aux prompts segmentés dans le temps, et applique au modèle un patch de contrôle temporel de type relais de prompts. Les prompts de segment sont séparés par |. Pour le prompt négatif, utilisez le nœud standard d'encodage de texte CLIP."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "Encodage du relais de prompts (chronologie)",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Latent vidéo vide — les dimensions sont lues depuis sa forme.",
+            "global_prompt": "Prompt global",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Définit la condition pour l'ensemble de la vidéo. Ancre les personnages, objets et arrière-plans de scène persistants.",
+            "max_frames": "Nombre max. de trames",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "Longueur totale de la chronologie (nombre de trames en espace pixel). Utilisée uniquement pour l'échelle visuelle de l'éditeur.",
+            "timeline_data": "Données de chronologie",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "État JSON de l'éditeur de chronologie (géré automatiquement, ne pas modifier à la main).",
+            "local_prompts": "Prompts segmentés",
+            "Auto-populated from the timeline editor.": "Rempli automatiquement depuis l'éditeur de chronologie.",
+            "segment_lengths": "Longueur du segment",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "Rempli automatiquement depuis l'éditeur de chronologie (nombre de trames en espace pixel).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Paramètre d'atténuation de la pénalité. Toute valeur inférieure à environ 0.1 produit des frontières nettes (valeur par défaut de l'article : 0.001). Pour des transitions plus douces, essayez 0.5 ou plus.",
+            "fps": "Fréquence d'images",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "Images par seconde — n'affecte l'affichage du temps dans l'éditeur de chronologie que lorsque time_units est réglé sur 'Secondes'.",
+            "time_units": "Unité de temps",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "Affiche la règle, les plages de segments, les entrées de longueur et le total en trames ou en secondes. Le stockage interne est toujours un nombre de trames en espace pixel.",
+            "relay_options": "Options du relais",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "Réglages avancés facultatifs par flux. Connectez le nœud Options avancées du relais de prompts."
+        },
+        "widgets": {
+            "max_frames": "Nombre max. de trames",
+            "fps": "Fréquence d'images",
+            "time_units": "Unité de temps",
+            "frames": "Trame",
+            "seconds": "Secondes"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive"
+        },
+        "description": "Identique à Encodage du relais de prompts, mais les prompts segmentés et les longueurs de segment se modifient visuellement sous forme de blocs déplaçables sur la chronologie. L'entrée max_frames ne définit que l'échelle de la chronologie (espace pixel) — le nombre réel de trames est toujours lu depuis le latent."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "Encodage du relais de prompts (intelligent)",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "Prompt global",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "Définit la condition pour l'ensemble de la vidéo. Laissez vide pour utiliser automatiquement le premier segment analysé depuis smart_prompt comme ancre globale.",
+            "smart_prompt": "Prompt intelligent",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Saisissez vos prompts avec la syntaxe intelligente :\n1. En ligne : 'Texte du premier segment [0-50] | Texte du deuxième segment [50-100]'\n2. En blocs : 'Premier segment :\nTexte du premier segment\nDeuxième segment :\nTexte du deuxième segment'\nLa syntaxe est automatiquement retirée, avec une normalisation uniforme ou proportionnelle.",
+            "normalize_by_tokens": "Normaliser par token",
+            "If true, scales the calculated length of each segment by its token count.": "Si vrai, met à l'échelle la longueur calculée de chaque segment selon son nombre de tokens.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Normaliser par token"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive"
+        },
+        "description": "Analyse une syntaxe telle que [0-50] ou des titres de bloc (par ex. 'Premier segment :') et calcule automatiquement la longueur des segments."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "Test d'encodage intelligent du relais de prompts",
+        "inputs": {
+            "smart_prompt": "Prompt intelligent",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Saisissez vos prompts avec la syntaxe intelligente :\n1. En ligne : 'Texte du premier segment [0-50] | Texte du deuxième segment [50-100]'\n2. En blocs : 'Premier segment :\nTexte du premier segment\nDeuxième segment :\nTexte du deuxième segment'\nLa syntaxe est automatiquement retirée, avec une normalisation uniforme ou proportionnelle.",
+            "normalize_by_tokens": "Normaliser par token",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Normaliser par token"
+        },
+        "outputs": {
+            "parsed_output": "Sortie analysée"
+        },
+        "description": "Fournit en sortie la syntaxe analysée, à des fins de test."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "Options avancées du relais de prompts",
+        "inputs": {
+            "video_strength": "Intensité vidéo",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "Multiplicateur de la pénalité temporelle vidéo. 0 désactive la segmentation vidéo. Le plus utile dans la plage 0-1, pour adoucir les frontières ; les valeurs >1 saturent rapidement avec l'epsilon par défaut (1e-3), car le biais est déjà assez grand pour mettre à zéro les tokens éloignés. Pour que >1 ait un effet visible, augmentez epsilon à environ 0.1 ou plus.",
+            "video_window_scale": "Échelle de la fenêtre vidéo",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Ajuste par mise à l'échelle la zone d'ancrage plate (par défaut L/2 - 2 trames). <1 fait démarrer plus tôt l'atténuation douce ; >1 élargit la zone rigide. 0 réduit l'ancrage à un point — l'atténuation démarre immédiatement au milieu du segment (plus net que par défaut, et non plus doux).",
+            "audio_epsilon": "Epsilon audio",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "L'epsilon du flux audio. 0 = hérite de l'epsilon principal de l'encodeur.",
+            "audio_strength": "Intensité audio",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "Multiplicateur de la pénalité temporelle audio. 0 laisse l'audio fuir à travers les coupes visuelles. Le plus utile dans la plage 0-1 ; les valeurs >1 saturent rapidement avec l'epsilon par défaut (1e-3) — augmentez audio_epsilon à environ 0.1 ou plus pour que >1 ait un effet visible.",
+            "audio_window_scale": "Mise à l'échelle de la fenêtre audio",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Met à l'échelle la largeur de la zone d'ancrage plate du flux audio. <1 démarre l'atténuation douce plus tôt ; >1 élargit la zone rigide. 0 réduit l'ancrage à un point — l'atténuation commence immédiatement au milieu du segment (plus net que par défaut, pas plus doux)."
+        },
+        "widgets": {
+            "video_strength": "Intensité vidéo",
+            "video_window_scale": "Échelle de la fenêtre vidéo",
+            "audio_epsilon": "Epsilon audio",
+            "audio_strength": "Intensité audio",
+            "audio_window_scale": "Mise à l'échelle de la fenêtre audio"
+        },
+        "outputs": {
+            "relay_options": "Options du relais"
+        },
+        "description": "Réglage facultatif des pénalités temporelles par flux. À connecter à l'entrée Options du relais de l'encodeur de relais de prompts. Les champs audio n'affectent que LTX2."
+    }
+}

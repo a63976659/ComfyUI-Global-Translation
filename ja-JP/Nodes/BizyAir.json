@@ -1,0 +1,2342 @@
+{
+    "BizyAir_SAMModelLoader": {
+        "title": "☁️BizyAir SAMモデルローダー",
+        "inputs": {
+            "model_name": "モデル名"
+        },
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "SAM_PREDICTOR": "SAM予測器"
+        }
+    },
+    "BizyAir_StyleModelApply": {
+        "title": "☁️BizyAir 任意スタイルモデル適用",
+        "inputs": {
+            "conditioning": "条件",
+            "style_model": "スタイルモデル",
+            "clip_vision_output": "CLIP ビジョン出力"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_GroundingDinoModelLoader": {
+        "title": "☁️BizyAir GroundingDinoモデルローダー",
+        "inputs": {
+            "model_name": "モデル名"
+        },
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "GROUNDING_DINO_MODEL": "GroundingDinoモデル"
+        }
+    },
+    "BizyAir_VITMatteModelLoader": {
+        "title": "☁️BizyAir VITMatteモデルローダー",
+        "inputs": {
+            "detail_method": "ディテール処理方法"
+        },
+        "widgets": {
+            "detail_method": "ディテール処理方法"
+        },
+        "outputs": {
+            "VitMatte_MODEL": "VITMatteモデル",
+            "VitMatte_predictor": "VITMatte予測器"
+        }
+    },
+    "BizyAir_GroundingDinoSAMSegment": {
+        "title": "☁️BizyAir GroundingDino-SAM 共同セグメンテーション",
+        "inputs": {
+            "grounding_dino_model": "GroundingDinoモデル",
+            "sam_predictor": "SAM予測器",
+            "image": "入力画像"
+        },
+        "widgets": {
+            "prompt": "プロンプト",
+            "box_threshold": "bbox検出閾値",
+            "text_threshold": "テキスト検出閾値"
+        },
+        "outputs": {
+            "IMAGE": "出力画像",
+            "MASK": "出力マスク"
+        }
+    },
+    "BizyAir_TrimapGenerate": {
+        "title": "☁️BizyAir Trimapジェネレーター",
+        "inputs": {
+            "mask": "入力マスク"
+        },
+        "widgets": {
+            "detail_erode": "ディテール侵食量",
+            "detail_dilate": "ディテール膨張量"
+        },
+        "outputs": {
+            "trimap": "出力マスク"
+        }
+    },
+    "BizyAir_VITMattePredict": {
+        "title": "☁️BizyAir VITMatte予測",
+        "inputs": {
+            "image": "入力画像",
+            "trimap": "Trimapマスク",
+            "vitmatte_model": "VITMatteモデル",
+            "vitmatte_predictor": "VITMatte予測器"
+        },
+        "widgets": {
+            "black_point": "ブラックレベル閾値",
+            "white_point": "ホワイトレベル閾値",
+            "max_megapixels": "最大メガピクセル数"
+        },
+        "outputs": {
+            "image": "出力画像",
+            "mask": "マスク"
+        }
+    },
+    "BizyAirDetailMethodPredict": {
+        "title": "☁️BizyAir ディテール手法予測",
+        "inputs": {
+            "image": "入力画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "detail_method": "ディテール処理方法",
+            "detail_erode": "ディテール侵食量",
+            "detail_dilate": "ディテール膨張量",
+            "black_point": "ブラックレベル閾値",
+            "white_point": "ホワイトレベル閾値"
+        },
+        "outputs": {
+            "image": "出力画像",
+            "mask": "マスク"
+        }
+    },
+    "BizyAirBaseNode": {
+        "title": "☁️BizyAir 基本ノード",
+        "inputs": {
+            "class_type": "クラスタイプ",
+            "kwargs": "引数辞書",
+            "node_ios": "ノード入出力"
+        }
+    },
+    "BizyAirSiliconCloudLLMAPI": {
+        "title": "☁️BizyAir SiliconCloud 大規模言語モデルAPI",
+        "inputs": {
+            "images": "入力画像"
+        },
+        "widgets": {
+            "model": "モデル",
+            "system_prompt": "システムプロンプト",
+            "user_prompt": "ユーザプロンプト",
+            "max_tokens": "最大トークン数",
+            "temperature": "温度パラメータ"
+        },
+        "outputs": {
+            "SRTING": "テキスト出力"
+        }
+    },
+    "BizyAirSiliconCloudVLMAPI": {
+        "title": "☁️BizyAir SiliconCloud ビジュアル言語モデルAPI",
+        "inputs": {
+            "images": "入力画像"
+        },
+        "widgets": {
+            "model": "モデル",
+            "system_prompt": "システムプロンプト",
+            "user_prompt": "ユーザプロンプト",
+            "max_tokens": "最大トークン数",
+            "temperature": "温度パラメータ",
+            "detail": "ディテールレベル"
+        },
+        "outputs": {
+            "SRTING": "テキスト出力"
+        }
+    },
+    "BizyAirJoyCaption": {
+        "title": "☁️BizyAir Joy 画像キャプション生成",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "do_sample": "サンプリングを有効化",
+            "temperature": "温度パラメータ",
+            "max_tokens": "最大トークン数"
+        },
+        "outputs": {
+            "SRTING": "テキスト出力"
+        }
+    },
+    "BizyAirJoyCaption2": {
+        "title": "☁️BizyAir Joy 画像キャプション生成2.0",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "do_sample": "サンプリングを有効化",
+            "temperature": "温度パラメータ",
+            "max_tokens": "最大トークン数",
+            "caption_type": "キャプションタイプ",
+            "caption_length": "キャプションの長さ",
+            "extra_options": "追加オプション",
+            "name_input": "名前入力",
+            "custom_prompt": "カスタムプロンプト"
+        },
+        "outputs": {
+            "SRTING": "テキスト出力"
+        }
+    },
+    "BizyAirJoyCaption3": {
+        "title": "☁️BizyAir Joy 画像キャプション生成3.0",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "do_sample": "サンプリングを有効化",
+            "temperature": "温度パラメータ",
+            "max_tokens": "最大トークン数",
+            "caption_type": "キャプションタイプ",
+            "caption_length": "キャプションの長さ",
+            "extra_options": "追加オプション",
+            "name_input": "名前入力",
+            "custom_prompt": "カスタムプロンプト"
+        },
+        "outputs": {
+            "SRTING": "テキスト出力"
+        }
+    },
+    "BizyAirMZChatGLM3TextEncode": {
+        "title": "☁️BizyAir MZ-ChatGLM3 テキストエンコード",
+        "inputs": {
+            "text": "入力テキスト"
+        },
+        "outputs": {
+            "conditioning": "条件出力"
+        }
+    },
+    "BizyAir_MinusZoneChatGLM3TextEncode": {
+        "title": "☁️BizyAir MinusZone ChatGLM3 テキストエンコード",
+        "inputs": {
+            "text": "入力テキスト"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_KSampler": {
+        "title": "☁️BizyAir Kサンプラー",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent_image": "latent画像"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "steps": "ステップ数",
+            "cfg": "CFG値",
+            "sampler_name": "サンプラー名",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ低減強度"
+        },
+        "outputs": {
+            "LATENT": "latent"
+        }
+    },
+    "BizyAir_KSamplerAdvanced": {
+        "title": "☁️BizyAir Kサンプラー（高度）",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent_image": "latent画像"
+        },
+        "widgets": {
+            "add_noise": "ノイズを追加",
+            "noise_seed": "ランダムシード",
+            "control_after_generate": "生成後制御",
+            "steps": "ステップ数",
+            "cfg": "CFG値",
+            "sampler_name": "サンプラー名",
+            "scheduler": "スケジューラ",
+            "start_at_step": "ガイダンス開始ステップ",
+            "end_at_step": "ガイダンス終了ステップ",
+            "return_with_leftover_noise": "残りノイズを保持して返す"
+        },
+        "outputs": {
+            "LATENT": "latent"
+        }
+    },
+    "BizyAir_CheckpointLoaderSimple": {
+        "title": "☁️BizyAir 簡易チェックポイントローダー",
+        "widgets": {
+            "ckpt_name": "チェックポイント名",
+            "model_version_id": "モデルバージョンID"
+        },
+        "outputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE"
+        }
+    },
+    "BizyAir_CLIPTextEncode": {
+        "title": "☁️BizyAir CLIPテキストエンコード",
+        "inputs": {
+            "text": "テキスト",
+            "clip": "CLIPモデル"
+        },
+        "outputs": {
+            "CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_VAEDecode": {
+        "title": "☁️BizyAir VAEデコーダー",
+        "inputs": {
+            "samples": "サンプル",
+            "vae": "VAEモデル"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAir_LoraLoader": {
+        "title": "☁️BizyAir LoRAローダー",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIPモデル"
+        },
+        "widgets": {
+            "lora_name": "LoRA名",
+            "strength_model": "モデル強度",
+            "strength_clip": "CLIP強度",
+            "model_version_id": "モデルバージョンID"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        }
+    },
+    "BizyAir_LoraLoader_Legacy": {
+        "title": "☁️BizyAir LoRAローダー(旧版)",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIPモデル"
+        },
+        "widgets": {
+            "lora_name": "LoRA名",
+            "strength_model": "モデル強度",
+            "strength_clip": "CLIP強度"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        }
+    },
+    "BizyAir_SharedLoraLoader": {
+        "title": "☁️BizyAir 共有 LoRa ローダー",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIPモデル"
+        },
+        "widgets": {
+            "share_id": "共有ID",
+            "lora_name": "LoRA名",
+            "strength_model": "モデル強度",
+            "strength_clip": "CLIP強度"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        }
+    },
+    "BizyAir_VAEEncode": {
+        "title": "☁️BizyAir VAEエンコーダー",
+        "inputs": {
+            "pixels": "ピクセルデータ",
+            "vae": "VAEモデル"
+        },
+        "outputs": {
+            "latent": "潜在空間"
+        }
+    },
+    "BizyAir_VAEEncodeForInpaint": {
+        "title": "☁️BizyAir VAEインペイントエンコーダー",
+        "inputs": {
+            "pixels": "ピクセルデータ",
+            "vae": "VAEモデル",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "grow_mask_by": "マスク拡張量"
+        },
+        "outputs": {
+            "none": "なし"
+        }
+    },
+    "BizyAir_ControlNetLoader": {
+        "title": "☁️BizyAir ControlNetローダー",
+        "widgets": {
+            "control_net_name": "ControlNet名",
+            "model_version_id": "モデルバージョンID"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "BizyAir_ControlNetLoader_Legacy": {
+        "title": "☁️BizyAir ControlNetローダー(旧版)",
+        "widgets": {
+            "control_net_name": "ControlNet名"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "BizyAir_CLIPSetLastLayer": {
+        "title": "☁️BizyAir CLIP 最終層設定",
+        "inputs": {
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stop_at_clip_layer": "CLIPレイヤーで停止"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir_CLIP"
+        }
+    },
+    "BizyAir_ConditioningCombine": {
+        "title": "☁️BizyAir 条件(結合)",
+        "inputs": {
+            "conditioning_1": "条件1",
+            "conditioning_2": "条件2"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_CLIPVisionEncode": {
+        "title": "☁️BizyAir CLIPビジョンエンコード",
+        "inputs": {
+            "clip_vision": "CLIPビジョン",
+            "image": "画像"
+        },
+        "outputs": {
+            "CLIP_VISION_OUTPUT": "CLIPビジョン出力"
+        }
+    },
+    "BizyAir_ConditioningSetArea": {
+        "title": "☁️BizyAir 条件(領域設定)",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "strength": "強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_ConditioningSetAreaPercentage": {
+        "title": "☁️BizyAir 条件(率による領域設定)",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "strength": "強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_ConditioningSetMask": {
+        "title": "☁️BizyAir 条件(マスク設定)",
+        "inputs": {
+            "conditioning": "条件",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "strength": "強度",
+            "set_cond_area": "条件領域を設定"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_InpaintModelConditioning": {
+        "title": "☁️BizyAir インペイントモデル条件",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "pixels": "ピクセル画像",
+            "mask": "マスク"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_InpaintModelConditioning_v2": {
+        "title": "☁️BizyAir インペイントモデル条件v2",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "pixels": "ピクセル画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "noise_mask": "ノイズマスク"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_ControlNetApplyAdvanced": {
+        "title": "☁️BizyAir ControlNet高度な適用",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "control_net": "Control_Net",
+            "image": "制御画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_ControlNetApply": {
+        "title": "☁️BizyAir ControlNet適用",
+        "inputs": {
+            "conditioning": "条件",
+            "control_net": "Control_Net",
+            "image": "制御画像",
+            "strength": "強度"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_CLIPVisionLoader": {
+        "title": "☁️BizyAir CLIPビジョンローダー",
+        "widgets": {
+            "clip_name": "CLIP名"
+        },
+        "outputs": {
+            "CLIP_VISION": "CLIP ビジョン出力"
+        }
+    },
+    "BizyAir_VAELoader": {
+        "title": "☁️BizyAir VAEローダー",
+        "widgets": {
+            "vae_name": "VAE名"
+        },
+        "outputs": {
+            "none": "なし"
+        }
+    },
+    "BizyAir_SharedControlNetLoader": {
+        "title": "☁️BizyAir 共有ControlNetローダー",
+        "widgets": {
+            "control_net_name": "ControlNet",
+            "share_id": "共有ID"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "BizyAir_StyleModelLoader": {
+        "title": "☁️BizyAir スタイルモデルローダー",
+        "widgets": {
+            "style_model_name": "スタイルモデル"
+        },
+        "outputs": {
+            "BIZYAIR_STYLE_MODEL": "BizyAir スタイルモデル"
+        }
+    },
+    "BizyAir_Wan_T2V_Pipeline": {
+        "title": "☁️BizyAir Wan テキストから動画モジュール",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "sampling_steps": "サンプリングステップ数",
+            "guidance_scale": "ガイダンススケール",
+            "shift_scale": "オフセット率",
+            "seed": "ランダムシード",
+            "control_after_generate": "生成後制御"
+        },
+        "outputs": {
+            "video_url": "動画パス"
+        }
+    },
+    "BizyAir_Wan_ImageToVideoPipeline": {
+        "title": "☁️BizyAir Wan 画像から動画パイプライン",
+        "inputs": {
+            "lora_config": "Lora設定",
+            "image": "画像"
+        },
+        "widgets": {
+            "model_id": "モデル名",
+            "steps": "ステップ数",
+            "cfg": "CFG値",
+            "seed": "ランダムシード",
+            "control_after_generate": "生成後に制御",
+            "use_teacache": "キャッシュ機能を使用"
+        },
+        "outputs": {
+            "VIDEO": "動画"
+        }
+    },
+    "BizyAir_Wan_LoraLoader": {
+        "title": "☁️BizyAir Wan Loraローダー",
+        "widgets": {
+            "lora_name": "Lora名",
+            "lora_weight": "Lora重み"
+        },
+        "outputs": {
+            "lora_config": "Lora設定"
+        }
+    },
+    "BizyAir_Wan_Model_Loader": {
+        "title": "☁️BizyAir Wanモデルローダー",
+        "widgets": {
+            "ckpt_name": "モデル"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_WanImageToVideo": {
+        "title": "☁️BizyAir Wan 画像から動画",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "camera_conditions": "カメラ条件",
+            "clip_vision_output": "CLIP ビジョン出力",
+            "start_image": "開始画像",
+            "end_image": "終了画像"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "length": "長さ",
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "Latent"
+        }
+    },
+    "BizyAirPiDiNetPreprocessor": {
+        "title": "☁️BizyAir PiDiNet ソフトエッジ線抽出",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "safe": "安全コンテンツ検出",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirColorPreprocessor": {
+        "title": "☁️BizyAir カラーパレット",
+        "inputs": {
+            "image": "画像"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirCannyEdgePreprocessor": {
+        "title": "☁️BizyAir Canny エッジ検出",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "low_threshold": "低しきい値",
+            "high_threshold": "高しきい値",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirSAMPreprocessor": {
+        "title": "☁️BizyAir SAMセグメンター",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "coarse": "粗さ",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirBinaryPreprocessor": {
+        "title": "☁️BizyAir 二値線画",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "bin_threshold": "二値化閾値",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirScribblePreprocessor": {
+        "title": "☁️BizyAir スケッチ線画",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "safe": "安全コンテンツ検出",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirM_LSDPreprocessor": {
+        "title": "☁️BizyAir M-LSD線画",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "score_threshold": "スコア閾値",
+            "dist_threshold": "距離閾値",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirUniFormer_SemSegPreprocessor": {
+        "title": "☁️BizyAir UniFormer セマンティックセグメンテーション",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirZoe_DepthMapPreprocessor": {
+        "title": "☁️BizyAir Zoe 深度マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirMiDaS_NormalMapPreprocessor": {
+        "title": "☁️BizyAir MiDaS 法線マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "bg_threshold": "背景閾値",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "POSE_KEYPOINT": "姿勢キーポイント",
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirMiDaS_DepthMapPreprocessor": {
+        "title": "☁️BizyAir MiDaS 深度マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "bg_threshold": "背景閾値",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirOpenposePreprocessor": {
+        "title": "☁️BizyAir OpenPose 姿勢推定",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "detect_hand": "手の検出",
+            "detect_body": "体の検出",
+            "detect_face": "顔の検出",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "POSE_KEYPOINT": "姿勢キーポイント",
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirLineArtPreprocessor": {
+        "title": "☁️BizyAir リアリスティック線画",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "coarse": "粗さ",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirLeReS_DepthMapPreprocessor": {
+        "title": "☁️BizyAir LeReS深度マップ(boost 有効時は leres++ を使用)",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "rm_nearest": "最近点を除去",
+            "rm_background": "背景を除去",
+            "boost": "強化",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirBAE_NormalMapPreprocessor": {
+        "title": "☁️BizyAir BAE 法線マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirOneFormer_COCO_SemSegPreprocessor": {
+        "title": "☁️BizyAir OneFormer COCO セグメンテーション",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirOneFormer_ADE20K_SemSegPreprocessor": {
+        "title": "☁️BizyAir OneFormer ADE20K セグメンテーション",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirHEDPreprocessor": {
+        "title": "☁️BizyAir HED ソフトエッジ線画",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "safe": "安全コンテンツ検出",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirFakeScribblePreprocessor": {
+        "title": "☁️BizyAir 疑似スケッチ線画(エッジ検出)",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "safe": "安全コンテンツ検出",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirTilePreprocessor": {
+        "title": "☁️BizyAir タイル処理",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "pyrUp_iters": "アップサンプリング反復回数",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "Tools_ImagesTest": {
+        "title": "☁️BizyAir 画像テストツール",
+        "inputs": {
+            "images1": "画像1",
+            "images2": "画像2"
+        },
+        "widgets": {
+            "ssim_threshold": "構造類似性閾値",
+            "raise_if_diff": "差異時に例外をスロー",
+            "image_id": "画像 ID"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "Tools_ImageEncodeDecodeTest": {
+        "title": "☁️BizyAir 画像エンコード/デコードテストツール",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "lossless": "ロスレス"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirDepthAnythingV2Preprocessor": {
+        "title": "☁️BizyAir DepthAnything V2(相対深度)",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "ckpt_name": "チェックポイント名",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirMetric3D_DepthMapPreprocessor": {
+        "title": "☁️BizyAir Metric3D 深度マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "backbone": "バックボーン",
+            "fx": "焦点距離 x",
+            "fy": "焦点距離 y",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirMetric3D_NormalMapPreprocessor": {
+        "title": "☁️BizyAir Metric3D 法線マップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "backbone": "バックボーン",
+            "fx": "焦点距離 x",
+            "fy": "焦点距離 y",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirDWPreprocessor": {
+        "title": "☁️BizyAir DWPose 姿勢推定",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "detect_hand": "手の検出",
+            "detect_body": "体の検出",
+            "detect_face": "顔の検出",
+            "resolution": "解像度",
+            "bbox_detector": "bbox検出器",
+            "pose_estimator": "姿勢推定"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "StableDiffusionXLControlNetUnionPipeline": {
+        "title": "☁️BizyAir ControlNet Union SDXL 1.0 パイプライン",
+        "inputs": {
+            "openpose_image": "OpenPose画像",
+            "depth_image": "深度マップ",
+            "hed_pidi_scribble_ted_image": "HED/PIDI/スケッチ画像",
+            "canny_lineart_anime_lineart_mlsd_image": "Canny/線画/MLSD画像",
+            "normal_image": "法線マップ",
+            "segment_image": "セグメンテーション画像"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "num_inference_steps": "推論ステップ数",
+            "num_images_per_prompt": "プロンプトあたり画像数",
+            "guidance_scale": "ガイダンススケール",
+            "prompt": "プロンプト",
+            "negative_prompt": "ネガティブプロンプト",
+            "control_guidance_start": "ガイダンス開始制御",
+            "control_guidance_end": "ガイダンス終了制御"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    },
+    "BizyAirSegmentAnythingText": {
+        "title": "☁️BizyAir テキストガイダンス SAM セグメンテーション",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "prompt": "プロンプト",
+            "box_threshold": "bbox検出閾値",
+            "text_threshold": "テキスト検出閾値"
+        },
+        "outputs": {
+            "IMAGE": "出力画像",
+            "MASK": "マスク"
+        }
+    },
+    "BizyAirSegmentAnythingPointBox": {
+        "title": "☁️BizyAir 画像ロード",
+        "widgets": {
+            "image": "入力画像",
+            "is_point": "ポイントモード"
+        },
+        "outputs": {
+            "processed_image": "出力画像",
+            "original_image": "出力画像",
+            "mask": "マスク"
+        }
+    },
+    "BizyAirRemoveBackground": {
+        "title": "☁️BizyAir 画像背景除去",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "outputs": {
+            "IMAGE": "出力画像",
+            "MASK": "マスク"
+        }
+    },
+    "BizyAir_StyleModelApplySimple": {
+        "title": "☁️BizyAir_スタイルモデル簡易適用",
+        "inputs": {
+            "conditioning": "条件",
+            "style_model": "スタイルモデル",
+            "clip_vision_output": "CLIP ビジョン出力"
+        },
+        "widgets": {
+            "image_strength": "画像強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_ReduxAdvanced": {
+        "title": "☁️BizyAir_高度な Redux",
+        "inputs": {
+            "conditioning": "条件",
+            "style_model": "スタイルモデル",
+            "clip_vision": "CLIPビジョンモデル",
+            "image": "入力画像",
+            "mask": "入力マスク"
+        },
+        "widgets": {
+            "downsampling_factor": "ダウンサンプリング係数",
+            "downsampling_function": "ダウンサンプリング関数",
+            "mode": "処理モード",
+            "weight": "重み値",
+            "autocrop_margin": "自動クロップマージン"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力",
+            "IMAGE": "出力画像",
+            "MASK": "出力マスク"
+        }
+    },
+    "BizyAir_CogView4_6B_Pipe": {
+        "title": "☁️BizyAir_CogView4-6B AI画像生成",
+        "inputs": {
+            "prompt": "プロンプト"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "guidance_scale": "ガイダンススケール",
+            "num_images_per_prompt": "プロンプトあたり生成数",
+            "num_inference_steps": "推論ステップ数",
+            "width": "生成幅",
+            "height": "生成高さ"
+        },
+        "outputs": {
+            "image": "出力画像"
+        }
+    },
+    "BizyAir_DetailDaemonSamplerNode": {
+        "title": "☁️BizyAir_ディテールガードサンプラー",
+        "inputs": {
+            "sampler": "サンプラー"
+        },
+        "widgets": {
+            "detail_amount": "ディテール強度",
+            "start": "開始セクション",
+            "end": "終了セクション",
+            "bias": "バイアス値",
+            "exponent": "指数係数",
+            "start_offset": "開始オフセット",
+            "end_offset": "終了オフセット",
+            "fade": "フェードアウト強度",
+            "smooth": "スムージング",
+            "cfg_scale_override": "CFGスケール上書き"
+        },
+        "outputs": {
+            "SAMPLER": "サンプラー"
+        }
+    },
+    "BizyAir_KSamplerSelect": {
+        "title": "☁️BizyAir_Kサンプラー選択",
+        "widgets": {
+            "sampler_name": "サンプラー名"
+        },
+        "outputs": {
+            "SAMPLER": "サンプラー"
+        }
+    },
+    "BizyAir_MultiplySigmas": {
+        "title": "☁️BizyAir_乗算スケジューラ",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "factor": "乗数係数",
+            "start": "開始位置",
+            "end": "終了位置"
+        },
+        "outputs": {
+            "SIGMAS": "シグマ"
+        }
+    },
+    "BizyAir_LyingSigmaSampler": {
+        "title": "☁️BizyAir_シグマ偽装サンプラー",
+        "inputs": {
+            "sampler": "サンプラー"
+        },
+        "widgets": {
+            "dishonesty_factor": "偽装係数",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "sampler": "サンプラー"
+        }
+    },
+    "BizyAir_DetailDaemonGraphSigmasNode": {
+        "title": "☁️BizyAir_ディテールガードグラフシグマノード",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "detail_amount": "ディテール強度",
+            "start": "開始セクション",
+            "end": "終了セクション",
+            "bias": "バイアス値",
+            "exponent": "指数係数",
+            "start_offset": "開始オフセット",
+            "end_offset": "終了オフセット",
+            "fade": "フェードアウト強度",
+            "smooth": "スムージング",
+            "cfg_scale": "CFGスケール"
+        }
+    },
+    "BizyAir_InstantIDModelLoader": {
+        "title": "☁️BizyAir_InstantIDモデルローダー",
+        "widgets": {
+            "instantid_file": "モデルファイル"
+        },
+        "outputs": {
+            "BIZYAIR_INSTANTID": "BizyAir Instant ID"
+        }
+    },
+    "BizyAir_ApplyInstantID": {
+        "title": "☁️BizyAir_InstantID適用",
+        "inputs": {
+            "instantid": "InstantIDモデル",
+            "insightface": "顔分析モデル",
+            "control_net": "Control_Net",
+            "image": "参考画像",
+            "model": "ベースモデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "image_kps": "顔キーポイント",
+            "mask": "領域マスク"
+        },
+        "widgets": {
+            "weight": "融合ウェイト",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー"
+        },
+        "outputs": {
+            "MODEL": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_ApplyInstantIDAdvanced": {
+        "title": "☁️BizyAir_InstantID高度な適用",
+        "inputs": {
+            "instantid": "InstantIDモデル",
+            "insightface": "顔分析モデル",
+            "control_net": "Control_Net",
+            "image": "参考画像",
+            "model": "ベースモデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "image_kps": "顔キーポイント",
+            "mask": "領域マスク"
+        },
+        "widgets": {
+            "weight": "融合ウェイト",
+            "ip_weight": "IPAdapter ウェイト",
+            "cn_strength": "ControlNet強度",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー",
+            "noise": "ノイズ強度",
+            "combine_embeds": "埋め込み融合"
+        },
+        "outputs": {
+            "MODEL": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_InstantIDFaceAnalysis": {
+        "title": "☁️BizyAir_InstantID顔分析",
+        "widgets": {
+            "provider": "計算デバイス"
+        },
+        "outputs": {
+            "BIZYAIR_FACEANALYSIS": "BizyAir 顔分析"
+        }
+    },
+    "BizyAir_LayerMask: SegmentAnythingUltra V2": {
+        "title": "☁️BizyAir_レイヤーマスク：スーパーセマンティックセグメンテーション V2",
+        "inputs": {
+            "image": "入力画像",
+            "sam_model": "SAMモデル",
+            "grounding_dino_model": "GroundingDinoモデル",
+            "threshold": "検出閾値",
+            "detail_method": "ディテール手法",
+            "detail_erode": "ディテール侵食量",
+            "detail_dilate": "ディテール膨張量",
+            "black_point": "ブラックレベル閾値",
+            "white_point": "ホワイトレベル閾値",
+            "process_detail": "ディテール処理",
+            "prompt": "テキストプロンプト",
+            "device": "計算デバイス",
+            "max_megapixels": "最大解像度(メガピクセル)",
+            "cache_model": "キャッシュモデル"
+        },
+        "outputs": {
+            "image": "出力画像",
+            "mask": "出力マスク"
+        }
+    },
+    "BizyAir_SegmentAnythingUltraV2": {
+        "title": "☁️BizyAir_レイヤーマスク：スーパーセマンティックセグメンテーション V2（高度）",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "sam_model": "SAMモデル",
+            "grounding_dino_model": "GroundingDinoモデル",
+            "threshold": "検出閾値",
+            "detail_method": "ディテール手法",
+            "detail_erode": "ディテール侵食量",
+            "detail_dilate": "ディテール膨張量",
+            "black_point": "ブラックレベル閾値",
+            "white_point": "ホワイトレベル閾値",
+            "process_detail": "ディテール処理",
+            "prompt": "テキストプロンプト",
+            "device": "計算デバイス",
+            "max_megapixels": "最大解像度(メガピクセル)",
+            "cache_model": "キャッシュモデル"
+        },
+        "outputs": {
+            "image": "出力画像",
+            "mask": "出力マスク"
+        }
+    },
+    "BizyAir_LayerMaskLoadSAM2Model": {
+        "title": "☁️BizyAir レイヤーマスク：SAM2モデル読み込み（高度）",
+        "inputs": {
+            "image": "画像",
+            "bboxes": "BBoxes"
+        },
+        "widgets": {
+            "sam2_model": "SAM2モデル",
+            "precision": "精度",
+            "device": "デバイス"
+        },
+        "outputs": {
+            "sam2_model": "SAM2モデル"
+        }
+    },
+    "BizyAir_LayerMaskSAM2UltraV2": {
+        "title": "レイヤーマスク：SAM2 スーパーV2（高度）",
+        "inputs": {
+            "sam2_model": "SAM2モデル",
+            "image": "画像",
+            "bboxes": "BBoxes"
+        },
+        "widgets": {
+            "bbox_select": "BBoxを選択",
+            "select_index": "番号を選択",
+            "detail_method": "ディテール処理方法",
+            "detail_erode": "ディテール侵食",
+            "detail_dilate": "ディテール膨張",
+            "black_point": "ブラック閾値",
+            "white_point": "ホワイト閾値",
+            "process_detail": "ディテール処理",
+            "device": "デバイス",
+            "max_megapixels": "Vitmatte最大サイズ"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        }
+    },
+    "BizyAir_PulidFluxModelLoader": {
+        "title": "☁️BizyAir_PuLID Fluxモデルローダー",
+        "widgets": {
+            "pulid_file": "モデルファイル"
+        },
+        "outputs": {
+            "pulid_flux": "PuLID Fluxプロセッサ"
+        }
+    },
+    "BizyAir_PulidFluxInsightFaceLoader": {
+        "title": "☁️BizyAir_PuLID InsightFaceローダー",
+        "widgets": {
+            "provider": "計算デバイス"
+        },
+        "outputs": {
+            "face_analysis": "顔アナライザー"
+        }
+    },
+    "BizyAir_PulidFluxEvaClipLoader": {
+        "title": "☁️BizyAir_PuLID EVA-CLIPローダー",
+        "outputs": {
+            "eva_clip": "EVA-CLIPモデル"
+        }
+    },
+    "BizyAir_ApplyPulidFlux": {
+        "title": "☁️BizyAir_PuLID Flux適用",
+        "inputs": {
+            "model": "ベースモデル",
+            "pulid_flux": "PuLIDプロセッサ",
+            "eva_clip": "EVA-CLIPモデル",
+            "face_analysis": "顔アナライザー",
+            "image": "参考画像",
+            "attn_mask": "アテンションマスク層"
+        },
+        "widgets": {
+            "weight": "融合ウェイト",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir モデル"
+        }
+    },
+    "BizyAir_SetUnionControlNetType": {
+        "title": "☁️BizyAir_Union ControlNetタイプ設定",
+        "inputs": {
+            "control_net": "Control_Net"
+        },
+        "widgets": {
+            "type": "ControlNetタイプ"
+        },
+        "outputs": {
+            "BIZYAIR_CONTROL_NET": "BizyAir_Control_Net"
+        }
+    },
+    "BizyAir_ConditioningAverage": {
+        "title": "☁️BizyAir_条件(平均)",
+        "inputs": {
+            "conditioning_to": "適用先条件",
+            "conditioning_from": "参照元条件"
+        },
+        "widgets": {
+            "conditioning_to_strength": "適用先の強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_ConditioningConcat": {
+        "title": "☁️BizyAir_条件(連結)",
+        "inputs": {
+            "conditioning_to": "適用先条件",
+            "conditioning_from": "参照元条件"
+        },
+        "widgets": {
+            "conditioning_to_strength": "適用先の強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir条件出力"
+        }
+    },
+    "BizyAir_ControlNetInpaintingAliMamaApply": {
+        "title": "☁️BizyAir_AliMama ControlNetインペイント適用",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "control_net": "Control_Net",
+            "vae": "VAEエンコーダー",
+            "image": "参考画像",
+            "mask": "インペイントマスク"
+        },
+        "widgets": {
+            "strength": "制御強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_DisableNoise": {
+        "title": "☁️BizyAir_ノイズ生成を無効化",
+        "outputs": {
+            "NOISE": "空ノイズ"
+        }
+    },
+    "BizyAir_RandomNoise": {
+        "title": "☁️BizyAir ランダムノイズ",
+        "widgets": {
+            "noise_seed": "ノイズシード",
+            "control_after_generate": "生成後制御"
+        },
+        "outputs": {
+            "NOISE": "空ノイズ"
+        }
+    },
+    "BizyAir_VPScheduler": {
+        "title": "☁️BizyAir_VPノイズスケジューラ",
+        "widgets": {
+            "steps": "総ステップ数",
+            "beta_d": "Beta減衰率",
+            "beta_min": "Beta最小値",
+            "eps_s": "Epsilon開始値"
+        },
+        "outputs": {
+            "SIGMAS": "シグマ"
+        }
+    },
+    "BizyAir_BasicScheduler": {
+        "title": "☁️BizyAir_基本スケジューラ",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "steps": "総ステップ数",
+            "denoise": "ノイズ除去"
+        },
+        "outputs": {
+            "SIGMAS": "シグマ"
+        }
+    },
+    "BizyAir_SplitSigmas": {
+        "title": "☁️BizyAir_シグマ分割",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "step": "分割ステップ"
+        },
+        "outputs": {
+            "high_sigmas": "高シグマ",
+            "low_sigmas": "低シグマ"
+        }
+    },
+    "BizyAir_SplitSigmasDenoise": {
+        "title": "☁️BizyAir_分割降噪スケジューラ",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "denoise": "ノイズ低減強度"
+        },
+        "outputs": {
+            "high_sigmas": "高シグマ",
+            "low_sigmas": "低シグマ"
+        }
+    },
+    "BizyAir_FlipSigmas": {
+        "title": "☁️BizyAir_反転スケジューラ",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "outputs": {
+            "sigmas": "シグマ"
+        }
+    },
+    "BizyAir_CFGGuider": {
+        "title": "☁️BizyAir_CFGガイダンス",
+        "inputs": {
+            "model": "拡散モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "widgets": {
+            "cfg": "CFGスケール"
+        },
+        "outputs": {
+            "GUIDER": "ガイダンス"
+        }
+    },
+    "BizyAir_BasicGuider": {
+        "title": "☁️BizyAir_基本ガイダンス",
+        "inputs": {
+            "model": "拡散モデル",
+            "conditioning": "条件"
+        },
+        "outputs": {
+            "GUIDER": "ガイダンス"
+        }
+    },
+    "BizyAir_SamplerCustomAdvanced": {
+        "title": "☁️BizyAir_カスタムサンプラー（高度）",
+        "inputs": {
+            "noise": "ノイズ生成",
+            "guider": "ガイダンス",
+            "sampler": "サンプラー",
+            "sigmas": "シグマ",
+            "latent_image": "latent"
+        },
+        "outputs": {
+            "output": "出力",
+            "denoised_output": "ノイズ除去出力"
+        }
+    },
+    "BizyAir_TrainDatasetAdd": {
+        "title": "☁️BizyAir_学習データセット追加",
+        "inputs": {
+            "dataset_config": "データセット設定"
+        },
+        "widgets": {
+            "width": "デフォルト幅",
+            "height": "デフォルト高さ",
+            "batch_size": "バッチサイズ",
+            "dataset_path": "データセットパス",
+            "dataset_version_id": "データセットバージョンID",
+            "class_tokens": "クラストークン",
+            "enable_bucket": "バケットを有効化",
+            "bucket_no_upscale": "バケット拡大を禁止",
+            "num_repeats": "重複回数",
+            "min_bucket_reso": "最小バケット解像度",
+            "max_bucket_reso": "最大バケット解像度"
+        },
+        "outputs": {
+            "dataset": "データセット"
+        }
+    },
+    "BizyAir_DifferentialDiffusion": {
+        "title": "☁️BizyAir_差分拡散モデル",
+        "inputs": {
+            "model": "ベースモデル"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir モデル"
+        }
+    },
+    "BizyAir_CLIPTextEncodeFlux": {
+        "title": "☁️BizyAir_CLIPテキストエンコード(Flux版)",
+        "inputs": {
+            "clip": "CLIPモデル"
+        },
+        "widgets": {
+            "clip_l": "CLIP-Lモデル",
+            "t5xxl": "T5-XXLモデル",
+            "guidance": "ガイダンス強度"
+        },
+        "outputs": {
+            "conditioning": "条件"
+        }
+    },
+    "BizyAir_FluxGuidance": {
+        "title": "☁️BizyAir_Fluxガイダンス条件",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "guidance": "ガイダンス強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir_条件"
+        }
+    },
+    "BizyAir_ReferenceLatent": {
+        "title": "☁️BizyAir_参照Latent",
+        "inputs": {
+            "conditioning": "条件",
+            "latent": "Latent"
+        },
+        "widgets": {
+            "guidance": "ガイダンス強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir_条件"
+        }
+    },
+    "BizyAir_ConditioningZeroOut": {
+        "title": "☁️BizyAir_ゼロ条件出力",
+        "inputs": {
+            "conditioning": "条件",
+            "guidance": "ガイダンス強度"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir_条件"
+        }
+    },
+    "BizyAir_ConditioningSetTimestepRange": {
+        "title": "☁️BizyAir_条件の時間ステップ範囲設定",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "start": "ガイダンス開始",
+            "end": "ガイダンス終了"
+        },
+        "outputs": {
+            "BIZYAIR_CONDITIONING": "BizyAir_条件"
+        }
+    },
+    "BizyAir_LoadImageURL": {
+        "title": "☁️BizyAir_URL画像読み込み",
+        "inputs": {
+            "url": "画像URL"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        }
+    },
+    "BizyAir_Image_Encode": {
+        "title": "☁️BizyAir_画像エンコード",
+        "inputs": {
+            "image": "入力画像"
+        },
+        "widgets": {
+            "lossless": "ロスレスエンコード"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "BizyAir_IPAdapterModelLoader": {
+        "title": "☁️BizyAir_IPAdapterモデルローダー",
+        "widgets": {
+            "ipadapter_file": "IPAdapterモデル"
+        },
+        "outputs": {
+            "IPADAPTER": "IPAdapter"
+        }
+    },
+    "BizyAir_IPAdapterUnifiedLoader": {
+        "title": "☁️BizyAir_IPAdapterモデルUnifiedローダー",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "preset": "プリセット"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_IPAdapterSimple": {
+        "title": "☁️BizyAir IPAdapter適用",
+        "inputs": {
+            "model": "モデル",
+            "image": "出力画像",
+            "attn_mask": "アテンションマスク"
+        },
+        "widgets": {
+            "weight": "融合ウェイト",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー",
+            "weight_type": "重みタイプ"
+        },
+        "outputs": {
+            "m": "モデル"
+        }
+    },
+    "BizyAir_IPAdapterStyleComposition": {
+        "title": "☁️BizyAir IPAdapterスタイル適用",
+        "inputs": {
+            "model": "モデル",
+            "image_style": "スタイル画像",
+            "image_composition": "適用画像",
+            "image_negative": "ネガティブ画像",
+            "clip_vision": "CLIPビジョン",
+            "attn_mask": "アテンションマスク"
+        },
+        "widgets": {
+            "weight_style": "スタイル重み",
+            "weight_composition": "適用重み",
+            "expand_style": "スタイルを拡大",
+            "combine_embeds": "融合",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー",
+            "embeds_scaling": "埋め込み拡張"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_IPAdapterAdvanced": {
+        "title": "☁️BizyAir IPAdapter（高度）",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "image_negative": "ネガティブ画像",
+            "clip_vision": "CLIPビジョン",
+            "attn_mask": "アテンションマスク"
+        },
+        "widgets": {
+            "weight": "重み",
+            "weight_type": "重みタイプ",
+            "combine_embeds": "融合",
+            "start_at": "開始レイヤー",
+            "end_at": "終了レイヤー",
+            "embeds_scaling": "埋め込み拡張"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_InstructPixToPixConditioning": {
+        "title": "☁️BizyAir_Pix2Pix 指示条件",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAEエンコーダー",
+            "pixels": "ピクセル画像"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "latent": "潜在空間"
+        }
+    },
+    "BizyAir_JanusModelLoader": {
+        "title": "☁️BizyAir_Janusモデルローダー",
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "model": "モデル",
+            "processor": "プロセッサ"
+        }
+    },
+    "BizyAir__KolorsUNETLoaderV2": {
+        "title": "☁️BizyAir_MZ-KolorsモデルローダーV2",
+        "widgets": {
+            "unet_name": "モデル名"
+        },
+        "outputs": {
+            "model": "モデル",
+            "processor": "プロセッサ"
+        }
+    },
+    "BizyAir_MZ_KolorsControlNetLoader": {
+        "title": "☁️BizyAir_MZ-KolorsモデルControlNetローダー",
+        "widgets": {
+            "control_net_name": "モデル名"
+        },
+        "outputs": {
+            "ControlNet": "モデル",
+            "processor": "プロセッサ"
+        }
+    },
+    "BizyAir_JanusImageUnderstanding": {
+        "title": "☁️BizyAir_Janus画像理解",
+        "inputs": {
+            "model": "モデル",
+            "processor": "プロセッサ",
+            "image": "入力画像",
+            "question": "質問内容"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "temperature": "温度パラメータ",
+            "top_p": "Top-Pサンプリング",
+            "max_new_tokens": "最大新規トークン数"
+        },
+        "outputs": {
+            "text": "回答テキスト"
+        }
+    },
+    "BizyAir_JanusImageGeneration": {
+        "title": "☁️BizyAir_Janus画像生成",
+        "inputs": {
+            "model": "モデル",
+            "processor": "プロセッサ",
+            "prompt": "生成プロンプト"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "batch_size": "バッチサイズ",
+            "cfg_weight": "CFGウェイト",
+            "temperature": "温度パラメータ",
+            "top_p": "Top-Pサンプリング"
+        },
+        "outputs": {
+            "images": "生成画像"
+        }
+    },
+    "BizyAir_ModelSamplingSD3": {
+        "title": "☁️BizyAir_SD3モデルサンプリング",
+        "inputs": {
+            "model": "ベースモデル"
+        },
+        "widgets": {
+            "shift": "オフセット"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir モデル"
+        }
+    },
+    "BizyAir_ModelSamplingFlux": {
+        "title": "☁️BizyAir_Fluxモデルサンプリング",
+        "inputs": {
+            "model": "ベースモデル"
+        },
+        "widgets": {
+            "max_shift": "最大オフセット",
+            "base_shift": "基本オフセット",
+            "width": "画像幅",
+            "height": "画像高さ"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir モデル"
+        }
+    },
+    "BizyAir_TripleCLIPLoader": {
+        "title": "☁️BizyAir_トリプルCLIPローダー",
+        "widgets": {
+            "clip_name1": "CLIP名1",
+            "clip_name2": "CLIP名2",
+            "clip_name3": "CLIP名3"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir CLIP"
+        }
+    },
+    "BizyAir_UNETLoader": {
+        "title": "☁️BizyAir_拡散モデルローダー",
+        "widgets": {
+            "unet_name": "UNet名",
+            "weight_dtype": "重みデータ型"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir CLIP"
+        }
+    },
+    "BizyAir_DualCLIPLoader": {
+        "title": "☁️BizyAir_デュアルCLIPローダー",
+        "widgets": {
+            "clip_name1": "CLIP名1",
+            "clip_name2": "CLIP名2",
+            "type": "タイプ"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir CLIP"
+        }
+    },
+    "BizyAir_CLIPLoader": {
+        "title": "☁️BizyAir_CLIPローダー",
+        "widgets": {
+            "clip_name": "CLIP名",
+            "type": "タイプ",
+            "device": "デバイス"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir CLIP"
+        }
+    },
+    "BizyAir_ControlNetApplySD3": {
+        "title": "☁️BizyAir_SD3 ControlNet適用",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "control_net": "Control_Net",
+            "vae": "VAEエンコーダー",
+            "image": "制御画像"
+        },
+        "widgets": {
+            "strength": "制御強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    },
+    "BizyAir_IF_TrellisCheckpointLoader": {
+        "title": "☁️BizyAir_IF_メッシュモデルローダー",
+        "widgets": {
+            "model_name": "モデル名",
+            "dinov2_model": "dinov2モデル",
+            "use_fp16": "fp16を使用",
+            "attn_backend": "アテンションバックエンド",
+            "smooth_k": "平滑化係数",
+            "spconv_algo": "疎畳み込みアルゴリズム",
+            "main_device": "使用デバイス"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_IF_TrellisImageTo3D": {
+        "title": "☁️BizyAir_IF_メッシュ画像から3D",
+        "inputs": {
+            "model": "モデル",
+            "images": "画像",
+            "masks": "マスク"
+        },
+        "widgets": {
+            "mode": "モード",
+            "seed": "ランダムシード",
+            "control_after_generate": "生成後制御",
+            "ss_guidance_strength": "超解像ガイダンス強度",
+            "ss_sampling_steps": "超解像サンプリングステップ数",
+            "slat_guidance_strength": "セグメントガイダンス強度",
+            "slat_sampling_steps": "セグメントサンプリングステップ数",
+            "multimode": "マルチモード"
+        },
+        "outputs": {
+            "trellis_gaussian": "メッシュガウシアン",
+            "trellis_mesh": "メッシュ構造"
+        }
+    },
+    "BizyAir_Trans3D2GlbFile": {
+        "title": "☁️BizyAir_3DをGLBファイルに変換",
+        "inputs": {
+            "trellis_gaussian": "メッシュガウシアン",
+            "trellis_mesh": "メッシュ構造"
+        },
+        "widgets": {
+            "mesh_simplify": "メッシュ簡略化",
+            "texture_size": "テクスチャサイズ",
+            "texture_mode": "テクスチャモード",
+            "save_glb": "glbを保存",
+            "save_texture": "テクスチャを保存"
+        },
+        "outputs": {
+            "url": "アドレス",
+            "texture_image": "テクスチャ画像"
+        }
+    },
+    "BizyAirDownloadFile": {
+        "title": "☁️BizyAirファイルダウンロード",
+        "widgets": {
+            "url": "ウェブアドレス",
+            "folder": "フォルダ",
+            "file_name": "ファイル名"
+        },
+        "outputs": {
+            "path": "パス"
+        }
+    },
+    "BizyAir_UltimateSDUpscale": {
+        "title": "☁️BizyAir SDアップスケール",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model": "アップスケールモデル"
+        },
+        "widgets": {
+            "upscale_by": "アップスケール倍率",
+            "seed": "ランダムシード",
+            "control_after_generate": "生成後制御",
+            "steps": "ステップ数",
+            "cfg": "CFGガイダンス",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "mode_type": "モードタイプ",
+            "tile_width": "タイル幅",
+            "tile_height": "タイル高さ",
+            "mask_blur": "マスクぼかし",
+            "tile_padding": "タイルパディング",
+            "seam_fix_mode": "シーム修復モード",
+            "seam_fix_denoise": "シーム修復ノイズ除去",
+            "seam_fix_width": "シーム修復幅",
+            "seam_fix_mask_blur": "シーム修復ぼかし",
+            "seam_fix_padding": "シーム修復パディング",
+            "force_uniform_tiles": "タイルを強制統一",
+            "tiled_decode": "タイルデコード"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "BizyAir_ImageUpscaleWithModel": {
+        "title": "☁️BizyAir 画像アップスケール（モデル使用）",
+        "inputs": {
+            "upscale_model": "アップスケールモデル",
+            "image": "画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "BizyAir_UpscaleModelLoader": {
+        "title": "☁️BizyAir_アップスケールモデルローダー",
+        "widgets": {
+            "model_name": "アップスケールモデル"
+        },
+        "outputs": {
+            "BIZYAIR_UPSCALE_MODEL": "BizyAir_アップスケールモデル"
+        }
+    },
+    "BizyAir_PassParameter": {
+        "title": "☁️BizyAir パラメータ受け渡し",
+        "widgets": {
+            "model_name": "アップスケールモデル"
+        },
+        "outputs": {
+            "BIZYAIR_UPSCALE_MODEL": "BizyAir_アップスケールモデル"
+        }
+    },
+    "BizyAir_NunchakuFluxDiTLoader": {
+        "title": "☁️BizyAir_Nunchaku FluxDiTローダー",
+        "widgets": {
+            "model_path": "モデルパス",
+            "cache_threshold": "キャッシュ閾値",
+            "attention": "アテンションモード",
+            "cpu_offload": "CPUアンロード",
+            "device_id": "デバイスID",
+            "data_type": "データ型",
+            "i2f_mode": "I2Fモード"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir_モデル"
+        }
+    },
+    "BizyAir_NunchakuTextEncoderLoader": {
+        "title": "☁️BizyAir Nunchaku テキストエンコーダーローダー",
+        "widgets": {
+            "model_type": "モデルタイプ",
+            "text_encoder1": "テキストエンコーダー1",
+            "text_encoder2": "テキストエンコーダー2",
+            "t5_min_length": "T5最小長",
+            "use_4bit_t5": "4bit T5を使用",
+            "int4_model": "INT4モデル"
+        },
+        "outputs": {
+            "BIZYAIR_CLIP": "BizyAir_CLIPエンコーダー"
+        }
+    },
+    "BizyAir_NunchakuFluxLoraLoader": {
+        "title": "☁️BizyAir Nunchaku FluxLoraローダー",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "lora_strength": "Lora強度",
+            "lora_name": "Lora名",
+            "model_version_id": "モデルバージョン番号"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir_モデル"
+        }
+    },
+    "BizyAir_NunchakuPulidApply": {
+        "title": "☁️BizyAir Nunchaku PuLID適用",
+        "inputs": {
+            "pulid": "PuLID",
+            "image": "画像",
+            "model": "モデル"
+        },
+        "widgets": {
+            "ip_weight": "IPウェイト"
+        },
+        "outputs": {
+            "BIZYAIR_MODEL": "BizyAir_モデル"
+        }
+    },
+    "BizyAir_NunchakuPulidLoader": {
+        "title": "☁️BizyAir Nunchaku PuLIDローダー",
+        "inputs": {
+            "pulid": "PuLID",
+            "model": "モデル"
+        },
+        "widgets": {
+            "ip_weight": "IPウェイト"
+        },
+        "outputs": {
+            "BIZYAIR_PULID": "BizyAir PuLID",
+            "BIZYAIR_MODEL": "BizyAir_モデル"
+        }
+    },
+    "BizyAir_Hy3D_2_1SimpleMeshGen": {
+        "title": "☁️BizyAir 混元3D_2_1 シンプルメッシュ生成",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "model": "モデル",
+            "steps": "反復ステップ数",
+            "guidance_scale": "ガイダンス強度",
+            "octree_resolution": "オクツリー解像度"
+        },
+        "outputs": {
+            "trimesh": "trimesh形式"
+        }
+    },
+    "BizyAir_Hy3DExportMesh": {
+        "title": "☁️BizyAir 混元3D_2_1 シンプルメッシュ生成",
+        "inputs": {
+            "trimesh": "trimesh形式"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_fommat": "ファイル形式",
+            "save_file": "ファイルを保存"
+        },
+        "outputs": {
+            "glb_path": "GLB パス"
+        }
+    },
+    "BizyAir_reactor": {
+        "title": "☁️BizyAir 🌌ReActor顔スワップ",
+        "inputs": {
+            "input_image": "対象画像",
+            "source_image": "元画像",
+            "face_model": "顔モデル",
+            "face_boost": "顔強化"
+        },
+        "widgets": {
+            "enabled": "有効",
+            "swap_model": "スワップモデル",
+            "facedetection": "検出モデル",
+            "face_restore_model": "修復モデル",
+            "face_restore_visibility": "顔修復の適用度",
+            "codeformer_weight": "CodeFormer_ウェイト",
+            "detect_gender_source": "ソース側の性別検出",
+            "detect_gender_input": "対象側の性別検出",
+            "source_faces_index": "ソース顔インデックス",
+            "input_faces_index": "対象顔インデックス",
+            "console_log_level": "コンソールログレベル"
+        },
+        "outputs": {
+            "BIZYAIR_PLACEHOLDER": "☁️BizyAirプレースホルダー",
+            "SWAPPED_IMAGE": "顔スワップ画像",
+            "ORIGINAL_IMAGE": "元画像",
+            "FACE_MODEL": "顔モデル"
+        }
+    },
+    "BizyAir_ReActorPlusOpt": {
+        "title": "☁️BizyAir 🌌ReActor顔スワップ（設定グループ）",
+        "inputs": {
+            "input_image": "対象画像",
+            "source_image": "元画像",
+            "face_model": "顔モデル",
+            "options": "ReActor設定グループ",
+            "face_boost": "顔強化"
+        },
+        "widgets": {
+            "enabled": "有効",
+            "swap_model": "スワップモデル",
+            "facedetection": "検出モデル",
+            "face_restore_model": "修復モデル",
+            "face_restore_visibility": "顔修復の適用度",
+            "codeformer_weight": "CodeFormer_ウェイト"
+        },
+        "outputs": {
+            "BIZYAIR_PLACEHOLDER": "☁️BizyAirプレースホルダー",
+            "SWAPPED_IMAGE": "顔スワップ画像",
+            "ORIGINAL_IMAGE": "元画像",
+            "FACE_MODEL": "顔モデル"
+        }
+    },
+    "BizyAir_ReActorOptions": {
+        "title": "☁️BizyAir 🌌ReActor設定グループ",
+        "widgets": {
+            "input_faces_order": "対象顔の順序",
+            "source_faces_order": "ソース顔の順序",
+            "detect_gender_source": "ソース側の性別検出",
+            "detect_gender_input": "対象側の性別検出",
+            "source_faces_index": "ソース顔インデックス",
+            "input_faces_index": "対象顔インデックス",
+            "console_log_level": "コンソールログレベル"
+        },
+        "outputs": {
+            "OPTIONS": "ReActor設定グループ"
+        }
+    },
+    "BizyAir_RestoreFace": {
+        "title": "☁️BizyAir 🌌ReActor顔修復",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "facedetection": "検出モデル",
+            "model": "修復モデル",
+            "visibility": "顔修復の適用度",
+            "codeformer_weight": "CodeFormer_ウェイト"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "BizyAir_ReActorFaceBoost": {
+        "title": "☁️BizyAir 🌌ReActor顔強化",
+        "widgets": {
+            "enabled": "有効",
+            "boost_model": "強化モデル",
+            "interpolation": "補間方式",
+            "visibility": "顔修復の適用度",
+            "codeformer_weight": "CodeFormer_ウェイト",
+            "restore_with_main_after": "メイン処理後の修復"
+        },
+        "outputs": {
+            "FACE_BOOST": "顔強化"
+        }
+    },
+    "BizyAir_MZ_KolorsUNETLoaderV2": {
+        "title": "☁️BizyAir  MinusZone - Kolors Unet ローダー V2",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "unet_name": "unetモデル名"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "BizyAir_ParseQwenVLBBoxes": {
+        "title": "☁️BizyAir  Qwen-VL の BBoxes テキストを解析して SAM2 に対応",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "model": "モデル",
+            "bboxes_text": "バウンディングボックステキスト",
+            "target": "ターゲット",
+            "bbox_selection": "バウンディングボックス選択",
+            "merge_boxes": "バウンディングボックス結合"
+        },
+        "outputs": {
+            "text": "テキスト",
+            "bboxes": "バウンディングボックス"
+        }
+    },
+    "BizyAir_NanoBanana": {
+        "title": "☁️BizyAir ナノバナナ",
+        "inputs": {
+            "image": "画像",
+            "image2": "画像2",
+            "image3": "画像3",
+            "image4": "画像4",
+            "image5": "画像5"
+        },
+        "widgets": {
+            "operation": "実行",
+            "temperature": "温度",
+            "target": "ターゲット",
+            "top_p": "top_p",
+            "seed": "シード",
+            "max_tokens": "最大トークン数",
+            "quality": "品質",
+            "aspect_ratio": "アスペクト比",
+            "character_consistency": "キャラクター一貫性"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "STRING": "文字列"
+        }
+    },
+    "BizyAir_Seedream4": {
+        "title": "☁️BizyAir Seedream 4.0",
+        "inputs": {
+            "image": "画像",
+            "image2": "画像2",
+            "image3": "画像3",
+            "image4": "画像4",
+            "image5": "画像5",
+            "image6": "画像6",
+            "image7": "画像7",
+            "image8": "画像8",
+            "image9": "画像9",
+            "image10": "画像10"
+        },
+        "widgets": {
+            "size": "サイズ",
+            "custom_width": "カスタム幅",
+            "custom_height": "カスタム高さ",
+            "model": "モデル",
+            "seed": "シード",
+            "max_tokens": "最大トークン数",
+            "quality": "品質",
+            "aspect_ratio": "アスペクト比",
+            "character_consistency": "キャラクター一貫性"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "STRING": "文字列"
+        }
+    },
+    "BizyAirGenerateLightningImage": {
+        "title": "☁️BizyAir 超リアル画像を生成",
+        "widgets": {
+            "prompt": "プロンプト",
+            "seed": "ランダムシード",
+            "width": "幅",
+            "height": "高さ",
+            "cfg": "CFG値",
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "IMAGE": "出力画像"
+        }
+    }
+}

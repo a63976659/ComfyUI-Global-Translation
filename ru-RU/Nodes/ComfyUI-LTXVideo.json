@@ -1,0 +1,1528 @@
+{
+    "LTXVSetAudioRefTokens": {
+        "title": "🅛🅣🅧Видео: задать метки опорного аудио",
+        "inputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "audio_latent": "Аудио-Latent"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "frozen_audio": "Заморозить аудио"
+        },
+        "description": "Задать метки опорного аудио"
+    },
+    "LTXVLoadConditioning": {
+        "title": "🅛🅣🅧Видео: загрузить условие",
+        "widgets": {
+            "file_name": "Имя файла",
+            "device": "Устройство"
+        },
+        "api_version": "V3"
+    },
+    "LTXVSaveConditioning": {
+        "title": "🅛🅣🅧Видео: сохранить условие",
+        "widgets": {
+            "conditioning": "Условие",
+            "filename": "Имя файла",
+            "dtype": "Тип данных"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "DecoderNoise": {
+        "title": "🅛🅣🅧Видео: шум декодера",
+        "inputs": {
+            "vae": "vae"
+        },
+        "widgets": {
+            "timestep": "Временной шаг",
+            "scale": "Масштаб",
+            "seed": "Случайное зерно"
+        },
+        "outputs": {
+            "VAE": "VAE"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "DynamicConditioning": {
+        "title": "🅛🅣🅧Видео: динамическое условие",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "power": "Интенсивность",
+            "only_first_frame": "Только первый кадр"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVBaseSampler": {
+        "title": "🅛🅣🅧Видео: базовый видеосэмплер",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "vae": "Энкодер VAE",
+            "guider": "Гидратор условий",
+            "sampler": "Алгоритм сэмплирования",
+            "sigmas": "Расписание шума",
+            "noise": "Начальный шум",
+            "optional_cond_images": "Изображение условия (необязательно)"
+        },
+        "widgets": {
+            "width": "Ширина кадра",
+            "height": "Высота кадра",
+            "num_frames": "общее количество кадров",
+            "optional_cond_indices": "Индекс условия (необязательно)",
+            "strength": "Ползунок интенсивности",
+            "crop": "Параметры обрезки",
+            "crf": "Коэффициент битрейта",
+            "blur": "Интенсивность размытия"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "denoised_output": "Latent шумоподавления",
+            "conditioning": "Тензор условия"
+        }
+    },
+    "LTXVExtendSampler": {
+        "title": "🅛🅣🅧Видео: сэмплер с расширением",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "vae": "Энкодер VAE",
+            "latents": "Начальный Latent",
+            "guider": "Гидратор условий",
+            "sampler": "Алгоритм сэмплирования",
+            "sigmas": "Расписание шума",
+            "noise": "Расширенный шум",
+            "optional_guiding_latents": "Latent гайда (необязательно)",
+            "guiding_strength": "Сила гайда",
+            "optional_reference_latents": "Опорный Latent (необязательно)",
+            "adain_factor": "Влияние переноса стиля",
+            "optional_negative_index_latents": "Негативный Latent (необязательно)",
+            "optional_negative_index": "Негативный индекс (необязательно)",
+            "optional_negative_index_strength": "Интенсивность негатива"
+        },
+        "widgets": {
+            "num_new_frames": "Добавленные кадры",
+            "frame_overlap": "Число перекрытия кадров",
+            "strength": "Интенсивность шумоподавления",
+            "adain_factor": "Ползунок переноса стиля"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "denoised_output": "Latent шумоподавления",
+            "conditioning": "Тензор условия"
+        }
+    },
+    "LTXVInContextSampler": {
+        "title": "🅛🅣🅧Видео: контекстный сэмплер",
+        "inputs": {
+            "vae": "Энкодер VAE",
+            "guider": "Гидратор условий",
+            "sampler": "Алгоритм сэмплирования",
+            "sigmas": "Расписание шума",
+            "noise": "Начальный шум",
+            "guiding_latents": "Latent гайда",
+            "optional_cond_image": "Изображение условия (необязательно)"
+        },
+        "widgets": {
+            "num_frames": "общее количество кадров"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "denoised_output": "Latent шумоподавления",
+            "conditioning": "Тензор условия"
+        }
+    },
+    "LinearOverlapLatentTransition": {
+        "title": "Линейный переход Latent",
+        "inputs": {
+            "samples1": "Начальный Latent",
+            "samples2": "Целевой Latent"
+        },
+        "widgets": {
+            "overlap": "Кадров перехода",
+            "axis": "Размерность смешивания",
+            "samples": "Последовательность Latent"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "LTXVNormalizingSampler": {
+        "title": "🅛🅣🅧Видео: сэмплер нормализации",
+        "widgets": {
+            "noise": "Шум",
+            "guider": "Гидратор",
+            "sampler": "Сэмплер",
+            "sigmas": "Таблица шума",
+            "latent_image": "Изображение Latent",
+            "video_normalization_factors": "Влияние нормализации видео",
+            "audio_normalization_factors": "Влияние нормализации аудио"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "GemmaAPITextEncode": {
+        "title": "Кодирование текста через API Gemma",
+        "widgets": {
+            "api_key": "Ключ API",
+            "prompt": "Промпт",
+            "enhance_prompt": "Усилить промпт",
+            "ckpt_name": "Имя файла модели"
+        },
+        "outputs": {
+            "conditioning": "Условие",
+            "CONDITIONING": "Условие"
+        },
+        "description": "Кодирует текстовые промпты через LTX Video API и возвращает CONDITIONING (условие) для моделей LTX-2.\n\nВместо локального шага кодирования CLIP узел отправляет промпт во внешний API для обработки. Требует ключ API и автоматически извлекает ID модели из метаданных файла чекпоинта.\n\nВходы:\n    - api_key: ключ аутентификации LTX Video API\n    - prompt: текстовый промпт для кодирования\n    - ckpt_name: файл чекпоинта с метаданными модели\n\nВозвращает:\n    - CONDITIONING: закодированное условие промпта, готовое для генерации видео LTX-2",
+        "api_version": "V1"
+    },
+    "LTXVGemmaCLIPModelLoader": {
+        "title": "🅛🅣🅧Видео: загрузчик Gemma CLIP",
+        "widgets": {
+            "gemma_path": "Путь к Gemma",
+            "ltxv_path": "Путь к LTXV",
+            "max_length": "Максимальная длина"
+        },
+        "outputs": {
+            "clip": "clip",
+            "CLIP": "CLIP"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVGemmaEnhancePrompt": {
+        "title": "🅛🅣🅧Видео: улучшение промпта Gemma",
+        "inputs": {
+            "image": "Изображение",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "prompt": "Промпт",
+            "max_tokens": "Максимальное число токенов",
+            "bypass_i2v": "Обход: изображение-в-видео",
+            "seed": "Случайное зерно"
+        },
+        "outputs": {
+            "enhanced_prompt": "Улучшенный промпт",
+            "srting": "Строка"
+        },
+        "description": "Улучшает текстовые промпты через Gemma 3 VLLM для повышения качества генерации видео.",
+        "api_version": "V1"
+    },
+    "LTXVAddGuideAdvanced": {
+        "title": "🅛🅣🅧Видео: расширенный гидратор условного управления",
+        "inputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "vae": "Энкодер VAE",
+            "latent": "Начальный Latent",
+            "image": "Опорное изображение"
+        },
+        "widgets": {
+            "frame_idx": "Индекс целевого кадра",
+            "strength": "Сила гайда",
+            "crf": "Коэффициент битрейта",
+            "blur_radius": "Радиус размытия",
+            "interpolation": "Метод интерполяции",
+            "crop": "Параметры обрезки"
+        },
+        "outputs": {
+            "conditioning": "Усилить условие",
+            "latent": "Latent гайда"
+        }
+    },
+    "LTXVImgToVideoAdvanced": {
+        "title": "🅛🅣🅧Видео: изображение в видео (расширенно)",
+        "inputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "vae": "Энкодер VAE",
+            "image": "Начальное изображение"
+        },
+        "widgets": {
+            "width": "Ширина видео",
+            "height": "Высота видео",
+            "length": "Длительность видео",
+            "batch_size": "Размер батча",
+            "crf": "Коэффициент битрейта",
+            "blur_radius": "Радиус размытия",
+            "interpolation": "Метод интерполяции",
+            "crop": "Параметры обрезки",
+            "strength": "Интенсивность преобразования"
+        },
+        "outputs": {
+            "conditioning": "Условие видео",
+            "latent": "Latent видео"
+        }
+    },
+    "LTXVAddGuideAdvancedAttention": {
+        "title": "Добавление расширенного направляющего внимания",
+        "inputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "vae": "VAE",
+            "latent": "Latent",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "frame_idx": "Индекс кадра",
+            "strength": "Интенсивность",
+            "crf": "CRF",
+            "blur_radius": "Радиус размытия",
+            "interpolation": "Способ интерполяции",
+            "crop": "Обрезка",
+            "attention_strength": "Интенсивность внимания",
+            "attention_mask": "Маска внимания"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "latent": "Latent",
+            "CONDITIONING": "Условие",
+            "LATENT": "Latent"
+        },
+        "description": "Добавляет условный кадр/видео по заданному индексу кадра с управлением интенсивностью внимания для каждого guidance. Те же шаги предобработки, что и у LTXVAddGuideAdvanced, плюс интенсивность внимания и необязательная пространственная маска.",
+        "api_version": "V1"
+    },
+    "LTXAddVideoICLoRAGuide": {
+        "title": "🅛🅣🅧Видео: добавить guidance IC-LoRA",
+        "inputs": {
+            "positive": "Положительное",
+            "negative": "Отрицательное",
+            "vae": "vae",
+            "latent": "Latent",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "frame_idx": "Индекс кадра",
+            "strength": "Интенсивность",
+            "latent_downscale_factor": "Влияние уменьшения Latent",
+            "crop": "Обрезка",
+            "use_tiled_encode": "Использовать блочное кодирование",
+            "tile_size": "Размер блока",
+            "tile_overlap": "Перекрытие плиток"
+        },
+        "outputs": {
+            "positive": "Положительное",
+            "negative": "Отрицательное",
+            "latent": "Latent"
+        },
+        "description": "Добавляет один или несколько условных кадров, начиная с указанного индекса кадра. Поддерживает одинарное изображение и многокадровое видео. Latent_downscale_factor масштабирует вход до дроби от целевого размера (1 = исходный размер, 2 = половина, 3 = треть и т. д.), чтобы IC-LoRA обрабатывалась на малой сетке.",
+        "api_version": "V3"
+    },
+    "LTXAddVideoICLoRAGuideAdvanced": {
+        "title": "🅛🅣🅧Видео: добавить guidance IC-LoRA (расширенно)",
+        "inputs": {
+            "positive": "Положительное",
+            "negative": "Отрицательное",
+            "vae": "vae",
+            "latent": "Latent",
+            "image": "Изображение",
+            "attention_mask": "Маска внимания"
+        },
+        "widgets": {
+            "frame_idx": "Индекс кадра",
+            "strength": "Интенсивность",
+            "latent_downscale_factor": "Влияние даунсемплинга Latent",
+            "crop": "Обрезка",
+            "use_tiled_encode": "Использовать блочное кодирование",
+            "tile_size": "Размер блока",
+            "tile_overlap": "Перекрытие плиток",
+            "attention_strength": "Интенсивность внимания"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "latent": "Latent"
+        },
+        "description": "Добавляет условие guidance IC-LoRA с управлением интенсивностью внимания для каждого guidance. То же, что LTXAddVideoICLoRAGuide, но позволяет через самовнимание управлять степенью влияния этого guidance на генерацию и поддерживает необязательную пространственную маску.",
+        "api_version": "V3"
+    },
+    "LTXICLoRALoaderModelOnly": {
+        "title": "🅛🅣🅧Видео: загрузчик IC-LoRA (только модель)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "lora_name": "Имя LoRA",
+            "strength_model": "Интенсивность модели"
+        },
+        "outputs": {
+            "model": "Модель",
+            "latent_downscale_factor": "Влияние даунсемплинга Latent"
+        },
+        "description": "Загружает модель LoRA и извлекает Latent_downscale_factor из метаданных safetensors.",
+        "api_version": "V3"
+    },
+    "LTXVSelectLatents": {
+        "title": "🅛🅣🅧Видео: селектор Latent",
+        "inputs": {
+            "samples": "Последовательность Latent"
+        },
+        "widgets": {
+            "start_index": "Начальный индекс",
+            "end_index": "Конечный индекс"
+        },
+        "outputs": {
+            "latent": "Выбранный Latent"
+        }
+    },
+    "LTXVAddLatents": {
+        "title": "🅛🅣🅧Видео: композитор Latent",
+        "inputs": {
+            "latents1": "Последовательность Latent 1",
+            "latents2": "Последовательность Latent 2",
+            "latent1": "Latent1",
+            "latent2": "Latent2",
+            "frames1": "Последовательность кадров 1",
+            "frames2": "Последовательность кадров 2"
+        },
+        "outputs": {
+            "latent": "Композиция Latent"
+        }
+    },
+    "LTXVSetVideoLatentNoiseMasks": {
+        "title": "🅛🅣🅧Видео: маска шума",
+        "inputs": {
+            "samples": "Последовательность Latent",
+            "masks": "Маска области",
+            "height": "Высота маски",
+            "width": "Ширина маски",
+            "noise_mask": "Маска шума",
+            "resized_masks": "Масштабирование маски",
+            "num_frames": "общее количество кадров",
+            "M": "Коэффициент размытия"
+        },
+        "widgets": {
+            "M": "Регулятор размытия"
+        },
+        "outputs": {
+            "latent": "Latent с маской"
+        }
+    },
+    "LTXVDilateLatent": {
+        "title": "🅛🅣🅧Видео: расширить Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "horizontal_scale": "Горизонтальное масштабирование",
+            "vertical_scale": "Вертикальное масштабирование"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Выполняет дилатацию Latent по размеру сетки.",
+        "api_version": "V1"
+    },
+    "LTXVAddLatentGuide": {
+        "title": "🅛🅣🅧Видео: гидратор Latent",
+        "inputs": {
+            "vae": "VAE",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "latent": "Latent",
+            "guiding_latent": "Latent гайда"
+        },
+        "widgets": {
+            "latent_idx": "Индекс Latent",
+            "strength": "Сила гайда"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "conditioning": "Усилить условие",
+            "latent": "Latent"
+        }
+    },
+    "LTXVImgToVideoConditionOnly": {
+        "title": "🅛🅣🅧Видео: преобразование условий изображения в видео",
+        "inputs": {
+            "vae": "VAE",
+            "image": "Изображение",
+            "latent": "Latent"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "bypass": "Пропуск"
+        },
+        "outputs": {
+            "latent": "Latent",
+            "LATENT": "Latent"
+        },
+        "description": "Применяется к первому кадру существующего Latent. Создаёт маску шума для управления интенсивностью условия.",
+        "api_version": "V1"
+    },
+    "LTXVSetAudioVideoMaskByTime": {
+        "title": "🅛🅣🅧Видео: маски аудио и видео по времени",
+        "inputs": {
+            "av_latent": "Аудиовизуальный Latent",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "model": "Модель",
+            "vae": "VAE",
+            "audio_vae": "Аудио VAE"
+        },
+        "widgets": {
+            "start_time": "Время начала",
+            "end_time": "Время окончания",
+            "video_fps": "FPS видео",
+            "mask_video": "Видеомаска",
+            "mask_audio": "Аудиомаска",
+            "mask_init_value_video": "Начальное значение видеомаски",
+            "mask_init_value_audio": "Начальное значение аудиомаски",
+            "slope_len": "Длина скоса",
+            "spatial_mask": "Пространственная маска"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "av_latent": "Аудиовизуальный Latent",
+            "video_latent_blend_coefficients": "Коэффициент смешивания Latent видео",
+            "video_pixel_blend_coefficients": "Коэффициент пиксельного смешивания видео",
+            "CONDITIONing": "Условие",
+            "latent": "Latent",
+            "float": "Число с плавающей точкой"
+        },
+        "description": "Задаёт маски аудио и видео по времени.",
+        "api_version": "V1"
+    },
+    "Adain Latent": {
+        "title": "🅛🅣🅧Видео: перенос стиля Latent",
+        "inputs": {
+            "latents": "Целевой Latent",
+            "reference": "Референс стиля"
+        },
+        "widgets": {
+            "factor": "Влияние"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "LTXVStatNormLatLat": {
+        "title": "🅛🅣🅧Видео: статистическая нормализация Latent",
+        "inputs": {
+            "lattent": "Latent"
+        },
+        "widgets": {
+            "target_mean": "Целевое среднее",
+            "target_std": "Целевое стандартное отклонение",
+            "percentile": "Квантиль",
+            "factor": "Фактор",
+            "clip_outliers": "Отсечение выбросов"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVPerStepAdainPatcher": {
+        "title": "🅛🅣🅧Видео: пошаговый адаптер AdaIN",
+        "inputs": {
+            "model": "Модель",
+            "reference": "Референс"
+        },
+        "widgets": {
+            "factors": "Влияние",
+            "per_frame": "На каждый кадр"
+        },
+        "description": "Этот узел применяет патч адаптивной instance-нормализации (AdaIN) на каждом шаге генерации моделей LTX-Video. Принимает модель и опорное изображение, позволяет настраивать вес нормализации через параметр «Влияние» (например 0.9, 0.75, 0.0) и необязательно применять патч к каждому кадру отдельно (per_frame)."
+    },
+    "LTXVPerStepStatNormPatcher": {
+        "title": "🅛🅣🅧Видео: патч статистической нормализации по шагам",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "factors": "Влияние",
+            "target_mean": "Целевое среднее",
+            "target_std": "Целевое стандартное отклонение",
+            "percentile": "Квантиль",
+            "clip_outliers": "Обрезка выбросов"
+        },
+        "outputs": {
+            "patch": "Патч"
+        },
+        "description": "Этот узел применяет патч пошаговой статистической нормализации к моделям LTX-Video. Позволяет настроить влияние нормализации, целевые среднее и стандартное отклонение, а также необязательно обрезать выбросы, оптимизируя статистические характеристики модели при заданных условиях."
+    },
+    "LTXVLooploopSampler": {
+        "title": "Циклический сэмплер",
+        "inputs": {
+            "model": "Модель",
+            "vae": "VAE",
+            "noise": "Шум",
+            "sampler": "Сэмплер",
+            "sigmas": "Значения sigma",
+            "guider": "Гидратор",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "temporal_tile_size": "Размер временного блока",
+            "temporal_overlap": "Временное перекрытие",
+            "guidinging_strength": "Сила гайда",
+            "temporal_overlap_cond_strength": "Интенсивность guidance временного перекрытия условия",
+            "cond_image_strength": "Интенсивность изображения условия",
+            "horizontal_tiles": "Число горизонтальных блоков",
+            "vertical_tiles": "Число вертикальных блоков",
+            "spatial_overlap": "Пространственное перекрытие",
+            "optional_cond_images": "Необязательное изображение условия",
+            "optional_guiding_latents": "Необязательный Latent гайда",
+            "adain_factor": "Фактор ADAIN",
+            "optional_positive_conditionings": "Необязательное позитивное условие",
+            "optional_negative_index_latents": "Необязательный Latent отрицательного индекса",
+            "guiding_start_step": "Начальный шаг guidance",
+            "guiding_end_step": "Конечный шаг guidance",
+            "optional_cond_image_indices": "Необязательный индекс изображения условия",
+            "optional_normalizing_latents": "Необязательный нормализованный Latent"
+        },
+        "outputs": {
+            "denoised_output": "Выход после шумоподавления",
+            "LATENT": "Latent"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "MultiPromptProvider": {
+        "title": "🅛🅣🅧Видео: слияние промптов",
+        "inputs": {
+            "prompts": "Список промптов",
+            "clip": "CLIP"
+        },
+        "outputs": {
+            "conditionings": "Условие",
+            "conditioning": "Условие"
+        }
+    },
+    "LowVRAMCheckpointLoader": {
+        "title": "🅛🅣🅧Видео: загрузчик чекпоинтов (низкая VRAM)",
+        "inputs": {
+            "dependencies": "Зависимости"
+        },
+        "widgets": {
+            "ckpt_name": "Название модели"
+        },
+        "description": "Загружает чекпоинт диффузионной модели с поддержкой зависимостей. Подключите 'dependencies' к выходу предыдущего загрузчика, чтобы обеспечить последовательную загрузку и снизить пиковое потребление видеопамяти."
+    },
+    "LowVRAMAudioVAELoader": {
+        "title": "🅛🅣🅧Видео: загрузчик аудио VAE (низкая VRAM)",
+        "inputs": {
+            "dependencies": "Зависимости"
+        },
+        "widgets": {
+            "ckpt_name": "Название модели"
+        },
+        "outputs": {
+            "audio_vae": "Аудио VAE",
+            "VAE": "VAE"
+        },
+        "description": "Загружает чекпоинт аудио VAE LTXV с поддержкой зависимостей. Подключите 'dependencies' к выходу предыдущего загрузчика, чтобы обеспечить последовательную загрузку и снизить пиковое потребление видеопамяти.",
+        "api_version": "V1"
+    },
+    "LowVRAMLatentUpscaleModelLoader": {
+        "title": "🅛🅣🅧Видео: загрузчик модели увеличения Latent (низкая VRAM)",
+        "inputs": {
+            "dependencies": "Зависимости"
+        },
+        "widgets": {
+            "model_name": "Название модели"
+        },
+        "outputs": {
+            "LATENT_UPSCALE_MODEL": "Модель апскейла Latent"
+        },
+        "description": "Загружает усилитель Latent с входом зависимостей для последовательной загрузки в сценариях с малым объёмом видеопамяти.",
+        "api_version": "V3"
+    },
+    "LTXVPreprocessMasks": {
+        "title": "🅛🅣🅧Видео: препроцессор маски",
+        "inputs": {
+            "masks": "Маска",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "invert_input_masks": "Инверсия маски",
+            "ignore_first_mask": "Игнорировать первый кадр",
+            "pooling_method": "Способ пулинга",
+            "grow_mask": "Расширение маски",
+            "tapered_corners": "Растушёвка краёв",
+            "clamp_min": "Ограничение по минимуму",
+            "clamp_max": "Ограничение по максимуму"
+        },
+        "outputs": {
+            "mask": "Маска"
+        }
+    },
+    "LTXVPromptEnhancerLoader": {
+        "title": "🅛🅣🅧Видео: загрузчик усилителя промптов",
+        "widgets": {
+            "llm_name": "Модель LLM",
+            "image_captioner_name": "Модель описания изображений",
+            "model_name": "Базовая модель",
+            "load_device": "Загрузить на устройство",
+            "image_captioner": "Описатель изображений"
+        },
+        "outputs": {
+            "ltxv_prompt_enhancer": "Усилитель промптов",
+            "prompt_enhancer": "Усилитель промптов"
+        }
+    },
+    "LTXVPromptEnhancer": {
+        "title": "🅛🅣🅧Видео: усилитель промптов",
+        "inputs": {
+            "prompt_enhancer": "Усилитель подсказок",
+            "image_prompt": "Подсказка изображения"
+        },
+        "widgets": {
+            "prompt": "Подсказка",
+            "image_captioner_name": "Модель описания изображений",
+            "model_name": "Базовая модель",
+            "load_device": "Загрузить на устройство",
+            "max_resulting_tokens": "Максимальное число результирующих слов"
+        },
+        "outputs": {
+            "str": "Строка",
+            "string": "Строка"
+        }
+    },
+    "LTXVLaplacianPyramidBlend": {
+        "title": "🅛🅣🅧Видео: смешивание пирамидой Лапласа",
+        "inputs": {
+            "image_a": "Изображение A",
+            "image_b": "Изображение B",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "trim_to_shortest": "Обрезка по кратчайшей стороне",
+            "mask_low_res_dilation": "Дилатация маски низкого разрешения"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "Бесшовно смешивает два изображения методом пирамиды Лапласа.",
+        "api_version": "V3"
+    },
+    "LTXVQ8Patch": {
+        "title": "🅛🅣🅧Видео: патч Q8",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "use_fp8_attention": "Использовать FP8-внимание",
+            "quantization_preset": "Пресет квантования",
+            "quantize_self_attn": "Квантованное самовнимание",
+            "quantize_cross_attn": "Квантованное перекрёстное внимание",
+            "quantize_ffn": "Квантованная сеть прямого распространения"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVSparseTrackEditor": {
+        "title": "🅛🅣🅧Видео: редактор разреженных траекторий",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "points_store": "Хранилище точек",
+            "coordinates": "Координаты",
+            "points_to_sample": "Число точек сэмплирования"
+        },
+        "outputs": {
+            "tracks": "Траектория"
+        },
+        "description": "Интерактивный сплайновый редактор для рисования разреженных траекторий движения на опорном изображении.",
+        "api_version": "V3"
+    },
+    "LTXVDrawTracks": {
+        "title": "🅛🅣🅧Видео: рисование траекторий",
+        "widgets": {
+            "tracks": "Траектория",
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "description": "GPU-ускоренный рендерер разреженных траекторий. Растеризует круги в высоком разрешении и выполняет даунсемплинг с билинейной интерполяцией.",
+        "api_version": "V3"
+    },
+    "LTXVApplySTG": {
+        "title": "🅛🅣🅧Видео: применить STG",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "block_indices": "Индекс модуля"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "STGGuiderNode": {
+        "title": "🅛🅣🅧Видео: узел гидратора STG",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "stg": "Сила гайда",
+            "rescale": "Коэффициент ресукейлинга"
+        },
+        "outputs": {
+            "guider": "Гидратор"
+        }
+    },
+    "STGGuiderAdvancedNode": {
+        "title": "Узел расширенного гидратора STG",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "preset": "Пресеты"
+        },
+        "widgets": {
+            "skip_steps_sigma_threshold": "Порог sigma пропускаемых шагов",
+            "cfg_star_rescale": "Повторное масштабирование CFG-Zero*",
+            "sigmas": "Значения sigma",
+            "cfg_values": "Значение CFG",
+            "stg_scale_values": "Значение масштаба STG",
+            "stg_rescale_values": "Фактор повторного масштабирования STG",
+            "stg_layers_indices": "Индексы слоёв STG",
+            "apply_apg": "Применить APG",
+            "apg_cfg_scale": "Коэффициент CFG для APG",
+            "eta": "eta",
+            "norm_threshold": "Порог нормализации"
+        },
+        "outputs": {
+            "GUIDERR": "GUIDDER"
+        },
+        "description": "Расширенный гидратор STG реализует сложные методы управления процессом удаления шума:\n\n    Он создаёт динамическое отображение от значений sigma, заданных планировщиком, к параметрам CFG и STG (Spatio-Temporal Skip Guidance [1]).\n    Такой подход задаёт диапазоны значений sigma, независимые от числа шагов, и позволяет точно управлять:\n    • коэффициентом CFG\n    • масштабом STG и коэффициентом повторного масштабирования\n    • режимом пропуска слоёв внимания STG\n\n    Гидратор также поддерживает:\n    • повторное масштабирование CFG-Zero* [2], динамически корректирующее негативное предсказание по скалярному произведению позитивного и негативного сигналов\n    • обнуление предсказания шума для шагов со значениями sigma выше заданного порога\n\n    Например, если диапазон sigma определён как [1.0, 0.85, 0.7, 0.6], значения CFG — как [4, 3, 2, 1], значения масштаба STG — как [1, 1, 1, 1], значения повторного масштабирования STG — как [1, 1, 1, 1], а индексы слоёв STG — как [[14, 17], [14, 16], [14], [14]], то гидратор будет:\n    - использовать CFG=4, масштаб STG=1, повторное масштабирование STG=1 и 4, 17] в диапазоне sigma (0.85, 1.0]\n    - использовать CFG=3, масштаб STG=1, повторное масштабирование STG=114, 16] в диапазоне sigma (0.7, 0.85]\n    - использовать CFG=2, масштаб STG=1, повторное масштабирование STG=114] в диапазоне sigma (0.6, 0.7]\n    - использовать CFG=1, масштаб STG=1, повторное масштабирование STG=114] в диапазоне sigma (0.6, 0.7]\n\n    Независимо от числа шагов гидратор использует одинаковые параметры для одинаковых значений sigma.\n\n    Ссылки:\n    [1] https://arxiv.org/abs/2411.18664\n    [2] https://arxiv.org/abs/2503.18886",
+        "api_version": "V1"
+    },
+    "STGAdvancedPresetsNode": {
+        "title": "Узел расширенных пресетов STG",
+        "widgets": {
+            "preset": "Пресеты"
+        },
+        "outputs": {
+            "STG高级预设": "Расширенный пресет STG"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "APGGuider": {
+        "title": "🅛🅣🅧Видео: APG-управление",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт"
+        },
+        "widgets": {
+            "cfg_scale": "Коэффициент CFG",
+            "eta": "eta",
+            "norm_threshold": "Порог нормализации",
+            "momentum_coefficient": "Коэффициент момента"
+        },
+        "outputs": {
+            "GUIDERR": "Guidance"
+        },
+        "description": "Гидратор APG реализует адаптивное проекционное управление (APG).\n    Источник: https://arxiv.org/abs/2411.02416.",
+        "api_version": "V1"
+    },
+    "LTXVTiledSampler": {
+        "title": "🅛🅣🅧Видео: поблочный видеосэмплер",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "vae": "Энкодер VAE",
+            "noise": "Начальный шум",
+            "sampler": "Алгоритм сэмплирования",
+            "sigmas": "Расписание шума",
+            "guider": "Условное руководство",
+            "latents": "Начальный Latent",
+            "overlap": "Регулятор перекрытия",
+            "optional_cond_images": "Изображение условия (необязательно)"
+        },
+        "widgets": {
+            "horizontal_tiles": "Горизонтальное разбиение на блоки",
+            "vertical_tiles": "Вертикальное разбиение на блоки",
+            "overlap": "Перекрытие блоков",
+            "latents_cond_strength": "Интенсивность условия Latent",
+            "boost_latent_similarity": "Усиление сходства",
+            "crop": "Параметры обрезки",
+            "optional_cond_indices": "Индекс условия (необязательно)",
+            "images_cond_strengths": "Интенсивность условия изображения"
+        },
+        "outputs": {
+            "denoised_output": "Latent шумоподавления",
+            "output": "Выходной Latent",
+            "latent": "Latent видео"
+        }
+    },
+    "LTXVTiledVAEDdecode": {
+        "title": "🅛🅣🅧Видео: блочный декодер VAE",
+        "inputs": {
+            "vae": "VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "horizontal_tiles": "Количество горизонтальных блоков",
+            "vertical_tiles": "Количество вертикальных блоков",
+            "overlap": "Область перекрытия",
+            "last_frame_fix": "Инпейнт последнего кадра",
+            "working_device": "Рабочее устройство",
+            "working_dtype": "Рабочий тип данных"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "IMAGE": "Изображение"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVSpatioTemporalTiledVAEDecode": {
+        "title": "🅛🅣🅧Видео: блочный декодер VAE для видео",
+        "inputs": {
+            "vae": "VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "spatial_tiles": "Количество пространственных блоков",
+            "spatial_overlap": "Область пространственного перекрытия",
+            "temporal_tile_length": "Длина временного блока",
+            "temporal_overlap": "Область временного перекрытия",
+            "last_frame_fix": "Инпейнт последнего кадра",
+            "working_device": "Рабочее устройство",
+            "working_dtype": "Рабочий тип данных"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "IMAGE": "Изображение"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXFloatToInt": {
+        "title": "🅛🅣🅧Видео: float в int",
+        "widgets": {
+            "a": "a"
+        },
+        "outputs": {
+            "INT": "Целое число"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXVPatcherVAE": {
+        "title": "🅛🅣🅧Видео: патч оптимизации VAE",
+        "inputs": {
+            "vae": "VAE"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "LTXVDilateVideoMask": {
+        "title": "🅛🅣🅧Видео: дилатация видеомаски",
+        "inputs": {
+            "mask": "Маска",
+            "image_as_mask": "Изображение как маска"
+        },
+        "widgets": {
+            "spatial_radius": "Пространственный радиус",
+            "temporal_radius": "Временной радиус"
+        },
+        "outputs": {
+            "mask": "Маска"
+        },
+        "description": "Расширяет видеомаску в пространстве и/или времени с помощью сепарируемого максимального пулинга и выполняет пороговую обработку результата."
+    },
+    "LTXVInpaintPreprocess": {
+        "title": "🅛🅣🅧Видео: предобработка перерисовки",
+        "inputs": {
+            "images": "Изображение",
+            "mask": "Маска"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "Синтезирует изображение с зелёным фоном в активной области маски — для условий перерисовки.",
+        "api_version": "V3"
+    },
+    "LTXAttentionBank": {
+        "title": "🅛🅣🅧Библиотека признаков внимания",
+        "inputs": {
+            "save_steps": "Сохраняемые шаги",
+            "blocks": "Блоки внимания"
+        },
+        "widgets": {
+            "save_steps": "Селектор шагов"
+        },
+        "outputs": {
+            "attn_bank": "Библиотека внимания",
+            "ATTN_BANK": "Библиотека внимания"
+        }
+    },
+    "LTXPrepareAttnInjections": {
+        "title": "🅛🅣🅧 Подготовка инъекции внимания",
+        "inputs": {
+            "latent": "Latent",
+            "attn_bank": "Библиотека внимания",
+            "blocks": "Блоки внимания"
+        },
+        "widgets": {
+            "query": "Запрос",
+            "key": "Ключ key",
+            "value": "Значение",
+            "inject_steps": "Число шагов инъекции"
+        },
+        "outputs": {
+            "latent": "Latent",
+            "attn_inj": "Конфигурация инъекции",
+            "ATTN_INJ": "Конфигурация инъекции"
+        }
+    },
+    "LTXAttentioOverride": {
+        "title": "🅛🅣🅧Перенаправитель внимания",
+        "inputs": {
+            "blocks": "Блоки внимания"
+        },
+        "outputs": {
+            "ltx_blocks": "Конфигурация перенаправления",
+            "LTX_BLOCKS": "Конфигурация перенаправления"
+        }
+    },
+    "LTXAttnOverride": {
+        "title": "🅛🅣🅧Конфигурация внимания",
+        "inputs": {
+            "layers": "Целевой слой"
+        },
+        "outputs": {
+            "attn_override": "Конфигурация внимания",
+            "ATTN_OVERRIDE": "Конфигурация внимания"
+        }
+    },
+    "AddLatentGuide": {
+        "title": "🅛🅣🅧Добавление guidance к Latent",
+        "inputs": {
+            "model": "Модель",
+            "latent": "Latent",
+            "image_latent": "Latent изображения"
+        },
+        "widgets": {
+            "index": "Индекс",
+            "strength": "Интенсивность"
+        },
+        "outputs": {
+            "model": "Модель",
+            "latent": "Latent"
+        }
+    },
+    "LTXFetaEnhance": {
+        "title": "🅛🅣🅧Усилитель признаков",
+        "inputs": {
+            "model": "Модель",
+            "feta_weight": "Веса признаков",
+            "attn_override": "Конфигурация внимания"
+        },
+        "widgets": {
+            "feta_weight": "Регулятор весов"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "LTXFlowEditCFGGuider": {
+        "title": "🅛🅣🅧Гидратор CFG для редактирования потока",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "source_pos": "Исходное позитивное условие",
+            "source_neg": "Исходное негативное условие",
+            "target_pos": "Целевое позитивное условие",
+            "target_neg": "Целевое негативное условие"
+        },
+        "widgets": {
+            "source_cfg": "Интенсивность CFG источника",
+            "target_cfg": "Целевая интенсивность CFG"
+        },
+        "outputs": {
+            "guider": "Гидратор"
+        }
+    },
+    "LTXFlowEditSampler": {
+        "title": "🅛🅣🅧Сэмплер редактирования потока",
+        "widgets": {
+            "skip_steps": "Пропускаемые шаги",
+            "refine_steps": "Уточняющие шаги",
+            "seed": "Случайное зерно"
+        },
+        "outputs": {
+            "sampler": "Сэмплер"
+        }
+    },
+    "LTXForwardModelSamplingPred": {
+        "title": "🅛🅣🅧Модель прямого предсказания",
+        "inputs": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "LTXReverseModelSamplingPred": {
+        "title": "🅛🅣🅧Модель обратного предсказания",
+        "inputs": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "LTXPerturbedAttention": {
+        "title": "🅛🅣🅧Применение возмущения внимания",
+        "inputs": {
+            "model": "Исходная модель",
+            "attn_override": "Конфигурация внимания"
+        },
+        "widgets": {
+            "scale": "Интенсивность возмущения",
+            "rescale": "Коэффициент ресукейлинга",
+            "cfg": "CFG"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "ModifyLTXModel": {
+        "title": "🅛🅣🅧Модификатор модели",
+        "inputs": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "LTXRFFForwardODESampler": {
+        "title": "Сэмплер прямого ODE LTXRFF",
+        "widgets": {
+            "gamma": "Гамма-функция",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "gamma_trend": "Тренд гаммы",
+            "seed": "Зерно",
+            "attn_bank": "Библиотека внимания",
+            "order": "По порядку"
+        },
+        "outputs": {
+            "SAMPLER": "Сэмплер"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "LTXRFReverseODESampler": {
+        "title": "🅛🅣🅧 Обратный сэмплер Rf-Inv",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "latent_image": "Latent-изображение",
+            "attn_inj": "Инъекция внимания"
+        },
+        "widgets": {
+            "eta": "Коэффициент шума",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "eta_trend": "Тренд изменений",
+            "order": "Порядок решения"
+        },
+        "outputs": {
+            "sampler": "Сэмплер"
+        }
+    },
+    "FlowEditForwardSamplerNode": {
+        "title": "🅛🅣🅧Прямое сэмплирование редактирования потока",
+        "inputs": {
+            "save_steps": "Сохраняемые шаги",
+            "single_layers": "Модуль с одним слоем",
+            "double_layers": "Модуль из двух слоёв"
+        },
+        "widgets": {
+            "save_steps": "Селектор шагов"
+        },
+        "outputs": {
+            "sampler": "Потоковый сэмплер",
+            "attn_inj": "Инъекция внимания"
+        }
+    },
+    "FlowEdit2ReverseSamplerNode": {
+        "title": "🅛🅣🅧Обратное сэмплирование редактирования потока",
+        "inputs": {
+            "attn_inj": "Инъекция внимания",
+            "inject_steps": "Число шагов инъекции",
+            "single_layers": "Модуль с одним слоем",
+            "double_layers": "Модуль из двух слоёв"
+        },
+        "widgets": {
+            "inject_steps": "Регулятор числа шагов"
+        },
+        "outputs": {
+            "sampler": "Потоковый сэмплер"
+        }
+    },
+    "PrepareAttnBankNode": {
+        "title": "🅛🅣🅧Подготовка библиотеки внимания",
+        "inputs": {
+            "latent": "Целевой Latent",
+            "attn_inj": "Инъекция внимания"
+        },
+        "outputs": {
+            "latent": "Подготовить Latent",
+            "attn_inj": "Инъекция оптимизации"
+        }
+    },
+    "RFSingleBlocksOverrideNode": {
+        "title": "🅛🅣🅧Конфигурация модуля одного слоя",
+        "outputs": {
+            "single_layers": "Конфигурация модуля"
+        }
+    },
+    "RFDoubleBlocksOverrideNode": {
+        "title": "🅛🅣🅧Конфигурация модуля из двух слоёв",
+        "outputs": {
+            "double_layers": "Конфигурация модуля"
+        }
+    },
+    "LTXVStatNormLatent": {
+        "title": "🅛🅣🅧Видео: статистическая нормализация Latent",
+        "inputs": {
+            "latents": "Latents"
+        },
+        "widgets": {
+            "target_mean": "Целевое среднее",
+            "target_std": "Целевое стандартное отклонение",
+            "percentile": "Процентиль",
+            "factor": "Влияние",
+            "clip_outliers": "Обрезка выбросов"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": ""
+    },
+    "GuiderParameters": {
+        "title": "🅛🅣🅧Параметры guidance LTX Video",
+        "inputs": {
+            "parameters": "Параметры"
+        },
+        "widgets": {
+            "modality": "Модальность",
+            "cfg": "CFG",
+            "stg": "STG",
+            "perturb_attn": "Возмущение внимания",
+            "rescale": "Повторное масштабирование",
+            "modality_scale": "Масштаб модальности",
+            "skip_step": "Пропускаемые шаги",
+            "cross_attn": "Перекрёстное внимание"
+        },
+        "outputs": {
+            "GUIDER_PARAMETERS": "Параметры guidance"
+        },
+        "description": "Узел параметров guidance LTXVideo"
+    },
+    "MultimodalGuider": {
+        "title": "🅛🅣🅧Мультимодальный гидратор",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "parameters": "Параметры"
+        },
+        "widgets": {
+            "clip_blocks": "clip_blocks"
+        },
+        "description": "Узел мультимодального гидратора"
+    },
+    "Set VAE Decoder Noise": {
+        "title": "🅛🅣🅧Шум энкодера и декодера VAE",
+        "inputs": {
+            "vae": "VAE"
+        },
+        "widgets": {
+            "timestep": "Временной шаг",
+            "scale": "Интенсивность шума",
+            "seed": "Случайное зерно"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "LTXVTiledVAEDecode": {
+        "title": "🅛🅣🅧Блочный декодер VAE",
+        "inputs": {
+            "vae": "VAE"
+        },
+        "widgets": {
+            "horizontal_tiles": "Горизонтальное разбиение на блоки",
+            "vertical_tiles": "Вертикальное разбиение на блоки",
+            "overlap": "Наложение",
+            "last_frame_fix": "Фиксация последнего кадра"
+        },
+        "outputs": {
+            "image": "Изображение"
+        }
+    },
+    "LTXVLinearOverlapLatentTransition": {
+        "title": "🅛🅣🅧 Линейный переход видеолатента",
+        "inputs": {
+            "samples1": "Начальный Latent",
+            "samples2": "Целевой Latent"
+        },
+        "widgets": {
+            "overlap": "Кадров перехода",
+            "axis": "Размерность смешивания",
+            "samples": "Последовательность Latent"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "LTXVFilmGrain": {
+        "title": "🅛🅣🅧 Генератор плёночного зерна LTXV",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "grain_intensity": "Интенсивность зерна",
+            "saturation": "Насыщенность цвета"
+        },
+        "outputs": {
+            "image": "Изображение"
+        }
+    },
+    "LTXVLatentUpsampler": {
+        "title": "🅛🅣🅧Сэмплирование суперразрешения Latent",
+        "inputs": {
+            "samples": "Latent низкого разрешения",
+            "upscale_model": "Модель суперразрешения",
+            "vae": "Энкодер VAE"
+        },
+        "outputs": {
+            "latent": "HD Latent"
+        }
+    },
+    "LTXVLatentUpsamplerModelLoader": {
+        "title": "🅛🅣🅧Загрузчик модели сэмплирования суперразрешения",
+        "widgets": {
+            "upscale_model": "Модель суперразрешения",
+            "spatial_upsample": "Пространственный апсемплинг",
+            "temporal_upsample": "Временной апсемплинг"
+        },
+        "outputs": {
+            "upscale_model": "Загрузить модель"
+        }
+    },
+    "LTXQ8Patch": {
+        "title": "🅛🅣🅧 Оптимизация модели LTX FP8",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "use_fp8_attention": "Включить FP8-внимание",
+            "quantization_preset": "Пресет квантования",
+            "quantize_self_attn": "Квантование самовнимания",
+            "quantize_cross_attn": "Квантованное перекрёстное внимание",
+            "quantize_ffn": "Квантованная сеть прямого распространения"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "LTXVQ8LoraModelLoader": {
+        "title": "🅛🅣🅧 Загрузчик LoRA LTXV FP8",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "lora_name": "Имя LoRA",
+            "strength_model": "Интенсивность модели"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "STGGuider": {
+        "title": "🅛🅣🅧 Узел гидратора STG",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "stg": "Сила гайда",
+            "rescale": "Коэффициент ресукейлинга"
+        },
+        "outputs": {
+            "guider": "Гидратор"
+        }
+    },
+    "STGGuiderAdvanced": {
+        "title": "🅛🅣🅧 Расширенный гидратор STG",
+        "inputs": {
+            "model": "Модель",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "preset": "Предустановленная конфигурация"
+        },
+        "widgets": {
+            "skip_steps_sigma_threshold": "Порог пропуска",
+            "cfg_star_rescale": "Повторное масштабирование CFG",
+            "sigmas": "Расписание шума",
+            "cfg_values": "Кривая CFG",
+            "stg_scale_values": "Кривая масштабирования STG",
+            "stg_rescale_values": "Кривая повторного масштабирования STG",
+            "stg_layers_indices": "Индексы слоёв STG"
+        },
+        "outputs": {
+            "guider": "Гидратор"
+        }
+    },
+    "STGAdvancedPresets": {
+        "title": "🅛🅣🅧 Расширенный пресет STG",
+        "inputs": {
+            "preset": "Выбор пресета"
+        },
+        "widgets": {
+            "preset": "Выбор пресета"
+        },
+        "outputs": {
+            "stg_advanced_preset": "Предустановленная конфигурация",
+            "STG_ADVANCED_PRESET": "Предустановленная конфигурация"
+        }
+    },
+    "LTXVLoopingSampler": {
+        "title": "🅛🅣🅧Циклический видеосэмплер",
+        "inputs": {
+            "model": "Диффузионная модель",
+            "vae": "Энкодер VAE",
+            "noise": "Начальный шум",
+            "sampler": "Алгоритм сэмплирования",
+            "sigmas": "Расписание шума",
+            "guider": "Условное руководство",
+            "latents": "Начальный Latent",
+            "optional_cond_image": "Изображение условия (необязательно)",
+            "optional_guiding_latents": "Latent гайда (необязательно)",
+            "optional_positive_conditionings": "Позитивное условие (необязательно)",
+            "optional_negative_index_latents": "Негативный Latent (необязательно)",
+            "optional_negative_index": "Негативный индекс (необязательно)",
+            "optional_negative_index_strength": "Интенсивность негатива"
+        },
+        "widgets": {
+            "use_latents_to_guide": "Использовать guidance Latent",
+            "guiding_strength": "Сила гайда",
+            "temporal_tile_size": "Регулятор временных блоков",
+            "temporal_overlap": "Временное перекрытие",
+            "temporal_overlap_cond_strength": "Интенсивность условия временного перекрытия",
+            "horizontal_tiles": "Горизонтальное разбиение на блоки",
+            "vertical_tiles": "Вертикальное разбиение на блоки",
+            "spatial_overlap": "Пространственное перекрытие",
+            "overlap": "Перекрытие кадров",
+            "overlap_cond_strength": "Интенсивность условия перекрытия",
+            "adain_factor": "Влияние переноса стиля"
+        },
+        "outputs": {
+            "denoised_output": "Latent шумоподавления",
+            "latent": "Latent видео"
+        }
+    },
+    "LTXVMultiPromptProvider": {
+        "title": "🅛🅣🅧Слияние промптов LTXV",
+        "inputs": {
+            "prompts": "Список промптов",
+            "clip": "CLIP"
+        },
+        "outputs": {
+            "conditionings": "Условие",
+            "conditioning": "Условие"
+        }
+    },
+    "ImageToCPU": {
+        "title": "🅛🅣🅧Из видеопамяти в ОЗУ",
+        "inputs": {
+            "image": "Изображение GPU"
+        },
+        "outputs": {
+            "image": "Изображение CPU"
+        }
+    },
+    "LTXVHDRDecodePostprocess": {
+        "title": "🅛🅣🅧 HDR постобработка после декодирования",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "exposure": "Экспозиция",
+            "save_exr": "Сохранить .exr",
+            "output_dir": "Каталог вывода",
+            "filename_prefix": "Префикс имени файла",
+            "half_precision": "Половинная точность"
+        },
+        "outputs": {
+            "tonemapped": "Тональный маппинг",
+            "hdr_linear": "Линейный HDR"
+        }
+    },
+    "LTXVAdainLatent": {
+        "title": "🅛🅣🅧 Latent переноса стиля",
+        "inputs": {
+            "latents": "Latent",
+            "reference": "Опорный Latent"
+        },
+        "widgets": {
+            "factor": "Вес",
+            "per_frame": "На каждый кадр"
+        }
+    },
+    "LTXVAudioOnlyModel": {
+        "title": "🅛🅣🅧 Модель только для аудио",
+        "inputs": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Запускает аудиовизуальную модель LTX-2 в режиме только аудио для генерации аудио из текста. Пропускает видеопоток и отключает перекрёстное внимание аудио и видео, поэтому сгенерированное аудио не зависит от латентов видео. Сэмплеру всё равно нужен минимальный фиктивный видеолатент (EmptyLTXVLatentVideo размером 64x64 и длиной 1, присоединённый через LTXVConcatAVLatent); этот латент не отслеживается. Удаление или пропуск этого узла восстанавливает обычную совместную аудиовизуальную генерацию."
+    },
+    "LTXVAudioOnlyEmptyVideoLatent": {
+        "title": "🅛🅣🅧 Пустой видеолатент (только аудио)",
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "LTXRFForwardODESampler": {
+        "title": "🅛🅣🅧 Прямой сэмплер Rf-Inv",
+        "inputs": {
+            "attn_bank": "Библиотека внимания"
+        },
+        "widgets": {
+            "gamma": "Коэффициент шума",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "gamma_trend": "Тренд изменений",
+            "seed": "Случайное зерно",
+            "order": "Порядок решения"
+        },
+        "outputs": {
+            "sampler": "Сэмплер"
+        }
+    }
+}

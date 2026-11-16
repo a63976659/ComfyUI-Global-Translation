@@ -1,0 +1,622 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_강화 비디오 병합",
+        "inputs": {
+            "images": "이미지",
+            "audio": "오디오"
+        },
+        "widgets": {
+            "frame_rate": "프레임 레이트",
+            "codec": "코덱 형식",
+            "container": "컨테이너 형식",
+            "bit_depth": "비트 심도",
+            "quality": "품질",
+            "log_level": "로그 수준",
+            "pingpong": "핑퐁 모드",
+            "save_metadata": "메타데이터 저장",
+            "filename_prefix": "파일명 접두사",
+            "save_output": "출력 저장",
+            "pass_frames": "프레임 전달",
+            "crop_to_audio": "오디오에 맞게 크롭",
+            "audio_codec": "오디오 코덱",
+            "audio_bitrate": "오디오 비트레이트",
+            "save_first_frame": "첫 프레임 저장",
+            "save_last_frame": "마지막 프레임 저장"
+        },
+        "outputs": {
+            "frames": "프레임",
+            "filename": "파일명"
+        },
+        "description": "이미지 배치를 고품질 비디오로 병합하며 NVENC/GPU를 자동 선택하고, 선택적인 핑퐁 재생·ComfyUI 워크플로우 메타데이터·MP4 대체 방식을 지원합니다."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_인페인트 크롭 준비",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "target_width": "목표 너비",
+            "target_height": "목표 높이",
+            "mask_blur": "마스크 블러",
+            "mask_min": "마스크 최솟값",
+            "mask_max": "마스크 최댓값",
+            "grow_px": "확장 픽셀",
+            "can_shrink": "축소 가능"
+        },
+        "outputs": {
+            "cropped_image": "크롭 후 이미지",
+            "cropped_mask": "크롭 후 마스크",
+            "bbox_x": "바운딩 박스 X 좌표",
+            "bbox_y": "바운딩 박스 Y 좌표",
+            "bbox_w": "바운딩 박스 너비",
+            "bbox_h": "바운딩 박스 높이"
+        },
+        "description": "인페인트용 이미지와 마스크 준비: 경계 추출, 크롭, 스케일 조정."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_인페인트 합성",
+        "inputs": {
+            "destination": "대상",
+            "source": "소스",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "x": "X 좌표",
+            "y": "Y 좌표",
+            "w": "너비",
+            "h": "높이",
+            "correction_method": "보정 방법"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "인페인트한 패치를 원본 이미지에 다시 합성하며, 색상 보정을 지원합니다."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_LLM 모델 선택기",
+        "widgets": {
+            "model": "모델",
+            "custom_path": "사용자 정의 경로",
+            "hf_repo_id": "HF 저장소 ID",
+            "hf_revision": "HF 리비전",
+            "download_if_missing": "없으면 다운로드",
+            "backend": "백엔드",
+            "task": "작업",
+            "device": "장치",
+            "dtype": "데이터 타입",
+            "quantization": "양자화",
+            "cache_mode": "캐시 모드",
+            "trust_remote_code": "원격 코드 신뢰",
+            "attention_implementation": "어텐션 구현",
+            "kv_cache_implementation": "KV 캐시 구현",
+            "kv_cache_quant_backend": "KV 캐시 양자화 백엔드",
+            "kv_cache_nbits": "KV 캐시 비트 수",
+            "kv_cache_residual_length": "KV 캐시 잔차 길이",
+            "llama_n_ctx": "Llama 컨텍스트 윈도우",
+            "llama_n_gpu_layers": "Llama GPU 레이어 수",
+            "llama_n_threads": "Llama 스레드 수",
+            "llama_chat_format": "Llama 채팅 형식",
+            "ollama_model": "Ollama 모델",
+            "ollama_url": "Ollama 주소",
+            "ollama_timeout": "Ollama 시간 제한"
+        },
+        "outputs": {
+            "llm_config": "LLM 구성"
+        },
+        "description": "DaSiWa LLM 모델 선택기: ComfyUI/models/llm에서 로컬 transformers LLM/VLM 폴더를 선택하고 캐시, 데이터 유형, 장치 및 오프로드 동작을 구성합니다."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_LLM 분석",
+        "inputs": {
+            "llm_config": "LLM 구성",
+            "images": "이미지",
+            "text_input": "텍스트 입력"
+        },
+        "widgets": {
+            "system_prompt_preset": "시스템 프롬프트 프리셋",
+            "system_prompt": "시스템 프롬프트",
+            "prompt": "프롬프트",
+            "max_new_tokens": "최대 새 토큰",
+            "max_input_tokens": "최대 입력 토큰",
+            "temperature": "온도",
+            "top_p": "Top_p",
+            "repetition_penalty": "반복 페널티",
+            "use_kv_cache": "KV 캐시 사용",
+            "seed": "랜덤 시드",
+            "max_frames": "최대 프레임 수",
+            "frame_stride": "프레임 단계",
+            "frame_strategy": "프레임 전략",
+            "resize_max_px": "최대 조정 픽셀",
+            "resize_algorithm": "조정 알고리즘",
+            "memory_cleanup": "메모리 정리"
+        },
+        "outputs": {
+            "response": "응답",
+            "info": "정보"
+        },
+        "description": "DaSiWa LLM 분석: 연결된 텍스트, 이미지 또는 VHS/비디오 프레임 배치를 대상으로 로컬 텍스트 또는 비전 언어 모델을 실행하고 문자열 응답을 반환합니다."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_LTX2 LoRA 로더",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "스택 데이터",
+            "model_type": "모델 유형",
+            "use_cache": "LoRA 파일 캐시 활성화",
+            "available_loras": "사용 가능한 LoRA 목록"
+        },
+        "outputs": {
+            "MODEL": "모델",
+            "CLIP": "CLIP"
+        },
+        "description": "DaSiWa 고급 LoRA 로더: 일반 이미지/비디오 LoRA 또는 LTX-2.3 비디오/오디오 LoRA를 스택으로 쌓습니다. 오디오 분리는 LTX-2.3에서만 사용할 수 있습니다."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_메타데이터 구성",
+        "inputs": {
+            "node_positive": "긍정 노드",
+            "node_negative": "부정 노드",
+            "node_model": "모델 노드",
+            "node_latent": "Latent 노드",
+            "node_noise": "노이즈 노드",
+            "node_sigmas": "시그마 노드",
+            "node_sampler": "샘플러 노드",
+            "extra_metadata": "추가 메타데이터",
+            "text_positive": "긍정 텍스트",
+            "text_negative": "부정 텍스트",
+            "text_steps": "단계 수 텍스트",
+            "text_cfg": "CFG 텍스트",
+            "text_sampler": "샘플러 텍스트",
+            "text_scheduler": "스케줄러 텍스트",
+            "text_seed": "랜덤 시드 텍스트",
+            "text_model": "모델 텍스트",
+            "save_output": "출력 저장"
+        },
+        "widgets": {
+            "save_workflow": "워크플로우 저장",
+            "model_hash": "모델 해시"
+        },
+        "outputs": {
+            "config": "구성"
+        },
+        "description": "DaSiWa 메타데이터 구성: 워크플로우 메타데이터 설정과 선택적인 자동 감지 링크를 컴팩트한 구성 출력으로 수집하여 이미지 저장기에서 사용하도록 합니다."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_메타데이터 이미지 저장기",
+        "inputs": {
+            "images": "이미지",
+            "metadata_config": "메타데이터 구성",
+            "extra_metadata": "추가 메타데이터"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "file_format": "파일 형식",
+            "compression": "압축",
+            "save_output": "출력 저장"
+        },
+        "outputs": {
+            "filename": "파일명",
+            "metadata": "메타데이터"
+        },
+        "description": "DaSiWa 메타데이터 이미지 저장기: ComfyUI 워크플로우 데이터와 A1111/Civitai 호환 생성 메타데이터를 포함한 PNG 또는 WebP 이미지를 저장합니다."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_메타데이터 이미지 저장기 완전판",
+        "inputs": {
+            "images": "이미지 배치",
+            "metadata_config": "메타데이터 구성",
+            "extra_metadata": "추가 메타데이터",
+            "node_positive": "긍정 노드",
+            "node_negative": "부정 노드",
+            "node_model": "모델 노드",
+            "node_latent": "Latent 노드",
+            "node_noise": "노이즈 노드",
+            "node_sigmas": "시그마 노드",
+            "node_sampler": "샘플러 노드",
+            "text_positive": "긍정 프롬프트",
+            "text_negative": "부정 프롬프트",
+            "text_steps": "스텝 수",
+            "text_cfg": "CFG 값",
+            "text_sampler": "샘플러",
+            "text_scheduler": "스케줄러",
+            "text_seed": "랜덤 시드",
+            "text_model": "텍스트 모델"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "file_format": "파일 형식",
+            "compression": "압축 수준",
+            "save_output": "출력 저장",
+            "save_workflow": "워크플로우 저장",
+            "model_hash": "모델 해시"
+        },
+        "outputs": {
+            "filename": "파일명",
+            "metadata": "메타데이터"
+        },
+        "description": "DaSiWa 메타데이터 이미지 저장기 완전판: 모든 메타데이터 감지 및 수동 재설정 포트가 노드에 직접 노출되는 고급 저장기 변형입니다."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_추가 메타데이터 생성",
+        "inputs": {
+            "extra_metadata": "추가 메타데이터"
+        },
+        "widgets": {
+            "key": "키",
+            "value": "값"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "추가 메타데이터"
+        },
+        "description": "DaSiWa 추가 메타데이터 생성: 이미지 저장기용 사용자 정의 메타데이터 키-값 쌍을 생성하거나 확장합니다."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_랜덤 문자열 선택기",
+        "inputs": {
+            "text": "텍스트"
+        },
+        "outputs": {
+            "text": "텍스트"
+        },
+        "description": "DaSiWa 랜덤 문자열 선택기: 텍스트를 그대로 전달하면서 각 {A|B|C} 그룹을 무작위로 선택된 항목으로 대체합니다"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_업스케일 정제",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "denoise": "노이즈 제거",
+            "deblur": "블러 제거",
+            "scale": "축소·확대",
+            "megapixels": "메가픽셀",
+            "width": "너비",
+            "height": "높이",
+            "device_id": "장치 ID",
+            "empty_cache": "캐시 삭제",
+            "denoise_quality": "노이즈 제거 품질",
+            "deblur_quality": "블러 제거 품질",
+            "upscale": "업스케일",
+            "upscale_quality": "업스케일 품질",
+            "resize_type": "크기 조정 유형",
+            "divisible_by": "나누어 떨어지는 값",
+            "ratio_preset": "비율 프리셋",
+            "resize_method": "크기 조정 방법",
+            "use_mmap": "디스크 매핑 사용",
+            "auto_unload_models": "모델 자동 오프로드"
+        },
+        "outputs": {
+            "images": "이미지"
+        },
+        "description": "DaSiWa RTX 업스케일 및 최적화기: 고성능 3패스 처리 노드. 1. 최적화 단계: 원본 해상도로 실행하며 NVIDIA RTX 비주얼 이펙트를 사용해 노이즈나 흐림을 정리합니다. 2. 업스케일 단계: VSR 또는 고비트레이트 모드로 이미지를 4배 업스케일합니다. 프레임별로 처리하여 비디오 배치에서 VRAM 사용량을 낮게 유지"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_해상도 스케일 계산기",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "resolution_preset": "해상도 프리셋",
+            "aspect_preset_when_not_image": "이미지가 아닐 때의 비율 프리셋",
+            "no_scale": "스케일 안 함",
+            "scale_from_image": "이미지에서 스케일",
+            "swap_aspect_when_not_image": "이미지가 아닐 때 비율 교환",
+            "custom_aspect_width": "사용자 정의 비율 너비",
+            "custom_aspect_height": "사용자 정의 비율 높이",
+            "mode": "모드",
+            "custom_divisor": "사용자 정의 나누기 값"
+        },
+        "outputs": {
+            "width_int": "정수 너비",
+            "height_int": "정수 높이",
+            "width_float": "부동소수점 너비",
+            "height_float": "부동소수점 높이"
+        },
+        "description": "DaSiWa 해상도 스케일 계산기: 대상 메가픽셀 면적을 기준으로 수학적으로 정확한 해상도를 계산합니다. - 표준 모드: 순수 수학 스케일링. - WAN/LTX 모드: 32픽셀 경계에 맞춤(WAN/LTX VAE에 필수). - 스케일 안 함: 모든 계산을 재설정하고 원본 이미지 크기를 그대로 출력"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_Torch 크기 조정",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "size_mode": "크기 모드",
+            "aspect_mode": "비율 모드",
+            "target_width": "목표 너비",
+            "target_height": "목표 높이",
+            "scale_multiplier": "스케일 배수",
+            "interpolation": "보간",
+            "gamma_correct": "감마 보정",
+            "divisible_by": "나누어 떨어지는 값",
+            "pad_color": "패딩 색상",
+            "crop_position": "크롭 위치",
+            "batch_size": "배치 크기",
+            "max_batch_megapixels": "최대 배치 메가픽셀",
+            "cache_size": "캐시 크기"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "ComfyUI 이미지를 위한 의존성 없는 PyTorch 배치 크기 조정 도구입니다. 픽셀 단위로 정확한 최근접 이웃, 바이리니어, 바이큐빅, 에어리어 및 캐시된 분리형 Lanczos 리샘플을 지원합니다"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_노드 상태 전환",
+        "widgets": {
+            "enabled": "활성화",
+            "trigger_on": "트리거 조건",
+            "action": "연산"
+        },
+        "outputs": {
+            "enabled_out": "출력 활성화"
+        },
+        "description": "DaSiWa 노드 상태 전환: 불리언 상태에 따라 연결된 대상 노드를 음소거하거나 바이패스하며, 스위치를 체인으로 연결하기 위한 활성화 출력이 있습니다"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_워터마크",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "watermark_path": "워터마크 경로",
+            "position": "위치",
+            "scale": "축소·확대",
+            "resampling": "리샘플",
+            "transparency": "투명도",
+            "rotation": "회전",
+            "padding_x": "X축 패딩",
+            "padding_y": "Y축 패딩",
+            "optical_padding": "광학 패딩",
+            "optical_strength": "광학 강도",
+            "random_switches": "랜덤 스위치",
+            "fade": "페이드",
+            "fade_margin": "페이드 여백",
+            "randomize_position": "랜덤 위치",
+            "random_seed": "랜덤 시드"
+        },
+        "description": "DaSiWa 워터마크: 안정적인 CPU 합성 기능을 갖춘 전문가급 워터마크 오버레이 노드입니다. 출력 배치를 RAM에 저장하고 초기화한 소스 프레임에서 블렌드를 시작해 깜빡임을 방지하며, 바이큐빅/Lanczos 스케일, 회전 및 “광학 패딩”을 지원해 완벽한 시각적 정렬을 제공합니다"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_프롬프트 프리셋 빌더",
+        "inputs": {
+            "positive_input": "긍정 입력",
+            "negative_input": "부정 입력"
+        },
+        "widgets": {
+            "style": "스타일",
+            "seed": "랜덤 시드",
+            "token_budget": "토큰 예산",
+            "selection_state": "선택 상태",
+            "reroll": "랜덤 재생성",
+            "auto_reroll": "자동 랜덤 재생성"
+        },
+        "outputs": {
+            "positive_prompt": "긍정 프롬프트",
+            "negative_prompt": "부정 프롬프트"
+        },
+        "description": "내장 이중 스타일 프롬프트 라이브러리에서 긍정과 부정 프롬프트를 만듭니다. 선택 항목과 가중치가 워크플로우에 저장됩니다"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_개별 시드 컨트롤러",
+        "description": "MiniMax H3 Director의 시드 조작 경험을 재사용하는 독립적인 시드 제어 노드입니다: 랜덤/고정 모드, 64비트 부호 없는 시드, 랜덤 재생성/마지막 시드 복원, 최근 10회 이력, 그리고 다운스트림 샘플러에서 바로 사용할 수 있는 NOISE 객체 출력.",
+        "inputs": {
+            "seed": "외부 시드 입력"
+        },
+        "widgets": {
+            "seed_value": "로컬 시드 값",
+            "seed_control_state": "시드 제어 상태",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "로컬 시드 값. 프런트엔드 패널에서 편집하며 기본 위젯은 숨겨두세요.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "저장되는 시드 제어 상태(JSON): 모드, 마지막 시드 및 최근 시드 목록.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "선택적인 외부 시드 입력: 연결하면 로컬 컨트롤이 비활성화되고 연결된 값을 그대로 전달합니다."
+        },
+        "outputs": {
+            "seed": "시드",
+            "noise": "노이즈"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Comfy Kitchen INT8 어텐션 패치",
+        "description": "모델에 패치를 적용해 실행 시 Comfy Kitchen INT8 어텐션 구현을 사용해 VRAM을 절약합니다. Comfy Kitchen을 사용할 수 없으면 ComfyUI 기본 어텐션으로 대체합니다.",
+        "inputs": {
+            "model": "모델"
+        },
+        "outputs": {
+            "MODEL": "모델"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_MiniMax H3 감독",
+        "description": "MiniMax H3 비디오/오디오 생성 감독 노드: 타임라인, 참조 미디어 및 프롬프트 빌드를 통합하여 MiniMax H3 Director Guide 노드에서 사용하는, 완전한 안내 정보를 담은 감독 구성을 출력합니다.",
+        "inputs": {
+            "fl2va_model": "FL2VA 모델",
+            "ref2va_model": "REF2VA 모델",
+            "external_width_overwrite": "외부 너비 재설정",
+            "external_height_overwrite": "외부 높이 재설정",
+            "external_prompt_overwrite": "외부 프롬프트 재설정"
+        },
+        "widgets": {
+            "mode": "모드",
+            "prompt": "프롬프트",
+            "width": "너비",
+            "height": "높이",
+            "duration": "지속 시간",
+            "ref_image_size": "참조 이미지 크기",
+            "frame_rate": "프레임 레이트"
+        },
+        "outputs": {
+            "guide": "감독 가이드",
+            "duration": "지속 시간",
+            "positive_prompt": "긍정 프롬프트",
+            "width": "너비",
+            "height": "높이",
+            "model": "모델",
+            "fl2va_requested": "FL2VA 요청",
+            "inpaint_requested": "인페인트 요청",
+            "frame_rate": "프레임 레이트"
+        },
+        "ui": {
+            "Model Mode:": "모델 모드:",
+            "Image Inpaint": "이미지 인페인트",
+            "Prompt Mode:": "프롬프트 모드:",
+            "Simple": "간단",
+            "Structured": "구조화",
+            "Use the simple prompt editor": "간단한 프롬프트 편집기 사용",
+            "Use the structured prompt editor": "구조화된 프롬프트 편집기 사용",
+            "One image reference; output exactly one frame through Get Image from Batch.": "이미지 참조 1장; “배치에서 이미지 가져오기”로 프레임을 정확히 1개 출력합니다.",
+            "Remove": "제거",
+            "Clear": "지우기",
+            "Remove all media and prompts": "모든 미디어와 프롬프트 제거",
+            "Nothing to clear yet": "아직 지울 내용이 없습니다",
+            "Nothing to clear.": "지울 내용이 없습니다.",
+            "Open MiniMax H3 Director documentation on GitHub": "GitHub에서 MiniMax H3 감독 문서 열기",
+            "T2VA · no input frame": "T2VA · 입력 프레임 없음",
+            "I2VA · one opening-frame slot": "I2VA · 첫 프레임 슬롯 1개",
+            "FL2VA · opening and closing-frame slots": "FL2VA · 첫 프레임 및 마지막 프레임 슬롯",
+            "L2VA · one closing-frame slot": "L2VA · 마지막 프레임 슬롯 1개",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "이미지 인페인트 · 이미지 정확히 1장 · “배치에서 이미지 가져오기”로 프레임 1개 출력 · 비디오/오디오 없음",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · 이미지 최대 9개, 비디오 3개, 오디오 3개 슬롯 · 총 최대 12개 파일",
+            "ASPECT": "종횡비",
+            "RESOLUTION": "해상도",
+            "INPUT SCALING": "입력 스케일",
+            "Auto": "자동",
+            "CUSTOM": "사용자 정의",
+            "Native (ShortEdge 768px)": "원본(짧은 변 768px)",
+            "Off": "꺼짐",
+            "Native (ShortEdge 2048px)": "원본(짧은 변 2048px)",
+            "Target · Selected Aspect & Resolution": "대상 · 선택한 종횡비 및 해상도",
+            "Fit": "맞춤",
+            "Fill and crop": "채운 후 크롭",
+            "Fit and pad": "맞춘 후 패딩",
+            "Long side with divisible crop": "긴 변 맞춤 및 나누어 떨어지는 크롭",
+            "0.26 MP - Preview": "0.26 MP - 미리보기",
+            "0.36 MP - Small": "0.36 MP - 소형",
+            "0.52 MP - SD": "0.52 MP - 표준 화질",
+            "0.65 MP - Balanced": "0.65 MP - 균형",
+            "0.83 MP - HD": "0.83 MP - 고화질",
+            "1.05 MP - HD+": "1.05 MP - 고화질+",
+            "1.20 MP - HD++": "1.20 MP - 고화질++",
+            "1.35 MP - 2K lite": "1.35 MP - 2K 라이트",
+            "1.75 MP - QHD": "1.75 MP - 초고화질",
+            "2.10 MP - FHD": "2.10 MP - 풀HD",
+            "3.30 MP - QHD+": "3.30 MP - 초고화질+",
+            "4.75 MP - 2K Pro": "4.75 MP - 2K 프로",
+            "6.50 MP - Production": "6.50 MP - 프로덕션",
+            "8.30 MP - UHD": "8.30 MP - 초고해상도",
+            "General": "일반",
+            "Horizontal": "가로",
+            "Square": "정사각형",
+            "Vertical": "세로",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "입력 스케일을 건너뜁니다 — 참조 자료를 원본 크기로 MiniMax에 전송합니다.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "참조 자료의 짧은 변이 2048픽셀을 초과할 때만 축소하고, 더 작은 입력은 처리 없이 그대로 통과합니다.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "참조 자료를 선택한 종횡비 및 해상도 박스에 맞게 조정합니다(스트레치, 종횡비 유지하지 않음).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "참조 자료를 종횡비를 유지하며 대상 박스에 맞게 스케일합니다.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "참조 자료를 종횡비를 유지하며 대상 박스를 채우도록 스케일한 후 넘치는 부분을 크롭합니다.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "참조 자료를 종횡비를 유지하며 대상 박스에 맞게 스케일한 후 빈 가장자리를 패딩합니다.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "긴 변이 대상과 일치하도록 스케일한 후, 정확하고 나누어 떨어지는 대상 크기로 크롭합니다.",
+            "RATIO W": "비율 너비",
+            "RATIO H": "비율 높이",
+            "Megapixels": "메가픽셀",
+            "Fixed pixels": "고정 픽셀",
+            "WIDTH": "너비",
+            "HEIGHT": "높이",
+            "External width/height overwrite · Director sizing and input scaling disabled": "외부 가로/세로 재설정 · 감독 크기 설정 및 입력 스케일 비활성화",
+            "Image/Video": "이미지/비디오",
+            "Image/Video · selected": "이미지/비디오 · 선택됨",
+            "audio": "오디오",
+            "audio · selected": "오디오 · 선택됨",
+            "Video only": "비디오만",
+            "Audio only": "오디오만",
+            "Video + embedded audio": "비디오 + 내장 오디오",
+            "Full source-duration scale": "전체 소스 지속 시간 스케일",
+            "Full audio waveform; crop markers show the selected reference window": "전체 오디오 웨이브폼; 크롭 마커가 선택한 참조 구간을 표시합니다",
+            "Decoding audio waveform…": "오디오 웨이브폼 디코딩 중…",
+            "Open preview and details": "미리보기와 세부 정보 열기",
+            "T2VA prompt builder": "T2VA 프롬프트 빌더",
+            "I2VA prompt builder": "I2VA 프롬프트 빌더",
+            "FL2VA prompt builder": "FL2VA 프롬프트 빌더",
+            "L2VA prompt builder": "L2VA 프롬프트 빌더",
+            "REF2VA prompt builder": "REF2VA 프롬프트 빌더",
+            "Image Inpaint prompt builder": "이미지 인페인트 프롬프트 빌더",
+            "T2VA simple prompt": "T2VA 간단한 프롬프트",
+            "I2VA simple prompt": "I2VA 간단한 프롬프트",
+            "FL2VA simple prompt": "FL2VA 간단한 프롬프트",
+            "L2VA simple prompt": "L2VA 간단한 프롬프트",
+            "REF2VA simple prompt": "REF2VA 간단한 프롬프트",
+            "Image Inpaint simple prompt": "이미지 인페인트 간단한 프롬프트",
+            "REF2VA prompt builder — write freely; headers are added automatically": "REF2VA 프롬프트 빌더 — 자유롭게 작성하면 필드 제목이 자동으로 추가됩니다",
+            "Prompt": "프롬프트",
+            "Insert [Shot N]": "[Shot N] 삽입",
+            "Prefill Labels & Summary": "레이블 및 요약 미리 채움",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "삽입한 미디어를 바탕으로 주체/이미지/비디오/오디오 레이블을 생성하고 요약 템플릿을 채웁니다",
+            "Preview Prompt": "프롬프트 미리보기",
+            "Show the full prompt that will be sent upstream": "업스트림으로 전송될 전체 프롬프트 보기",
+            "External prompt detected — builder fields are disabled.": "외부 프롬프트가 감지되었습니다 — 빌더 필드가 비활성화되었습니다.",
+            "Write the complete MiniMax H3 prompt...": "여기에 완전한 MiniMax H3 프롬프트를 작성하세요…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] 여기서 장면 설명을 시작하세요…",
+            "Describe ambient sounds, dialogue, effects...": "환경음, 대사, 효과음을 설명하세요…",
+            "N/A or describe background score...": "N/A를 입력하거나 배경 음악을 설명하세요…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1>은 <Picture 1>의 여성으로, 검은색 짧은 머리에 빨간 코트를 입고 있습니다.\n<Picture 1>은 [Shot 1]의 첫 프레임 앵커입니다.\n<Subject 2>는 <Video 1>에서 가져온 보행 동작입니다.\n<Video 1>은 카메라 이동 경로와 리듬 구조를 제공합니다.\n<Audio 1>은 <Subject 1>의 음색 참조입니다.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] <Picture 1>의 <Subject 1>, <Video 1>의 동작과 리듬, <Audio 1>의 목소리 특성을 사용합니다.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> ([Shot 1], [Shot 2]에 등장): fully_preserved - 정체성과 의류가 일관되게 유지됩니다.\n<Picture 1> ([Shot 1] 첫 프레임): fully_preserved - 오프닝 구도 앵커입니다.\n<Subject 2> (동작을 <Subject 1>으로 전달): attribute_transfer - 보행 리듬을 <Subject 1>에 적용합니다.\n<Video 1> (리듬 구조): weak_reference - 대략적인 타이밍과 카메라 리듬을 유지합니다.\n<Audio 1>: reference - 음색과 전달 방식을 따르되 원본 신호는 복제하지 않습니다.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] 00:04.500에서, ……",
+            "Audio environment description...": "오디오 환경 설명…",
+            "N/A or background score...": "N/A를 입력하거나 배경 음악을 설명하세요…",
+            "Close and save (Escape or click outside)": "닫고 저장(Esc 또는 바깥쪽 클릭)",
+            "Start:": "시작:",
+            "End:": "종료:",
+            "▶ Play crop": "▶ 크롭 재생",
+            "Playing crop…": "크롭 재생 중…",
+            "Play only the current crop range": "현재 크롭 구간만 재생",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "강조된 크롭 영역을 드래그해 이동하고, 양쪽 끝 마커를 드래그해 크기를 조정합니다.",
+            "Save": "저장",
+            "Cancel": "취소",
+            "Full media preview": "전체 미디어 미리보기",
+            "Done": "완료",
+            "Copy": "복사",
+            "All media and prompts cleared.": "모든 미디어와 프롬프트를 지웠습니다.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA는 이미지 참조만 지원하며 비디오와 오디오는 사용할 수 없습니다.",
+            "This media type is not available in the selected MiniMax mode.": "선택한 MiniMax 모드에서는 이 미디어 유형을 지원하지 않습니다.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA는 이미지 참조만 지원합니다. 이미지/비디오 트랙을 선택하세요.",
+            "Upload failed": "업로드 실패",
+            "T2VA has no input lanes.": "T2VA에는 입력 트랙이 없습니다.",
+            "This mode does not support audio references.": "이 모드에서는 오디오 참조를 지원하지 않습니다.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "오디오 트랙을 선택했습니다. 여기서 Ctrl+V로 파일을 붙여넣으세요.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "이미지/비디오 트랙을 선택했습니다. 여기서 Ctrl+V로 파일을 붙여넣으세요."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_MiniMax H3 감독 실행기",
+        "description": "감독 가이드를 네이티브 MiniMax H3 노드 호출로 변환합니다: 가이드의 모드에 따라 MiniMaxH3ImageToVideo 또는 MiniMaxH3ReferenceToVideo를 호출하여 conditioning과 latent을 생성합니다.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "감독 가이드",
+            "audio_vae": "오디오 VAE"
+        },
+        "outputs": {
+            "positive": "긍정 conditioning",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_MiniMax H3 잔차 캐시",
+        "description": "MiniMax H3 모델에 근사적인 블록 단위 잔차 캐시를 추가합니다: 선택한 단계 범위에서 이전 block-stack 출력을 재사용해 비싼 재계산을 건너뛰고 속도를 높입니다. 임계값이 높을수록 더 많이 건너뛰며 충실도가 낮아질 수 있습니다.",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "reuse_threshold": "재사용 임계값",
+            "start_percent": "시작 백분율",
+            "end_percent": "종료 백분율",
+            "max_steps": "최대 건너뛰기 단계 수",
+            "device": "장치",
+            "verbose": "상세 로그"
+        },
+        "outputs": {
+            "MODEL": "모델"
+        }
+    }
+}

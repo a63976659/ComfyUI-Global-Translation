@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "محمّل نموذج SUPIR",
+        "widgets": {
+            "supir_model": "نموذج SUPIR",
+            "sdxl_model": "نموذج SDXL",
+            "fp8_unet": "دقة UNet FP8",
+            "diffusion_dtype": "نوع التقليم"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "نموذج SUPIR",
+            "SUPIR_model": "نموذج SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "محمّل قديم، لا يُنصح باستخدامه.\n\nيحمّل نموذج SUPIR ونموذج SDXL ثم يدمجهما."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "محمّل نموذج SUPIR_V2",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "نموذج SUPIR",
+            "fp8_unet": "دقة UNet FP8",
+            "diffusion_dtype": "نوع التقليم",
+            "high_vram": "ذاكرة عرض مرتفعة"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "نموذج SUPIR",
+            "SUPIR_model": "نموذج SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "تحميل نموذجي SUPIR وSDXL ثم دمجهما.\n\nيجب إبقاء نوع التقليم على خيار تلقائي إلا إذا حدث خطأ أثناء تحميل النموذج.\n\nfp8_unet: استدعاء UNet باستخدام torch.float8_e4m3fn، يخفض متطلبات ذاكرة العرض لكنه يؤثر قليلًا على الجودة.\n\nذاكرة عرض عالية: تحميل النموذج إلى GPU عبر Accelerate، يسرع التحميل قليلًا."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "محمّل نموذج SUPIR_V2 (CLIP)",
+        "inputs": {
+            "model": "النموذج",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "نموذج SUPIR",
+            "fp8_unet": "دقة UNet FP8",
+            "diffusion_dtype": "نوع التقليم",
+            "high_vram": "ذاكرة عرض مرتفعة"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "نموذج SUPIR",
+            "SUPIR_model": "نموذج SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "تحميل نموذجي SUPIR وSDXL ثم دمجهما.\n\nيجب إبقاء نوع التقليم على خيار تلقائي إلا إذا حدث خطأ أثناء تحميل النموذج.\n\nfp8_unet: استدعاء UNet باستخدام torch.float8_e4m3fn، يخفض متطلبات ذاكرة العرض لكنه يؤثر قليلًا على الجودة.\n\nذاكرة عرض عالية: تحميل النموذج إلى GPU عبر Accelerate، يسرع التحميل قليلًا."
+    },
+    "SUPIR_encode": {
+        "title": "ترميز SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "صورة"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE مجزّأ",
+            "encoder_tile_size": "حجم قطعة الترميز",
+            "encoder_dtype": "تقليم الترميز"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "فك ترميز SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE مجزّأ",
+            "decoder_tile_size": "حجم قطعة فك الترميز"
+        },
+        "outputs": {
+            "image": "صورة"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "مرحلة SUPIR الأولى",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "صورة"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE مجزّأ",
+            "encoder_tile_size": "حجم قطعة الترميز",
+            "decoder_tile_size": "حجم قطعة فك الترميز",
+            "encoder_dtype": "تقليم الترميز"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "صورة",
+            "denoised_latents": "Latent"
+        },
+        "description": "«المرحلة الأولى» من SUPIR. يشفّر ويفكّ تشفير الصور باستخدام denoise_encoder الخاص بـ SUPIR لإصلاح آثار الضغط، لكنه قد يسبب ضبابية الصورة.\n\nيمكن الاستبدال بمُعيّن/تمويه آخر أو عدم استخدام هذه العقدة."
+    },
+    "SUPIR_conditioner": {
+        "title": "شرط SUPIR",
+        "inputs": {
+            "SUPIR_MODEL": "نموذج SUPIR",
+            "SUPIR_model": "نموذج SUPIR",
+            "latents": "Latent",
+            "captions": "العنوان/التعليق التوضيحي"
+        },
+        "widgets": {
+            "positive_prompt": "موجّه موجب",
+            "negative_prompt": "الموجّه السلبي"
+        },
+        "outputs": {
+            "positive": "شرط موجب",
+            "negative": "شرط سالب"
+        },
+        "description": "إنشاء الشروط للمُعيّن.\n إدخال العنوان اختياري، وعند تلقي عنوان يُضاف إلى الموجّه الموجب\n إذا قُدمت قائمة عناوين لصورة إدخال واحدة فيجب أن تطابق العناوين عدد التجزئات\n يرجى الرجوع إلى عقدة تجزئة صور SUPIR\n إذا قُدمت قائمة عناوين وطابقت دفعة الصور الواردة فستستخدم كل صورة العنوان المقابل"
+    },
+    "SUPIR_sample": {
+        "title": "أخذ عينات SUPIR",
+        "inputs": {
+            "SUPIR_model": "نموذج SUPIR",
+            "latents": "Latent",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "control_before_generate": "عمل قبل التشغيل",
+            "steps": "عدد الخطوات",
+            "cfg_scale_start": "تحجيم CFG البدئي",
+            "cfg_scale_end": "تحجيم CFG الختامي",
+            "EDM_s_churn": "اضطراب EDM العشوائي",
+            "s_noise": "كمية الضوضاء",
+            "DPMPP_eta": "معامل تباعد خطوات DPMPP",
+            "control_scale_start": "تحجيم التحكم البدئي",
+            "control_scale_end": "تحجيم التحكم الختامي",
+            "restore_cfg": "استعادة CFG",
+            "keep_model_loaded": "إبقاء النموذج محمّلًا",
+            "sampler": "العيّان",
+            "sampler_tile_size": "حجم قطعة العينات",
+            "sampler_tile_stride": "طول خطوة قطع العينات"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nالـ Latent المستخدم في أخذ العينات؛ عند استخدام SUPIR Latent يؤثر هذا البند على شكل الضجيج فقط.\n\nفي الحالات الأخرى يكون كما في إعداد ComfyUI الافتراضي. \n\nإذا كان هناك مدخل Latent يتم الاعتماد على المدخل.\n\n- **CFG：**\n\nالتحكم في CFG بالاستيفاء الخطي، باستخدام تحجيم CFG البدئي قيمة أولية والتوسع خطيًا إلى قيمة تحجيم CFG الختامي.\n\nضبط البندين على قيمة واحدة يعطّل تحجيم الاستيفاء.\n\n- **EDM_s_churn：**\n\nيتحكم في سرعة تكيّف عملية أخذ العينات مع تغيرات ضجيج الـ Latent.\n\nغير فعّال مع مُعيّن DPMPP.\n\n- **كمية الضجيج s_noise：**\n\nيتحكم في كمية الضجيج المضافة إلى الـ Latent في كل خطوة من خطوات أخذ العينات. \n\n- **DPMPP_eta：**\n\nعامل قياس يؤثر في عملية الانتشار عبر تكيّف عملية إزالة الضجيج مع تغير مستوى الضجيج مع الزمن.\n\nغير فعّال مع مُعيّن EDM. \n\n- **تحجيم التحكم control_scale：**\n\nقوة نموذج تحكم SUPIR، يُتحكم في القوة من البداية إلى النهاية بالاستيفاء الخطي.\n\nكلما صغرت القيمة قلّت قوة التحكم.\n\n- **استعادة CFG restore_cfg：**\n\nيتحكم في درجة استعادة الصورة الأصلية أثناء أخذ العينات.\n\nيُستخدم لضبط عملية أخذ العينات بدقة عبر التلقيم.\n\n- **المُعيّن：**\n\nEDM يحتاج عددًا كبيرًا من الخطوات لكن الجودة تكون أفضل عادة.\n\nDPMPP يحتاج خطوات أقل ويناسب نماذج Lighting.\n\nمُعيّن التجزئة يعتمد أخذ العينات المُجزّأ، وهو بطيء جدًا لكنه يتيح دقة أعلى بذاكرة عرض أقل.\n\nقبل تجزئة الصورة يجب تحديد حجم التجزئة، ويؤثر تباعد التجزئات في حجم تداخل كل تجزئة. يمكن الرجوع في وظيفة التجزئة إلى عقدة تجزئة صور SUPIR."
+    },
+    "SUPIR_tiles": {
+        "title": "تجزئة صور SUPIR",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "tile_size": "حجم الكتلة",
+            "tile_stride": "خطوة الكتل"
+        },
+        "outputs": {
+            "image_tiles": "صور الكتل",
+            "tile_size": "حجم الكتلة",
+            "tile_stride": "خطوة الكتل"
+        },
+        "description": "تجزئة الصورة بالطريقة المستخدمة في مُعيّن التجزئة.\n\nلمعاينة التجزئات واستنتاج كل تجزئة عكسيًا (هذه الميزة قيد التطوير)."
+    },
+    "SUPIR_Upscale": {
+        "title": "تكبير SUPIR",
+        "inputs": {
+            "image": "صورة",
+            "captions": "العنوان/التعليق التوضيحي"
+        },
+        "widgets": {
+            "supir_model": "نموذج SUPIR",
+            "sdxl_model": "نموذج SDXL",
+            "seed": "البذرة",
+            "control_before_generate": "عمل قبل التشغيل",
+            "resize_method": "طريقة القياس",
+            "scale_by": "معامل التحجيم",
+            "steps": "عدد الخطوات",
+            "restoration_scale": "تحجيم الاستعادة",
+            "cfg_scale": "نسبة CFG",
+            "a_prompt": "موجّه موجب",
+            "n_prompt": "الموجّه السلبي",
+            "s_churn": "معامل تلاشي الضوضاء",
+            "s_noise": "كمية الضوضاء",
+            "control_scale": "تحجيم التحكم",
+            "cfg_scale_start": "قوة بداية توجيه CFG",
+            "control_scale_start": "وزن ControlNet البدئي",
+            "color_fix_type": "نوع تصحيح الألوان",
+            "keep_model_loaded": "إبقاء النموذج محمّلًا",
+            "use_tiled_vae": "VAE مجزّأ",
+            "encoder_tile_size": "حجم قطعة الترميز",
+            "encoder_tile_size_pixels": "حجم قطعة فك الترميز بالبكسل",
+            "decoder_tile_size": "حجم قطعة فك الترميز",
+            "decoder_tile_size_latent": "حجم قطعة فك الترميز Latent",
+            "diffusion_dtype": "نوع التقليم",
+            "encoder_dtype": "تقليم الترميز",
+            "batch_size": "حجم الدفعة",
+            "use_tiled_sampling": "استخدام أخذ العينات المُجزّأ",
+            "used_tiled_sampling": "استخدام أخذ العينات المُجزّأ",
+            "sampler_tile_size": "حجم قطعة العينات",
+            "sampler_tile_stride": "طول خطوة قطع العينات",
+            "fp8_unet": "دقة UNet FP8",
+            "fp8_vae": "fp8_vae",
+            "sampler": "العيّان"
+        },
+        "outputs": {
+            "upscaled_image": "صورة"
+        }
+    }
+}

@@ -1,0 +1,2075 @@
+{
+    "Trellis2LoadModel": {
+        "title": "Carregador de modelo Trellis2",
+        "widgets": {
+            "modelname": "Nome do modelo",
+            "backend": "Backend de operação",
+            "device": "Dispositivo de execução",
+            "low_vram": "Modo de baixa VRAM",
+            "keep_models_loaded": "Manter o modelo na memória",
+            "conv_backend": "Backend de operação de convolução",
+            "sparse_backend": "Backend de operação esparsa",
+            "use_reconviagen": "Ativar o gerador ReconViagen"
+        },
+        "outputs": {
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelGenerator": {
+        "title": "Gerador de malha de vóxel Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "pipeline_type": "Tipo de pipeline",
+            "sparse_structure_steps": "Etapas de geração da estrutura esparsa",
+            "shape_steps": "Etapas de geração da forma",
+            "texture_steps": "Etapas de geração da textura",
+            "max_num_tokens": "Número máximo de tokens",
+            "max_views": "Quantidade máxima de vistas",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "generate_texture_slat": "Gerar fragmentos de textura",
+            "use_tiled_decoder": "Usar decodificador em blocos",
+            "sampler": "Amostrador",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "keep_only_shell": "Manter apenas a malha da casca"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Estrutura de caixa delimitadora BVH"
+        },
+        "description": ""
+    },
+    "Trellis2LoadImageWithTransparency": {
+        "title": "Carregador de imagem com canal alfa Trellis2",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "image_with_alpha": "Imagem com canal alfa"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMesh": {
+        "title": "Simplificador de malha Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "method": "Algoritmo de simplificação"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimesh": {
+        "title": "Simplificador de malha triangular Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "method": "Algoritmo de simplificação"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2ProgressiveSimplify": {
+        "title": "Simplificador progressivo de malha Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "max_edge_length": "Limiar de comprimento máximo da aresta",
+            "max_triangle_aspect_ratio": "Limiar da proporção máxima do triângulo",
+            "strategy": "Estratégia de simplificação",
+            "stabilizer": "Parâmetros do estabilizador",
+            "touch_near_boundary_edges": "Processar arestas próximas à fronteira",
+            "optimize_vertex_positions": "Otimizar posições dos vértices",
+            "angle_based_weights": "Usar pesos baseados no ângulo"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToTrimesh": {
+        "title": "Conversor de malha de vóxel em malha triangular Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "reorient_vertices": "Reorientar direção dos vértices"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2ExportMesh": {
+        "title": "Exportação de malha Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "file_format": "Formato de arquivo de exportação"
+        },
+        "outputs": {
+            "glb_path": "Caminho do arquivo GLB",
+            "relative_path": "Caminho relativo"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessMesh": {
+        "title": "Pós-processamento de malha Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "remove_duplicate_faces": "Remover faces duplicadas",
+            "repair_non_manifold_edges": "Corrigir arestas não manifold",
+            "remove_non_manifold_faces": "Remover faces não manifold",
+            "remove_small_connected_components": "Remover componentes conexos pequenos",
+            "remove_small_connected_components_size": "Limiar de tamanho de componentes conexos pequenos",
+            "unify_faces_orientation": "Unificar orientação das faces",
+            "remove_floaters": "Remover cacos flutuantes",
+            "remove_infinite_vertices": "Remover vértices com coordenadas infinitas",
+            "merge_vertices": "Consolidar os vértices",
+            "merge_distance": "Limiar de distância para combinar vértices",
+            "remove_nan_vertices": "Remover vértices com valores inválidos"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapAndRasterizer": {
+        "title": "Desdobramento UV e rasterização de malha Trellis2",
+        "inputs": {
+            "mesh": "Malha",
+            "bvh": "Estrutura de caixa delimitadora BVH"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "mesh_cluster_refine_iterations": "Iterações de refinamento dos aglomerados da malha",
+            "mesh_cluster_global_iterations": "Iterações globais dos aglomerados da malha",
+            "mesh_cluster_smooth_strength": "Força de suavização dos aglomerados da malha",
+            "texture_size": "Tamanho da textura",
+            "texture_alpha_mode": "Modo do canal de transparência da textura",
+            "double_side_material": "Ativar material de dois lados",
+            "bake_on_vertices": "Fornear na cor dos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "inpainting": "Ativar correção de buracos da imagem",
+            "reorient_vertices": "Reorientar direção dos vértices"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura de cor base",
+            "metallic_roughness_texture": "Textura de metalidade e rugosidade"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelAdvancedGenerator": {
+        "title": "Gerador avançado de malha de vóxel Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "pipeline_type": "Tipo de pipeline",
+            "sparse_structure_steps": "Etapas de geração da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Valor T de reescalonamento da estrutura esparsa",
+            "shape_steps": "Etapas de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Reescalonamento da orientação de forma",
+            "shape_rescale_t": "Valor T de reescalonamento da forma",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Valor T de reescalonamento da textura",
+            "max_num_tokens": "Número máximo de tokens",
+            "max_views": "Quantidade máxima de vistas",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "generate_texture_slat": "Gerar fragmentos de textura",
+            "sparse_structure_guidance_interval_start": "Valor inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Valor final do intervalo de orientação da estrutura esparsa",
+            "shape_guidance_interval_start": "Valor inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Valor final do intervalo de orientação de forma",
+            "texture_guidance_interval_start": "Valor inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Valor final do intervalo de orientação de textura",
+            "use_tiled_decoder": "Usar decodificador em blocos",
+            "sampler": "Amostrador",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Subpassos DINO",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "dino_foundation_cap": "Limite superior da base DINO",
+            "keep_only_shell": "Manter apenas a malha da casca"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Estrutura de caixa delimitadora BVH"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelMultiViewGenerator": {
+        "title": "Gerador de malha multivistas por vóxel Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "front_image": "Imagem positiva",
+            "back_image": "Imagem traseira",
+            "left_image": "Imagem esquerda",
+            "right_image": "Imagem direita"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "pipeline_type": "Tipo de pipeline",
+            "sparse_structure_steps": "Etapas de geração da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Valor T de reescalonamento da estrutura esparsa",
+            "shape_steps": "Etapas de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Reescalonamento da orientação de forma",
+            "shape_rescale_t": "Valor T de reescalonamento da forma",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Valor T de reescalonamento da textura",
+            "max_num_tokens": "Nº máximo de tokens",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "generate_texture_slat": "Gerar slat de textura",
+            "sparse_structure_guidance_interval_start": "Ponto inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Ponto final do intervalo de orientação da estrutura esparsa",
+            "shape_guidance_interval_start": "Ponto inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Ponto final do intervalo de orientação de forma",
+            "texture_guidance_interval_start": "Ponto inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Ponto final do intervalo de orientação de textura",
+            "use_tiled_decoder": "Ativar decodificador em blocos",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Valor da temperatura de mistura",
+            "sampler": "Amostrador",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Número de iterações de preenchimento dos buracos",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento do modelo DINO",
+            "dino_substeps": "Subpassos DINO",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "dino_foundation_cap": "Limite máximo da base DINO",
+            "keep_only_shell": "Manter apenas a casca da malha"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Caixas delimitadoras hierárquicas BVH"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessAndUnWrapAndRasterizer": {
+        "title": "Pós-processamento, desdobramento UV e rasterizador Trellis2",
+        "inputs": {
+            "mesh": "Malha",
+            "bvh": "Caixas delimitadoras hierárquicas BVH"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do aglomerado da malha (radianos)",
+            "mesh_cluster_refine_iterations": "Iterações de otimização dos aglomerados da malha",
+            "mesh_cluster_global_iterations": "Iterações globais dos aglomerados da malha",
+            "mesh_cluster_smooth_strength": "Força de suavização dos aglomerados da malha",
+            "texture_size": "Tamanho da textura",
+            "remesh": "Remesh (nova malha)",
+            "remesh_band": "Largura da faixa de remalhagem",
+            "remesh_project": "Projeção de remalhagem",
+            "target_face_num": "Número alvo de faces",
+            "simplify_method": "Método de simplificação",
+            "fill_holes": "Preencher buracos",
+            "texture_alpha_mode": "Modo do canal Alpha da textura",
+            "dual_contouring_resolution": "Resolução do algoritmo de dual contouring",
+            "double_side_material": "Material de dois lados",
+            "remove_floaters": "Remover fragmentos flutuantes",
+            "bake_on_vertices": "Fornear nos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "remove_inner_faces": "Remover faces internas",
+            "inpainting": "Inpaint de imagem",
+            "reorient_vertices": "Reorientar os vértices"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura de cor base",
+            "metallic_roughness_texture": "Textura de metalidade e rugosidade"
+        },
+        "description": ""
+    },
+    "Trellis2Remesh": {
+        "title": "Remalhagem Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "remesh_band": "Largura da faixa de remalhagem",
+            "remesh_project": "Projeção de remalhagem",
+            "dual_contouring_resolution": "Resolução do algoritmo de dual contouring",
+            "remove_floaters": "Remover fragmentos flutuantes",
+            "remove_inner_faces": "Remover faces internas"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMesh": {
+        "title": "Reconstrução de malha Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "remesh_band": "Largura da faixa de remalhagem",
+            "resolution": "Resolução"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMeshWithQuad": {
+        "title": "Reconstrução de malha quadrilateral Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "remesh_band": "Largura da faixa de remalhagem",
+            "resolution": "Resolução",
+            "remove_floaters": "Remover fragmentos flutuantes",
+            "remove_inner_faces": "Remover faces internas"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturing": {
+        "title": "Geração de textura de malha Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image": "Imagem",
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Valor T de reescalonamento da textura",
+            "resolution": "Resolução",
+            "texture_size": "Tamanho da textura",
+            "texture_alpha_mode": "Modo do canal Alpha da textura",
+            "double_side_material": "Material de dois lados",
+            "texture_guidance_interval_start": "Ponto inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Ponto final do intervalo de orientação de textura",
+            "max_views": "Contagem máxima de views",
+            "bake_on_vertices": "Fornear nos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do aglomerado da malha (radianos)",
+            "sampler": "Amostrador",
+            "inpainting": "Inpaint de imagem",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento do modelo DINO",
+            "dino_substeps": "Subpassos DINO",
+            "dino_foundation_cap": "Limite máximo da base DINO"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura de cor base",
+            "metallic_roughness_texture": "Textura de metalidade e rugosidade"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturingMultiView": {
+        "title": "Mapeamento de textura multivistas da malha Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline de processamento",
+            "front_image": "Imagem positiva",
+            "trimesh": "malha triangular (trimesh)",
+            "back_image": "Imagem traseira",
+            "left_image": "Imagem esquerda",
+            "right_image": "Imagem direita"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Limiar T de reescalonamento da textura",
+            "resolution": "Resolução",
+            "texture_size": "Tamanho da textura",
+            "texture_alpha_mode": "Modo do canal Alpha da textura",
+            "double_side_material": "Material de dois lados",
+            "texture_guidance_interval_start": "Valor inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Valor final do intervalo de orientação de textura",
+            "bake_on_vertices": "Fornear nos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (radianos)",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Temperatura de mistura",
+            "sampler": "Amostrador",
+            "inpainting": "Inpaint de imagem",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento do modelo DINO",
+            "dino_substeps": "Subpassos DINO",
+            "dino_foundation_cap": "Limite superior do modelo base DINO"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura de cor base",
+            "metallic_roughness_texture": "Textura de metalidade e rugosidade"
+        },
+        "description": ""
+    },
+    "Trellis2LoadMesh": {
+        "title": "Carregar modelo de malha Trellis2",
+        "widgets": {
+            "glb_path": "Caminho do arquivo GLB"
+        },
+        "outputs": {
+            "trimesh": "Modelo de malha GLB aguardando geração de textura"
+        },
+        "description": "Carrega um modelo em formato GLB do caminho especificado."
+    },
+    "Trellis2PreProcessImage": {
+        "title": "Pré-processamento de imagem Trellis2",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "padding": "Margem interna",
+            "remove_background": "Remover Fundo",
+            "max_size": "Tamanho Máximo"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": ""
+    },
+    "Trellis2MeshRefiner": {
+        "title": "Otimizador de malha Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline de processamento",
+            "trimesh": "malha triangular (trimesh)",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "resolution": "Resolução",
+            "shape_steps": "Etapas de otimização da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Reescalonamento da orientação de forma",
+            "shape_rescale_t": "Limiar T de reescalonamento da forma",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Limiar T de reescalonamento da textura",
+            "max_num_tokens": "Nº máximo de tokens",
+            "generate_texture_slat": "Gerar placa de textura",
+            "downsampling": "Fator de subamostragem",
+            "shape_guidance_interval_start": "Valor inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Valor final do intervalo de orientação de forma",
+            "texture_guidance_interval_start": "Valor inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Valor final do intervalo de orientação de textura",
+            "use_tiled_decoder": "Usar decodificador em fragmentos",
+            "max_views": "Contagem máxima de views",
+            "sampler": "Amostrador",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento do modelo DINO",
+            "dino_substeps": "Subpassos DINO",
+            "dino_foundation_cap": "Limite superior do modelo base DINO"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Estrutura hierárquica de volumes delimitadores (BVH)"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess2": {
+        "title": "Pós-processamento de malha V2 Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "fill_holes": "Preencher buracos",
+            "fix_normals": "Corrigir as normais",
+            "fix_face_orientation": "Corrigir viramento das faces",
+            "remove_duplicate_faces": "Remover faces duplicadas",
+            "weld_vertices": "Soldar vértices",
+            "weld_vertices_digits": "Dígitos de precisão da soldagem de vértices",
+            "smooth": "Suavização",
+            "smooth_iterations": "Iterações de suavização",
+            "subdivide": "Remalhamento de Textura",
+            "subdivide_iterations": "Iterações de subdivisão"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2OvoxelExportToGLB": {
+        "title": "Exportar malha de vóxel como GLB Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "texture_size": "Tamanho da textura",
+            "target_face_num": "Número alvo de faces"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2TrimeshToMeshWithVoxel": {
+        "title": "Conversão de malha triangular em malha com vóxel Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "resolution": "Resolução"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2Continue": {
+        "title": "Nó relay de 2 vias Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1",
+            "input_2": "Entrada 2"
+        },
+        "outputs": {
+            "output_1": "Saída 1",
+            "output_2": "Saída 2"
+        },
+        "description": ""
+    },
+    "Trellis2Continue3": {
+        "title": "Nó relay de 3 vias Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1",
+            "input_2": "Entrada 2",
+            "input_3": "Entrada 3"
+        },
+        "outputs": {
+            "output_1": "Saída 1",
+            "output_2": "Saída 2",
+            "output_3": "Saída 3"
+        },
+        "description": ""
+    },
+    "Trellis2Continue4": {
+        "title": "Nó relay de 4 vias Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1",
+            "input_2": "Entrada 2",
+            "input_3": "Entrada 3",
+            "input_4": "Entrada 4"
+        },
+        "outputs": {
+            "output_1": "Saída 1",
+            "output_2": "Saída 2",
+            "output_3": "Saída 3",
+            "output_4": "Saída 4"
+        },
+        "description": ""
+    },
+    "Trellis2Continue5": {
+        "title": "Nó relay de 5 vias Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1",
+            "input_2": "Entrada 2",
+            "input_3": "Entrada 3",
+            "input_4": "Entrada 4",
+            "input_5": "Entrada 5"
+        },
+        "outputs": {
+            "output_1": "Saída 1",
+            "output_2": "Saída 2",
+            "output_3": "Saída 3",
+            "output_4": "Saída 4",
+            "output_5": "Saída 5"
+        },
+        "description": ""
+    },
+    "Trellis2Continue6": {
+        "title": "Nó relay de 6 vias Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1",
+            "input_2": "Entrada 2",
+            "input_3": "Entrada 3",
+            "input_4": "Entrada 4",
+            "input_5": "Entrada 5",
+            "input_6": "Entrada 6"
+        },
+        "outputs": {
+            "output_1": "Saída 1",
+            "output_2": "Saída 2",
+            "output_3": "Saída 3",
+            "output_4": "Saída 4",
+            "output_5": "Saída 5",
+            "output_6": "Saída 6"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToMeshlibMesh": {
+        "title": "Conversão de malha com vóxel em malha Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "outputs": {
+            "meshlib_mesh": "Malha em formato Meshlib"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithMeshlib": {
+        "title": "Preenchimento de buracos de malha Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "holes_filled": "Buracos preenchidos"
+        },
+        "description": "Preenche todos os buracos da malha usando o algoritmo de triangulação ideal."
+    },
+    "Trellis2FillHolesNicelyWithMeshlib": {
+        "title": "Preenchimento de alta qualidade dos buracos da malha com Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "holes_filled": "Buracos preenchidos"
+        },
+        "description": "Preenche todos os buracos da malha com alta qualidade usando o algoritmo de triangulação ideal."
+    },
+    "Trellis2SmoothNormals": {
+        "title": "Suavização de normais Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2RemeshWithQuad": {
+        "title": "Remalhagem quad Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "remesh_band": "Faixa de remalhagem",
+            "remesh_project": "Alinhamento da projeção de remalhagem",
+            "dual_contouring_resolution": "Resolução da extração por dual contouring",
+            "remove_floaters": "Remover flocos soltos",
+            "remove_inner_faces": "Remover faces internas"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2BatchSimplifyMeshAndExport": {
+        "title": "Exportação de simplificação de malhas em lote Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "method": "Método de simplificação",
+            "fill_holes": "Preencher buracos",
+            "reorient_vertices": "Reorientação de vértices",
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "file_format": "Formato do arquivo",
+            "weld_vertices": "Soldar vértices coincidentes",
+            "weld_vertices_digits": "Dígitos de precisão da soldagem de vértices"
+        },
+        "outputs": {
+            "lst_glb_path": "Lista de caminhos de arquivo GLB"
+        },
+        "description": ""
+    },
+    "Trellis2WeldVertices": {
+        "title": "Soldagem de vértices Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "merge_texture": "Combinar textura",
+            "merge_normals": "Combinar normais",
+            "digits": "Dígitos de precisão"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2StringSelector": {
+        "title": "Seletor de string Trellis2",
+        "widgets": {
+            "strings": "Lista de strings",
+            "index": "Índices selecionados"
+        },
+        "outputs": {
+            "string": "String selecionada"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithCuMesh": {
+        "title": "Preenchimento de buracos CuMesh Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "max_permieters": "Limiar de perímetro máximo do buraco"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": "Preencher todos os buracos da malha"
+    },
+    "Trellis2LaplacianSmoothingWithOpen3d": {
+        "title": "Suavização laplaciana Open3D Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "iterations": "Iterações",
+            "method": "Método de suavização"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimesh": {
+        "title": "Desdobramento UV da malha triangular Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "mesh_cluster_refine_iterations": "Iterações de otimização dos aglomerados da malha",
+            "mesh_cluster_global_iterations": "Iterações globais dos aglomerados da malha",
+            "mesh_cluster_smooth_strength": "Força de suavização dos aglomerados da malha"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelCascadeGenerator": {
+        "title": "Gerador de malha em cascata por vóxel Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "pipeline_type": "Tipo de pipeline",
+            "sparse_structure_steps": "Etapas de amostragem da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Passo temporal de reescalonamento da estrutura esparsa",
+            "sparse_structure_sampler": "Amostrador da estrutura esparsa",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "sparse_structure_guidance_interval_start": "Passo inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Passo final do intervalo de orientação da estrutura esparsa",
+            "low_res_shape_steps": "Etapas de amostragem de forma em baixa resolução",
+            "low_res_shape_guidance_strength": "Força da orientação de forma em baixa resolução",
+            "low_res_shape_guidance_rescale": "Reescalonamento da orientação de forma em baixa resolução",
+            "low_res_shape_rescale_t": "Passo temporal de reescalonamento de forma em baixa resolução",
+            "low_res_shape_sampler": "Amostrador de forma em baixa resolução",
+            "low_res_shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma em baixa resolução",
+            "low_res_shape_guidance_interval_end": "Passo final do intervalo de orientação de forma em baixa resolução",
+            "high_res_shape_steps": "Etapas de amostragem de forma em alta resolução",
+            "high_res_shape_guidance_strength": "Força da orientação de forma em alta resolução",
+            "high_res_shape_guidance_rescale": "Reescalonamento da orientação de forma em alta resolução",
+            "high_res_shape_rescale_t": "Passo temporal de reescalonamento de forma em alta resolução",
+            "high_res_shape_sampler": "Amostrador de forma em alta resolução",
+            "high_res_shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma em alta resolução",
+            "high_res_shape_guidance_interval_end": "Passo final do intervalo de orientação de forma em alta resolução",
+            "generate_texture_slat": "Gerar placa de textura",
+            "texture_steps": "Etapas de amostragem da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Reescalonamento da orientação da textura",
+            "texture_rescale_t": "Passo temporal de reescalonamento da textura",
+            "texture_sampler": "Amostrador de textura",
+            "texture_guidance_interval_start": "Passo inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Passo final do intervalo de orientação de textura",
+            "max_num_tokens": "Número máximo de tokens",
+            "use_tiled_decoder": "Usar decodificador em blocos",
+            "max_views": "Número máximo de views",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento Dino",
+            "dino_substeps": "Tamanho do subpasso Dino",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "dino_foundation_cap": "Limite máximo da base Dino",
+            "keep_only_shell": "Manter apenas a casca"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Estrutura de aceleração BVH"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondGenerator": {
+        "title": "Gerador com condicionamento de imagem Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "max_views": "Número máximo de views"
+        },
+        "outputs": {
+            "cond_512": "Condicionamento de resolução 512",
+            "cond_1024": "Condicionamento de resolução 1024",
+            "pipeline": "Pipeline carregado",
+            "moge_camera_config": "Configuração de câmera Moge"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGenerator": {
+        "title": "Gerador de estrutura esparsa Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_cond": "Condicionamento de imagem",
+            "image": "Imagem",
+            "moge_camera_config": "Configuração de câmera Moge"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "sparse_structure_steps": "Etapas de amostragem da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Passo temporal de reescalonamento da estrutura esparsa",
+            "sparse_structure_sampler": "Amostrador da estrutura esparsa",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "sparse_structure_guidance_interval_start": "Passo inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Passo final do intervalo de orientação da estrutura esparsa",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento Dino",
+            "dino_substeps": "Tamanho do subpasso Dino",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "dino_foundation_cap": "Limite máximo da base Dino",
+            "keep_only_shell": "Manter apenas a casca"
+        },
+        "outputs": {
+            "coords": "Conjunto de coordenadas",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeGenerator": {
+        "title": "Gerador de forma Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_cond": "Imagem de condicionamento",
+            "coords": "Coordenadas",
+            "image": "Imagem",
+            "moge_camera_config": "Configuração de câmera Moge"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "shape_steps": "Etapas de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Coeficiente de reescalonamento da orientação de forma",
+            "shape_rescale_t": "Limiar T de reescalonamento da forma",
+            "shape_sampler": "Amostrador de forma",
+            "shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Passo final do intervalo de orientação de forma",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características Dino",
+            "dino_substeps": "Subpassos Dino",
+            "dino_foundation_cap": "Limite superior das características base Dino"
+        },
+        "outputs": {
+            "shape_slat": "Características raster da forma",
+            "resolution": "Resolução",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeGenerator": {
+        "title": "Gerador de forma em cascata Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_cond": "Imagem de condicionamento",
+            "shape_slat": "Características raster da forma",
+            "image": "Imagem",
+            "moge_camera_config": "Configuração de câmera Moge"
+        },
+        "widgets": {
+            "from_resolution": "Resolução de origem",
+            "to_resolution": "Resolução alvo",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "max_num_tokens": "Nº máximo de tokens",
+            "shape_steps": "Etapas de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Coeficiente de reescalonamento da orientação de forma",
+            "shape_rescale_t": "Limiar T de reescalonamento da forma",
+            "shape_sampler": "Amostrador de forma",
+            "shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Passo final do intervalo de orientação de forma",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características Dino",
+            "dino_substeps": "Subpassos Dino",
+            "dino_foundation_cap": "Limite superior das características base Dino"
+        },
+        "outputs": {
+            "shape_slat": "Características raster da forma",
+            "resolution": "Resolução",
+            "pipeline": "Pipeline carregado",
+            "num_tokens": "Quantidade de tokens"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatGenerator": {
+        "title": "Gerador de características raster de textura Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_cond": "Imagem de condicionamento",
+            "shape_slat": "Características raster da forma",
+            "image": "Imagem",
+            "moge_camera_config": "Configuração de câmera Moge"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "texture_steps": "Etapas de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Coeficiente de reescalonamento da orientação de textura",
+            "texture_rescale_t": "Limiar T de reescalonamento da textura",
+            "texture_sampler": "Amostrador de textura",
+            "texture_guidance_interval_start": "Passo inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Passo final do intervalo de orientação de textura",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características Dino",
+            "dino_substeps": "Subpassos Dino",
+            "dino_foundation_cap": "Limite superior das características base Dino",
+            "from_resolution": "Resolução de origem"
+        },
+        "outputs": {
+            "texture_slat": "Características raster da textura",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatents": {
+        "title": "Decodificação Latent Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "shape_slat": "Características raster da forma",
+            "texture_slat": "Características raster da textura"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "use_tiled_decoder": "Usar decodificador em fragmentos"
+        },
+        "outputs": {
+            "mesh": "Modelo de malha",
+            "bvh": "Estrutura de aceleração BVH",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMeshAdvanced": {
+        "title": "Simplificação avançada de malha Trellis2",
+        "inputs": {
+            "mesh": "Modelo de malha"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "thresh": "Limiar de simplificação",
+            "lambda_edge_length": "Coeficiente de peso do comprimento da aresta",
+            "lambda_skinny": "Peso de supressão de triângulos alongados",
+            "lambda_curvature": "Peso de preservação da curvatura",
+            "lambda_boundary": "Peso de preservação da fronteira",
+            "lambda_area": "Peso da área",
+            "qem_regularization": "Força de regularização QEM"
+        },
+        "outputs": {
+            "mesh": "Modelo de malha"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimeshAdvanced": {
+        "title": "Simplificação avançada de malha triangular Trellis2",
+        "inputs": {
+            "trimesh": "Modelo de malha triangular"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "thresh": "Limiar de simplificação",
+            "lambda_edge_length": "Coeficiente de peso do comprimento da aresta",
+            "lambda_skinny": "Peso de supressão de triângulos alongados",
+            "lambda_curvature": "Peso de preservação da curvatura",
+            "lambda_boundary": "Peso de preservação da fronteira",
+            "lambda_area": "Peso da área",
+            "qem_regularization": "Força de regularização QEM"
+        },
+        "outputs": {
+            "trimesh": "Modelo de malha triangular"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturing": {
+        "title": "Forneamento de textura multivistas Trellis2",
+        "inputs": {
+            "trimesh": "Modelo de malha triangular",
+            "front_image": "Imagem positiva",
+            "back_image": "Imagem traseira",
+            "left_image": "Imagem esquerda",
+            "right_image": "Imagem direita",
+            "top_image": "Imagem da face de cima",
+            "bottom_image": "Imagem da face de baixo",
+            "custom_images": "Imagens de vista personalizadas",
+            "camera_config": "Configuração da câmera"
+        },
+        "widgets": {
+            "texture_size": "Tamanho da textura",
+            "blend_texture": "Ativar mistura de texturas",
+            "blend_exponent": "Expoente de mistura",
+            "ortho_scale": "Coeficiente de escala da projeção ortogonal",
+            "norm_size": "Tamanho normalizado",
+            "fill_holes": "Preencher vazios da textura",
+            "max_hole_size": "Tamanho máximo do vazio preenchível",
+            "use_metallic": "Gerar canal de metalidade/rugosidade",
+            "depth_eps": "Limiar de deslocamento de profundidade",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "add_alpha_channel": "Adicionar canal de transparência",
+            "front_weight": "Peso frontal",
+            "back_weight": "Peso da face traseira",
+            "left_weight": "Peso do lado esquerdo",
+            "right_weight": "Peso do lado direito",
+            "top_weight": "Peso da face de cima",
+            "bottom_weight": "Peso da face de baixo",
+            "custom_azimuths": "Azimutes das vistas personalizadas",
+            "custom_elevations": "Elevações das vistas personalizadas",
+            "custom_weights": "Pesos das vistas personalizadas"
+        },
+        "outputs": {
+            "trimesh": "Modelo de malha triangular",
+            "base_color": "Mapa de cor base",
+            "metallic_roughness": "Mapa de metalidade e rugosidade"
+        },
+        "description": "Adiciona textura ao modelo de malha projetando imagens de várias vistas.\n\nUsa um algoritmo de mistura ponderada por ângulo: cada superfície recebe informação de textura de todas as vistas visíveis, com peso determinado pelo grau de alinhamento entre a orientação da superfície e a direção da câmera.\n\nDefinição dos ângulos de câmera (sistema de coordenadas com eixo Y para cima):\n- Azimute: ângulo de rotação em torno do eixo Y\n  - 0° = frontal (olhando para -Z)\n  - 90° = esquerda (olhando para -X)\n  - 180° = traseira (olhando para +Z)\n  - 270° = direita (olhando para +X)\n- Elevação: ângulo de rotação em torno do eixo X\n  - 0° = vista horizontal\n  - 90° = face superior (olhando para -Y, de cima para baixo)\n  - -90° = face inferior (olhando para +Y, de baixo para cima)"
+    },
+    "Trellis2ProjectHighPolyToLowPoly": {
+        "title": "Projeção de malha de alta para baixa polígonos Trellis2",
+        "inputs": {
+            "high_poly_trimesh": "Malha triangular de alta polígonos",
+            "low_poly_trimesh": "Malha triangular de baixa polígonos",
+            "front_image": "Imagem positiva",
+            "back_image": "Imagem traseira",
+            "left_image": "Imagem esquerda",
+            "right_image": "Imagem direita",
+            "top_image": "Imagem do topo",
+            "bottom_image": "Imagem da base",
+            "custom_images": "Imagem Personalizada",
+            "camera_config": "Configuração da câmera"
+        },
+        "widgets": {
+            "texture_size": "Tamanho da textura",
+            "blend_texture": "Mistura de textura",
+            "blend_exponent": "Expoente de mistura",
+            "ortho_scale": "Escala da projeção ortográfica",
+            "norm_size": "Tamanho normalizado",
+            "fill_holes": "Preencher buracos",
+            "max_hole_size": "Dimensão máxima do buraco",
+            "use_metallic": "Ativar canal de metalidade",
+            "depth_eps": "Limiar de erro de profundidade",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Valor do limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "add_alpha_channel": "Adicionar canal Alpha",
+            "front_weight": "Peso frontal",
+            "back_weight": "Peso da face traseira",
+            "left_weight": "Peso do lado esquerdo",
+            "right_weight": "Peso do lado direito",
+            "top_weight": "Peso do topo",
+            "bottom_weight": "Peso inferior",
+            "custom_azimuths": "Lista de azimutes personalizados",
+            "custom_elevations": "Lista de elevações personalizadas",
+            "custom_weights": "Lista de pesos personalizados"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color": "Textura de cor base",
+            "metallic_roughness": "Textura de metalidade e rugosidade"
+        },
+        "description": "Confere textura à malha projetando imagens de várias vistas.\n\nUsa um algoritmo de mistura ponderada por ângulo: cada superfície recebe textura de todas as vistas que a observam, com peso determinado pelo grau de alinhamento entre a superfície e a câmera correspondente.\n\nÂngulos de câmera (sistema de coordenadas com eixo Y para cima):\n- Azimute: rotação em torno do eixo Y\n  - 0° = frontal (olhando para -Z)\n  - 90° = esquerda (olhando para -X)  \n  - 180° = traseira (olhando para +Z)\n  - 270° = direita (olhando para +X)\n- Elevação: rotação em torno do eixo X\n  - 0° = direção horizontal\n  - 90° = topo (de cima, olhando para -Y)\n  - -90° = base (de baixo, olhando para +Y)"
+    },
+    "Trellis2RenderMultiView": {
+        "title": "Renderização multivistas Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "render_size": "Dimensão da renderização",
+            "ortho_scale": "Escala da projeção ortográfica",
+            "blender_exec_path": "Caminho do executável do Blender",
+            "azimuths": "Lista de ângulos azimutais",
+            "elevations": "Lista de ângulos de elevação"
+        },
+        "outputs": {
+            "images": "Imagem",
+            "ortho_scale": "Escala da projeção ortográfica",
+            "azimuths": "Lista de ângulos azimutais",
+            "elevations": "Lista de ângulos de elevação"
+        },
+        "description": ""
+    },
+    "Trellis2CudaReset": {
+        "title": "Redefinição CUDA Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1"
+        },
+        "outputs": {
+            "output_1": "Saída 1"
+        },
+        "description": ""
+    },
+    "Trellis2SaveImage": {
+        "title": "Salvar imagem Trellis2",
+        "inputs": {
+            "images": "Imagem"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "compress_level": "Nível de compressão"
+        },
+        "outputs": {
+            "images_path": "Caminho das imagens"
+        },
+        "description": "Salva a imagem de entrada no diretório de saída do ComfyUI."
+    },
+    "Trellis2VoxelToMesh": {
+        "title": "Vóxel para malha Trellis2",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "target_height_mm": "Altura alvo (mm)",
+            "sigma": "Coeficiente sigma de suavização",
+            "coarse_downsample": "Taxa de subamostragem grosseira",
+            "taubin_iterations": "Número de iterações de suavização Taubin"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2UnloadAllModels": {
+        "title": "Descarregar todos os modelos Trellis2",
+        "inputs": {
+            "input_1": "Entrada 1"
+        },
+        "outputs": {
+            "output_1": "Saída 1"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGeneratorWithReconViaGen": {
+        "title": "Gerador de estrutura esparsa com reconstrução generativa Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline de processamento",
+            "images": "Imagem"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "sparse_structure_steps": "Etapas iterativas da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Coeficiente de reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Valor T de reescalonamento da estrutura esparsa",
+            "sparse_structure_sampler": "Amostrador da estrutura esparsa",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "sparse_structure_guidance_interval_start": "Ponto inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Ponto final do intervalo de orientação da estrutura esparsa",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Subpassos DINO",
+            "dino_foundation_cap": "Limiar da base DINO",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "keep_only_shell": "Manter apenas a casca"
+        },
+        "outputs": {
+            "coords": "Lista de coordenadas",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "pipeline": "Pipeline de processamento"
+        },
+        "description": ""
+    },
+    "Trellis2ExtractImagesFromVideo": {
+        "title": "Extração de quadros de vídeo Trellis2",
+        "widgets": {
+            "video_file": "Arquivo de vídeo",
+            "frames_per_second": "Quadros extraídos por segundo"
+        },
+        "outputs": {
+            "images": "Imagem"
+        },
+        "description": ""
+    },
+    "Trellis2MaxTokensCalculator": {
+        "title": "Calculadora de tokens máximos Trellis2",
+        "widgets": {
+            "default_max_tokens": "Máximo de tokens padrão"
+        },
+        "outputs": {
+            "max_tokens": "Nº máximo de tokens"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondMultiViewGenerator": {
+        "title": "Gerador multivistas com condicionamento de imagem Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline de processamento",
+            "front_image": "Imagem positiva",
+            "back_image": "Imagem traseira",
+            "left_image": "Imagem esquerda",
+            "right_image": "Imagem direita"
+        },
+        "outputs": {
+            "conds_512": "Cond de resolução 512",
+            "conds_1024": "Cond de resolução 1024",
+            "views_list": "Lista de vistas",
+            "pipeline": "Pipeline de processamento"
+        },
+        "description": ""
+    },
+    "Trellis2SparseMultiViewGenerator": {
+        "title": "Gerador esparso multivistas Trellis2",
+        "inputs": {
+            "pipeline": "Pipeline de processamento",
+            "image_conds": "Condicionamento de imagem",
+            "views_list": "Lista de vistas"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "sparse_structure_steps": "Etapas iterativas da estrutura esparsa",
+            "sparse_structure_guidance_strength": "Força da orientação da estrutura esparsa",
+            "sparse_structure_guidance_rescale": "Coeficiente de reescalonamento da orientação da estrutura esparsa",
+            "sparse_structure_rescale_t": "Valor T de reescalonamento da estrutura esparsa",
+            "sparse_structure_sampler": "Amostrador da estrutura esparsa",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "sparse_structure_guidance_interval_start": "Ponto inicial do intervalo de orientação da estrutura esparsa",
+            "sparse_structure_guidance_interval_end": "Ponto final do intervalo de orientação da estrutura esparsa",
+            "fill_holes": "Preencher buracos",
+            "hole_iterations": "Iterações de preenchimento de buracos",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Subpassos DINO",
+            "hole_fill_algorithm": "Algoritmo de preenchimento de buracos",
+            "dino_foundation_cap": "Limiar da base DINO",
+            "keep_only_shell": "Manter apenas a casca",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Coeficiente de temperatura de mistura"
+        },
+        "outputs": {
+            "coords": "Lista de coordenadas",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "views_list": "Lista de vistas",
+            "pipeline": "Pipeline de processamento"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeMultiViewGenerator": {
+        "title": "Gerador multivistas de forma Trellis",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_conds": "Condicionamento de imagem",
+            "views_list": "Lista de views",
+            "coords": "Coordenadas"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "shape_steps": "Steps de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Coeficiente de reescalonamento da orientação de forma",
+            "shape_rescale_t": "Passo temporal t de reescalonamento da forma",
+            "shape_sampler": "Amostrador de forma",
+            "shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Passo final do intervalo de orientação de forma",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Número de steps DINO",
+            "dino_foundation_cap": "Limiar da base DINO",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Coeficiente de temperatura de mesclagem"
+        },
+        "outputs": {
+            "shape_slat": "Latent esparso de slat de forma",
+            "resolution": "Resolução",
+            "views_list": "Lista de views",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeMultiViewGenerator": {
+        "title": "Gerador multivistas de forma em cascata Trellis",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_conds": "Condicionamento de imagem",
+            "views_list": "Lista de views",
+            "shape_slat": "Latent esparso de slat de forma"
+        },
+        "widgets": {
+            "from_resolution": "Resolução de origem",
+            "to_resolution": "Resolução alvo",
+            "sparse_structure_resolution": "Resolução da estrutura esparsa",
+            "max_num_tokens": "Número máximo de tokens",
+            "shape_steps": "Steps de geração da forma",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_guidance_rescale": "Coeficiente de reescalonamento da orientação de forma",
+            "shape_rescale_t": "Passo temporal t de reescalonamento da forma",
+            "shape_sampler": "Amostrador de forma",
+            "shape_guidance_interval_start": "Passo inicial do intervalo de orientação de forma",
+            "shape_guidance_interval_end": "Passo final do intervalo de orientação de forma",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Número de steps DINO",
+            "dino_foundation_cap": "Limiar da base DINO",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Coeficiente de temperatura de mesclagem"
+        },
+        "outputs": {
+            "shape_slat": "Latent esparso de slat de forma",
+            "resolution": "Resolução",
+            "views_list": "Lista de views",
+            "pipeline": "Pipeline carregado",
+            "num_tokens": "Contagem de tokens"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatMultiViewGenerator": {
+        "title": "Gerador multivistas de slat de textura Trellis",
+        "inputs": {
+            "pipeline": "Pipeline carregado",
+            "image_conds": "Condicionamento de imagem",
+            "views_list": "Lista de views",
+            "shape_slat": "Latent esparso de slat de forma"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "texture_steps": "Número de steps de geração da textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Coeficiente de reescalonamento da orientação de textura",
+            "texture_rescale_t": "Passo temporal t de reescalonamento da textura",
+            "texture_sampler": "Amostrador de textura",
+            "texture_guidance_interval_start": "Passo inicial do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Passo final do intervalo de orientação de textura",
+            "verbose": "Registrar log detalhado",
+            "dino_lock": "Travamento das características DINO",
+            "dino_substeps": "Número de steps DINO",
+            "dino_foundation_cap": "Limiar da base DINO",
+            "front_axis": "Eixo frontal",
+            "blend_temperature": "Coeficiente de temperatura de mesclagem"
+        },
+        "outputs": {
+            "texture_slat": "Latent esparso de slat de textura",
+            "views_list": "Lista de views",
+            "pipeline": "Pipeline carregado"
+        },
+        "description": ""
+    },
+    "Trellis2MoGeCameraConfig": {
+        "title": "Configuração de câmera MoGe Trellis",
+        "widgets": {
+            "camera_angle_x": "Ângulo do eixo X da câmera",
+            "distance": "Distância da câmera",
+            "mesh_scale": "Proporção de escala da malha"
+        },
+        "outputs": {
+            "moge_camera_config": "Configuração de câmera MoGe"
+        },
+        "description": ""
+    },
+    "Trellis2FovMoGeCameraConfig": {
+        "title": "Configuração de câmera MoGe com ângulo de visão Trellis",
+        "widgets": {
+            "fov": "Campo de visão (FOV)",
+            "unit": "Unidade",
+            "extend_pixel": "Quantidade de pixels estendidos",
+            "mesh_scale": "Proporção de escala da malha"
+        },
+        "outputs": {
+            "moge_camera_config": "Configuração de câmera MoGe"
+        },
+        "description": ""
+    },
+    "Trellis2RenderPreview": {
+        "title": "Gerar imagem de pré-visualização",
+        "inputs": {
+            "trimesh": "Formato trimesh"
+        },
+        "widgets": {
+            "num_views": "Quantidade de vistas",
+            "resolution": "Resolução",
+            "render_mode": "Modo de renderização"
+        },
+        "outputs": {
+            "preview_images": "Imagem de pré-visualização",
+            "IMAGE": "Imagem"
+        },
+        "description": "\nGera uma imagem de pré-visualização a partir da geometria da malha 3D.\n\nParâmetros:\n- trimesh: geometria da malha 3D\n- Número de vistas: quantidade de vistas de renderização (rotação em torno do centro)\n- Resolução: resolução de renderização\n- Modo de renderização: estilo de renderização (normal, argila, cor base)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RenderVideo": {
+        "title": "Gerar vídeo em rotação",
+        "inputs": {
+            "trimesh": "Formato trimesh"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "fps": "Quadros por segundo",
+            "resolution": "Resolução",
+            "filename_prefix": "Prefixo do arquivo"
+        },
+        "outputs": {
+            "video_path": "Caminho do vídeo",
+            "STRING": "Cadeia de Caracteres"
+        },
+        "description": "\nGera um vídeo em rotação a partir da geometria da malha 3D.\n\nParâmetros:\n- trimesh: geometria da malha 3D\n- num_frames: número de quadros no vídeo\n- fps: quadros por segundo\n- resolution: resolução de renderização\n- filename_prefix: prefixo do nome do arquivo de saída\n",
+        "api_version": "V1"
+    },
+    "Trellis2GetConditioning": {
+        "title": "Obter Condicionamento",
+        "inputs": {
+            "model_config": "Configuração do modelo",
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "background_color": "Cor de fundo"
+        },
+        "outputs": {
+            "conditioning": "Condicionamento",
+            "preprocessed_image": "Imagem pré-processada",
+            "TRELLIS2_CONDITIONING": "Condicionamento TRELLIS2",
+            "IMAGE": "Imagem"
+        },
+        "description": "\nPreprocessa a imagem com DinoV3 e extrai características visuais.\n\nEste nó executa as seguintes operações:\n1. Aplica a máscara como canal alpha\n2. Recorta até a caixa delimitadora do objeto\n3. Pré-multiplicação alpha\n4. Extrai as características com DinoV3\n\nParâmetros:\n- model_config: configuração TRELLIS. carregada\n- image: imagem de entrada (formato RGB\n- mask: máscara do primeiro plano (branco = objeto, preto = fundo\nUse qualquer nó de remoção de fundo (BiRefNet, rembg etc.) para gerar a máscara.",
+        "api_version": "V1"
+    },
+    "Trellis2ImageToShape": {
+        "title": "Gerar forma a partir da imagem",
+        "inputs": {
+            "model_config": "Configuração do modelo",
+            "conditioning": "Condicionamento"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "ss_guidance_strength": "Força da orientação da estrutura esparsa",
+            "ss_sampling_steps": "Etapas de amostragem da estrutura esparsa",
+            "shape_guidance_strength": "Força da orientação de forma",
+            "shape_sampling_steps": "Etapas de amostragem da forma",
+            "max_tokens": "Máximo de tokens"
+        },
+        "outputs": {
+            "shape_result": "Resultado de forma",
+            "mesh": "Malha",
+            "TRELLIS2_SHAPE_RESULT": "Resultado de forma TRELLIS2",
+            "TRIMESH": "Formato trimesh"
+        },
+        "description": "\nGera uma forma 3D a partir de condicionamento de imagem.\n\nEste nó gera a geometria da forma (sem textura/material PBR).\nConecte shape_result a “Forma para Malha Texturizada” para obter materiais PBR.\n\nParâmetros:\n- model_config: configuração do modelo carregado (a resolução é definida no nó de carregamento do modelo)\n- conditioning: condicionamento DinoV3 do nó “Obter Condicionamento”\n- seed: semente aleatória para reprodutibilidade\n- ss_*: parâmetros de amostragem da estrutura esparsa\n- shape_*: parâmetros de amostragem latent da forma\n\nRetornos:\n- shape_result: dados da forma para a geração de textura\n- mesh: malha sem sombreamento para pré-visualização/exportação\n",
+        "api_version": "V1"
+    },
+    "Trellis2ShapeToTexturedMesh": {
+        "title": "Gerar malha texturizada a partir da forma",
+        "inputs": {
+            "model_config": "Configuração do modelo",
+            "conditioning": "Condicionamento",
+            "shape_result": "Resultado de forma"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "tex_guidance_strength": "Força da orientação da textura",
+            "tex_sampling_steps": "Etapas de amostragem da textura"
+        },
+        "outputs": {
+            "mesh_glb_path": "Caminho da malha (arquivo .glb)",
+            "voxelgrid_npz_path": "Caminho da malha de vóxel (arquivo .npz)",
+            "STRING": "Cadeia de Caracteres"
+        },
+        "description": "\nGera uma malha texturizada com materiais PBR a partir da forma.\n\nObtém shape_result do nó “Imagem para Forma” e gera os materiais PBR:\n- base_color (RGB) - metallic - roughness - alpha\n\nParâmetros:\n- model_config: configuração do modelo carregado\n- conditioning: condicionamento DinoV3 (o mesmo usado para a forma)\n- shape_result: dados da forma do nó “Imagem para Forma”\n- seed: semente aleatória para a variação da textura\n- tex_*: parâmetros de amostragem da textura\n\nRetornos:\n- mesh_glb_path: caminho da geometria da malha (arquivo .glb)\n- voxelgrid_npz_path: caminho dos dados da malha de vóxel (arquivo .npz com coordenadas, atributos, vértices, faces etc.)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RemoveBackground": {
+        "title": "Remover Fundo",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "low_vram": "Baixa VRAM"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "IMAGE": "Imagem",
+            "MASK": "Máscara"
+        },
+        "description": "\nRemove o fundo da imagem usando BiRefNet (igual ao rembg do TRELLIS).\n\nEste nó usa o modelo de segmentação BiRefNet para extrair a máscara do primeiro plano.\nA máscara pode ser usada no nó “Obter Condicionamento”.\n\nParâmetros:\n- image: imagem RGB de entrada\n- low_vram: move o modelo para a CPU quando não estiver em uso (mais lento, mas economiza VRAM)\n\nRetornos:\n- image: imagem original (inalterada)\n- mask: máscara do primeiro plano (branco = objeto, preto = fundo)\n",
+        "api_version": "V1"
+    },
+    "LoadTrellis2Models": {
+        "title": "Carregar modelos Trellis2",
+        "widgets": {
+            "resolution": "Resolução",
+            "precision": "Precisão",
+            "attn_backend": "Backend de atenção"
+        },
+        "outputs": {
+            "model_config": "Configuração do modelo",
+            "TRELLIS2_MODEL_CONFIG": "Configuração do modelo TRELLIS2"
+        },
+        "description": "\nCarrega a configuração do modelo Trellis2 para geração de imagem para 3D.\n\nEste nó cria um objeto de configuração que os nós de inferência usam para carregar os modelos sob demanda.\n\nModos de resolução:\n- 512: rápido, qualidade menor\n- 1024_cascade: máxima qualidade, usa cascata 512->1024\n- 1536_cascade: saída com resolução máxima\n\nBackends de atenção:\n- auto: o melhor disponível (sageattn > flash_attn > xformers > sdpa)\n- flash_attn: FlashAttention (requer o pacote flash_attn)\n- xformers: atenção com memória eficiente (requer o pacote xformers)\n- sdpa: scaled_dot_product_attention nativo do PyTorch (PyTorch >= 2.0)\n- sageattn: SageAttention (mais rápido, requer o pacote sageattention)\n",
+        "api_version": "V1"
+    },
+    "Trellis2LoadSSFlowModel": {
+        "title": "Carregar o modelo de fluxo da estrutura esparsa",
+        "inputs": {
+            "model_config": "Configuração do modelo"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "MODEL": "Modelo"
+        },
+        "description": "\nEmpacota o modelo de fluxo da estrutura esparsa como um MODEL ComfyUI padrão.\n\nEste nó encapsula o modelo de fluxo no sistema BaseModel/ModelPatcher do ComfyUI\npara que o KSampler possa conduzi-lo, usando qualquer amostrador/agendador.\n\nConecte a saída MODEL à entrada 'model' do KSampler.\nUse Trellis2SSConditioning para o condicionamento positivo/negativo.\nUse Trellis2Empty3DLatent como Latent inicial.\n",
+        "api_version": "V1"
+    },
+    "Trellis2SSConditioning": {
+        "title": "Converter condicionamento DinoV3 Trellis2",
+        "inputs": {
+            "conditioning": "Condicionamento"
+        },
+        "outputs": {
+            "positive": "Condição positiva",
+            "negative": "Condição negativa"
+        },
+        "description": "\nConverte o condicionamento DinoV3 do Trellis2 em condicionamento ComfyUI padrão.\n\nAceita a saída de “Trellis2 Obter Condicionamento” e produz\ncondicionamento positivo/negativo compatível com o KSampler.\n\nConecte 'positive' à entrada positiva do KSampler.\nConecte 'negative' à entrada negativa do KSampler.\n",
+        "api_version": "V1"
+    },
+    "Trellis2Empty3DLatent": {
+        "title": "Criar 3D Latent vazio",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "batch_size": "Tamanho do lote"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "\nCria um tensor 3D Latent vazio para amostragem da estrutura esparsa.\n\nLê a resolução e a contagem de canais do modelo para criar a forma correta: [lote, canais, resolução, resolução, resolução].\n\nPara o modelo Trellis2 padrão: [1, 8, 16, 16, 16].\n",
+        "api_version": "V1"
+    },
+    "Trellis2ApplyGuidanceInterval": {
+        "title": "Aplicar intervalo de orientação",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "guidance_interval_start": "Início do intervalo",
+            "guidance_interval_end": "Fim do intervalo"
+        },
+        "outputs": {
+            "MODEL": "Modelo"
+        },
+        "description": "\nControla quando o CFG é ativado durante a amostragem.\n\nNo flow matching do TRELLIS2, o sigma varia de 1.0 (ruído puro) a 0.0 (dados limpos).\n- (0.0, 1.0) = aplicar CFG sempre (configuração padrão, igual à do KSampler padrão)\n- (0.2, 0.8) = aplicar CFG apenas quando o sigma estiver entre 0.2 e 0.8\n\nFora desse intervalo, usa somente a previsão condicionada (sem CFG).",
+        "api_version": "V1"
+    },
+    "Trellis2DecodeSSLatent": {
+        "title": "Decodificar Latent da estrutura esparsa",
+        "inputs": {
+            "model_config": "Configuração do modelo",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "ss_resolution": "Resolução SS"
+        },
+        "outputs": {
+            "coords": "Coordenadas",
+            "TRELLIS2_SS_COORDCOORD": "Coordenadas Trellis2"
+        },
+        "description": "\nDecodifica o Latent da estrutura esparsa em coordenadas de vóxel.\n\nParte das características latentes amostradas pelo KSampler e executa as etapas a seguir:\n1. Executa o SparseStructureDecoder (logits -> ocupação binária)\n2. Opcionalmente aplica subamostragem por max pooling até a resolução alvo\n3. Extrai as coordenadas dos vóxeis ativos\n\nAs coordenadas de saída podem ser passadas aos nós de geração de forma seguintes.",
+        "api_version": "V1"
+    },
+    "Trellis2Simplify": {
+        "title": "Simplificar malha Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "target_face_count": "Número alvo de faces",
+            "fill_holes": "Preencher buracos",
+            "fill_holes_perimeter": "Limiar de perímetro do buraco",
+            "remesh": "Remesh (nova malha)",
+            "remesh_band": "Faixa de remalhagem refeita"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": "\nSimplifica a malha até o número alvo de faces.\n\nUsa CuMesh para simplificação acelerada por GPU.\n\nParâmetros:\n- target_face_count: número alvo de faces\n- fill_holes: preenche pequenos buracos antes da simplificação\n- fill_holes_perimeter: perímetro máximo de buraco a preencher\n- remesh: aplica remalhagem por dual contouring para obter uma topologia mais limpa\n- remesh_band: largura da faixa de remalhagem",
+        "api_version": "V1"
+    },
+    "Trellis2UVUnwrap": {
+        "title": "Desdobramento UV da malha Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "chart_cone_angle": "Ângulo do cone da ilha UV",
+            "chart_refine_iterations": "Iterações de refinamento",
+            "chart_global_iterations": "Iterações globais de otimização",
+            "chart_smooth_strength": "Força de suavização"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": "\nDesdobra os UVs da malha usando xatlas.\n\nCria apenas o mapa UV, sem fornear texturas. Use o nó Rasterize PBR em seguida para fazer o fornamento das texturas.\n\nParâmetros:\n- chart_cone_angle: limiar de agrupamento dos gráficos (graus)\n- chart_refine_iterations: refinamento dos gráficos UV\n- chart_global_iterations: iterações globais de otimização dos UVs\n- chart_smooth_strength: força de suavização dos UVs\n\nDica: simplifique a malha primeiro! O desdobramento UV de 10 milhões de faces demora muito.",
+        "api_version": "V1"
+    },
+    "Trellis2RasterizePBR": {
+        "title": "Fornear textura PBR de dados de vóxel",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "voxelgrid": "Grade de vóxeis"
+        },
+        "widgets": {
+            "texture_size": "Resolução da textura"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "description": "\nForneia as texturas PBR dos dados de vóxel para uma malha com mapeamento UV.\n\nRequer uma malha com UV e forneia cor/metalicidade/rugosidade a partir de VOXELGRID.\n\nA malha de entrada precisa ter UV (use primeiro o nó UV Unwrap).\n\nParâmetros:\n- texture_size: resolução da textura fornreada (512-16384 pixels)",
+        "api_version": "V1"
+    },
+    "Trellis2ExportGLB": {
+        "title": "Exportar arquivo GLB Trellis2",
+        "widgets": {
+            "voxelgrid_path": "Caminho da malha de vóxel",
+            "decimation_target": "Número alvo de faces",
+            "texture_size": "Resolução da textura",
+            "remesh": "Remesh (nova malha)",
+            "filename_prefix": "Prefixo do nome do arquivo"
+        },
+        "outputs": {
+            "glb_path": "Caminho do GLB"
+        },
+        "description": "\nExporta o GLTF texturizado de uma só vez a partir dos dados de vóxel.\n\nObtém voxelgrid_npz_path de “Forma para Malha Texturizada” e executa as etapas a seguir:\n1. Simplifica a malha até o número alvo de faces\n2. Realiza o desdobramento UV\n3. Forneia as texturas PBR dos dados de vóxel (cor base, metalicidade, rugosidade)\n4. Exporta o GLTF texturizado para a pasta de saída do ComfyUI\n\nParâmetros:\n- voxelgrid_path: caminho do arquivo .npz vindo de “Forma para Malha Texturizada”\n- decimation_target: número alvo de faces após a simplificação\n- texture_size: resolução das texturas PBR fornreadas\n- remesh: aplica remalhagem antes da simplificação para obter uma topologia mais limpa\n- filename_prefix: prefixo do nome do arquivo de saída",
+        "api_version": "V1"
+    },
+    "Trellis2ExportTrimesh": {
+        "title": "Exportar malha triangular Trellis2",
+        "inputs": {
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "file_format": "Formato do arquivo"
+        },
+        "outputs": {
+            "file_path": "Caminho do arquivo"
+        },
+        "description": "\nExporta a malha triangular para vários formatos de arquivo 3D.\n\nSuporta: GLB, OBJ, PLY, STL, 3MF, DAE",
+        "api_version": "V1"
+    },
+    "Trellis2MeshWithVoxeltoTrimesmesh": {
+        "title": "Conversão de malha baseada em vóxel em malha triangular Trellis2",
+        "widgets": {
+            "mesh": "Malha",
+            "reorient_vertices": "Reorientar vértices novamente"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "TRIMESH": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexture": {
+        "title": "Trellis2MeshTexture",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "pipeline": "Pipeline carregado",
+            "trimesh": "malha triangular (trimesh)",
+            "seed": "Semente",
+            "texture_steps": "Etapas de textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Ajuste da proporção da textura",
+            "texture_rescale_t": "Ajuste t de reescalonamento da textura",
+            "resolution": "Resolução",
+            "texture_size": "Tamanho da textura",
+            "texture_alpha_mode": "Modo de transparência da textura",
+            "double_side_material": "Material de dois lados",
+            "texture_guidance_interval_start": "Início do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Fim do intervalo de orientação de textura",
+            "max_views": "Views máximas",
+            "bake_on_vertices": "Fornear nos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Raio angular do limiar dos agrupamentos da malha (radianos)",
+            "sampler": "Amostrador",
+            "inpainting": "Correção",
+            "verbose": "Detalhes",
+            "dino_lock": "Travamento DINO",
+            "dino_substeps": "Subpasso DINO",
+            "dino_foundation_cap": "Cap da base DINO"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura da cor de base",
+            "metallic_roughness_texture": "Textura de brilho metálico",
+            "TRIMESH": "malha triangular (trimesh)",
+            "IMAGE": "Imagem"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturerMultiView": {
+        "title": "Trellis2MeshTexturerMultiView",
+        "inputs": {
+            "pipeline": "pipeline",
+            "front_image": "Imagem da vista frontal",
+            "trimesh": "malha triangular (trimesh)",
+            "back_image": "Imagem da vista traseira",
+            "left_image": "Imagem da vista esquerda",
+            "right_image": "Imagem da vista direita"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "纹理步骤": "Etapas de textura",
+            "纹理引导强度": "Força da orientação da textura",
+            "纹理引导缩放": "Escala de orientação da textura",
+            "纹理缩放t": "t de escala da textura",
+            "分辨率": "Resolução",
+            "纹理大小": "Tamanho da textura",
+            "纹理alpha模式": "Modo alpha da textura",
+            "双面材质": "Material de dois lados",
+            "纹理引导区间开始": "Início do intervalo de orientação de textura",
+            "纹理引导区间结束": "Fim do intervalo de orientação de textura",
+            "烘焙在顶点上": "Fornear sobre os vértices",
+            "使用自定义法线": "Usar normais personalizadas",
+            "网格聚类阈值圆锥半角弧度": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "前方轴": "Eixo anterior",
+            "混合温度": "Temperatura de mistura",
+            "采样器": "Amostrador",
+            "修复": "Correção",
+            "详细信息": "Detalhes",
+            "DINO锁定": "Travamento DINO",
+            "DINO子步数": "Subpassos DINO",
+            "DINO基础帽": "Cap da base DINO"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "基色纹理": "Textura de cor fundamental",
+            "金属光泽粗糙度纹理": "Textura de rugosidade do brilho metálico"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess": {
+        "title": "Trellis2PostProcess",
+        "inputs": {
+            "mesh": "Malha"
+        },
+        "widgets": {
+            "填充孔洞": "Preencher buracos",
+            "修复法线": "Corrigir normais",
+            "修复面朝向": "Corrigir orientação das faces",
+            "删除重复面": "Excluir faces duplicadas",
+            "焊接顶点": "Soldar vértices",
+            "焊接顶点位数": "Dígitos de soldagem de vértices",
+            "平滑": "Suavização",
+            "平滑迭代次数": "Iterações de suavização",
+            "细分": "Subdivisão",
+            "细分迭代次数": "Iterações de subdivisão"
+        },
+        "outputs": {
+            "mesh": "Malha"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimessh": {
+        "title": "Desdobrar malha triangular",
+        "widgets": {
+            "trimessh": "malha triangular (trimesh)",
+            "网格簇阈值圆锥半角弧度": "Ângulo semiangular do cone-limiar dos agrupamentos da malha",
+            "网格簇细化迭代次数": "Iterações de refinamento dos agrupamentos da malha",
+            "网格簇全局迭代次数": "Iterações globais dos agrupamentos da malha",
+            "网格簇光滑强度": "Força de alisamento dos agrupamentos da malha"
+        },
+        "outputs": {
+            "trresm": "malha triangular (trimesh)",
+            "TRIMESH": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexture": {
+        "title": "Textura multivistas Trellis2",
+        "widgets": {
+            "trimesh": "malha triangular (trimesh)",
+            "texture_size": "Tamanho da textura",
+            "blend_texture": "Mistura de textura",
+            "blend_exponent": "Expoente de mistura",
+            "ortho_scale": "Razão ortogonal",
+            "norm_size": "Dimensão normalizada",
+            "fill_holes": "Preencher buracos",
+            "max_hole_size": "Tamanho máximo do buraco",
+            "use_metallic": "Usar brilho metálico",
+            "depth_eps": "Erro de profundidade",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "add_alpha_channel": "Adicionar canal de transparência",
+            "front_image": "Vista frontal",
+            "back_image": "Vista traseira",
+            "left_image": "Vista esquerda",
+            "right_image": "Vista direita",
+            "top_image": "Vista superior",
+            "bottom_image": "Vista inferior",
+            "front_weight": "Peso da vista frontal",
+            "back_weight": "Peso da vista traseira",
+            "left_weight": "Peso da vista esquerda",
+            "right_weight": "Peso da vista direita",
+            "top_weight": "Peso da vista superior",
+            "bottom_weight": "Peso da vista inferior",
+            "custom_images": "Imagem Personalizada",
+            "custom_azimuths": "Azimutes personalizados",
+            "custom_elevations": "Elevações personalizadas",
+            "custom_weights": "Pesos personalizados",
+            "camera_config": "Configuração da câmera"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color": "Cor base",
+            "metallic_roughness": "Brilho metálico",
+            "TRIMESH": "TRIMESH",
+            "IMAGE": "Imagem"
+        },
+        "description": "Aplica textura à malha projetando várias vistas.\n\nUsa mistura ponderada por ângulo: cada superfície recebe textura de todas as vistas que a enxergam, ponderada pelo quão diretamente ela encara cada câmera.\n\nÂngulos de câmera (sistema com Y para cima:\n- Azimute: rotação em torno do eixo Y\n  - 0° = frente (voltado para -Z)\n  - 90° = esquerda (voltado para -X)\n  - 180° = trás (voltado para +Z)\n  - 270° = direita (voltado para +X)\n- Elevação: rotação em torno do eixo X\n  - 0° = horizontal\n  - 90° = topo (de cima, voltado para -Y)\n  - -90° = base (de baixo, voltado para +Y)"
+    },
+    "Trellis2TexxlatMultiViewGenerator": {
+        "title": "Trellis2TexxlatMultiViewGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_conds": "Mapa de condicionamento",
+            "views_list": "Lista de views",
+            "shape_slat": "Slot de forma"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "texture_steps": "Etapas de textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Ajuste da proporção da textura",
+            "texture_rescale_t": "Tempo de reescalonamento da textura",
+            "texture_sampler": "Amostrador de textura",
+            "texture_guidance_interval_start": "Início do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Fim do intervalo de orientação de textura",
+            "verbose": "Detalhes",
+            "dino_lock": "Travamento DINO",
+            "dino_substeps": "Subpassos DINO",
+            "dino_foundation_cap": "Cap da base DINO",
+            "front_axis": "Eixo dianteiro",
+            "blend_temperature": "Temperatura de mistura"
+        },
+        "outputs": {
+            "texture_slat": "Slot de textura",
+            "views_list": "Lista de views",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTextture": {
+        "title": "Trellis2MeshTextture",
+        "inputs": {
+            "pipeline": "Tubo",
+            "image": "Imagem",
+            "trimesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "seed": "Semente",
+            "texture_steps": "Etapas de textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Escala de orientação da textura",
+            "texture_rescale_t": "t de escala da textura",
+            "resolution": "Resolução",
+            "texture_size": "Tamanho da textura",
+            "texture_alpha_mode": "Modo de transparência da textura",
+            "double_side_material": "Material de dois lados",
+            "texture_guidance_interval_start": "Início do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Fim do intervalo de orientação de textura",
+            "max_views": "Views máximas",
+            "bake_on_vertices": "Fornear nos vértices",
+            "use_custom_normals": "Usar normais personalizadas",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "sampler": "Amostrador",
+            "inpainting": "Correção",
+            "verbose": "Detalhes",
+            "dino_lock": "dino_lock",
+            "dino_substeps": "Subpasso dino",
+            "dino_foundation_cap": "Cap da base dino"
+        },
+        "outputs": {
+            "trimesh": "malha triangular (trimesh)",
+            "base_color_texture": "Textura da cor de base",
+            "metallic_roughness_texture": "Textura de brilho metálico"
+        },
+        "description": ""
+    },
+    "Trellis2UnwrapTrimesmes": {
+        "title": "Trellis2UnwrapTrimesmes",
+        "inputs": {
+            "trresm": "trresm"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "mesh_cluster_refinement_iterations": "Iterações de refinamento global da malha",
+            "mesh_cluster_global_iterations": "Iterações de otimização global da malha",
+            "mesh_cluster_smooth_strength": "Força de suavização da malha"
+        },
+        "outputs": {
+            "trresm": "trresm"
+        },
+        "description": ""
+    },
+    "Trellis2TexxlatGenerator": {
+        "title": "Trellis2TexxlatGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_cond": "Mapa de condicionamento",
+            "shape_slat": "slat de forma",
+            "image": "Imagem",
+            "moge_camera_config": "Configuração de câmera moge"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "texture_steps": "Etapas de textura",
+            "texture_guidance_strength": "Força da orientação da textura",
+            "texture_guidance_rescale": "Escala de orientação da textura",
+            "texture_rescale_t": "t de escala da textura",
+            "texture_sampler": "Amostrador de textura",
+            "texture_guidance_interval_start": "Início do intervalo de orientação de textura",
+            "texture_guidance_interval_end": "Fim do intervalo de orientação de textura",
+            "verbose": "Detalhes",
+            "dino_lock": "Travamento dino",
+            "dino_substeps": "Subpassos dino",
+            "dino_foundation_cap": "Cap da base dino",
+            "from_resolution": "Resolução inicial"
+        },
+        "outputs": {
+            "texture_slat": "slat de textura",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatent": {
+        "title": "Trellis2DecodeLatent",
+        "inputs": {
+            "pipeline": "pipeline",
+            "shape_slat": "slat de forma",
+            "texture_slat": "slat de textura"
+        },
+        "widgets": {
+            "resolution": "Resolução",
+            "use_tiled_decoder": "Usar decodificador em mosaico"
+        },
+        "outputs": {
+            "mesh": "Malha",
+            "bvh": "Caixa delimitadora",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2simplifyTrimeseshAdvanced": {
+        "title": "Trellis2simplifyTrimeseshAdvanced",
+        "inputs": {
+            "trimesmesh": "malha triangular (trimesh)"
+        },
+        "widgets": {
+            "target_face_num": "Número alvo de faces",
+            "thresh": "Limiar",
+            "lambda_edge_length": "Peso do comprimento da aresta",
+            "lambda_skinny": "Peso de delgazamento",
+            "lambda_curvature": "Peso da curvatura",
+            "lambda_boundary": "Peso da fronteira",
+            "lambda_area": "Peso da área",
+            "qem_regularization": "Regularização QEM"
+        },
+        "outputs": {
+            "trimesmesh": "malha triangular (trimesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturer": {
+        "title": "Trellis2MultiViewTexturer",
+        "inputs": {
+            "trimesh": "trimesh",
+            "front_image": "Imagem da vista frontal",
+            "back_image": "Imagem da vista traseira",
+            "left_image": "Imagem da vista esquerda",
+            "right_image": "Imagem da vista direita",
+            "top_image": "Imagem da vista superior",
+            "bottom_image": "Imagem da vista inferior",
+            "custom_images": "Imagem Personalizada",
+            "camera_config": "Configuração da câmera"
+        },
+        "widgets": {
+            "texture_size": "Tamanho da textura",
+            "blend_texture": "Mistura de textura",
+            "blend_exponent": "Expoente de mistura",
+            "ortho_scale": "Razão ortogonal",
+            "norm_size": "Dimensão das normais",
+            "fill_holes": "Preencher buracos",
+            "max_hole_size": "Tamanho máximo do buraco",
+            "use_metallic": "Usar brilho metálico",
+            "depth_eps": "Limiar de profundidade",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Limiar de semi-ângulo do cone dos aglomerados da malha (rad)",
+            "add_alpha_channel": "Adicionar canal alfa",
+            "front_weight": "Peso da vista frontal",
+            "back_weight": "Peso da vista traseira",
+            "left_weight": "Peso da vista esquerda",
+            "right_weight": "Peso da vista direita",
+            "top_weight": "Peso da vista superior",
+            "bottom_weight": "Peso da vista inferior",
+            "custom_azimuths": "Azimutes personalizados",
+            "custom_elevations": "Elevações personalizadas",
+            "custom_weights": "Pesos personalizados"
+        },
+        "outputs": {
+            "trimesh": "trimesh",
+            "base_color": "Cor base",
+            "metallic_roughness": "Rugosidade do brilho metálico"
+        },
+        "description": "Aplica textura projetando imagens de várias vistas.\n\nUsa mistura ponderada por ângulo: cada superfície recebe textura de todas as vistas que podem “vê-la”, e o peso é determinado pelo ângulo em que a superfície encara diretamente cada câmera.\n\nÂngulos de câmera (sistema com Y para cima):\n- Azimute: rotação em torno do eixo Y\n  - 1° = frente (voltado para -Z)   - 91° = esquerda (voltado para -X)   - 181° = trás (voltado para +Z)   - 271° = direita (voltado para +X) - Elevação: rotação em torno do eixo X\n  - 1° = horizontal\n  - 91° = topo (voltado para -Y, visto de cima)   - -91° = base (voltado para +Y, visto de baixo)"
+    }
+}

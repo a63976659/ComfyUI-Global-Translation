@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪LTX顔アテンションアンカー",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "face_bbox_norm": "顔bbox正規化",
+            "strength": "強度",
+            "inject_mode": "注入モード",
+            "anchor_frame": "アンカーフレーム",
+            "anchor_upsample": "アンカーアップスケール",
+            "track_threshold": "追跡閾値",
+            "face_threshold": "顔閾値",
+            "identity_threshold": "アイデンティティ閾値",
+            "depth_curve": "深度カーブ",
+            "spatial_prior": "空間事前分布",
+            "block_index_filter": "ブロックインデックスフィルター",
+            "bypass": "バイパス",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "model": "モデル",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: 顔領域のアイデンティティアンカー。キャッシュ機能は LTXLatentAnchor ノード（シーンレベルの安定性）へ移動しました。本ノードは引き続き顔を対象とします。",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "LTXLatentアンカー",
+        "inputs": {
+            "model": "モデル",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "強度",
+            "cache_at_step": "キャッシュステップ",
+            "similarity_threshold": "類似度閾値",
+            "decay_with_distance": "距離による減衰",
+            "bypass": "バイパス",
+            "advanced_mode": "アドバンストモード",
+            "cache_mode": "キャッシュモード",
+            "forwards_per_step": "1ステップあたりの順方向パス回数",
+            "cache_warmup": "キャッシュウォームアップ",
+            "anchor_frame": "アンカーフレーム",
+            "depth_curve": "深度カーブ",
+            "block_index_filter": "ブロックインデックスフィルター",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "LTX2.x 向けのシーン全体 Latent アンカー。長時間のサンプリングでもプロンプト+条件と物理的な力を安定させ、一貫性を保ちます。予測可能なキャッシュタイミングを得るには SIGMAS を接続します。アドバンストモードに切り替えると研究用パラメータにアクセスできます。"
+    },
+    "LTXLatentAnchorAware": {
+        "title": "LTXLatentアンカー認識",
+        "inputs": {
+            "model": "モデル",
+            "reference_image": "参考画像",
+            "vae": "VAE",
+            "energy_latent": "エネルギーLatent",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "強度",
+            "cache_at_step": "キャッシュステップ",
+            "similarity_threshold": "類似度閾値",
+            "decay_with_distance": "距離による減衰",
+            "energy_threshold": "エネルギー閾値",
+            "bypass": "バイパス",
+            "debug": "デバッグ",
+            "advanced_mode": "アドバンストモード",
+            "cache_mode": "キャッシュモード",
+            "forwards_per_step": "1ステップあたりの順方向パス回数",
+            "cache_warmup": "キャッシュウォームアップ",
+            "anchor_frame": "アンカーフレーム",
+            "depth_curve": "深度カーブ",
+            "block_index_filter": "ブロックインデックスフィルター"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "外部参照による、空間エネルギー調整をオプションで備えた Latent アンカー。参照画像（または Latent 入力）が空間重みを供給します。自己マッチングには実行中の Latent（正しい特徴空間）を使用します。"
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "LTXテキストアテンション増幅器",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "text_amplification": "テキストアテンション増幅",
+            "spatial_focus": "空間フォーカス",
+            "block_index_filter": "ブロックインデックスフィルター",
+            "bypass": "バイパス",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "各ブロックの LTX2 テキストクロスアテンション（attn2）を増幅し、トークン数を多く拡張したときの条件の希薄化を補償します。アップサンプリング段階で使用すると、プロンプト追従性と色彩の安定性が回復します。"
+    },
+    "LTXTiledSampler": {
+        "title": "LTXタイルサンプラー",
+        "inputs": {
+            "noise": "ノイズ",
+            "guider": "ガイダンス",
+            "sampler": "サンプラー",
+            "sigmas": "sigma",
+            "latent_image": "Latent画像"
+        },
+        "widgets": {
+            "bypass_tiling": "タイル化をスキップ",
+            "tile_axis": "タイル軸",
+            "n_tiles": "タイル数",
+            "tile_overlap": "タイル重叠",
+            "max_size_for_no_tile": "タイルなしの最大サイズ",
+            "audio_pass": "音声スルー",
+            "audio_carrier_tile": "音声キャリアタイル",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "output": "出力",
+            "denoised_output": "ノイズ除去出力"
+        },
+        "description": "LTX2 のアップサンプリング段階での軽い仕上げ向けの、タイル式 drop-in 代替 SamplerCustomAdvanced。各タイルで訓練分布どおりの完全なトークン数サンプリングを実行し、その後コサインブレンドします。軽いノイズ除去にのみ使用してください。デフォルトは音声スルーで、audio_carrier_tile は追加ステップなしに音声サンプリングと選択した 1 タイルを同時に実行します。bypass_tiling=true にすると標準の単一サンプリングの透明スルーとして動作し、デバッグやタイル化が不要な場合に利用できます。"
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "LTXV Latentアップサンプラー（タイル版）",
+        "inputs": {
+            "samples": "サンプル",
+            "upscale_model": "超解像モデル",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "タイルサイズ",
+            "overlap": "オーバーラップ",
+            "max_size_for_no_tile": "タイル不要の最大サイズ",
+            "rotate_for_landscape": "横画面向けに回転",
+            "debug": "デバッグ"
+        },
+        "description": "LTXVLatentUpsampler のタイル式 drop-in 代替。空間タイル上でアップサンプリングを実行し、コサイン窓によるオーバーラップ合成を適用することで、極端なアスペクト比での色ズレと歪みを解消します。安全なアスペクト比では非タイル版とほぼ同一の出力になり、極端なケースでは超解像モデルの不安定化を回避します。"
+    },
+    "LTXModelInspector": {
+        "title": "LTXモデル検出器",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "name_filter": "名前フィルター",
+            "focus_path": "フォーカスパス",
+            "max_modules_listed": "表示する最大モジュール数",
+            "trace_path_contains": "追跡パスに含まれる文字列",
+            "max_modules_traced": "追跡する最大モジュール数",
+            "trace_calls_per_module": "各モジュールの追跡呼び出し回数",
+            "print_top_level": "トップレベル情報を出力"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "拡散モデルを検査します：トップレベル構造、名前フィルター、フォーカスパス、追跡フック。"
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Latentクロスフェード自己連結",
+        "inputs": {
+            "frames_0": "フレーム_0",
+            "frames_1": "フレーム_1"
+        },
+        "widgets": {
+            "match_spatial": "空間マッチ",
+            "interpolate_mode": "補間モード",
+            "cross_fade_frames": "クロスフェードフレーム",
+            "fade_curve": "フェードアウトカーブ"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "自動空間マッチ + 時間連結、オプションのクロスフェードに対応。"
+    },
+    "AudioLatentStretch": {
+        "title": "音声Latentストレッチ",
+        "inputs": {
+            "audio_latent": "音声Latent"
+        },
+        "widgets": {
+            "source_fps": "元FPS",
+            "target_fps": "対象FPS",
+            "interp_mode": "補間モード"
+        },
+        "outputs": {
+            "audio_latent": "音声Latent"
+        },
+        "description": "音声 Latent を対象 FPS にリサンプリングします。Hermite モードを推奨します。"
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Latent時間アップサンプラー",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "元FPS",
+            "target_fps": "対象FPS",
+            "interp_mode": "補間モード",
+            "auto_retime": "自動リタイミング",
+            "motion_scale": "運動比率",
+            "spatial_sharpen": "空間シャープ",
+            "ltx_safe": "LTXセーフ",
+            "override_frames": "上書きフレーム数"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Hermite ベースの時間アップサンプリング。自動リズム補正機能を搭載。"
+    },
+    "LatentMotionSharpener": {
+        "title": "Latent運動シャープナー",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "基本シャープ",
+            "motion_sharpen": "運動シャープ",
+            "motion_thresh": "運動閾値",
+            "temporal_smooth_mask": "時間軸平滑マスク"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "フレーム間の運動量に応じて適応的にシャープ処理を行います。"
+    },
+    "LatentMotionRetime": {
+        "title": "Latent運動リタイミング",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "元FPS",
+            "target_fps": "対象FPS",
+            "strength": "強度",
+            "manual_scale": "手動スケール"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "アップサンプルト Latent の 24->30fps のリズムを補正するため、運動量を減衰させます。"
+    },
+    "LatentTemporalInpainter": {
+        "title": "Latent時間補完器",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "アンカーσ",
+            "ghost_sigma": "ゴーストσ",
+            "score_gamma": "スコアγ",
+            "anchor_blend": "アンカー融合",
+            "seed": "シード",
+            "debug_scores": "デバッグスコア"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "フレーム単位のゴースト検出 + ノイズターゲット化。実際のアンカーフレームをロックします。その後 KSampler で 0.3-0.45 をノイズ除去します。"
+    },
+    "LTXActionAmplifier": {
+        "title": "LTXアクション増幅器",
+        "inputs": {
+            "model": "モデル",
+            "clip": "clip",
+            "positive": "ポジティブプロンプト"
+        },
+        "widgets": {
+            "amplification_strength": "増幅強度",
+            "action_vocabulary_text": "アクション語彙テキスト",
+            "scale_ceiling": "スケール上限",
+            "auto_threshold": "自動閾値",
+            "similarity_threshold": "類似度閾値",
+            "similarity_sharpness": "類似度シャープ",
+            "amplification_floor": "増幅下限",
+            "top_k": "Top-K",
+            "bypass": "バイパス",
+            "debug": "デバッグ"
+        },
+        "description": "ポジティブプロンプト内でアクション/運動のテキストトークンを選択的に増幅し、一致する動詞トークンのK/V 振幅を強化します。記述系トークンは変更しません。LikenessSemanticClamp と対称な逆の処理で、TextAmplifier の一律スケール調整を置き換えます。"
+    },
+    "LTXFaceDetector": {
+        "title": "LTX顔検出器",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "padding": "パディング",
+            "fallback_bbox": "代替bbox",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "face_bbox": "顔bbox"
+        },
+        "description": "画像内で顔を検出し、正規化された bbox 文字列を出力します。出力は LikenessGuide の face_bbox_within_reference、LikenessAnchor の override_face_bbox/frame_0_bbox、face_anchor の face_bbox_norm に接続できます。検出をノードロジックから分離し、複数のノードで同一の bbox を共有できるようにします。"
+    },
+    "LTXLikenessAnchor": {
+        "title": "LTX類似性アンカー",
+        "inputs": {
+            "model": "モデル",
+            "reference_info": "参照情報"
+        },
+        "widgets": {
+            "strength": "強度",
+            "reference_source": "参照ソース",
+            "frame_0_bbox": "フレーム0 bbox",
+            "similarity_threshold": "類似度閾値",
+            "decay_with_distance": "距離による減衰",
+            "bypass": "バイパス",
+            "debug": "デバッグ",
+            "advanced_mode": "アドバンストモード",
+            "depth_curve": "深度カーブ",
+            "block_index_filter": "ブロックインデックスフィルター",
+            "similarity_sharpness": "類似度シャープ",
+            "override_face_bbox": "顔bboxを上書き",
+            "skip_when_sigma_above": "sigma超過時にスキップ",
+            "pull_mode": "プルモード",
+            "late_block_falloff": "後半ブロック減衰"
+        },
+        "description": "各ブロックのアテンションを参照特徴へ引き寄せてアイデンティティを維持します。2 種類のモード：(1) LikenessGuide から参照情報を取得し、その参照フレームを使用します。(2) 参照情報を接続しない場合、Latent のフレーム 0 を参照として使用します——フレーム 0 が条件となる開始画像である i2v ワークフロー向け。v1.2 は方向性プルモード（色を保持）を採用しています。"
+    },
+    "LTXLikenessGuide": {
+        "title": "LTX類似性ガイダンス",
+        "inputs": {
+            "positive": "ポジティブプロンプト",
+            "negative": "ネガティブプロンプト",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "参考画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "placement_mode": "配置モード",
+            "face_detect": "顔検出",
+            "reference_mask_mode": "参照マスクモード",
+            "face_padding": "顔パディング",
+            "crf": "CRF",
+            "blur_radius": "ぼかし半径",
+            "interpolation": "補間",
+            "crop": "クロップ",
+            "attention_strength": "アテンション強度",
+            "face_bbox_within_reference": "参照内の顔bbox",
+            "emit_latent": "latentを出力",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "positive": "ポジティブプロンプト",
+            "negative": "ネガティブプロンプト",
+            "latent": "latent",
+            "reference_info": "参照情報"
+        },
+        "description": "アイデンティティ保持のため、類似性参照画像を条件設定に追加します。修正後のポジティブ/ネガティブ条件（Guider 用）と参照情報メタデータ（LikenessAnchor 用）を出力します。デフォルトでは latent 出力は入力のスルーであり、拡張もクロップも不要です。ガイダンスの価値は、モデルおよびその bbox メタデータとの条件インタラクションから得られるのであって、latent の修正によるものではありません。"
+    },
+    "LTXLikenessCrop": {
+        "title": "LTX類似性クロップ",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "参照情報"
+        },
+        "widgets": {
+            "debug": "デバッグ"
+        },
+        "description": "VAE デコード前に Latent から類似性参照フレームをクロップします。LTXLikenessGuide の emit_latent=拡張 モードを反転させます。ガイダンスが拡張 latent を出力している場合のみ使用してください。ガイダンスがスルーモード（デフォルト）ならこのノードは不要で、latent を直接 VAE デコードへ接続できます。"
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "LTX類似性セマンティッククランプ",
+        "inputs": {
+            "model": "モデル",
+            "clip": "clip",
+            "positive": "ポジティブプロンプト",
+            "reference_info": "参照情報"
+        },
+        "widgets": {
+            "suppression_strength": "抑制強度",
+            "face_modifier_text": "顔修飾テキスト",
+            "similarity_threshold": "類似度閾値",
+            "auto_threshold": "自動閾値",
+            "similarity_sharpness": "類似度シャープ",
+            "suppression_floor": "抑制下限",
+            "top_k": "top_k",
+            "soft_edge_frac": "ソフトエッジ比率",
+            "override_face_bbox": "顔bboxを上書き",
+            "bypass": "バイパス",
+            "debug": "デバッグ"
+        },
+        "description": "attn2 領域内の顔 bbox 領域に対し、セマンティックなテキストトークン抑制を行います。埋め込み空間と修飾語彙の対応関係からプロンプト内の顔修飾トークンを識別し、その領域へのアテンションを選択的に抑制します。廃止済みの LikenessClamp の一律振幅スケーリングを置き換えます。"
+    }
+}

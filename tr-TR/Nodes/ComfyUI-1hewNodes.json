@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "Görsel renk eşleştirme",
+        "inputs": {
+            "source_image": "Kaynak görsel",
+            "reference_image": "Referans görsel"
+        },
+        "widgets": {
+            "method": "Yöntem"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Referans görselin renkleri kaynak görsellere aktarılır. Yığın işleme desteklenir; referans görsel sayısı kaynak yığından farklıysa referans görseller döngüsel olarak kullanılır (i % ref_count). wavelet/adain yerel olarak çalışır; mkl/hm/reinhard/mvgd ve bunların karışık sürümleri ‘color-matcher’ paketini kullanır."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "Görsel renk geri yükleme",
+        "inputs": {
+            "edit_image": "Düzenleme görseli",
+            "org_image": "Orijinal görsel"
+        },
+        "widgets": {
+            "background_threshold": "Arka plan eşiği",
+            "unchanged_threshold": "Değişmezlik eşiği",
+            "seam_max_distance": "Derz maksimum mesafesi",
+            "seam_decay": "Derz sönümlemesi",
+            "seam_residual_blur": "Derz artık bulanıklığı",
+            "seam_color_sigma": "Derz renk sigma değeri",
+            "occlusion_residual_blur": "Oklüzyon artık bulanıklığı",
+            "occlusion_bridge_width": "Oklüzyon köprü genişliği"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "unchanged_mask": "Değişmeyen maske"
+        },
+        "description": "Nesne kaldırmanın yol açtığı oklüzyon derzlerini yerel olarak yumuşatırken, hizalanmış AI düzenleme rengini orijinal referansa geri yükler. Güvenilir afin renk oturtma ve sürekli derz alanı kullanır (yapısal değişmez maske temizliği devre dışı bırakıldı). Düzenlenen görselde bir Alpha kanalı varsa korunur."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "Görsel hizalama değişim maskesi",
+        "inputs": {
+            "edit_image": "Düzenleme görseli",
+            "org_image": "Orijinal görsel"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "max_offset": "Maksimum ofset",
+            "max_rotation": "Maksimum döndürme",
+            "max_scale": "Maksimum ölçek",
+            "min_align_score": "Minimum hizalama skoru",
+            "color_compensation": "Renk telafisi",
+            "sensitivity": "Hassasiyet",
+            "min_component_area": "Minimum bileşen alanı",
+            "expand": "Genişlet",
+            "feather": "Tüyleme"
+        },
+        "outputs": {
+            "align_image": "Hizalı görüntü",
+            "clean_mask": "Temiz maske",
+            "raw_mask": "Ham maske",
+            "change_score": "Değişim skoru",
+            "overlay_image": "Bindirme görseli"
+        },
+        "description": "Yapay zekâ ile düzenlenmiş görseli, kararlı arka plan piksellerini kullanarak küçük ölçekli küresel renk kaymasını reddetmek suretiyle orijinal görselle hizalar ve orijinal/temiz değişim maskesini verir."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "Görsel Alpha kenar işleme",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "edge": "Kenar",
+            "feather": "Tüyleme"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "Alfa kanallı görsellerde opak alanların kenarlarını ayarlar: içeriye daraltma / dışarıya genişletme + tüy efekti (feather).\n\nTipik senaryo: Arka planı çıkardıktan (maskeleme) sonra, öğe kenarlarında arka plan rengiyle kirlenmiş yarı saydam bir “tüylü / renkli kenar” halkası kalır. Bu düğüm önce kenarları içeriye doğru daraltarak kirlenen kenar piksellerini doğrudan kırpar, ardından temiz bir geçiş için Gauss tüy efekti uygular; tüy efekti öncesinde opak alanın rengini geçiş bandına doğru yayarak (bleed) tüy efekti sonrasında koyu kenarlar / renkli kenarlar oluşmasını önler.\n\nİşlem sırası: daraltma / genişletme → renk yayma → tüy efekti.\nAlfa içeren 4 kanallı bir görsel ve işlenmiş Alfa maskesi çıktısı verir.\n\nDaraltma / genişletme, gri tonlamalı morfoloji (minimum / maksimum filtresi) olup doğrudan Alfa üzerinde uygulanır: yerel olarak doğrusal yumuşak kenarlarda, yarıçapı r olan bir filtre tam olarak o yamaç eğiminin r piksel kaydırılmasına eşdeğerdir; bu nedenle Alfa’nın her eşdeğer çizgisi bütünüyle r kadar kaydırılır ve maskenin (matte) yerleşik kenar yumuşatması (anti-aliasing), 1 piksellik basamağa dönüşmeden eksiksiz korunur. Delik doldurma bir maske onarımıdır ve başka düğümlerin işlemesine bırakılır."
+    },
+    "1hew_ImageBlur": {
+        "title": "Görsel bulanıklaştırma",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "blur": "Bulanıklık"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Tüm görseline Gauss bulanıklığı uygular; davranışı LayerStyle’ın LayerFilter: Gaussian Blur V2 sürümüyle tutarlıdır.\n\n- Bulanıklık parametresi ondalık (FLOAT) değerleri destekler; bu, anlamsal olarak V2 sürümüne daha yakındır;\n- Bulanıklık 0 iken orijinal görsel doğrudan geçirilir;\n- Yığın başına kare kare işlenir, kanal sayısı ve veri türü değişmeden korunur."
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "Görüntü Yakınlaştırma Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "native_image": "Yerel görsel",
+            "native_mask": "Yerel maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "Görüntü Yakınlaştırma Qwen Image 3.0",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "native_image": "Yerel görsel",
+            "native_mask": "Yerel maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "Görüntü Yakınlaştırma Qwen Image 3.0 Pro",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "native_image": "Yerel görsel",
+            "native_mask": "Yerel maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "Görsel minimum alanı",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "length_to_sq_area": "Referans kenar uzunluğu",
+            "method": "Yöntem",
+            "divisible_by": "Tam bölünebilir",
+            "fit": "Uydurma",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "resize_bool": "Ölçeklensin mi"
+        },
+        "description": "Görseli, alanı en kare referans alanına ulaşana kadar büyütür.\n\n- ``length_to_sq_area`` referans kare kenar uzunluğunu tanımlar (hedef alan = N²).\n- ``Uydurma`` davranışı «Genel Görsel Ölçeklendirme» gibidir: kırp/doldur/uzat.\n- ``Tam bölünebilir`` nihai boyutları bir sayının katına yukarı yuvarlar.\n- ``resize_bool`` gerçekte bir büyütme yapılıp yapılmadığını bildirir."
+    },
+    "1hew_StringRandom": {
+        "title": "Rastgele Dizi",
+        "widgets": {
+            "custom_text": "Özel metin",
+            "seed": "Rastgele tohum"
+        },
+        "outputs": {
+            "string": "Dize"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "Metin Karşılaştırma",
+        "widgets": {
+            "a": "a",
+            "operator": "Operatör",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "Boolean değeri"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "Çoklu maske matematik işlemleri",
+        "inputs": {
+            "mask_1": "Maske 1",
+            "mask_2": "Maske 2"
+        },
+        "widgets": {
+            "operation": "İşlem"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "Jimeng Metin Oranı",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "selection": "Seçim"
+        },
+        "outputs": {
+            "string": "Dize"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "Maske Seviyesi",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "black_point": "Siyah nokta",
+            "white_point": "Beyaz nokta"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Maskenin kontrastını ve aralığını ayarlamak için görüntüdeki siyah ve beyaz noktaların eşik değerlerini belirler."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "Tam Sayı Karşılaştırma",
+        "inputs": {
+            "a": "Değer a",
+            "operator": "Operatör",
+            "b": "Değer b"
+        },
+        "widgets": {
+            "bool": "Boolean değeri"
+        },
+        "description": "İki tam sayının büyüklük ilişkisini karşılaştırır"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "Ondalık sayı karşılaştırma",
+        "widgets": {
+            "a": "Değer a",
+            "operator": "Operatör",
+            "b": "Değer b"
+        },
+        "outputs": {
+            "bool": "Boolean değeri"
+        },
+        "description": "İki ondalık sayının büyüklük ilişkisini karşılaştırır"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "Görsel siyah-beyaz kenar aşındırma",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "gamma": "Gama",
+            "shrink_radius": "Daraltma yarıçapı",
+            "blur_radius": "Bulanıklık yarıçapı"
+        },
+        "outputs": {
+            "mask": "Maske"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "Maskeye Kontur Çiz",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "fill_hole": "Delikleri doldur",
+            "stroke_width": "Kenarlık genişliği",
+            "include_mask": "Maskeyi dahil et"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Maskeye kontur (stroke) işlemi uygular"
+    },
+    "1hew_VideoToURL": {
+        "title": "Videodan URL'ye",
+        "inputs": {
+            "video": "Video dosyası yolu"
+        },
+        "widgets": {
+            "timeout": "Zaman aşımı süresi (saniye)"
+        },
+        "outputs": {
+            "url": "Oluşturulan URL"
+        },
+        "description": "Video dosyasını erişilebilir bir URL bağlantısına dönüştürür"
+    },
+    "1hew_VideoToImage": {
+        "title": "Videodan görsel çıkar",
+        "inputs": {
+            "video": "Video çıkışı"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "audio": "Ses",
+            "fps": "Kare hızı",
+            "frame_count": "Kare sayısı"
+        },
+        "description": "Videoyu görüntülere, sese, kare hızına ve kare sayısına dönüştürür"
+    },
+    "1hew_IntVideoCount": {
+        "title": "Video Sayacı",
+        "inputs": {
+            "video_1": "Video1"
+        },
+        "outputs": {
+            "int": "Tamsayı"
+        },
+        "description": "Videoları saymak için düğüm"
+    },
+    "1hew_ImageToMask": {
+        "title": "Görüntüden Maskeye",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Görüntüyü maskeye dönüştürür"
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "Görsel yığını dizini",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "index": "Dizin"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "Görsel yığınını eşitle",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "num_frame": "Kare sayısı"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "Görsel listesi iç içe geçirme",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "segment_count": "Segment sayısı"
+        },
+        "outputs": {
+            "image_list": "Görsel listesi"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "Sınır kutusu doldurma",
+        "inputs": {
+            "paste_image": "Yapıştırılan görsel",
+            "bbox_mask": "Sınır kutusu maskesi"
+        },
+        "widgets": {
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Görsel sınır kutusu doldurucu - görseli bbox_mask dış sınırlayıcı kutusuna yerleştirir ve kalan bölgesini belirtilen renkle doldurur."
+    },
+    "1hew_IntImageCount": {
+        "title": "Tam Sayı Görüntü Sayısı",
+        "inputs": {
+            "image_1": "Görsel1"
+        },
+        "outputs": {
+            "int": "Tamsayı"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "PSD Yükle",
+        "widgets": {
+            "file": "Dosya",
+            "index": "Dizin",
+            "include_hidden": "Gizli öğeleri dahil et",
+            "group_mode": "Gruplama modu",
+            "output_mode": "Çıkış modu",
+            "preview": "Önizleme",
+            "choose psd to upload": "Yüklenecek PSD dosyasını seç"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "filename": "Dosya adı",
+            "layer_name": "Katman adı"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "Maskeden Sınır Kutusu Maskesi",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "output_mode": "Çıkış modu",
+            "divisible_by": "Tam bölünebilir"
+        },
+        "outputs": {
+            "bbox_mask": "Sınır kutusu maskesi"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "Çoklu Görüntü Listesi",
+        "inputs": {
+            "image_1": "Görsel1"
+        },
+        "widgets": {
+            "image_1": "Görsel1"
+        },
+        "outputs": {
+            "image_list": "Görsel listesi"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "Bellek Temizleme",
+        "widgets": {
+            "anything": "Herhangi bir içerik",
+            "unload_model": "Modeli bellekten çıkar"
+        },
+        "description": "ComfyUI'nin mevcut görev bittikten sonra yürütme önbelleğini ve model bellek kullanımını serbest bırakmasını ister; birden çok sıraya alma arasındaki RAM/VRAM temizliği için uygundur."
+    },
+    "1hew_AudioDuration": {
+        "title": "Ses süresi",
+        "inputs": {
+            "audio": "Ses"
+        },
+        "description": "Sesin süresini alır."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "Görsel yığını çıkarma",
+        "inputs": {
+            "image": "Görsel",
+            "mode": "Mod",
+            "index": "Dizin",
+            "step": "Adım",
+            "uniform": "Düzenli",
+            "max_keep": "Maksimum tutma sayısı"
+        },
+        "description": "Görsel yığınından belirtilen desendeki görselleri çıkarır."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "Görsel yığını gruplama",
+        "inputs": {
+            "image": "Görsel",
+            "batch_size": "Yığın boyutu",
+            "overlap": "Örtüşme",
+            "last_batch_mode": "Son yığın modu",
+            "color": "Renk"
+        },
+        "description": "Görsel yığınını gruplar halinde işler."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "Görsel yığını aralığı",
+        "inputs": {
+            "image": "Görsel",
+            "start_index": "Başlangıç dizini",
+            "num_frame": "Kare sayısı"
+        },
+        "description": "Görsel yığınından belirtilen aralıktaki görselleri çıkarır."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "Görsel yığını bölme",
+        "inputs": {
+            "image": "Görsel",
+            "take_count": "Alınan kare sayısı",
+            "from_start": "Baştan"
+        },
+        "description": "Görsel yığınını belirtilen görsel sayısına göre parçalar."
+    },
+    "1hew_ImageListAppend": {
+        "title": "Görsel listesine ekleme",
+        "inputs": {
+            "image_1": "Görsel1",
+            "image_2": "Görsel2"
+        },
+        "description": "İki görseli listeye ekler."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "Maske Partisi Matematik İşlemi",
+        "inputs": {
+            "mask": "Maske",
+            "operation": "İşlem"
+        },
+        "description": "Maske partisine matematiksel işlem uygular."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "Maske Partisi Aralığı",
+        "inputs": {
+            "mask": "Maske",
+            "start_index": "Başlangıç dizini",
+            "num_frame": "Kare sayısı"
+        },
+        "description": "Maske partisinden belirtilen aralıktaki maskeleri çıkarır."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "Maske Partisi Bölme",
+        "inputs": {
+            "mask": "Maske",
+            "take_count": "Alınan kare sayısı",
+            "from_start": "Baştan"
+        },
+        "description": "Maske partisinden maskeleri belirtilen miktarda böler."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "Video Klip Gruplama",
+        "inputs": {
+            "image": "Görsel",
+            "threshold_base": "Eşik tabanı",
+            "threshold_range": "Eşik aralığı",
+            "threshold_count": "Eşik sayısı",
+            "kernel": "Çekirdek (kernel)",
+            "min_frame_count": "Min. kare sayısı",
+            "max_frame_count": "Maks. kare sayısı",
+            "fast": "Hızlı",
+            "add_frame": "Kare ekle",
+            "delete_frame": "Kare sil"
+        },
+        "description": "Görüntüye göre video kliplerini gruplandırır."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "Parlaklık Kontrast Eşleştirme",
+        "inputs": {
+            "source_image": "Kaynak görsel",
+            "reference_image": "Referans görsel",
+            "edge_amount": "Kenar miktarı",
+            "consistency": "Tutarlılık",
+            "method": "Yöntem"
+        },
+        "description": "Kaynak görüntü ile referans görüntü arasındaki parlaklık ve kontrastı eşleştirir."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "Metin Kodlama Qwen Görüntü Düzenleme",
+        "description": "Görüntü düzenleme için metni Qwen modeliyle kodlar."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "Görsel yığınını listeye çevir",
+        "inputs": {
+            "image_batch": "Görsel yığını"
+        },
+        "description": "Görsel yığınını görsel listesine dönüştürür."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "Görsel listesini yığınına çevir",
+        "inputs": {
+            "image_list": "Görsel listesi"
+        },
+        "description": "Görsel listesini görsel yığınına dönüştürür."
+    },
+    "1hew_ImageToURL": {
+        "title": "Görüntüden İnternet Adresi URL",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "timeout": "Zaman aşımı"
+        },
+        "outputs": {
+            "url": "İnternet adresi bağlantısı URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "Maske Partisini Listeye Dönüştür",
+        "inputs": {
+            "mask_batch": "Maske partisi"
+        },
+        "description": "Maske partisini maske listesine dönüştürür."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "Maske Listesini Partiye Dönüştür",
+        "description": "Birden çok maskeyi tek bir partiye dönüştürür.",
+        "inputs": {
+            "mask_list": "Maske listesi"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "Maskeden Sam3Box",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "condition": "Durum (koşul)",
+            "output_mode": "Çıkış modu"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "Dizi Koordinatlarından Sınır Kutusu",
+        "description": "Koordinat dizisinden sınır kutusu üretir.",
+        "inputs": {
+            "coordinates_string": "Koordinat dizesi"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "Dizi Koordinatlarından Sınır Kutusu Maskesi",
+        "description": "Koordinat dizisinden sınır kutusu maskesi üretir.",
+        "inputs": {
+            "image": "Görsel",
+            "coordinates_string": "Koordinat dizesi",
+            "output_mode": "Çıkış modu"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "Metin Listesinden Diziye",
+        "description": "Metin listesini tek bir dizide birleştirir.",
+        "inputs": {
+            "text_list": "Metin listesi",
+            "prefix": "Ön ek",
+            "suffix": "Son ek",
+            "separator": "Ayırıcı"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "Metinden Her Türlü Biçime",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "outputs": {
+            "any": "Herhangi"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "URL'den Videoya",
+        "description": "URL'den video getirir.",
+        "inputs": {
+            "video_url": "Video URL'si",
+            "timeout": "Zaman aşımı süresi"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "Kılavuz çizgilerini tespit et",
+        "description": "Görseldeki kılavuz çizgilerini tespit eder.",
+        "inputs": {
+            "image": "Görsel",
+            "canny_low": "Canny düşük eşiği",
+            "canny_high": "Canny yüksek eşiği",
+            "seg_min_len": "Minimum segment uzunluğu",
+            "seg_max_gap": "Maksimum segment boşluğu",
+            "guide_filter": "Kılavuz filtresi",
+            "guide_width": "Kılavuz çizgisi genişliği",
+            "cluster_eps": "Kümeleme ε değeri"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "Arka planı kaldır",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "model": "Model girdisi",
+            "add_background": "Arka plan ekle"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "Arka plan kaldırma iyileştirmesi",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "type": "Tür",
+            "subject_protect": "Özne koruması",
+            "feather": "Tüyleme",
+            "decolor_edge": "Kenar renk giderme"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "Yolo tespiti",
+        "description": "Görseldeki nesneleri tespit etmek için YOLO modeli kullanır.",
+        "inputs": {
+            "image": "Görsel",
+            "yolo_model": "YOLO modeli",
+            "threshold": "Eşik",
+            "mask_index": "Maske dizini",
+            "label": "Etiket",
+            "label_size": "Etiket boyutu"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "Görsel etiket ekle",
+        "description": "Görselin üzerine metin etiketi ekler.",
+        "inputs": {
+            "image": "Görsel",
+            "height_pad": "Yükseklik dolgusu",
+            "font_size": "Yazı tipi boyutu",
+            "invert_color": "Renkleri ters çevir",
+            "font": "Yazı tipi",
+            "text": "Metin",
+            "direction": "Yön",
+            "input1": "Girdi 1",
+            "input2": "Girdi 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "Alpha kanalı temizleme",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "clean_strength": "Temizleme şiddeti",
+            "detect_only": "Yalnızca tespit"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "noise_mask": "Gürültü maskesi"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "Alpha kanalı ayırma",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "background_color": "Arka plan rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "Maske ile görselin üzerine sınır kutusu çiz",
+        "description": "Maske aracılığıyla görselin üzerine sınır kutusu çizer.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "bbox_color": "Sınır kutusu rengi",
+            "stroke_width": "Kenarlık genişliği",
+            "fill": "Dolgu",
+            "padding": "İç dolgu",
+            "output_mode": "Çıkış modu"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "Görsel düzenleme birleştirme",
+        "description": "Görselleri düzenler ve birleştirir.",
+        "inputs": {
+            "reference_image": "Referans görsel",
+            "edit_image": "Düzenleme görseli",
+            "edit_mask": "Düzenleme maskesi",
+            "edit_image_position": "Düzenleme görseli konumu",
+            "match_edit_size": "Düzenleme boyutunu eşle",
+            "spacing": "Aralık",
+            "spacing_color": "Boşluk rengi",
+            "pad_color": "Dolgu rengi"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "Görsel birleştirme",
+        "description": "Ana görsel birleştirme.",
+        "inputs": {
+            "image_1": "Görsel1",
+            "image_2": "Görsel2",
+            "image_3": "Görsel3",
+            "direction": "Yön",
+            "match_image_size": "Görsel boyutunu eşleştir",
+            "spacing_width": "Boşluk genişliği",
+            "spacing_color": "Boşluk rengi",
+            "pad_color": "Dolgu rengi"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "Görsel döngüsü",
+        "description": "Görseli ileri geri işler.",
+        "inputs": {
+            "image": "Görsel",
+            "pre_reverse": "Ön ters çevirme",
+            "ops_count": "İşlem sayısı",
+            "frame_count": "Kare sayısı",
+            "remove_link_frame": "Bağlantı karesini kaldır"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "Görüntü Çizimi",
+        "description": "Görsel ızgara düzenini çizer.",
+        "inputs": {
+            "image": "Görsel",
+            "layout": "Yerleşim",
+            "spacing": "Aralık",
+            "grid_columns": "Izgara sütun sayısı",
+            "background_color": "Arka plan rengi"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "Maskeyle Döndürülen Görüntü",
+        "description": "Görüntüyü döndürür ve maskeyi uygular.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "angle": "Açı",
+            "pad_color": "Dolgu rengi",
+            "expand": "Genişlet",
+            "mask_center": "Maske merkezi"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "Düz Renkli Görüntü Üret",
+        "description": "Düz renkli görüntü üretir.",
+        "inputs": {
+            "get_image_size": "Görsel boyutunu al",
+            "preset_size": "Ön ayar boyutu",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "color": "Renk",
+            "alpha": "Saydamlık",
+            "invert": "Ters çevir",
+            "mask_opacity": "Maske saydamlığı",
+            "divisible_by": "Tam bölünebilir"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "Maske Üzerinden Kontur Çiz",
+        "description": "Maske üzerinden görüntüye kontur çizer.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "stroke_width": "Kontur genişliği",
+            "stroke_color": "Kontur rengi"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "Alpha ile karıştırma",
+        "description": "Alpha değerleriyle bindirme görseli ile temel görsel arasında karışım yapar.",
+        "inputs": {
+            "overlay_image": "Bindirme görseli",
+            "base_image": "Temel görsel",
+            "overlay_mask": "Bindirme maskesi",
+            "blend_mode": "Karıştırma modu",
+            "opacity": "Opaklık",
+            "invert_mask": "Maskeyi ters çevir"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "CSS ile karıştırma",
+        "description": "CSS karıştırma modlarıyla bindirme görseli ile temel görsel arasında karışım yapar.",
+        "inputs": {
+            "overlay_image": "Bindirme görseli",
+            "base_image": "Temel görsel",
+            "blend_mode": "Karıştırma modu",
+            "blend_percentage": "Karıştırma yüzdesi",
+            "overlay_mask": "Bindirme maskesi",
+            "invert_mask": "Maskeyi ters çevir"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "Maske ile görselleri karıştırma",
+        "description": "Maske aracılığıyla görseller arasında karışım yapar.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "fill_hole": "Boşlukları doldur",
+            "invert": "Ters çevir",
+            "feather": "Tüyleme",
+            "opacity": "Opaklık",
+            "expansion": "Genişlet",
+            "background_color": "Arka plan rengi",
+            "background_opacity": "Arka plan opaklığı",
+            "output_mask_invert": "Çıktı maskesini ters çevir"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "Görseli kareye kırp",
+        "description": "Görseli kare olarak kırpar.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "scale_factor": "Ölçek çarpanı",
+            "extra_padding": "Ek dolgu",
+            "fill_color": "Dolgu rengi",
+            "apply_mask": "Maske uygula",
+            "divisible_by": "Tam bölünebilir"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "Sınır kutusu kırpma",
+        "widgets": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "preset_ratio": "Ön ayar oranı",
+            "get_crop_ratio": "Kırpma oranını al",
+            "scale_strength": "Ölçek şiddeti",
+            "crop_to_side": "Kenar uzunluğuna kırp",
+            "crop_to_length": "Uzunluğa kırp",
+            "divisible_by": "Tam bölme katı"
+        },
+        "description": "Görseli maskeye göre kırpan ve sonraki yapıştırma için sınır kutusu maskesi bilgisi döndüren görsel kırpıcı",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "Kenar kırpma ve doldurma",
+        "description": "Görselin kenarlarını kırpar ve doldurur.",
+        "inputs": {
+            "image": "Görsel",
+            "uniform_amount": "Eşit dolgu miktarı",
+            "top_amount": "Üst dolgu miktarı",
+            "bottom_amount": "Alt dolgu miktarı",
+            "left_amount": "Sol dolgu miktarı",
+            "right_amount": "Sağ dolgu miktarı",
+            "pad_color": "Dolgu rengi",
+            "divisible_by": "Tam bölünebilir"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "Görsel ızgara bölme",
+        "description": "Görseli ızgaraya böler.",
+        "inputs": {
+            "image": "Görsel",
+            "rows": "Satır sayısı",
+            "columns": "Sütun sayısı",
+            "index": "Dizin",
+            "all": "Tümü"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "Maske ile görseli kırpmak",
+        "description": "Görseli maskeye göre kırpar.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "output_crop": "Çıktı kırpma",
+            "output_alpha": "Çıkış alfası"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "Sınır kutusu maskesiyle görsel yapıştırma",
+        "description": "Sınır kutusu maskesi aracılığıyla görselin üzerine yapıştırır.",
+        "inputs": {
+            "paste_image": "Yapıştırılan görsel",
+            "base_image": "Temel görsel",
+            "bbox_mask": "Sınır kutusu maskesi",
+            "paste_mask": "Yapıştırma maskesi",
+            "position_x": "X konumu",
+            "position_y": "Y konumu",
+            "scale": "Ölçekle",
+            "rotation": "Döndürme",
+            "opacity": "Opaklık",
+            "apply_paste_mask": "Yapıştırma maskesini uygula"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "Yüksek/düşük frekanslı görsel birleştirme",
+        "description": "Yüksek frekanslı ve düşük frekanslı görselleri birleştirir.",
+        "inputs": {
+            "high_freq": "Yüksek frekanslı görsel",
+            "low_freq": "Düşük frekanslı görsel",
+            "method": "Yöntem",
+            "high_strength": "Yüksek frekans şiddeti",
+            "low_strength": "Düşük frekans şiddeti"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "Görsel yüksek/düşük frekans ayrımı",
+        "inputs": {
+            "image": "Görsel",
+            "method": "Yöntem",
+            "blur_radius": "Bulanıklık yarıçapı"
+        },
+        "description": "Görseldeki yüksek frekanslı ve düşük frekanslı bileşenleri ayırarak işler."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "Görsel yüksek/düşük frekans dönüşümü",
+        "inputs": {
+            "generate_image": "Üretilen görsel",
+            "detail_image": "Detay görseli",
+            "detail_mask": "Detay maskesi",
+            "method": "Yöntem",
+            "blur_radius": "Bulanıklık yarıçapı"
+        },
+        "description": "Görselin yüksek ve düşük frekans bileşenleri üzerinde dönüşüm işlemi uygular."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "Görüntü Yakınlaştırma Flux Kontext",
+        "description": "Flux Kontext kullanarak görüntü boyutunu ayarlar.",
+        "inputs": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi",
+            "image": "Görsel",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "Görüntü Yakınlaştırma Gemini 3.0 Pro",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "Görüntü Yakınlaştırma Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi",
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "Görüntü Yakınlaştırma Jimeng",
+        "description": "Jimeng kullanarak görüntü boyutunu ayarlar.",
+        "inputs": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi",
+            "image": "Görsel",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "Görüntü Yakınlaştırma Qwen Image",
+        "description": "Görüntüyü yakınlaştırır.",
+        "inputs": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi",
+            "image": "Görsel",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "Görüntü Yakınlaştırma Kare",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "Genel Görüntü Yakınlaştırma",
+        "description": "Görüntüye genel yakınlaştırma uygular.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "get_image_size": "Görsel boyutunu al",
+            "preset_ratio": "Ön ayar oranı",
+            "proportional_width": "Genişliğe Orantılı Yakınlaştır",
+            "proportional_height": "Yüksekliğe Orantılı Yakınlaştır",
+            "method": "Yöntem",
+            "scale_to_side": "Kenar Uzunluğuna Yakınlaştır",
+            "scale_to_length": "Uzunluğa Yakınlaştır",
+            "fit": "Uydurma yöntemi",
+            "pad_color": "Dolgu rengi",
+            "divisible_by": "Tam bölünebilir"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "Görüntü Döşeme Birleştirme",
+        "inputs": {
+            "tile": "Döşeme (tile)",
+            "tile_meta": "Döşeme üst verisi",
+            "blend_strength": "Kaynaştırma şiddeti"
+        },
+        "description": "Birden çok döşeme (tile) görüntüsünü tek bir tam görüntüde birleştirir."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "Görüntü Parçalama",
+        "inputs": {
+            "image": "Görsel",
+            "get_tile_size": "Parça boyutunu al",
+            "mode": "Mod",
+            "overlap_amount": "Örtüşme miktarı",
+            "grid_row": "Satır sayısı",
+            "grid_col": "Sütun sayısı",
+            "divisible_by": "Bölünebilir sayı"
+        },
+        "description": "Görüntüyü birden çok parçaya böler."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "Tam Sayı Görüntü Kenar Uzunluğu",
+        "inputs": {
+            "image": "Görsel",
+            "mode": "Mod"
+        },
+        "description": "Görüntünün kenar uzunluğunu hesaplar veya tam sayı değere ayarlar."
+    },
+    "1hew_IntImageSize": {
+        "title": "Tam Sayı Görüntü Boyutu",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "description": "Görüntünün tam sayı boyutlarını alır."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "Tam Sayı Maske Kenar Uzunluğu",
+        "inputs": {
+            "mask": "Maske",
+            "mode": "Mod"
+        },
+        "description": "Maskenin kenar uzunluğunu hesaplar veya tam sayı değere ayarlar."
+    },
+    "1hew_IntSplit": {
+        "title": "Tam Sayı Bölme",
+        "inputs": {
+            "total": "Toplam",
+            "split_point": "Bölme noktası"
+        },
+        "description": "Bir tam sayıyı belirtilen konumdan iki parçaya böler."
+    },
+    "1hew_IntWan": {
+        "title": "Tam Sayı On Binler Hanesi",
+        "inputs": {
+            "value": "Değer"
+        },
+        "description": "Bir tam sayının on binler hanesini alır veya ayarlar."
+    },
+    "1hew_GetFileCount": {
+        "title": "Dosya sayısını al",
+        "inputs": {
+            "folder": "Klasör",
+            "type": "Tür",
+            "include_subdir": "Alt dizinleri dahil et"
+        },
+        "description": "Belirtilen klasördeki ve alt dizinlerdeki dosya sayısını sayar."
+    },
+    "1hew_LoadImage": {
+        "title": "Görsel yükle",
+        "inputs": {
+            "get_image_size": "Görsel boyutunu al",
+            "file": "Dosya",
+            "index": "Dizin",
+            "include_subdir": "Alt dizinleri dahil et",
+            "all": "Tümü"
+        },
+        "description": "Belirtilen yoldan görüntü dosyasını yükler."
+    },
+    "1hew_LoadTxt": {
+        "title": "Metin Yükle",
+        "widgets": {
+            "file": "Dosya",
+            "encode": "Kodlama",
+            "index": "Dizin",
+            "include_subdir": "Alt dizinleri dahil et"
+        },
+        "outputs": {
+            "text": "Metin",
+            "filename": "Dosya adı"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "Video yükle",
+        "inputs": {
+            "file": "Dosya",
+            "frame_limit": "Kare sınırı",
+            "fps": "Kare hızı",
+            "start_skip": "Başta atla",
+            "end_skip": "Sonda atla",
+            "format": "Biçim",
+            "video_index": "Video dizini",
+            "include_subdir": "Alt dizinleri dahil et"
+        },
+        "description": "Belirtilen yoldan video dosyasını yükler."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "Videodan görsel çıkar",
+        "inputs": {
+            "file": "Dosya",
+            "frame_limit": "Kare sınırı",
+            "fps": "Kare hızı",
+            "start_skip": "Başta atla",
+            "end_skip": "Sonda atla",
+            "format": "Biçim",
+            "video_index": "Video dizini",
+            "include_subdir": "Alt dizinleri dahil et"
+        },
+        "description": "Video dosyasını bir dizi görüntü karesine dönüştürür."
+    },
+    "1hew_SaveImage": {
+        "title": "Görseli kaydet",
+        "inputs": {
+            "image": "Görsel",
+            "filename_prefix": "Dosya adı ön eki",
+            "save_output": "Çıktıyı kaydet",
+            "save_metadata": "Meta verileri kaydet"
+        },
+        "description": "Görüntüyü belirtilen yola kaydeder."
+    },
+    "1hew_SaveTxt": {
+        "title": "Metin kaydet",
+        "inputs": {
+            "any": "Herhangi"
+        },
+        "widgets": {
+            "filename": "Dosya adı",
+            "auto_increment": "Otomatik artış",
+            "save_output": "Çıktıyı kaydet",
+            "encode": "Kodlama"
+        },
+        "outputs": {
+            "file_path": "Dosya yolu"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "Video kaydet",
+        "inputs": {
+            "video": "Video çıkışı",
+            "filename_prefix": "Dosya adı ön eki",
+            "save_output": "Çıktıyı kaydet",
+            "save_metadata": "Meta verileri kaydet"
+        },
+        "description": "Videoyu belirtilen yola kaydeder."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "Görüntüyü Video Olarak Kaydet",
+        "description": "Görüntü ve ses'e göre videoyu kaydeder.",
+        "inputs": {
+            "image": "Görsel",
+            "audio": "Ses",
+            "fps": "Kare hızı",
+            "filename_prefix": "Dosya adı ön eki",
+            "save_output": "Çıktıyı kaydet",
+            "save_metadata": "Meta verileri kaydet"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "Herhangi Boş Boolean",
+        "description": "Boolean değerinin boş olup olmadığını tespit eder.",
+        "inputs": {
+            "any": "Herhangi bir değer"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "Herhangi Boş Tamsayı",
+        "description": "Tamsayı değerinin boş olup olmadığını tespit eder.",
+        "inputs": {
+            "any": "Herhangi bir değer",
+            "empty": "Boş değer",
+            "not_empty": "Boş olmayan değer"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "Herhangi Anahtar Boolean",
+        "description": "Boolean değere göre iki seçenek arasında geçiş yapar.",
+        "inputs": {
+            "boolean": "Boolean değeri",
+            "on_true": "Doğruyken",
+            "on_false": "Yanlışken"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "Seçici geçişi",
+        "inputs": {
+            "input_1": "Girdi 1"
+        },
+        "widgets": {
+            "select": "Seç"
+        },
+        "outputs": {
+            "output": "Çıkış",
+            "select": "Seç"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "Çoklu Seçici Geçişi",
+        "inputs": {
+            "input_1": "Girdi 1"
+        },
+        "widgets": {
+            "select": "Seç"
+        },
+        "outputs": {
+            "output_1": "Çıkış 1",
+            "select": "Seç"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "Metin Eşleşme Satır Numarası",
+        "widgets": {
+            "text_multiline": "Çok satırlı metin",
+            "text_single": "Tek satırlı metin"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "Metin Eşleşme Değeri",
+        "widgets": {
+            "text_multiline": "Çok satırlı metin",
+            "text_single": "Tek satırlı metin"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "Maske Saydamlığı Temizleme",
+        "widgets": {
+            "mask": "Maske",
+            "clean_strength": "Temizleme şiddeti",
+            "detect_only": "Yalnızca tespit"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "noise_mask": "Gürültü maskesi"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "Sınır Kutusu Maskesiyle Maske Kırp",
+        "description": "Maskeyi sınır kutusu maskesiyle kırpar.",
+        "inputs": {
+            "mask": "Maske",
+            "bbox_mask": "Sınır kutusu maskesi"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "Maske Doldurma Delikleri",
+        "description": "Maskedeki delikleri doldurur.",
+        "inputs": {
+            "mask": "Maske",
+            "invert_mask": "Maskeyi ters çevir"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "Sınır Kutusu Maskesiyle Maske Yapıştır",
+        "description": "Maskeyi sınır kutusu maskesiyle yapıştırır.",
+        "inputs": {
+            "paste_mask": "Yapıştırma maskesi",
+            "bbox_mask": "Sınır kutusu maskesi",
+            "base_mask": "Temel maske"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "Maske Kopyala",
+        "description": "Maskeyi yineler.",
+        "inputs": {
+            "mask": "Maske",
+            "invert": "Ters çevir",
+            "count": "Adet"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "Maske Ayırma",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "threshold": "Eşik",
+            "min_area": "En küçük alan",
+            "sort_mode": "Sıralama modu",
+            "connectivity": "Bağlantısallık"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "count": "Tamsayı"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "Maskeden Görüntü",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "fill_hole": "Delikleri doldur",
+            "white_area_color": "Beyaz alan rengi",
+            "black_area_color": "Siyah alan rengi",
+            "output_alpha": "Alpha kanalını çıktı olarak ver"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "Çoklu Görüntü Toplu İşleme",
+        "description": "Birden çok görüntüyü toplu olarak işler.",
+        "inputs": {
+            "fit": "Uydur",
+            "pad_color": "Dolgu rengi",
+            "image_1": "Görsel1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "Çoklu Görüntü Bindirme",
+        "inputs": {
+            "image_1": "Görsel 1"
+        },
+        "widgets": {
+            "fit_mode": "Uydurma modu",
+            "color": "Renk"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Çok katmanlı bindirme:\n- image_1 en üst katmandır, sayı büyüdükçe alt katmanlara inilir\n- RGBA girişlerinde normal katman harmanlaması için alpha kullanılır\n- RGB girişleri opak katman olarak kabul edilir",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "Çoklu Görüntü Birleştirme",
+        "description": "Birden çok görüntüyü birleştirir (mosaik).",
+        "inputs": {
+            "direction": "Yön",
+            "match_image_size": "Görsel boyutlarını eşle",
+            "spacing_width": "Boşluk genişliği",
+            "spacing_color": "Boşluk rengi",
+            "pad_color": "Dolgu rengi",
+            "image_1": "Görsel1",
+            "image_2": "Görsel2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "Çoklu Maske Birleştirme",
+        "description": "Birden çok maskeyi toplu olarak işler.",
+        "inputs": {
+            "fit": "Uydur",
+            "pad_color": "Dolgu rengi",
+            "mask_1": "Maske 1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "Çoklu maske matematik işlemleri",
+        "description": "Birden çok maskede matematiksel işlem yürütür.",
+        "inputs": {
+            "mask_1": "Maske 1",
+            "mask_2": "Maske 2",
+            "operation": "İşlem"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "Çoklu dize birleştirme",
+        "description": "Birden çok diziyi birbirine bağlar.",
+        "inputs": {
+            "filter_empty_line": "Boş satırları filtrele",
+            "filter_comment": "Yorumları filtrele",
+            "separator": "Ayırıcı",
+            "input": "Girdi"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "Özel Ondalık Sayı Listesi",
+        "description": "Özel ondalık sayı listesi oluşturur.",
+        "inputs": {
+            "custom_text": "Özel metin"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "Özel Tam Sayı Listesi",
+        "inputs": {
+            "custom_text": "Özel metin"
+        },
+        "description": "Özel tam sayıları içeren bir liste üretir."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "Özel Çekirdek (Seed) Listesi",
+        "inputs": {
+            "seed": "Tohum",
+            "count": "Miktar"
+        },
+        "description": "Belirtilen sayıda rastgele çekirdek (seed) içeren bir liste üretir."
+    },
+    "1hew_ListCustomString": {
+        "title": "Özel Dizi Listesi",
+        "inputs": {
+            "custom_text": "Özel metin"
+        },
+        "description": "Özel dizileri içeren bir liste üretir."
+    },
+    "1hew_StringFilter": {
+        "title": "Dizi Ayıklama",
+        "inputs": {
+            "text": "Metin",
+            "filter_empty_line": "Boş satırları filtrele",
+            "filter_comment": "Yorumları filtrele",
+            "input": "Girdi"
+        },
+        "description": "Metindeki boş satırları ve yorumları ayıklar."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "Çoklu dize birleştirme",
+        "inputs": {
+            "text1": "Metin 1",
+            "text2": "Metin 2",
+            "text3": "Metin 3",
+            "text4": "Metin 4",
+            "text5": "Metin 5",
+            "filter_empty_line": "Boş satırları filtrele",
+            "filter_comment": "Yorumları filtrele",
+            "separator": "Ayırıcı",
+            "input": "Girdi"
+        },
+        "description": "Birden çok metni tek bir dizide birleştirir; boş satırları ve yorumları isteğe bağlı olarak ayıklar."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "Metin Özel Çıkarma",
+        "inputs": {
+            "json_data": "JSON verisi",
+            "key": "Anahtar",
+            "precision_match": "Birebir eşleşme",
+            "label_filter": "Etiket filtresi"
+        },
+        "description": "JSON verisinden belirli bir anahtarın değerini çıkarır ve birebir eşleşme ile etiket filtreleme yapar."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "Metin Ön ve Ar Eki",
+        "inputs": {
+            "text": "Metin",
+            "prefix": "Ön ek",
+            "suffix": "Son ek"
+        },
+        "description": "Metnin önüne ve arkasına belirtilen ön son ve ar eklerini getirir."
+    },
+    "1hew_RangeMapping": {
+        "title": "Aralık Eşleme",
+        "inputs": {
+            "value": "Değer",
+            "min": "Minimum",
+            "max": "Maksimum",
+            "rounding": "Yuvarlama"
+        },
+        "description": "0-1 aralığındaki değeri [min,max] aralığına eşler, ondalık hassasiyet kontrolünü destekler."
+    },
+    "1hew_WorkflowName": {
+        "title": "İş Akışı Adı",
+        "inputs": {
+            "prefix": "Ön ek",
+            "suffix": "Son ek",
+            "date_format": "Tarih biçimi",
+            "full_path": "Tam yol",
+            "strip_extension": "Uzantıyı kaldır"
+        },
+        "description": "Ön ek, son ek ve tarih biçimi içeren bir iş akışı adı üretir."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "Sınır kutusu maskesiyle görseli kırpmak",
+        "description": "Sınır kutusu maskesi kullanarak görseli kırpar.",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "preset_ratio": "Ön ayar oranı",
+            "get_crop_ratio": "Kırpma oranını al",
+            "scale_strength": "Ölçek şiddeti",
+            "crop_to_side": "Kenar uzunluğuna kırp",
+            "crop_to_length": "Uzunluğa kırp",
+            "divisible_by": "Tam bölünebilir"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "Görsel Alpha birleştirme",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "invert_mask": "Maskeyi ters çevir"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "Görsel yığını iç içe geçirme",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "segment_count": "Segment sayısı"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "Dizi Oranı Gemini 3.1 Flash Görüntü",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "selection": "Seç"
+        },
+        "outputs": {
+            "string": "Dize"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "Dizi Oranı GPT 2.0 Görüntü",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "selection": "Seç"
+        },
+        "outputs": {
+            "string": "Dize"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "Görüntü Boyutu Ayarlama GPT Image 2.0",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Ön ayar boyutu",
+            "fit": "Yöntem",
+            "pad_color": "Arka plan rengi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "Dizi Ayrıştırma",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "selection": "Seç"
+        },
+        "outputs": {
+            "string": "Dize"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "Herhangi Anahtar Tamsayı",
+        "description": "Tamsayı değerine göre seçenekler arasında geçiş yapar."
+    }
+}

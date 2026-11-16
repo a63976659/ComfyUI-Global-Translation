@@ -1,0 +1,742 @@
+{
+    "Pixaroma3D": {
+        "title": "Pixaroma 3D",
+        "widgets": {
+            "Open 3D Builder": "Abrir criação 3D"
+        },
+        "outputs": {
+            "image": "Cena 3D renderizada",
+            "width": "Largura da imagem (pixels)",
+            "height": "Altura da imagem (pixels)"
+        },
+        "description": "Construtor 3D Pixaroma — um editor completo de cenas 3D que roda dentro do ComfyUI. Abra o editor em tela cheia no nó para adicionar primitivas (cubo, esfera, cilindro, toro, blob, terreno, rocha, bule, recipiente oco), assets compostos (árvores, casas, móveis, flores) ou importar seus próprios modelos .glb/.obj.\n\nControles de câmera integrados (órbita, pan, zoom), iluminação realista, desfazer/refazer e pré-visualização em tempo real. Os atalhos de teclado usam o layout do Blender (G mover, S escalar, R rotacionar, Shift+D duplicar, teclado numérico 1/3/7 para predefinições de vista).\n\nGera o render final como IMAGE, junto com sua largura e altura, para que você possa conectar diretamente ao ControlNet (ideal para mapas de profundidade, line art, mapas de normais) ou a qualquer fluxo de trabalho img2img.\n\nAs entradas são slots de espaço reservado dinâmicos, criados pelo editor quando você adiciona camadas de imagem de fundo; as dicas deles ficam no lado JS."
+    },
+    "PixaromaAudioStudio": {
+        "title": "Estúdio de Áudio Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "audio": "Áudio"
+        },
+        "widgets": {
+            "Open AudioReact": "Abrir AudioReact"
+        },
+        "outputs": {
+            "video_frames": "Sequência de Quadros de Vídeo",
+            "audio": "Áudio",
+            "fps": "Taxa de quadros"
+        },
+        "description": "AudioReact Pixaroma — transforma uma única imagem em um vídeo reativo ao áudio. Abra o editor em tela cheia no nó para arrastar a linha do tempo do áudio, escolher o modo de movimento (15 opções: zoom pulsante, tremor de câmera, falha (glitch), compressão, onda, inclinação, pixelização, divisão RGB etc.) e sobrepor até 8 efeitos (deslocamento de cromaticidade, brilho, vinheta, deslocamento de matiz, graduação de cor ciano-laranja cinematográfica, faixas de cinema, linhas de varredura, granulação de filme). A pré-visualização WebGL em tempo real responde à batida enquanto você arrasta.\n\nNenhum modelo extra é necessário. Funciona com o nó Salvar MP4 Pixaroma para codificar o resultado diretamente em MP4 e reutilizar o áudio. Requer suporte a WebGL2.\n\nAmbas as entradas são opcionais — você pode conectar IMAGE/AUDIO a montante de qualquer fonte ou carregar em linha dentro do editor (arrastar e soltar ou escolher arquivo). A seleção em linha substitui a conexão a montante até que você desligue o interruptor de pino em linha."
+    },
+    "PixaromaCombine": {
+        "title": "Combinar Pixaroma",
+        "inputs": {
+            "any1": "Qualquer 1",
+            "any2": "Qualquer 2"
+        },
+        "outputs": {
+            "batch": "Lote"
+        },
+        "description": "Une duas entradas em um lote. Conecte quaisquer duas coisas a Qualquer 1 e Qualquer 2, e o nó de união as mescla: imagens e quadros de vídeo são empilhados em um lote, Latents são processados em lote, números e textos são coletados como listas. Se um lado estiver vazio, o outro é repassado diretamente, então é seguro usar como acumulador dentro de um loop (na rodada 1 ainda não há nada para adicionar). Funciona com qualquer tipo de conexão."
+    },
+    "PixaromaCompare": {
+        "title": "Comparar Pixaroma",
+        "inputs": {
+            "image1": "Imagem 1",
+            "image2": "Imagem 2"
+        },
+        "description": "Comparação de Imagens Pixaroma — a maneira mais simples de ver a diferença entre duas imagens. Conecte quaisquer duas saídas IMAGE a Imagem 1 e Imagem 2 (por exemplo: antes/depois da ampliação, original/reparada, duas variantes de checkpoint) e execute o fluxo de trabalho.\n\nO visualizador no nó oferece três modos: lado a lado com controle deslizante arrastável, sobreposição com opacidade ajustável, ou o modo “Diferença”, que realça as mudanças específicas entre as duas imagens. O modo inicial de um novo nó de comparação pode ser definido nas configurações desse nó, abertas pelo botão de engrenagem na barra de ferramentas do nó ou clicando com o botão direito no nó.\n\nAmbas as entradas são opcionais. Se apenas uma imagem estiver conectada (por exemplo, quando o ramo conectado a uma das entradas está silenciado ou em bypass), o nó mostra apenas essa imagem; se nenhuma estiver conectada, mostra uma dica breve — ele nunca lança um erro de sistema, então é seguro mantê-lo em fluxos de trabalho que alternam entre texto para imagem e imagem para imagem."
+    },
+    "PixaromaImageComposition": {
+        "title": "Compositor de Imagens Pixaroma",
+        "widgets": {
+            "Open Image Composer": "Abrir Compositor de Imagens"
+        },
+        "outputs": {
+            "image": "Imagem composta",
+            "width": "Largura da imagem (pixels)",
+            "height": "Altura da imagem (pixels)"
+        },
+        "description": "Compositor de Imagens Pixaroma — combine e organize várias imagens em um canvas em camadas. Arraste uma imagem sobre o corpo do nó fechado para adicioná-la como nova camada (o editor é aberto e a imagem arrastada é empilhada sobre as camadas existentes, nunca as substitui). No editor em tela cheia, você também pode adicionar camadas arrastando e soltando, colando da área de transferência ou conectando uma entrada IMAGE a montante a um slot de espaço reservado; depois mova/escalone/gire as camadas pelas alças e aplique efeitos por camada: opacidade, modo de mistura (Normal, Multiplicar, Divisão, Sobrepor, Escurecer, Clarear, Subexposição de cores, Superexposição de cores, Luz forte, Luz suave, Diferença, Exclusão, Matiz, Saturação, Cor, Luminosidade), desfoque gaussiano e remoção de fundo com IA (com tecnologia rembg, escolhendo automaticamente o melhor modelo instalado: birefnet -> isnet -> u2net).\n\nA ferramenta borracha permite mascarar qualquer camada de forma não destrutiva. O desfoque por camada usa uma curva quadrática (controle deslizante 0-100 → 0-50 pixels), então valores baixos permitem controle fino. Shift+rolagem sobre a camada selecionada a escala no lugar.\n\nGera o resultado final da composição como IMAGE, junto com sua largura e altura.\n\nAs entradas são slots dinâmicos de espaço reservado, criados pelo editor quando você adiciona camadas de espaço reservado — conecte qualquer fonte IMAGE a montante ao slot correspondente. As dicas dessas entradas ficam no lado JS."
+    },
+    "PixaromaCrop": {
+        "title": "Recortar Pixaroma",
+        "widgets": {
+            "Open Crop": "Abrir Recorte"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "crop_info": "Informação de recorte",
+            "width": "Largura (pixels)",
+            "height": "Altura (pixels)"
+        },
+        "description": "Recorte de Imagem Pixaroma - recorte visualmente qualquer imagem, sem digitar coordenadas de pixels. Três maneiras de fornecer a imagem de origem: conectar qualquer imagem a montante ao slot de entrada (Carregar imagem, decodificação VAE, saída do ControlNet etc.), arrastar e soltar um arquivo de imagem no corpo do nó, ou colar da área de transferência com Ctrl+V. Arrastar e soltar e colar desconectam automaticamente a conexão a montante, usando a imagem carregada manualmente.\n\nCampos de largura/altura/X/Y/proporção/alinhamento no painel do nó - os campos numéricos aceitam expressões matemáticas, como '1024+512' ou '512*2'. Escolher um alinhamento diferente de livre recentraliza automaticamente a caixa de recorte em relação à imagem de origem, então, ao escolher o recorte central, mudar a largura ou a altura para 512 alinha automaticamente X/Y ao deslocamento de centralização. O editor em tela cheia mostra um retângulo de recorte arrastável com alças, além de proporções predefinidas padrão (1:1, 16:9, 9:16 etc.) adequadas para redes sociais, e um botão de carregar imagem para trocar a imagem de origem dentro do editor (que também desconecta automaticamente a conexão a montante).\n\nGera a imagem recortada, a máscara de recorte correspondente (conecte a entrada de máscara, como a saída de máscara do Carregar imagem, para transmitir a transparência do recorte com a mesma caixa), a nova largura e altura, e a conexão 'crop_info'. Alimente crop_info no Devolução de Recorte Pixaroma para colar o recorte editado de volta exatamente na posição correspondente da imagem original (recortar, reparar/ampliar e devolver).\n\nA entrada 'Imagem' é opcional - você pode conectar uma imagem a montante ou carregar uma imagem diretamente por arrastar e soltar, colar com Ctrl+V ou pelo botão de carregar imagem do editor (esses métodos substituem a conexão)"
+    },
+    "PixaromaFindReplace": {
+        "title": "Localizar e Substituir Pixaroma",
+        "inputs": {
+            "text": "Texto"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Localizar e Substituir Pixaroma - coloque este nó na conexão entre uma fonte de texto (nó LLM, Mostrar Texto, Texto Pixaroma, qualquer saída de string) e o nó que usa esse texto. Ele intercepta o texto, aplica as regras de localizar/substituir e repassa o resultado editado. Também mostra no nó uma pré-visualização do antes e depois.\n\nCada edição adiciona uma regra: digite o que localizar e o que substituir. Deixar o lado da substituição vazio exclui o texto encontrado. Desligar a regra a ignora sem excluir; arraste a alça para reordenar. As regras são aplicadas de cima para baixo.\n\nInterruptores globais: Maiúsculas/minúsculas (correspondência exata de maiúsculas/minúsculas), Palavra inteira (corresponde apenas a palavras completas, então 'art' não acerta 'artist'), Expressão regular (trata o conteúdo de busca como uma expressão regular), Organizar (após editar, mescla espaços duplos e corrige vírgulas extras ou duplas)"
+    },
+    "PixaromaGroupSwitch": {
+        "title": "Interruptor de Grupo Pixaroma",
+        "description": "Interruptor de Grupo Pixaroma - um painel compacto de interruptores para os Grupos Pixaroma. Cada interruptor pode silenciar ou fazer bypass de todos os nós do grupo, permitindo ligar/desligar seções inteiras do fluxo de trabalho sem fios.\n\nAbra o painel (ícone de engrenagem ou clique com o botão direito no nó) para escolher se o interruptor silencia ou faz bypass, quais grupos ele controla (todos ou um conjunto de grupos selecionado manualmente, com busca e ordenação) e as regras de alternância (qualquer quantidade ligada, apenas um ligado por vez ou sempre manter um ligado).\n\nAdicione vários desses nós para tarefas diferentes - um para silenciar, outro para bypass. Eles se sincronizam entre si e com os botões de título dos próprios grupos, pois todos leem e definem o estado em tempo real dos grupos"
+    },
+    "PixaromaImageInfo": {
+        "title": "Informações da Imagem Pixaroma",
+        "inputs": {
+            "image_info": "Informações da imagem"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura (pixels)",
+            "height": "Altura (pixels)",
+            "filename": "Nome do arquivo"
+        },
+        "description": "Informações da Imagem Pixaroma - desempacota o pacote de dados de informações da imagem do carregador mini Pixaroma em saídas de imagem, máscara, largura, altura e nome do arquivo. Conecte apenas quando precisar dessas informações extras, mantendo o carregador compacto. Largura, altura e nome do arquivo também aparecem na superfície do nó"
+    },
+    "PixaromaImageResize": {
+        "title": "Redimensionar Imagem Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura",
+            "height": "Altura",
+            "longest_side": "Lado mais longo"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura (pixels)",
+            "height": "Altura (pixels)",
+            "longest_side": "Lado mais longo"
+        },
+        "description": "Redimensiona uma imagem (e sua máscara) no meio do fluxo de trabalho. Escolha o modo - desligado, mega pixels máximos, lado mais longo, escalar por ×, ajustar por dentro, cortar para preencher, igualar proporção de tela ou preencher (adiciona bordas para outpaint). Você pode conectar largura/altura (por exemplo, do Resolução Pixaroma) para definir o tamanho, ou conectar um único lado mais longo para escalar o lado maior para esse valor (retrato ou paisagem, sem precisar escolher a orientação). Gera imagem, máscara, largura e altura"
+    },
+    "PixaromaInpaintCrop": {
+        "title": "Recorte de Inpaint Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "size_mode": "Modo de tamanho",
+            "blend_mode": "Modo de mistura",
+            "target": "Alvo",
+            "multiple": "Multiplicador",
+            "context_px": "pixels de contexto",
+            "mask_grow": "Expansão da máscara",
+            "mask_blur": "Desfoque da máscara",
+            "softness": "Suavidade",
+            "invert_mask": "Inverter máscara",
+            "Open mask editor": "Abrir Editor de Máscaras"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "crop_info": "Informação de recorte",
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Recorte de Inpaint Pixaroma: a maneira fácil de configurar o inpaint. Abra o editor em tela cheia e pinte a máscara sobre a área que precisa de reparo (com pincel, borracha, limpar, inverter e ajuste do tamanho do pincel). O nó identifica automaticamente a região ao redor da máscara, adiciona uma margem de contexto e recorta um trecho adequado ao modelo (dimensões múltiplas de 8, escaladas para o alvo, garantindo resolução suficiente mesmo para áreas de máscara pequenas).\n\nAtive invert_mask para inverter a máscara e fazer inpaint na área oposta (por exemplo, o fundo da imagem recortada em vez do sujeito), sem precisar de um nó extra de inverter máscara.\n\nConecte a imagem e a máscara recortadas ao seu modelo de inpaint (KSampler, Flux, modelos de edição) e conecte crop_info ao nó Costura de Inpaint Pixaroma para colar o resultado de volta exatamente na posição original.\n\nGera a imagem recortada, a máscara correspondente, a linha de informações do recorte e a largura/altura do recorte (útil para o Latent vazio). A linha de informações do recorte usa o mesmo tipo do nó Recorte de Imagem, então os dois são intercambiáveis."
+    },
+    "PixaromaInpaintStitch": {
+        "title": "Costura de Img2Img Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "crop_info": "Informação de recorte"
+        },
+        "widgets": {
+            "softness": "Suavidade",
+            "blend_mode": "Modo de mistura",
+            "color_match": "Correspondência de cores"
+        },
+        "outputs": {
+            "image": "Imagem.",
+            "original": "Imagem original"
+        },
+        "description": "Costura de Inpaint Pixaroma: cola o resultado do recorte de inpaint de volta no local exato de origem na imagem original, mesclando para eliminar a emenda.\n\nConecte a saída crop_info do nó Recorte de Inpaint Pixaroma ao crop_info aqui e, em seguida, conecte o resultado do recorte de inpaint (após o processamento do modelo) à imagem. Por padrão, o nó reajusta a área recortada de volta à posição original, mesclando apenas a área pintada; o conteúdo fora da máscara permanece preciso pixel a pixel.\n\nA suavidade da emenda e o modo de mistura vêm do nó Recorte de Inpaint Pixaroma via crop_info, mas podem ser sobrescritos aqui (softness=-1 usa as configurações do nó de recorte). Como este nó fica após o amostrador, alterar a suavidade, o modo de mistura ou a combinação de cores reexecuta apenas este nó — o amostrador mantém a semente aleatória fixa em cache, então você pode ajustar a mesclagem instantaneamente, sem regenerar. A combinação de cores corrige desvios de cor/tom introduzidos pelo modelo.\n\nGera a imagem final completa e a imagem original não recortada; ambas podem ser conectadas juntas ao nó Comparação de Imagens Pixaroma para uma comparação antes/depois instantânea."
+    },
+    "KreaLoraConvertPixaroma": {
+        "title": "Conversor de LoRA Krea Pixaroma",
+        "widgets": {
+            "lora_name": "Nome da LoRA",
+            "output_name": "Nome de saída",
+            "overwrite": "Sobrescrever"
+        },
+        "description": "Converte um LoRA Krea 2 treinado no fal.ai em um arquivo compatível com o ComfyUI. Os LoRAs Krea 2 do fal.ai usam nomes de camada que o ComfyUI não reconhece, então não carregam; este nó renomeia essas camadas e salva uma nova cópia na sua pasta loras, utilizável por qualquer carregador de LoRA. Os pesos são copiados exatamente, o resultado é idêntico, apenas carregável. Escolha um LoRA, veja a leitura, clique em Converter. Ele apenas lê seus arquivos e grava um novo arquivo: nunca modifica o original nem baixa qualquer coisa. Ferramenta independente, sem afiliação ou endosso do Krea ou fal.ai."
+    },
+    "PixaromaLabel": {
+        "title": "Rótulo Pixaroma",
+        "widgets": {
+            "label_json": "JSON de Rótulos"
+        },
+        "description": "Rótulo Pixaroma: um rótulo de texto simples para documentar o fluxo de trabalho. Clique no nó para abrir o editor em tela cheia, onde você pode definir o conteúdo do texto, a fonte, o tamanho da fonte (máximo de 256 pixels), a cor do texto e a cor de fundo.\n\nFunção puramente de anotação: sem processamento de imagem, sem entradas para conectar, sem cadeia de saída. O rótulo estilizado é renderizado diretamente no corpo do nó e é salvo e restaurado com o fluxo de trabalho."
+    },
+    "PixaromaLoadImage": {
+        "title": "Carregar Imagem Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura (pixels)",
+            "height": "Altura (pixels)",
+            "filename": "Nome do arquivo",
+            "original_width": "Largura da imagem original",
+            "original_height": "Altura da Imagem Original"
+        },
+        "description": "Carregar Imagem Pixaroma: o recurso nativo de carregar imagem (envio, arrastar e soltar, colar, múltiplos quadros, Alfa para máscara) mais ajustes em linha: mega pixels máximos, lado mais longo, escalar por ×, ajustar por dentro, cortar para preencher, igualar proporção de tela. Suporta chips de alinhamento, seletor de reamostragem e proteção de resolução na ampliação. Saídas: imagem, máscara, largura, altura, nome do arquivo, largura original, altura original. Na maioria dos fluxos de trabalho, dispensa a combinação de Obter dimensões da imagem + Escala da imagem + Recorte da imagem a jusante."
+    },
+    "PixaromaLoadImagesFolder": {
+        "title": "Carregar Imagens da Pasta Pixaroma",
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura",
+            "height": "Altura",
+            "filename": "Nome do arquivo",
+            "index": "Índice",
+            "total": "Quantidade total"
+        },
+        "description": "Carrega várias imagens de qualquer pasta do disco e as envia uma a uma para o fluxo de trabalho — cada imagem gera um resultado. Você pode escolher todas, as primeiras N, ou selecionar manualmente imagens específicas na galeria de miniaturas. As opções de ajuste são as mesmas do nó Carregar Imagem Pixaroma (mega pixels máximos, lado mais longo, escalar por ×, ajustar por dentro, cortar para preencher, igualar proporção de tela). As saídas são listas: imagem, máscara, largura, altura, nome do arquivo, índice, quantidade total. Conecte o nome do arquivo a um nó de salvamento para preservar o nome original de cada resultado, e largura/altura ao Latent vazio para corresponder às dimensões de cada imagem. Clique em Executar uma vez e mantenha a quantidade de lotes em 1."
+    },
+    "PixaromaLoadImageMini": {
+        "title": "Carregar Imagem Mini Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "image_info": "Informações da imagem"
+        },
+        "description": "Carregar Imagem Mini Pixaroma — um nó compacto de carregar imagem. Suporta envio, arrastar e soltar, colar ou escolher arquivo; as mesmas opções de redimensionamento em linha do Load Image (mega pixels máximos, lado mais longo, escalar por ×, ajustar por dentro, cortar para preencher, igualar proporção) ficam no painel de configurações, mantendo a interface do nó minimalista. O editor de máscara e copiar/colar (Clipspace) funcionam normalmente.\n\nGera apenas a imagem e um pequeno pacote de dados image_info. Quando precisar da máscara, largura, altura ou nome do arquivo, conecte image_info ao nó Informações da Imagem Pixaroma — assim o carregador permanece pequeno."
+    },
+    "PixaromaLoadVideo": {
+        "title": "Carregar Vídeo Pixaroma",
+        "widgets": {
+            "video": "Vídeo",
+            "max_frames": "Máximo de quadros",
+            "force_fps": "Forçar taxa de quadros",
+            "skip_first_frames": "Pular os primeiros quadros",
+            "custom_width": "Largura personalizada",
+            "custom_height": "Altura personalizada"
+        },
+        "outputs": {
+            "video_frames": "Quadros de sequência de vídeo",
+            "audio": "Áudio",
+            "frame_count": "Número de quadros",
+            "fps": "Taxa de quadros",
+            "width": "Largura",
+            "height": "Altura",
+            "duration": "Duração (s)"
+        },
+        "description": "Carregar Vídeo Pixaroma — envie ou escolha um vídeo e decodifique-o em um lote de quadros; o nó tem pré-visualização de vídeo integrada, para que você veja o vídeo de origem sem sair do ComfyUI.\n\nSaídas: video_frames (o vídeo como um lote de imagens), áudio, número de quadros, taxa de quadros, largura, altura e duração — então normalmente não é preciso um nó separado de informações do vídeo. Funciona com o nó Salvar MP4 Pixaroma: conecte diretamente video_frames e áudio.\n\nControles de carregamento: Máximo de quadros define quantos quadros carregar a partir do início (uma proteção para vídeos longos), pular os primeiros quadros apara o começo, Forçar taxa de quadros reamostra para uma taxa estável, e largura/altura personalizadas redimensionam cada quadro (definir ambas corta para preencher essas dimensões sem esticar).\n\nPrefere PyAV para leitura, caso contrário usa 图像io; o áudio é extraído via ffmpeg. A maioria das instalações do ComfyUI não precisa de configuração extra."
+    },
+    "PixaromaLoadVideoFrame": {
+        "title": "Carregar Quadro de Vídeo Pixaroma",
+        "widgets": {
+            "video": "Vídeo",
+            "choose video to upload": "Escolha o vídeo para enviar",
+            "frame": "Quadro"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "frame_count": "Total de quadros",
+            "fps": "Taxa de quadros",
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Carregar Quadro de Vídeo Pixaroma — carrega um vídeo e seleciona um quadro como imagem para alimentar o fluxo de trabalho. Semelhante ao nó Carregar Imagem, mas para vídeo.\n\nO nó tem uma pré-visualização com controle deslizante: arraste o controle para qualquer posição, use os botões de seta para voltar ou avançar quadro a quadro, ou digite o número exato do quadro. O total de quadros é lido automaticamente, então o controle sabe quantos quadros o vídeo tem.\n\nSaídas: imagem (o quadro selecionado), máscara, número de quadros, taxa de quadros, largura e altura. Os números de quadro começam em 0, então 0 é o primeiro quadro.\n\nPrefere PyAV para leitura, caso contrário usa 图像io. Buscar quadros profundos em vídeos longos continua rápido, porque vai direto ao quadro em vez de ler o vídeo inteiro."
+    },
+    "PixaromaLoopStart": {
+        "title": "Início de Loop Pixaroma",
+        "widgets": {
+            "total": "Quantidade total"
+        },
+        "description": "O marcador de início de um loop. Coloque os nós entre o Início de Loop e o Fim de Loop, e toda essa seção é executada repetidamente. Defina 'Quantidade total' como o número de loops. 'Índice' conta as rodadas do loop a partir de 0. Os slots de valor guardam o que precisa passar de uma rodada para a próxima (por exemplo, os quadros gerados até agora ou um contador de execuções) — conecte de volta o slot de valor correspondente do Fim de Loop, para que cada rodada continue de onde a anterior parou. Se o loop não precisa transportar nada, deixe os slots de valor vazios."
+    },
+    "PixaromaLoopEnd": {
+        "title": "Fim de Loop Pixaroma",
+        "description": "O marcador de fim de um loop. Conecte o 'loop' do Início de Loop. Coloque nos slots de valor os valores que precisam passar para a próxima rodada (por exemplo, um nó de união, para acumular os quadros de cada rodada). Depois que todas as execuções do loop terminam, os slots de valor geram os valores finais transportados. Tudo entre o Início de Loop e o Fim de Loop é executado repetidamente."
+    },
+    "PixaromaLoopEngine": {
+        "title": "Motor de Loop Pixaroma",
+        "inputs": {
+            "loop": "Número de loops",
+            "index_in": "Índice atual",
+            "total": "Número total"
+        },
+        "description": "Driver recursivo interno de Loop Start / Loop End. O usuário não precisa colocar este nó manualmente — Loop End o gera automaticamente. A cada rodada, ele verifica se é necessária uma próxima iteração do loop (índice+1 < quantidade total); se sim, clona o corpo do loop e a si mesmo, executando novamente com o próximo índice e os valores transportados atualizados; caso contrário, gera os valores transportados finais."
+    },
+    "PixaromaLoraLoader": {
+        "title": "Carregador de LoRA Pixaroma",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "Clipe"
+        },
+        "outputs": {
+            "MODEL": "Modelo",
+            "triggers": "Palavras de Gatilho"
+        },
+        "description": "Você pode empilhar qualquer número de LoRAs em um único nó. Cada LoRA tem seu próprio interruptor e intensidade, e você pode encadear modelo e CLIP por vários desses nós. Clique no «i» em uma linha para ver as informações do LoRA e selecionar suas palavras de gatilho; as palavras de gatilho ativadas saem como texto puro pela saída triggers, para conectar ao seu prompt. As palavras de gatilho são lidas diretamente do arquivo, funcionando sem rede; a busca opcional no Civitai por LoRA pode obter as palavras de gatilho oficiais e pré-visualizações quando você solicitar. Depois de adicionar um LoRA, todos os interruptores e configurações ficam no meio do nó; clicar com o botão direito em uma linha permite movê-la, duplicá-la ou excluí-la."
+    },
+    "PixaromaMuteSwitch": {
+        "title": "Interruptor de Silenciamento Pixaroma",
+        "outputs": {
+            "out": "Dados de silêncio"
+        },
+        "description": "Interruptor de Silenciamento Pixaroma — ligue/desligue ramos inteiros do fluxo de trabalho com um único nó. Conecte o último nó de cada cena (normalmente o KSampler) a uma linha e clique na pílula dessa linha para ignorar ou ativar a cena na próxima execução. A pílula no canto superior esquerdo alterna entre o modo único (apenas uma cena executa por vez, como botões de opção) e o modo múltiplo (qualquer combinação de cenas pode executar). A pílula no canto superior direito alterna entre silenciar (a cena não executa de forma alguma) e bypass (cada nó da cena repassa as entradas sem alterações). Quando várias cenas compartilham nós a montante, o nó só é silenciado quando todas as cenas que dependem dele estão desligadas — assim você nunca interrompe acidentalmente uma cena que ainda está executando."
+    },
+    "PixaromaNote": {
+        "title": "Nota Pixaroma",
+        "widgets": {
+            "note_json": "JSON de Notas"
+        },
+        "description": "Nota Pixaroma — um editor de anotações em texto rico no canvas. Abra o editor em tela cheia para escrever notas com vários parágrafos, com suporte a negrito/itálico/sublinhado/tachado, títulos (H1/H2/H3), listas com marcadores e numeradas, blocos de código (com botão de copiar), ícones em linha (CLIP, LoRA, GGUF, versões de modelo e mais de 30 outros), tabelas, separadores, botões de cores personalizadas (baixar/ver página/ler mais/comum), dicas de pasta e pílulas pré-estilizadas do YouTube e do Discord. Cada bloco tem sua própria cor, escolhida em um modal centralizado que aparece acima do canvas. A visualização de código permite editar manualmente o HTML subjacente; o prompt de LLM incorporado em assets/note-pixaroma-llm-prompt.txt permite que o ChatGPT ou o Gemini gere para você HTML compatível com a visualização de código. Puramente de anotação — sem processamento de imagem, sem fiação de entrada, sem encadeamento de saída. Seu estilo é totalmente preservado ao salvar e restaurar."
+    },
+    "NotifyPixaroma": {
+        "title": "Notificador Pixaroma",
+        "inputs": {
+            "any": "Sinal qualquer"
+        },
+        "widgets": {
+            "enabled": "Ativar",
+            "volume": "Volume do som",
+            "label": "Rótulo",
+            "sound": "Efeito Sonoro",
+            "Preview": "Pré-visualização"
+        },
+        "description": "Reproduz um efeito sonoro de aviso quando o fluxo de trabalho chega a este nó. Coloque-o no fim do fluxo de trabalho para ouvir o aviso ao concluir a renderização, ou adicione-o a qualquer ramificação do grafo para receber lembretes em pontos de verificação. É muito útil quando você está em outra aba do navegador ou em outro aplicativo enquanto o ComfyUI executa. Os arquivos de som são enumerados automaticamente a partir de assets/sounds/ — solte arquivos .mp3, .wav ou .ogg para adicionar mais (reinicie o ComfyUI para carregar os arquivos novos). Cada nó também é um cronômetro de ponto de verificação: a cada execução ele mede o tempo que o fluxo leva para chegar ao nó, exibe esse tempo no próprio nó e mantém um histórico por nó que abre com o botão direito (Histórico de horários dos avisos). A cronometragem é independente do som (continua sendo registrada com o som desligado) e pode ser desativada por nó no menu de contexto. A setinha na linha do relógio dobra o nó para mostrar só o relógio (modo compacto) ou o expande (Recolher/Expandir no menu de contexto). Cada nó tem sua própria chave de som, e há uma chave mestra que sobrepõe todos os nós de aviso — ela fica nas configurações do nó, abertas pelo botão de engrenagem na barra de ferramentas do nó ou clicando com o botão direito nele, e aparece no menu de contexto como «Silenciar todos os sons de aviso». O botão de pré-visualização ignora as duas chaves, porque clicá-lo é pedir manualmente para ouvir o som na hora."
+    },
+    "PixaromaNumber": {
+        "title": "Número Pixaroma",
+        "widgets": {
+            "value": "Valor"
+        },
+        "outputs": {
+            "int": "Inteiro",
+            "float": "Flutuante"
+        },
+        "description": "Número Pixaroma — um nó pequeno com um campo numérico. Gera o mesmo valor duas vezes: uma como INT (arredondado para o inteiro mais próximo) e outra como FLOAT (mantendo as casas decimais). Útil quando um nó a jusante precisa de INT e outro de FLOAT, ou quando você quer converter um decimal em inteiro de forma limpa no meio do fluxo de trabalho. O campo numérico aceita inteiros (42), decimais (3.14) e expressões matemáticas (1024+64, 1024/3, 512*2). Na conversão de flutuante para inteiro, arredonda para o inteiro mais próximo: 3.5 vira 4, 3.4 vira 3, -2.5 vira -2."
+    },
+    "PixaromaOutpaint": {
+        "title": "Outpaint Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "width": "Largura",
+            "height": "Altura",
+            "outpaint_info": "Informações de Outpaint"
+        },
+        "description": "Preenche as bordas da imagem com uma cor sólida para que o modelo de outpaint preencha a nova área, depois opcionalmente escala o resultado para dentro de um limite de megapixels e informa as dimensões finais.\n\nCinza médio é a cor de preenchimento padrão; qualquer cor pode ser usada, mas um preenchimento muito escuro desloca a cor de toda a imagem gerada, porque o modelo treinado para substituir esse preenchimento aprende cor e forma ao mesmo tempo. O cinza é neutro e não causa transbordamento de tonalidade.\n\nA imagem é expandida proporcionalmente para a forma alvo, e a âncora decide de que lado aparece o novo espaço. O modo por borda permite definir o número exato de pixels em cada borda. O limite de megapixels é opcional: quando desligado, a imagem mantém as dimensões preenchidas.\n\nAs saídas de largura e altura informam as dimensões finais, então podem alimentar diretamente um Latent vazio."
+    },
+    "PixaromaOutpaintStitch": {
+        "title": "Costura de Outpaint Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "outpaint_info": "Informações de Outpaint"
+        },
+        "widgets": {
+            "feather": "Esmaecer",
+            "color_match": "Correspondência de cores"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "description": "Devolve a imagem original ao resultado do outpaint, mantendo apenas as partes recém-geradas pelo modelo. Use-a depois do outpaint do Pixaroma quando precisar que o modelo reduza uma imagem grande: as partes originais voltam com qualidade total, não a versão amolecida e reduzida pelo processamento do modelo.\n\nConecte a saída 'outpaint_info' do outpaint do Pixaroma ao 'outpaint_info' daqui e conecte a imagem concluída (após decodificar com o VAE) à 'Imagem'. O nó reescala o resultado de volta ao tamanho completo preenchido, recoloca a imagem original exatamente no lugar e funde as emendas.\n\n'Esmaecer' suaviza as emendas entre a imagem original e as áreas adicionadas. A emenda não pode ficar totalmente invisível porque a área adicionada é fundida com uma cópia recodificada da imagem original, não com a imagem original em si, então um pouco de esmaecimento geralmente funciona melhor. Suaviza apenas as bordas vizinhas às áreas novas; as bordas da imagem real permanecem nítidas.\n\n'颜色 match' corrige o degrau de tom que às vezes aparece na fronteira entre a área adicionada e a imagem original, estendendo a cor da imagem original para dentro da área adicionada ao longo da emenda. Ele acompanha o fundo por regiões, então equilibra cenas com parede clara e piso escuro em vez de uma cor lisa só. 0 desliga, 100 é correspondência total (geralmente o melhor valor), e acima de 100 casa demais, para degraus teimosos raros. Ele só equilibra o tom e não afeta textura nem detalhe, então não cria artefatos.\n\nProduz a imagem recomposta em resolução total e uma máscara que marca a área gerada nova (branco) contra a área original não modificada (preto) — útil se depois você quiser refinar de leve só as partes adicionadas."
+    },
+    "PixaromaPaint": {
+        "title": "Pintura Pixaroma",
+        "widgets": {
+            "Open Paint": "Abrir tela"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "width": "Largura da imagem (pixels)",
+            "height": "Altura da imagem (pixels)"
+        },
+        "description": "Pintura Pixaroma — um editor de pintura rápido e simples com camadas. Arrastar uma imagem sobre o corpo do nó fechado a adiciona como nova camada superior (o editor é aberto e a imagem arrastada é empilhada acima do fundo criado automaticamente, nunca substituindo as camadas existentes). Abra o editor em tela cheia para pintar sobre as camadas empilhadas com as ferramentas de lápis/pincel/borracha/esfumar/preenchimento/formas/conta-gotas, com controles ao estilo do Photoshop (arrastar para reordenar, opacidade, modo de mistura, mesclar, achatar). O motor de pincel suporta dureza/opacidade personalizadas, e a ferramenta de esfumar permite uma mistura suave de cores.\n\nO botão de remoção de fundo com IA (baseado em rembg) nas camadas de origem de imagem extrai o sujeito com um clique. Uma caixa de seleção na barra de ferramentas permite salvar a imagem diretamente no disco com fundo transparente.\n\nGera a imagem final composta junto com sua largura e altura. Dentro do editor, você também pode arrastar e soltar mais imagens para adicioná-las como camadas extras, ou conectar qualquer fonte de imagem a montante aos slots de entrada opcionais criados pelo editor.\n\nAs entradas são slots dinâmicos de espaço reservado criados pelo editor; as dicas deles ficam no lado JS."
+    },
+    "PixaromaPauseImage": {
+        "title": "Pausar Imagem Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Pausar Imagem Pixaroma — um portão interno que pausa o fluxo de trabalho neste ponto para que você revise a imagem antes de executar as etapas caras seguintes (ampliação, segundo passe, pós-processamento). Conecte qualquer fonte de imagem à entrada e o próximo nó à saída.\n\nCom o interruptor em 'Pausar', clicar em 'Executar' para aqui e mostra a imagem; o restante do fluxo de trabalho não roda. Clicar em 'Continuar' executa apenas o fluxo a jusante, usando exatamente a imagem que você viu — modelos, amostradores e decodificação são ignorados, por isso é rápido. Clicar em 'Regenerar' gera uma nova imagem aqui (se a semente aleatória do amostrador estiver em aleatório, uma imagem diferente será gerada). Mude o interruptor para 'Ignorar' para executar o fluxo de trabalho completo de uma só vez.\n\nOs snapshots são armazenados na pasta temporária do ComfyUI e são limpos quando o ComfyUI reinicia, então após reiniciar é preciso pausar uma vez antes de usar 'Continuar'."
+    },
+    "PixaromaPauseText": {
+        "title": "Pausar Texto Pixaroma",
+        "inputs": {
+            "text": "Texto"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Pausar Texto Pixaroma - um nó de porta interno que pausa o fluxo de trabalho aqui, permitindo que você leia e edite o texto antes que o restante do processo execute. Ideal para texto vindo de um modelo de linguagem, cujo conteúdo exato você não controla. Conecte sua fonte de texto à entrada e o próximo nó à saída.\n\nQuando alternado para o modo de pausa, clicar em Executar para aqui e mostra o texto gerado pelo modelo; o restante do fluxo de trabalho não executa. Após editar o texto, clique em Continuar e apenas o fluxo a jusante executa, usando o texto que você confirmou — ignorando o modelo, então é rápido. Clique em Regenerar para obter um novo texto: o nó segue as conexões de volta, encontra a origem que gerou o texto e rola seu 随机随机种子 para um novo valor aleatório, obtendo um resultado diferente. Alternar para o modo de passagem executa o fluxo de trabalho inteiro de uma vez. Alternar para o modo de retenção reutiliza o texto atual a cada execução — ignorando o modelo, cada execução gera uma nova imagem a partir do mesmo prompt, então você pode gerar rapidamente variantes em lote enquanto preserva suas edições."
+    },
+    "PixaromaPortraitLandscape": {
+        "title": "Interruptor Retrato/Paisagem Pixaroma",
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "outputs": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Gera largura e altura na orientação que você escolher. Insira duas dimensões (ou conecte-as de outros nós) e clique em Retrato ou Paisagem. O modo retrato organiza na vertical (o menor valor como largura); o modo paisagem organiza na horizontal (o maior valor como largura). Alterne a orientação com um clique, sem precisar manter dois nós LA×AL e um interruptor. A ordem em que você insere os dois valores não afeta o resultado. Gera largura e altura."
+    },
+    "PixaromaPreview": {
+        "title": "Pré-visualização Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "save_mode": "modo de salvamento"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Pré-visualizar Imagem Pixaroma - pré-visualização de imagem em linha com botões Salvar no Disco, Salvar Saída, Copiar e Abrir, com suporte a lotes. Conecte qualquer fonte IMAGE à entrada. Todos os quadros do lote são renderizados no corpo do nó; clique em qualquer miniatura para expandi-la em linha. As teclas de seta alternam entre os quadros do lote, clicar em qualquer lugar da imagem aberta avança, e Esc ou X recolhe. Alterne o layout grade/tira pelo pequeno ícone no canto superior direito da área de pré-visualização.\n\nSalvar no Disco permite escolher qualquer pasta do seu computador; o nome de arquivo sugerido é incrementado automaticamente a cada clique. Salvar Saída grava na pasta output/ do ComfyUI. Copiar coloca o quadro selecionado como PNG na área de transferência do sistema, pronto para colar em outros nós, aplicativos de desenho, mensagens etc. Abrir abre o quadro selecionado em uma nova aba do navegador, para visualização em tela cheia ou comparação lado a lado de várias imagens. Os quatro botões agem sobre o quadro selecionado no momento; Salvar no Disco e Salvar Saída incorporam o fluxo de trabalho no PNG, para que você possa arrastá-lo de volta para o ComfyUI depois.\n\nAlterne save_mode para 'save' e o nó poderá substituir diretamente o SaveImage: a cada execução, todos os quadros do lote são gravados automaticamente em output/, com os metadados do fluxo de trabalho incorporados. A pré-visualização também persiste após a troca de abas do fluxo de trabalho, para que você possa parar em um quadro específico e voltar depois.\n\nO campo de prefixo do nome do arquivo suporta sintaxe de subpastas com '/' (por exemplo, 'SDXL/portrait'), marcadores de data no estilo VHS/VideoHelperSuite (por exemplo, '%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png') e marcadores nativos do ComfyUI (%year%, %month%, %day%, %hour%, %minute%, %second%, %width%, %height%). Os códigos de formato de data são yyyy, yy, MM, dd, HH, mm, ss. Também há suporte a marcadores de referência de nós, como %Seed Pixaroma.seed% (ou %KSampler.seed%), que inserem valores de campos de outros nós no nome do arquivo, de forma semelhante ao nó SaveImage nativo. Consulte o README do projeto para a referência completa de marcadores.\n\nClique com o botão direito no nó para abrir as configurações de pré-visualização de imagem. Adicionar informações de geração do Civitai também grava as configurações em um formato legível pelo Civitai, para que as imagens publicadas aqui mostrem o checkpoint, as LoRAs e suas forças, além das etapas, semente aleatória, amostrador e dimensões. Os valores vêm automaticamente do seu fluxo de trabalho, sem conexões extras. Desativado por padrão."
+    },
+    "PixaromaPrompt": {
+        "title": "Prompt Pixaroma",
+        "inputs": {
+            "text_in": "Texto de entrada"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Prompt Pixaroma - uma caixa de prompt com uma única saída de texto, além de uma biblioteca pessoal de @tags reutilizáveis e uma entrada de texto opcional que pode ser combinada.\n\nDigite seu prompt e arraste @tags para as partes que você reutiliza. Salve uma tag chamada oilpainting cujo texto completo é a longa string 'oil painting, thick brush strokes, Rembrandt lighting, ...' e depois basta digitar @oilpainting. Digite @ na caixa para ver uma lista pesquisável agrupada por categoria; tags conhecidas são destacadas e tags desconhecidas indicam erro de digitação. Cada @tag é substituída pelo texto completo na execução, então a caixa permanece curta. Ative 'Mostrar expandido' para pré-visualizar o que será enviado.\n\nConectar um prompt à entrada de texto o combina com o seu prompt - escolha 'Meu prompt primeiro' ou 'Conexão primeiro', além do separador. Sem conexão, a saída é apenas o seu prompt.\n\nGerencie as tags pelo botão Tags: uma biblioteca em tela cheia com categorias. Sua biblioteca é salva nas configurações do ComfyUI, então é privada para você e preservada ao atualizar o plugin; pode ser compartilhada com outras pessoas via exportar/importar."
+    },
+    "PixaromaPromptFromList": {
+        "title": "Seletor de Lista de Prompts Pixaroma",
+        "inputs": {
+            "prompts": "Lista de Prompts"
+        },
+        "widgets": {
+            "index": "Índice"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Seletor de Lista de Prompts Pixaroma - uma pequena ferramenta de seleção. Recebe a saída `提示词s` de um Prompt Múltiplo Pixaroma (definido no modo de lista) e seleciona um prompt pelo número de índice.\n\nColoque vários desses nós no fluxo de trabalho (todos conectados ao mesmo Prompt Múltiplo) para que a cena 1 obtenha o prompt 1, a cena 2 obtenha o prompt 2 e assim por diante — sem precisar empilhar muitos pontos de saída no nó da biblioteca.\n\nO índice começa em 1: 1 seleciona o primeiro prompt da biblioteca. Se o índice estiver fora do intervalo, a saída é uma string vazia."
+    },
+    "PixaromaPromptMulti": {
+        "title": "Prompt Múltiplo Pixaroma",
+        "outputs": {
+            "text": "Texto",
+            "prompts": "Prompt"
+        },
+        "description": "Prompt Múltiplo Pixaroma — um único nó que alterna entre dois modos de execução pelos botões no topo.\n\nModo de fila: ao clicar em Executar, o fluxo de trabalho roda uma vez para cada prompt ativado. Linhas vazias são ignoradas automaticamente. Cada prompt se torna um item independente no painel de fila, fácil de cancelar separadamente. Conecte a saída `Texto` ao CLIP Text Encode. Use este modo quando quiser comparar variantes de prompt (uma imagem por prompt).\n\nModo de lista: ao clicar em Executar uma vez, o nó envia todos os prompts ativados como uma lista (sem loop de fila). Conecte a saída `提示词s` a um ou mais nós Seletor de Lista de Prompts Pixaroma a jusante; cada nó seleciona um prompt diferente pelo número. Use este modo quando partes diferentes do mesmo fluxo de trabalho (cena 1, cena 2……) precisam obter prompts diferentes da mesma biblioteca, sem adicionar nós extras em cada lugar.\n\nAmbas as saídas estão sempre visíveis — o botão de modo apenas controla se a fila faz loop. Clique em 「+ Add 提示词」 para adicionar uma linha. O interruptor inclui/exclui a linha. Arraste a alça à esquerda para reordenar. Limpar prompts apaga o texto mas mantém as linhas. Redefinir volta ao estado de duas linhas vazias."
+    },
+    "PixaromaPromptPack": {
+        "title": "Pacote de Prompts Pixaroma",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Pacote de Prompts Pixaroma — cole um bloco de texto de prompts, com uma execução do fluxo de trabalho na fila por prompt.\n\nEscolha o modo de divisão pelos botões no topo: parágrafo (padrão, divide por linhas em branco, ideal para prompts longos) ou linha (divide a cada quebra de linha, ideal para listas de prompts curtos).\n\nO contador no canto inferior direito da caixa de texto mostra o total de prompts. Durante a execução, muda para 「atual/total」, facilitando o acompanhamento do progresso.\n\nPrompts vazios (apenas com espaços em branco) são ignorados automaticamente. Se a caixa de texto estiver vazia ao clicar em Executar, nada é adicionado à fila e um aviso é exibido."
+    },
+    "PixaromaPromptReader": {
+        "title": "Leitor de Prompt Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "filename": "Nome do arquivo"
+        },
+        "outputs": {
+            "text": "Informação do prompt da imagem"
+        },
+        "description": "Leitor de Prompt Pixaroma — carrega uma imagem gerada pelo ComfyUI (ou Automatic1111/Forge) e lê o prompt positivo salvo nos metadados PNG. Sem pré-visualização da imagem, apenas texto. Gera o prompt como uma string, que pode ser conectada ao CLIPTextEncode ou a outros nós de entrada de texto para reutilização. Arraste e solte um PNG no nó, clique para enviar uma imagem, ou escolha na caixa de combinação de arquivos. Ao selecionar um arquivo, o conteúdo exibido atualiza imediatamente, então você pode ver o prompt antes de executar o fluxo de trabalho. Se a imagem não tiver prompt embutido (JPG, captura de tela ou PNG com metadados perdidos), a exibição mostra uma nota breve, e a saída de string carrega a mesma nota, garantindo que as conexões a jusante não quebrem. Suporta fluxos de trabalho do ComfyUI com nós de texto encadeados (ConditioningCombine, StringConcatenate, codificador de texto duplo SDXL), e o formato 'parameters' do Automatic1111/Forge. Você também pode conectar o nome do arquivo à entrada opcional 'filename' (por exemplo, da saída 'filename' do nó Carregar Imagem Pixaroma) — uma vez conectado, o nó ignora seu próprio seletor e lê o prompt dessa imagem. Selecionar, enviar ou arrastar um arquivo assume o controle, e a conexão é desconectada automaticamente."
+    },
+    "PixaromaPromptStack": {
+        "title": "Pilha de Prompts Pixaroma",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Pilha de Prompts Pixaroma — salva uma lista ordenada de blocos de prompt, com alternância de ativado/desativado, rótulos e reordenação. Todos os blocos ativados são concatenados em uma única string de saída usando o separador escolhido (o padrão é vírgula mais espaço, alterável nas configurações do nó, que podem ser abertas pelo botão de engrenagem na barra de ferramentas do nó ou clicando com o botão direito no nó).\n\nClique em 「+ Add row」 para adicionar um bloco. Clique no botão de alternância para silenciar/reativar um bloco. Arraste a alça à esquerda para reordenar."
+    },
+    "PixaromaReferenceNode": {
+        "title": "Nó de Referência Pixaroma",
+        "outputs": {
+            "output": "Saída"
+        },
+        "description": "Nó de exemplo para criar objetos HTML DOM de teste dentro de um nó"
+    },
+    "Pixaroma_VueReferenceNode": {
+        "title": "Nó de Referência Vue Pixaroma",
+        "widgets": {
+            "image": "Imagem",
+            "count": "Quantidade",
+            "prompt": "Prompt (texto descritivo)",
+            "mode": "Modo",
+            "mask": "Máscara",
+            "pixaroma_data": "Dados Pixaroma"
+        },
+        "description": "Novo nó de referência Vue Pixaroma compatível com Nodes 2.0"
+    },
+    "PixaromaRemoveBackground": {
+        "title": "Remover Fundo Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "model": "Modelo"
+        },
+        "outputs": {
+            "image": "Imagem com Canal Alfa",
+            "mask": "Máscara",
+            "inverted_mask": "Inverter máscara"
+        },
+        "description": "Remove o fundo da imagem usando o modelo BiRefNet, retornando em um único nó a imagem recortada (RGBA), a máscara de primeiro plano e a máscara invertida.\n\nO modelo é carregado de ComfyUI/models/background_removal/. O nome do arquivo controla a resolução de pré-processamento: nomes contendo 'matt' ou 'hr' (sem diferenciar maiúsculas/minúsculas) são pré-processados em resolução 2048, todos os outros em 1024. Nomes de arquivo recomendados: birefnet.safetensors (padrão), birefnet-hr.safetensors (alta resolução), birefnet-matting.safetensors (recorte em alta resolução para cabelo/pelos).\n\nLinks de download:\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/background_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
+    },
+    "PixaromaResizeCrop": {
+        "title": "Redimensionar e Recortar Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Recorta a imagem para uma largura e altura exatas especificadas. A imagem é escalada para preencher completamente as dimensões de destino e, em seguida, o excesso é recortado a partir do centro, então o resultado sempre tem exatamente a largura e altura definidas, sem esticar nem faixas de cinema. Imagens menores são ampliadas para preencher. Insira as dimensões nos campos de largura e altura ou conecte-as de outros nós (como o nó Resolução Pixaroma ou nós numéricos). A máscara opcional é recortada da mesma forma. Gera imagem, máscara, largura e altura — ideal para forçar imagens ou quadros de vídeo a um tamanho fixo, como 512×896 ou 704×1280."
+    },
+    "PixaromaResolution": {
+        "title": "Resolução Pixaroma",
+        "outputs": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Resolução Pixaroma — seletor de resolução em um clique. A UI do nó mostra uma grade 3×3 de chips de proporção (1:1, 16:9, 9:16, 2:1, 3:2, 2:3, 4:3, 3:4, 4:5), cada uma com os 8 tamanhos mais usados. Cobre SDXL, vídeo de IA e tamanhos adequados para redes sociais. Clique em um chip, escolha o tamanho e pronto.\n\nO modo de proporção personalizada permite inserir qualquer proporção (21:9, 16:10 etc.) e calcula automaticamente tamanhos adequados para IA. O modo de resolução personalizada permite inserir dimensões exatas; os campos de largura/altura aceitam expressões matemáticas, como '1024+128' ou '512*2'. Os chips de alinhamento (16/32/64/sem alinhamento) arredondam a saída para múltiplos preferidos pelo codificador VAE.\n\nGera largura e altura como inteiros. O estado é salvo e restaurado com o fluxo de trabalho.\n\nToda a UI fica no lado JS; a única entrada Python é uma string de estado serializada oculta, injetada durante a execução."
+    },
+    "PixaromaRunLog": {
+        "title": "Registro de Execução Pixaroma",
+        "description": "Registro de Execução Pixaroma — a ferramenta complementar ao Cronômetro de Execução, que mostra no nó os tempos das 10 execuções mais recentes do fluxo de trabalho atual. A cada clique em Executar, ele cronometra o fluxo de trabalho inteiro e adiciona o tempo de conclusão ao topo da lista (mais recente primeiro), para que você veja se o fluxo de trabalho está ficando mais rápido ou perceba uma desaceleração repentina.\n\nA execução mais recente é destacada e a mais rápida é marcada. Clique duas vezes em qualquer linha para adicionar uma nota curta sobre aquela execução, como usar uma lora de estilo ou 随机随机种子 12345, para distinguir os tempos; a nota é salva junto com a execução correspondente, e novas execuções a empurram para baixo na lista. A lista se aplica apenas ao fluxo de trabalho atual. Clique com o botão direito no nó para copiar um tempo ou limpar a lista.\n\nEle não precisa de nenhuma conexão. A lista é salva com o fluxo de trabalho, então persiste após trocar de aba, recarregar a página ou reiniciar o ComfyUI. Apenas execuções concluídas são registradas; execuções interrompidas ou com erro são ignoradas."
+    },
+    "PixaromaRunTimer": {
+        "title": "Cronômetro de Execução Pixaroma",
+        "description": "Cronômetro de Execução Pixaroma — um relógio que mede quanto tempo o fluxo de trabalho leva. Ele zera ao clicar em Executar, conta enquanto o fluxo de trabalho roda, congela o tempo total ao concluir e então toca um som de aviso, para que você saiba que terminou mesmo estando em outra aba.\n\nO nó mostra apenas o relógio. Clique com o botão direito no nó para abrir as configurações: ligar ou desligar o som de aviso, escolher o som e o volume (com botão de pré-visualização), definir o número de casas decimais exibidas e definir a cor do relógio.\n\nA biblioteca de sons é a mesma do Notificador Pixaroma — coloque arquivos .mp3, .wav ou .ogg com nomes simples (letras, números, hífens) em assets/sounds/ para adicionar mais sons de aviso (aplicado após reiniciar o ComfyUI). A configuração global de silenciar todos os sons do cronômetro de execução fica no topo das configurações do nó, abertas pelo botão de engrenagem na barra de ferramentas do nó ou clicando com o botão direito no nó."
+    },
+    "PixaromaSaveImage": {
+        "title": "Salvar Imagem Pixaroma",
+        "inputs": {
+            "images": "Imagem",
+            "name": "Nome"
+        },
+        "description": "Salvar Imagem Pixaroma - salva imagens em qualquer pasta do computador, não apenas na pasta de saída do ComfyUI. Digite ou cole um caminho, ou clique em Procurar para escolher uma pasta na caixa de diálogo normal do Windows; deixe em branco para usar a pasta de saída. O campo de nome de arquivo aceita marcadores e mostra em tempo real uma pré-visualização do arquivo que será salvo. Os marcadores incluem: %input% (entrada de nome conectada, por exemplo o nome do arquivo vindo de Carregar Imagem Pixaroma), %date:yyyy-MM-dd% (e qualquer formato de data/hora), %counter% (incremento automático, nunca sobrescreve), %width%, %height%, %batch_num%, e referências a nós como %Seed Pixaroma.seed%. Usar / no nome cria subpastas. O formato é PNG (sem perdas, com o fluxo de trabalho embutido, então o arquivo pode ser arrastado de volta para o ComfyUI) ou JPG (menor, com a qualidade definida no menu de contexto; o ComfyUI não consegue recarregar o fluxo de trabalho de um JPG). Clicar com o botão direito no nó permite definir o estilo de data, os dígitos do contador, a qualidade JPG, a incorporação do fluxo de trabalho e as informações de geração do Civitai. Ao salvar em lote, o contador incrementa a cada quadro.\n\nAdicionar informações de geração do Civitai (botão direito) também grava as configurações em um formato legível pelo Civitai, então as imagens enviadas para a plataforma exibem o checkpoint, os LoRAs e seus pesos, as etapas, 随机随机种子, o amostrador e as dimensões. Os valores são lidos automaticamente do fluxo de trabalho, sem precisar conectá-los a este nó. O primeiro salvamento após adicionar um novo modelo pausa brevemente para gerar sua impressão digital, depois lembra esse modelo.\n\nAs imagens salvas mostram uma pré-visualização grande no nó: uma única imagem preenche a área, um lote aparece como grade. Clicar em uma imagem da grade amplia; as setas ao clicar ou passar o mouse folheiam as páginas, e a tecla X volta à grade. Copiar coloca a imagem exibida na área de transferência; Abrir mostra em uma nova aba do navegador. Redimensionar o nó amplia a pré-visualização. A alternância de modo alterna entre “Salvar” (grava o arquivo a cada execução) e “Pré-visualização” (a imagem aparece no nó, sem gravar na pasta), então também serve como nó de pré-visualização. Abrir pasta mostra o local de salvamento no explorador de arquivos; a janela pode aparecer na barra de tarefas."
+    },
+    "PixaromaSaveMp4": {
+        "title": "Salvar MP4 Pixaroma",
+        "inputs": {
+            "video_frames": "Quadros de vídeo",
+            "audio": "Áudio"
+        },
+        "widgets": {
+            "fps": "Taxa de quadros",
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "save_mode": "modo de salvamento",
+            "trim_to_audio": "Recortar até o áudio"
+        },
+        "description": "Salvar MP4 Pixaroma - codifica um lote de imagens (e áudio opcional) em um único arquivo MP4 no formato H.264, com pré-visualização de <视频> integrada no corpo do nó, para que você veja o resultado sem sair do ComfyUI.\n\nOs quadros são transmitidos diretamente para a entrada padrão do ffmpeg (sem arquivos PNG temporários); o áudio é multiplexado em AAC 192k. Funciona com o nó AudioReact Pixaroma, mas também serve para qualquer fonte que gere quadros + áudio.\n\nO fluxo de trabalho é incorporado no MP4 salvo (como metadados de comentário), então você pode arrastar o vídeo de volta para o ComfyUI para restaurar o gráfico - para ler isso, é preciso ter instalado um pacote de vídeo como o VideoHelperSuite.\n\nO binário do ffmpeg é localizado automaticamente: prefere o exe incluído no imageio-ffmpeg (sem instalação no sistema - execute 'pip install imageio-ffmpeg'), depois o ffmpeg do PATH. O yuv420p exige largura e altura pares; se as dimensões forem ímpares, o nó mostra um erro claro em vez do travamento confuso do ffmpeg.\n\nO codificador está fixado em libx264 / predefinição medium / CRF 19. Se o fluxo de trabalho precisar de controle por segmento, esses parâmetros podem ser movidos para INPUT_TYPES."
+    },
+    "PixaromaSeed": {
+        "title": "Semente Pixaroma",
+        "outputs": {
+            "seed": "Semente aleatória"
+        },
+        "description": "Semente Aleatória Pixaroma - uma fonte de semente que pode ser conectada ao KSampler (ou a qualquer nó com entrada de semente). Um único nó de semente pode alimentar vários amostradores ao mesmo tempo, fazendo com que compartilhem a mesma semente.\n\nDois modos: o modo aleatório gera uma nova semente a cada execução; o modo fixo mantém a mesma semente para resultados reproduzíveis. Botões: Nova semente fixa aleatória gera uma nova semente e a trava; Usar última semente restaura a semente da execução anterior; Copiar copia a semente atual para a área de transferência. No modo aleatório, a linha “Última execução” mostra a semente que realmente gerou a última imagem.\n\nGera a semente como um inteiro. O estado é salvo e restaurado com o fluxo de trabalho.\n\nPara incluir a semente no nome do arquivo salvo, digite %Seed Pixaroma.seed% no campo de nome de arquivo dos nós Salvar Imagem Pixaroma, Salvar MP4 Pixaroma ou Pré-visualizar Imagem Pixaroma (use o nome deste nó, não o do amostrador; renomear o nó altera o marcador)."
+    },
+    "PixaromaSetNode": {
+        "title": "Definir Nó Pixaroma",
+        "inputs": {
+            "value": "Valor"
+        },
+        "widgets": {
+            "name": "Nome"
+        },
+        "outputs": {
+            "*": "Qualquer"
+        },
+        "description": "Armazene qualquer conexão com um nome e leia-a de qualquer lugar com o nó Obter do Pixaroma. É um fio sem fio que mantém o canvas limpo. Ele também tem uma saída de passagem direta, então nós próximos podem se conectar diretamente a ele, enquanto nós distantes a leem pelo nó Obter. Existe só no editor: em tempo de execução o valor flui direto da origem original, portanto não altera o resultado nem reduz a velocidade. Conecte qualquer coisa, dê um nome e mantenha o nó dobrado para conservar a ordem."
+    },
+    "PixaromaGetNode": {
+        "title": "Obter Nó Pixaroma",
+        "outputs": {
+            "*": "Qualquer Correspondência"
+        },
+        "description": "Lê, sem conexão, o valor que o nó de configurações do Pixaroma armazenou sob um nome. Escolha o nome no menu suspenso e a saída levará o valor daquele nó de configurações, com tipo compatível. Assim como o nó de configurações do Pixaroma, existe apenas no editor e resolve direto na origem em tempo de execução, portanto sem custo extra. Você pode adicionar quantos nós Obter quiser ao mesmo nome para distribuir um valor."
+    },
+    "PixaromaShowText": {
+        "title": "Mostrar Texto Pixaroma",
+        "inputs": {
+            "source": "Origem"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Nó Mostrar Texto Pixaroma - inspecione o conteúdo que flui pelo nó em uma caixa de texto somente leitura, selecionável e copiável. Conecte qualquer coisa à entrada source - strings, inteiros, flutuantes, Latent, tensores IMAGE, até tipos desconhecidos - e o nó imprime um formato compacto e legível:\n\n- Tensores: forma, tipo de dados, mínimo, máximo\n- Latent: forma das amostras\n- Qualquer outra coisa: str(valor)\n\nO nó pode ser redimensionado livremente; textos longos rolam com uma barra de rolagem em vez de forçar o nó a crescer. A mesma string também é passada para a saída de string 'Texto', para que você possa encadeá-la a outros nós (útil para inspecionar o prompt antes de passá-lo adiante)."
+    },
+    "PixaromaSizes": {
+        "title": "Dimensões Pixaroma",
+        "outputs": {
+            "width": "Largura Selecionada (pixels)",
+            "height": "Altura selecionada (pixels)"
+        },
+        "description": "Dimensões Pixaroma - sua própria lista de resoluções favoritas. Adicione as dimensões exatas de largura×altura que você usa, escolha uma na lista e ela gera largura e altura como inteiros.\n\nOs botões Retrato/Paisagem invertem as dimensões escolhidas, então basta adicionar uma vez um tamanho como 1024×1536 para reutilizá-lo em qualquer orientação (tamanhos quadrados não são afetados). Um novo nó começa em 1024×1024 por padrão; abra as configurações (ícone de engrenagem) para adicionar, excluir e reordenar tamanhos, carregar um conjunto de tamanhos comuns ou alinhar largura e altura a múltiplos de 8, 16, 32 ou 64, para obter dimensões adequadas ao VAE.\n\nO estado é salvo e restaurado com o fluxo de trabalho."
+    },
+    "PixaromaSliders": {
+        "title": "Controle Deslizante Pixaroma",
+        "description": "Controle Deslizante Pixaroma - um painel de controle que reúne em um único nó os controles, interruptores e configurações que importam para você, conectando cada um diretamente ao seu destino. Adicione um controle, dê um nome a ele e conecte sua saída a qualquer entrada. Cada controle assume o tipo correspondente ao que você insere: controles deslizantes para números (etapas, CFG, denoise, intensidade do LoRA), interruptores para configurações booleanas, menus suspensos para seletores (amostrador, agendador, checkpoint), que você pode aparar para manter apenas as opções usadas, semente aleatória com aleatorização, ou um campo de texto para prompts. Ao reconectar um controle, ele se ajusta automaticamente para corresponder. Clique com o botão direito no nó para abrir as configurações. Você pode encontrá-lo buscando por painel de controle, controle deslizante, interruptor, alternância, menu suspenso, caixa de combinação, semente aleatória ou texto."
+    },
+    "PixaromaSwitch": {
+        "title": "Interruptor Pixaroma",
+        "outputs": {
+            "output": "Passagem Direta"
+        },
+        "description": "Interruptor Pixaroma - um interruptor de passagem que permite escolher uma de várias entradas conectadas para fluir pela saída. Conecte qualquer número de nós a montante (até 32) às linhas e clique no botão de alternância de uma linha para ativá-la. A linha ativa flui sem alterações - funciona com qualquer tipo de conexão (MODEL, CLIP, IMAGE, STRING, AUDIO etc.).\n\nO nó cresce automaticamente conforme você conecta: sempre há uma linha final vazia na parte inferior aguardando a próxima conexão. Desconectar uma linha remove a linha correspondente. Cada linha tem um rótulo clicável que você pode renomear para lembrar o que cada entrada representa."
+    },
+    "PixaromaSwitchSource": {
+        "title": "Interruptor de Fonte Pixaroma",
+        "description": "Interruptor de Fonte Pixaroma - com um único botão, alterna todo um grupo de conexões entre duas fontes (A e B). Cada linha tem uma entrada A e uma entrada B, e envia uma delas para a saída daquela linha; o botão A/B escolhe o lado de todas as linhas de uma vez. Conecte seus nós “locais” às entradas A e seus nós “API” às entradas B (ou quaisquer duas configurações), e então alterne entre eles com um único clique, sem precisar alternar vários interruptores separados.\n\nUse o campo de número de linhas para definir quantas linhas você precisa. Funciona com qualquer tipo de conexão (MODEL, CLIP, VAE, IMAGE, Latent, STRING etc.). O lado ativo é o único que executa — os nós a montante do outro lado são ignorados. Os botões abaixo do interruptor A/B determinam o que acontece quando uma linha do lado ativo não tem conexão: “Permitir vazio” mantém essa saída silenciosamente vazia (útil quando as conexões são assimétricas, por exemplo o lado B tem 3 conexões e o lado A apenas 1); “Mostrar erro” lança um erro explícito quando o outro lado está conectado (capturando casos em que você arrasta sem querer uma conexão para o lado errado)."
+    },
+    "PixaromaSwitchWH": {
+        "title": "Interruptor LA×AL Pixaroma",
+        "inputs": {
+            "width_a": "Largura a",
+            "height_a": "Altura a",
+            "width_b": "Largura b",
+            "height_b": "Altura b"
+        },
+        "outputs": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "Interruptor LA×AL Pixaroma - escolha largura/altura entre duas fontes de entrada com um único clique. Conecte dois pares de largura/altura (por exemplo, a largura/altura do Load Image Pixaroma e a largura/altura do Resolution Pixaroma) às entradas A e B, e clique em A ou B no nó para escolher qual par flui pela saída. Isso permite alternar entre as dimensões originais da imagem de origem e uma resolução escolhida manualmente, sem refazer as conexões.\n\nSe apenas um par estiver conectado, ele será usado independentemente do estado do botão de alternância - por isso você pode desconectar a entrada não utilizada durante a configuração inicial do fluxo de trabalho."
+    },
+    "PixaromaText": {
+        "title": "Texto Pixaroma",
+        "widgets": {
+            "text": "Texto"
+        },
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Texto Pixaroma - uma caixa de texto multilinha com saída STRING. Ideal para prompts e qualquer outro texto longo que você precise escrever em um só lugar e encadear a vários nós a jusante (prompt positivo, prompt negativo, legendas, instruções etc.).\n\nA caixa de texto cresce com o nó: ao trabalhar com prompts longos, arraste o canto inferior direito para aumentar a altura ou a largura da caixa.\n\nInterruptor de prompt dinâmico (desligado por padrão): quando desligado, o texto é enviado exatamente como digitado, com todas as chaves preservadas, o que é necessário para prompts JSON. Ligá-lo ativa os curingas {a|b} (uma opção é escolhida aleatoriamente a cada fila, com aninhamento livre como {a|{b|c}}), usa \\{ e \\} para chaves literais, e remove comentários (// até o fim da linha e blocos /* ... */)."
+    },
+    "_TextJoinBase": {
+        "title": "_Classe base de união de texto",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Lógica compartilhada dos nós Two/Three/Four. As subclasses definem N (número de campos) e suas próprias DESCRIPTION/OUTPUT_TOOLTIPS. As entradas e saídas são construídas a partir de N, então text_1 até text_N são passados como argumentos nomeados para join()/IS_CHANGED()."
+    },
+    "PixaromaTextOverlay": {
+        "title": "Sobreposição de Texto Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "text": "Texto"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Adiciona uma única sobreposição de texto estilizada no topo da imagem de entrada. Ajuste fonte, tamanho, peso, itálico, alinhamento, altura da linha, espaçamento entre letras, opacidade, ângulo de rotação, posição, cor do texto e uma barra de fundo opcional diretamente no nó. Clique em “Abrir Editor de Texto” para entrar na tela cheia, com arrastar para mover, arrastar cantos para escalar, arrastar alças para girar, guias de alinhamento, botões de alinhamento do canvas, ajustar largura/ajustar altura, desfazer/refazer e salvar no disco. Conectar a entrada opcional “Texto” substitui o texto do painel, usando qualquer fonte de string a montante. Na primeira execução, o novo nó centraliza automaticamente o texto nas dimensões reais da imagem."
+    },
+    "PixaromaTextWatermark": {
+        "title": "Marca d'Água de Texto Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "text": "Texto"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Adiciona uma marca d'água de texto estilizada a uma única imagem ou a um lote inteiro. Escolha uma âncora de 9 pontos (cantos, bordas ou centro), mais o preenchimento interno, e a marca d'água cai na mesma posição em cada imagem, independentemente do tamanho. O tamanho pode ser um valor fixo em pixels ou uma porcentagem da largura de cada imagem, então lotes com tamanhos mistos mantêm o visual consistente. Ajuste no nó a fonte, o peso, o itálico, a cor, a opacidade, o ângulo de rotação e uma barra de fundo opcional. Conectar a entrada opcional “Texto” permite alimentar o texto da marca d'água a partir de uma fonte de string a montante. Sem editor de tela cheia — este é um nó de configurar e executar."
+    },
+    "PixaromaUncrop": {
+        "title": "Devolução de Recorte Pixaroma",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "crop_info": "Informação de recorte"
+        },
+        "widgets": {
+            "feather": "Esmaecer"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "crop_info": "Informação de recorte"
+        },
+        "description": "Devolução de Recorte Pixaroma — cola a área recortada editada de volta na posição de origem da imagem original, o clássico fluxo de trabalho de recortar, reparar ou ampliar e devolver.\n\nConecte a saída “informações do recorte” de “Recorte de Imagem Pixaroma” à entrada “informações do recorte” aqui, e conecte a área recortada editada (qualquer conteúdo após ampliação, reparo, tratamento de cor etc.) à entrada “Imagem”. O nó redimensiona a área recortada editada para o tamanho do recorte original conforme necessário e a compõe sobre a imagem original completa, mantendo inalterado tudo fora da área recortada.\n\nA transparência é transmitida pelo quadro inteiro: a saída “Máscara” é a máscara original com a área recortada atualizada, então conectar diretamente a máscara do recorte de imagem preserva a transparência de toda a imagem (ou conecte a máscara da área editada para alterar apenas aquela região). “Esmaecer” suaviza as emendas, para uma mesclagem sem costuras.\n\nGera a imagem completa recombinada junto com a máscara de quadro inteiro."
+    },
+    "PixaromaVersionCheck": {
+        "title": "Verificação de Versão Pixaroma",
+        "description": "Verificação de Versão Pixaroma — um pequeno painel no canvas que mostra as versões essenciais ao relatar um bug: versão do ComfyUI (backend), versão do frontend do ComfyUI, a interface de nós atualmente ativa (Nodes 2.0 / Legacy) e a versão instalada do Pixaroma. O botão Copiar copia as quatro linhas de texto, prontas para colar no relatório de bug.\n\nFunção puramente de diagnóstico — sem entradas para conectar, sem cadeia de saída, sem operações Python durante a execução. Ao alternar as configurações, as linhas da UI do nó atualizam em tempo real."
+    },
+    "PixaromaWH": {
+        "title": "LA×AL Pixaroma",
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "outputs": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "description": "LA×AL Pixaroma — um nó pequeno com apenas dois campos numéricos, largura e altura, e saídas de largura/altura correspondentes. Sem entradas. Digite as dimensões desejadas diretamente no nó.\n\nUse quando precisar inserir manualmente a resolução alvo e alimentá-la em um nó como o “Interruptor LA×AL Pixaroma”, para alternar entre os valores manuais e as dimensões geradas por outros nós (por exemplo, as saídas de largura/altura do Carregar imagem)."
+    },
+    "PixaromaTextJoinTwo": {
+        "title": "Unir Dois Textos Pixaroma",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Une dois trechos de texto em um. Digite o conteúdo em cada campo separadamente, ou conecte o texto de outro nó com sua notação de ponto (definida pela conexão ao ligar). Um separador deve ser inserido entre os trechos (vírgula, espaço, nova linha, sem separador ou separador personalizado)\n\nTrechos vazios são ignorados, para não gerar separadores extras. Clicar com o botão direito no nó que contém as configurações de separador permite pular os trechos vazios."
+    },
+    "PixaromaTextJoinThree": {
+        "title": "Unir Três Textos Pixaroma",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Combina três textos em um. Digite em cada campo separadamente, ou conecte o texto de outro nó ao seu círculo (o círculo vence quando conectado). Os segmentos podem ser separados por um separador (vírgula, espaço, nova linha, sem separador ou separador personalizado), e segmentos vazios são ignorados para que você nunca acabe com separadores sobrando.\n\n Clique com o botão direito no nó separador para configurar a ignorância dos segmentos vazios."
+    },
+    "PixaromaTextJoinFour": {
+        "title": "Unir Quatro Textos Pixaroma",
+        "outputs": {
+            "text": "Texto"
+        },
+        "description": "Une quatro trechos de texto em um. Digite o conteúdo em cada campo ou conecte o texto de outro nó ao ponto correspondente (quando conectado, o ponto tem prioridade). Um separador é inserido entre os trechos (vírgula, espaço, nova linha, sem separador ou separador personalizado), e trechos vazios são ignorados, para que não haja separadores extras.\n\n Clique com o botão direito no nó, que contém as configurações de separador, para ignorar os trechos vazios."
+    },
+    "PixaromaXYPlot": {
+        "title": "Gráfico XY Pixaroma",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo"
+        },
+        "outputs": {
+            "grid": "Malha"
+        },
+        "description": "Gráfico XY Pixaroma — compare configurações num relance. Coloque este nó no final do fluxo de trabalho e conecte a imagem final a ele, como um nó de pré-visualização. No corpo do nó, escolha nos menus suspensos dos nós já presentes no gráfico o que varia ao longo do eixo X (horizontal) e do eixo Y (vertical) — sem conexões extras. As caixas de valores se ajustam à seleção: números oferecem uma faixa “início/fim/etapas”, menus suspensos (amostrador, modelo) oferecem uma lista de seleção e prompts oferecem localizar e substituir. Clique em Executar uma vez: o fluxo de trabalho roda para cada combinação e os resultados preenchem a grade rotulada dentro do nó, com botões “Salvar no Disco”/“Salvar Saída”/“Copiar”/“Abrir”. A semente aleatória fica travada entre as células (a menos que você esteja plotando a semente aleatória), então a única diferença que você vê é o que está testando."
+    }
+}

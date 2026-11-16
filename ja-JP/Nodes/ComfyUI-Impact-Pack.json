@@ -1,0 +1,3409 @@
+{
+    "ONNXDetectorForEach": {
+        "title": "フレーム単位ONNX検出器",
+        "inputs": {
+            "onnx_detector": "ONNX検出器",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張係数",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズフィルター閾値"
+        },
+        "description": ""
+    },
+    "ImpactIntConstSender": {
+        "title": "Impact整数定数シンダー",
+        "inputs": {
+            "signal": "信号"
+        },
+        "widgets": {
+            "value": "数値",
+            "link_id": "リンクID"
+        },
+        "description": ""
+    },
+    "ImagePasteMasked": {
+        "title": "マスク付き画像貼り付け",
+        "inputs": {
+            "destination": "対象画像",
+            "source": "元画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "x": "X座標",
+            "y": "Y座標",
+            "resize_source": "元画像サイズを調整"
+        },
+        "description": ""
+    },
+    "Unsampler": {
+        "title": "逆サンプラー",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブプロンプト",
+            "negative": "ネガティブプロンプト",
+            "latent_image": "latent 画像"
+        },
+        "widgets": {
+            "steps": "step 総数",
+            "end_at_step": "終了step",
+            "cfg": "CFG 値",
+            "sampler_name": "サンプラー名",
+            "scheduler": "スケジューラ",
+            "normalize": "正規化"
+        },
+        "description": ""
+    },
+    "ImpactKSamplerBasicPipe": {
+        "title": "Kサンプラー(ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Kサンプラーのノードバンドル版。\n スケジューラのウィジェットを入力に変換する際は、互換性問題の解決のために スケジューラアダプタ ノードを参照してください。"
+    },
+    "ImpactKSamplerAdvancedBasicPipe": {
+        "title": "Kサンプラー(高度ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "add_noise": "ノイズ追加",
+            "noise_seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "start_at_step": "ノイズ除去開始ステップ数",
+            "end_at_step": "ノイズ除去終了ステップ数",
+            "return_with_leftover_noise": "ノイズ返却"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Kサンプラーの高度なノードバンドル版。\n スケジューラのウィジェットを入力に変換する際は、互換性問題の解決のために スケジューラアダプタ ノードを参照してください。"
+    },
+    "CLIPSegDetectorProvider": {
+        "title": "CLIPSeg検出器",
+        "widgets": {
+            "text": "テキスト",
+            "blur": "ぼかし",
+            "threshold": "閾値",
+            "dilation_factor": "膨張"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox検出"
+        },
+        "description": "BBox検出を提供するCLIPSegのラッパー。"
+    },
+    "SEGSOrderedFilterDetailerHookProvider": {
+        "title": "Seg順序フィルタ最適化コンストレイント",
+        "widgets": {
+            "target": "ターゲット",
+            "order": "順序",
+            "take_start": "開始番号",
+            "take_count": "数"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "Seg範囲フィルタ最適化コンストレイント, Segラベルフィルタ最適化コンストレイント - 最適化コンストレイント を作成して Segフィルタ ノードを提供するラッパーノードが存在し、顔最適化 や 検出器 で適用できます。"
+    },
+    "SEGSRangeFilterDetailerHookProvider": {
+        "title": "Seg範囲フィルタ最適化コンストレイント",
+        "widgets": {
+            "target": "ターゲット",
+            "mode": "モード",
+            "min_value": "最小値",
+            "max_value": "最大値"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        }
+    },
+    "SEGSLabelFilterDetailerHookProvider": {
+        "title": "Segラベルフィルタ最適化コンストレイント",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "プリセット",
+            "labels": "ラベル"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        }
+    },
+    "CustomSamplerDetailerHookProvider": {
+        "title": "カスタムサンプリング最適化コンストレイント",
+        "inputs": {
+            "sampler": "サンプラー"
+        },
+        "widgets": {
+            "preset": "プリセット",
+            "labels": "ラベル"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        }
+    },
+    "LamaRemoverDetailerHookProvider": {
+        "title": "LaMa修復アルゴリズム最適化コンストレイント",
+        "inputs": {
+            "sampler": "サンプラー"
+        },
+        "widgets": {
+            "mask_threshold": "マスク閾値",
+            "gaussblur_radius": "ガウシアンブラー半径",
+            "skip_sampling": "サンプリングをスキップ"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        }
+    },
+    "EmptySegs": {
+        "title": "空のSeg",
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "空のSegを提供します。"
+    },
+    "SetDefaultImageForSEGS": {
+        "title": "Segデフォルト画像を設定",
+        "inputs": {
+            "segs": "Seg",
+            "image": "画像"
+        },
+        "widgets": {
+            "override": "上書き"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "最適化エンハンサーを通っていない場合、SEGSには検出領域の情報だけが含まれ、画像は含まれません。このノードはSEGSにデフォルト画像を設定します。"
+    },
+    "RemoveImageFromSEGS": {
+        "title": "Seg画像削除",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactControlNetApplySEGS": {
+        "title": "ControlNet適用Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Segプリプロセス",
+            "control_image": "ControlNet 入力"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "SegにControlNetを適用するには、Inspire PackのPreprocessor Providerノードを使ってこのノードを利用する必要があります。\n Segプリプロセス と ControlNet画像 はオプションで適用できます。ControlNet画像 が指定されると Segプリプロセス は無視されます。\n ControlNet画像として設定した場合、Segプレビュー (ControlNet画像) で切り抜かれた中心画像をプレビューできます。Segプリプロセス で生成された画像は、各最適化プロセッサの ControlNet画像 出力で確認してください。\n このSegプリプロセス は最適化処理中に切り抜き画像をリアルタイムでプリプロセスして動作し、ControlNet画像は切り抜かれて ControlNet適用Seg の入力として使用されます。"
+    },
+    "ImpactControlNetApplyAdvancedSEGS": {
+        "title": "ControlNet適用(高度)Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Segプリプロセス",
+            "control_image": "画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "SegにControlNetを適用するには、Inspire PackのPreprocessor Providerノードを使ってこのノードを利用する必要があります。\n Segプリプロセス と ControlNet画像 はオプションで適用できます。ControlNet画像 が指定されると Segプリプロセス は無視されます。\n ControlNet画像として設定した場合、Segプレビュー (ControlNet画像) で切り抜かれた中心画像をプレビューできます。Segプリプロセス で生成された画像は、各最適化プロセッサの ControlNet画像 出力で確認してください。\n このSegプリプロセス は最適化処理中に切り抜き画像をリアルタイムでプリプロセスして動作し、ControlNet画像は切り抜かれて ControlNet適用Seg の入力として使用されます。"
+    },
+    "ImpactControlNetClearSEGS": {
+        "title": "ControlNet削除Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Segに適用されたControlNetをクリア"
+    },
+    "ImpactDecomposeSEGS": {
+        "title": "Seg分解",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS_HEADER": "Segヘッダー情報",
+            "SEG_ELT": "Seg_要素"
+        }
+    },
+    "ImpactAssembleSEGS": {
+        "title": "Seg組み合わせ",
+        "inputs": {
+            "seg_header": "Segヘッダー情報",
+            "seg_elt": "Seg_要素"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactFrom_SEG_ELT": {
+        "title": "Seg要素から",
+        "inputs": {
+            "seg_elt": "Seg_要素"
+        },
+        "outputs": {
+            "seg_elt": "Seg_要素",
+            "cropped_image": "クロップ画像",
+            "cropped_mask": "クロップマスク",
+            "crop_region": "クロップ領域",
+            "BBox": "Seg要素_BBox",
+            "Seg_ELT_bbox": "Seg要素BBox",
+            "control_net_wrapper": "ControlNet置換",
+            "confidence": "信頼度",
+            "label": "ラベル"
+        }
+    },
+    "ImpactEdit_SEG_ELT": {
+        "title": "Seg_要素の編集",
+        "inputs": {
+            "seg_elt": "Seg_要素",
+            "cropped_image_opt": "クロップ画像",
+            "cropped_mask_opt": "クロップマスク",
+            "crop_region_opt": "クロップ領域",
+            "bbox_opt": "BBox選択",
+            "control_net_wrapper_opt": "ControlNet置換",
+            "confidence_opt": "信頼度",
+            "label_opt": "ラベル"
+        },
+        "outputs": {
+            "Seg_ELT": "Seg_要素",
+            "SEG_ELT": "Seg_要素"
+        }
+    },
+    "ImpactDilate_Mask_SEG_ELT": {
+        "title": "Seg要素膨張",
+        "inputs": {
+            "seg_elt": "Seg_要素"
+        },
+        "widgets": {
+            "dilation": "膨張"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_要素"
+        }
+    },
+    "ImpactDilateMask": {
+        "title": "マスク膨張",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "dilation": "膨張"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "ImpactGaussianBlurMask": {
+        "title": "マスクガウシアンブラー",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "kernel_size": "サイズ",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "ImpactDilateMaskInSEGS": {
+        "title": "Segマスク膨張",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "dilation": "膨張"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactGaussianBlurMaskInSEGS": {
+        "title": "Segマスクガウシアンブラー",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "kernel_size": "サイズ",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactScaleBy_BBOX_SEG_ELT": {
+        "title": "Seg要素スケール",
+        "inputs": {
+            "seg": "Seg"
+        },
+        "widgets": {
+            "scale_by": "係数"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_要素"
+        }
+    },
+    "ImpactSEGSToMaskBatch": {
+        "title": "Segからマスクセット",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "PreviewBridge": {
+        "title": "ブリッジプレビュー画像",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "image": "画像",
+            "block": "ブロック",
+            "restore_mask": "マスク復元"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        },
+        "description": "Clip領域の マスクエディタ 機能を使用する場合は、このカスタムノードを画像ブリッジャーとともに使用できます。"
+    },
+    "PreviewBridgeLatent": {
+        "title": "ブリッジプレビューLatent",
+        "inputs": {
+            "latent": "Latent",
+            "vae_opt": "VAE選択"
+        },
+        "widgets": {
+            "image": "画像",
+            "block": "ブロック",
+            "restore_mask": "マスク復元",
+            "preview_method": "プレビュー方法"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "MASK": "マスク"
+        },
+        "description": "このカスタムノードは Clip空間 の マスクエディタ 機能を使用する際に、ブリッジノードとともに潜空間で一緒に使用できます。\n 入力にマスク付きの潜在変数が提供されている場合、そのマスクを表示します。さらに、マスク出力は潜在変数に設定されているマスクを提供します。\n 入力にマスクのない潜在変数の場合は元の潜在変数をそのまま出力しますが、マスク出力には領域全体がマスクとして設定された結果が出力されます。\n マスクエディタ でマスクを設定すると、マスクが潜在変数に適用され、出力には保存されたマスクが含まれます。同じマスクがマスク出力としても出力されます。\n VAE選択に接続されている場合、プレビュー方法 よりも優先度が高くなります。"
+    },
+    "ImageSender": {
+        "title": "画像送信",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "link_id": "接続ID"
+        },
+        "description": "画像送信 で生成された画像は、同じ 接続ID を介して自動的に 画像受信 へ送られます。"
+    },
+    "ImageReceiver": {
+        "title": "画像受信",
+        "widgets": {
+            "image": "画像",
+            "save_to_workflow": "ワークフローに保存",
+            "image_data": "画像データ",
+            "trigger_always": "常にトリガー",
+            "link_id": "接続ID"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        },
+        "description": "画像送信 で生成された画像は、同じ 接続ID を介して自動的に 画像受信 へ送られます。"
+    },
+    "LatentSender": {
+        "title": "Latent送信",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "preview_method": "プレビュー方法",
+            "link_id": "接続ID"
+        },
+        "description": "Latent送信 で生成されたLatentは、同じ 接続ID を介して自動的に Latent受信 へ送られます。\n また、Latent送信 は プレビューLatent によって実装されています。これはLatentをペイロードとして画像サムネイルに格納します。\n ComfyUIの現在の構造ではSDXL LatentとSD1.5/SD2.1 Latentを区別できないため、SD1.5の方法でデコードしてサムネイルを生成しています。"
+    },
+    "LatentReceiver": {
+        "title": "Latent受信",
+        "widgets": {
+            "latent": "Latent",
+            "trigger_always": "常にトリガー",
+            "link_id": "接続ID"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Latent送信 で生成されたLatentは、同じ 接続ID を介して自動的に Latent受信 へ送られます。\n また、Latent送信 は プレビューLatent によって実装されています。これはLatentをペイロードとして画像サムネイルに格納します。\n ComfyUIの現在の構造ではSDXL LatentとSD1.5/SD2.1 Latentを区別できないため、SD1.5の方法でデコードしてサムネイルを生成しています。"
+    },
+    "ImageMaskSwitch": {
+        "title": "画像マスク切り替え",
+        "inputs": {
+            "images1": "画像1",
+            "mask1": "マスク1",
+            "images2": "画像2",
+            "mask2": "マスク2",
+            "images3": "画像3",
+            "mask3": "マスク3",
+            "images4": "画像4",
+            "mask4": "マスク4",
+            "select": "選択",
+            "mask1_opt": "マスク1",
+            "images2_opt": "画像2",
+            "mask2_opt": "マスク2",
+            "images3_opt": "画像3",
+            "mask3_opt": "マスク3",
+            "images4_opt": "画像4",
+            "mask4_opt": "マスク4"
+        },
+        "widgets": {
+            "select": "選択",
+            "sel_mode": "モードを選択"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        },
+        "description": "複数の入力の中から、セレクタで指定された入力を選択して出力します。1番目の入力は必須で、その他の入力は任意です。ただし、セレクタで指定された入力が接続されていない場合はエラーが発生する可能性があります。"
+    },
+    "LatentSwitch": {
+        "title": "Latent切り替え",
+        "inputs": {
+            "input1": "入力1",
+            "latent1": "Latent1",
+            "latent2_opt": "Latent2",
+            "latent3_opt": "Latent3",
+            "latent4_opt": "Latent4"
+        },
+        "widgets": {
+            "select": "選択",
+            "sel_mode": "モードを選択"
+        },
+        "outputs": {
+            "selected_index": "インデックスを選択",
+            "selected_value": "値を選択",
+            "selected_label": "ラベルを選択"
+        },
+        "description": "複数の入力の中から、セレクタで指定された入力を選択して出力します。1番目の入力は必須で、その他の入力は任意です。ただし、セレクタで指定された入力が接続されていない場合はエラーが発生する可能性があります。"
+    },
+    "SEGSSwitch": {
+        "title": "Seg切り替え",
+        "inputs": {
+            "input1": "入力1",
+            "Seg": "Seg1",
+            "segs2_opt": "Seg2",
+            "segs3_opt": "Seg3",
+            "segs4_opt": "Seg4"
+        },
+        "widgets": {
+            "select": "選択",
+            "sel_mode": "モードを選択"
+        },
+        "outputs": {
+            "selected_index": "インデックスを選択",
+            "selected_value": "値を選択",
+            "selected_label": "ラベルを選択"
+        },
+        "description": "複数の入力の中から、セレクタで指定された入力を選択して出力します。1番目の入力は必須で、その他の入力は任意です。ただし、セレクタで指定された入力が接続されていない場合はエラーが発生する可能性があります。"
+    },
+    "ImpactSwitch": {
+        "title": "切り替え",
+        "inputs": {
+            "input1": "入力1",
+            "input2": "入力2",
+            "input3": "入力3",
+            "input4": "入力4"
+        },
+        "widgets": {
+            "select": "選択",
+            "sel_mode": "モードを選択",
+            "select_on_execution": "実行時",
+            "select_on_prompt": "プロンプト"
+        },
+        "outputs": {
+            "selected_index": "インデックスを選択",
+            "selected_value": "値を選択",
+            "selected_label": "ラベルを選択"
+        }
+    },
+    "ImpactInversedSwitch": {
+        "title": "反転切り替え",
+        "inputs": {
+            "input": "入力"
+        },
+        "widgets": {
+            "sel_mode": "モードを選択",
+            "select": "選択"
+        },
+        "outputs": {
+            "*": "出力"
+        },
+        "description": "リスト作成(任意) とは異なり、1つの入力を受け取って複数から1つを出力します"
+    },
+    "ImpactInversedSwtich": {
+        "title": "反転切り替え",
+        "inputs": {
+            "input": "入力"
+        },
+        "widgets": {
+            "select": "選択"
+        },
+        "outputs": {
+            "output1": "出力1"
+        }
+    },
+    "SEGSToImageList": {
+        "title": "Segから画像リスト",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "代替画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "ImpactSEGSToMaskList": {
+        "title": "Segからマスクリスト",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "ImpactSEGSConcat": {
+        "title": "Seg結合",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSPicker": {
+        "title": "Seg選択",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "代替画像"
+        },
+        "widgets": {
+            "picks": "選択",
+            "pick": "選択"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "入力されたSEGSから特定のSEGSを選択する機能を提供します。"
+    },
+    "ReencodeLatent": {
+        "title": "Latentを再エンコード",
+        "inputs": {
+            "samples": "Latent",
+            "input_vae": "デコードVAE",
+            "output_vae": "エンコードVAE"
+        },
+        "widgets": {
+            "overlap": "オーバーラップ領域",
+            "tile_mode": "チャンクモード",
+            "tile_size": "タイルサイズ"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ReencodeLatentPipe": {
+        "title": "Latent再エンコード(ノードバンドル)",
+        "inputs": {
+            "samples": "Latent",
+            "input_basic_pipe": "デコードノードバンドル",
+            "output_basic_pipe": "エンコードノードバンド"
+        },
+        "widgets": {
+            "tile_mode": "チャンクモード"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ImpactImageBatchToImageList": {
+        "title": "画像バッチから画像リスト",
+        "inputs": {
+            "image": "画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "画像バッチを画像リストに変換します。\n 複数のバッチで生成された画像を使って処理を行うことができます。"
+    },
+    "ImpactMakeImageList": {
+        "title": "画像リスト作成",
+        "inputs": {
+            "image1": "画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "複数の画像を1つの画像リストに変換します。"
+    },
+    "ImpactMakeImageBatch": {
+        "title": "画像バッチ作成",
+        "inputs": {
+            "image1": "画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "複数の画像を1つの画像バッチに変換します。\n 画像入力は必要に応じて拡大できます。"
+    },
+    "ImpactCombineConditionings": {
+        "title": "条件結合",
+        "inputs": {
+            "conditioning1": "条件1",
+            "conditioning2": "条件2",
+            "conditioning3": "条件3",
+            "conditioning4": "条件4",
+            "conditioning5": "条件5",
+            "conditioning6": "条件6",
+            "conditioning7": "条件7",
+            "conditioning8": "条件8",
+            "conditioning9": "条件9",
+            "conditioning10": "条件10"
+        },
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "複数の条件入力を受け取り、1つの条件に結合します。"
+    },
+    "ImpactSEGSLabelFilter": {
+        "title": "Segラベルフィルタ",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "プリセット",
+            "labels": "ラベル"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "マスクSeg",
+            "remained_SEGS": "残りSeg"
+        }
+    },
+    "ImpactSEGSRangeFilter": {
+        "title": "Seg範囲フィルタ",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "ターゲット",
+            "min_value": "最小値",
+            "max_value": "最大値",
+            "mode": "モード"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "マスクSeg",
+            "remained_SEGS": "残りSeg"
+        }
+    },
+    "ImpactSEGSOrderedFilter": {
+        "title": "Seg順序フィルタ",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "ターゲット",
+            "order": "順序",
+            "take_start": "開始番号",
+            "take_count": "数"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "マスクSeg",
+            "remained_SEGS": "残りSeg"
+        }
+    },
+    "ImpactStringSelector": {
+        "title": "文字列選択",
+        "widgets": {
+            "strings": "文字列",
+            "multiline": "複数行テキスト",
+            "select": "選択"
+        },
+        "outputs": {
+            "STRING": "文字列"
+        },
+        "description": "文字列の一部を選択して返します。複数行テキスト モードが無効の場合は、セレクタが指す行の文字列をそのまま返します。複数行テキスト モードが有効の場合は、# で始まる行を区切りとして文字列を分割し、その中から返します。選択 の値が項目数を超えている場合は、1行目から数え直して該当するものを返します。"
+    },
+    "BitwiseAndMaskForEach": {
+        "title": "Seg交集",
+        "inputs": {
+            "base_segs": "基本Seg",
+            "mask_segs": "マスクseg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "SubtractMaskForEach": {
+        "title": "Seg減算",
+        "inputs": {
+            "base_segs": "基本Seg",
+            "mask_segs": "マスクseg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BitwiseAndMask": {
+        "title": "マスクの積集合",
+        "inputs": {
+            "mask1": "マスク1",
+            "mask2": "マスク2"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "SubtractMask": {
+        "title": "マスクの減算",
+        "inputs": {
+            "mask1": "マスク1",
+            "mask2": "マスク2"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "AddMask": {
+        "title": "マスクの加算",
+        "inputs": {
+            "mask1": "マスク1",
+            "mask2": "マスク2"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "ImpactSegsAndMask": {
+        "title": "Segマスク",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "マスク"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSegsAndMaskForEach": {
+        "title": "Segマスク(バッチ)",
+        "inputs": {
+            "segs": "Seg",
+            "masks": "マスク"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask": {
+        "title": "Segマスク",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "マスク"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask ForEach": {
+        "title": "Segマスク(バッチ)",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "マスク",
+            "masks": "マスクグループ"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "MediaPipeFaceMeshToSEGS": {
+        "title": "MediaPipeフェイスメッシュからSeg",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "crop_factor": "クロップ係数",
+            "bbox_fill": "BBox塗りつぶし",
+            "crop_min_size": "クロップ最小サイズ",
+            "drop_size": "最小サイズ",
+            "dilation": "膨張",
+            "face": "顔",
+            "mouth": "口",
+            "left_eyebrow": "左眉",
+            "left_eye": "左目",
+            "left_pupil": "左瞳孔",
+            "right_eyebrow": "右眉",
+            "right_eye": "右目",
+            "right_pupil": "右瞳孔"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "mediapipe フェイスメッシュ画像から各ランドマークを分離し、ラベル付きのSegを作成します。\n 通常、MediaPipeフェイスメッシュプレプロセッサで作成される画像はサイズが縮小されます。\n 処理中にサイズを一致させるため、MediaPipeフェイスメッシュ画像を指定された 参照画像選択 の元のサイズに調整します。"
+    },
+    "MaskToSEGS_for_AnimateDiff": {
+        "title": "マスクからSegへ(動的拡散)",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "crop_factor": "クロップ係数",
+            "combined": "結合するかどうか",
+            "bbox_fill": "BBox塗りつぶし",
+            "drop_size": "最小サイズ",
+            "contour_fill": "輪郭塗りつぶし"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "マスクに基づいてダイナミック拡散用のSegを生成します。"
+    },
+    "MaskToSEGS": {
+        "title": "マスクからSegへ",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "crop_factor": "クロップ係数",
+            "combined": "結合するかどうか",
+            "bbox_fill": "BBox塗りつぶし",
+            "drop_size": "最小サイズ",
+            "contour_fill": "輪郭塗りつぶし"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "マスクからSegを生成します。"
+    },
+    "ToBinaryMask": {
+        "title": "マスク二値化",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "threshold": "閾値"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "生成された0〜255のα値を持つマスクを0と255に分離します。ゼロ以外の場合の値は常に255に設定されます。"
+    },
+    "MasksToMaskList": {
+        "title": "マスクからマスカリストへ",
+        "inputs": {
+            "masks": "マスク"
+        },
+        "widgets": {
+            "threshold": "閾値"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "このノードは、バッチ形式のマスクを個別のマスクのリストに変換します。"
+    },
+    "MaskListToMaskBatch": {
+        "title": "マスカリストからマスクへ",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "このノードはマスクリストをマスクバッチ形式に変換します。"
+    },
+    "ImageListToImageBatch": {
+        "title": "画像リストから画像バッチ",
+        "inputs": {
+            "images": "画像"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "画像リストを画像バッチに変換します。"
+    },
+    "SegsToCombinedMask": {
+        "title": "Segからマスク",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "RemoveNoiseMask": {
+        "title": "ノイズマスクを除去",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "DetailerForEach": {
+        "title": "ローカル最適化",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "scheduler_func_opt": "スケジューラ関数",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "wildcard": "プロンプト",
+            "max_retries": "最大リトライ回数"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域に対し、ガイドサイズを基準に拡大してから修復を行い、補正・強化します。\n プロンプト は「プロンプトエンコーダ (Impact)」に似た機能を提供し、プロンプトとLoRAの読み込みに対応しています。さらに、検出領域ごとに異なるプロンプトを適用する機能にも対応しています。\n詳細はチュートリアルページを参照してください。\n注意：プロンプトを空にすると、この入力は無視されます。"
+    },
+    "DetailerForEachAutoRetry": {
+        "title": "最適化（segs）自動リトライ付き",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "scheduler_func_opt": "スケジューラ関数",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "wildcard": "プロンプト",
+            "max_retries": "最大リトライ回数"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "DetailerForEachPipe": {
+        "title": "ローカル最適化(ノードバンド)",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "detailer_hook": "最適化コンストレイント",
+            "scheduler_func_opt": "スケジューラ関数",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル選択"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "wildcard": "プロンプト",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "refiner_ratio": "最適化比率"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域に対し、ガイドサイズを基準に拡大してから修復を行い、補正・強化します。"
+    },
+    "DetailerForEachDebug": {
+        "title": "ローカル最適化(上級)",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "scheduler_func_opt": "スケジューラ関数",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "wildcard": "プロンプト"
+        },
+        "outputs": {
+            "image": "画像",
+            "cropped": "クロップ画像",
+            "cropped_refined": "最適化画像",
+            "cropped_refined_alpha": "最適化チャンネル",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域に対し、ガイドサイズを基準に拡大してから修復を行い、補正・強化します。"
+    },
+    "DetailerForEachDebugPipe": {
+        "title": "ローカル最適化(上級ノードバンド)",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "detailer_hook": "最適化コンストレイント",
+            "scheduler_func_opt": "スケジューラ関数",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル選択"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "wildcard": "プロンプト",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "refiner_ratio": "最適化比率"
+        },
+        "outputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "cropped": "クロップ画像",
+            "cropped_refined": "最適化画像",
+            "cropped_refined_alpha": "最適化チャンネル",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域に対し、ガイドサイズを基準に拡大してから修復を行い、補正・強化します。"
+    },
+    "DetailerForEachPipeForAnimateDiff": {
+        "title": "AnimatedDiff局所最適化(ノードバンドル)",
+        "inputs": {
+            "image_frames": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "detailer_hook": "最適化コンストレイント",
+            "scheduler_func_opt": "スケジューラ関数",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "refiner_ratio": "最適化比率"
+        },
+        "outputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(Seg)内の各領域について、ガイドサイズを基準に拡大してから修復（inpainting）で補正・強化します。\nこのノードはAnimateDiffなどの動画の最適化・改善専用に設計された特殊な最適化強化ノードで、Segに含まれる複数フレームにまたがるバッチマスクにも対応します。"
+    },
+    "NoiseInjectionDetailerHookProvider": {
+        "title": "ノイズ挿入の最適化コンストレイント",
+        "widgets": {
+            "schedule_for_cycle": "周期スケジュール",
+            "source": "生成デバイス",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "start_strength": "開始強度",
+            "end_strength": "終了強度",
+            "strength": "強度"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "最適化コンストレイント は 最適化 における 制約 の一種で、各 Seg を処理する際にノイズを注入します。"
+    },
+    "CoreMLDetailerHookProvider": {
+        "title": "CoreML最適化コンストレイント",
+        "widgets": {
+            "mode": "モード"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "CoreMLは 512x512、512x768、768x512、768x768 のサイズのサンプリングのみ対応しています。\n CoreML最適化コンストレイントは、切り抜き領域の拡大倍数をこのサイズに正確に固定します。\n このフックを使用すると、ガイドサイズ にかかわらず常にこのサイズが選択されます。ただし、ガイドサイズ が小さい場合はスキップが発生します。"
+    },
+    "NoiseInjectionHookProvider": {
+        "title": "ノイズ挿入コンストレイント",
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "schedule_for_iteration": "スケジューリングループ",
+            "source": "生成デバイス",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "start_strength": "開始強度",
+            "end_strength": "終了強度"
+        },
+        "outputs": {
+            "PK_HOOK": "フック"
+        },
+        "description": "イテレーション拡大 の各イテレーションで、Latent空間にノイズを注入し、スケジュールに応じて強度を調整します。\n BlenderNeko/ComfyUI_Noise ノード拡張のインストールが必要です。\n シードはノイズ生成に必要な初期値であり、各イテレーションで処理が進むにつれて1ずつ増加します。\n ソース は、設定するCPUノイズとGPUノイズの種類を決定します。\n 現在利用できるのはシンプルなスケジュールのみで、各イテレーションの処理中にノイズの強度が 開始強度 から 終了強度 まで変化します。"
+    },
+    "UnsamplerDetailerHookProvider": {
+        "title": "逆サンプリング最適化コンストレイント",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "start_end_at_step": "開始・終了ステップ数",
+            "end_end_at_step": "終了ステップ",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "normalize": "規格化",
+            "schedule_for_cycle": "スケジューリングループ"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "各サイクルで逆サンプラーを適用します。このノードを使用するには ComfyUI_Noise のインストールが必要です。"
+    },
+    "DenoiseSchedulerDetailerHookProvider": {
+        "title": "ノイズ除去スケジュール最適化コンストレイント",
+        "widgets": {
+            "schedule_for_cycle": "スケジューリングループ",
+            "target_denoise": "目標ノイズ低減"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "サイクルの進行に伴い、ノイズ除去器の最適化が 目標ノイズ低減 に変化します。"
+    },
+    "SEGSDetailer": {
+        "title": "Seg最適化",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "scheduler_func_opt": "スケジューラ関数",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "batch_size": "バッチサイズ",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "refiner_ratio": "最適化比率"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "segs": "Seg",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域について、ガイドサイズを基準に拡大してから修復（inpainting）で補正・強化します。\n このノードは元画像ではなくSEGSに直接作用します。元画像に適用する場合は「SEGS貼り付け」ノードを使用してください。"
+    },
+    "SEGSDetailerForAnimateDiff": {
+        "title": "Seg最適化動的拡散",
+        "inputs": {
+            "image_frames": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本パイプ",
+            "scheduler_func_opt": "スケジューラ関数",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "refiner_ratio": "最適化比率"
+        },
+        "outputs": {
+            "segs": "Seg",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出領域情報コレクション(SEGS)内の各領域について、ガイドサイズを基準に拡大してから修復（inpainting）で補正・強化します。\n このノードは元画像ではなくSEGSに直接作用します。元画像に適用する場合は「SEGS貼り付け」ノードを使用してください。\n このノードはAnimateDiffなどの動画の最適化・改善専用に設計された特殊な最適化強化ノードで、SEGSに含まれる複数フレームにまたがるバッチマスクにも対応します。"
+    },
+    "SEGSPaste": {
+        "title": "Seg貼付",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "ref_image_opt": "参考画像"
+        },
+        "widgets": {
+            "feather": "フェザー"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "SEGS最適化エンハンサーで最適化されたSEGSを元画像に貼り戻す機能を持つノードです。"
+    },
+    "SEGSPreview": {
+        "title": "Segプレビュー",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "代替画像"
+        },
+        "widgets": {
+            "alpha_mode": "alphaモード",
+            "min_alpha": "最小値alpha"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "SEGSPreviewCNet": {
+        "title": "Segプレビュー(CNet)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "SAMDetectorCombined": {
+        "title": "SAM検出結合",
+        "inputs": {
+            "sam_model": "SAMモデル",
+            "segs": "Seg",
+            "images": "画像",
+            "image": "画像"
+        },
+        "widgets": {
+            "detection_hint": "検出プロンプト",
+            "dilation": "膨張",
+            "threshold": "閾値",
+            "bbox_expansion": "BBox拡張",
+            "mask_hint_threshold": "マスク検出しきい値",
+            "mask_hint_use_negative": "ネガティブマスクプロンプト"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "SAM技術を用いて、入力Segで示された位置の断片を入力画像から抽出し、それらを1つに統合したマスクとして出力します。"
+    },
+    "SAMDetectorSegmented": {
+        "title": "SAM検出セグメンテーション",
+        "inputs": {
+            "sam_model": "SAMモデル",
+            "segs": "Seg",
+            "images": "画像",
+            "image": "画像"
+        },
+        "widgets": {
+            "detection_hint": "検出プロンプト",
+            "dilation": "膨張",
+            "threshold": "閾値",
+            "bbox_expansion": "BBox拡張",
+            "mask_hint_threshold": "マスク検出しきい値",
+            "mask_hint_use_negative": "ネガティブマスクプロンプト"
+        },
+        "outputs": {
+            "combined_mask": "マスクを結合",
+            "batch_masks": "マスクグループ"
+        },
+        "description": "SAM検出結合に似ていますが、検出されたセグメントを分離して出力します。同じ検出領域で複数のセグメントが見つかる場合があり、現状ではそれらを任意に3つのグループにまとめる仕様となっています。この点は今後改善される予定です。\n そのため、統一されたマスクである 結合マスク と、バッチ形式でまとめられた複数のマスクである マスクグループ を出力します。\n マスクグループ では完全に分離できない場合もありますが、ある程度のレベルでの分割機能を提供します。"
+    },
+    "ImpactSAM2VideoDetectorSEGS": {
+        "title": "SAM2動画検出からSeg",
+        "inputs": {
+            "sam2_model": "SAMモデル",
+            "segs": "Seg",
+            "bbox_detector": "BBox検出",
+            "image_frames": "フレーム画像"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾値",
+            "sam2_threshold": "sam2しきい値",
+            "crop_factor": "焦点距離係数",
+            "drop_size": "滴下サイズ"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "簡易Seg検出 に似ていますが、SAM2 の動画トラッキング技術を利用して、複数のマスクを含む SEGS オブジェクトを生成します。\n このノードを使用するには、SAMLoader で SAM2 モデルを選択する必要があります。"
+    },
+    "BboxDetectorSEGS": {
+        "title": "BBox検出からSeg",
+        "inputs": {
+            "bbox_detector": "BBox検出",
+            "detailer_hook": "最適化コンストレイント",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "しきい値：修復の幅を制御します。しきい値が小さいほど修復効果が大きくなります\n 。"
+    },
+    "SegmDetectorSEGS": {
+        "title": "Segm検出からSeg",
+        "inputs": {
+            "segm_detector": "Segm検出",
+            "detailer_hook": "最適化コンストレイント",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ONNXDetectorSEGS": {
+        "title": "ONNX検出からSeg",
+        "inputs": {
+            "bbox_detector": "BBox検出",
+            "detailer_hook": "最適化コンストレイント",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS_for_AD": {
+        "title": "簡易Seg検出ダイナミック拡散",
+        "inputs": {
+            "bbox_detector": "BBox検出",
+            "image_frames": "画像",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾値",
+            "bbox_dilation": "BBox膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ",
+            "sub_threshold": "補助閾値",
+            "sub_dilation": "補助膨張",
+            "sub_bbox_expansion": "補助BBox拡張",
+            "sam_mask_hint_threshold": "SAMマスク検出閾値",
+            "masking_mode": "マスクモード",
+            "segs_pivot": "メインSeg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS": {
+        "title": "簡易Seg検出",
+        "inputs": {
+            "bbox_detector": "BBox検出",
+            "image": "画像",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾値",
+            "bbox_dilation": "BBox膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ",
+            "sub_threshold": "補助閾値",
+            "sub_dilation": "補助膨張",
+            "sub_bbox_expansion": "補助BBox拡張",
+            "sam_mask_hint_threshold": "SAMマスク検出閾値",
+            "post_dilation": "膨張後"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "主に BBox検出 を使用し、追加で SAMモデル または Segm検出 を提供します。このノードは BBox と 輪郭 に対するマスク操作により、内部で改善されたSegを生成します。\n少し複雑なワークフローを簡略化する便利なツールとして機能します。"
+    },
+    "ImpactSimpleDetectorSEGSPipe": {
+        "title": "簡易Seg検出(ノードバンド)",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル",
+            "image": "画像"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾値",
+            "bbox_dilation": "BBox膨張",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ",
+            "sub_threshold": "補助閾値",
+            "sub_dilation": "補助膨張",
+            "sub_bbox_expansion": "補助BBox拡張",
+            "sam_mask_hint_threshold": "SAMマスク検出閾値",
+            "post_dilation": "膨張後"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BboxDetectorCombined_v2": {
+        "title": "BBox検出器v2",
+        "inputs": {
+            "bbox_detector": "BBox検出",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "バウンディングボックスを検出し、入力画像からマスクを返します。"
+    },
+    "SegmDetectorCombined_v2": {
+        "title": "Segm検出器v2",
+        "inputs": {
+            "segm_detector": "Segm検出",
+            "image": "画像"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "セグメンテーションを検出し、入力画像からマスクを返します。"
+    },
+    "FaceDetailer": {
+        "title": "顔最適化",
+        "inputs": {
+            "image": "画像",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "max_size": "最大サイズ",
+            "guide_size_for": "ガイド対象",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "bbox_threshold": "BBox閾値",
+            "bbox_dilation": "BBox膨張",
+            "bbox_crop_factor": "BBoxクロップ係数",
+            "sam_detection_hint": "SAM検出プロンプト",
+            "sam_dilation": "SAM膨張",
+            "sam_threshold": "SAM閾値",
+            "sam_bbox_expansion": "SAMBBox拡張",
+            "sam_mask_hint_threshold": "SAMマスク検出閾値",
+            "sam_mask_hint_use_negative": "SAMネガティブマスクプロンプト",
+            "drop_size": "最小サイズ",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード"
+        },
+        "outputs": {
+            "image": "画像",
+            "cropped_refined": "最適化画像",
+            "cropped_enhanced_alpha": "最適化パート",
+            "mask": "マスク",
+            "detailer_pipe": "最適化ノードバンドル",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出モデル（bbox、segm、sam）を使って入力画像から特定の対象を自動検出し、ガイドサイズを基準に検出領域を拡大して補完することで最適化を強化します。\nユーザーがよく行う顔最適化の強化ワークフローを簡略化するために設計されたノードですが、検出モデルの選択によってはさまざまな自動補完用途にも使えます。"
+    },
+    "FaceDetailerPipe": {
+        "title": "顔最適化(ノードバンドル)",
+        "inputs": {
+            "image": "画像",
+            "detailer_pipe": "最適化ノードバンドル",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "max_size": "最大サイズ",
+            "guide_size_for": "ガイド対象",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "noise_mask": "マスクのみ生成",
+            "force_inpaint": "強制再描画",
+            "bbox_threshold": "BBox閾値",
+            "bbox_dilation": "BBox膨張",
+            "bbox_crop_factor": "BBoxクロップ係数",
+            "sam_detection_hint": "SAM検出プロンプト",
+            "sam_dilation": "SAM膨張",
+            "sam_threshold": "SAM閾値",
+            "sam_bbox_expansion": "SAMBBox拡張",
+            "sam_mask_hint_threshold": "SAMマスク検出閾値",
+            "sam_mask_hint_use_negative": "SAMネガティブマスクプロンプト",
+            "drop_size": "最小サイズ",
+            "refiner_ratio": "最適化比率",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード"
+        },
+        "outputs": {
+            "image": "画像",
+            "cropped_refined": "最適化画像",
+            "cropped_enhanced_alpha": "最適化パート",
+            "mask": "マスク",
+            "detailer_pipe": "最適化ノードバンドル",
+            "cnet_images": "制御画像"
+        },
+        "description": "検出モデル（bbox、segm、sam）を使って入力画像から特定の対象を自動検出し、ガイドサイズを基準に検出領域を拡大して補完することで最適化を強化します。\nユーザーがよく行う顔最適化の強化ワークフローを簡略化するために設計されたノードですが、検出モデルの選択によってはさまざまな自動補完用途にも使えます。"
+    },
+    "MaskDetailerPipe": {
+        "title": "マスク最適化(ノードバンドル)",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "basic_pipe": "基本パイプ",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル",
+            "scheduler_func_opt": "スケジューラ関数",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "guide_size": "ガイドサイズ",
+            "guide_size_for": "ガイド対象",
+            "max_size": "最大サイズ",
+            "mask_mode": "マスクモード",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "フェザー",
+            "crop_factor": "クロップ係数",
+            "drop_size": "最小サイズ",
+            "refiner_ratio": "最適化比率",
+            "cycle": "ループ回数",
+            "inpaint_model": "修復モデル",
+            "noise_mask_feather": "ノイズマスクフェザー",
+            "tiled_encode": "分割エンコード",
+            "tiled_decode": "タイルデコード",
+            "bbox_fill": "bbox塗りつぶし",
+            "contour_fill": "輪郭塗りつぶし",
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "image": "画像",
+            "cropped_refined": "最適化画像",
+            "cropped_enhanced_alpha": "最適化パート",
+            "basic_pipe": "基本パイプ",
+            "refiner_basic_pipe_opt": "最適化基本ノードバンドル"
+        },
+        "description": "この最適化エンハンサーノードは、マスクで指定された領域を拡大し、ガイドサイズを基準に拡大修復を行うことで補正・強化します。"
+    },
+    "ToDetailerPipe": {
+        "title": "最適化バンドルへ",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "Select to add LoRA": "LoRA追加",
+            "Select to add Wildcard": "プロンプト追加選択"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "ToDetailerPipeSDXL": {
+        "title": "最適化バンドルへ(SDXL)",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "refiner_model": "モデル(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "ポジティブ条件(Refiner)",
+            "refiner_negative": "ネガティブ条件(Refiner)",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "Select to add LoRA": "LoRA追加",
+            "Select the LoRA to add to the text": "LoRAを選択",
+            "Select to add Wildcard": "プロンプト追加選択"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "FromDetailerPipe": {
+        "title": "最適化バンドルから",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "outputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "FromDetailerPipe_v2": {
+        "title": "最適化バンドルv2から",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。\n前世代よりも追加出力が1つ多く、入力パイプラインを直接出力します。ベースバンドル編集 と 最適化バンドル編集 を行う際に非常に便利です。"
+    },
+    "FromDetailerPipeSDXL": {
+        "title": "最適化バンドルから(SDXL)",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント",
+            "refiner_model": "モデル(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "ポジティブ条件(Refiner)",
+            "refiner_negative": "ネガティブ条件(Refiner)"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "EditDetailerPipe": {
+        "title": "最適化バンドの編集",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "sam_model": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "segm_detector": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "Select to add Wildcard": "プロンプト追加選択",
+            "Select the LoRA to add to the text": "LoRAを選択",
+            "Select to add LoRA": "LoRA追加"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、ベースノードバンドル または 最適化ノードバンドル の一部の要素を置き換えるために使用します。"
+    },
+    "DetailerPipeToBasicPipe": {
+        "title": "最適化バンドルから基本バンドル",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "base_basic_pipe": "基本パイプ",
+            "refiner_basic_pipe": "最適化基本ノードバンドル"
+        },
+        "description": "これらのノードは、モデル、CLIP、VAE、ポジティブ条件、ネガティブ条件を ベースノードバンドル にバンドルするか、ベースノードバンドル から各要素を抽出するために使用します。"
+    },
+    "AnyPipeToBasic": {
+        "title": "任意バンドルから基本バンドル",
+        "inputs": {
+            "any_pipe": "任意バンドル"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ",
+            "refiner_basic_pipe": "最適化基本ノードバンドル"
+        },
+        "description": "これらのノードは、モデル、CLIP、VAE、ポジティブ条件、ネガティブ条件を ベースノードバンドル にバンドルするか、ベースノードバンドル から各要素を抽出するために使用します。"
+    },
+    "ToBasicPipe": {
+        "title": "基本バンドルへ",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ"
+        },
+        "description": "これらのノードは、モデル、CLIP、VAE、ポジティブ条件、ネガティブ条件を ベースノードバンドル にバンドルするか、ベースノードバンドル から各要素を抽出するために使用します。"
+    },
+    "FromBasicPipe": {
+        "title": "基本バンドルから",
+        "inputs": {
+            "basic_pipe": "基本パイプ"
+        },
+        "outputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "description": "これらのノードは、モデル、CLIP、VAE、ポジティブ条件、ネガティブ条件を ベースノードバンドル にバンドルするか、ベースノードバンドル から各要素を抽出するために使用します。"
+    },
+    "FromBasicPipe_v2": {
+        "title": "基本バンドルv2から",
+        "inputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。\n前世代よりも追加出力が1つ多く、入力パイプラインを直接出力します。ベースバンドル編集 と 最適化バンドル編集 を行う際に非常に便利です。"
+    },
+    "EditBasicPipe": {
+        "title": "基本バンドの編集",
+        "inputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ"
+        },
+        "description": "これらのノードは、ベースノードバンドル または 最適化ノードバンドル の一部の要素を置き換えるために使用します。"
+    },
+    "BasicPipeToDetailerPipe": {
+        "title": "基本バンドから最適化バンドへ",
+        "inputs": {
+            "BASIC_PIPE": "基本パイプ",
+            "basic_pipe": "基本パイプ",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "Select to add Wildcard": "プロンプト追加選択",
+            "Select the LoRA to add to the text": "LoRAを選択",
+            "Select to add LoRA": "LoRA追加"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "最適化ノードバンドル",
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "BasicPipeToDetailerPipeSDXL": {
+        "title": "基本バンドから最適化バンドへ(SDXL)",
+        "inputs": {
+            "base_basic_pipe": "基本ノードバンド",
+            "refiner_basic_pipe": "最適化基本ノードバンドル",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "detailer_hook": "最適化コンストレイント"
+        },
+        "widgets": {
+            "Select to add Wildcard": "プロンプト追加選択",
+            "Select the LoRA to add to the text": "LoRAを選択",
+            "Select to add LoRA": "LoRA追加"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "最適化ノードバンドル",
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、モデルやVAEなどの複数の入力を 最適化ノードバンドル にバンドルするか、最適化ノードバンドル からバンドルされた要素を抽出するために使用します。"
+    },
+    "EditDetailerPipeSDXL": {
+        "title": "最適化バンドの編集(SDXL)",
+        "inputs": {
+            "detailer_pipe": "最適化ノードバンドル",
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "bbox_detector": "BBox検出",
+            "sam_model_opt": "SAMモデル",
+            "sam_model": "SAMモデル",
+            "segm_detector_opt": "Segm検出",
+            "segm_detector": "Segm検出",
+            "detailer_hook": "最適化コンストレイント",
+            "refiner_model": "モデル(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "ポジティブ条件(Refiner)",
+            "refiner_negative": "ネガティブ条件(Refiner)"
+        },
+        "widgets": {
+            "Select to add Wildcard": "プロンプト追加選択",
+            "Select the LoRA to add to the text": "LoRAを選択",
+            "Select to add LoRA": "LoRA追加"
+        },
+        "outputs": {
+            "detailer_pipe": "最適化ノードバンドル"
+        },
+        "description": "これらのノードは、ベースノードバンドル または 最適化ノードバンドル の一部の要素を置き換えるために使用します。"
+    },
+    "LatentPixelScale": {
+        "title": "Latentピクセルスケール",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAE",
+            "upscale_model_opt": "アップスケールモデル"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "scale_factor": "スケール係数",
+            "use_tiled_vae": "分割VAEを使用"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "IMAGE": "画像"
+        },
+        "description": "このノードはLatent空間をピクセル空間に変換して拡大し、再びLatent空間に戻します。\n 拡大モデル が指定されている場合はそのモデルでピクセルを拡大し、スケール方法 で指定した補間方法でターゲット解像度へ縮小します。"
+    },
+    "PixelKSampleUpscalerProvider": {
+        "title": "Kサンプラーピクセルスケール",
+        "inputs": {
+            "model": "モデル",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model_opt": "アップスケールモデル",
+            "scheduler_func_opt": "スケジューラ関数",
+            "pk_hook_opt": "フック"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "use_tiled_vae": "分割VAEを使用",
+            "tile_size": "タイルサイズ"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        },
+        "description": "VAEデコード でLatentをピクセルに変換して拡大し、VAEエンコード でLatentに戻してからKサンプリングを行うKサンプラーを提供します。\n このアップサンプラーは Latent反復スケール などのノードに付けて使用できます。\n Latentピクセルスケールと同様に、拡大モデル が指定されるとモデルによるピクセル拡大を行います。"
+    },
+    "PixelKSampleUpscalerProviderPipe": {
+        "title": "Kサンプラーピクセルスケール(ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ",
+            "upscale_model_opt": "アップスケールモデル",
+            "scheduler_func_opt": "スケジューラ関数",
+            "tile_cnet_opt": "タイル分割ControlNet選択",
+            "pk_hook_opt": "フック"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "use_tiled_vae": "分割VAEを使用",
+            "tile_size": "タイルサイズ",
+            "tile_cnet_strength": "タイル分割ControlNet強度"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        }
+    },
+    "IterativeLatentUpscale": {
+        "title": "Latent反復スケール",
+        "inputs": {
+            "samples": "Latent",
+            "upscaler": "スケール"
+        },
+        "widgets": {
+            "upscale_factor": "スケール係数",
+            "steps": "ステップ数",
+            "temp_prefix": "プレフィックス",
+            "step_mode": "ステップモード"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "入力のスケールで スケール係数 をステップに分割し、スケールを反復実行します。Latent を入力として受け取り、Latent を結果として出力します。"
+    },
+    "IterativeImageUpscale": {
+        "title": "画像イテレーション拡大縮小",
+        "inputs": {
+            "pixels": "画像",
+            "upscaler": "スケール",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "upscale_factor": "スケール係数",
+            "steps": "ステップ数",
+            "temp_prefix": "プレフィックス",
+            "step_mode": "ステップモード"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "入力の スケール で スケール係数 をステップに分割し、スケールを反復実行します。画像を入力として受け取り、画像を出力します。\n 内部では、このノードは 反復スケール（Latent） を使用します"
+    },
+    "PixelTiledKSampleUpscalerProvider": {
+        "title": "Kサンプラーピクセルスケール(分割)",
+        "inputs": {
+            "model": "モデル",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model_opt": "アップスケールモデル",
+            "pk_hook_opt": "フック",
+            "tile_cnet_opt": "タイル分割ControlNet選択"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "tile_width": "タイル幅",
+            "tile_height": "タイル高さ",
+            "tiling_strategy": "分割戦略",
+            "tile_cnet_strength": "タイル分割ControlNet強度",
+            "overlap": "オーバーラップ領域"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        },
+        "description": "Kサンプリングピクセルスケーラーに似ていますが、タイル分割Kサンプラー と タイル分割 VAE デコーダ/エンコーダ を使用して、高解像度でのGPU VRAM問題を回避します。\n BlenderNeko/ComfyUI_TiledKSampler ノード拡張のインストールが必要です。"
+    },
+    "SEGSUpscaler": {
+        "title": "高度(Seg)",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "model": "モデル",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model_opt": "アップスケールモデル",
+            "upscaler_hook_opt": "高度コンストレイント選択",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "rescale_factor": "拡大手法",
+            "resampling_method": "リサンプリング手法",
+            "supersample": "スーパーサンプリング",
+            "rounding_modulus": "丸めモジュラス",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "タイル幅",
+            "inpaint_model": "タイル高さ",
+            "noise_mask_feather": "ノイズマスクフェザー"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "SEGSUpscalerPipe": {
+        "title": "高度(Segバンドル)",
+        "inputs": {
+            "image": "画像",
+            "segs": "Seg",
+            "basic_pipe": "基本バンド",
+            "model": "モデル",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model_opt": "アップスケールモデル",
+            "upscaler_hook_opt": "高度コンストレイント選択",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "rescale_factor": "拡大手法",
+            "resampling_method": "リサンプリング手法",
+            "supersample": "スーパーサンプリング",
+            "rounding_modulus": "丸めモジュラス",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "feather": "タイル幅",
+            "inpaint_model": "タイル高さ",
+            "noise_mask_feather": "ノイズマスクフェザー"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "PixelTiledKSampleUpscalerProviderPipe": {
+        "title": "Kサンプラーピクセルスケール(分割ノードバンドル)",
+        "inputs": {
+            "model": "モデル",
+            "vae": "VAE",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "upscale_model_opt": "アップスケールモデル",
+            "pk_hook_opt": "フック",
+            "basic_pipe": "基本パイプ",
+            "tile_cnet_opt": "タイル分割ControlNet選択"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "tile_width": "タイル幅",
+            "tile_height": "タイル高さ",
+            "tiling_strategy": "分割戦略",
+            "tile_cnet_strength": "タイル分割ControlNet強度"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProvider": {
+        "title": "デュアルサンプリングスケーラー",
+        "inputs": {
+            "base_sampler": "基本サンプラー",
+            "mask_sampler": "マスクサンプラー",
+            "mask": "マスク",
+            "vae": "VAE",
+            "full_sampler_opt": "グローバルサンプラー",
+            "upscale_model_opt": "アップスケールモデル",
+            "pk_hook_base_opt": "基本制約",
+            "pk_hook_mask_opt": "マスクコンストレイント",
+            "pk_hook_full_opt": "グローバルコンストレイント"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "nearest-exact": "ネイバー-正確",
+            "bilinear": "バイリニア補間",
+            "area": "領域",
+            "full_sample_schedule": "サンプルスケジューラ",
+            "interleave1": "インターレース1",
+            "interleave2": "インターレース2",
+            "interleave3": "インターレース3",
+            "last1": "プログレッシブ1",
+            "last2": "プログレッシブ2",
+            "interleave1+last1": "インターレース1+プログレッシブ1",
+            "interleave2+last1": "インターレース2+プログレッシブ1",
+            "interleave3+last1": "インターレース3+プログレッシブ1",
+            "use_tiled_vae": "分割VAEを使用",
+            "tile_size": "タイルサイズ"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProviderPipe": {
+        "title": "デュアルサンプリングスケーラー(ノードバンドル)",
+        "inputs": {
+            "base_sampler": "基本サンプラー",
+            "mask_sampler": "マスクサンプラー",
+            "mask": "マスク",
+            "basic_pipe": "基本パイプ",
+            "full_sampler_opt": "グローバルサンプラー",
+            "upscale_model_opt": "アップスケールモデル",
+            "pk_hook_base_opt": "基本制約",
+            "pk_hook_mask_opt": "マスクコンストレイント",
+            "pk_hook_full_opt": "グローバルコンストレイント"
+        },
+        "widgets": {
+            "scale_method": "拡大手法",
+            "full_sample_schedule": "サンプルスケジューラ",
+            "use_tiled_vae": "分割VAEを使用",
+            "tile_size": "タイルサイズ"
+        },
+        "outputs": {
+            "UPSCALER": "スケール"
+        },
+        "description": "これはサンプラーで、デュアルサンプラー を反復拡大用に拡張します。\n デュアルサンプラースケーラ(ノードバンドル) - ノードバンドル版の デュアルサンプラースケーラ。"
+    },
+    "PixelKSampleHookCombine": {
+        "title": "ピクセルKサンプラーコンストレイント組み合わせ",
+        "inputs": {
+            "hook1": "制約1",
+            "hook2": "制約2"
+        },
+        "outputs": {
+            "PK_HOOK": "ピクセルKサンプラーコンストレイント"
+        },
+        "description": "これは2つの ピクセルKサンプラーコンストレイント を接続するために使用します。コンストレイント1を先に実行し、その後コンストレイント2を実行します。"
+    },
+    "DenoiseScheduleHookProvider": {
+        "title": "ノイズ除去コンストレイント",
+        "widgets": {
+            "schedule_for_iteration": "スケジューリングループ",
+            "target_denoise": "目標ノイズ低減"
+        },
+        "outputs": {
+            "PK_HOOK": "フック"
+        },
+        "description": "イテレーティブ拡大 は、反復ステップの進行に応じて ノイズ除去 を 目標ノイズ除去 に段階的に調整するコンストレイントを提供します。\n cfg と ノイズ除去 を同時に変更したい場合は、CFGコンストレイント と ピクセルKサンプラーコンストレイント組み合わせ の コンストレイント を組み合わせてください。"
+    },
+    "CfgScheduleHookProvider": {
+        "title": "CFGコンストレイント",
+        "widgets": {
+            "schedule_for_iteration": "スケジューリングループ",
+            "target_cfg": "ターゲットCFG"
+        },
+        "outputs": {
+            "PK_HOOK": "フック"
+        },
+        "description": "イテレーティブ拡大 は、反復ステップの進行に応じて cfg を 目標cfg に段階的に調整するコンストレイントを提供します。"
+    },
+    "StepsScheduleHookProvider": {
+        "title": "ステップ数スケジュール制約プロバイダ",
+        "widgets": {
+            "schedule_for_iteration": "スケジューリングループ",
+            "target_steps": "目標ステップ数"
+        },
+        "outputs": {
+            "PK_HOOK": "フック"
+        },
+        "description": "イテレーティブ拡大 は、反復ステップの進行に応じて サンプリングステップ数 を 目標ステップ数 に段階的に調整するコンストレイントを提供します。"
+    },
+    "DetailerHookCombine": {
+        "title": "最適化コンストレイント結合",
+        "inputs": {
+            "hook1": "制約1",
+            "hook2": "制約2"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "これは2つの 最適化コンストレイント を接続するために使用します。\n ピクセルKサンプラーコンストレイント組み合わせ に類似しています。"
+    },
+    "UnsamplerHookProvider": {
+        "title": "逆サンプリングコンストレイント",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "start_end_at_step": "開始ステップ数",
+            "end_end_at_step": "終了ステップ",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "normalize": "規格化",
+            "schedule_for_iteration": "スケジューリングループ"
+        },
+        "outputs": {
+            "PK_HOOK": "フック"
+        },
+        "description": "各イテレーションで逆サンプラーを適用します。このノードを使用するには ComfyUI_Noise のインストールが必要です。"
+    },
+    "KSamplerProvider": {
+        "title": "Kサンプリングプロバイダ(ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去"
+        },
+        "outputs": {
+            "KSAMPLER": "Kサンプラー"
+        },
+        "description": "これはサンプラーで、Kサンプリング を デュアルサンプラー と デュアルサンプラースケーラ で使用できるようにします。"
+    },
+    "TwoSamplersForMask": {
+        "title": "デュアルサンプラー",
+        "inputs": {
+            "latent_image": "Latent",
+            "base_sampler": "基本サンプラー",
+            "mask_sampler": "マスクサンプラー",
+            "mask": "マスク"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "このノードはマスク領域に応じて2種類のサンプラーを適用できます。ベースサンプラー はマスクが0の領域に適用され、マスクサンプラー はマスクが1の領域に適用されます。\n 注意：VAEインペイントエンコーダ でエンコードした潜在表現は使用できません。"
+    },
+    "TiledKSamplerProvider": {
+        "title": "Kサンプリングプロバイダ(分割ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "denoise": "ノイズ除去",
+            "tile_width": "タイル幅",
+            "tile_height": "タイル高さ",
+            "tiling_strategy": "分割戦略"
+        },
+        "outputs": {
+            "KSAMPLER": "Kサンプラー"
+        },
+        "description": "ComfyUI_TiledKSampler は Kサンプラー を提供するサンプラーです。\n BlenderNeko/ComfyUI_TiledKSampler ノード拡張をインストールする必要があります。"
+    },
+    "KSamplerAdvancedProvider": {
+        "title": "Kサンプリングプロバイダ(高度ノードバンドル)",
+        "inputs": {
+            "basic_pipe": "基本パイプ",
+            "sampler_opt": "サンプラーを選択",
+            "scheduler_func_opt": "スケジューラ関数"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "sigma_factor": "sigma 係数"
+        },
+        "outputs": {
+            "KSAMPLER_ADVANCED": "KSampler(詳細)"
+        },
+        "description": "これはサンプラーで、Kサンプラーを デュアルサンプラー(高度) と 領域サンプラー で使用できるようにします。\nノイズ除去プランに sigma係数 を乗じることで、設定されたノイズ除去量に応じてノイズ除去の度を調整できます"
+    },
+    "TwoAdvancedSamplersForMask": {
+        "title": "デュアルサンプラー(高度)",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "基本サンプラー",
+            "mask_sampler": "マスクサンプラー",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "overlap_factor": "カバレッジ係数"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "デュアルサンプラー は デュアルサンプラー(高度) に似ていますが、動作が異なります。デュアルサンプラー はベース領域のすべてのサンプリングが完了してからマスク領域のサンプリングを行います。\n 一方、デュアルサンプラー(高度) は各ステップでベース領域とマスク領域のサンプリングを順に行います。"
+    },
+    "ImpactWildcardProcessor": {
+        "title": "プロンプトプロセッサ",
+        "widgets": {
+            "wildcard_text": "プロンプト",
+            "populated_text": "入力テキスト",
+            "mode": "入力するかどうか",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "Select to add Wildcard": "プロンプト追加選択"
+        },
+        "outputs": {
+            "processed text": "テキスト処理"
+        },
+        "description": "このノードはプロンプト記法で書かれたテキストプロンプトを処理し、処理後のテキストプロンプトを出力します。\nテキストは「テキスト処理」のプロンプトから生成されます。モードを「補完」に設定すると、実行のたびに動的なプロンプトが生成され、2番目のテキストボックスに入力されます。モードを「固定」に設定すると、2番目のテキストボックスの内容は変更されません。\n 「固定」モードで画像を生成した場合、その生成に使用されたプロンプトはメタデータに保存されます。"
+    },
+    "ImpactWildcardEncode": {
+        "title": "プロンプトエンコード",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "wildcard_text": "プロンプト",
+            "populated_text": "入力テキスト",
+            "mode": "入力するかどうか",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "Select to add Wildcard": "プロンプト追加選択",
+            "Select to add LoRA": "LoRA追加"
+        },
+        "outputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "populated_text": "テキスト塗りつぶし",
+            "conditioning": "条件"
+        },
+        "description": "プロンプトプロセッサと同様に、LoRAの読み込み機能を提供します。\n（例：<lora:some_awesome_lora:0.7:1.2>）。入力されたプロンプトは、すべてのLoRA読み込みが完了した後にclipでエンコードされます。\n 'Inspire Pack'をインストールするとLBW(LoRAブロックウェイト)構文が使用できます。\n <lora:chunli:1.0:1.0:LBW=B11:0,0,0,0,0,0,0,0,0,0,A,0,0,0,0,0,0;A=0.;>, \n <lora:chunli:1.0:1.0:LBW=0,0,0,0,0,0,0,0,0,0,A,B,0,0,0,0,0;A=0.5;B=0.2;>,\n <lora:chunli:1.0:1.0:LBW=SD-MIDD;>"
+    },
+    "RegionalPrompt": {
+        "title": "リージョンプロンプト",
+        "inputs": {
+            "mask": "マスク",
+            "advanced_sampler": "KSampler(詳細)"
+        },
+        "widgets": {
+            "variation_seed": "変化のシード",
+            "variation_strength": "強度変化",
+            "variation_method": "変化方法"
+        },
+        "outputs": {
+            "regional_prompts": "リージョンプロンプト",
+            "REGIONAL_PROMPTS": "リージョンプロンプト"
+        },
+        "description": "このノードは、領域を指定するマスクと各領域に適用するサンプラーを組み合わせて、領域プロンプト を作成します。"
+    },
+    "CombineRegionalPrompts": {
+        "title": "領域プロンプト結合",
+        "inputs": {
+            "regional_prompts1": "領域プロンプト1",
+            "regional_prompts2": "領域プロンプト2"
+        },
+        "outputs": {
+            "REGIONAL_PROMPTS": "リージョンプロンプト"
+        },
+        "description": "複数の 領域プロンプト を1つの 領域プロンプト に結合します。"
+    },
+    "RegionalSampler": {
+        "title": "領域サンプラー",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "KSampler(詳細)",
+            "regional_prompts": "リージョンプロンプト"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "seed_2nd": "第2乱数シード",
+            "seed_2nd_mode": "第2乱数シードモード",
+            "steps": "ステップ数",
+            "base_only_steps": "基本ステップのみ",
+            "denoise": "ノイズ除去",
+            "overlap_factor": "カバレッジ係数",
+            "restore_latent": "一時Latent",
+            "additional_mode": "追加モード",
+            "additional_sampler": "追加サンプラー",
+            "additional_sigma_ratio": "追加sigma比率"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "このノードはベースサンプラーと領域プロンプトを使用してサンプリングを行います。ベースサンプラーは各ステップでサンプリングを実行し、各領域のサンプリングは各領域にバインドされたサンプラーによって行われます。\n オーバーラップ係数 - マスク外側の領域と良好にブレンドできるよう、各領域の重なり量を指定します。\n 一時Latent- 各領域をサンプリングする際、マスク外側の領域をベースの潜空間に復元し、領域サンプリング中にマスク外へ余分なノイズが混入するのを防ぎます。"
+    },
+    "RegionalSamplerAdvanced": {
+        "title": "領域サンプラー(高度)",
+        "inputs": {
+            "samples": "Latent",
+            "latent_image": "Latent",
+            "base_sampler": "KSampler(詳細)",
+            "regional_prompts": "リージョンプロンプト"
+        },
+        "widgets": {
+            "add_noise": "ノイズ追加",
+            "seed": "シード",
+            "noise_seed": "シード",
+            "control_after_generate": "実行後操作",
+            "steps": "ステップ数",
+            "start_at_step": "ノイズ除去開始ステップ数",
+            "end_at_step": "ノイズ除去終了ステップ数",
+            "overlap_factor": "カバレッジ係数",
+            "restore_latent": "一時Latent",
+            "return_with_leftover_noise": "ノイズ返却",
+            "additional_mode": "追加モード",
+            "additional_sampler": "追加サンプラー",
+            "additional_sigma_ratio": "追加sigma比率"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "これは領域サンプラーの高度版です。ノイズ除去 ではなく ステップ数 で制御できます。\n 注意：sdeサンプラーと uni_pcサンプラー はサンプリング過程の各ステップで追加のノイズを混入します。この問題を軽減するため、各領域をサンプリングする際に uni_pcサンプラー は追加の dpmpp_fast を適用し、sdeサンプラー は追加策として dpmpp_2mサンプラー を使用します。"
+    },
+    "ImpactConcatConditionings": {
+        "title": "条件マージ",
+        "inputs": {
+            "conditioning1": "条件1"
+        },
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "複数の条件入力を受け取り、連結して1つの条件にします。"
+    },
+    "ImpactImageInfo": {
+        "title": "画像情報",
+        "inputs": {
+            "value": "画像"
+        },
+        "outputs": {
+            "batch": "バッチサイズ",
+            "height": "高さ",
+            "width": "幅",
+            "channel": "チャンネル"
+        }
+    },
+    "ImpactLatentInfo": {
+        "title": "Latent情報",
+        "inputs": {
+            "value": "Latent"
+        },
+        "outputs": {
+            "batch": "バッチサイズ",
+            "height": "高さ",
+            "width": "幅",
+            "channel": "チャンネル"
+        }
+    },
+    "ImpactMinMax": {
+        "title": "極値探索",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "mode": "モード"
+        },
+        "outputs": {
+            "INT": "整数値"
+        }
+    },
+    "ImpactQueueTrigger": {
+        "title": "キュートリガ",
+        "inputs": {
+            "signal": "信号"
+        },
+        "widgets": {
+            "mode": "モード"
+        },
+        "outputs": {
+            "signal_opt": "信号"
+        },
+        "description": "このノードが実行されると、繰り返しタスクの実行を支援するために新しいキューが追加されます。信号の状態が変化したときのみ実行されます。"
+    },
+    "ImpactQueueTriggerCountdown": {
+        "title": "キュートリガ(カウント)",
+        "inputs": {
+            "signal": "信号"
+        },
+        "widgets": {
+            "total": "合計",
+            "mode": "モード",
+            "count": "カウント"
+        },
+        "outputs": {
+            "total": "合計",
+            "signal_opt": "信号",
+            "count": "カウント"
+        },
+        "description": "キュートリガーと同様にキューを追加しますが、キューのサイズが1以下の場合は追加されません。実行のたびにカウントが1減ります。"
+    },
+    "ImpactSetWidgetValue": {
+        "title": "コンポーネント値を設定",
+        "inputs": {
+            "signal": "信号",
+            "boolean_value": "ブール値",
+            "int_value": "INT",
+            "float_value": "浮動小数点",
+            "string_value": "文字列"
+        },
+        "widgets": {
+            "node_id": "ノードID",
+            "widget_name": "ウィジェット名"
+        },
+        "outputs": {
+            "signal_opt": "信号"
+        },
+        "description": "このノードは、任意の入力を指定したノードのコントロールとして設定します。型が一致しない場合はエラーが発生する可能性があります。"
+    },
+    "ImpactNodeSetMuteState": {
+        "title": "ノード無効化",
+        "inputs": {
+            "signal": "信号"
+        },
+        "widgets": {
+            "node_id": "ノードID",
+            "set_state": "状態"
+        },
+        "outputs": {
+            "signal_opt": "信号"
+        },
+        "description": "このノードは特定のノードのミュート状態を変更します。"
+    },
+    "ImpactSleep": {
+        "title": "スリープ",
+        "inputs": {
+            "signal": "信号"
+        },
+        "widgets": {
+            "seconds": "秒数"
+        },
+        "outputs": {
+            "signal_opt": "信号"
+        },
+        "description": "指定された時間（秒単位）待機します"
+    },
+    "ImpactRemoteBoolean": {
+        "title": "リモートブール",
+        "widgets": {
+            "node_id": "ノードID",
+            "widget_name": "ウィジェット名",
+            "value": "値"
+        },
+        "description": "プロンプトの開始時に、このノードは コンポーネント名 のノードIDを強制的に設定します。対象コンポーネントの種類が異なる場合は無視されます。"
+    },
+    "ImpactRemoteInt": {
+        "title": "リモート整数値",
+        "widgets": {
+            "node_id": "ノードID",
+            "widget_name": "ウィジェット名",
+            "value": "値"
+        },
+        "description": "プロンプトの開始時に、このノードは コンポーネント名 のノードIDを強制的に設定します。対象コンポーネントの種類が異なる場合は無視されます。"
+    },
+    "ImpactControlBridge": {
+        "title": "制御ブリッジ",
+        "inputs": {
+            "value": "値"
+        },
+        "widgets": {
+            "mode": "モード"
+        },
+        "outputs": {
+            "value": "値"
+        },
+        "description": "このノードは モード と 動作 に応じて、接続されているコントロールノードの状態を変更します。変更すべきノードがある場合、現在の実行が一時停止し、ミュート状態が更新されたうえで新しいプロンプトキューが挿入されます。\n モード が Active の場合、動作にかかわらず接続されたコントロールノードを有効にします。\n モード が バイパス/ミュート の場合、動作が バイパス か ミュート かによって接続ノードの状態を変更します。\n 制限：これらの仕様上、バッチカウントが1を超えると正常に動作しません。また、シードがランダム化されている場合や、キュートリガー、コンポーネント値の設定、ノードの無効化などの操作でノードの状態が変更された場合は、コントロールブリッジより前では正常な動作を保証できません。\n このノードを使う際は、キュートリガー、コンポーネント値の設定、ノードの無効化および同様の操作がワークフローの末尾で実行されるように構成してください。\n 各イテレーションでシード値を変えたい場合は、ランダム化ではなく、ワークフローの末尾で「コントロール値の設定」を実行するようにしてください。\n コントロールブリッジ以降でランダム化を行うのであれば、シードが変化しても問題ありません。"
+    },
+    "ImpactCompare": {
+        "title": "比較",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "cmp": "比較方法"
+        },
+        "outputs": {
+            "BOOLEAN": "ブール値"
+        }
+    },
+    "ImpactConditionalBranchSelMode": {
+        "title": "条件分岐切り替えモード",
+        "inputs": {
+            "tt_value": "真",
+            "ff_value": "偽"
+        },
+        "widgets": {
+            "cond": "条件"
+        },
+        "outputs": {
+            "*": "出力"
+        }
+    },
+    "ImpactConditionalBranch": {
+        "title": "条件切り替え",
+        "inputs": {
+            "tt_value": "真",
+            "ff_value": "偽"
+        },
+        "widgets": {
+            "cond": "条件"
+        },
+        "outputs": {
+            "*": "出力"
+        }
+    },
+    "ImpactIfNone": {
+        "title": "存在しない場合",
+        "inputs": {
+            "signal": "信号",
+            "any_input": "任意入力"
+        },
+        "widgets": {
+            "cond": "条件"
+        },
+        "outputs": {
+            "signal_opt": "信号選択",
+            "bool": "ブール値"
+        },
+        "description": "いずれかの入力が None なら 真 を返し、いずれも None でなければ 偽 を返します。"
+    },
+    "ImpactBoolean": {
+        "title": "ブール値",
+        "inputs": {
+            "signal": "信号",
+            "any_input": "任意入力"
+        },
+        "widgets": {
+            "value": "値"
+        },
+        "outputs": {
+            "signal_opt": "信号選択",
+            "BOOLEAN": "ブール値"
+        }
+    },
+    "ImpactConvertDataType": {
+        "title": "データ型を変換",
+        "inputs": {
+            "value": "値"
+        },
+        "widgets": {
+            "cond": "条件"
+        },
+        "outputs": {
+            "STRING": "文字列",
+            "FLOAT": "浮動小数点",
+            "INT": "整数値",
+            "BOOLEAN": "ブール値"
+        }
+    },
+    "ImpactLogicalOperators": {
+        "title": "論理演算子",
+        "inputs": {
+            "bool_a": "真偽値a",
+            "bool_b": "真偽値b"
+        },
+        "widgets": {
+            "operator": "演算"
+        },
+        "outputs": {
+            "STRING": "文字列",
+            "FLOAT": "浮動小数点",
+            "INT": "整数値",
+            "BOOLEAN": "ブール値"
+        }
+    },
+    "ImpactInt": {
+        "title": "INT",
+        "widgets": {
+            "value": "値"
+        },
+        "outputs": {
+            "INT": "整数値"
+        }
+    },
+    "ImpactFloat": {
+        "title": "浮動小数点",
+        "widgets": {
+            "value": "値"
+        },
+        "outputs": {
+            "FLOAT": "浮動小数点"
+        }
+    },
+    "ImpactValueSender": {
+        "title": "送信値",
+        "inputs": {
+            "value": "値",
+            "signal_opt": "信号選択"
+        },
+        "widgets": {
+            "link_id": "接続ID"
+        },
+        "outputs": {
+            "signal": "信号"
+        }
+    },
+    "ImpactValueReceiver": {
+        "title": "受信値",
+        "widgets": {
+            "typ": "タイプ",
+            "value": "値",
+            "link_id": "接続ID"
+        },
+        "outputs": {
+            "*": "出力"
+        }
+    },
+    "ImpactNeg": {
+        "title": "反転値",
+        "inputs": {
+            "value": "値"
+        },
+        "outputs": {
+            "BOOLEAN": "ブール値"
+        }
+    },
+    "ImpactConditionalStopIteration": {
+        "title": "条件停止イテレーション",
+        "inputs": {
+            "cond": "条件"
+        }
+    },
+    "ImpactIsNotEmptySEGS": {
+        "title": "Segが空でないかどうか",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "BOOLEAN": "ブール値"
+        },
+        "description": "このノードは入力のSegが空でない場合にのみ true を返します"
+    },
+    "ImpactLogger": {
+        "title": "出力ログ",
+        "inputs": {
+            "data": "データ"
+        }
+    },
+    "ImpactDummyInput": {
+        "title": "仮想入力",
+        "outputs": {
+            "*": "出力"
+        }
+    },
+    "ImpactHFTransformersClassifierProvider": {
+        "title": "HFTransformer分類器",
+        "widgets": {
+            "preset_repo_id": "プリセットリポジトリID",
+            "manual_repo_id": "手動リポジトリID",
+            "device_mode": "デバイスモード"
+        },
+        "outputs": {
+            "TRANSFORMERS_CLASSIFIER": "TF分類器"
+        },
+        "description": "HuggingFaceのtransformersモデルが提供する分類器に基づくノードです。\n 「リポジトリID」パラメータにはHuggingFaceのリポジトリIDを指定します。プリセットリポジトリID が 手動リポジトリID に設定されている場合は、手動で入力したリポジトリIDを使用します。\n 例えば 'rizvandwiki/gender-classification-2' は性別分類モデルを提供するリポジトリです。"
+    },
+    "ImpactSEGSClassify": {
+        "title": "Seg分類",
+        "inputs": {
+            "classifier": "分類器",
+            "segs": "Seg",
+            "ref_image_opt": "参考画像"
+        },
+        "widgets": {
+            "preset_expr": "プリセット式",
+            "manual_expr": "手動式"
+        },
+        "outputs": {
+            "filtered_SEGS": "マスクSeg",
+            "remained_SEGS": "残りSeg",
+            "detected_labels": "検出ラベル"
+        },
+        "description": "このノードは TF分類器 で読み込んだ 'HFTransformer分類器' を使ってSegを分類します。\n 「式」は label > number の形式で記述でき、プリセット式 が Manual expr の場合は manual_expr に入力した式を使用します。\n 例えば male <= 0.4 なら、分類結果で male ラベルのスコアが0.4以下の場合に マスクSeg に、それ以外の場合に 残りSeg に分類されます。\n サポートされるラベルは、対応するHuggingFaceリポジトリのconfig.jsonを参照してください。\n #Female や #Male は単一のラベルではなく、Female, women, woman, ... のような複数のラベルをまとめて扱うための記号です。"
+    },
+    "SAMLoader": {
+        "title": "SAMローダー",
+        "widgets": {
+            "model_name": "モデル名",
+            "device_mode": "デバイスモード"
+        },
+        "outputs": {
+            "SAM_MODEL": "SAMモデル"
+        },
+        "description": "SAMモデルを読み込み"
+    },
+    "ONNXDetectorProvider": {
+        "title": "ONNXローダー",
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox検出",
+            "ONNX_DETECTOR": "ONNX検出"
+        },
+        "description": "ONNX検出 を提供するための ONNX モデルを読み込みます。"
+    },
+    "PreviewDetailerHookProvider": {
+        "title": "プレビュー最適化エンハンサコンストレイントプロバイダ",
+        "widgets": {
+            "quality": "品質"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント",
+            "UPSCALER_HOOK": "超解像コンストレイント"
+        },
+        "description": "このコンストレイントノードを接続すると、SEGS最適化タスク完了後のプレビュー確認に役立ちます。\n 生成タイル分割Seg などの大量のSegを処理する場合、改善が段階的に進んでいく様子を監視できます。\n 元画像に貼り付けたSegに対して適用されるコンストレイントなので、Seg最適化 のようなノードには影響しません。"
+    },
+    "BlackPatchRetryHookProvider": {
+        "title": "ブラックパッチ再試行フックプロバイダ",
+        "widgets": {
+            "mean_thresh": "平均閾値",
+            "var_thresh": "変化しきい値"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント",
+            "UPSCALER_HOOK": "超解像コンストレイント"
+        }
+    },
+    "ImpactIPAdapterApplySEGS": {
+        "title": "IPAdapter(Seg)を適用",
+        "inputs": {
+            "segs": "Seg",
+            "ipadapter_pipe": "ipadapterバンドル",
+            "neg_image": "基底画像",
+            "reference_image": "参考画像"
+        },
+        "widgets": {
+            "weight": "重み",
+            "noise": "ノイズ",
+            "weight_type": "重みタイプ",
+            "seed": "シード",
+            "start_at": "開始ステップ数",
+            "end_at": "終了ステップ",
+            "cfg": "CFG",
+            "unfold_batch": "バッチ展開",
+            "faceid_v2": "FaceID_V2",
+            "weight_v2": "重み_v2",
+            "context_crop_factor": "コンテキストクロップ係数",
+            "combine_embeds": "融合埋め込み"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "SegにIPAdapterを適用するには、Inspire PackのPreprocessor Providerノードを使ってこのノードを利用する必要があります。"
+    },
+    "ImpactFrom_SEG_ELT_bbox": {
+        "title": "SEG要素 bboxから",
+        "inputs": {
+            "bbox": "BBox"
+        },
+        "outputs": {
+            "left": "左",
+            "top": "上",
+            "right": "右",
+            "bottom": "下"
+        }
+    },
+    "ImpactFrom_SEG_ELT_crop_region": {
+        "title": "SEG要素クロップ領域から",
+        "inputs": {
+            "crop_region": "クロップ領域"
+        },
+        "outputs": {
+            "left": "左",
+            "top": "上",
+            "right": "右",
+            "bottom": "下"
+        }
+    },
+    "ImpactSEGSMerge": {
+        "title": "Seg結合",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "BBoxSegに複数のSegが含まれている場合、Seg結合 により複数のSegを1つの結合Segにまとめます。ラベルは「結合」になり、信頼度は最小の信頼度になります。適用済みのControlNetと切り抜き画像は削除されます。"
+    },
+    "ImpactCount_Elts_in_SEGS": {
+        "title": "SEGSによる要素計算",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "INT": "整数値"
+        }
+    },
+    "ImpactMakeAnyList": {
+        "title": "リスト作成(任意)",
+        "inputs": {
+            "value1": "値1"
+        },
+        "outputs": {
+            "INT": "整数値"
+        },
+        "description": "任意の値を含むリストを作成します。いくつでも入力を受け付け、1つの出力を生成します。型はノードに接続した時点で決定され、入力の接続ごとに利用可能なスロットが増えます。"
+    },
+    "ImpactMakeMaskList": {
+        "title": "マスクリスト作成",
+        "inputs": {
+            "mask1": "マスク1"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "画像リストノードと同じ機能を持ちますが、画像ではなくマスクを入力として使用します。"
+    },
+    "ImpactMakeMaskBatch": {
+        "title": "バッチマスク作成",
+        "inputs": {
+            "mask1": "マスク1"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "画像リストノードと同じ機能を持ちますが、画像ではなくマスクを入力として使用します。"
+    },
+    "ImpactSelectNthItemOfAnyList": {
+        "title": "n 項目目を選択(任意のリスト)",
+        "inputs": {
+            "any_list": "任意リスト"
+        },
+        "widgets": {
+            "index": "指数"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "リストからN番目の要素を選択します。インデックスが範囲外の場合は、リストの最後の要素を返します。"
+    },
+    "ImpactSEGSLabelAssign": {
+        "title": "Seg割り当て（ラベル）",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSIntersectionFilter": {
+        "title": "Segフィルタ(交集)",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "widgets": {
+            "iou_threshold": "iouしきい値",
+            "ioa_threshold": "ioaしきい値"
+        },
+        "outputs": {
+            "filtered_SEGS": "フィルタ済みSeg"
+        }
+    },
+    "ImpactSEGSNMSFilter": {
+        "title": "Segフィルタ(非最大抑制)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "iou_threshold": "iouしきい値"
+        },
+        "outputs": {
+            "filtered_SEGS": "フィルタ済みSeg"
+        }
+    },
+    "StringListToString": {
+        "title": "文字列リストを文字列に変換",
+        "inputs": {
+            "string_list": "文字列リスト"
+        },
+        "widgets": {
+            "join_with": "追加"
+        },
+        "outputs": {
+            "STRING": "文字列"
+        },
+        "description": "文字列リストを文字列に変換します。"
+    },
+    "WildcardPromptFromString": {
+        "title": "文字列からプロンプトを生成",
+        "inputs": {
+            "string": "文字列"
+        },
+        "widgets": {
+            "delimiter": "区切り文字",
+            "prefix_all": "すべてのプレフィックス",
+            "postfix_all": "サフィックス",
+            "restrict_to_tags": "ラベルに制限",
+            "exclude_tags": "除外ラベル"
+        },
+        "outputs": {
+            "wildcard": "プロンプト",
+            "segs_labels": "Segラベル"
+        },
+        "description": "文字列から詳細用のラベル付きプロンプトを作成します。\n 生成タイル分割Seg と一緒に使用すると良好に動作します。"
+    },
+    "ImpactExecutionOrderController": {
+        "title": "実行コマンドコントローラ",
+        "inputs": {
+            "signal": "信号",
+            "value": "値"
+        },
+        "outputs": {
+            "signal": "信号",
+            "value": "値"
+        },
+        "description": "ノードの実行順序を強制的に制御するための補助ノード。\n 先に実行すべきノードの出力をシグナルに接続し、後に実行すべきノードの入力はこのノード経由にしてください。"
+    },
+    "ImpactListBridge": {
+        "title": "リストブリッジャー",
+        "inputs": {
+            "list_input": "リスト入力"
+        },
+        "outputs": {
+            "list_output": "リスト出力"
+        },
+        "description": "リスト出力をこのノード経由で受け渡すと、データの収集と整理を行ってから転送するため、前段階のサブワークフローが完了していることが保証されます。"
+    },
+    "ImpactSchedulerAdapter": {
+        "title": "スケジューラアダプタ",
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "extra_scheduler": "追加スケジューラ"
+        },
+        "outputs": {
+            "scheduler": "スケジューラ"
+        },
+        "description": "Impact Pack と Inspire Pack のスケジューラに AYS が追加されたことで、既存のスケジューラウィジェットを入力に変換すると非互換の問題が発生します。スケジューラアダプタ は間接的な接続を可能にします。"
+    },
+    "ImpactFlattenMask": {
+        "title": "マスカリストからマスクへ",
+        "inputs": {
+            "masks": "マスク"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        },
+        "description": "画像リストノードと同じ機能を持ちますが、画像ではなくマスクを入力として使用します。"
+    },
+    "MaskRectArea": {
+        "title": "マスク矩形面積",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "w": "幅",
+            "h": "高さ",
+            "image_width": "画像の幅",
+            "image_height": "画像の高さ",
+            "blur_radius": "ぼかし半径",
+            "extra_scheduler": "追加スケジューラ"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "MaskRectAreaAdvanced": {
+        "title": "マスク矩形面積(高度)",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "image_width": "画像の幅",
+            "image_height": "画像の高さ",
+            "blur_radius": "ぼかし半径",
+            "extra_scheduler": "追加スケジューラ"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "ImpactNegativeConditioningPlaceholder": {
+        "title": "ネガティブ条件プレースホルダ",
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "FLUX.1のようなモデルはネガティブ条件を使用しません。これはそれら用のプレースホルダーノードです。Impact Kサンプラー、Kサンプラー (Inspire)、最適化 で使用されるネガティブ条件をこのノードに置き換えることでFLUX.1を利用できます。"
+    },
+    "GITSSchedulerFuncProvider": {
+        "title": "GITSスケジューラ関数プロバイダ",
+        "widgets": {
+            "coeff": "係数",
+            "denoise": "ノイズ低減強度"
+        },
+        "outputs": {
+            "SCHEDULER_FUNC": "スケジューリングプログラム関数"
+        },
+        "description": "GITSスケジューラ用のスケジューラ関数を提供します"
+    },
+    "VariationNoiseDetailerHookProvider": {
+        "title": "バリエーションノイズ最適化エンハンサーコンストレイントプロバイダ",
+        "widgets": {
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "strength": "強度"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "最適化コンストレイント"
+        },
+        "description": "バリエーション用シードを最適化プロセッサに適用します。組み合わせて複数の段階で適用することができます。"
+    },
+    "ImpactMakeTileSEGS": {
+        "title": "タイル分割Segを生成",
+        "inputs": {
+            "images": "画像",
+            "filter_in_segs_opt": "Segオプションのフィルタ",
+            "filter_out_segs_opt": "フィルタリングするSegオプション"
+        },
+        "widgets": {
+            "bbox_size": "BBoxサイズ",
+            "crop_factor": "クロップ係数",
+            "min_overlap": "最小オーバーラップ量",
+            "filter_segs_dilation": "分割領域膨張フィルタ",
+            "mask_irregularity": "マスク不規則度",
+            "irregular_mask_mode": "不規則マスクモード"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "workflow>Impact::MAKE_BASIC_PIPE": {
+        "title": "Impact:基本バンドル作成",
+        "inputs": {
+            "images": "画像",
+            "filter_in_segs_opt": "Segオプションのフィルタ",
+            "filter_out_segs_opt": "フィルタリングするSegオプション"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt名前",
+            "Positive prompt": "ポジティブプロンプト",
+            "Negative prompt": "ネガティブプロンプト",
+            "filter_segs_dilation": "分割領域膨張フィルタ",
+            "mask_irregularity": "マスク不規則度",
+            "irregular_mask_mode": "不規則マスクモード"
+        },
+        "outputs": {
+            "basic_pipe": "基本バンド"
+        }
+    },
+    "workflow>MAKE_BASIC_PIPE": {
+        "title": "基本バンドル作成",
+        "inputs": {
+            "images": "画像",
+            "filter_in_segs_opt": "Segオプションのフィルタ",
+            "filter_out_segs_opt": "フィルタリングするSegオプション"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt名前",
+            "text": "テキスト",
+            "CLIPTextEncode text": "CLIPテキストエンコードテキスト",
+            "vae_name": "VAE名前",
+            "mask_irregularity": "マスク不規則度",
+            "irregular_mask_mode": "不規則マスクモード"
+        },
+        "outputs": {
+            "basic_pipe": "基本バンド"
+        }
+    },
+    "UltralyticsDetectorProvider": {
+        "title": "検出ローダ",
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox検出",
+            "SEGM_DETECTOR": "SEGM検出"
+        }
+    }
+}

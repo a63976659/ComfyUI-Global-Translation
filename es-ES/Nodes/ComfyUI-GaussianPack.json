@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "Análisis gaussiano",
+        "inputs": {
+            "ply_path": "Ruta"
+        },
+        "outputs": {
+            "report": "Informe"
+        },
+        "description": "Inspecciona un archivo PLY de 3DGS e informa del formato, el orden de SH, la precisión y el tamaño."
+    },
+    "GaussianExport": {
+        "title": "Exportación gaussiana",
+        "inputs": {
+            "ply_path": "Ruta"
+        },
+        "widgets": {
+            "output_filename": "Nombre del archivo de salida",
+            "format": "Formato"
+        },
+        "outputs": {
+            "out_path": "Ruta de salida"
+        },
+        "description": "Convierte un PLY de 3DGS a otro formato (PLY de paso, PLY con SH eliminado o SPZ)."
+    },
+    "GaussiansFromPointCloud": {
+        "title": "Distribución gaussiana en la nube de puntos",
+        "inputs": {
+            "ply_path": "Ruta"
+        },
+        "widgets": {
+            "output_filename": "Nombre del archivo de salida",
+            "output_dir": "Directorio de salida",
+            "init_scale": "Escala inicial",
+            "init_opacity": "Opacidad inicial",
+            "knn_k": "Knn K",
+            "subsample_max": "Valor máximo de submuestreo"
+        },
+        "outputs": {
+            "ply_path": "Ruta"
+        },
+        "description": "Convierte un PLY de nube de puntos en un PLY de 3DGS con escalas derivadas de KNN."
+    },
+    "LoadPLY": {
+        "title": "Cargar archivos `.ply`",
+        "widgets": {
+            "ply_file": "Carpeta"
+        },
+        "outputs": {
+            "ply_path": "Ruta"
+        },
+        "description": "Explora los archivos `.ply` desde el directorio input/ de ComfyUI."
+    },
+    "LoadPLYOutput": {
+        "title": "Cargar salida `.ply`",
+        "widgets": {
+            "ply_file": "Archivo PLY"
+        },
+        "outputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "description": "Explora de forma recursiva los archivos `.ply` del directorio output/ de ComfyUI."
+    },
+    "GaussianMerge": {
+        "title": "Fusión gaussiana",
+        "inputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "widgets": {
+            "target_count": "Cantidad objetivo",
+            "output_filename": "Nombre del archivo de salida",
+            "opacity_threshold": "Umbral de opacidad",
+            "k": "k",
+            "backend": "Motor interno"
+        },
+        "outputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "description": "Fusiona un PLY de 3DGS por pares hasta llegar al número objetivo de gaussianas."
+    },
+    "PreviewGaussians": {
+        "title": "Vista previa de la distribución gaussiana",
+        "inputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "widgets": {
+            "camera_mode": "Modo de cámara",
+            "fov_degrees": "Ángulo de campo de visión",
+            "renderer": "Renderizador",
+            "transport_format": "Formato de transmisión"
+        },
+        "description": "Visor interactivo de salpicaduras gaussianas (gspalt.js).\n\nAdmite dos modos de cámara: órbita (gira la esfera) y observador (cámara de vuelo con WASD)."
+    },
+    "PreviewGaussianCamera": {
+        "title": "Vista previa de la cámara gaussiana",
+        "inputs": {
+            "ply_path": "Ruta PLY",
+            "extrinsics": "Extrínsecas",
+            "intrinsics": "Intrínsecas"
+        },
+        "widgets": {
+            "image_width": "Anchura de imagen",
+            "image_height": "Altura de imagen",
+            "near_plane": "Plano de recorte cercano",
+            "background": "Fondo",
+            "force_backend": "Forzar motor interno"
+        },
+        "outputs": {
+            "image": "Imagen"
+        },
+        "description": "Renderiza un PLY de 3DGS a un lote IMAGE a partir de la pose de cámara indicada."
+    },
+    "PreviewGaussianDual": {
+        "title": "Vista previa gaussiana dual",
+        "inputs": {
+            "ply_path_1": "Ruta PLY 1",
+            "ply_path_2": "Ruta PLY 2"
+        },
+        "widgets": {
+            "camera_mode": "Modo de cámara",
+            "fov_degrees": "Ángulo de campo de visión",
+            "renderer": "Renderizador",
+            "transport_format": "Formato de transmisión",
+            "layout": "Diseño"
+        },
+        "description": "Compara dos salpicaduras gaussianas lado a lado o las muestra con un deslizador."
+    },
+    "PreviewGaussianSharp": {
+        "title": "Vista previa de realce gaussiano",
+        "widgets": {
+            "ply_path": "Ruta PLY",
+            "extrinsics": "Extrínsecas",
+            "intrinsics": "Intrínsecas"
+        },
+        "description": "Vista previa de archivos Ply de salpicaduras gaussianas SHARP (visor gspalt.js).\n\nDuplica la vista previa gaussiana de GeometryPack: acepta EXTRINSICS/INTRINSICS y regenera el punto de vista de cámara capturado (la cámara mira hacia abajo por +Z desde la posición deducida de las extrínsecas; el FOV sale de las intrínsecas). Ideal para las salpicaduras gaussianas en abanico de profundidad monocular de SHARP, que solo son correctas en el origen de captura."
+    },
+    "TransformGaussian": {
+        "title": "Transformar gaussianas",
+        "inputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "widgets": {
+            "rotate_x": "Rotación alrededor del eje X",
+            "rotate_y": "Rotación alrededor del eje Y",
+            "rotate_z": "Rotación alrededor del eje Z"
+        },
+        "outputs": {
+            "ply_path": "Ruta PLY"
+        },
+        "description": "Rota un Ply de salpicaduras gaussianas alrededor de los ejes XYZ (en grados).\n\nLa posición y el cuaternión de cada salpicadura giran juntos; si existen, las normales también giran. Los coeficientes SH AC no cambian (la rotación Wigner-D correcta es un paso posterior)."
+    }
+}

@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "טוען מודל SUPIR",
+        "widgets": {
+            "supir_model": "מודל SUPIR",
+            "sdxl_model": "מודל SDXL",
+            "fp8_unet": "דיוק UNet FP8",
+            "diffusion_dtype": "סוג גיזום"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "מודל SUPIR",
+            "SUPIR_model": "מודל SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "טוען בגרסה ישנה, לא מומלץ לשימוש.\n\nטוען את מודל SUPIR ואת מודל SDXL ואז ממזג ביניהם."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "טוען מודל SUPIR_V2",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "מודל SUPIR",
+            "fp8_unet": "דיוק UNet FP8",
+            "diffusion_dtype": "סוג גיזום",
+            "high_vram": "VRAM גבוה"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "מודל SUPIR",
+            "SUPIR_model": "מודל SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "טוען את מודל SUPIR ואת מודל SDXL ואז ממזג ביניהם.\n\nיש לשמור על אפשרות סוג הגזירה כ\"אוטומטי\", אלא אם כן מתרחשת שגיאה בטעינת המודל.\n\nfp8_unet: מפעיל את UNet ב־torch.float8_e4m3fn; מפחית את דרישות ה־VRAM אך משפיע מעט על האיכות.\n\nVRAM גבוה: טוען את המודל ל־GPU באמצעות Accelerate, משפר מעט את מהירות הטעינה."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "טוען מודל SUPIR_V2 (CLIP)",
+        "inputs": {
+            "model": "מודל",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "מודל SUPIR",
+            "fp8_unet": "דיוק UNet FP8",
+            "diffusion_dtype": "סוג גיזום",
+            "high_vram": "VRAM גבוה"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "מודל SUPIR",
+            "SUPIR_model": "מודל SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "טוען את מודל SUPIR ואת מודל SDXL ואז ממזג ביניהם.\n\nיש לשמור על אפשרות סוג הגזירה כ\"אוטומטי\", אלא אם כן מתרחשת שגיאה בטעינת המודל.\n\nfp8_unet: מפעיל את UNet ב־torch.float8_e4m3fn; מפחית את דרישות ה־VRAM אך משפיע מעט על האיכות.\n\nVRAM גבוה: טוען את המודל ל־GPU באמצעות Accelerate, משפר מעט את מהירות הטעינה."
+    },
+    "SUPIR_encode": {
+        "title": "קידוד SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "תמונה"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE בחלקים",
+            "encoder_tile_size": "גודל אריח קידוד",
+            "encoder_dtype": "קיצוץ המקודד"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "פיענוח SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE בחלקים",
+            "decoder_tile_size": "גודל אריח פענוח"
+        },
+        "outputs": {
+            "image": "תמונה"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "שלב ראשון של SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "תמונה"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE בחלקים",
+            "encoder_tile_size": "גודל אריח קידוד",
+            "decoder_tile_size": "גודל אריח פענוח",
+            "encoder_dtype": "קיצוץ המקודד"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "תמונה",
+            "denoised_latents": "Latent"
+        },
+        "description": "ה«שלב הראשון» של SUPIR. מקודד ומפנח תמונה באמצעות ה-denoise_encoder של SUPIR, לתיקון עיוותי דחיסה, אך זה גורם לטשטוש התמונה.\n\nניתן להחליף בדוגם או בטשטוש אחר, או פשוט לא להשתמש בצומת זה."
+    },
+    "SUPIR_conditioner": {
+        "title": "תנאי SUPIR",
+        "inputs": {
+            "SUPIR_MODEL": "מודל SUPIR",
+            "SUPIR_model": "מודל SUPIR",
+            "latents": "Latent",
+            "captions": "כותרת/כתובית"
+        },
+        "widgets": {
+            "positive_prompt": "פרומפט חיובי",
+            "negative_prompt": "פרומפט שלילי"
+        },
+        "outputs": {
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי"
+        },
+        "description": "יוצר תנאים לדוגם.\n קלט הכותרת אופציונלי; כאשר הוא מקבל כותרת, היא נוספת לפרומפט החיובי\n אם מסופ רשימת כותרות עבור תמונת קלט בודדת, על הכותרות להתאים למספר האריחים\n יש לעיין ב־SUPIR אריחי תמונה\n אם מסופ רשימת כותרות והיא תואמת לאצוות התמונות הנכנסת, כל תמונה תשתמש בכותרת המתאימה לה"
+    },
+    "SUPIR_sample": {
+        "title": "דגימת SUPIR",
+        "inputs": {
+            "SUPIR_model": "מודל SUPIR",
+            "latents": "Latent",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "control_before_generate": "פעולה לפני הרצה",
+            "steps": "מספר צעדים",
+            "cfg_scale_start": "תחילת קנה מידה CFG",
+            "cfg_scale_end": "סיום קנה מידה CFG",
+            "EDM_s_churn": "הפרעה אקראית של EDM",
+            "s_noise": "כמות רעש",
+            "DPMPP_eta": "פרמטר אורך צעד של DPMPP",
+            "control_scale_start": "תחילת קנה מידה של שליטה",
+            "control_scale_end": "סיום קנה מידה של שליטה",
+            "restore_cfg": "שחזור CFG",
+            "keep_model_loaded": "שמירת המודל טעון",
+            "sampler": "מדגם",
+            "sampler_tile_size": "גודל אריח דוגם",
+            "sampler_tile_stride": "מרווח אריח דוגם"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent:**\n\nה־Latent המשמש לדגימה. כאשר משתמשים ב־SUPIR Latent, פרמטר זה משפיע רק על צורת הרעש.\n\nבשאר המקרים זה זהה לברירת המחדל של ComfyUI. \n\nאם קיים קלט Latent, הקלט גובר.\n\n- **CFG:**\n\nשליטה ב־CFG באמצעות אינטרפולציה ליניארית, כאשר שיכוך CFG התחלתי הוא הערך ההתחלתי והשיכוך ליניארית לשיכוך CFG סופי.\n\nהגדרת שני הערכים הללו לערך זהה מבטלת את אינטרפולציית השיכוך.\n\n- **EDM_s_churn:**\n\nשולט בקצב שבו תהליך הדגימה מתאים את עצמו לשינויי הרעש ב־Latent.\n\nלא יעיל עם דוגם DPMPP.\n\n- **כמות הרעש s_noise:**\n\nשולט בכמות הרעש שנוספת ל־Latent בכל צעד של תהליך הדגימה. \n\n- **DPMPP_eta:**\n\nגורם סקאלה המשפיע על תהליך ההפצה בכך שהוא מתאים כיצד תהליך הסרת הרעש מגיב לשינויים ברמת הרעש לאורך זמן.\n\nלא יעיל עם דוגם EDM. \n\n- **שיכוך בקרה control_scale:**\n\nעוצמת מודל הבקרה של SUPIR; העוצמה נשלטת מאותה נקודה ועד הסיום באמצעות אינטרפולציה ליניארית.\n\nככל שהערך קטן יותר, עוצמת הבקרה קטנה יותר.\n\n- **שחזור CFG restore_cfg:**\n\nשולט במידת השחזור לתמונה המקורית במהלך הדגימה.\n\nמשמש לכיוונון עדין של תהליך הדגימה.\n\n- **דוגם:**\n\nEDM דורש מספר רב של צעדים, אך לרוב האיכות טובה יותר.\n\nDPMPP דורש פחות צעדים ומתאים למודלי Lighting.\n\nהדוגם המפוצל לשבצים משתמש בדגימה בשבצים; הוא איטי מאוד, אך מאפשר להשיג רזולוציה גבוהה יותר בזיכרון VRAM נמוך יותר.\n\nלפני פיצול התמונה יש לקבוע את גודל השבץ; צעד השבץ משפיע על גודל החפיפה בין השבצים. את פונקציית הפיצול לשבצים ניתן לראות בצומת SUPIR אריחי תמונה."
+    },
+    "SUPIR_tiles": {
+        "title": "אריחי תמונה של SUPIR",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "tile_size": "גודל בלוק",
+            "tile_stride": "גודל צעד מקטע"
+        },
+        "outputs": {
+            "image_tiles": "מקטעי תמונה",
+            "tile_size": "גודל בלוק",
+            "tile_stride": "גודל צעד מקטע"
+        },
+        "description": "מפצל את התמונה לאריחים בשיטת הדוגם המפצל לאריחים.\n\nמשמש לתצוגה מקדימה של האריחים ולהסקת פרומפט לכל אריח (פיצ'ר זה עדיין בפיתוח)."
+    },
+    "SUPIR_Upscale": {
+        "title": "הגדלת SUPIR",
+        "inputs": {
+            "image": "תמונה",
+            "captions": "כותרת/כתובית"
+        },
+        "widgets": {
+            "supir_model": "מודל SUPIR",
+            "sdxl_model": "מודל SDXL",
+            "seed": "זרע אקראי",
+            "control_before_generate": "פעולה לפני הרצה",
+            "resize_method": "שיטת קנה-מידה",
+            "scale_by": "מקדם קנה מידה",
+            "steps": "מספר צעדים",
+            "restoration_scale": "קנה מידת שחזור",
+            "cfg_scale": "קנה מידה CFG",
+            "a_prompt": "פרומפט חיובי",
+            "n_prompt": "פרומפט שלילי",
+            "s_churn": "מקדם דעיכת רעש",
+            "s_noise": "כמות רעש",
+            "control_scale": "קנה מידת שליטה",
+            "cfg_scale_start": "עוצמת מנחה CFG התחלתית",
+            "control_scale_start": "משקל התחלתי של ControlNet",
+            "color_fix_type": "סוג תיקון צבע",
+            "keep_model_loaded": "שמירת המודל טעון",
+            "use_tiled_vae": "VAE בחלקים",
+            "encoder_tile_size": "גודל אריח קידוד",
+            "encoder_tile_size_pixels": "גודל אריח פענוח בפיקסלים",
+            "decoder_tile_size": "גודל אריח פענוח",
+            "decoder_tile_size_latent": "גודל אריח פענוח של Latent",
+            "diffusion_dtype": "סוג גיזום",
+            "encoder_dtype": "קיצוץ המקודד",
+            "batch_size": "גודל אצווה",
+            "use_tiled_sampling": "שימוש בדגימת אריחים",
+            "used_tiled_sampling": "שימוש בדגימת אריחים",
+            "sampler_tile_size": "גודל אריח דוגם",
+            "sampler_tile_stride": "מרווח אריח דוגם",
+            "fp8_unet": "דיוק UNet FP8",
+            "fp8_vae": "fp8_vae",
+            "sampler": "מדגם"
+        },
+        "outputs": {
+            "upscaled_image": "תמונה"
+        }
+    }
+}

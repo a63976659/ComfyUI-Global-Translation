@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "Carregar Modelo ICLight",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "model_path": "Modelo"
+        },
+        "outputs": {
+            "MODEL": "Modelo"
+        },
+        "description": "Maneira pouco agradável, porém eficaz de carregar modelos IC-Light.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nUse junto com o nó de condição ICLight."
+    },
+    "ICLightConditioning": {
+        "title": "Aplicar condição ICLight",
+        "inputs": {
+            "positive": "Condição positiva",
+            "negative": "Condição negativa",
+            "vae": "VAE",
+            "foreground": "Latent de Primeiro Plano",
+            "opt_background": "Latent de fundo (opcional)"
+        },
+        "widgets": {
+            "multiplier": "Multiplicador"
+        },
+        "outputs": {
+            "positive": "Condição positiva",
+            "negative": "Condição negativa",
+            "empty_latent": "Latent vazio"
+        },
+        "description": "Nó de condição para modelos IC-Light. Para usar o “Latent de fundo”, é necessário trocar o modelo IC-Light para a versão “fbc”."
+    },
+    "LightSource": {
+        "title": "Fonte de luz simples",
+        "inputs": {
+            "prev_image": "Imagem Anterior"
+        },
+        "widgets": {
+            "light_position": "Posição da luz",
+            "multiplier": "Luminosidade",
+            "start_color": "Cor inicial",
+            "end_color": "Cor final",
+            "width": "Largura",
+            "height": "Altura",
+            "batch_size": "Tamanho do lote"
+        },
+        "outputs": {
+            "IMAGE": "Imagem"
+        },
+        "description": "Gera uma imagem em tons de cinza com gradiente que pode ser usada como fonte de luz simples. As cores podem ser especificadas por RGB ou HEX."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Calcular normais",
+        "inputs": {
+            "images": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Centro da faixa de entrada"
+        },
+        "outputs": {
+            "divided": "Separador",
+            "normal": "Imagem de normal"
+        },
+        "description": "Calcula as normais a partir de imagens de diferentes ângulos.\nRequer um lote de imagens contendo 4 imagens: esquerda, direita, baixo, cima"
+    },
+    "LoadHDRImage": {
+        "title": "Carregar Imagem HDR",
+        "widgets": {
+            "image": "Imagem",
+            "exposure": "Exposição",
+            "exposures": "Exposição"
+        },
+        "outputs": {
+            "IMAGE": "Imagem",
+            "MASK": "Máscara"
+        },
+        "description": "Carrega imagens .hdr da pasta input.\nSaída: lote de imagens LDR."
+    },
+    "BackgroundScaler": {
+        "title": "Escala de cinza do fundo",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "scale": "Escala",
+            "invert": "Inverter"
+        },
+        "outputs": {
+            "IMAGE": "Imagem"
+        },
+        "description": "Ajusta a área da máscara como imagem em tons de cinza"
+    },
+    "DetailTransfer": {
+        "title": "Transferência de detalhes",
+        "inputs": {
+            "target": "Imagem de destino",
+            "source": "Imagem de referência",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "mode": "Modo",
+            "blur_sigma": "Sigma do desfoque",
+            "blend_factor": "Coeficiente de mesclagem"
+        },
+        "outputs": {
+            "IMAGE": "Imagem"
+        }
+    }
+}

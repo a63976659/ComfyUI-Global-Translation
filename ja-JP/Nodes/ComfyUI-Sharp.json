@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "画像属性からPLYへ変換",
+        "inputs": {
+            "gaussian_attrs": "ガウス属性",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "output_prefix": "出力プレフィックス",
+            "focal_length_px": "焦点距離ピクセル"
+        },
+        "outputs": {
+            "ply_path": "PLYファイルパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "ピクセルごとの14チャンネルの MULTIBAND_IMAGE（例：SharpPredictGaussianAttrs の1層目のガウシアン属性出力）＋一致するカメラの外部パラメータ／内部パラメータから、3DガウシアンポイントクラウドのPLYファイルを生成します。マルチバンドにはNDC位置が格納されており、このノードではSHARPのunproject_gaussiansを使って保存前にワールド座標系へ変換します。"
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharpパノラマキューブ分割",
+        "widgets": {
+            "panorama": "パノラマ画像",
+            "image_w": "画像幅",
+            "image_h": "画像高さ",
+            "fov_x_deg": "X視野角",
+            "fov_y_deg": "Y視野角",
+            "rot_deg": "回転角度",
+            "pitch_up": "上方向ピッチ角",
+            "pitch_down": "下方向ピッチ角"
+        },
+        "outputs": {
+            "face_images": "フェース画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "fov_x_deg": "X軸視野角",
+            "num_faces": "ポリゴン数"
+        },
+        "description": "アスペクト比2:1の球形パノラマ画像から、固定のピッチ角・ヨー角グリッドでN個の透視クロップをサンプリングします（デフォルトはピッチ3×ヨー3＝27ビュー）。WorldStereoPanoramaCubeSplitとジオメトリが一致しており、各面の深度モデルへの入力段階として使用し、その出力はSharpDepthMergeでつなぎ戻せます。\n\nSharpのSamplePanorama（FOV＋オーバーラップからグリッドを導出し、出力は正方形）とは異なり、このノードは固定のピッチ角グリッドと矩形アスペクト比（デフォルト832x480）を持ち、WorldStereoのpano_bankが使用するカメラ／内部パラメータの規約に準拠しています。"
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp前景予測",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "mode": "モード",
+            "focal_length_mm": "焦点距離ミリメートル",
+            "output_prefix": "出力プレフィックス"
+        },
+        "outputs": {
+            "ply_path": "PLYファイルパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "Sharpを使用して画像から3DガウシアンポイントクラウドのPLYファイルを生成し、可視表面のガウシアンポイントクラウドのみを保持して、遮蔽された部分を破棄します。SharpPredictと比べて画像あたりのガウシアン数が半分になります。バッチ入力では番号付きのPLYファイルフォルダが作成されます。"
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "メトリック深度からガウシアンポイントクラウドを予測",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "metric_depth_layer0": "メートル深度レイヤー0",
+            "metric_depth_layer1": "メートル深度レイヤー1",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "focal_length_mm": "焦点距離ミリメートル",
+            "output_prefix": "出力プレフィックス",
+            "save_background_layer": "背景レイヤーを保存",
+            "snap_to_external_depth": "外部深度に整合",
+            "depth_convention": "深度規約",
+            "edge_crop": "エッジトリミング"
+        },
+        "outputs": {
+            "ply_path": "PLYファイルパス",
+            "ply_folder": "PLYフォルダパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "外部から提供されたメトリック深度をアライメント目標として使用し、Sharpのガウシアンデコーダを実行します。外部深度が `init_模型` ガウシアン基本値の一貫したジオメトリスケルトンとなり、ガウシアンポイントクラウドが複数ビュー間で一致した表面を共有します——各面の継ぎ目問題を解消します。\n\nPLYファイルを保存（単一画像->1つの.ply、バッチ->N個のNNN.plyを含むフォルダ）。MergeGaussiansパイプラインで1つのPLYファイルに結合します。"
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharpガウシアン属性予測",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "focal_length_mm": "焦点距離ミリメートル"
+        },
+        "outputs": {
+            "metric_depth": "メトリック深度",
+            "extrinsics_mdepth": "外部パラメータ_メートル深度",
+            "intrinsics_mdepth": "内部パラメータ_メトリック深度",
+            "first_layer_depth_refined": "第1層深度最適化",
+            "first_layer_gaussian_attrs": "第1層ガウス属性",
+            "second_layer_depth_refined": "第2層深度最適化",
+            "second_layer_gaussian_attrs": "第2層ガウス属性",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "Sharp推論を実行し、各ピクセルのガウシアンデコーダ出力をPLYファイルにフラット化するのではなく、構造化された階層テンソル（深度＋すべてのガウシアン属性のMULTIBAND_IMAGE）として公開します。\n\n深度出力でAlignDepthMapsを駆動して各面のスケールを復元し、PLYファイルを再構築する前にそのスケールをマルチバンドの位置チャネルに乗算します。"
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharpメトリック深度予測",
+        "widgets": {
+            "model": "モデル",
+            "image": "画像",
+            "focal_length_mm": "焦点距離ミリメートル",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "レイヤー0メトロ深度",
+            "layer_1_metric_depth": "レイヤー1メトロ深度",
+            "extrinsics_mdepth": "外部パラメータ_メートル深度",
+            "intrinsics_mdepth": "内部パラメータ_メトリック深度",
+            "layer_0_points_raw": "レイヤー0生ポイントクラウド",
+            "layer_1_points_raw": "レイヤー1生ポイントクラウド"
+        },
+        "description": "Sharpのエンコーダ＋変位ヘッドのみを実行します（ガウシアンデコーダはスキップ）。ピクセルごとのメトリック深度と対応する外部パラメータ／内部パラメータを出力します。深度のみが必要な場合、SharpPredictGaussianAttrsの約2倍の速度です。SharpDepthMergeに接続すると、クリーンな球面深度マージが可能です。"
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "ガウシアン分布からリファイン深度を取得",
+        "inputs": {
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "ply_path": "PLYパス",
+            "out_size": "出力サイズ"
+        },
+        "outputs": {
+            "depth_maps": "深度マップ",
+            "valid_mask": "有効マスク",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "Sharp が予測した PLY ガウシアン点を各面のカメラ空間に再投影し、詳細化されたピクセル単位の深度（実際にはデコーダが生成した z 値で、詳細化前の視差ヘッドではありません）を復元します。各ピクセルの最小深度=レイヤー0（可視表面）。\n\n深度マップを AlignDepthMaps に渡して対数スケールで整合し、結果の面単位のスケール係数をガウシアン点に適用してからガウシアン分布を統合してください。"
+    },
+    "ScaleImageValues": {
+        "title": "画像値を調整",
+        "widgets": {
+            "image": "画像"
+        },
+        "description": "画像のすべての値を[0, 1]区間に線形に再マッピングします。深度マップのプレビューに便利です（深度マップはメートルなどの単位を含められますが、ComfyUIのPreviewImageは[0, 1]範囲の値を期待するため）。各バッチ項目は、自身の(H, W, C)上の最小値/最大値に基づいて独立にスケーリングされます。定数値の画像はすべてゼロになります（ゼロ除算によるNaNにはなりません）。"
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "レイから平面深度へ変換",
+        "inputs": {
+            "image": "画像",
+            "intrinsics": "内部パラメータ",
+            "extrinsics": "外部パラメータ"
+        },
+        "outputs": {
+            "image": "画像",
+            "intrinsics": "内部パラメータ",
+            "extrinsics": "外部パラメータ"
+        },
+        "description": "面深度規約コンバータ。レイ距離深度に各面の余弦マッピング(1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)) を乗算して、Sharpガウシアンデコーダと逆投影が期待する平面Z深度を生成します。パノラマ分割深度ソース（アイソメトリック深度パノラマ上のPanoramaSplit）とSharp予測ノードの間に配置します。内部パラメータが正規化形式で渡された場合、ピクセル単位のKに再調整し、すべての下流ノードが一貫した単位を見るようにします。"
+    },
+    "AlignDepthMaps": {
+        "title": "深度マップ整合",
+        "inputs": {
+            "depth_maps": "深度マップ",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "reference_view": "参照ビュー",
+            "method": "手法"
+        },
+        "outputs": {
+            "aligned_depth_maps": "整合後の深度マップ",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "alignment_info": "整合情報"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "EXIF情報付き画像を読み込み",
+        "widgets": {
+            "image": "画像",
+            "default_focal_mm": "デフォルト焦点距離（ミリ）"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "focal_length_mm": "焦点距離（ミリ）"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "Sharpモデル読み込み",
+        "widgets": {
+            "precision": "精度",
+            "checkpoint_path": "チェックポイントパス"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "ガウシアン分布の統合",
+        "widgets": {
+            "ply_folder": "PLYフォルダ",
+            "output_prefix": "出力プレフィックス",
+            "max_depth": "最大深度",
+            "min_opacity": "最小透明度"
+        },
+        "outputs": {
+            "ply_path": "PLYパス",
+            "num_gaussians": "ガウス分布数"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp予測",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "focal_length_mm": "焦点距離（ミリ）",
+            "output_prefix": "出力プレフィックス"
+        },
+        "outputs": {
+            "ply_path": "PLYパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp深度予測",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "reference_depth": "参照深度"
+        },
+        "outputs": {
+            "depth_maps": "深度マップ",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "alignment_maps": "整合マップ"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "深度をパノラマに投影",
+        "inputs": {
+            "depth_maps": "深度マップ",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "panorama_width": "パノラマ画像幅",
+            "show_borders": "境界を表示",
+            "disagreement_scale": "不一致スケール",
+            "blend_mode": "ブレンドモード",
+            "border_color": "ボーダー色"
+        },
+        "outputs": {
+            "panoramic_depth": "パノラマ深度",
+            "debug_overlay": "デバッグオーバーレイ",
+            "disagreement_heatmap": "不一致ヒートマップ"
+        },
+        "description": "カテゴリ: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "パノラマサンプリング",
+        "inputs": {
+            "panorama": "パノラマ画像"
+        },
+        "widgets": {
+            "fov_degrees": "視野角（度）",
+            "overlap_percent": "重複パーセンテージ",
+            "output_size": "出力サイズ",
+            "skip_poles": "極点をスキップ"
+        },
+        "outputs": {
+            "images": "画像",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ",
+            "num_horizontal": "水平方向数",
+            "num_vertical": "垂直方向数"
+        },
+        "description": "カテゴリ: Sharp"
+    }
+}

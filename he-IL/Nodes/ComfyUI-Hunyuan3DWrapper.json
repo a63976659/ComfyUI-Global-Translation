@@ -1,0 +1,516 @@
+{
+    "Hy3DTorchCompileSettings": {
+        "title": "הגדרות הידור Torch של Hunyuan3D",
+        "widgets": {
+            "backend": "מנוע אחורי",
+            "fullgraph": "גרף שלם",
+            "mode": "מצב",
+            "dynamic": "דינמי",
+            "dynamo_cache_size_limit": "מגבלת מטמון של Dynamo",
+            "compile_transformer": "הידור של Transformer",
+            "compile_vae": "הידור של VAE"
+        },
+        "outputs": {
+            "torch_compile_args": "פרמטרי הידור של Torch"
+        }
+    },
+    "Hy3DPostprocessMesh": {
+        "title": "עיבוד משלים של הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "remove_floaters": "הסרת גופים מרחפים",
+            "remove_degenerate_faces": "הסרת פאות מנוונות",
+            "reduce_faces": "צמצום מספר הפאות",
+            "max_facenum": "מגבלת מספר הפאות המקסימלי",
+            "smooth_normals": "החלקת נורמלים"
+        },
+        "outputs": {
+            "trimesh": "הרשת לאחר האופטימיזציה"
+        }
+    },
+    "Hy3DModelLoader": {
+        "title": "טוען מודל של Hunyuan3D",
+        "inputs": {
+            "compile_args": "פרמטרי הידור"
+        },
+        "widgets": {
+            "model": "מודל",
+            "attention_mode": "מצב קשב",
+            "cublas_ops": "פעולות CUBLAS"
+        },
+        "outputs": {
+            "pipeline": "צינור",
+            "vae": "VAE"
+        }
+    },
+    "Hy3DVAELoader": {
+        "title": "טוען VAE של Hunyuan3D",
+        "widgets": {
+            "model_name": "שם מודל"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadHy3DDelightModel": {
+        "title": "טעינת מודל Hunyuan3D Delight (הורדה)",
+        "inputs": {
+            "compile_args": "פרמטרי הידור"
+        },
+        "widgets": {
+            "model": "מודל"
+        },
+        "outputs": {
+            "delight_pipe": "צינור Delight"
+        }
+    },
+    "Hy3DDelightImage": {
+        "title": "תמונת Delight של Hunyuan3D",
+        "inputs": {
+            "delight_pipe": "צינור Delight",
+            "image": "תמונה",
+            "scheduler": "מתזמן"
+        },
+        "widgets": {
+            "steps": "מספר צעדים",
+            "width": "רוחב",
+            "height": "גובה",
+            "cfg_image": "תמונת CFG",
+            "seed": "זרע"
+        },
+        "outputs": {
+            "image": "תמונה"
+        }
+    },
+    "DownloadAndLoadHy3DPaintModel": {
+        "title": "טעינת מודל Hunyuan3D Paint (הורדה)",
+        "inputs": {
+            "model": "מודל",
+            "compile_args": "פרמטרי הידור"
+        },
+        "outputs": {
+            "delight_pipe": "צינור Delight"
+        }
+    },
+    "Hy3DCameraConfig": {
+        "title": "תצורת מצלמה של Hunyuan3D",
+        "widgets": {
+            "camera_azimuths": "זווית אזימוט של המצלמה",
+            "camera_elevations": "זווית הגבהה של המצלמה",
+            "view_weights": "משקל התצוגה",
+            "camera_distance": "מרחק מצלמה",
+            "ortho_scale": "קנה מידה אורתוגונלי"
+        },
+        "outputs": {
+            "camera_config": "תצורת המצלמה"
+        }
+    },
+    "Hy3DMeshVerticeInpaintTexture": {
+        "title": "תיקון מרקם קודקודי הרשת אצל Hunyuan3D",
+        "inputs": {
+            "texture": "המרקם המקורי",
+            "mask": "מסיכת תיקון",
+            "renderer": "מרנדר"
+        },
+        "outputs": {
+            "texture": "מרקם",
+            "mask": "מסיכה",
+            "renderer": "מרנדר"
+        }
+    },
+    "Hy3DMeshUVWrap": {
+        "title": "עטיפת UV של הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "outputs": {
+            "trimesh": "רשת משולשת"
+        }
+    },
+    "Hy3DRenderMultiView": {
+        "title": "רינדור מרובה תצוגות אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת",
+            "camera_config": "תצורת המצלמה"
+        },
+        "widgets": {
+            "render_size": "גודל הרינדור",
+            "texture_size": "גודל מרקם",
+            "normal_space": "מרחב הנורמלים",
+            "camera_elevs": "זווית הגבהה של המצלמה",
+            "camera_azims": "זווית אזימוט של המצלמה",
+            "use_abs_coor": "קואורדינטות מוחלטות",
+            "bg_color": "צבע רקע"
+        },
+        "outputs": {
+            "normal_maps": "מפת נורמלים",
+            "position_maps": "מפת מיקום",
+            "renderer": "מרנדר",
+            "masks": "מסיכה"
+        }
+    },
+    "Hy3DRenderSingleView": {
+        "title": "רינדור תצוגה יחידה אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "render_type": "סוג הרינדור",
+            "render_size": "גודל הרינדור",
+            "camera_type": "סוג מצלמה",
+            "camera_distance": "מרחק מצלמה",
+            "pan_x": "הזזה לאורך ציר X",
+            "pan_y": "הזזה לאורך ציר Y",
+            "ortho_scale": "קנה מידה אורתוגונלי",
+            "azimuth": "זווית אזימוט",
+            "elevation": "גבהים",
+            "bg_color": "צבע רקע"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה"
+        }
+    },
+    "Hy3DRenderMultiViewDepth": {
+        "title": "רינדור עומק מרובה תצוגות אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת",
+            "camera_config": "תצורת המצלמה"
+        },
+        "widgets": {
+            "render_size": "גודל הרינדור",
+            "texture_size": "גודל מרקם",
+            "camera_elevs": "זווית הגבהה של המצלמה",
+            "camera_azims": "זווית אזימוט של המצלמה"
+        },
+        "outputs": {
+            "depth_maps": "מפת עומק",
+            "masks": "מסיכה"
+        }
+    },
+    "Hy3DGetMeshPBRTextures": {
+        "title": "השגת מרקמי PBR של הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "texture": "מרקם בסיסי"
+        },
+        "outputs": {
+            "image": "תמונה"
+        }
+    },
+    "Hy3DSetMeshPBRTextures": {
+        "title": "הגדרת מרקמי PBR של הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת",
+            "image": "תמונת מרקם PBR"
+        },
+        "widgets": {
+            "texture": "מרקם בסיסי"
+        },
+        "outputs": {
+            "trimesh": "רשת עם מרקם"
+        }
+    },
+    "Hy3DSetMeshPBRAttributes": {
+        "title": "הגדרת תכונות PBR של הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "baseColorFactor": "מקדם צבע בסיס",
+            "emissiveFactor": "מקדם הארה עצמית",
+            "metallicFactor": "מקדם מתכתיות",
+            "roughnessFactor": "מקדם חספוס",
+            "doubleSided": "רינדור דו־צדדי"
+        },
+        "outputs": {
+            "trimesh": "רשת עם תכונות PBR"
+        }
+    },
+    "Hy3DDiffusersSchedulerConfig": {
+        "title": "מתזמן הדיפוזיה של Hunyuan3D",
+        "inputs": {
+            "pipeline": "צינור"
+        },
+        "widgets": {
+            "scheduler": "מתזמן",
+            "sigmas": "ערך Sigma"
+        },
+        "outputs": {
+            "diffusers_scheduler": "מתזמן של Diffusers"
+        }
+    },
+    "Hy3DIMRemesh": {
+        "title": "רטופולוגיה מחדש של Instant-Meshes אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "merge_vertices": "מיזוג קודקודים",
+            "vertex_count": "מספר הקודקודים",
+            "smooth_iter": "מספר איטרציות החלקה",
+            "align_to_boundaries": "יישור הגבולות",
+            "triangulate_result": "תוצאת הטריאנגולציה",
+            "max_facenum": "מספר הפאות המקסימלי"
+        },
+        "outputs": {
+            "trimesh": "רשת עם רטופולוגיה חדשה"
+        }
+    },
+    "Hy3DBPT": {
+        "title": "בנייה מחדש של פואסון בייסיאני אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "enable_bpt": "הפעלת אלגוריתם BPT",
+            "seed": "זרע אקראי",
+            "control_after_generate": "שליטה לאחר יצירה",
+            "temperature": "מקדם טמפרטורה",
+            "pc_num": "מספר הנקודות בענן",
+            "samples": "מספר הדגימות"
+        },
+        "outputs": {
+            "trimesh": "הרשת לאחר האופטימיזציה"
+        }
+    },
+    "Hy3DSampleMultiView": {
+        "title": "דגימה מרובת תצוגות אצל Hunyuan3D",
+        "inputs": {
+            "pipeline": "צינור",
+            "ref_image": "תמונת ייחוס",
+            "normal_maps": "מפת נורמלים",
+            "position_maps": "מפת מרקם של המיקום",
+            "camera_config": "תצורת המצלמה",
+            "scheduler": "מתזמן",
+            "samples": "מספר הדוגמיות"
+        },
+        "widgets": {
+            "view_size": "גודל התצוגה",
+            "steps": "מספר צעדים",
+            "seed": "זרע",
+            "control after generate": "שליטה לאחר יצירה",
+            "denoise_strength": "עוצמת הסרת רעש"
+        },
+        "outputs": {
+            "image": "תמונה"
+        }
+    },
+    "CV2InpaintTexture": {
+        "title": "תיקון מרקם של CV2",
+        "inputs": {
+            "texture": "מרקם",
+            "mask": "מסיכת תיקון"
+        },
+        "widgets": {
+            "inpaint_radius": "רדיוס התיקון",
+            "inpaint_method": "אלגוריתם התיקון"
+        },
+        "outputs": {
+            "texture": "מרקם"
+        }
+    },
+    "Hy3DMeshInfo": {
+        "title": "מידע על הרשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "outputs": {
+            "trimesh": "הרשת המקורית",
+            "vertices": "קודקוד",
+            "faces": "פאות"
+        }
+    },
+    "Hy3DFastSimplifyMesh": {
+        "title": "פישוט רשת מהיר אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "target_count": "מספר פאות יעד",
+            "aggressiveness": "עוצמת הפישוט",
+            "max_iterations": "מקסימום חזרות",
+            "update_rate": "תדירות העדכון",
+            "preserve_border": "שמירה על הגבולות",
+            "lossless": "מצב חסר הפסד",
+            "threshold_lossless": "סף חסר הפסד"
+        },
+        "outputs": {
+            "trimesh": "הרשת המפושטת"
+        }
+    },
+    "Hy3DBakeFromMultiview": {
+        "title": "אפייה מרובת תצוגות אצל Hunyuan3D",
+        "inputs": {
+            "images": "תמונה",
+            "renderer": "מרנדר",
+            "camera_config": "תצורת המצלמה"
+        },
+        "widgets": {
+            "camera_config": "תצורת המצלמה",
+            "views": "מספר התצוגות",
+            "camera_elevs": "זווית הגבהה של המצלמה",
+            "camera_azims": "זווית אזימוט של המצלמה",
+            "view_weights": "משקל התצוגה",
+            "method": "שיטת האפייה"
+        },
+        "outputs": {
+            "texture": "מרקם",
+            "mask": "מסיכה",
+            "renderer": "מרנדר"
+        }
+    },
+    "Hy3DApplyTexture": {
+        "title": "החלת מרקם אצל Hunyuan3D",
+        "inputs": {
+            "texture": "מרקם",
+            "renderer": "מרנדר"
+        },
+        "outputs": {
+            "trimesh": "רשת משולשת"
+        }
+    },
+    "Hy3DLoadMesh": {
+        "title": "טעינת רשת אצל Hunyuan3D",
+        "widgets": {
+            "glb_path": "נתיב GLB"
+        },
+        "outputs": {
+            "trimesh": "רשת משולשת"
+        }
+    },
+    "Hy3DUploadMesh": {
+        "title": "העלאת רשת אצל Hunyuan3D",
+        "widgets": {
+            "mesh": "נתוני משב",
+            "choose glb file to upload": "בחירת קובץ GLB להעלאה"
+        },
+        "outputs": {
+            "trimesh": "רשת משולשת"
+        }
+    },
+    "Hy3DGenerateMesh": {
+        "title": "יצירת רשת אצל Hunyuan3D",
+        "inputs": {
+            "pipeline": "צינור",
+            "image": "תמונה",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "guidance_scale": "יחס הנחיה",
+            "steps": "מספר צעדים",
+            "seed": "זרע",
+            "scheduler": "מתזמן",
+            "force_offload": "העברה כפויה",
+            "front": "תצוגה קדמית",
+            "back": "תצוגה אחורית",
+            "left": "תצוגת שמאל",
+            "right": "תצוגת ימין"
+        },
+        "outputs": {
+            "latents": "מרחב סמוי"
+        }
+    },
+    "Hy3DGenerateMeshMultiView": {
+        "title": "יצירת רשת ממספר תצוגות אצל Hunyuan3D",
+        "inputs": {
+            "pipeline": "צינור העיבוד",
+            "front": "תצוגה קדמית",
+            "left": "תצוגת שמאל",
+            "right": "תצוגת ימין",
+            "back": "תצוגה אחורית"
+        },
+        "widgets": {
+            "guidance_scale": "יחס הנחיה",
+            "steps": "צעדי חזרה",
+            "seed": "זרע אקראי",
+            "control after generate": "שליטה לאחר יצירה",
+            "scheduler": "מתזמן"
+        },
+        "outputs": {
+            "latent": "מרחב סמוי",
+            "image": "תמונה",
+            "mask": "מסיכה"
+        }
+    },
+    "Hy3DVAEDecode": {
+        "title": "פיענוח VAE אצל Hunyuan3D",
+        "inputs": {
+            "vae": "VAE",
+            "latents": "מרחב סמוי"
+        },
+        "widgets": {
+            "box_v": "מסגרת גבולות",
+            "octree_resolution": "רזולוציית עץ אוקטלי",
+            "num_chunks": "מספר בלוקים",
+            "mc_level": "רמת MC",
+            "mc_algo": "אלגוריתם MC",
+            "enable_flash_vdm": "הפעלת Flash VDM",
+            "force_offload": "העברה כפויה"
+        },
+        "outputs": {
+            "trimesh": "רשת משולשת"
+        }
+    },
+    "Hy3DExportMesh": {
+        "title": "ייצוא רשת אצל Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "filename_prefix": "קידומת קובץ",
+            "file_format": "פורמט קובץ",
+            "save_file": "שמור קובץ"
+        },
+        "outputs": {
+            "glb_path": "נתיב glb"
+        }
+    },
+    "TrimeshToMESH": {
+        "title": "המרת רשת משולשת לפורמט MESH",
+        "inputs": {
+            "trimesh": "נתוני רשת משולשת"
+        },
+        "outputs": {
+            "mesh": "נתוני פורמט MESH"
+        }
+    },
+    "MESHToTrimesh": {
+        "title": "המרת פורמט MESH לרשת משולשת",
+        "inputs": {
+            "mesh": "נתוני פורמט MESH"
+        },
+        "outputs": {
+            "TRIMESH": "נתוני רשת משולשת"
+        }
+    },
+    "Hy3DNvdiffrastRenderer": {
+        "title": "מרנדר Nvdiffrast של Hunyuan3D",
+        "inputs": {
+            "trimesh": "רשת משולשת"
+        },
+        "widgets": {
+            "render_type": "סוג הרינדור",
+            "width": "רוחב פלט",
+            "height": "גובה פלט",
+            "ssaa": "החלקת קצוות בדגימת־על",
+            "num_frames": "מספר פריימים",
+            "camera_distance": "מרחק מצלמה",
+            "yaw": "זווית יוואו",
+            "pitch": "זווית גובה",
+            "fov": "טווח שדה הראייה",
+            "near": "מישור הקיצוץ הקרוב",
+            "far": "מישור קיצוץ רחוק",
+            "pan_x": "הזזה לאורך ציר X",
+            "pan_y": "הזזה לאורך ציר Y"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה"
+        }
+    }
+}

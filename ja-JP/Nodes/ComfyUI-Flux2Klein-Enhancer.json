@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Flux2Klein Kサンプラー（実験版）",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_image": "Latent画像",
+            "negative": "ネガティブ条件"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "seed": "ランダムシード",
+            "denoise": "ノイズ除去強度",
+            "base_shift": "基本オフセット",
+            "max_shift": "最大オフセット",
+            "cfg_scale": "CFGスケーリング係数",
+            "guidance_embed": "ガイダンス埋め込み"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Flux2Klein カラーアンカー",
+        "inputs": {
+            "model": "モデル",
+            "conditioning": "条件付き"
+        },
+        "widgets": {
+            "strength": "強度",
+            "ramp_curve": "グラデーションカーブ",
+            "ref_index": "参照インデックス",
+            "channel_weights": "チャンネル重み",
+            "debug": "デバッグモード"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Flux2Klein エンハンサー",
+        "inputs": {
+            "conditioning": "条件付き",
+            "device": "実行デバイス"
+        },
+        "widgets": {
+            "active_scale": "アクティブ領域スケール",
+            "per_token_whiten": "トークン単位ホワイトニング",
+            "norm_equalize": "ノルム均等化",
+            "early_layer_scale": "浅層スケール係数",
+            "mid_layer_scale": "中層スケール係数",
+            "late_layer_scale": "深層スケール係数",
+            "preserve_original": "オリジナルデータ保持",
+            "active_end_override": "アクティブ終点オーバーライド",
+            "debug": "デバッグモード"
+        },
+        "description": "Klein条件付けのアクティブ領域に対してスカラー／ホワイトニング処理を実行し、同時にKlein専用のQwen3レイヤー別スケール機能を提供します。"
+    },
+    "Flux2KleinDetailController": {
+        "title": "Flux2Klein ディテールコントローラー",
+        "inputs": {
+            "conditioning": "条件付き",
+            "device": "実行デバイス"
+        },
+        "widgets": {
+            "front_mult": "前半部倍率",
+            "mid_mult": "中部倍率",
+            "end_mult": "後半部倍率",
+            "emphasis_start": "強調開始位置",
+            "emphasis_end": "強調終了位置",
+            "emphasis_mult": "強調倍率",
+            "preserve_original": "オリジナルデータ保持",
+            "debug": "デバッグモード"
+        },
+        "description": "セクション埋め込み倍率調整器。\n\n実モード（推奨）：セクションエンコーダーと組み合わせて使用します。エンコーダーは条件付けメタデータ（`meta[\"klein_sections\"]`）としてセクションのトークン範囲を生成します。本ノードはユーザーが設定した係数に従い、対応する範囲内のアクティブ埋め込みの倍率を調整します。\n\n互換モード（旧版／非推奨）：セクションメタデータが存在しない場合、ノードはアクティブ領域を自動的に25%／50%／25%の固定比率で分割します。これらの分割境界は恣意的なものです——Qwen3のトークンには固定された位置意味論がないため——本ノードのv1バージョンはこのモードでは実質的な効果がほとんどありません。このモードは旧ワークフローとの互換性保持のために残されています。意味のあるセクション認識スケール効果を得るには、セクションエンコーダーへの切り替えを推奨します。"
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Flux2Klein マスク参照コントローラー",
+        "inputs": {
+            "conditioning": "条件付き",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "strength": "強度",
+            "invert_mask": "マスク反転",
+            "feather": "マスクぼかし",
+            "reference_index": "参照インデックス",
+            "debug": "デバッグモード"
+        },
+        "description": "描画したマスクを使用して参照Latentに空間減衰処理を適用します。\n\n参照Latentを、マスクから生成したピクセル単位のスカラ値で乗算します。条件付けLatentは直接その場で変更されます（meta['reference_Latents'] を置換）。"
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Flux2Klein 参照Latentコントローラー",
+        "inputs": {
+            "model": "モデル",
+            "conditioning": "条件付き"
+        },
+        "widgets": {
+            "strength": "強度",
+            "reference_index": "参照インデックス",
+            "spatial_fade": "空間フェード",
+            "spatial_fade_strength": "空間フェード強度",
+            "debug": "デバッグモード"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Flux2Klein テキスト参照バランサー",
+        "inputs": {
+            "model": "モデル",
+            "conditioning": "条件付き"
+        },
+        "widgets": {
+            "balance": "バランス係数",
+            "debug": "デバッグモード"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Flux2Klein 参照Latent重み調整器",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "reference_index": "参照インデックス",
+            "weight": "重み"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Flux2Klein テキストエンハンサー",
+        "inputs": {
+            "conditioning": "条件付き"
+        },
+        "widgets": {
+            "magnitude": "全体振幅",
+            "contrast": "コントラスト",
+            "normalize_strength": "正規化強度",
+            "skip_bos": "開始トークンをスキップ",
+            "debug": "デバッグモード"
+        },
+        "description": "テキスト条件付けトークンを修正します。\n\n操作順序：\n1. 正規化：トークン振幅を均等化\n2. コントラスト：トークン間の差異を拡大／縮小\n3. 振幅：全体をスケール"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Flux2Klein セクションエンコーダー",
+        "inputs": {
+            "clip": "クリップ",
+            "separator": "区切り文字"
+        },
+        "widgets": {
+            "front_text": "前部テキスト",
+            "mid_text": "中部テキスト",
+            "end_text": "後部テキスト",
+            "combined_prompt": "マージプロンプト",
+            "show_preview": "プレビュー表示",
+            "debug": "デバッグモード"
+        },
+        "outputs": {
+            "conditioning": "条件付き",
+            "front_section": "前部セクション",
+            "mid_section": "中部セクション",
+            "end_section": "後部セクション",
+            "full_prompt": "完全プロンプト"
+        },
+        "description": "3セグメント式のプロンプトをトークン分割し、セクションのトークン範囲を条件付けメタデータとして生成して、ディテールコントローラーが読み取れるようにします。"
+    },
+    "IdentityFeatureTransfer": {
+        "title": "アイデンティティ特徴転移",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_block": "開始ブロック",
+            "end_block": "終了ブロック",
+            "mode": "モード",
+            "top_k_percent": "Top Kパーセンテージ"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "アイデンティティ特徴転移（高度版）",
+        "inputs": {
+            "model": "モデル",
+            "subject_mask": "主体マスク"
+        },
+        "widgets": {
+            "reference_index": "参照インデックス",
+            "mode": "モード",
+            "top_k_percent": "Top Kパーセンテージ",
+            "double_enable": "二重転移を有効化",
+            "double_strength": "二重転移強度",
+            "double_start": "二重転移開始点",
+            "double_end": "二重転移終了点",
+            "single_enable": "単一転移を有効化",
+            "single_strength": "単一転移強度",
+            "single_start": "単一転移開始点",
+            "single_end": "単一転移終了点",
+            "block_schedule": "ブロックスケジューリング",
+            "sim_floor": "類似度下限",
+            "mask_threshold": "マスク閾値"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "アイデンティティ特徴転移 V3",
+        "inputs": {
+            "model": "モデル",
+            "subject_mask": "主体マスク"
+        },
+        "widgets": {
+            "preset": "プリセット",
+            "reference_index": "参照インデックス",
+            "double_schedule": "二重転移スケジュール",
+            "single_schedule": "単一転移スケジュール",
+            "double_sim": "二重転移類似度",
+            "single_sim": "単一転移類似度",
+            "commit_margin": "コミット余量",
+            "commit_confirm": "コミット確定",
+            "commit_anchor": "コミットアンカー",
+            "mask_threshold": "マスク閾値",
+            "debug": "デバッグモード"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "最終アイデンティティ特徴転移",
+        "inputs": {
+            "model": "モデル",
+            "subject_mask_1": "主体マスク1",
+            "subject_mask_2": "主体マスク2",
+            "subject_mask_3": "主体マスク3",
+            "subject_mask_4": "主体マスク4",
+            "subject_mask_5": "主体マスク5",
+            "subject_mask_6": "主体マスク6",
+            "subject_mask_7": "主体マスク7",
+            "subject_mask_8": "主体マスク8"
+        },
+        "widgets": {
+            "preset": "プリセット",
+            "enabled": "有効",
+            "reference_index": "参照インデックス",
+            "reference_indices": "参照インデックスリスト",
+            "similarity_floor": "類似度下限",
+            "softmax_temperature": "Softmax温度係数",
+            "mask_threshold": "マスク閾値",
+            "double_blocks": "ダブルモジュール範囲",
+            "single_blocks": "シングルモジュール範囲",
+            "total_sampling_steps": "総サンプルステップ数",
+            "debug": "デバッグモード"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "アイデンティティ特徴ガイダンス",
+        "inputs": {
+            "model": "モデル",
+            "identity_latent": "アイデンティティ特徴Latent"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "有効化開始率",
+            "end_percent": "有効化終了率",
+            "mode": "モード"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Flux2 Klein複数参照Latent処理",
+        "inputs": {
+            "conditioning": "条件付き",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "条件付き"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "FLUX.2 Klein Kサンプラー",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブプロンプト",
+            "negative": "ネガティブプロンプト",
+            "latent_image": "画像Latent"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "guidance_scale": "ガイダンススケール",
+            "seed": "シード",
+            "denoise": "デノイズ",
+            "base_shift": "基礎シフト",
+            "max_shift": "最大シフト"
+        },
+        "description": "FLUX.2 Klein KSamplerノードは、Latent空間での画像生成に使用します。"
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Flux2 Kleinエンハンサー",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "magnitude": "振幅",
+            "contrast": "コントラスト",
+            "normalize_strength": "正規化強度",
+            "preserve_original": "オリジナル保持",
+            "preserve_mode": "保持モード",
+            "edit_text_weight": "編集テキスト重み",
+            "active_end_override": "アクティブ終了オーバーライド",
+            "low_vram": "低VRAM",
+            "device": "デバイス",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "FLUX. .Klein 条件付けエンハンサー。\n\n操作内容：\n- 振幅：アクティブ領域の埋め込みを直接スケール\n- コントラスト：トークン間の差異を拡大\n- 正規化：トークンサイズを均一化\n- オリジナル保持：複数のモードで元の埋め込みをミックスして戻す\n\nすべての操作はアクティブなテキスト領域のみを変更します（パディング部分は影響を受けません）。",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Flux2 Kleinディテールコントローラー",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "front_mult": "前部倍数",
+            "mid_mult": "中部倍数",
+            "end_mult": "末尾倍数",
+            "emphasis_start": "強調開始",
+            "emphasis_end": "強調終了",
+            "emphasis_mult": "強調倍数",
+            "preserve_original": "オリジナル保持",
+            "preserve_mode": "保持モード",
+            "low_vram": "低VRAM",
+            "device": "デバイス",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "FLUX. .Klein 条件付けの領域制御。\n\nアクティブトークンを領域へ分割します：\n- 前部：主題／主要な概念\n- 中部：詳細情報／修飾子\n- 末尾：スタイル／品質用語",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Flux2 Klein参照Latentコントローラー",
+        "inputs": {
+            "model": "モデル",
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "strength": "強度",
+            "reference_index": "参照インデックス",
+            "spatial_fade": "空間ディミング",
+            "spatial_fade_strength": "空間ディミング強度",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "MODEL": "モデル",
+            "CONDITIONING": "条件"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Flux2 Kleinテキストと参照のバランス",
+        "inputs": {
+            "model": "モデル",
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "balance": "バランス",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "MODEL": "モデル",
+            "CONDITIONING": "条件"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Flux2 Kleinテキストエンハンサー",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "magnitude": "振幅",
+            "contrast": "コントラスト",
+            "normalize_strength": "正規化強度",
+            "skip_bos": "開始シンボルをスキップ",
+            "debug": "デバッグ"
+        },
+        "outputs": {
+            "CONDITIONING": "条件"
+        },
+        "description": "テキスト条件付けトークンを修正します。\n\n操作順序：\n1. 正規化：トークンサイズを均一化\n2. コントラスト：トークン間の差異を拡大／縮小\n3. 振幅：全体をスケール",
+        "api_version": "V1"
+    }
+}

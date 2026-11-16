@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Flux2Klein K샘플러 (실험판)",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "latent_image": "Latent 이미지",
+            "negative": "네거티브 컨디셔닝"
+        },
+        "widgets": {
+            "steps": "스텝 수",
+            "seed": "랜덤 시드",
+            "denoise": "디노이즈 강도",
+            "base_shift": "기본 시프트량",
+            "max_shift": "최대 시프트량",
+            "cfg_scale": "CFG 스케일 계수",
+            "guidance_embed": "가이드 임베딩"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Flux2Klein 색상 앵커",
+        "inputs": {
+            "model": "모델",
+            "conditioning": "컨디션 제어"
+        },
+        "widgets": {
+            "strength": "강도",
+            "ramp_curve": "그라데이션 곡선",
+            "ref_index": "참조 인덱스",
+            "channel_weights": "채널 가중치",
+            "debug": "디버그 모드"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Flux2Klein 증강기",
+        "inputs": {
+            "conditioning": "컨디션 제어",
+            "device": "실행 장치"
+        },
+        "widgets": {
+            "active_scale": "활성 영역 축소·확대",
+            "per_token_whiten": "토큰별 화이트닝",
+            "norm_equalize": "노름 균형",
+            "early_layer_scale": "얕은 층 축소·확대 계수",
+            "mid_layer_scale": "중간 층 축소·확대 계수",
+            "late_layer_scale": "깊은 층 축소·확대 계수",
+            "preserve_original": "원본 데이터 유지",
+            "active_end_override": "활성 종료점 덮어쓰기",
+            "debug": "디버그 모드"
+        },
+        "description": "Klein 컨디셔닝의 활성 영역에 순수 스칼라/화이트닝 연산을 수행하며, Klein 전용 Qwen3 층별 축소·확대 기능을 제공합니다."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Flux2Klein 디테일 컨트롤러",
+        "inputs": {
+            "conditioning": "컨디션 제어",
+            "device": "실행 장치"
+        },
+        "widgets": {
+            "front_mult": "앞부분 배율",
+            "mid_mult": "중간 부분 배율",
+            "end_mult": "뒷부분 배율",
+            "emphasis_start": "강조 시작 위치",
+            "emphasis_end": "강조 종료 위치",
+            "emphasis_mult": "강조 배율",
+            "preserve_original": "원본 데이터 유지",
+            "debug": "디버그 모드"
+        },
+        "description": "구간별 임베딩 배율 조절기.\n\n실제 모드(권장): 구간별 인코더와 함께 사용합니다. 인코더가 구간별 토큰 범위를 컨디셔닝 메타데이터 (`meta[\"klein_sections\"]`)로 생성하며, 이 노드는 사용자가 설정한 계수에 따라 해당 범위의 활성 임베딩에 배율 조정을 적용합니다.\n\n호환 모드(레거시/비권장): 구간 메타데이터가 없는 경우, 노드가 활성 영역을 자동으로 25%/50%/25%의 고정 비율로 분할합니다. 이 분할 경계는 임의의 것입니다 — Qwen3 토큰에는 고정된 위치 의미가 없습니다 — 이 노드의 v1 버전은 이 모드에서 사실상 효과가 없습니다. 이 모드는 레거시 워크플로와의 호환성을 위해 유지되며, 의미 있는 구간 인식 축소·확대 효과를 얻으려면 구간별 인코더로 전환하는 것을 권장합니다."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Flux2Klein 마스크 참조 컨트롤러",
+        "inputs": {
+            "conditioning": "컨디션 제어",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "strength": "강도",
+            "invert_mask": "반전 마스크",
+            "feather": "마스크 페더링",
+            "reference_index": "참조 인덱스",
+            "debug": "디버그 모드"
+        },
+        "description": "그린 마스크로 참조 Latent에 공간 감쇠 처리를 적용합니다.\n\n참조 Latent에 마스크로 생성된 픽셀별 스칼라를 곱합니다. 컨디셔닝 Latent가 원래 위치에서 직접 수정됩니다(meta['reference_Latents'] 교체)."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Flux2Klein 참조 Latent 컨트롤러",
+        "inputs": {
+            "model": "모델",
+            "conditioning": "컨디션 제어"
+        },
+        "widgets": {
+            "strength": "강도",
+            "reference_index": "참조 인덱스",
+            "spatial_fade": "공간 페이드아웃",
+            "spatial_fade_strength": "공간 페이드아웃 강도",
+            "debug": "디버그 모드"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Flux2Klein 텍스트-참조 균형기",
+        "inputs": {
+            "model": "모델",
+            "conditioning": "컨디션 제어"
+        },
+        "widgets": {
+            "balance": "균형 계수",
+            "debug": "디버그 모드"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Flux2Klein 참조 Latent 가중치 조절기",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "reference_index": "참조 인덱스",
+            "weight": "가중치"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Flux2Klein 텍스트 증강기",
+        "inputs": {
+            "conditioning": "컨디션 제어"
+        },
+        "widgets": {
+            "magnitude": "전역 크기",
+            "contrast": "대비",
+            "normalize_strength": "정규화 강도",
+            "skip_bos": "시작 토큰 건너뛰기",
+            "debug": "디버그 모드"
+        },
+        "description": "텍스트 컨디셔닝 토큰을 수정합니다.\n\n연산 순서:\n1. 정규화: 토큰 크기 균형\n2. 대비: 토큰 간 차이 확대/축소\n3. 크기: 전체 축소·확대"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Flux2Klein 구간별 인코더",
+        "inputs": {
+            "clip": "클립",
+            "separator": "구분자"
+        },
+        "widgets": {
+            "front_text": "앞부분 텍스트",
+            "mid_text": "중간 텍스트",
+            "end_text": "뒷부분 텍스트",
+            "combined_prompt": "병합 프롬프트",
+            "show_preview": "미리보기 표시",
+            "debug": "디버그 모드"
+        },
+        "outputs": {
+            "conditioning": "컨디션 제어",
+            "front_section": "앞부분 구간",
+            "mid_section": "중간 구간",
+            "end_section": "뒷부분 구간",
+            "full_prompt": "전체 프롬프트"
+        },
+        "description": "3단 구성 프롬프트를 토큰화하고 구간별 토큰 범위를 컨디셔닝 메타데이터로 생성하여 디테일 컨트롤러가 읽어 가도록 합니다."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "신원 특징 전달",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "strength": "강도",
+            "start_block": "시작 블록",
+            "end_block": "종료 블록",
+            "mode": "모드",
+            "top_k_percent": "Top K 백분율"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "신원 특징 전달 (고급판)",
+        "inputs": {
+            "model": "모델",
+            "subject_mask": "주체 마스크"
+        },
+        "widgets": {
+            "reference_index": "참조 인덱스",
+            "mode": "모드",
+            "top_k_percent": "Top K 백분율",
+            "double_enable": "이중 전달 활성화",
+            "double_strength": "이중 전달 강도",
+            "double_start": "이중 전달 시작점",
+            "double_end": "이중 전달 종료점",
+            "single_enable": "단일 전달 활성화",
+            "single_strength": "단일 전달 강도",
+            "single_start": "단일 전달 시작점",
+            "single_end": "단일 전달 종료점",
+            "block_schedule": "블록 스케줄링",
+            "sim_floor": "유사도 하한",
+            "mask_threshold": "마스크 임계값"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "신원 특징 전달 V3",
+        "inputs": {
+            "model": "모델",
+            "subject_mask": "주체 마스크"
+        },
+        "widgets": {
+            "preset": "프리셋",
+            "reference_index": "참조 인덱스",
+            "double_schedule": "이중 전달 스케줄",
+            "single_schedule": "단일 전달 스케줄",
+            "double_sim": "이중 전달 유사도",
+            "single_sim": "단일 전달 유사도",
+            "commit_margin": "커밋 여유",
+            "commit_confirm": "커밋 확인",
+            "commit_anchor": "커밋 앵커",
+            "mask_threshold": "마스크 임계값",
+            "debug": "디버그 모드"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "최종 신원 특징 전달",
+        "inputs": {
+            "model": "모델",
+            "subject_mask_1": "주체 마스크1",
+            "subject_mask_2": "주체 마스크2",
+            "subject_mask_3": "주체 마스크3",
+            "subject_mask_4": "주체 마스크4",
+            "subject_mask_5": "주체 마스크5",
+            "subject_mask_6": "주체 마스크6",
+            "subject_mask_7": "주체 마스크7",
+            "subject_mask_8": "주체 마스크8"
+        },
+        "widgets": {
+            "preset": "프리셋",
+            "enabled": "활성화",
+            "reference_index": "참조 인덱스",
+            "reference_indices": "참조 인덱스 목록",
+            "similarity_floor": "유사도 하한",
+            "softmax_temperature": "Softmax 온도 계수",
+            "mask_threshold": "마스크 임계값",
+            "double_blocks": "더블 블록 범위",
+            "single_blocks": "싱글 블록 범위",
+            "total_sampling_steps": "총 샘플 스텝 수",
+            "debug": "디버그 모드"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "신원 특징 가이드",
+        "inputs": {
+            "model": "모델",
+            "identity_latent": "신원 특징 Latent"
+        },
+        "widgets": {
+            "strength": "강도",
+            "start_percent": "적용 시작 백분율",
+            "end_percent": "적용 종료 백분율",
+            "mode": "모드"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Flux2 Klein 다중 참조 Latent 처리",
+        "inputs": {
+            "conditioning": "컨디션 제어",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "컨디션 제어"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "FLUX.2 Klein K샘플러",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 프롬프트",
+            "negative": "부정 프롬프트",
+            "latent_image": "이미지 Latent"
+        },
+        "widgets": {
+            "steps": "스텝 수",
+            "guidance_scale": "가이드 배율",
+            "seed": "시드",
+            "denoise": "디노이즈",
+            "base_shift": "기본 오프셋",
+            "max_shift": "최대 오프셋"
+        },
+        "description": "FLUX.2 Klein KSampler 노드는 Latent 공간에서 이미지 생성을 수행합니다."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Flux2 Klein 증강기",
+        "inputs": {
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "magnitude": "크기",
+            "contrast": "대비",
+            "normalize_strength": "정규화 강도",
+            "preserve_original": "원본 유지",
+            "preserve_mode": "유지 모드",
+            "edit_text_weight": "편집 텍스트 가중치",
+            "active_end_override": "활성 종료 덮어쓰기",
+            "low_vram": "저VRAM",
+            "device": "장치",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "FLUX. .Klein 컨디셔닝 증강기.\n\n연산 내용:\n- 크기: 활성 영역 임베딩을 직접 축소·확대\n- 대비: 토큰 간 차이 확대\n- 정규화: 토큰 크기를 균일하게 맞춤\n- 원본 유지: 다양한 모드로 원본 임베딩에 다시 혼합\n\n모든 연산은 활성 텍스트 영역만 수정합니다(패딩 부분은 영향 없음).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Flux2 Klein 디테일 컨트롤러",
+        "inputs": {
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "front_mult": "앞부분 배수",
+            "mid_mult": "중간 부분 배수",
+            "end_mult": "끝부분 배수",
+            "emphasis_start": "강조 시작",
+            "emphasis_end": "강조 종료",
+            "emphasis_mult": "강조 배수",
+            "preserve_original": "원본 유지",
+            "preserve_mode": "유지 모드",
+            "low_vram": "저VRAM",
+            "device": "장치",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "FLUX. .Klein 컨디셔닝의 영역 제어.\n\n활성 토큰을 영역으로 분할:\n- 앞부분: 주제/핵심 개념\n- 중간: 상세 정보/수식어\n- 끝부분: 스타일/품질 용어",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Flux2 Klein 참조 Latent 컨트롤러",
+        "inputs": {
+            "model": "모델",
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "strength": "강도",
+            "reference_index": "참조 인덱스",
+            "spatial_fade": "공간 페이딩",
+            "spatial_fade_strength": "공간 페이딩 강도",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "MODEL": "모델",
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Flux2 Klein 텍스트-참조 균형",
+        "inputs": {
+            "model": "모델",
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "balance": "균형",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "MODEL": "모델",
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Flux2 Klein 텍스트 증강기",
+        "inputs": {
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "magnitude": "크기",
+            "contrast": "대비",
+            "normalize_strength": "정규화 강도",
+            "skip_bos": "시작 심볼 건너뛰기",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "CONDITIONING": "컨디셔닝"
+        },
+        "description": "텍스트 컨디셔닝 토큰을 수정합니다.\n\n연산 순서:\n1. 정규화: 토큰 크기 균일 맞춤\n2. 대비: 토큰 간 차이 확대/축소\n3. 크기: 전체 축소·확대",
+        "api_version": "V1"
+    }
+}

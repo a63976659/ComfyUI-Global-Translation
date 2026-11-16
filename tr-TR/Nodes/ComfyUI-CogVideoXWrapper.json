@@ -1,0 +1,403 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "CogVideo modelini indir ve yükle",
+        "inputs": {
+            "block_edit": "Blok düzenleme",
+            "lora": "LoRA modeli",
+            "compile_args": "Derleme parametreleri"
+        },
+        "widgets": {
+            "precision": "Hassasiyet",
+            "quantization": "Niceleme",
+            "enable_sequential_cpu_offload": "Sıralı CPU'ya aktarmayı etkinleştir",
+            "attention_mode": "Dikkat modu",
+            "load_device": "Yükleme aygıtı",
+            "compile": "Derleme"
+        },
+        "outputs": {
+            "cogvideomodel": "CogVideo modeli",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "CogVideo Görsel Kodlama",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "Görsel",
+            "vae": "VAE",
+            "start_image": "Başlangıç görseli",
+            "end_image": "Bitiş görseli"
+        },
+        "widgets": {
+            "enable_tiling": "Parçalamayı etkinleştir",
+            "noise_aug_strength": "Gürültü güçlendirme şiddeti",
+            "strength": "Şiddet",
+            "start_percent": "Başlangıç yüzdesi",
+            "end_percent": "Bitiş yüzdesi"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "CogVideo Kod Çözme",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "VAE parçalamayı etkinleştir",
+            "tile_sample_min_height": "Parça örnek minimum yüksekliği",
+            "tile_sample_min_width": "Parça örnek minimum genişliği",
+            "tile_overlap_factor_height": "Parça örtüşme yükseklik çarpanı",
+            "tile_overlap_factor_width": "Parça örtüşme genişlik çarpanı",
+            "auto_tile_size": "Otomatik parça boyutu",
+            "pipeline": "Boru hattı"
+        },
+        "outputs": {
+            "images": "Görsel"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "CogVideo Metin Kodlama",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "İstem",
+            "strength": "Şiddet",
+            "force_offload": "Zorla aktar"
+        },
+        "outputs": {
+            "conditioning": "Koşullandırma",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "CogVideo Örneklemeleyici",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "samples": "Latent",
+            "image_cond_latents": "Görsel koşullandırma Latent'i",
+            "context_options": "Bağlam seçenekleri",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "Tora yörüngesi",
+            "fastercache": "Hızlı önbellek",
+            "feta_args": "Video güçlendirme parametreleri",
+            "teacache_args": "Tea Önbellek Parametreleri"
+        },
+        "widgets": {
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "num_frames": "Kare sayısı",
+            "fps": "Kare hızı",
+            "steps": "Adım sayısı",
+            "cfg": "CFG",
+            "seed": "Tohum",
+            "control_after_generate": "Çalıştırma sonrası eylem",
+            "scheduler": "Zamanlayıcı",
+            "t_tile_length": "Parça uzunluğu",
+            "t_tile_overlap": "Parça örtüşmesi",
+            "denoise_strength": "Gürültü giderme"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "CogVideo LoRA Seçici",
+        "inputs": {
+            "lora": "LoRA modeli",
+            "strength": "Şiddet",
+            "prev_lora": "Önceki LoRA",
+            "fuse_lora": "LoRA kaynaştırma"
+        },
+        "widgets": {
+            "lora": "LoRA modeli",
+            "strength": "Şiddet",
+            "prev_lora": "Önceki LoRA",
+            "fuse_lora": "LoRA kaynaştırma"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "CogVideo LoRA Seçici (Comfy sürümü)",
+        "inputs": {
+            "lora": "LoRA modeli",
+            "strength": "Şiddet",
+            "prev_lora": "Önceki LoRA",
+            "fuse_lora": "LoRA kaynaştırma"
+        },
+        "widgets": {
+            "lora": "LoRA modeli",
+            "strength": "Şiddet",
+            "prev_lora": "Önceki LoRA",
+            "fuse_lora": "LoRA kaynaştırma"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "CogVideo GGUF modelini indir ve yükle",
+        "inputs": {
+            "block_edit": "Blok düzenleme"
+        },
+        "widgets": {
+            "vae_precision": "VAE hassasiyeti",
+            "fp8_fastmode": "FP8 Hızlı Mod",
+            "load_device": "Yükleme aygıtı",
+            "enable_sequential_cpu_offload": "Sıralı CPU'ya aktarmayı etkinleştir",
+            "attention_mode": "Dikkat modu",
+            "compile_args": "Derleme parametreleri"
+        },
+        "outputs": {
+            "cogvideomodel": "CogVideo modeli",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "CogVideoX Model Yükleyici",
+        "inputs": {
+            "base_precision": "Temel hassasiyet",
+            "quantization": "Niceleme",
+            "load_device": "Yükleme aygıtı",
+            "enable_sequential_cpu_offload": "Sıralı CPU'ya aktarmayı etkinleştir",
+            "block_edit": "Blok düzenleme",
+            "lora": "LoRA modeli",
+            "compile_args": "Derleme parametreleri",
+            "attention_mode": "Dikkat modu"
+        },
+        "outputs": {
+            "cogvideomodel": "CogVideo modeli"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "CogVideoX VAE Yükleyici",
+        "inputs": {
+            "model_name": "Model adı",
+            "precision": "Hassasiyet",
+            "compile_args": "Derleme parametreleri"
+        },
+        "widgets": {
+            "model_name": "Model adı",
+            "precision": "Hassasiyet",
+            "compile_args": "Derleme parametreleri"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "Tora modelini indir ve yükle",
+        "outputs": {
+            "tora_model": "Tora modeli"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "CogVideo ControlNet'i indir ve yükle",
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet modeli"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "CogVideo Video Güçlendirme",
+        "widgets": {
+            "weight": "Ağırlık",
+            "start_percent": "Başlangıç yüzdesi",
+            "end_percent": "Bitiş yüzdesi"
+        },
+        "outputs": {
+            "feta_args": "Video güçlendirme parametreleri"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "CogVideo Bağlam Seçenekleri",
+        "inputs": {
+            "freenoise": "Serbest gürültü"
+        },
+        "widgets": {
+            "context_schedule": "Bağlam planı",
+            "context_frames": "Bağlam kare sayısı",
+            "context_stride": "Bağlam adım aralığı",
+            "context_overlap": "Bağlam örtüşmesi",
+            "freenoise": "Serbest gürültü"
+        },
+        "outputs": {
+            "context_options": "Bağlam seçenekleri"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "CogVideo Transformer Düzenleme",
+        "inputs": {
+            "remove_blocks": "Blokları kaldır"
+        },
+        "outputs": {
+            "block_list": "Engelleme listesi",
+            "transformerblocks": "Transformer blokları"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "CogVideo Torch Derleme Ayarları",
+        "widgets": {
+            "backend": "Arka uç",
+            "fullgraph": "Tam grafik",
+            "mode": "Mod",
+            "dynamic": "Dinamik",
+            "dynamo_cache_size_limit": "Dynamo Önbellek Boyutu Sınırı"
+        },
+        "outputs": {
+            "torch_compile_args": "Torch Derleme Parametreleri",
+            "compileargs": "Derleme parametreleri"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "CogVideo Metin Kodlama Birleştirme",
+        "inputs": {
+            "conditioning_1": "Koşullandırma 1",
+            "conditioning_2": "Koşullandırma 2"
+        },
+        "widgets": {
+            "combination_mode": "Birleştirme modu",
+            "weighted_average_ratio": "Ağırlıklı ortalama oranı"
+        },
+        "outputs": {
+            "conditioning": "Koşullandırma"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "Tora Yörünge Kodlama",
+        "inputs": {
+            "tora_model": "Tora modeli",
+            "vae": "VAE",
+            "coordinates": "Koordinatlar"
+        },
+        "widgets": {
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "num_frames": "Kare sayısı",
+            "strength": "Şiddet",
+            "start_percent": "Başlangıç yüzdesi",
+            "end_percent": "Bitiş yüzdesi",
+            "enable_tiling": "Parçalamayı etkinleştir"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora yörüngesi",
+            "video_flow_images": "Video akışı görselleri"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "Tora Optik Akış Kodlama",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "Tora modeli",
+            "optical_flow": "Optik akış"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "start_percent": "Başlangıç yüzdesi",
+            "end_percent": "Bitiş yüzdesi"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora yörüngesi"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "CogVideo Görsel Kodlama FunInP",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "Başlangıç görseli",
+            "end_image": "Bitiş görseli"
+        },
+        "widgets": {
+            "num_frames": "Kare sayısı",
+            "enable_tiling": "Parçalı işlemeyi etkinleştir",
+            "noise_aug_strength": "Gürültü güçlendirme şiddeti"
+        },
+        "outputs": {
+            "image_cond_latents": "Görsel koşullandırma Latent'i"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "CogVideo X Hızlı Önbellek",
+        "inputs": {
+            "num_blocks_to_cache": "Önbellek blok sayısı"
+        },
+        "widgets": {
+            "start_step": "Başlangıç adımı",
+            "hf_step": "Yüksek frekans adımı",
+            "lf_step": "Alçak frekans adımı",
+            "cache_device": "Önbellek aygıtı",
+            "num_blocks_to_cache": "Önbellek blok sayısı"
+        },
+        "outputs": {
+            "fastercache": "Hızlı önbellek"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "CogVideoX Tea Önbelleği",
+        "widgets": {
+            "rel_l1_thresh": "Göreli L1 eşiği"
+        },
+        "outputs": {
+            "teacache_args": "Tea Önbellek Parametreleri"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "CogVideo ControlNet",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "Görsel"
+        },
+        "widgets": {
+            "control_strength": "Kontrol şiddeti",
+            "control_start_percent": "Kontrol başlangıç yüzdesi",
+            "control_end_percent": "Kontrol bitiş yüzdesi"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "CogVideoX'i En Yakın Kova Boyutuna Akıllıca Ayarla",
+        "inputs": {
+            "images": "Görsel"
+        },
+        "widgets": {
+            "base_resolution": "Temel çözünürlük",
+            "upscale_method": "Büyütme yöntemi",
+            "crop": "Kırp"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "images": "Görsel",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "int": "Tamsayı"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "CogVideo Latent Önizlemesi",
+        "inputs": {
+            "samples": "Örnekleme"
+        },
+        "widgets": {
+            "seed": "Tohum",
+            "min_val": "Minimum",
+            "max_val": "Maksimum",
+            "r_bias": "R sapması",
+            "g_bias": "G sapması",
+            "b_bias": "B sapması"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "images": "Görsel",
+            "latent_rgb_factors": "Latent RGB faktörleri",
+            "string": "Dize"
+        }
+    }
+}

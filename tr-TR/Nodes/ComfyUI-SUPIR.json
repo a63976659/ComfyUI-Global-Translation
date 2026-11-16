@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "SUPIR Model Yükleyici",
+        "widgets": {
+            "supir_model": "SUPIR Modeli",
+            "sdxl_model": "SDXL Modeli",
+            "fp8_unet": "FP8 UNet Kesinliği",
+            "diffusion_dtype": "Budama türü"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR Modeli",
+            "SUPIR_model": "SUPIR Modeli",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Eski sürüm yükleyici; kullanılması önerilmez.\n\nSUPIR modelini ve SDXL modelini yükler, ardından kaynaştırır."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "SUPIR Model Yükleyici_V2",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR Modeli",
+            "fp8_unet": "FP8 UNet Kesinliği",
+            "diffusion_dtype": "Budama türü",
+            "high_vram": "Yüksek VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR Modeli",
+            "SUPIR_model": "SUPIR Modeli",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR modelini ve SDXL modelini yükler, ardından birleştirir.\n\nModel yüklenirken hata oluşmadıkça budama türü Otomatik seçeneğinde kalmalıdır.\n\nfp8_unet: UNet'i torch.float8_e4m3fn ile çağırır; VRAM gereksinimini düşürür ama kaliteyi hafif etkiler.\n\nYüksek VRAM: modeli Accelerate ile GPU'ya yükler, yükleme hızını hafifçe artırır."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "SUPIR Model Yükleyici_V2（CLIP）",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR Modeli",
+            "fp8_unet": "FP8 UNet Kesinliği",
+            "diffusion_dtype": "Budama türü",
+            "high_vram": "Yüksek VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR Modeli",
+            "SUPIR_model": "SUPIR Modeli",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR modelini ve SDXL modelini yükler, ardından birleştirir.\n\nModel yüklenirken hata oluşmadıkça budama türü Otomatik seçeneğinde kalmalıdır.\n\nfp8_unet: UNet'i torch.float8_e4m3fn ile çağırır; VRAM gereksinimini düşürür ama kaliteyi hafif etkiler.\n\nYüksek VRAM: modeli Accelerate ile GPU'ya yükler, yükleme hızını hafifçe artırır."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR Kodlama",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Görsel"
+        },
+        "widgets": {
+            "use_tiled_vae": "Parçalı VAE",
+            "encoder_tile_size": "Kodlama blok boyutu",
+            "encoder_dtype": "Kodlama budaması"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR Kod Çözme",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "Parçalı VAE",
+            "decoder_tile_size": "Kod çözme blok boyutu"
+        },
+        "outputs": {
+            "image": "Görsel"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR Aşama Bir",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Görsel"
+        },
+        "widgets": {
+            "use_tiled_vae": "Parçalı VAE",
+            "encoder_tile_size": "Kodlama blok boyutu",
+            "decoder_tile_size": "Kod çözme blok boyutu",
+            "encoder_dtype": "Kodlama budaması"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "Görsel",
+            "denoised_latents": "Latent"
+        },
+        "description": "SUPIR'in 「Birinci Aşaması」. SUPIR'in denoise_encoder'ı ile görseli kodlar ve kodunu çözer; sıkıştırma artefaktlarını onarmak için kullanılır ama görseli bulanıklaştırır.\n\nBaşka bir örnekleyici/bulanıklık düğümüyle değiştirilebilir veya bu düğüm hiç kullanılmayabilir."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR Koşul",
+        "inputs": {
+            "SUPIR_MODEL": "SUPIR Modeli",
+            "SUPIR_model": "SUPIR Modeli",
+            "latents": "Latent",
+            "captions": "Başlık/altyazı"
+        },
+        "widgets": {
+            "positive_prompt": "Olumlu istem",
+            "negative_prompt": "Negatif istem"
+        },
+        "outputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma"
+        },
+        "description": "Örnekleyici için koşul oluşturur.\n Başlık girişi isteğe bağlıdır; bir başlık aldığında onu olumlu isteme ekler\n Tek bir giriş görseli için bir başlık listesi sağlanırsa, bu başlıkların parça sayısıyla eşleşmesi gerekir\n Lütfen SUPIR Parçalı Görsel düğümüne bakın\n Bir başlık listesi sağlanır ve bu liste gelen görsel yığınıyla eşleşirse, her görsel ilgili başlığı kullanır"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR Örneklemesi",
+        "inputs": {
+            "SUPIR_model": "SUPIR Modeli",
+            "latents": "Latent",
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma"
+        },
+        "widgets": {
+            "seed": "Tohum",
+            "control_before_generate": "Çalıştırma öncesi eylem",
+            "steps": "Adım sayısı",
+            "cfg_scale_start": "Başlangıç CFG ölçeği",
+            "cfg_scale_end": "Bitiş CFG ölçeği",
+            "EDM_s_churn": "EDM Rastgele Pertürbasyon",
+            "s_noise": "Gürültü miktarı",
+            "DPMPP_eta": "DPMPP Adım Boyutu Parametresi",
+            "control_scale_start": "Başlangıç kontrol ölçeği",
+            "control_scale_end": "Bitiş kontrol ölçeği",
+            "restore_cfg": "Onarım CFG",
+            "keep_model_loaded": "Modeli yüklü tut",
+            "sampler": "Örneklemeleyici",
+            "sampler_tile_size": "Örnekleyici blok boyutu",
+            "sampler_tile_stride": "Örnekleyici blok adım uzunluğu"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nÖrneklemek için kullanılan Latent; SUPIR Latent kullanılırken bu öğe yalnızca gürültü şeklini etkiler.\n\nDiğer durumlarda ComfyUI varsayılanıyla aynı. \n\nBir Latent girişi varsa, giriş esas alınır.\n\n- **CFG：**\n\nCFG'yi lineer enterpolasyonla kontrol eder; Başlangıç CFG Ölçeğini başlangıç değeri alıp Bitiş CFG Ölçeği değerine lineer olarak ölçekler.\n\nBu iki öğeyi aynı değere ayarlamak enterpolasyon ölçeklendirmeyi devre dışı bırakır.\n\n- **EDM_s_churn：**\n\nÖrnekleme sürecinin Latent gürültü değişimlerine uyum hızını kontrol eder.\n\nDPMPP örnekleyicisinde etkisizdir.\n\n- **Gürültü miktarı s_noise：**\n\nÖrnekleme sürecinde her adımda Latent'e eklenen gürültü miktarını kontrol eder. \n\n- **DPMPP_eta：**\n\nGürültü giderme sürecinin zamanla gürültü düzeyinin değişimlerine nasıl uyum sağladığını ayarlayarak yayılma sürecini etkileyen ölçek faktörü.\n\nEDM örnekleyicisinde etkisizdir. \n\n- **Kontrol ölçeği control_scale：**\n\nSUPIR kontrol modelinin şiddeti; baştan sona lineer enterpolasyonla şiddeti kontrol eder.\n\nDeğer küçüldükçe kontrol şiddeti azalır.\n\n- **Geri yükleme CFG'si restore_cfg：**\n\nÖrnekleme sırasında özgün görselin ne ölçüde geri getirileceğini kontrol eder.\n\nÖrnekleme sürecini kademeli olarak ince ayarlamak için kullanılır.\n\n- **Örnekleyici：**\n\nEDM çok adım gerektirir ama genellikle daha iyi kalite verir.\n\nDPMPP daha az adım gerektirir, Lighting modellerine uygundur.\n\nParçalı örnekleyici parçalı örnekleme kullanır; çok yavaştır ama daha düşük VRAM ile daha yüksek çözünürlük elde edilebilir.\n\nGörseli parçalamadan önce parça boyutu belirlenmelidir; parça adım boyutu her parçanın örtüşme boyutunu etkiler. Parçalama özelliği için SUPIR Parçalı Görsel düğümüne bakılabilir."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR Parçalı Görsel",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "tile_size": "Parça boyutu",
+            "tile_stride": "Parça adım boyutu"
+        },
+        "outputs": {
+            "image_tiles": "Döşeme Görselleri",
+            "tile_size": "Parça boyutu",
+            "tile_stride": "Parça adım boyutu"
+        },
+        "description": "Parçalı örnekleyici yöntemiyle görseli parçalara ayırır.\n\nParça önizlemesi ve her parçanın ters çıkarımı için kullanılır (bu özellik hâlâ geliştirilmekte)."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR Büyütme",
+        "inputs": {
+            "image": "Görsel",
+            "captions": "Başlık/altyazı"
+        },
+        "widgets": {
+            "supir_model": "SUPIR Modeli",
+            "sdxl_model": "SDXL Modeli",
+            "seed": "Tohum",
+            "control_before_generate": "Çalıştırma öncesi eylem",
+            "resize_method": "Ölçekleme yöntemi",
+            "scale_by": "Ölçekleme katsayısı",
+            "steps": "Adım sayısı",
+            "restoration_scale": "Onarım ölçeği",
+            "cfg_scale": "CFG ölçekleme",
+            "a_prompt": "Olumlu istem",
+            "n_prompt": "Negatif istem",
+            "s_churn": "Gürültü azalma katsayısı",
+            "s_noise": "Gürültü miktarı",
+            "control_scale": "Kontrol ölçeği",
+            "cfg_scale_start": "CFG Güdüme Başlangıç Şiddeti",
+            "control_scale_start": "ControlNet Başlangıç Ağırlığı",
+            "color_fix_type": "Renk düzeltme türü",
+            "keep_model_loaded": "Modeli yüklü tut",
+            "use_tiled_vae": "Parçalı VAE",
+            "encoder_tile_size": "Kodlama blok boyutu",
+            "encoder_tile_size_pixels": "Kod çözme blok boyutu piksel",
+            "decoder_tile_size": "Kod çözme blok boyutu",
+            "decoder_tile_size_latent": "Kod çözme blok boyutu Latent",
+            "diffusion_dtype": "Budama türü",
+            "encoder_dtype": "Kodlama budaması",
+            "batch_size": "Yığın boyutu",
+            "use_tiled_sampling": "Parçalı Örnekleme Kullan",
+            "used_tiled_sampling": "Parçalı Örnekleme Kullan",
+            "sampler_tile_size": "Örnekleyici blok boyutu",
+            "sampler_tile_stride": "Örnekleyici blok adım uzunluğu",
+            "fp8_unet": "FP8 UNet Kesinliği",
+            "fp8_vae": "fp8_vae",
+            "sampler": "Örneklemeleyici"
+        },
+        "outputs": {
+            "upscaled_image": "Görsel"
+        }
+    }
+}

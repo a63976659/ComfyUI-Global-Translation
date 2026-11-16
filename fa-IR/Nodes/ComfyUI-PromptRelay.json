@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "رمزگذاری رلهٔ پرامپت",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "ویدیوی Latent خالی — اندازه‌ها از شکل آن خوانده می‌شوند.",
+            "global_prompt": "پرامپت سراسری",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "شرط را برای کل ویدیو تعیین می‌کند. نقش‌ها، اجسام و پس‌زمینهٔ صحنهٔ مداوم را لنگر می‌کند.",
+            "local_prompts": "پرامپت‌های قطعه‌بندی‌شده",
+            "Ordered prompts for each temporal segment, separated by |": "پرامپت‌های ترتیبی برای هر بازهٔ زمانی، جداشده با |",
+            "segment_lengths": "طول قطعه",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "تعداد فریم‌های فضای پیکسل برای هر قطعه، جداشده با ویرگول. اگر خالی بگذارید، به‌طور خودکار یکنواخت توزیع می‌شود.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "پارامتر فروپاشی جریمه. هر مقداری زیر حدود 0.1 مرزهای تیز می‌سازد (مقدار پیش‌فرض مقاله 0.001). برای گذار نرم‌تر 0.5 یا بیشتر را بیازمایید.",
+            "relay_options": "گزینه‌های رله",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "تنظیمات پیشرفتهٔ اختیاری در سطح جریان. گرهٔ گزینه‌های پیشرفتهٔ رله پرامپت را وصل کنید."
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت"
+        },
+        "description": "پرامپت سراسری را با پرامپت‌های قطعه‌بندی‌شدهٔ زمانی ترکیب و رمزگذاری می‌کند و مدل را برای کنترل زمانی رلهٔ پرامپت ترقیع می‌کند. پرامپت‌های قطعه‌بندی‌شده با | جدا می‌شوند. برای پرامپت منفی از گرهٔ استاندارد رمزگذاری متن CLIP استفاده کنید."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "رمزگذاری رلهٔ پرامپت (خط زمان)",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "ویدیوی Latent خالی — اندازه‌ها از شکل آن خوانده می‌شوند.",
+            "global_prompt": "پرامپت سراسری",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "شرط را برای کل ویدیو تعیین می‌کند. نقش‌ها، اجسام و پس‌زمینهٔ صحنهٔ مداوم را لنگر می‌کند.",
+            "max_frames": "حداکثر تعداد فریم",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "طول کل خط زمان (تعداد فریم در فضای پیکسل). فقط برای مقیاس بصری ویرایشگر استفاده می‌شود.",
+            "timeline_data": "داده‌های خط زمان",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "وضعیت JSON ویرایشگر خط زمان (به‌طور خودکار مدیریت می‌شود؛ لطفاً دستی ویرایش نکنید).",
+            "local_prompts": "پرامپت‌های قطعه‌بندی‌شده",
+            "Auto-populated from the timeline editor.": "به‌طور خودکار از ویرایشگر خط زمان پر می‌شود.",
+            "segment_lengths": "طول قطعه",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "به‌طور خودکار از ویرایشگر خط زمان پر می‌شود (تعداد فریم در فضای پیکسل).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "پارامتر فروپاشی جریمه. هر مقداری زیر حدود 0.1 مرزهای تیز می‌سازد (مقدار پیش‌فرض مقاله 0.001). برای گذار نرم‌تر 0.5 یا بیشتر را بیازمایید.",
+            "fps": "نرخ فریم",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "فریم بر ثانیه — تنها زمانی بر نمایش زمان در ویرایشگر خط زمان اثر می‌گذارد که time_units روی '秒' تنظیم شده باشد.",
+            "time_units": "واحد زمان",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "خط‌کش، دامنهٔ قطعه‌ها، ورودی طول و جمع کل را بر حسب فریم یا ثانیه نشان می‌دهد. ذخیرهٔ داخلی همیشه تعداد فریم در فضای پیکسلی است.",
+            "relay_options": "گزینه‌های رله",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "تنظیمات پیشرفتهٔ اختیاری در سطح جریان. گرهٔ گزینه‌های پیشرفتهٔ رله پرامپت را وصل کنید."
+        },
+        "widgets": {
+            "max_frames": "حداکثر تعداد فریم",
+            "fps": "نرخ فریم",
+            "time_units": "واحد زمان",
+            "frames": "فریم",
+            "seconds": "ثانیه"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت"
+        },
+        "description": "مانند رمزگذاری رلهٔ پرامپت است، اما پرامپت‌های قطعه‌بندی‌شده و طول قطعه‌ها به‌صورت بصری و در قالب بلوک‌های قابل کشیدن روی خط زمان ویرایش می‌شوند. ورودی max_frames فقط مقیاس خط زمان را تنظیم می‌کند (فضای پیکسل) — تعداد واقعی فریم‌ها همچنان از latent خوانده می‌شود."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "رمزگذاری رله پرامپت (هوشمند)",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "پرامپت سراسری",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "شرط را برای کل ویدیو تعیین می‌کند. اگر خالی بماند، خودکار نخستین قطعهٔ تجزیه‌شده در smart_prompt را به‌عنوان لنگر سراسری به کار می‌گیرد.",
+            "smart_prompt": "پرامپت هوشمند",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "با دستور زبان هوشمند پرامپت وارد کنید:\n1. درون‌خطی: 'متن بخش اول [0-50] | متن بخش دوم [50-100]'\n2. بلوکی: 'بخش اول:\nمتن بخش اول\nبخش دوم:\nمتن بخش دوم'\nنشانگرهای دستور زبان خودکار حذف و به‌صورت یکنواخت یا متناسب با نسبت نرمال‌سازی می‌شوند.",
+            "normalize_by_tokens": "نرمال‌سازی بر اساس Token",
+            "If true, scales the calculated length of each segment by its token count.": "اگر درست باشد، طول بر اساس تعداد token هر قطعه مقیاس می‌خورد.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "نرمال‌سازی بر اساس Token"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت"
+        },
+        "description": "نحوهایی مانند [0-50] یا عنوان بخش (مثل '第一段：') را تجزیه می‌کند و طول قطعه‌ها را به‌طور خودکار محاسبه می‌کند."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "آزمون رمزگذاری هوشمند رلهٔ پرامپت",
+        "inputs": {
+            "smart_prompt": "پرامپت هوشمند",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "با دستور زبان هوشمند پرامپت وارد کنید:\n1. درون‌خطی: 'متن بخش اول [0-50] | متن بخش دوم [50-100]'\n2. بلوکی: 'بخش اول:\nمتن بخش اول\nبخش دوم:\nمتن بخش دوم'\nنشانگرهای دستور زبان خودکار حذف و به‌صورت یکنواخت یا متناسب با نسبت نرمال‌سازی می‌شوند.",
+            "normalize_by_tokens": "نرمال‌سازی بر اساس Token",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "نرمال‌سازی بر اساس Token"
+        },
+        "outputs": {
+            "parsed_output": "خروجی تجزیه"
+        },
+        "description": "نحو تجزیه‌شده را برای مقاصد آزمایشی خروجی می‌دهد."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "گزینه‌های پیشرفتهٔ رلهٔ پرامپت",
+        "inputs": {
+            "video_strength": "شدت ویدیو",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "ضریب جریمهٔ زمانی ویدیو. 0 قطعه‌بندی ویدیو را غیرفعال می‌کند. در بازهٔ 0-1 بیشترین کاربرد را دارد و مرزها را نرم می‌کند؛ مقادیر >1 با epsilon پیش‌فرض (1e-3) به‌سرعت اشباع می‌شوند، زیرا انحراف به‌اندازه‌ای بزرگ است که tokenهای دور را صفر می‌کند. برای اینکه >1 اثر محسوسی داشته باشد، باید epsilon را به حدود 0.1 یا بالاتر افزایش دهید.",
+            "video_window_scale": "مقیاس پنجرهٔ ویدیو",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "ناحیهٔ لنگر مسطّح را مقیاس می‌دهد (پیش‌فرض L/2 - 2 فریم). <1 باعث می‌شود فروپاشی نرم زودتر شروع شود؛ >1 ناحیهٔ صلب را بزرگ‌تر می‌کند. 0 لنگر را به یک نقطه تقلیل می‌دهد - فروپاشی بی‌درنگ از میانهٔ قطعه آغاز می‌شود (تیزتر از پیش‌فرض، نه نرم‌تر).",
+            "audio_epsilon": "epsilon صدا",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "epsilon جریان صدا. 0 = epsilon اصلی رمزگذار را به ارث می‌برد.",
+            "audio_strength": "شدت صدا",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "ضریب جریمهٔ زمانی صدا. 0 اجازه می‌دهد صدا از میان گذارهای بصری نشت کند. در بازهٔ 0-1 بیشترین کاربرد را دارد؛ مقادیر >1 با epsilon پیش‌فرض (1e-3) به‌سرعت اشباع می‌شوند — برای اینکه >1 اثر محسوسی داشته باشد، باید audio_epsilon را به حدود 0.1 یا بالاتر افزایش دهید.",
+            "audio_window_scale": "مقیاس پنجرهٔ صدا",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "عرض ناحیهٔ لنگر تخت را برای جریان صدا مقیاس می‌کند. <1 باعث می‌شود افت نرم زودتر شروع شود؛ >1 ناحیهٔ سخت را گسترش می‌دهد. 0 لنگر را به یک نقطه جمع می‌کند — افت بلافاصله از میانهٔ قطعه شروع می‌شود (تیزتر از پیش‌فرض، نه نرم‌تر)."
+        },
+        "widgets": {
+            "video_strength": "شدت ویدیو",
+            "video_window_scale": "مقیاس پنجرهٔ ویدیو",
+            "audio_epsilon": "epsilon صدا",
+            "audio_strength": "شدت صدا",
+            "audio_window_scale": "مقیاس پنجرهٔ صدا"
+        },
+        "outputs": {
+            "relay_options": "گزینه‌های رله"
+        },
+        "description": "تنظیم اختیاری جریمهٔ زمانی در سطح جریان. به ورودی گزینه‌های رله در رمزگذار رلهٔ پرامپت وصل کنید. فیلدهای صدا فقط بر LTX2 اثر می‌گذارند."
+    }
+}

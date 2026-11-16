@@ -1,0 +1,619 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_מיזוג וידאו משופר",
+        "inputs": {
+            "images": "תמונה",
+            "audio": "אודיו"
+        },
+        "widgets": {
+            "frame_rate": "קצב פריימים",
+            "codec": "פורמט קידוד",
+            "container": "פורמט מכולה",
+            "bit_depth": "עומק סיבים",
+            "quality": "איכות",
+            "log_level": "רמת יומן",
+            "pingpong": "מצב פינג-פונג",
+            "save_metadata": "שמירת מטא-נתונים",
+            "filename_prefix": "קידומת שם קובץ",
+            "save_output": "שמירת פלט",
+            "pass_frames": "העברת פריימים",
+            "crop_to_audio": "חיתוך לפי האודיו",
+            "audio_codec": "קידוד אודיו",
+            "audio_bitrate": "קצב סיבי אודיו",
+            "save_first_frame": "שמירת הפריים הראשון",
+            "save_last_frame": "שמירת הפריים האחרון"
+        },
+        "outputs": {
+            "frames": "פריים",
+            "filename": "שם קובץ"
+        },
+        "description": "ממזג אצוות תמונות לוידאו באיכות גבוהה, בוחר אוטומטית ב-NVENC או ב-GPU, ותומך בהשמעת פינג-פונג אופציונלית, במטא-נתוני תזרים העבודה של ComfyUI ובחלופת MP4."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_הכנת חיתוך לתיקון",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "target_width": "רוחב יעד",
+            "target_height": "גובה יעד",
+            "mask_blur": "טשטוש מסיכה",
+            "mask_min": "ערך מסיכה מינימלי",
+            "mask_max": "ערך מסיכה מרבי",
+            "grow_px": "פיקסלים להרחבה",
+            "can_shrink": "ניתן להקטנה"
+        },
+        "outputs": {
+            "cropped_image": "התמונה לאחר החיתוך",
+            "cropped_mask": "המסיכה לאחר החיתוך",
+            "bbox_x": "קואורדינטת X של תיבת הגבול",
+            "bbox_y": "קואורדינטת Y של תיבת הגבול",
+            "bbox_w": "רוחב תיבת הגבול",
+            "bbox_h": "גובה תיבת הגבול"
+        },
+        "description": "מכין תמונה ומסיכה לתיקון: חילוץ גבולות, חיתוך וקנה מידה."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_הלחנת תיקון",
+        "inputs": {
+            "destination": "יעד",
+            "source": "מקור",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "x": "קואורדינטת X",
+            "y": "קואורדינטת Y",
+            "w": "רוחב",
+            "h": "גובה",
+            "correction_method": "שיטת תיקון"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "מלחיב את הטלאי המתוקן חזרה לתמונה המקורית, עם תמיכה בתיקון צבע."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_בורר מודלי LLM",
+        "widgets": {
+            "model": "מודל",
+            "custom_path": "נתיב מותאם אישית",
+            "hf_repo_id": "מזהה מאגר HF",
+            "hf_revision": "גרסת תיקון של HF",
+            "download_if_missing": "הורדה אם חסר",
+            "backend": "מנוע אחורי",
+            "task": "משימה",
+            "device": "התקן",
+            "dtype": "סוג נתונים",
+            "quantization": "קוונטיזציה",
+            "cache_mode": "מצב מטמון",
+            "trust_remote_code": "אמון בקוד מרחוק",
+            "attention_implementation": "מימוש קשב",
+            "kv_cache_implementation": "מימוש מטמון KV",
+            "kv_cache_quant_backend": "מנוע אחורי לקוונטיזציה של מטמון KV",
+            "kv_cache_nbits": "מספר הסיבים של מטמון KV",
+            "kv_cache_residual_length": "אורך השארית של מטמון KV",
+            "llama_n_ctx": "חלון ההקשר של Llama",
+            "llama_n_gpu_layers": "מספר שכבות ה-GPU של Llama",
+            "llama_n_threads": "מספר השרשורים של Llama",
+            "llama_chat_format": "פורמט הצ'אט של Llama",
+            "ollama_model": "מודל Ollama",
+            "ollama_url": "כתובת Ollama",
+            "ollama_timeout": "מגבלת הזמן של Ollama"
+        },
+        "outputs": {
+            "llm_config": "תצורת LLM"
+        },
+        "description": "בורר מודלי LLM של DaSiWa: בוחר תיקיית transformers LLM/VLM מקומית מתוך ComfyUI/models/llm ומגדיר מטמון, סוג נתונים, התקן והתנהגות העברה."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_ניתוח LLM",
+        "inputs": {
+            "llm_config": "תצורת LLM",
+            "images": "תמונה",
+            "text_input": "כניסת טקסט"
+        },
+        "widgets": {
+            "system_prompt_preset": "הגדרת פרומפט מערכת מראש",
+            "system_prompt": "פרומפט מערכת",
+            "prompt": "פרומפט",
+            "max_new_tokens": "מספר טוקנים חדשים מרבי",
+            "max_input_tokens": "מספר טוקני קלט מרבי",
+            "temperature": "טמפרטורה",
+            "top_p": "Top_p",
+            "repetition_penalty": "עונש כפילות",
+            "use_kv_cache": "שימוש במטמון KV",
+            "seed": "זרע אקראי",
+            "max_frames": "מספר פריימים מרבי",
+            "frame_stride": "גודל צעד פריים",
+            "frame_strategy": "אסטרטגיית פריימים",
+            "resize_max_px": "מספר פיקסלים מרבי לכוונון",
+            "resize_algorithm": "אלגוריתם כוונון",
+            "memory_cleanup": "ניקוי זיכרון"
+        },
+        "outputs": {
+            "response": "תגובה",
+            "info": "מידע"
+        },
+        "description": "ניתוח LLM של DaSiWa: מפעיל מודל שפה טקסטואלי או חזותי מקומי על הטקסט, התמונה או אצוות פריימי VHS/וידאו המחוברות, ומחזיר תגובת מחרוזת."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_טוען LoRA של LTX2",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "נתוני ערימה",
+            "model_type": "סוג מודל",
+            "use_cache": "הפעלת מטמון קבצי LoRA",
+            "available_loras": "רשימת ה-LoRA הזמינות"
+        },
+        "outputs": {
+            "MODEL": "מודל",
+            "CLIP": "CLIP"
+        },
+        "description": "טוען ה-LoRA המתקדם של DaSiWa: ערימת LoRA רגיל של תמונה/וידאו או של וידאו/אודיו עבור LTX-2.3. הפרדת אודיו חלה רק על LTX-2.3."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_תצורת מטא-נתונים",
+        "inputs": {
+            "node_positive": "צומת חיובי",
+            "node_negative": "צומת שלילי",
+            "node_model": "צומת מודל",
+            "node_latent": "צומת Latent",
+            "node_noise": "צומת רעש",
+            "node_sigmas": "צומת סיגמא",
+            "node_sampler": "צומת מדגם",
+            "extra_metadata": "מטא-נתונים נוספים",
+            "text_positive": "טקסט חיובי",
+            "text_negative": "טקסט שלילי",
+            "text_steps": "טקסט מספר צעדים",
+            "text_cfg": "טקסט CFG",
+            "text_sampler": "טקסט המדגם",
+            "text_scheduler": "טקסט המתזמן",
+            "text_seed": "טקסט זרע אקראי",
+            "text_model": "טקסט מודל",
+            "save_output": "שמירת פלט"
+        },
+        "widgets": {
+            "save_workflow": "שמירת תזרים העבודה",
+            "model_hash": "היטל המודל"
+        },
+        "outputs": {
+            "config": "תצורה"
+        },
+        "description": "תצורת המטא-נתונים של DaSiWa: מרכזת את הגדרות המטא-נתונים של תזרים העבודה ואת קישורי הזיהוי האוטומטי האופציונליים לפלט תצורה קומפקטי לשימוש שומר התמונות."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_שומר תמונות עם מטא-נתונים",
+        "inputs": {
+            "images": "תמונה",
+            "metadata_config": "הגדרת מטא-נתונים",
+            "extra_metadata": "מטא-נתונים נוספים"
+        },
+        "widgets": {
+            "filename_prefix": "קידומת שם קובץ",
+            "file_format": "פורמט קובץ",
+            "compression": "דחיסה",
+            "save_output": "שמירת פלט"
+        },
+        "outputs": {
+            "filename": "שם קובץ",
+            "metadata": "מטא-נתונים"
+        },
+        "description": "שומר תמונות המטא-נתונים של DaSiWa: שומר תמונת PNG או WebP הכוללות את נתוני תזרים העבודה של ComfyUI ואת מטא-הנתונים של ההפעלה, בתאימות ל-A1111 ול-Civitai."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_שומר תמונות עם מטא-נתונים בגרסה המלאה",
+        "inputs": {
+            "images": "קבוצת תמונות",
+            "metadata_config": "הגדרת מטא-נתונים",
+            "extra_metadata": "מטא-נתונים נוספים",
+            "node_positive": "צומת חיובי",
+            "node_negative": "צומת שלילי",
+            "node_model": "צומת מודל",
+            "node_latent": "צומת Latent",
+            "node_noise": "צומת רעש",
+            "node_sigmas": "צומת סיגמא",
+            "node_sampler": "צומת מדגם",
+            "text_positive": "פרומפט חיובי",
+            "text_negative": "פרומפט שלילי",
+            "text_steps": "מספר צעדים",
+            "text_cfg": "ערך CFG",
+            "text_sampler": "מדגם",
+            "text_scheduler": "מתזמן",
+            "text_seed": "זרע אקראי",
+            "text_model": "מודל טקסט"
+        },
+        "widgets": {
+            "filename_prefix": "קידומת שם קובץ",
+            "file_format": "פורמט קובץ",
+            "compression": "רמת דחיסה",
+            "save_output": "שמירת פלט",
+            "save_workflow": "שמירת תזרים העבודה",
+            "model_hash": "היטל המודל"
+        },
+        "outputs": {
+            "filename": "שם קובץ",
+            "metadata": "מטא-נתונים"
+        },
+        "description": "שומר תמונות המטא-נתונים של DaSiWa בגרסה המלאה: גרסת שומר מתקדמת שבה כל יציאות זיהוי המטא-נתונים ודריסות היד חשופות ישירות על הצומת."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_יצירת מטא-נתונים נוספים",
+        "inputs": {
+            "extra_metadata": "מטא-נתונים נוספים"
+        },
+        "widgets": {
+            "key": "מפתח",
+            "value": "ערך"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "מטא-נתונים נוספים"
+        },
+        "description": "יצירת מטא-נתונים נוספים של DaSiWa: יוצר או מרחיב זוגות מפתח-ערך של מטא-נתונים מותאמים אישית עבור שומר התמונות."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_בורר מחרוזות אקראיות",
+        "inputs": {
+            "text": "טקסט"
+        },
+        "outputs": {
+            "text": "טקסט"
+        },
+        "description": "בורר המחרוזות האקראי של DaSiWa: מעביר את הטקסט ומחליף כל קבוצה {A|B|C} באפשרות שנבחרה אקראית"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_הגדלה ועידון",
+        "inputs": {
+            "images": "תמונה"
+        },
+        "widgets": {
+            "denoise": "הסרת רעש",
+            "deblur": "הסרת טשטוש",
+            "scale": "קנה מידה",
+            "megapixels": "מגה-פיקסל",
+            "width": "רוחב",
+            "height": "גובה",
+            "device_id": "מזהה התקן",
+            "empty_cache": "ניקוי מטמון",
+            "denoise_quality": "איכות הסרת רעש",
+            "deblur_quality": "איכות הסרת טשטוש",
+            "upscale": "הגדלה",
+            "upscale_quality": "איכות הגדלה",
+            "resize_type": "סוג שינוי גודל",
+            "divisible_by": "ערך מתחלק",
+            "ratio_preset": "הגדרת יחס מראש",
+            "resize_method": "שיטת שינוי גודל",
+            "use_mmap": "שימוש במיפוי דיסק",
+            "auto_unload_models": "העברת מודל אוטומטית"
+        },
+        "outputs": {
+            "images": "תמונה"
+        },
+        "description": "הגדלה ומיטוב של DaSiWa RTX: צומת עיבוד תלת-שלבי בביצועים גבוהים. 1. שלב המיטוב: פועל ברזולוציית המקור ומנקה רעשים או טשטוש בעזרת אפקטים חזותיים של NVIDIA RTX. 2. שלב ההגדלה: מגדיל את התמונה פי 4 באמצעות VSR או מצב קצב סיבים גבוה. העיבוד מתבצע פריים אחר פריים כדי לשמור על ניצול VRAM נמוך באצוות וידאו"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_מחשבון קנה מידה של רזולוציה",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "resolution_preset": "הגדרת רזולוציה מראש",
+            "aspect_preset_when_not_image": "הגדרת יחס מראש כאשר זו אינה תמונה",
+            "no_scale": "ללא קנה מידה",
+            "scale_from_image": "קנה מידה מהתמונה",
+            "swap_aspect_when_not_image": "החלפת היחס כאשר זו אינה תמונה",
+            "custom_aspect_width": "רוחב יחס מותאם אישית",
+            "custom_aspect_height": "גובה יחס מותאם אישית",
+            "mode": "מצב",
+            "custom_divisor": "מחלק מותאם אישית"
+        },
+        "outputs": {
+            "width_int": "רוחב במספר שלם",
+            "height_int": "גובה במספר שלם",
+            "width_float": "רוחב במספר צף",
+            "height_float": "גובה במספר צף"
+        },
+        "description": "מחשבון קנה המידה של הרזולוציה של DaSiWa: מחשב רזולוציה מדויקת מתמטית על בסיס שטח היעד במגה-פיקסלים. - מצב סטנדרטי: קנה מידה מתמטי טהור. - מצב WAN/LTX: יישור לגבולות של 32 פיקסלים (חובה ל-VAE של WAN/LTX). - ללא קנה מידה: דורס את כל החישובים ומפליק ישירות את מידות תמונת המקור"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_Torch_שינוי גודל",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "size_mode": "מצב גודל",
+            "aspect_mode": "מצב יחס",
+            "target_width": "רוחב יעד",
+            "target_height": "גובה יעד",
+            "scale_multiplier": "מכפיל קנה מידה",
+            "interpolation": "הסתמה",
+            "gamma_correct": "תיקון גאמה",
+            "divisible_by": "ערך מתחלק",
+            "pad_color": "צבע מילוי",
+            "crop_position": "מיקום חיתוך",
+            "batch_size": "גודל אצווה",
+            "max_batch_megapixels": "מגה-פיקסלים מרביים באצווה",
+            "cache_size": "גודל מטמון"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "כלי ללא תלויות לשינוי גודל בצבירה של תמונות ComfyUI באמצעות PyTorch. תומך בדגימה מחדש מדויקת ברמת הפיקסל בשיטות הקרוב-משריאה, בי-ליניארית, בי-קובית, אזורית וב-Lanczos נפרדת ומטומטנת"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_החלפת מצב צומת",
+        "widgets": {
+            "enabled": "הפעל",
+            "trigger_on": "תנאי הפעלה",
+            "action": "פעולה"
+        },
+        "outputs": {
+            "enabled_out": "פלט מופעל"
+        },
+        "description": "מתג מצב הצומת של DaSiWa: משתיק או עוקף את הצמתים היעדים המחוברים בהתאם למצב הבוליאני, עם פלט הפעלה לשרשור מתגים"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_סימן מים",
+        "inputs": {
+            "images": "תמונה"
+        },
+        "widgets": {
+            "watermark_path": "נתיב סימן המים",
+            "position": "מיקום",
+            "scale": "קנה מידה",
+            "resampling": "דגימה מחדש",
+            "transparency": "שקיפות",
+            "rotation": "סיבוב",
+            "padding_x": "מילוי ציר X",
+            "padding_y": "מילוי ציר Y",
+            "optical_padding": "מילוי אופטי",
+            "optical_strength": "עוצמה אופטית",
+            "random_switches": "מתג אקראי",
+            "fade": "הופעה ודהייה",
+            "fade_margin": "שולי הופעה ודהייה",
+            "randomize_position": "מיקום אקראי",
+            "random_seed": "זרע אקראי"
+        },
+        "description": "סימן המים של DaSiWa: צומת הנחיית סימן מים ברמה מקצועית עם יכולת הלחבה יציבה ב-CPU. שומר את אצוות הפלט בזיכרון RAM, מערבב החל מפריימי המקור שאותחולו כדי למנוע הבהוב, ותומך בקנה מידה בי-קובי או Lanczos, בסיבוב וב\"מילוי אופטי\" לקבלת יישור חזותי מושלם"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_בונה פרומפטים מהגדרות פרומפט מראש",
+        "inputs": {
+            "positive_input": "קלט חיובי",
+            "negative_input": "קלט שלילי"
+        },
+        "widgets": {
+            "style": "סגנון",
+            "seed": "זרע אקראי",
+            "token_budget": "תקציב טוקנים",
+            "selection_state": "מצב הבחירה",
+            "reroll": "הגרלה מחדש",
+            "auto_reroll": "הגרלה מחדש אוטומטית"
+        },
+        "outputs": {
+            "positive_prompt": "פרומפט חיובי",
+            "negative_prompt": "פרומפט שלילי"
+        },
+        "description": "בונה פרומפטים חיוביים ושליליים מספריית הפרומפטים המובנית בעלת שני הסגנונות. הבחירות והמשקולות נשמרות בתזרים העבודה"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_בקר זרע עצמאי",
+        "description": "צומת בקרת זרע עצמאי, המשחזר את חוויית השימוש בזרע של MiniMax H3 Director: מצב אקראי או קבוע, זרע ללא סימן בן 64 סיבים, הגרלה מחדש או שחזור הזרע הקודם, 10 רשומות היסטוריה אחרונות, וכן פלט של אובייקט NOISE לשימוש ישיר אצל המדגם במורד הזרם.",
+        "inputs": {
+            "seed": "קלט זרע חיצוני"
+        },
+        "widgets": {
+            "seed_value": "ערך זרע מקומי",
+            "seed_control_state": "מצב בקרת הזרע",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "ערך זרע מקומי, הנערך בלוח הממשק הקדמי; די בכך שהבקרים המקוריים יישארו מוסתרים.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "מצב בקרת הזרע השמור בין הפעלות (JSON): מצב, הזרע האחרון ורשימת הזרעים בהיסטוריה.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "קלט זרע חיצוני אופציונלי: לאחר חיבורו הבקרים המקומיים מושבתים והערך המחובר מועבר כמות שהוא."
+        },
+        "outputs": {
+            "seed": "זרע",
+            "noise": "רעש"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Comfy Kitchen INT8 טלאי קשב",
+        "description": "מטליא את המודל כדי להשתמש בזמן הרצה במימוש קשב INT8 של Comfy Kitchen לחיסכון בזיכרון VRAM. אם Comfy Kitchen אינו זמין, חוזר למימוש הקשב המוגדר של ComfyUI.",
+        "inputs": {
+            "model": "מודל"
+        },
+        "outputs": {
+            "MODEL": "מודל"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_MiniMax H3 במאי",
+        "description": "צומת הבמאי ליצירת וידאו/אודיו של MiniMax H3: מאחד את ציר הזמן, את מדיית הייחוס ואת בניית הפרומפט, ומפליק תצורת במאי הכוללת את כל מידע ההנחיה, לשימוש צומת MiniMax H3 Director Guide.",
+        "inputs": {
+            "fl2va_model": "מודל FL2VA",
+            "ref2va_model": "מודל REF2VA",
+            "external_width_overwrite": "דריסת רוחב חיצונית",
+            "external_height_overwrite": "דריסת גובה חיצונית",
+            "external_prompt_overwrite": "דריסת פרומפט חיצונית"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "prompt": "פרומפט",
+            "width": "רוחב",
+            "height": "גובה",
+            "duration": "משך זמן",
+            "ref_image_size": "גודל תמונת ייחוס",
+            "frame_rate": "קצב פריימים"
+        },
+        "outputs": {
+            "guide": "מדריך הבמאי",
+            "duration": "משך זמן",
+            "positive_prompt": "פרומפט חיובי",
+            "width": "רוחב",
+            "height": "גובה",
+            "model": "מודל",
+            "fl2va_requested": "בקשת FL2VA",
+            "inpaint_requested": "בקשת תיקון",
+            "frame_rate": "קצב פריימים"
+        },
+        "ui": {
+            "Model Mode:": "מצב המודל:",
+            "Image Inpaint": "ציור מחדש מקומי",
+            "Prompt Mode:": "מצב הפרומפט:",
+            "Simple": "פשוט",
+            "Structured": "מובנה",
+            "Use the simple prompt editor": "שימוש בעורך הפרומפטים הפשוט",
+            "Use the structured prompt editor": "שימוש בעורך הפרומפטים המובנה",
+            "One image reference; output exactly one frame through Get Image from Batch.": "ייחוס בתמונה אחת; פריים אחד בדיוק באמצעות הצומת 'השגת תמונה מהאצווה'.",
+            "Remove": "הסר",
+            "Clear": "ניקוי",
+            "Remove all media and prompts": "הסרת כל המדיה וכל הפרומפטים",
+            "Nothing to clear yet": "אין תוכן לניקוי",
+            "Nothing to clear.": "אין תוכן לניקוי.",
+            "Open MiniMax H3 Director documentation on GitHub": "פתיחת תיעוד הבמאי של MiniMax H3 ב-GitHub",
+            "T2VA · no input frame": "T2VA · ללא פריימי קלט",
+            "I2VA · one opening-frame slot": "I2VA · מתם אחד לפריים הראשון",
+            "FL2VA · opening and closing-frame slots": "FL2VA · מתמי הפריים הראשון והאחרון",
+            "L2VA · one closing-frame slot": "L2VA · מתם אחד לפריים האחרון",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "ציור מחדש מקומי · תמונה אחת בדיוק · פריים אחד באמצעות הצומת 'השגת תמונה מהאצווה' · ללא וידאו או אודיו",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · עד 9 מתמי תמונות, 3 מתמי וידאו ו-3 מתמי אודיו · סה הכול עד 12 קבצים",
+            "ASPECT": "יחס מידות",
+            "RESOLUTION": "רזולוציה",
+            "INPUT SCALING": "קנה מידה של הקלט",
+            "Auto": "אוטומטי",
+            "CUSTOM": "מותאם אישית",
+            "Native (ShortEdge 768px)": "מקורי (צד קצר 768px)",
+            "Off": "סגירה",
+            "Native (ShortEdge 2048px)": "מקורי (צד קצר 2048px)",
+            "Target · Selected Aspect & Resolution": "יעד · יחס המידות והרזולוציה שנבחרו",
+            "Fit": "התאמה",
+            "Fill and crop": "מילוי וחיתוך",
+            "Fit and pad": "התאמה והוספת שוליים",
+            "Long side with divisible crop": "חיתוך מיושר לצד הארוך המתחלק במספר שלם",
+            "0.26 MP - Preview": "0.26 MP - תצוגה מקדימה",
+            "0.36 MP - Small": "0.36 MP - קטן",
+            "0.52 MP - SD": "0.52 MP - סטנדרטי",
+            "0.65 MP - Balanced": "0.65 MP - מאוזן",
+            "1.35 MP - 2K lite": "1.35 MP - 2K קל",
+            "1.75 MP - QHD": "1.75 MP - סופר חד",
+            "2.10 MP - FHD": "2.10 MP - Full HD",
+            "3.30 MP - QHD+": "3.30 MP - סופר חד+",
+            "4.75 MP - 2K Pro": "4.75 MP - 2K מקצועי",
+            "6.50 MP - Production": "6.50 MP - רמת הפקה",
+            "8.30 MP - UHD": "8.30 MP - אולטרה חד",
+            "General": "כללי",
+            "Horizontal": "אופקי",
+            "Square": "ריבוע",
+            "Vertical": "אנכי",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "דילוג על כוונון קנה המידה של הקלט - חומר הייחוס נשלח אל MiniMax במידותיו המקוריות.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "מקטן רק כאשר הצד הקצר של חומר הייחוס עולה על 2048 פיקסלים; קלטים קטנים יותר עוברים כמות שהם, ללא עיבוד.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "התאמת חומר הייחוס ליחס המידות ולתיבת הרזולוציה שנבחרו (מתיחה, ללא שמירה על יחס רוחב-גובה).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "כוונון קנה המידה של חומר הייחוס כך שיתאים לתיבת היעד תוך שמירה על יחס רוחב-גובה.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "כוונון קנה המידה של חומר הייחוס כך שימלא את תיבת היעד תוך שמירה על יחס רוחב-גובה, ולאחר מכן חיתוך החלקים החורגים.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "כוונון קנה המידה של חומר הייחוס כך שיתאים לתיבת היעד תוך שמירה על יחס רוחב-גובה, ולאחר מכן מילוי השוליים הריקים.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "כוונון קנה המידה כך שהצד הארוך יתאים ליעד, ולאחר מכן חיתוך לגודל יעד מדויק ומתחלק.",
+            "RATIO W": "יחס רוחב",
+            "RATIO H": "יחס גובה",
+            "Megapixels": "מגה-פיקסל",
+            "Fixed pixels": "פיקסלים קבועים",
+            "WIDTH": "רוחב",
+            "HEIGHT": "גובה",
+            "External width/height overwrite · Director sizing and input scaling disabled": "דריסת רוחב וגובה חיצונית · קביעת מידות הבמאי וכוונון קנה המידה של הקלט מושבתים",
+            "Image/Video": "תמונה/וידאו",
+            "Image/Video · selected": "תמונה/וידאו · נבחר",
+            "audio": "אודיו",
+            "audio · selected": "אודיו · נבחר",
+            "Video only": "וידאו בלבד",
+            "Audio only": "אודיו בלבד",
+            "Video + embedded audio": "וידאו + אודיו מוטמע",
+            "Full source-duration scale": "קנה מידה מלא של משך זמן המקור",
+            "Full audio waveform; crop markers show the selected reference window": "גל האודיו המלא; סימני החיתוך מציינים את טווח הייחוס שנבחר",
+            "Decoding audio waveform…": "מפענח את גל האודיו…",
+            "Open preview and details": "פתיחת התצוגה המקדימה והפרטים",
+            "T2VA prompt builder": "בונה הפרומפטים של T2VA",
+            "I2VA prompt builder": "בונה הפרומפטים של I2VA",
+            "FL2VA prompt builder": "בונה הפרומפטים של FL2VA",
+            "L2VA prompt builder": "בונה הפרומפטים של L2VA",
+            "REF2VA prompt builder": "בונה הפרומפטים של REF2VA",
+            "Image Inpaint prompt builder": "בונה הפרומפטים לציור מחדש מקומי",
+            "T2VA simple prompt": "פרומפט פשוט של T2VA",
+            "I2VA simple prompt": "פרומפט פשוט של I2VA",
+            "FL2VA simple prompt": "פרומפט פשוט של FL2VA",
+            "L2VA simple prompt": "פרומפט פשוט של L2VA",
+            "REF2VA simple prompt": "פרומפט פשוט של REF2VA",
+            "Image Inpaint simple prompt": "פרומפט פשוט לציור מחדש מקומי",
+            "REF2VA prompt builder — write freely; headers are added automatically": "בונה הפרומפטים של REF2VA - ניתן לכתוב בחופשיות, כותרות השדות יתווספו אוטומטית",
+            "Prompt": "פרומפט",
+            "Insert [Shot N]": "הכנסת [Shot N]",
+            "Prefill Labels & Summary": "מילוי מראש של תוויות וסיכום",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "יצירת תוויות של נושא/תמונה/וידאו/אודיו בהתאם למדיה שהוכנסה, ומילוי תבנית הסיכום",
+            "Preview Prompt": "תצוגה מקדימה של הפרומפט",
+            "Show the full prompt that will be sent upstream": "צפייה בפרומפט המלא שעומד להישלח במעלה הזרם",
+            "External prompt detected — builder fields are disabled.": "זוהה פרומפט חיצוני - שדות בונה הפרומפטים מושבתים.",
+            "Write the complete MiniMax H3 prompt...": "כתבו כאן את פרומפט MiniMax H3 המלא…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] החלו לתאר כאן את הסצנה שלכם…",
+            "Describe ambient sounds, dialogue, effects...": "תארו את צלילי הסביבה, את הדיאלוג ואת אפקטי הקול…",
+            "N/A or describe background score...": "מלאו N/A, או תארו את מוזיקת הרקע…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> היא האישה שמופיעה ב-<Picture 1>, עם שיער שחור קצר ובמעיל אדום.\n<Picture 1> היא עוגן הפריים הראשון של [Shot 1].\n<Subject 2> הוא תנועת ההליכה שנלקחה מ-<Video 1>.\n<Video 1> מספק את נתיב תנועת המצלמה ואת מבנה הקצב.\n<Audio 1> הוא התייחסות גוון הקול של <Subject 1>.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] השתמשו ב-<Subject 1> שבתוך <Picture 1>, בתנועה ובקצב של <Video 1>, ובמאפייני הקול של <Audio 1>.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> (מופיע ב- [Shot 1], [Shot 2]): fully_preserved - הזהות והתלבושת נשמרות זהות.\n<Picture 1> (הפריים הראשון של [Shot 1]): fully_preserved - עוגן הקומפוזיציה הפותחת.\n<Subject 2> (העברת תנועה אל <Subject 1>): attribute_transfer - קצב ההליכה מיושם על <Subject 1>.\n<Video 1> (מבנה הקצב): weak_reference - שמירת התיזמון הכללי וקצב הצילום.\n<Audio 1>: reference - עוקב אחר גוון הקול וסגנון ההבעה, אך אינו מעתיק את האות המקורי.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] ב-00:04.500, ……",
+            "Audio environment description...": "תיאור סביבת האודיו…",
+            "N/A or background score...": "מלאו N/A, או תארו את מוזיקת הרקע…",
+            "Close and save (Escape or click outside)": "סגירה ושמירה (Esc או לחיצה מחוץ לחלון)",
+            "Start:": "פתיחה:",
+            "End:": "סיום:",
+            "▶ Play crop": "▶ השמעת הקטע החתוך",
+            "Playing crop…": "הקטע החתוך מנגן…",
+            "Play only the current crop range": "השמעת טווח החיתוך הנוכחי בלבד",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "גרירת אזור החיתוך המודגש מזיזה אותו; גרירת שני הסימנים שבקצוות משנה את הגודל.",
+            "Save": "שמירה",
+            "Cancel": "ביטול",
+            "Full media preview": "תצוגה מקדימה מלאה של המדיה",
+            "Done": "הושלם",
+            "Copy": "העתקה",
+            "All media and prompts cleared.": "כל המדיה וכל הפרומפטים נמחקו.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA תומך רק בייחוס תמונה; וידאו ואודיו אינם זמינים.",
+            "This media type is not available in the selected MiniMax mode.": "מצב MiniMax שנבחר אינו תומך בסוג מדיה זה.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA תומך רק בייחוס תמונה; נא לבחור מסלול תמונה/וידאו.",
+            "Upload failed": "ההעלאה נכשלה",
+            "T2VA has no input lanes.": "ל-T2VA אין מסלול קלט.",
+            "This mode does not support audio references.": "מצב זה אינו תומך בייחוס אודיו.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "נבחר מסלול אודיו. ניתן להדביק כאן קובץ ב-Ctrl+V.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "נבחר מסלול תמונה/וידאו. ניתן להדביק כאן קובץ ב-Ctrl+V."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_MiniMax H3 מפעיל הבמאי",
+        "description": "ממיר את מדריך הבמאי לקריאות מקוריות של צמתים ב-MiniMax H3: בהתאם למצב שמדריך הבמאי קורא ל-MiniMaxH3ImageToVideo או ל-MiniMaxH3ReferenceToVideo, ויוצר conditioning ו-latent.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "מדריך הבמאי",
+            "audio_vae": "VAE אודיו"
+        },
+        "outputs": {
+            "positive": "conditioning חיובי",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_MiniMax H3 מטמון שאריות",
+        "description": "מוסיף למודל MiniMax H3 מטמון שאריות שלם-בלוק בקירוב: בטווח הצעדים שנבחר נעשה שימוש חוזר בפלט ה-block-stack מהרצה הקודמת, ומדלגים על חישובים יקרים כדי להגביר את המהירות. ככל שהסף גבוה יותר כך מדלגים יותר, וזה עלול לפגוע באמינות.",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "reuse_threshold": "סף שימוש חוזר",
+            "start_percent": "אחוז התחלתי",
+            "end_percent": "אחוז סיום",
+            "max_steps": "מספר צעדים לדילוג מרבי",
+            "device": "התקן",
+            "verbose": "יומן מפורט"
+        },
+        "outputs": {
+            "MODEL": "מודל"
+        }
+    }
+}

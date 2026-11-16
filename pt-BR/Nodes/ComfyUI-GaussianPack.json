@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "Análise gaussiana",
+        "inputs": {
+            "ply_path": "Caminho"
+        },
+        "outputs": {
+            "report": "Relatório"
+        },
+        "description": "Inspeciona um arquivo PLY 3DGS e informa o formato, a ordem de SH, a precisão e o tamanho."
+    },
+    "GaussianExport": {
+        "title": "Exportação gaussiana",
+        "inputs": {
+            "ply_path": "Caminho"
+        },
+        "widgets": {
+            "output_filename": "Nome do arquivo de saída",
+            "format": "Formato"
+        },
+        "outputs": {
+            "out_path": "Caminho de saída"
+        },
+        "description": "Converte um PLY 3DGS para outra variação (passagem de PLY, PLY com SH removido ou SPZ)."
+    },
+    "GaussiansFromPointCloud": {
+        "title": "Distribuições gaussianas na nuvem de pontos",
+        "inputs": {
+            "ply_path": "Caminho"
+        },
+        "widgets": {
+            "output_filename": "Nome do arquivo de saída",
+            "output_dir": "Diretório de saída",
+            "init_scale": "Escala inicial",
+            "init_opacity": "Transparência inicial",
+            "knn_k": "Knn K",
+            "subsample_max": "Valor máximo de subamostragem"
+        },
+        "outputs": {
+            "ply_path": "Caminho"
+        },
+        "description": "Converte a nuvem de pontos PLY em um PLY 3DGS com escalas derivadas por KNN."
+    },
+    "LoadPLY": {
+        "title": "Carregar arquivos `.ply`",
+        "widgets": {
+            "ply_file": "Pasta"
+        },
+        "outputs": {
+            "ply_path": "Caminho"
+        },
+        "description": "Navega recursivamente pelos arquivos `.ply` no diretório input/ do ComfyUI."
+    },
+    "LoadPLYOutput": {
+        "title": "Carregar saída `.ply`",
+        "widgets": {
+            "ply_file": "Arquivo PLY"
+        },
+        "outputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "description": "Navega recursivamente pelos arquivos `.ply` no diretório output/ do ComfyUI."
+    },
+    "GaussianMerge": {
+        "title": "Consolidação de gaussianos",
+        "inputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "widgets": {
+            "target_count": "Quantidade alvo",
+            "output_filename": "Nome do arquivo de saída",
+            "opacity_threshold": "Limiar de transparência",
+            "k": "k",
+            "backend": "Backend de processamento"
+        },
+        "outputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "description": "Consolida os PLYs 3DGS aos pares até a contagem alvo de gaussianos."
+    },
+    "PreviewGaussians": {
+        "title": "Pré-visualização das distribuições gaussianas",
+        "inputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "widgets": {
+            "camera_mode": "Modo de câmera",
+            "fov_degrees": "Ângulo de campo de visão",
+            "renderer": "Renderizador",
+            "transport_format": "Formato de transporte"
+        },
+        "description": "Visualizador interativo de splats gaussianos (gspalt.js).\n\nSuporta dois modos de câmera: órbita (esfera giratória) e observador (câmera de voo com WASD)."
+    },
+    "PreviewGaussianCamera": {
+        "title": "Câmera de pré-visualização de gaussianos",
+        "inputs": {
+            "ply_path": "Caminho do PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "image_width": "Largura da imagem",
+            "image_height": "Altura da imagem",
+            "near_plane": "Plano de recorte próximo",
+            "background": "Fundo",
+            "force_backend": "Forçar o backend"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Renderiza um PLY 3DGS para um lote IMAGE usando a pose de câmera informada."
+    },
+    "PreviewGaussianDual": {
+        "title": "Pré-visualização dupla de gaussianos",
+        "inputs": {
+            "ply_path_1": "Caminho do PLY 1",
+            "ply_path_2": "Caminho do PLY 2"
+        },
+        "widgets": {
+            "camera_mode": "Modo de câmera",
+            "fov_degrees": "Ângulo de campo de visão",
+            "renderer": "Renderizador",
+            "transport_format": "Formato de transporte",
+            "layout": "Disposição"
+        },
+        "description": "Compara dois splats gaussianos lado a lado ou os exibe em um controle deslizante."
+    },
+    "PreviewGaussianSharp": {
+        "title": "Pré-visualização de gaussianos SHARP",
+        "widgets": {
+            "ply_path": "Caminho do PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Pré-visualiza arquivos Ply de splats gaussianos SHARP (visualizador gspalt.js).\n\nReproduz a pré-visualização de gaussianos do GeometryPack: aceita EXTRINSICS/INTRINSICS e regenera o ponto de vista da captura (câmera na posição derivada dos extrínsecos olhando para +Z, FOV vindo dos intrínsecos). Melhor para gaussianos em leque de profundidade monocular SHARP, que só ficam corretos na origem da captura."
+    },
+    "TransformGaussian": {
+        "title": "Transformar gaussianos",
+        "inputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "widgets": {
+            "rotate_x": "Rotação em torno do eixo X",
+            "rotate_y": "Rotação em torno do eixo Y",
+            "rotate_z": "Rotação em torno do eixo Z"
+        },
+        "outputs": {
+            "ply_path": "Caminho do PLY"
+        },
+        "description": "Gira um Ply de splats gaussianos em torno dos eixos XYZ (em graus).\n\nAs posições e os quatérnios de cada splat são girados juntos; as normais também são giradas, se existirem. Os coeficientes SH não são alterados (a rotação Wigner-D correta é um passo futuro)."
+    }
+}

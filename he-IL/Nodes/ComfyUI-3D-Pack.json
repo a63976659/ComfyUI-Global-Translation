@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "אפיית טקסטורה על הרשת",
+        "inputs": {
+            "reference_images": "תמונת ייחוס",
+            "reference_masks": "מסכת ייחוס",
+            "reference_orbit_camera_poses": "תנוחות מצלמה מסלולית של ייחוס",
+            "mesh": "רשת"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "עדשת מצלמה מסלולית של ייחוס",
+            "mesh_albedo_width": "רוחב אלבדו של הרשת",
+            "mesh_albedo_height": "גובה אלבדו של הרשת",
+            "training_iterations": "מספר איטרציות אימון",
+            "batch_size": "גודל אצווה",
+            "texture_learning_rate": "קצב למידה של טקסטורה",
+            "train_mesh_geometry": "אימון גאומטריית הרשת",
+            "geometry_learning_rate": "קצב למידה גאומטרי",
+            "ms_ssim_loss_weight": "משקל הפסד MS-SSIM",
+            "force_cuda_rasterize": "אילוץ רסטריזציה ב-CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "רשת",
+            "baked_texture": "טקסטורה"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "מודל CRM CCMs MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "דוגם CRM_MVDiffusion",
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס",
+            "multiview_images": "תצוגות מרובות"
+        },
+        "widgets": {
+            "prompt": "פרומפט חיובי",
+            "prompt_neg": "פרומפט שלילי",
+            "seed": "זרע אקראי",
+            "control_after_generate": "פעולה לאחר הרצה",
+            "mv_guidance_scale": "מקדם הנחייה של MV",
+            "num_inference_steps": "צעדי הסקה"
+        },
+        "outputs": {
+            "multiview_CCMs": "תצוגות מרובות CCMs"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "מודל CRM Image MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "דוגם CRM_MVDiffusion",
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס"
+        },
+        "widgets": {
+            "prompt": "פרומפט חיובי",
+            "prompt_neg": "פרומפט שלילי",
+            "seed": "זרע אקראי",
+            "control_after_generate": "פעולה לאחר הרצה",
+            "mv_guidance_scale": "מקדם הנחייה של MV",
+            "num_inference_steps": "צעדי הסקה"
+        },
+        "outputs": {
+            "multiview_images": "תצוגות מרובות"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "המרת 3DGS לרשת באמצעות NeRF ו-Marching Cubes",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "הגדרות Gaussian",
+            "force_cuda_rast": "אילוץ רסטריזציה ב-CUDA"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "מודל שחזור קונבולוציוני",
+        "inputs": {
+            "crm_model": "מודל CRM",
+            "multiview_images": "תצוגות מרובות",
+            "multiview_CCMs": "תצוגות מרובות CCMs"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "מצעד טטרהדרונים בעומק",
+        "inputs": {
+            "reference_points_cloud": "ענן נקודות לייחוס",
+            "reference_images": "תמונת ייחוס",
+            "reference_masks": "מסכת ייחוס"
+        },
+        "widgets": {
+            "training_iterations": "מספר איטרציות אימון",
+            "points_cloud_fitting_weight": "משקל סינון ענן נקודות",
+            "mesh_smoothing_weight": "משקל החלקת רשת",
+            "chamfer_faces_sample_scale": "קנה מידה של דגימת פאות (chamfer)",
+            "mesh_scale": "קנה מידה של הרשת",
+            "grid_resolution": "רזולוציית גריד",
+            "geometry_learning_rate": "קצב למידה גאומטרי",
+            "positional_encoding_multires": "קידוד מיקום מרובה",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "התאמת רשת ממבטים מרובים",
+        "inputs": {
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס",
+            "reference_orbit_camera_poses": "תנוחות מצלמה מסלולית של ייחוס",
+            "mesh": "רשת"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "עדשת מצלמה מסלולית של ייחוס",
+            "mesh_albedo_height": "גובה אלבדו של הרשת",
+            "mesh_albedo_width": "רוחב אלבדו של הרשת",
+            "training_iterations": "מספר איטרציות אימון",
+            "batch_size": "גודל אצווה",
+            "texture_learning_rate": "קצב למידה של טקסטורה",
+            "train_mesh_geometry": "אימון גאומטריית הרשת",
+            "geometry_learning_rate": "קצב למידה גאומטרי",
+            "ms_ssim_loss_weight": "משקל הפסד MS-SSIM",
+            "remesh_after_n_iteration": "בנייה מחדש של הרשת כל N איטרציות",
+            "force_cuda_rasterize": "אילוץ רסטריזציה ב-CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "רשת",
+            "baked_texture": "טקסטורה"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "מפת עומק לייחוס",
+            "reference_normal_maps": "תמונות נורמל של ייחוס",
+            "reference_masks": "מסכת ייחוס",
+            "reference_orbit_camera_poses": "תנוחות מצלמה מסלולית של ייחוס"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "עדשת מצלמה מסלולית של ייחוס",
+            "training_iterations": "מספר איטרציות אימון",
+            "batch_size": "גודל אצווה",
+            "learning_rate": "קצב למידה",
+            "voxel_grids_resolution": "רזולוציית גריד ווקסלי",
+            "depth_min_distance": "מרחק מינימלי בעומק",
+            "depth_max_distance": "מרחק מרבי בעומק",
+            "mask_loss_weight": "משקל הפסד מסכה",
+            "depth_loss_weight": "משקל הפסד עומק",
+            "normal_loss_weight": "משקל הפסד נורמל",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "אילוץ רסטריזציה ב-CUDA"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "Gaussian Splatting",
+        "inputs": {
+            "reference_images": "תמונת ייחוס",
+            "reference_masks": "מסכת ייחוס",
+            "reference_orbit_camera_poses": "תנוחות מצלמה מסלולית של ייחוס",
+            "points_cloud_to_initialize_gaussian": "ענן נקודות לאתחול Gaussian",
+            "ply_to_initialize_gaussian": "gs_ply לאתחול",
+            "mesh_to_initialize_gaussian": "רשת לאתחול Gaussian"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "עדשת מצלמה מסלולית של ייחוס",
+            "training_iterations": "מספר איטרציות אימון",
+            "batch_size": "גודל אצווה",
+            "ms_ssim_loss_weight": "משקל הפסד MS-SSIM",
+            "alpha_loss_weight": "משקל הפסד alpha",
+            "offset_loss_weight": "משקל הפסד היסט",
+            "offset_opacity_loss_weight": "משקל הפסד אטימות ההיסט",
+            "invert_background_probability": "הסתברות להיפוך הרקע",
+            "feature_learning_rate": "קצב למידה של תכונות",
+            "opacity_learning_rate": "קצב למידה של אטימות",
+            "scaling_learning_rate": "קצב למידה של קנה מידה",
+            "rotation_learning_rate": "קצב למידה של סיבוב",
+            "position_learning_rate_init": "קצב למידה התחלתי של המיקום",
+            "position_learning_rate_final": "קצב למידה סופי של המיקום",
+            "position_learning_rate_delay_mult": "מקדם עיכוב של קצב הלמידה במיקום",
+            "position_learning_rate_max_steps": "מספר צעדים מרבי של קצב הלמידה במיקום",
+            "initial_gaussians_num": "מספר Gaussian התחלתי",
+            "K_nearest_neighbors": "מספר השכנים הקרובים K",
+            "percent_dense": "אחוז צפיפות",
+            "density_start_iterations": "מספר איטרציות התחלתי של הצפיפות",
+            "density_end_iterations": "מספר איטרציות סופי של הצפיפות",
+            "densification_interval": "מרווח עיבוי",
+            "opacity_reset_interval": "מרווח איפוס האטימות",
+            "densify_grad_threshold": "סף מפל הצפיפות",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס",
+            "reference_orbit_camera_poses": "תנוחות מצלמה מסלולית של ייחוס"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "עדשת מצלמה מסלולית של ייחוס",
+            "training_iterations": "מספר איטרציות אימון",
+            "training_resolution": "רזולוציית האימון",
+            "marching_cude_threshold": "סף אלגוריתם marching cubes",
+            "marching_cude_grids_resolution": "רזולוציית גרידי מצעד קוביות",
+            "marching_cude_grids_batch_size": "גודל אצוות של גרידי מצעד קוביות",
+            "texture_resolution": "רזולוציית הטקסטורה",
+            "force_cuda_rast": "אילוץ רסטריזציה ב-CUDA"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "מודל Gaussian רב-מבטי גדול (LGM)",
+        "inputs": {
+            "multiview_images": "תצוגות מרובות",
+            "lgm_model": "מודל LGM"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "מודל MVDream",
+        "inputs": {
+            "mvdream_pipe": "אגודת צמתים MVDream",
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס"
+        },
+        "widgets": {
+            "prompt": "פרומפט",
+            "prompt_neg": "פרומפט שלילי",
+            "seed": "זרע אקראי",
+            "control_after_generate": "פעולה לאחר הרצה",
+            "mv_guidance_scale": "מקדם הנחייה של MV",
+            "num_inference_steps": "צעדי הסקה",
+            "elevation": "זווית גובה"
+        },
+        "outputs": {
+            "multiview_images": "תצוגות מרובות"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס",
+            "reference_normals": "תמונות נורמל של ייחוס"
+        },
+        "widgets": {
+            "training_iterations": "מספר איטרציות אימון",
+            "batch_size": "גודל אצווה",
+            "learning_rate": "קצב למידה",
+            "learning_rate_alpha": "קצב למידה alpha",
+            "color_loss_weight": "משקל הפסד צבע",
+            "mesh_smoothing_weight": "משקל החלקת רשת",
+            "mask_loss_weight": "משקל הפסד מסכה",
+            "normal_loss_weight": "משקל הפסד נורמל",
+            "sparse_loss_weight": "משקל הפסד דלילות",
+            "warm_up_end": "סיום החימום המוקדם",
+            "anneal_end": "סיום החימום ההדרגתי",
+            "use_white_background": "שימוש ברקע לבן",
+            "geometry_extract_resolution": "רזולוציית חילוץ גאומטריה",
+            "marching_cude_threshold": "סף אלגוריתם marching cubes"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס",
+            "tgs_model": "מודל TGS"
+        },
+        "widgets": {
+            "cam_dist": "מרחק מצלמה"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "מודל TSR",
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "רזולוציית חילוץ גאומטריה",
+            "marching_cude_threshold": "סף אלגוריתם marching cubes"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "מודל Wonder3D MVDiffusion",
+        "inputs": {
+            "mvdiffusion_pipe": "אגודת צמתים MVDiffusion",
+            "reference_image": "תמונת ייחוס",
+            "reference_mask": "מסכת ייחוס"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "control_after_generate": "פעולה לאחר הרצה",
+            "mv_guidance_scale": "מקדם הנחייה של MV",
+            "num_inference_steps": "צעדי הסקה"
+        },
+        "outputs": {
+            "multiview_images": "תצוגות מרובות",
+            "multiview_normals": "נורמלים ממבטים מרובים"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "3DGS לענן נקודות",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "ענן נקודות"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "הרשת לענן נקודות",
+        "inputs": {
+            "mesh": "רשת"
+        },
+        "outputs": {
+            "points_cloud": "ענן נקודות"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "רנדר מצלמת סיבוב של Gaussian Splatting",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "תנוחות מצלמה מסלולית"
+        },
+        "widgets": {
+            "render_image_width": "רוחב",
+            "render_iamge_height": "גובה",
+            "render_orbit_camera_fovy": "עדשת מצלמת הסיבוב",
+            "render_background_r": "רקע R",
+            "render_background_g": "רקע G",
+            "render_background_b": "רקע B"
+        },
+        "outputs": {
+            "rendered_gs_images": "תמונה",
+            "rendered_gs_masks": "מסכה"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "יצירת תנוחות מצלמת סיבוב",
+        "inputs": {
+            "reference_images": "תמונת ייחוס"
+        },
+        "widgets": {
+            "generate_pose_commnad": "פקודת יצירת תנוחה"
+        },
+        "outputs": {
+            "orbit_camposes": "תנוחות מצלמה מסלולית"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "ערימת תנוחות מצלמת סיבוב",
+        "widgets": {
+            "orbit_radius_start": "תחילת רדיוס המסלול",
+            "orbit_radius_stop": "סיום רדיוס המסלול",
+            "orbit_radius_step": "צעד רדיוס המסלול",
+            "elevation_start": "תחילת זווית הגבהות",
+            "elevation_stop": "סיום זווית הגבהות",
+            "elevation_step": "צעד זווית הגבהות",
+            "azimuth_start": "תחילת זווית האזימוט",
+            "azimuth_stop": "סיום זווית האזימוט",
+            "azimuth_step": "צעד זווית האזימוט",
+            "orbit_center_X_start": "תחילת X של מרכז המסלול",
+            "orbit_center_X_stop": "סיום X של מרכז המסלול",
+            "orbit_center_X_step": "צעד X של מרכז המסלול",
+            "orbit_center_Y_start": "תחילת Y של מרכז המסלול",
+            "orbit_center_Y_stop": "סיום Y של מרכז המסלול",
+            "orbit_center_Y_step": "צעד Y של מרכז המסלול",
+            "orbit_center_Z_start": "תחילת Z של מרכז המסלול",
+            "orbit_center_Z_stop": "סיום Z של מרכז המסלול",
+            "orbit_center_Z_step": "צעד Z של מרכז המסלול"
+        },
+        "outputs": {
+            "orbit_camposes": "תנוחות מצלמה מסלולית",
+            "orbit_radius_list": "רשימת רדיוסי המסלול",
+            "elevation_list": "רשימת זוויות גבהות",
+            "azimuth_list": "רשימת זוויות אזימוט",
+            "orbit_center_X_list": "רשימת ערכי X של מרכז המסלול",
+            "orbit_center_Y_list": "רשימת ערכי Y של מרכז המסלול",
+            "orbit_center_Z_list": "רשימת ערכי Z של מרכז המסלול"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "החלפת ציר של 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "יעד ציר X",
+            "axis_y_to": "יעד ציר Y",
+            "axis_z_to": "יעד ציר Z"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "החלפת ציר של הרשת",
+        "inputs": {
+            "mesh": "רשת"
+        },
+        "widgets": {
+            "axis_x_to": "יעד ציר X",
+            "axis_y_to": "יעד ציר Y",
+            "axis_z_to": "יעד ציר Z"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "טעינת 3DGS",
+        "widgets": {
+            "gs_file_path": "נתיב קובץ gs"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "טעינת רשת תלת-ממד",
+        "widgets": {
+            "mesh_file_path": "נתיב קובץ רשת",
+            "resize": "שינוי קנה מידה מחדש",
+            "renormal": "מיפוי מחדש של הנורמלים",
+            "retex": "התאמת טקסטורה מחדש",
+            "optimizable": "ניתן לאופטימיזציה"
+        },
+        "outputs": {
+            "mesh": "רשת"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "טעינת מודל CRM MVDiffusion",
+        "widgets": {
+            "model_name": "שם מודל",
+            "crm_config_path": "נתיב תצורת CRM"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "דוגם CRM_MVDiffusion"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "טעינת מודל שחזור קונבולוציוני",
+        "widgets": {
+            "model_name": "שם מודל"
+        },
+        "outputs": {
+            "crm_model": "מודל CRM"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "טעינת צינור Diffusers",
+        "widgets": {
+            "diffusers_pipeline_name": "שם הצינור"
+        },
+        "outputs": {
+            "pipe": "אלומת צמתים"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "טעינת מודל Gaussian רב-מבטי גדול (LGM)",
+        "widgets": {
+            "model_name": "שם מודל",
+            "lgb_config": "הגדרות lgb"
+        },
+        "outputs": {
+            "lgm_model": "מודל LGM"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "טעינת מודל Triplane Gaussian Transformers (TGS)",
+        "widgets": {
+            "model_name": "שם מודל"
+        },
+        "outputs": {
+            "tgs_model": "מודל TGS"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "טעינת מודל TripoSR (TSR)",
+        "widgets": {
+            "model_name": "שם מודל",
+            "chunk_size": "גודל בלוק"
+        },
+        "outputs": {
+            "tsr_model": "מודל TSR"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "שמירת 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "נתיב שמירה"
+        },
+        "outputs": {
+            "save_path": "נתיב שמירה"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "שמירת רשת תלת-ממד",
+        "inputs": {
+            "mesh": "רשת"
+        },
+        "widgets": {
+            "save_path": "נתיב שמירה"
+        },
+        "outputs": {
+            "save_path": "נתיב שמירה"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "תצוגה מקדימה של 3DGS",
+        "widgets": {
+            "gs_file_path": "נתיב קובץ gs"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "תצוגה מקדימה של רשת תלת-ממד",
+        "widgets": {
+            "mesh_file_path": "נתיב קובץ רשת"
+        }
+    }
+}

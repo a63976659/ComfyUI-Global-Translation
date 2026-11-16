@@ -1,0 +1,418 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "Descargar y cargar modelo de CogVideo",
+        "inputs": {
+            "block_edit": "Edición de bloques",
+            "lora": "Modelo LoRA",
+            "compile_args": "Parámetros de compilación"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "precision": "Precisión",
+            "quantization": "Cuantización",
+            "enable_sequential_cpu_offload": "Activar descarga secuencial en CPU",
+            "attention_mode": "Modo de atención",
+            "load_device": "Dispositivo de carga",
+            "compile": "Compilar"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "cogvideomodel": "Modelo CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "Codificación de imagen CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "Imagen",
+            "vae": "VAE",
+            "start_image": "Imagen inicial",
+            "end_image": "Imagen final"
+        },
+        "widgets": {
+            "enable_tiling": "Activar teselas",
+            "noise_aug_strength": "Intensidad de realce de ruido",
+            "strength": "Intensidad",
+            "start_percent": "Porcentaje inicial",
+            "end_percent": "Porcentaje final"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "Decodificación CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Activar teselas VAE",
+            "tile_sample_min_height": "Altura mínima de muestra de tesela",
+            "tile_sample_min_width": "Anchura mínima de muestra de tesela",
+            "tile_overlap_factor_height": "Factor de solapamiento de altura de teselas",
+            "tile_overlap_factor_width": "Factor de solapamiento de anchura de teselas",
+            "auto_tile_size": "Tamaño de tesela automático",
+            "pipeline": "Conducto"
+        },
+        "outputs": {
+            "images": "Imagen"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "Codificación de texto CogVideo",
+        "inputs": {
+            "clip": "CLIP",
+            "strength": "Intensidad",
+            "force_offload": "Forzar descarga"
+        },
+        "outputs": {
+            "conditioning": "Condición",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "Muestreador CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "samples": "Latent",
+            "model": "Modelo",
+            "image_cond_latents": "Latent de condición de imagen",
+            "context_options": "Opciones de contexto",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "Trayectoria Tora",
+            "fastercache": "Caché rápida",
+            "feta_args": "Parámetros de realce de vídeo",
+            "teacache_args": "Parámetros de caché Tea"
+        },
+        "widgets": {
+            "width": "Anchura",
+            "height": "Altura",
+            "num_frames": "Nº de fotogramas",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "seed": "Semilla",
+            "control_after_generate": "Acción después de ejecutar",
+            "scheduler": "Planificador",
+            "t_tile_length": "Longitud de tesela",
+            "t_tile_overlap": "Solapamiento de teselas",
+            "denoise_strength": "Denoizar"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "Selector de LoRA CogVideo",
+        "inputs": {
+            "lora": "Modelo LoRA",
+            "strength": "Intensidad",
+            "prev_lora": "LoRA anterior",
+            "fuse_lora": "Fusionar LoRA"
+        },
+        "widgets": {
+            "lora": "Modelo LoRA",
+            "strength": "Intensidad",
+            "prev_lora": "LoRA anterior",
+            "fuse_lora": "Fusionar LoRA"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "Selector de LoRA CogVideo (versión Comfy)",
+        "inputs": {
+            "lora": "Modelo LoRA",
+            "strength": "Intensidad",
+            "prev_lora": "LoRA anterior",
+            "fuse_lora": "Fusionar LoRA"
+        },
+        "widgets": {
+            "lora": "Modelo LoRA",
+            "strength": "Intensidad",
+            "prev_lora": "LoRA anterior",
+            "fuse_lora": "Fusionar LoRA"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "Descargar y cargar modelo GGUF de CogVideo",
+        "inputs": {
+            "block_edit": "Edición de bloques"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "vae_precision": "Precisión del VAE",
+            "fp8_fastmode": "Modo rápido FP8",
+            "load_device": "Dispositivo de carga",
+            "enable_sequential_cpu_offload": "Activar descarga secuencial en CPU",
+            "attention_mode": "Modo de atención",
+            "compile_args": "Parámetros de compilación"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "cogvideomodel": "Modelo CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "Cargador de modelos CogVideo X",
+        "inputs": {
+            "model": "Modelo",
+            "base_precision": "Precisión base",
+            "quantization": "Cuantización",
+            "load_device": "Dispositivo de carga",
+            "enable_sequential_cpu_offload": "Activar descarga secuencial en CPU",
+            "block_edit": "Edición de bloques",
+            "lora": "Modelo LoRA",
+            "compile_args": "Parámetros de compilación",
+            "attention_mode": "Modo de atención"
+        },
+        "outputs": {
+            "cogvideomodel": "Modelo CogVideo"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "Cargador VAE de CogVideo X",
+        "inputs": {
+            "model_name": "Nombre del modelo",
+            "precision": "Precisión",
+            "compile_args": "Parámetros de compilación"
+        },
+        "widgets": {
+            "model_name": "Nombre del modelo",
+            "precision": "Precisión",
+            "compile_args": "Parámetros de compilación"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "Descargar y cargar modelo Tora",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "model": "Modelo"
+        },
+        "outputs": {
+            "tora_model": "Modelo Tora"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "Descargar y cargar ControlNet de CogVideo",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "model": "Modelo"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "Modelo ControlNet de CogVideo"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "Realce de vídeo CogVideo",
+        "widgets": {
+            "weight": "Peso",
+            "start_percent": "Porcentaje inicial",
+            "end_percent": "Porcentaje final"
+        },
+        "outputs": {
+            "feta_args": "Parámetros de realce de vídeo"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "Opciones de contexto CogVideo",
+        "inputs": {
+            "freenoise": "Ruido libre"
+        },
+        "widgets": {
+            "context_schedule": "Programación de contexto",
+            "context_frames": "Nº de fotogramas de contexto",
+            "context_stride": "Paso de contexto",
+            "context_overlap": "Solapamiento de contexto",
+            "freenoise": "Ruido libre"
+        },
+        "outputs": {
+            "context_options": "Opciones de contexto"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "Edición de Transformer CogVideo",
+        "inputs": {
+            "remove_blocks": "Eliminar bloques"
+        },
+        "outputs": {
+            "block_list": "Lista de bloques suprimidos",
+            "transformerblocks": "Bloques de Transformer"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "Ajustes de compilación Torch CogVideo",
+        "widgets": {
+            "fullgraph": "Grafo completo",
+            "mode": "Modo",
+            "dynamic": "Dinámico",
+            "dynamo_cache_size_limit": "Límite de tamaño de caché Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "Parámetros de compilación Torch",
+            "compileargs": "Parámetros de compilación"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "Fusión de codificaciones de texto CogVideo",
+        "inputs": {
+            "conditioning_1": "Condición 1",
+            "conditioning_2": "Condición 2"
+        },
+        "widgets": {
+            "combination_mode": "Modo de fusión",
+            "weighted_average_ratio": "Proporción de media ponderada"
+        },
+        "outputs": {
+            "conditioning": "Condición"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "Codificación de trayectoria Tora",
+        "inputs": {
+            "tora_model": "Modelo Tora",
+            "vae": "VAE",
+            "coordinates": "Coordenadas"
+        },
+        "widgets": {
+            "width": "Anchura",
+            "height": "Altura",
+            "num_frames": "Nº de fotogramas",
+            "strength": "Intensidad",
+            "start_percent": "Porcentaje inicial",
+            "end_percent": "Porcentaje final",
+            "enable_tiling": "Activar teselas"
+        },
+        "outputs": {
+            "tora_trajectory": "Trayectoria Tora",
+            "video_flow_images": "Imágenes de flujo de vídeo"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "Codificación de flujo óptico Tora",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "Modelo Tora",
+            "optical_flow": "Flujo óptico"
+        },
+        "widgets": {
+            "strength": "Intensidad",
+            "start_percent": "Porcentaje inicial",
+            "end_percent": "Porcentaje final"
+        },
+        "outputs": {
+            "tora_trajectory": "Trayectoria Tora"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "Codificación de imagen FunInP de CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "Imagen inicial",
+            "end_image": "Imagen final"
+        },
+        "widgets": {
+            "num_frames": "Nº de fotogramas",
+            "enable_tiling": "Activar procesamiento por teselas",
+            "noise_aug_strength": "Intensidad de realce de ruido"
+        },
+        "outputs": {
+            "image_cond_latents": "Latent de condición de imagen"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "Caché rápida de CogVideo X",
+        "inputs": {
+            "num_blocks_to_cache": "Nº de bloques en caché"
+        },
+        "widgets": {
+            "start_step": "Paso de inicio",
+            "hf_step": "Paso de alta frecuencia",
+            "lf_step": "Paso de baja frecuencia",
+            "cache_device": "Dispositivo de caché",
+            "num_blocks_to_cache": "Nº de bloques en caché"
+        },
+        "outputs": {
+            "fastercache": "Caché rápida"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "Caché Tea de CogVideo X",
+        "widgets": {
+            "rel_l1_thresh": "Umbral L1 relativo"
+        },
+        "outputs": {
+            "teacache_args": "Parámetros de caché Tea"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "CogVideo ControlNet",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "Imagen"
+        },
+        "widgets": {
+            "control_strength": "Intensidad de control",
+            "control_start_percent": "Porcentaje de inicio del control",
+            "control_end_percent": "Porcentaje de fin del control"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "Ajuste inteligente al tamaño de bucket más cercano de CogVideo X",
+        "inputs": {
+            "images": "Imagen"
+        },
+        "widgets": {
+            "base_resolution": "Resolución base",
+            "upscale_method": "Método de escalado",
+            "crop": "Recortar"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "images": "Imagen",
+            "width": "Anchura",
+            "height": "Altura",
+            "int": "Entero"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "Vista previa Latent CogVideo",
+        "inputs": {
+            "samples": "Muestreo"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "min_val": "Valor mínimo",
+            "max_val": "Valor máximo",
+            "r_bias": "Sesgo R",
+            "g_bias": "Sesgo G",
+            "b_bias": "Sesgo B"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "images": "Imagen",
+            "latent_rgb_factors": "Factor RGB Latent",
+            "string": "Cadena"
+        }
+    }
+}

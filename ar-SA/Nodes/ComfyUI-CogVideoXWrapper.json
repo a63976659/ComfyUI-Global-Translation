@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "تنزيل وتحميل نموذج CogVideo",
+        "inputs": {
+            "block_edit": "تحرير الكتل",
+            "lora": "نموذج Lora",
+            "compile_args": "معاملات التصريف"
+        },
+        "widgets": {
+            "model": "النموذج",
+            "precision": "الدقّة",
+            "quantization": "تكميم",
+            "enable_sequential_cpu_offload": "تفعيل تفريغ الحمل إلى CPU بالتسلسل",
+            "attention_mode": "وضع الانتباه",
+            "load_device": "جهاز التحميل",
+            "compile": "تصريف"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "cogvideomodel": "نموذج CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "ترميز الصورة لCogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "صورة",
+            "vae": "VAE",
+            "start_image": "صورة البداية",
+            "end_image": "صورة النهاية"
+        },
+        "widgets": {
+            "enable_tiling": "تفعيل المعالجة بالكتل",
+            "noise_aug_strength": "قوة تعزيز الضوضاء",
+            "strength": "قوة",
+            "start_percent": "نسبة البداية",
+            "end_percent": "نسبة النهاية"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "فك ترميز CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "تفعيل VAE بالكتل",
+            "tile_sample_min_height": "الحد الأدنى لارتفاع عيّنات الكتل",
+            "tile_sample_min_width": "الحد الأدنى لعرض عيّنات الكتل",
+            "tile_overlap_factor_height": "عامل ارتفاع تراكب الكتل",
+            "tile_overlap_factor_width": "عامل عرض تراكب الكتل",
+            "auto_tile_size": "حجم الكتل التلقائي",
+            "pipeline": "حزمة العقد"
+        },
+        "outputs": {
+            "images": "صورة"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "ترميز النص لCogVideo",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "الموجّه",
+            "strength": "قوة",
+            "force_offload": "تفريغ قسري"
+        },
+        "outputs": {
+            "conditioning": "شرط",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "عيّان CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "samples": "Latent",
+            "model": "النموذج",
+            "image_cond_latents": "Latent شرط الصورة",
+            "context_options": "خيارات السياق",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "مسار Tora",
+            "fastercache": "التخزين المؤقت السريع",
+            "feta_args": "معاملات تعزيز الفيديو",
+            "teacache_args": "معاملات تخزين Tea المؤقت"
+        },
+        "widgets": {
+            "width": "العرض",
+            "height": "الارتفاع",
+            "num_frames": "عدد الإطارات",
+            "fps": "معدل الإطارات",
+            "steps": "عدد الخطوات",
+            "cfg": "CFG",
+            "seed": "البذرة",
+            "control_after_generate": "عمل بعد التشغيل",
+            "scheduler": "الجدّول",
+            "t_tile_length": "طول الكتلة",
+            "t_tile_overlap": "تراكب الكتل",
+            "denoise_strength": "إزالة الضوضاء"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "منتقي Lora لCogVideo",
+        "inputs": {
+            "lora": "نموذج Lora",
+            "strength": "قوة",
+            "prev_lora": "Lora السابق",
+            "fuse_lora": "دمج Lora"
+        },
+        "widgets": {
+            "lora": "نموذج Lora",
+            "strength": "قوة",
+            "prev_lora": "Lora السابق",
+            "fuse_lora": "دمج Lora"
+        },
+        "outputs": {
+            "lora": "Lora لCogVideo"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "منتقي Lora لCogVideo (نسخة Comfy)",
+        "inputs": {
+            "lora": "نموذج Lora",
+            "strength": "قوة",
+            "prev_lora": "Lora السابق",
+            "fuse_lora": "دمج Lora"
+        },
+        "widgets": {
+            "lora": "نموذج Lora",
+            "strength": "قوة",
+            "prev_lora": "Lora السابق",
+            "fuse_lora": "دمج Lora"
+        },
+        "outputs": {
+            "lora": "Lora لCogVideo"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "تنزيل وتحميل نموذج GGUF لCogVideo",
+        "inputs": {
+            "block_edit": "تحرير الكتل"
+        },
+        "widgets": {
+            "model": "النموذج",
+            "vae_precision": "دقة VAE",
+            "fp8_fastmode": "نمط FP8 السريع",
+            "load_device": "جهاز التحميل",
+            "enable_sequential_cpu_offload": "تفعيل تفريغ الحمل إلى CPU بالتسلسل",
+            "attention_mode": "وضع الانتباه",
+            "compile_args": "معاملات التصريف"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "cogvideomodel": "نموذج CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "محمّل نموذج CogVideoX",
+        "inputs": {
+            "model": "النموذج",
+            "base_precision": "دقة الأساس",
+            "quantization": "تكميم",
+            "load_device": "جهاز التحميل",
+            "enable_sequential_cpu_offload": "تفعيل تفريغ الحمل إلى CPU بالتسلسل",
+            "block_edit": "تحرير الكتل",
+            "lora": "نموذج Lora",
+            "compile_args": "معاملات التصريف",
+            "attention_mode": "وضع الانتباه"
+        },
+        "outputs": {
+            "cogvideomodel": "نموذج CogVideo"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "محمّل VAE لCogVideoX",
+        "inputs": {
+            "model_name": "اسم النموذج",
+            "precision": "الدقّة",
+            "compile_args": "معاملات التصريف"
+        },
+        "widgets": {
+            "model_name": "اسم النموذج",
+            "precision": "الدقّة",
+            "compile_args": "معاملات التصريف"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "تنزيل وتحميل نموذج Tora",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "model": "النموذج"
+        },
+        "outputs": {
+            "tora_model": "نموذج Tora"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "تنزيل وتحميل ControlNet لCogVideo",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "model": "النموذج"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "نموذج ControlNet لCogVideo"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "تعزيز الفيديو لCogVideo",
+        "widgets": {
+            "weight": "الوزن",
+            "start_percent": "نسبة البداية",
+            "end_percent": "نسبة النهاية"
+        },
+        "outputs": {
+            "feta_args": "معاملات تعزيز الفيديو"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "خيارات السياق لCogVideo",
+        "inputs": {
+            "freenoise": "ضوضاء حرة"
+        },
+        "widgets": {
+            "context_schedule": "جدولة السياق",
+            "context_frames": "عدد إطارات السياق",
+            "context_stride": "خطوة السياق",
+            "context_overlap": "تداخل السياق",
+            "freenoise": "ضوضاء حرة"
+        },
+        "outputs": {
+            "context_options": "خيارات السياق"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "تحرير Transformer لCogVideo",
+        "inputs": {
+            "remove_blocks": "إزالة الكتلة"
+        },
+        "outputs": {
+            "block_list": "قائمة الحظر",
+            "transformerblocks": "كتل Transformer"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "إعدادات تصريف Torch لCogVideo",
+        "widgets": {
+            "backend": "الواجهة الخلفية",
+            "fullgraph": "الصورة كاملة",
+            "mode": "الوضع",
+            "dynamic": "ديناميكي",
+            "dynamo_cache_size_limit": "حد حجم تخزين Dynamo المؤقت"
+        },
+        "outputs": {
+            "torch_compile_args": "معاملات تصريف Torch",
+            "compileargs": "معاملات التصريف"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "دمج ترميز النص لCogVideo",
+        "inputs": {
+            "conditioning_1": "شرط 1",
+            "conditioning_2": "شرط 2"
+        },
+        "widgets": {
+            "combination_mode": "وضع الدمج",
+            "weighted_average_ratio": "نسبة المتوسط الموزّن"
+        },
+        "outputs": {
+            "conditioning": "شرط"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "ترميز مسار Tora",
+        "inputs": {
+            "tora_model": "نموذج Tora",
+            "vae": "VAE",
+            "coordinates": "الإحداثيات"
+        },
+        "widgets": {
+            "width": "العرض",
+            "height": "الارتفاع",
+            "num_frames": "عدد الإطارات",
+            "strength": "قوة",
+            "start_percent": "نسبة البداية",
+            "end_percent": "نسبة النهاية",
+            "enable_tiling": "تفعيل المعالجة بالكتل"
+        },
+        "outputs": {
+            "tora_trajectory": "مسار Tora",
+            "video_flow_images": "صور تدفق الفيديو"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "ترميز التدفق البصري Tora",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "نموذج Tora",
+            "optical_flow": "التدفق البصري"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "start_percent": "نسبة البداية",
+            "end_percent": "نسبة النهاية"
+        },
+        "outputs": {
+            "tora_trajectory": "مسار Tora"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "ترميز صورة FunInP لCogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "صورة البداية",
+            "end_image": "صورة النهاية"
+        },
+        "widgets": {
+            "num_frames": "عدد الإطارات",
+            "enable_tiling": "تفعيل المعالجة بالكتل",
+            "noise_aug_strength": "قوة تعزيز الضوضاء"
+        },
+        "outputs": {
+            "image_cond_latents": "Latent شرط الصورة"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "التخزين المؤقت السريع X لCogVideo",
+        "inputs": {
+            "num_blocks_to_cache": "عدد كتل التخزين المؤقت"
+        },
+        "widgets": {
+            "start_step": "خطوة البداية",
+            "hf_step": "خطوات الترددات العالية",
+            "lf_step": "خطوات الترددات المنخفضة",
+            "cache_device": "جهاز التخزين المؤقت",
+            "num_blocks_to_cache": "عدد كتل التخزين المؤقت"
+        },
+        "outputs": {
+            "fastercache": "التخزين المؤقت السريع"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "تخزين Tea المؤقت لCogVideoX",
+        "widgets": {
+            "rel_l1_thresh": "عتبة L1 النسبية"
+        },
+        "outputs": {
+            "teacache_args": "معاملات تخزين Tea المؤقت"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "ControlNet لCogVideo",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "صورة"
+        },
+        "widgets": {
+            "control_strength": "قوة التحكم",
+            "control_start_percent": "نسبة بداية التحكم",
+            "control_end_percent": "نسبة نهاية التحكم"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "ControlNet لCogVideo"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "الضبط الذكي لCogVideoX لأقرب حجم دلو",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "base_resolution": "الدقة الأساسية",
+            "upscale_method": "طريقة التكبير",
+            "crop": "قصّ"
+        },
+        "outputs": {
+            "image": "صورة",
+            "images": "صورة",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "int": "عدد صحيح"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "معاينة Latent لCogVideo",
+        "inputs": {
+            "samples": "عيّنة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "min_val": "القيمة الدنيا",
+            "max_val": "القيمة القصوى",
+            "r_bias": "انحراف R",
+            "g_bias": "انحراف G",
+            "b_bias": "انحراف B"
+        },
+        "outputs": {
+            "image": "صورة",
+            "images": "صورة",
+            "latent_rgb_factors": "عوامل RGB لـ Latent",
+            "string": "سلسلة نصية"
+        }
+    }
+}

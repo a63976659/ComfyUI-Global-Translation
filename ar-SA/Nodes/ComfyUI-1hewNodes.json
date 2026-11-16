@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "مطابقة ألوان الصور",
+        "inputs": {
+            "source_image": "صورة المصدر",
+            "reference_image": "صورة مرجعية"
+        },
+        "widgets": {
+            "method": "الطريقة"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "ينقل ألوان الصورة المرجعية إلى صورة المصدر. يدعم المعالجة بالدفعة؛ وعند اختلاف عدد الصور المرجعية عن حجم دفعة المصدر تُعاد الصور المرجعية بشكل دائري (i % ref_count). تعمل طريقتا wavelet/adain بشكل أصلي؛ أما mkl/hm/reinhard/mvgd ونسخها المختلطة فتستخدم حزمة 'color-matcher'."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "استعادة ألوان الصور",
+        "inputs": {
+            "edit_image": "الصورة المعدّلة",
+            "org_image": "صورة المصدر"
+        },
+        "widgets": {
+            "background_threshold": "عتبة الخلفية",
+            "unchanged_threshold": "عتبة عدم التغيّر",
+            "seam_max_distance": "أقصى مسافة للتقاطعات",
+            "seam_decay": "تلاشي التقاطعات",
+            "seam_residual_blur": "تمويه بقايا التقاطعات",
+            "seam_color_sigma": "الانحراف المعياري لألوان التقاطعات",
+            "occlusion_residual_blur": "تمويه بقايا الإخفاء",
+            "occlusion_bridge_width": "عرض جسر الإخفاء"
+        },
+        "outputs": {
+            "image": "صورة",
+            "unchanged_mask": "القناع غير المتغيّر"
+        },
+        "description": "يعيد ألوان الصور المعدَّلة بالذكاء الاصطناعي بعد المحاذَاة إلى المرجع الأصلي، مع تنعيم موضعي لتقاطعات الإخفاء الناتجة عن إزالة الكائنات. يستخدم ملاءمة ألوان أفينية موثوقة وحقل تقاطعات متصل (أصبح تنظيف الأقنعة الثابتة بنيويًا معطَّلاً). وعند وجود قناة Alpha في الصورة المعدَّلة يتم الاحتفاظ بها."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "قناع تغيير محاذاة الصور",
+        "inputs": {
+            "edit_image": "الصورة المعدّلة",
+            "org_image": "صورة المصدر"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "max_offset": "أقصى إزاحة",
+            "max_rotation": "أقصى دوران",
+            "max_scale": "أقصى تحجيم",
+            "min_align_score": "أدنى درجة محاذاة",
+            "color_compensation": "تعويض الألوان",
+            "sensitivity": "الحساسية",
+            "min_component_area": "أصغر مساحة مكوَّن",
+            "expand": "توسيع",
+            "feather": "تنعيم الحافة"
+        },
+        "outputs": {
+            "align_image": "محاذاة الصورة",
+            "clean_mask": "القناع النظيف",
+            "raw_mask": "القناع الخام",
+            "change_score": "درجة التغيير",
+            "overlay_image": "صورة التراكب"
+        },
+        "description": "يحاذي الصورة المعدَّلة بالذكاء الاصطناعي مع الصورة الأصلية، مستخدمًا بكسلات الخلفية المستقرة لرفض الانحراف اللوني العام الطفيف، ويخرج قناع التغيير الخام/النظيف."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "معالجة حواف Alpha للصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "edge": "الحافة",
+            "feather": "تنعيم الحافة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "يضبط حواف المنطقة المعتمة في الصور ذات قناة Alpha: تقليص الحواف إلى الداخل / توسيعها إلى الخارج + تنعيم (ترييش).\n\nالحالة الشائعة: بعد القصّ (إزالة الخلفية) قد تبقى حول حواف العنصر حلقة شبه شفافة من الحواف الخشنة/الملونة ملوثة بلون الخلفية. تبدأ هذه العقدة بتقليص الحواف بالطريقة المورفولوجية لتقصّ بكسلات الحواف الملوثة مباشرة، ثم تطبّق ترييشًا غاوسيًا للحصول على انتقال نظيف؛ وقبل الترييش يُوسَّع لون المنطقة المعتمة إلى نطاق الانتقال (bleed) بشكل ثابت، لتجنّب ظهور حواف داكنة/ملونة بعد الترييش.\n\nترتيب المعالجة: تقليص/توسيع الحواف → توسّع اللون → الترييش.\nالناتج صورة من 4 قنوات مع Alpha، ويعطى معه قناع Alpha بعد المعالجة.\n\nتقليص/توسيع الحواف هو معالجة مورفولوجية بالتدرج الرمادي (مرشح القيمة الدنيا / القيمة القصوى) تُطبَّق على Alpha مباشرة:\nفي الحافة الناعمة الخطية محليًا، يطابق المرشح بنصف قطر r إزاحة ذلك المنحدر بمقدار r بكسل تمامًا،\nولذلك تُزاح كل خطوط التساوي في Alpha إزاحة كلية مقدارها r، ويبقى مكافحة التعرج المدمجة في الـ matte محفوظة بالكامل\nدون أن تتحول إلى درجة بحجم 1px. أما سدّ الثقوب فيندرج تحت إصلاح الأقنعة، ويُترك لعقد أخرى."
+    },
+    "1hew_ImageBlur": {
+        "title": "تمويه الصورة",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "blur": "درجة التمويه"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "يطبّق تمويهًا غاوسيًا على الصورة بأكملها، بسلوك مطابق لـ LayerFilter: Gaussian Blur V2 في LayerStyle.\n\n- يقبل معامل التمويه الأعداد العشرية (FLOAT)، وهو أقرب في دلالته إلى إصدار V2؛\n- عندما تساوي التمويه 0 تُمرَّر الصورة الأصلية كما هي؛\n- تُعالَج الصور إطارًا بإطار داخل الدفعة مع الحفاظ على عدد القنوات ونوع البيانات دون تغيير.\n"
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "تحجيم الصورة Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "native_image": "الصورة الأصلية",
+            "native_mask": "القناع الأصلي"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "تحجيم الصورة Qwen Image 3.0",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "native_image": "الصورة الأصلية",
+            "native_mask": "القناع الأصلي"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "تحجيم الصورة Qwen Image 3.0 Pro",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "native_image": "الصورة الأصلية",
+            "native_mask": "القناع الأصلي"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "أصغر مساحة للصورة",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "length_to_sq_area": "طول الضلع المرجعي",
+            "method": "الطريقة",
+            "divisible_by": "قابل للقسمة",
+            "fit": "الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "resize_bool": "هل يُغيَّر الحجم"
+        },
+        "description": "يكبّر الصورة حتى تبلغ مساحتها مساحة المربع المرجعي الدنيا.\n\n- يحدد ``length_to_sq_area`` طول ضلع المربع المرجعي (المساحة المستهدفة = N²).\n- يسلك ``الملاءمة`` سلوك «تغيير حجم الصورة العام»: قصّ/حشو/تمديد.\n- يقرّب ``قابل للقسمة`` المقاس النهائي لأعلى إلى مضاعف لعدد معين.\n- يبلّغ ``resize_bool`` عمّا إذا حدث التكبير فعليًا.\n"
+    },
+    "1hew_StringRandom": {
+        "title": "سلسلة نصية عشوائية",
+        "widgets": {
+            "custom_text": "نص مخصص",
+            "seed": "بذرة عشوائية"
+        },
+        "outputs": {
+            "string": "سلسلة نصية"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "مقارنة النصوص",
+        "widgets": {
+            "a": "a",
+            "operator": "عامل التشغيل",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "قيمة منطقية"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "حسابات رياضية على أقنعة متعددة",
+        "inputs": {
+            "mask_1": "قناع 1",
+            "mask_2": "قناع 2"
+        },
+        "widgets": {
+            "operation": "العملية"
+        },
+        "outputs": {
+            "mask": "قناع"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "نسبة نص Jimeng",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "selection": "الاختيار"
+        },
+        "outputs": {
+            "string": "سلسلة نصية"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "مستوى القناع",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "black_point": "النقطة السوداء",
+            "white_point": "النقطة البيضاء"
+        },
+        "outputs": {
+            "mask": "قناع"
+        },
+        "description": "تعيين عتبات النقطة السوداء والنقطة البيضاء لصورة القناع لضبط تباين القناع ومداه."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "مقارنة الأعداد الصحيحة",
+        "inputs": {
+            "a": "القيمة a",
+            "operator": "عامل التشغيل",
+            "b": "القيمة b"
+        },
+        "widgets": {
+            "bool": "قيمة منطقية"
+        },
+        "description": "مقارنة قيمتي عددين صحيحين"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "مقارنة الأعداد العشرية",
+        "widgets": {
+            "a": "القيمة a",
+            "operator": "عامل التشغيل",
+            "b": "القيمة b"
+        },
+        "outputs": {
+            "bool": "قيمة منطقية"
+        },
+        "description": "يقارن أيَّ عددين عشريين أكبر من حيث القيمة"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "صقل حواف الصور بالأبيض والأسود",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "gamma": "غاما",
+            "shrink_radius": "نصف قطر التقلّص",
+            "blur_radius": "نصف قطر التمويه"
+        },
+        "outputs": {
+            "mask": "قناع"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "حدود القناع",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "fill_hole": "ملء الثقوب",
+            "stroke_width": "سماكة الخط",
+            "include_mask": "تضمين القناع"
+        },
+        "outputs": {
+            "mask": "قناع"
+        },
+        "description": "رسم حدود حول القناع"
+    },
+    "1hew_VideoToURL": {
+        "title": "تحويل الفيديو إلى URL",
+        "inputs": {
+            "video": "مسار ملف الفيديو"
+        },
+        "widgets": {
+            "timeout": "المهلة بالثواني"
+        },
+        "outputs": {
+            "url": "عنوان URL المُولَّد"
+        },
+        "description": "تحويل ملف الفيديو إلى رابط URL يمكن الوصول إليه"
+    },
+    "1hew_VideoToImage": {
+        "title": "تحويل الفيديو إلى صور",
+        "inputs": {
+            "video": "فيديو"
+        },
+        "outputs": {
+            "image": "صورة",
+            "audio": "صوت",
+            "fps": "معدل الإطارات",
+            "frame_count": "عدد الإطارات"
+        },
+        "description": "تحويل الفيديو إلى صور وصوت ومعدل إطارات وعدد إطارات"
+    },
+    "1hew_IntVideoCount": {
+        "title": "عدّاد الفيديو",
+        "inputs": {
+            "video_1": "فيديو1"
+        },
+        "outputs": {
+            "int": "عدد صحيح"
+        },
+        "description": "عقدة لعدّ مقاطع الفيديو"
+    },
+    "1hew_ImageToMask": {
+        "title": "تحويل الصورة إلى قناع",
+        "inputs": {
+            "image": "صورة"
+        },
+        "outputs": {
+            "mask": "قناع"
+        },
+        "description": "تحويل الصورة إلى قناع"
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "فهرسة دفعات الصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "index": "الفهرس"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "توحيد دفعات الصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "num_frame": "عدد الإطارات"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "تشابك قائمة الصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "segment_count": "عدد المقاطع"
+        },
+        "outputs": {
+            "image_list": "قائمة صور"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "حشو الصندوق المحيط",
+        "inputs": {
+            "paste_image": "لصق الصورة",
+            "bbox_mask": "قناع الصندوق المحيط"
+        },
+        "widgets": {
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "أداة حشو الصندوق المحيط للصور - تضع الصورة ضمن الإطار الخارجي لـ ``bbox_mask`` وتملء باقي المنطقة باللون المحدد."
+    },
+    "1hew_IntImageCount": {
+        "title": "عدد الصور كعدد صحيح",
+        "inputs": {
+            "image_1": "صورة1"
+        },
+        "outputs": {
+            "int": "عدد صحيح"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "تحميل PS",
+        "widgets": {
+            "file": "ملف",
+            "index": "الفهرس",
+            "include_hidden": "تضمين العناصر المخفية",
+            "group_mode": "وضع التجميع",
+            "output_mode": "وضع الخرج",
+            "preview": "معاينة",
+            "choose psd to upload": "اختيار ملف PSD للرفع"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "filename": "اسم الملف",
+            "layer_name": "اسم الطبقة"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "تحويل القناع إلى قناع المربع المحيط",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "output_mode": "وضع الخرج",
+            "divisible_by": "قابل للقسمة"
+        },
+        "outputs": {
+            "bbox_mask": "قناع الصندوق المحيط"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "قائمة صور متعددة",
+        "inputs": {
+            "image_1": "صورة1"
+        },
+        "widgets": {
+            "image_1": "صورة1"
+        },
+        "outputs": {
+            "image_list": "قائمة صور"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "تنظيف الذاكرة",
+        "widgets": {
+            "anything": "أي محتوى",
+            "unload_model": "إلغاء تحميل النموذج"
+        },
+        "description": "يطلب من ComfyUI تحرير ذاكرة التخزين المؤقت للتنفيذ وحِمل النماذج بعد انتهاء المهمة الحالية، وهو مفيد لتنظيف RAM/VRAM بين عمليات التنفيذ المتعددة في قائمة الانتظار."
+    },
+    "1hew_AudioDuration": {
+        "title": "مدة الصوت",
+        "inputs": {
+            "audio": "صوت"
+        },
+        "description": "يحصل على مدة الصوت."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "استخراج من دفعة الصور",
+        "inputs": {
+            "image": "صورة",
+            "mode": "الوضع",
+            "index": "الفهرس",
+            "step": "حجم الخطوة",
+            "uniform": "منتظم",
+            "max_keep": "أقصى عدد للاحتفاظ"
+        },
+        "description": "يستخرج الصور المطابقة لنمط محدد من دفعة الصور."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "تجميع دفعات الصور",
+        "inputs": {
+            "image": "صورة",
+            "batch_size": "حجم الدفعة",
+            "overlap": "تراكب",
+            "last_batch_mode": "نمط الدفعة الأخيرة",
+            "color": "اللون"
+        },
+        "description": "يقسّم دفعة الصور إلى مجموعات."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "مدى دفعة الصور",
+        "inputs": {
+            "image": "صورة",
+            "start_index": "الفهرس البداية",
+            "num_frame": "عدد الإطارات"
+        },
+        "description": "يستخرج الصور ضمن مدى محدد من دفعة الصور."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "تقسيم دفعة الصور",
+        "inputs": {
+            "image": "صورة",
+            "take_count": "عدد الإطارات المأخوذة",
+            "from_start": "من البداية"
+        },
+        "description": "يقسّم الصور المستخرجة من دفعة الصور إلى أجزاء بعدد محدد."
+    },
+    "1hew_ImageListAppend": {
+        "title": "إلحاق الصور إلى قائمة",
+        "inputs": {
+            "image_1": "صورة1",
+            "image_2": "صورة2"
+        },
+        "description": "يضيف صورتين إلى قائمة."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "عمليات حسابية على دفعة الأقنعة",
+        "inputs": {
+            "mask": "قناع",
+            "operation": "عملية"
+        },
+        "description": "تنفيذ عمليات حسابية على دفعة الأقنعة."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "نطاق دفعة الأقنعة",
+        "inputs": {
+            "mask": "قناع",
+            "start_index": "الفهرس البداية",
+            "num_frame": "عدد الإطارات"
+        },
+        "description": "استخراج أقنعة ضمن نطاق محدد من دفعة الأقنعة."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "تقسيم دفعة الأقنعة",
+        "inputs": {
+            "mask": "قناع",
+            "take_count": "عدد الإطارات المأخوذة",
+            "from_start": "من البداية"
+        },
+        "description": "تقسيم الأقنعة من دفعة الأقنعة حسب عدد محدد."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "تجميع مقاطع الفيديو",
+        "inputs": {
+            "image": "صورة",
+            "threshold_base": "أساس العتبة",
+            "threshold_range": "نطاق العتبة",
+            "threshold_count": "عدد العتبات",
+            "kernel": "النواة",
+            "min_frame_count": "أدنى عدد إطارات",
+            "max_frame_count": "أقصى عدد إطارات",
+            "fast": "سريع",
+            "add_frame": "إضافة إطار",
+            "delete_frame": "حذف إطار"
+        },
+        "description": "تجميع مقاطع الفيديو بناءً على الصور."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "مطابقة السطوع والتباين",
+        "inputs": {
+            "source_image": "صورة المصدر",
+            "reference_image": "صورة مرجعية",
+            "edge_amount": "مقدار الحواف",
+            "consistency": "الاتساق",
+            "method": "الطريقة"
+        },
+        "description": "مطابقة السطوع والتباين بين صورة المصدر والصورة المرجعية."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "ترميز النص Qwen لتحرير الصور",
+        "description": "ترميز النص باستخدام نموذج Qwen لتحرير الصور."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "تحويل دفعة الصور إلى قائمة",
+        "inputs": {
+            "image_batch": "دفعة الصور"
+        },
+        "description": "يحوّل دفعة الصور إلى قائمة صور."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "تحويل قائمة الصور إلى دفعة",
+        "inputs": {
+            "image_list": "قائمة صور"
+        },
+        "description": "يحوّل قائمة الصور إلى دفعة صور."
+    },
+    "1hew_ImageToURL": {
+        "title": "تحويل الصورة إلى عنوان URL",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "timeout": "مهلة"
+        },
+        "outputs": {
+            "url": "عنوان URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "تحويل دفعة الأقنعة إلى قائمة",
+        "inputs": {
+            "mask_batch": "دفعة الأقنعة"
+        },
+        "description": "تحويل دفعة الأقنعة إلى قائمة أقنعة."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "تحويل قائمة الأقنعة إلى دفعة",
+        "description": "تحويل عدة أقنعة إلى دفعة واحدة.",
+        "inputs": {
+            "mask_list": "قائمة الأقنعة"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "تحويل القناع إلى Sam3Box",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "condition": "الحالة",
+            "output_mode": "وضع الخرج"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "تحويل سلسلة الإحداثيات النصية إلى مربع محيط",
+        "description": "إنشاء المربع المحيط من سلسلة نصية للإحداثيات.",
+        "inputs": {
+            "coordinates_string": "سلسلة نصية للإحداثيات"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "تحويل سلسلة الإحداثيات النصية إلى قناع المربع المحيط",
+        "description": "إنشاء قناع المربع المحيط من سلسلة نصية للإحداثيات.",
+        "inputs": {
+            "image": "صورة",
+            "coordinates_string": "سلسلة نصية للإحداثيات",
+            "output_mode": "وضع الخرج"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "تحويل قائمة النصوص إلى سلسلة نصية",
+        "description": "دمج قائمة النصوص في سلسلة نصية واحدة.",
+        "inputs": {
+            "text_list": "قائمة النصوص",
+            "prefix": "بادئة",
+            "suffix": "لاحقة",
+            "separator": "الفاصل"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "تحويل النص إلى أي صيغة",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "outputs": {
+            "any": "أي"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "تحويل URL إلى فيديو",
+        "description": "جلب الفيديو من URL.",
+        "inputs": {
+            "video_url": "عنوان URL للفيديو",
+            "timeout": "مدة المهلة"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "كشف خطوط الإرشاد",
+        "description": "يكتشف خطوط الإرشاد في الصورة.",
+        "inputs": {
+            "image": "صورة",
+            "canny_low": "العتبة الدنيا لـ Canny",
+            "canny_high": "العتبة العليا لـ Canny",
+            "seg_min_len": "أدنى طول تقسيم",
+            "seg_max_gap": "أقصى فجوة تقسيم",
+            "guide_filter": "مرشح الإرشاد",
+            "guide_width": "عرض خط الإرشاد",
+            "cluster_eps": "قيمة ε للتجميع"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "إزالة الخلفية",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "model": "النموذج",
+            "add_background": "إضافة خلفية"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "تحسين إزالة الخلفية",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "type": "النوع",
+            "subject_protect": "حماية الموضوع",
+            "feather": "تنعيم الحافة",
+            "decolor_edge": "إزالة اللون من الحواف"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "كشف Yolo",
+        "description": "يستخدم نموذج YOLO للكشف عن الكائنات في الصورة.",
+        "inputs": {
+            "image": "صورة",
+            "yolo_model": "نموذج YOLO",
+            "threshold": "العتبة",
+            "mask_index": "فهرس القناع",
+            "label": "تسمية",
+            "label_size": "حجم التسمية"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "إضافة تسمية إلى الصورة",
+        "description": "يضيف تسميات نصية على الصورة.",
+        "inputs": {
+            "image": "صورة",
+            "height_pad": "حشو الارتفاع",
+            "font_size": "حجم الخط",
+            "invert_color": "عكس الألوان",
+            "font": "الخط",
+            "text": "نص",
+            "direction": "الاتّجاه",
+            "input1": "إدخال 1",
+            "input2": "إدخال 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "تنظيف قناة Alpha",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "clean_strength": "قوة التنظيف",
+            "detect_only": "اكتشاف فقط"
+        },
+        "outputs": {
+            "mask": "قناع",
+            "noise_mask": "قناع الضوضاء"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "فصل قناة Alpha",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "background_color": "لون الخلفية"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "رسم صندوق محيط على الصور باستخدام الأقنعة",
+        "description": "يرسم صناديق محيطية على الصور باستخدام الأقنعة.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "bbox_color": "لون الصندوق المحيط",
+            "stroke_width": "سماكة الخط",
+            "fill": "تعبئة",
+            "padding": "الحشوة الداخلية",
+            "output_mode": "وضع الخرج"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "لصق الصور المعدَّلة",
+        "description": "يعدّل الصور ويلصقها معًا.",
+        "inputs": {
+            "reference_image": "صورة مرجعية",
+            "edit_image": "الصورة المعدّلة",
+            "edit_mask": "قناع التعديل",
+            "edit_image_position": "موضع الصورة المعدَّلة",
+            "match_edit_size": "مطابقة حجم التعديل",
+            "spacing": "التباعد",
+            "spacing_color": "لون المسافات",
+            "pad_color": "لون التعبئة"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "لصق الصور",
+        "description": "اللصق الرئيسي للصور.",
+        "inputs": {
+            "image_1": "صورة1",
+            "image_2": "صورة2",
+            "image_3": "صورة3",
+            "direction": "الاتّجاه",
+            "match_image_size": "مطابقة أبعاد الصورة",
+            "spacing_width": "عرض المسافة",
+            "spacing_color": "لون المسافات",
+            "pad_color": "لون التعبئة"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "تكرار الصور",
+        "description": "معالجة الصور ذهابًا وإيابًا.",
+        "inputs": {
+            "image": "صورة",
+            "pre_reverse": "العكس المسبق",
+            "ops_count": "عدد العمليات",
+            "frame_count": "عدد الإطارات",
+            "remove_link_frame": "إزالة الإطار الرابط"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "رسم الصورة",
+        "description": "يرسم تخطيط شبكة للصور.",
+        "inputs": {
+            "image": "صورة",
+            "layout": "تخطيط",
+            "spacing": "التباعد",
+            "grid_columns": "أعمدة الشبكة",
+            "background_color": "لون الخلفية"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "تدوير الصورة مع قناع",
+        "description": "تدوير الصورة وتطبيق القناع عليها.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "angle": "الزاوية",
+            "pad_color": "لون التعبئة",
+            "expand": "توسيع",
+            "mask_center": "مركز القناع"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "إنشاء صورة بلون موحد",
+        "description": "إنشاء صورة بلون موحد.",
+        "inputs": {
+            "get_image_size": "الحصول على أبعاد الصورة",
+            "preset_size": "المقاس المسبق",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "color": "اللون",
+            "alpha": "شفافية",
+            "invert": "عكس",
+            "mask_opacity": "شفافية القناع",
+            "divisible_by": "قابل للقسمة على"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "رسم الحدود عبر قناع",
+        "description": "رسم حدود على الصورة باستخدام قناع.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "stroke_width": "سماكة الحدود",
+            "stroke_color": "لون الحدود"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "المزج بقناة Alpha",
+        "description": "يمزج بين صورة التراكب والصورة الأساسية حسب قيم Alpha.",
+        "inputs": {
+            "overlay_image": "صورة التراكب",
+            "base_image": "الصورة الأساسية",
+            "overlay_mask": "قناع التراكب",
+            "blend_mode": "وضع المزج",
+            "opacity": "التعتيم",
+            "invert_mask": "عكس القناع"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "المزج بأنماط CSS",
+        "description": "يمزج بين صورة التراكب والصورة الأساسية باستخدام أنماط مزج CSS.",
+        "inputs": {
+            "overlay_image": "صورة التراكب",
+            "base_image": "الصورة الأساسية",
+            "blend_mode": "وضع المزج",
+            "blend_percentage": "نسبة المزج",
+            "overlay_mask": "قناع التراكب",
+            "invert_mask": "عكس القناع"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "مزج الصور بالأقنعة",
+        "description": "يمزج بين الصور باستخدام الأقنعة.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "fill_hole": "ردم الفراغات",
+            "invert": "عكس",
+            "feather": "تنعيم الحافة",
+            "opacity": "التعتيم",
+            "expansion": "توسيع",
+            "background_color": "لون الخلفية",
+            "background_opacity": "شفافية الخلفية",
+            "output_mask_invert": "عكس القناع الناتج"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "القصّ إلى صورة مربعة",
+        "description": "يقصّ الصورة إلى مربّع.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "scale_factor": "عامل التحجيم",
+            "extra_padding": "حشو إضافي",
+            "fill_color": "لون التعبئة",
+            "apply_mask": "تطبيق القناع",
+            "divisible_by": "قابل للقسمة على"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "قصّ الصندوق المحيط",
+        "widgets": {
+            "image": "صورة",
+            "mask": "قناع",
+            "preset_ratio": "النسبة المحددة مسبقًا",
+            "get_crop_ratio": "الحصول على نسبة الاقتصاص",
+            "scale_strength": "قوة التحجيم",
+            "crop_to_side": "القصّ إلى طول الضلع",
+            "crop_to_length": "القصّ إلى الطول",
+            "divisible_by": "مضاعف القسمة الصحيحة"
+        },
+        "description": "أداة قصّ الصور - تقصّ الصورة وفقًا للقناع وتعيد معلومات قناع الصندوق المحيط لإعادة لصقها إلى موضعها الأصلي",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "قصّ الحواف وحشوها",
+        "description": "يقصّ حواف الصورة ويملؤها.",
+        "inputs": {
+            "image": "صورة",
+            "uniform_amount": "مقدار الحشو المنتظم",
+            "top_amount": "مقدار الحشو العلوي",
+            "bottom_amount": "مقدار الحشو السفلي",
+            "left_amount": "مقدار الحشو الأيسر",
+            "right_amount": "مقدار الحشو الأيمن",
+            "pad_color": "لون التعبئة",
+            "divisible_by": "قابل للقسمة على"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "تقسيم الصورة بشبكة",
+        "description": "يقسّم الصورة إلى شبكة من الخلايا.",
+        "inputs": {
+            "image": "صورة",
+            "rows": "عدد الصفوف",
+            "columns": "عدد الأعمدة",
+            "index": "الفهرس",
+            "all": "الكل"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "قصّ الصور بالأقنعة",
+        "description": "يقصّ الصور باستخدام القناع.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "output_crop": "قصّ الناتج",
+            "output_alpha": "شفافية الناتج"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "لصق الصور بقناع الصندوق المحيط",
+        "description": "يلصق على الصور باستخدام أقنعة الصناديق المحيطية.",
+        "inputs": {
+            "paste_image": "لصق الصورة",
+            "base_image": "الصورة الأساسية",
+            "bbox_mask": "قناع الصندوق المحيط",
+            "paste_mask": "قناع اللصق",
+            "position_x": "موضع X",
+            "position_y": "موضع Y",
+            "scale": "تحجيم",
+            "rotation": "تدوير",
+            "opacity": "التعتيم",
+            "apply_paste_mask": "تطبيق قناع اللصق"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "دمج الصور عالية ومنخفضة التردد",
+        "description": "يدمج الصور عالية التردد مع الصور منخفضة التردد.",
+        "inputs": {
+            "high_freq": "صورة عالية التردد",
+            "low_freq": "صورة منخفضة التردد",
+            "method": "الطريقة",
+            "high_strength": "قوة التردد العالي",
+            "low_strength": "قوة التردد المنخفض"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "فصل الترددات عالية/منخفضة للصور",
+        "inputs": {
+            "image": "صورة",
+            "method": "الطريقة",
+            "blur_radius": "نصف قطر التمويه"
+        },
+        "description": "يفصل مكوّنات الصورة عالية التردد عن منخفضة التردد."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "تحويل الترددات عالية/منخفضة للصور",
+        "inputs": {
+            "generate_image": "صورة الناتج",
+            "detail_image": "صورة التفاصيل",
+            "detail_mask": "قناع التفاصيل",
+            "method": "الطريقة",
+            "blur_radius": "نصف قطر التمويه"
+        },
+        "description": "يطبّق عمليات تحويل على المكوّنات عالية التردد ومنخفضة التردد في الصورة."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "تحجيم الصورة Flux Kontext",
+        "description": "تعديل حجم الصورة باستخدام Flux Kontext.",
+        "inputs": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة",
+            "image": "صورة",
+            "mask": "قناع"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "تحجيم الصورة Gemini 3.0 Pro",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "تحجيم الصورة Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة",
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "تحجيم الصورة Jimeng",
+        "description": "تعديل حجم الصورة باستخدام Jimeng.",
+        "inputs": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة",
+            "image": "صورة",
+            "mask": "قناع"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "تحجيم الصورة Qwen Image",
+        "description": "تغيير مقياس الصورة.",
+        "inputs": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة",
+            "image": "صورة",
+            "mask": "قناع"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "تحجيم الصورة إلى مربع",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "التحجيم العام للصورة",
+        "description": "تحجيم عام للصورة.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "get_image_size": "الحصول على أبعاد الصورة",
+            "preset_ratio": "النسبة المحددة مسبقًا",
+            "proportional_width": "التحجيم حسب نسبة العرض",
+            "proportional_height": "التحجيم حسب نسبة الارتفاع",
+            "method": "الطريقة",
+            "scale_to_side": "التحجيم إلى طول الضلع",
+            "scale_to_length": "التحجيم إلى الطول",
+            "fit": "طريقة الملاءمة",
+            "pad_color": "لون التعبئة",
+            "divisible_by": "قابل للقسمة على"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "دمج بلاطات الصورة",
+        "inputs": {
+            "tile": "بلاطة",
+            "tile_meta": "بيانات البلاطة الوصفية",
+            "blend_strength": "قوة الدمج"
+        },
+        "description": "دمج عدة صور بلاطية في صورة كاملة واحدة."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "تقسيم الصورة إلى أجزاء",
+        "inputs": {
+            "image": "صورة",
+            "get_tile_size": "الحصول على حجم الأجزاء",
+            "mode": "الوضع",
+            "overlap_amount": "مقدار التراكب",
+            "grid_row": "عدد الصفوف",
+            "grid_col": "عدد الأعمدة",
+            "divisible_by": "قابل للقسمة على"
+        },
+        "description": "تقسيم الصورة إلى عدة أجزاء."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "طول ضلع الصورة كعدد صحيح",
+        "inputs": {
+            "image": "صورة",
+            "mode": "الوضع"
+        },
+        "description": "حساب طول ضلع الصورة أو تعيينه كعدد صحيح."
+    },
+    "1hew_IntImageSize": {
+        "title": "أبعاد الصورة كأعداد صحيحة",
+        "inputs": {
+            "image": "صورة"
+        },
+        "description": "الحصول على أبعاد الصورة كأعداد صحيحة."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "طول ضلع القناع كعدد صحيح",
+        "inputs": {
+            "mask": "قناع",
+            "mode": "الوضع"
+        },
+        "description": "حساب طول ضلع القناع أو تعيينه كعدد صحيح."
+    },
+    "1hew_IntSplit": {
+        "title": "تقسيم العدد الصحيح",
+        "inputs": {
+            "total": "الإجمالي",
+            "split_point": "نقطة التقسيم"
+        },
+        "description": "تقسيم عدد صحيح إلى جزأين عند موضع محدد."
+    },
+    "1hew_IntWan": {
+        "title": "خانة العشرة آلاف للعدد الصحيح",
+        "inputs": {
+            "value": "القيمة"
+        },
+        "description": "الحصول على خانة العشرة آلاف في عدد صحيح أو تعيينها."
+    },
+    "1hew_GetFileCount": {
+        "title": "الحصول على عدد الملفات",
+        "inputs": {
+            "folder": "مجلد",
+            "type": "النوع",
+            "include_subdir": "تضمين المجلدات الفرعية"
+        },
+        "description": "يعدّ عدد الملفات الموجودة في المجلد المحدد ومجلداته الفرعية."
+    },
+    "1hew_LoadImage": {
+        "title": "تحميل صورة",
+        "inputs": {
+            "get_image_size": "الحصول على أبعاد الصورة",
+            "file": "ملف",
+            "index": "الفهرس",
+            "include_subdir": "تضمين المجلدات الفرعية",
+            "all": "الكل"
+        },
+        "description": "تحميل ملف صورة من مسار محدد."
+    },
+    "1hew_LoadTxt": {
+        "title": "تحميل النص",
+        "widgets": {
+            "file": "ملف",
+            "encode": "الترميز",
+            "index": "الفهرس",
+            "include_subdir": "تضمين المجلدات الفرعية"
+        },
+        "outputs": {
+            "text": "نص",
+            "filename": "اسم الملف"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "تحميل فيديو",
+        "inputs": {
+            "file": "ملف",
+            "frame_limit": "حد الإطارات",
+            "fps": "معدل الإطارات",
+            "start_skip": "التخطي عند البداية",
+            "end_skip": "التخطي عند النهاية",
+            "format": "صيغة",
+            "video_index": "فهرس الفيديو",
+            "include_subdir": "تضمين المجلدات الفرعية"
+        },
+        "description": "تحميل ملف فيديو من مسار محدد."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "تحويل الفيديو إلى صور",
+        "inputs": {
+            "file": "ملف",
+            "frame_limit": "حد الإطارات",
+            "fps": "معدل الإطارات",
+            "start_skip": "التخطي عند البداية",
+            "end_skip": "التخطي عند النهاية",
+            "format": "صيغة",
+            "video_index": "فهرس الفيديو",
+            "include_subdir": "تضمين المجلدات الفرعية"
+        },
+        "description": "تحويل ملف الفيديو إلى سلسلة من إطارات الصور."
+    },
+    "1hew_SaveImage": {
+        "title": "حفظ الصورة",
+        "inputs": {
+            "image": "صورة",
+            "filename_prefix": "بادئة اسم الملف",
+            "save_output": "حفظ الإخراج",
+            "save_metadata": "حفظ البيانات الوصفية"
+        },
+        "description": "حفظ الصورة في مسار محدد."
+    },
+    "1hew_SaveTxt": {
+        "title": "حفظ النص",
+        "inputs": {
+            "any": "أي"
+        },
+        "widgets": {
+            "filename": "اسم الملف",
+            "auto_increment": "الزيادة التلقائية",
+            "save_output": "حفظ الإخراج",
+            "encode": "الترميز"
+        },
+        "outputs": {
+            "file_path": "مسار الملف"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "حفظ الفيديو",
+        "inputs": {
+            "video": "فيديو",
+            "filename_prefix": "بادئة اسم الملف",
+            "save_output": "حفظ الإخراج",
+            "save_metadata": "حفظ البيانات الوصفية"
+        },
+        "description": "حفظ الفيديو في مسار محدد."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "حفظ الصورة كفيديو",
+        "description": "حفظ الفيديو بناءً على الصورة والصوت.",
+        "inputs": {
+            "image": "صورة",
+            "audio": "صوت",
+            "fps": "معدل الإطارات",
+            "filename_prefix": "بادئة اسم الملف",
+            "save_output": "حفظ الإخراج",
+            "save_metadata": "حفظ البيانات الوصفية"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "قيمة منطقية فارغة من أي نوع",
+        "description": "يتحقق مما إذا كانت القيمة المنطقية فارغة.",
+        "inputs": {
+            "any": "أي قيمة"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "عدد صحيح فارغ من أي نوع",
+        "description": "يتحقق مما إذا كانت قيمة العدد الصحيح فارغة.",
+        "inputs": {
+            "any": "أي قيمة",
+            "empty": "قيمة فارغة",
+            "not_empty": "قيمة غير فارغة"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "تبديل منطقي من أي نوع",
+        "description": "يبدّل بين خيارين حسب القيمة المنطقية.",
+        "inputs": {
+            "boolean": "قيمة منطقية",
+            "on_true": "عندما تكون صحيحة",
+            "on_false": "عندما تكون خاطئة"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "تبديل المحدِّد",
+        "inputs": {
+            "input_1": "إدخال 1"
+        },
+        "widgets": {
+            "select": "تحديد"
+        },
+        "outputs": {
+            "output": "إخراج",
+            "select": "تحديد"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "تبديل عدة محددات",
+        "inputs": {
+            "input_1": "إدخال 1"
+        },
+        "widgets": {
+            "select": "تحديد"
+        },
+        "outputs": {
+            "output_1": "المخرج 1",
+            "select": "تحديد"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "مطابقة النص برقم السطر",
+        "widgets": {
+            "text_multiline": "نص متعدد الأسطر",
+            "text_single": "نص أحادي السطر"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "مطابقة النص بالقيمة",
+        "widgets": {
+            "text_multiline": "نص متعدد الأسطر",
+            "text_single": "نص أحادي السطر"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "تنظيف شفافية القناع",
+        "widgets": {
+            "mask": "قناع",
+            "clean_strength": "قوة التنظيف",
+            "detect_only": "اكتشاف فقط"
+        },
+        "outputs": {
+            "mask": "قناع",
+            "noise_mask": "قناع الضوضاء"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "قص القناع عبر قناع المربع المحيط",
+        "description": "قص القناع باستخدام قناع المربع المحيط.",
+        "inputs": {
+            "mask": "قناع",
+            "bbox_mask": "قناع الصندوق المحيط"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "ملء ثقوب القناع",
+        "description": "ملء الثقوب في القناع.",
+        "inputs": {
+            "mask": "قناع",
+            "invert_mask": "عكس القناع"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "لصق القناع عبر قناع المربع المحيط",
+        "description": "لصق القناع باستخدام قناع المربع المحيط.",
+        "inputs": {
+            "paste_mask": "قناع اللصق",
+            "bbox_mask": "قناع الصندوق المحيط",
+            "base_mask": "القناع الأساسي"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "تكرار القناع",
+        "description": "تكرار القناع.",
+        "inputs": {
+            "mask": "قناع",
+            "invert": "عكس",
+            "count": "عدد"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "فصل القناع",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "threshold": "العتبة",
+            "min_area": "المساحة الدنيا",
+            "sort_mode": "وضع الفرز",
+            "connectivity": "الاتصال"
+        },
+        "outputs": {
+            "mask": "قناع",
+            "count": "عدد صحيح"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "تحويل القناع إلى صورة",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "fill_hole": "ملء الثقوب",
+            "white_area_color": "لون المنطقة البيضاء",
+            "black_area_color": "لون المنطقة السوداء",
+            "output_alpha": "إخراج قناة ألفا"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "المعالجة الجماعية لصور متعددة",
+        "description": "معالجة عدة صور دفعة واحدة.",
+        "inputs": {
+            "fit": "ملاءمة",
+            "pad_color": "لون التعبئة",
+            "image_1": "صورة1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "تراكب صور متعددة",
+        "inputs": {
+            "image_1": "صورة 1"
+        },
+        "widgets": {
+            "fit_mode": "وضع الملاءمة",
+            "color": "اللون"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "تراكب طبقات متعددة:\n- image_1 هي الطبقة العلوية، كلما زاد الرقم نزلت الطبقة نحو الأسفل\n- مدخلات RGBA تستخدم ألفا في التركيب الطبيعي للطبقات\n- مدخلات RGB تُعتبر طبقات معتمة",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "تجميع صور متعددة",
+        "description": "تجميع عدة صور معًا.",
+        "inputs": {
+            "direction": "الاتّجاه",
+            "match_image_size": "مطابقة حجم الصورة",
+            "spacing_width": "عرض المسافة",
+            "spacing_color": "لون المسافات",
+            "pad_color": "لون التعبئة",
+            "image_1": "صورة1",
+            "image_2": "صورة2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "تجميع أقنعة متعددة",
+        "description": "معالجة عدة أقنعة دفعة واحدة.",
+        "inputs": {
+            "fit": "ملاءمة",
+            "pad_color": "لون التعبئة",
+            "mask_1": "قناع 1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "حسابات رياضية على أقنعة متعددة",
+        "description": "تنفيذ عمليات حسابية على عدة أقنعة.",
+        "inputs": {
+            "mask_1": "قناع 1",
+            "mask_2": "قناع 2",
+            "operation": "عملية"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "ربط سلاسل نصية متعددة",
+        "description": "وصل عدة سلاسل نصية معًا.",
+        "inputs": {
+            "filter_empty_line": "تصفية الأسطر الفارغة",
+            "filter_comment": "تصفية التعليقات",
+            "separator": "الفاصل",
+            "input": "إدخال"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "قائمة أعداد عشرية مخصصة",
+        "description": "قائمة مخصصة من الأعداد العشرية.",
+        "inputs": {
+            "custom_text": "نص مخصص"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "قائمة أعداد صحيحة مخصصة",
+        "inputs": {
+            "custom_text": "نص مخصص"
+        },
+        "description": "إنشاء قائمة تحتوي على أعداد صحيحة مخصصة."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "قائمة بذور مخصصة",
+        "inputs": {
+            "seed": "البذرة",
+            "count": "الكمية"
+        },
+        "description": "إنشاء قائمة تحتوي على عدد محدد من البذور العشوائية."
+    },
+    "1hew_ListCustomString": {
+        "title": "قائمة سلاسل نصية مخصصة",
+        "inputs": {
+            "custom_text": "نص مخصص"
+        },
+        "description": "إنشاء قائمة تحتوي على سلاسل نصية مخصصة."
+    },
+    "1hew_StringFilter": {
+        "title": "ترشيح السلاسل النصية",
+        "inputs": {
+            "text": "نص",
+            "filter_empty_line": "تصفية الأسطر الفارغة",
+            "filter_comment": "تصفية التعليقات",
+            "input": "إدخال"
+        },
+        "description": "ترشيح الأسطر الفارغة والتعليقات من النص."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "ربط سلاسل نصية متعددة",
+        "inputs": {
+            "text1": "النص 1",
+            "text2": "النص 2",
+            "text3": "النص 3",
+            "text4": "النص 4",
+            "text5": "النص 5",
+            "filter_empty_line": "تصفية الأسطر الفارغة",
+            "filter_comment": "تصفية التعليقات",
+            "separator": "الفاصل",
+            "input": "إدخال"
+        },
+        "description": "دمج عدة نصوص في سلسلة نصية واحدة مع خيار ترشيح الأسطر الفارغة والتعليقات."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "الاستخراج المخصص للنص",
+        "inputs": {
+            "json_data": "بيانات JSON",
+            "key": "المفتاح",
+            "precision_match": "المطابقة الدقيقة",
+            "label_filter": "ترشيح التسميات"
+        },
+        "description": "استخراج قيمة مفتاح محدد من بيانات JSON مع المطابقة الدقيقة وترشيح التسميات."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "بادئة النص ولاحقته",
+        "inputs": {
+            "text": "نص",
+            "prefix": "بادئة",
+            "suffix": "لاحقة"
+        },
+        "description": "إضافة بادئة ولاحقة محددتين قبل النص وبعده."
+    },
+    "1hew_RangeMapping": {
+        "title": "تعيين النطاق",
+        "inputs": {
+            "value": "القيمة",
+            "min": "الحدّ الأدنى",
+            "max": "الحدّ الأقصى",
+            "rounding": "التقريب لأقرب قيمة"
+        },
+        "description": "تعيين قيم من نطاق 0-1 إلى النطاق [min,max]، مع دعم التحكم بدقة الأعداد العشرية."
+    },
+    "1hew_WorkflowName": {
+        "title": "اسم سير العمل",
+        "inputs": {
+            "prefix": "بادئة",
+            "suffix": "لاحقة",
+            "date_format": "تنسيق التاريخ",
+            "full_path": "المسار الكامل",
+            "strip_extension": "إزالة الامتداد"
+        },
+        "description": "إنشاء اسم سير عمل مع بادئة ولاحقة وتنسيق تاريخ."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "قصّ الصور بقناع الصندوق المحيط",
+        "description": "يقصّ الصور باستخدام قناع الصندوق المحيط.",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "preset_ratio": "النسبة المحددة مسبقًا",
+            "get_crop_ratio": "الحصول على نسبة الاقتصاص",
+            "scale_strength": "قوة التحجيم",
+            "crop_to_side": "القصّ إلى طول الضلع",
+            "crop_to_length": "القصّ إلى الطول",
+            "divisible_by": "قابل للقسمة على"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "دمج Alpha للصور",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "invert_mask": "عكس القناع"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "تشابك دفعات الصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "segment_count": "عدد المقاطع"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "سلسلة النسبة النصية Gemini 3.1 Flash Image",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "selection": "اختيار"
+        },
+        "outputs": {
+            "string": "سلسلة نصية"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "سلسلة النسبة النصية GPT Image 2.0",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "selection": "اختيار"
+        },
+        "outputs": {
+            "string": "سلسلة نصية"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "تعديل أبعاد الصورة GPT Image 2.0",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "preset_size": "المقاس المسبق",
+            "fit": "الطريقة",
+            "pad_color": "لون الخلفية"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "تحليل السلسلة النصية",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "selection": "اختيار"
+        },
+        "outputs": {
+            "string": "سلسلة نصية"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "تبديل للأعداد الصحيحة من أي نوع",
+        "description": "يبدّل الخيارات حسب قيمة العدد الصحيح."
+    }
+}

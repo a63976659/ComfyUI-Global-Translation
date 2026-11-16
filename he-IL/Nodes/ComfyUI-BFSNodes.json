@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "מחולל הנחיית BFS AMV",
+        "inputs": {
+            "video": "וידאו",
+            "images": "תמונה",
+            "audio": "אודיו"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "length": "אורך",
+            "hold": "השהיית מעקב",
+            "fill": "מילוי",
+            "placement": "הנחה",
+            "fps": "קצב פריימים",
+            "indices": "אינדקס",
+            "scene_threshold": "סף סצנה"
+        },
+        "outputs": {
+            "guide": "הנחיה",
+            "debug": "ניפוי"
+        },
+        "description": "מייצר הנחיית AMV (פריימים מפתח + פריימים ריקים). external_images יכול למקם תמונות אוטומטית לפי פעימות מוזיקה (יש להגדיר placement כ־audio_beats). יש להזרים את `הנחיה` ל־VAE או למודול ייחוס."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "יצירת תנאי אנימה לריאליזם BFS Bernini",
+        "inputs": {
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "vae": "VAE",
+            "guide_video": "וידאו הנחיה"
+        },
+        "widgets": {
+            "length": "אורך"
+        },
+        "outputs": {
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "latent": "Latent",
+            "debug": "ניפוי"
+        },
+        "description": "יצירת תנאי וידאו-לוידאו (v2v) טהור מאנימה לריאליזם עבור ה-LoRA של Bernini-R. guide_video תואם ל-source_id 1 (קנבס האנימה) | הפלט תואם ל-source_id 0 (צילום אמיתי). ללא מודול ייחוס. ההנחיה חלה הן על החיובי והן על השלילי, ולכן CFG מגדיל רק את פרומפט הטקסט (סגנון צילום אמיתי) ולא את הייחוס. יש להשתמש ב-CFG מתון; ההנחיה שומרת על תנועה/פריסה. אין לשלב את ה-LoRA הזה עם צמתים של החלפת פנים: הוא מזריק טוקני source_id 2 שה-LoRA של אנימה לריאליזם לא ראה מעולם באימון."
+    },
+    "LTXColorMask": {
+        "title": "מסיכת צבע LTX",
+        "inputs": {
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "color": "צבע",
+            "style": "סגנון",
+            "marker_radius_frac": "יחס רדיוס סימון",
+            "custom_r": "R מותאם אישית",
+            "custom_g": "G מותאם אישית",
+            "custom_b": "B מותאם אישית",
+            "background_black": "רקע שחור"
+        },
+        "outputs": {
+            "colored_mask": "מסיכה צבעונית"
+        },
+        "description": "צובע מחדש מסיכות SAM2 (לבן טהור/בינאריות) לפי מוסכמות האימון של scail2v2. 'silhouette' משמש למתחי מסיכת ההנחיה, ו-'flat_marker' (נקודת צבע קטנה, ללא צורה) למתחי מסיכת הזהות — עיינו ברמז של כל קלט כדי להבין מדוע שניהם שונים."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "יצירת תנאי החלפת פנים BFS Bernini",
+        "inputs": {
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "vae": "VAE",
+            "guide_video": "וידאו הנחיה",
+            "head_image": "תמונת ראש"
+        },
+        "widgets": {
+            "length": "אורך",
+            "amplify_reference": "הגדלת ייחוס"
+        },
+        "outputs": {
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "latent": "Latent",
+            "debug": "ניפוי"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "ניפוי LoRA החלפת פנים BFS",
+        "inputs": {
+            "model": "מודל"
+        },
+        "outputs": {
+            "model": "מודל",
+            "debug": "ניפוי"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "פיצול LoRA של עריכת תוכן כלשהו LTXV",
+        "inputs": {
+            "lora_name": "שם LoRA"
+        },
+        "widgets": {
+            "overwrite": "דריסה"
+        },
+        "outputs": {
+            "standard_lora_name": "שם LoRA סטנדרטי",
+            "editanything_module_name": "שם מודול של עריכת תוכן כלשהו"
+        },
+        "description": "מפצל את נקודת הביקורת של עריכת תוכן כלשהו ל-LoRA סטנדרטי ולמודולים מסייעים."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "טוען מודול של עריכת תוכן כלשהו LTXV",
+        "widgets": {
+            "module_name": "שם מודול"
+        },
+        "outputs": {
+            "editanything_module": "מודול עריכת תוכן כלשהו"
+        },
+        "description": "טוען את המודולים המסייעים שנוצרו על ידי פיצול ה-LoRA של עריכת תוכן כלשהו LTXV."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "טוען LoRA של עריכת תוכן כלשהו LTXV",
+        "inputs": {
+            "model": "מודל",
+            "lora_name": "שם LoRA"
+        },
+        "widgets": {
+            "strength_model": "עוצמת המודל"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "טוען LoRA לנקודת הביקורת של עריכת תוכן כלשהו."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "יישום עריכת תוכן כלשהו LTXV",
+        "inputs": {
+            "model": "מודל",
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "תמונת ייחוס",
+            "lora_name": "שם LoRA",
+            "guide_frames": "פריימי הנחיה",
+            "ref_temporal_offset_latents": "Latent בהיסט זמן של ייחוס"
+        },
+        "widgets": {
+            "resize_mode": "מצב קנה מידה",
+            "guide_strength": "עוצמת הנחיה",
+            "ref_strength": "עוצמת ייחוס",
+            "role_strength": "עוצמת דמות",
+            "adaln_scale": "קנה מידה AdaLN",
+            "enable_adaln": "הפעלת AdaLN",
+            "enable_role_embedding": "הפעלת הטבעת דמות",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "latent": "Latent",
+            "ref_image_preview": "תצוגה מקדימה של תמונת ייחוס"
+        },
+        "description": "יצירת תנאי אחודה של עריכת תוכן כלשהם לוידאו-לווידאו עם התייחסות AdaLN LoRA. מחיל בצומת יחידה את כל שלושת אותות התנאי מנקודת ביקורת אחת של LoRA: ① רצף ה-IC-LoRA מקודד תמונות ייחוס ווידאו הנחיה (אופציונלי) ומצרף אותן כפריימי תנאי נקיים אל ה-Latent. הפריסה ב-Transformer: [טוקני יעד | טוקני ייחוס @ t=-1 | טוקני הנחיה @ t=0..T] ② הטבעות דמות (role_embedding.embedding.משקל[0]) מוסיפות טביעת אצבע נלמדת בת 128 ממדים לטוקני תמונת הייחוס לפני patchify_proj, כדי שהמודל יבחין בין @תמונות ייחוס לפריימי הנחיה באמצעות קשב-עצמי. ③ יצירת תנאי AdaLN (ref_adaln_proj: fc1 → SiLU → proj) אוגרת בצורה את ה-Latent של תמונת הייחוס בעזרת המטיל השמור ב-LoRA, מטילה דרך MLP בן 2 שכבות אל מרחב צעד-הזמן של AdaLN, ומוסיפה אותו להטיית צעד-הזמן של כל בלוק ב-Transformer — עוגן מראה גלובלי מתמשך. יש לחבר אחרי טוען LoRA סטנדרטי ולפני ה-KSampler."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "החלת מסיכה ניטרלית LTXV",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "background": "רקע",
+            "hard_edges": "קשיח"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "מחליף את אזורי התמונה/וידאו הממוסכים ברקע נקי בצבע אחיד; שימושי לפני הזנת תמונות ייחוס או פריימי הנחיה ליצירת תנאי LTXV."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "התאמת גודל ייחוס לפי מסיכה LTXV",
+        "inputs": {
+            "ref_image": "תמונת ייחוס",
+            "size_mask": "מסיכת גודל",
+            "ref_mask": "מסכת ייחוס"
+        },
+        "widgets": {
+            "fit": "התאמה",
+            "background": "רקע",
+            "padding": "מילוי",
+            "hard_edges": "קשיח"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "object_mask": "מסיכת אובייקט"
+        },
+        "description": "משתמש בתיבת הגבול של המסיכה כגודל אובייקט היעד ומתאים את גודל אובייקט הייחוס על קנבס נקי. מיקום המסיכה אינו נלקח בחשבון; רק הרוחב והגובה שלה מגדירים את יחס קנה המידה הרצוי."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "מדגם לולאתי של עריכת תוכן כלשהו LTXV",
+        "inputs": {
+            "model": "מודל",
+            "vae": "VAE",
+            "noise": "רעש",
+            "sampler": "מדגם",
+            "sigmas": "סיגמא",
+            "guider": "מנחה",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "latents": "Latent",
+            "editanything_module": "מודול עריכת תוכן כלשהו",
+            "ref_image": "תמונת ייחוס",
+            "guide_frames": "פריימי הנחיה"
+        },
+        "widgets": {
+            "temporal_tile_size": "גודל מקטע זמן",
+            "temporal_overlap": "חפיפה זמנית",
+            "blend_overlap": "חפיפת ערבוב",
+            "lora_name": "שם LORA",
+            "ref_resize_mode": "מצב קנה מידה של ייחוס",
+            "ref_strength": "עוצמת ייחוס",
+            "guide_strength": "עוצמת הנחיה",
+            "role_strength": "עוצמת דמות",
+            "adaln_scale": "קנה מידה AdaLN",
+            "enable_ic_lora": "הפעלת IC-LORA",
+            "enable_role_embedding": "הפעלת הטבעת דמות",
+            "enable_adaln": "הפעלת AdaLN",
+            "reapply_per_chunk": "החלה מחדש לכל מקטע",
+            "enable_visual_crossattn": "הפעלת קשב חוצה חזותי",
+            "ref_context_scale": "קנה מידה של הקשר ייחוס",
+            "ref_token_scale": "קנה מידה של טוקן ייחוס",
+            "ref_start_block": "מקטע התחלה של ייחוס",
+            "ref_end_block": "מקטע סיום של ייחוס",
+            "ref_init_from": "מקור אתחול הייחוס",
+            "ref_init_seed": "זרע אקראי לאתחול ייחוס",
+            "ref_attn_lora_strength": "עוצמת LORA של קשב ייחוס",
+            "debug_ea": "ניפוי EA",
+            "ref_temporal_offset_latents": "Latent בהיסט זמן של ייחוס"
+        },
+        "outputs": {
+            "denoised_output": "פלט לאחר הסרת רעש",
+            "ref_image_preview": "תצוגה מקדימה של תמונת ייחוס",
+            "diff_vs_previous_run": "ההבדל מהרצה קודמת"
+        },
+        "description": "מדגם לולאתי בזמן, שכל מקטע בו מיושם תנאי עריכת תוכן כלשהו מלא.\n\nדומה ל-LTXVEditAnythingApply, אך מפרוס את הווידאו מבחינה זמנית ומחיל מחדש בכל מקטע את טוקני הייחוס+ההנחיה של IC-LoRA (דרך LTXVAddGuide.append_keyframe), את הטבעות הדמות ואת AdaLN. כל מקטע תואם פרוסה אחת של וידאו ההנחיה.\n\nהקלטים הם תנאי חיובי/שלילי מפורשים; קלט GUIDER מספק רק את מנגנון הדגימה (פרמטרי CFG/STG), ותנאיו נדרסים בכל מקטע באמצעות guider.set_conds."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "מדד הפרש LTXVLatent",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "תווית",
+            "print_console": "הדפסה לקונסולה",
+            "compare_noise_mask": "השוואת מסיכת רעש"
+        },
+        "outputs": {
+            "metrics": "מדד",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "דמיון קוסינוסי"
+        },
+        "description": "משווה שני Latent ומדווח MSE/RMSE/L1/PSNR/דמיון קוסינוסי.\n\nלשימוש בבדיקות A/B של חלופות: הריצו את המדגם עם תצורה A, שמרו Latent→הריצו עם תצורה B→חברו את SaveLatent.A ואת הפלט החדש לצומת זה. הפלט כולל גם מחרוזת מעוצבת ל-UI/לקונסולה וגם מספרים צפים נפרדים, כדי שתוכלו לשרשר לצרטט או לצומת שמירת טקסט נפרד.\n\nאם לצורת שני ה-Latent אינה זהה (למשל אי-התאמה מרחבית עקב הבדלי VAE), חלים נסיגה להשוואת תת-אזורים חופפים."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "מדד הפרש תמונה LTXV",
+        "inputs": {
+            "image_a": "תמונה A",
+            "image_b": "תמונה B"
+        },
+        "widgets": {
+            "label": "תווית",
+            "print_console": "הדפסה לקונסולה"
+        },
+        "outputs": {
+            "metrics": "מדד",
+            "image_a": "תמונה A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "דומה ל-LTXVLatentDiffMetrics, אך חל על תמונות מפוענחות (אחרי VAE) — PSNR משתמש בטווח פיקסלים [0,1]. שימושי מאוד להשוואת שגיאות פיקסל בעלות משמעות חזותית בין שתי הרצות מפוענחות."
+    },
+    "LTXIdentityCAN": {
+        "title": "CAN זהות LTX",
+        "inputs": {
+            "model": "מודל",
+            "reference_image": "תמונת ייחוס",
+            "can_weights": "משקל CAN"
+        },
+        "widgets": {
+            "strength": "עוצמה"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "חזות Gemma לזהות LTX",
+        "inputs": {
+            "clip": "עריכה",
+            "reference_image": "תמונת ייחוס"
+        },
+        "widgets": {
+            "prompt": "פרומפט"
+        },
+        "outputs": {
+            "conditioning": "תנאי"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "זהות מרובה זוויות LTX",
+        "inputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "פנים חזיתיות של ייחוס",
+            "reference_back_head": "עורף של ייחוס",
+            "reference_body_front": "גוף חזיתי של ייחוס",
+            "reference_side_profile": "פרופיל צד של ייחוס"
+        },
+        "widgets": {
+            "identity_projector": "מטיל זהות",
+            "phase_scale": "סקאלת פאזה",
+            "id_strength": "עוצמת זהות",
+            "arcface_mode": "מצב ArcFace",
+            "debug_log": "יומן ניפוי",
+            "reference_temporal_offset_latents": "Latent בהיסט זמן של ייחוס"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "latent": "Latent",
+            "debug": "ניפוי"
+        },
+        "description": "העברת זהות מרובת-פרספקטיבות: פנים חזיתיות (חובה) + תצורות ייחוס רשות של עורף/גוף/צד, כל תצורה מוזרקת כמקטע חפיפה+פאזת מקור נפרד (source_id 2/3/4/5), בהתאמה לאימון מרובה-תצורות. נא לטעון תחילה את ה-LoRA מרובה התצורות על MODEL."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "תנאי זהות חופפים LTX",
+        "inputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "תמונת ייחוס"
+        },
+        "widgets": {
+            "source_id": "מזהה מקור",
+            "phase_scale": "סקאלת פאזה",
+            "ref_resize_mode": "מצב קנה מידה של ייחוס",
+            "debug_log": "יומן ניפוי",
+            "crop_anchor": "עוגן חיתוך",
+            "layout": "פריסה",
+            "reference_guidance_scale": "עוצמת הנחיית ייחוס",
+            "reference_temporal_offset_latents": "Latent בהיסט זמן של ייחוס"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "latent": "Latent",
+            "debug": "ניפוי",
+            "ref_preview": "תצוגה מקדימה של ייחוס",
+            "crop_overlay": "שכבת על של חיתוך"
+        },
+        "description": "תנאי התייחסות של חפיפה/st_drc/strata + פאזת מקור המומשים באמצעות טלאי מודל, עם היסט זמן של התייחסות-בלבד בניסוי להפחתת זליגה סינתטית בפריים 0. ההתייחסויות הן טוקנים עצמאיים (לא I2V), מתאימות לכל נושא — לא רק פנים. בנקודות ביקורת שאומנו על התייחסויות ערומות (פריסה='strata') אפשר לקבל אצוות תמונות. נא לטעון תחילה את ה-LoRA על MODEL. הפלטים ref_preview/crop_overlay מציגים במדויק מה קודד, ואילו חלקי ההתייחסות נשמרים (תיבה ירוקה) ואילו נזרקים לאחר חיתוך עבור match_target."
+    },
+    "LTXIdentityTransfer": {
+        "title": "העברת זהות LTX",
+        "inputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "תמונת ייחוס"
+        },
+        "widgets": {
+            "source_id": "מזהה מקור",
+            "phase_scale": "סקאלת פאזה",
+            "ref_resize_mode": "מצב קנה מידה של ייחוס",
+            "debug_log": "יומן ניפוי",
+            "crop_anchor": "עוגן חיתוך",
+            "layout": "פריסה",
+            "reference_guidance_scale": "עוצמת הנחיית ייחוס",
+            "reference_temporal_offset_latents": "Latent בהיסט זמן של ייחוס"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "latent": "Latent",
+            "debug": "ניפוי",
+            "ref_preview": "תצוגה מקדימה של ייחוס",
+            "crop_overlay": "שכבת על של חיתוך"
+        },
+        "description": "תנאי התייחסות של חפיפה/st_drc/strata + פאזת מקור המומשים באמצעות טלאי מודל, עם היסט זמן של התייחסות-בלבד בניסוי להפחתת זליגה סינתטית בפריים 0. ההתייחסויות הן טוקנים עצמאיים (לא תמונה-לווידאו), מתאימות לכל נושא — לא רק פנים. בנקודות ביקורת שאומנו על התייחסויות ערומות (פריסה='strata') אפשר לקבל אצוות תמונות. נא לטעון תחילה את ה-LoRA על MODEL. הפלטים ref_preview/crop_overlay מציגים במדויק מה קודד, ואילו חלקי ההתייחסות נשמרים (תיבה ירוקה) ואילו נזרקים לאחר חיתוך עבור match_target."
+    },
+    "LTXMultipleControls": {
+        "title": "בקרות מרובות LTX",
+        "inputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "וידאו הנחיה",
+            "mask_video": "מסיכת וידאו",
+            "identity_image": "תמונת זהות",
+            "identity_mask_image": "תמונת מסיכת זהות"
+        },
+        "widgets": {
+            "guide_source_id": "מזהה מקור הנחיה",
+            "guide_phase_scale": "סקאלת פאזה של הנחיה",
+            "guide_layout": "פריסת הנחיה",
+            "guide_ref_resize_mode": "מצב קנה מידה של תמונת ייחוס להנחיה",
+            "guide_downscale_factor": "מקדם תת-דגימה של הנחיה",
+            "mask_source_id": "מזהה מקור מסיכה",
+            "mask_phase_scale": "סקאלת פאזה של מסיכה",
+            "mask_layout": "פריסת מסיכה",
+            "mask_ref_resize_mode": "מצב קנה מידה של תמונת ייחוס למסיכה",
+            "mask_downscale_factor": "מקדם תת-דגימה של מסיכה",
+            "auto_mask_guide": "הנחיית מסיכה אוטומטית",
+            "mask_white_thresh": "סף לבן של מסיכה",
+            "identity_source_id": "מזהה מקור זהות",
+            "identity_phase_scale": "סקאלת פאזה של זהות",
+            "identity_layout": "פריסת זהות",
+            "identity_ref_resize_mode": "מצב קנה מידה של תמונת ייחוס לזהות",
+            "identity_downscale_factor": "מקדם תת-דגימה של זהות",
+            "identity_mask_source_id": "מזהה מקור מסיכת זהות",
+            "identity_mask_phase_scale": "סקאלת פאזה של מסיכת זהות",
+            "identity_mask_layout": "פריסת מסיכת זהות",
+            "identity_mask_ref_resize_mode": "מצב קנה מידה של תמונת ייחוס למסיכת זהות",
+            "identity_mask_downscale_factor": "מקדם תת-דגימה של מסיכת זהות",
+            "crop_anchor": "עוגן חיתוך",
+            "reference_guidance_scale": "קנה מידה של הנחיית ייחוס",
+            "debug_log": "יומן ניפוי",
+            "identity_temporal_offset_latents": "Latent בהיסט זמן של זהות"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "latent": "Latent",
+            "debug": "מידע ניפוי"
+        },
+        "description": "מאחד את תנאי ההתייחסות של הנחיה, מסיכה, זהות ומסיכת זהות בקריאת צומת יחידה, כך שמפרטי התייחסות RoPE של כל המתחים הפעילים אכן מתמזגים (שרשור קריאות לצומת LTXIdentityOverlapConditioning אינו עובד — כל קריאה דורסת את המפרט של קודמתה). כל מתח הוא אופציונלי ויש לו מזהה מקור/סקאלת פאזה/פריסה/מצב קנה מידה של התייחסות משל עצמו — ללא קידוד קשיח, רק ברירות מחדל התואמות את scail2v2_r128_v13 (הנחיה=0, מסיכה=0, שתיהן ללא פאזה; זהות=2, עם פאזה). וידאו ההנחיה מטוה אוטומטית בשחור באזורי ההחלפה (auto_mask_guide), כדי להתאים לשיטת האימון של v13 — זה התיקון שגורם להעברת זהות באמת לפעול. identity_mask אינו בשימוש אצל v13 (נא להשאיר ריק ולנתק); הוא נשמר לתאימות עם נקודות ביקורת ישנות."
+    },
+    "LTXMultishotPrompt": {
+        "title": "פרומפט מרובה-צילומים של LTX",
+        "inputs": {
+            "image_1": "תמונת ייחוס 1",
+            "image_2": "תמונת ייחוס 2",
+            "image_3": "תמונת ייחוס 3",
+            "image_4": "תמונת ייחוס 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "תיכון עדשה 1",
+            "shot_size_1": "גודל עדשה 1",
+            "camera_move_1": "תנועת מצלמה 1",
+            "shot_modifier_2": "תיכון עדשה 2",
+            "shot_size_2": "גודל עדשה 2",
+            "camera_move_2": "תנועת מצלמה 2",
+            "shot_modifier_3": "תיכון עדשה 3",
+            "shot_size_3": "גודל עדשה 3",
+            "camera_move_3": "תנועת מצלמה 3",
+            "shot_modifier_4": "תיכון עדשה 4",
+            "shot_size_4": "גודל עדשה 4",
+            "camera_move_4": "תנועת מצלמה 4"
+        },
+        "outputs": {
+            "prompt": "פרומפט",
+            "references": "תמונת ייחוס",
+            "num_shots": "מספר עדשות"
+        },
+        "description": "מייצר פרומפטים מרובי-צילומים בפורמט ShotPlan, וכן אצוות ייחוס סדורות במילוי אפור הנדרשות לאימון LoRA שכבתי מרובה-צילומים. הזינו את `references` להעברת זהות LTX (פריסה='strata', מזהה מקור=2, סקאלת פאזה=1.0), ואת `פרומפט` לצומת קידוד הטקסט של LTX."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "חיתוך הפריים הראשון LTX",
+        "inputs": {
+            "images": "תמונה"
+        },
+        "widgets": {
+            "trim": "מספר פריימים לחיתוך"
+        },
+        "outputs": {
+            "images": "תמונה"
+        },
+        "description": "מוחק את N הפריימים הראשונים של הווידאו (אצוות תמונות) — מבטל את בעיית זליגת פריים 0 של הייחוס."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "מחבר תמונות ייחוס מרובות BFS",
+        "inputs": {
+            "ref_image_1": "תמונת ייחוס 1",
+            "ref_image_2": "תמונת ייחוס 2",
+            "ref_image_3": "תמונת ייחוס 3",
+            "ref_image_4": "תמונת ייחוס 4",
+            "ref_image_5": "תמונת ייחוס 5"
+        },
+        "widgets": {
+            "fit_mode": "מצב התאמה"
+        },
+        "outputs": {
+            "sheet": "תמונת חיבור",
+            "n_refs": "מספר תמונות ייחוס",
+            "debug": "מידע ניפוי"
+        },
+        "description": "ממזג 1-5 תמונות ייחוס מחוברות לתמונת חיבור קבועה 1536x1024 המשמשת לאימון LoRA עם מקורות מרובים. מתח ריק מפחית את מספר תמונות הייחוס; מתחים ריקים נדלגים במישרין ולא ממולאים בתוכן ריק."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "תמונת חיבור 2x2 של ישויות",
+        "inputs": {
+            "person": "אדם",
+            "clothing": "בגד",
+            "object_or_person2": "חפץ/אדם2",
+            "scene": "סצנה"
+        },
+        "outputs": {
+            "sheet": "תמונת חיבור",
+            "n_refs": "מספר תמונות ייחוס",
+            "debug": "מידע ניפוי"
+        },
+        "description": "מייצר את תמונת החיבור הרבעונית הקבועה 2x2 בגודל 1536x1024 המשמשת לאימון ה-LoRA של humoset_sheets_v7 עם מקורות ייחוס מרובים. משמעויות הרבעונים קבועות (שמאל-למעלה: אדם, ימין-למעלה: בגד, שמאל-למטה: חפץ/אדם2, ימין-למטה: סצנה); קלט ריק משאיר את הרבעון המתאים לבן. לשימוש עם LTXIdentityOverlapConditioning: פריסה=חפיפה, מזהה מקור=2, סקאלת פאזה=1.0, מצב קנה מידה של התייחסות=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "טוען פנים בטווח פריימים",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "frame_start": "פריים התחלתי",
+            "frame_end": "פריים סופי"
+        },
+        "outputs": {
+            "face_sequence": "רצף פנים"
+        },
+        "description": "עוטף תמונת פנים יחידה כטווח פריימים [פריים התחלתי, פריים סופי]. מחזיר רצף פנים — רשימת מילונים שמשמשת את ReservedRegionFrameComposer. פריים סופי=-1 מסמן \"עד הפריים האחרון\" (ללא תקרה)."
+    },
+    "FaceSequenceBatch": {
+        "title": "עיבוד אצוות רצף פנים",
+        "inputs": {
+            "face_sequence_a": "רצף פנים A",
+            "face_sequence_b": "רצף פנים B"
+        },
+        "outputs": {
+            "face_sequence": "רצף פנים"
+        },
+        "description": "ממזג שתי רשימות רצף פנים לרשימה אחת. חיבור שרשרת של מספר צמתים מאפשר לבנות אצווה עם מספר טווחים."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "מלכין פריימים לאזורים שמורים",
+        "inputs": {
+            "frames": "פריים",
+            "face_sequence": "רצף פנים",
+            "face_images": "תמונת פנים"
+        },
+        "widgets": {
+            "region_position": "מיקום אזור",
+            "region_size_px": "גודל פיקסלים של אזור",
+            "face_distribution": "פיזור פנים",
+            "interval_frames": "מספר פריימים למרווח",
+            "overflow_mode": "מצב גלישה",
+            "stack_direction": "כיוון ערימה",
+            "face_scale_pct": "אחוז קנה מידה של פנים",
+            "face_padding_px": "שולי פיקסלים של פנים",
+            "face_gap_px": "מרווח פיקסלים של פנים",
+            "face_align_main": "יישור פנים ראשי",
+            "face_align_cross": "יישור צולב של פנים",
+            "chroma_r": "כרומה R",
+            "chroma_g": "כרומה G",
+            "chroma_b": "כרומה B"
+        },
+        "outputs": {
+            "frames_out": "פריים של פלט"
+        },
+        "description": "צומת ComfyUI המלחין אזורים שמורים (שמאל/ימין/מעלה/מטה) בכל פריים, תוך שמירה על גודל פריימי הפלט המקוריים. תכונות עיקריות: - שמירה על רזולוציית הפלט הסופית זהה לרזולוציית הפריים המקורית - התאמת תוכן הווידאו לאזור שנותר ללא חיתוך - מילוי האזורים השמורים בצבע כרומה - הנחת תמונת פנים אחת או יותר באזור זה - תמיכה במצב פיזור זמן עבור אצוות פנים (קלט תמונות) - תמיכה בהגדרת טווחים פר-פריים באמצעות קלט רצף הפנים"
+    }
+}

@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "הורדה וטעינה של מודל CogVideo",
+        "inputs": {
+            "block_edit": "עריכת בלוקים",
+            "lora": "מודל Lora",
+            "compile_args": "פרמטרי הידור"
+        },
+        "widgets": {
+            "model": "מודל",
+            "precision": "דיוק",
+            "quantization": "קוונטיזציה",
+            "enable_sequential_cpu_offload": "הפעלת העברה ל-CPU טורית",
+            "attention_mode": "מצב קשב",
+            "load_device": "התקן טעינה",
+            "compile": "הידור"
+        },
+        "outputs": {
+            "model": "מודל",
+            "cogvideomodel": "מודל CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "קידוד תמונה של CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "תמונה",
+            "vae": "VAE",
+            "start_image": "תמונת התחלה",
+            "end_image": "תמונת סיום"
+        },
+        "widgets": {
+            "enable_tiling": "הפעלת מקטעים",
+            "noise_aug_strength": "עוצמת שיפור רעש",
+            "strength": "עוצמה",
+            "start_percent": "אחוז התחלה",
+            "end_percent": "אחוז סיום"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "פיענוח של CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "הפעלת מקטעי VAE",
+            "tile_sample_min_height": "גובה מינימלי של דגמי מקטע",
+            "tile_sample_min_width": "רוחב מינימלי של דגמי מקטע",
+            "tile_overlap_factor_height": "גורם חפיפת מקטעים בגובה",
+            "tile_overlap_factor_width": "גורם חפיפת מקטעים ברוחב",
+            "auto_tile_size": "גודל מקטע אוטומטי",
+            "pipeline": "אלומת צמתים"
+        },
+        "outputs": {
+            "images": "תמונה"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "קידוד טקסט של CogVideo",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "פרומפט",
+            "strength": "עוצמה",
+            "force_offload": "העברה כפויה"
+        },
+        "outputs": {
+            "conditioning": "תנאי",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "מדגם של CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "תנאי חיובי",
+            "negative": "תנאי שלילי",
+            "samples": "Latent",
+            "model": "מודל",
+            "image_cond_latents": "Latent של תנאי תמונה",
+            "context_options": "אפשרויות הקשר",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "מסלול Tora",
+            "fastercache": "מטמון מהיר",
+            "feta_args": "פרמטרי שיפור וידאו",
+            "teacache_args": "פרמטרי מטמון Tea"
+        },
+        "widgets": {
+            "width": "רוחב",
+            "height": "גובה",
+            "num_frames": "מספר פריימים",
+            "fps": "קצב פריימים",
+            "steps": "מספר צעדים",
+            "cfg": "CFG",
+            "seed": "זרע אקראי",
+            "control_after_generate": "פעולה לאחר הרצה",
+            "scheduler": "מתזמן",
+            "t_tile_length": "אורך מקטע",
+            "t_tile_overlap": "חפיפת מקטעים",
+            "denoise_strength": "הסרת רעש"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "בורר Lora של CogVideo",
+        "inputs": {
+            "lora": "מודל Lora",
+            "strength": "עוצמה",
+            "prev_lora": "Lora הקודם",
+            "fuse_lora": "Lora למיזוג"
+        },
+        "widgets": {
+            "lora": "מודל Lora",
+            "strength": "עוצמה",
+            "prev_lora": "Lora הקודם",
+            "fuse_lora": "Lora למיזוג"
+        },
+        "outputs": {
+            "lora": "CogVideo Lora"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "בורר Lora של CogVideo (גרסת Comfy)",
+        "inputs": {
+            "lora": "מודל Lora",
+            "strength": "עוצמה",
+            "prev_lora": "Lora הקודם",
+            "fuse_lora": "Lora למיזוג"
+        },
+        "widgets": {
+            "lora": "מודל Lora",
+            "strength": "עוצמה",
+            "prev_lora": "Lora הקודם",
+            "fuse_lora": "Lora למיזוג"
+        },
+        "outputs": {
+            "lora": "CogVideo Lora"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "הורדה וטעינה של מודל GGUF ב-CogVideo",
+        "inputs": {
+            "block_edit": "עריכת בלוקים"
+        },
+        "widgets": {
+            "model": "מודל",
+            "vae_precision": "דיוק VAE",
+            "fp8_fastmode": "מצב מהיר FP8",
+            "load_device": "התקן טעינה",
+            "enable_sequential_cpu_offload": "הפעלת העברה ל-CPU טורית",
+            "attention_mode": "מצב קשב",
+            "compile_args": "פרמטרי הידור"
+        },
+        "outputs": {
+            "model": "מודל",
+            "cogvideomodel": "מודל CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "טוען מודל של CogVideo X",
+        "inputs": {
+            "model": "מודל",
+            "base_precision": "דיוק בסיסי",
+            "quantization": "קוונטיזציה",
+            "load_device": "התקן טעינה",
+            "enable_sequential_cpu_offload": "הפעלת העברה ל-CPU טורית",
+            "block_edit": "עריכת בלוקים",
+            "lora": "מודל Lora",
+            "compile_args": "פרמטרי הידור",
+            "attention_mode": "מצב קשב"
+        },
+        "outputs": {
+            "cogvideomodel": "מודל CogVideo"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "טוען VAE של CogVideo X",
+        "inputs": {
+            "model_name": "שם מודל",
+            "precision": "דיוק",
+            "compile_args": "פרמטרי הידור"
+        },
+        "widgets": {
+            "model_name": "שם מודל",
+            "precision": "דיוק",
+            "compile_args": "פרמטרי הידור"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "הורדה וטעינה של מודל Tora",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "model": "מודל"
+        },
+        "outputs": {
+            "tora_model": "מודל Tora"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "הורדה וטעינה של ControlNet ב-CogVideo",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "model": "מודל"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "מודל CogVideo ControlNet"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "שיפור וידאו של CogVideo",
+        "widgets": {
+            "weight": "משקל",
+            "start_percent": "אחוז התחלה",
+            "end_percent": "אחוז סיום"
+        },
+        "outputs": {
+            "feta_args": "פרמטרי שיפור וידאו"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "אפשרויות הקשר של CogVideo",
+        "inputs": {
+            "freenoise": "רעש חופשי"
+        },
+        "widgets": {
+            "context_schedule": "תוכנית ההקשר",
+            "context_frames": "מספר פריימי ההקשר",
+            "context_stride": "מרווח צעדי ההקשר",
+            "context_overlap": "חפיפת הקשר",
+            "freenoise": "רעש חופשי"
+        },
+        "outputs": {
+            "context_options": "אפשרויות הקשר"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "עריכת Transformer של CogVideo",
+        "inputs": {
+            "remove_blocks": "הסרת בלוקים"
+        },
+        "outputs": {
+            "block_list": "רשימת בלוקים חסומים",
+            "transformerblocks": "בלוקי Transformer"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "הגדרות הידור Torch של CogVideo",
+        "widgets": {
+            "backend": "מנוע אחורי",
+            "fullgraph": "גרף מלא",
+            "mode": "מצב",
+            "dynamic": "דינמי",
+            "dynamo_cache_size_limit": "מגבלת גודל מטמון של Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "פרמטרי הידור של Torch",
+            "compileargs": "פרמטרי הידור"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "מיזוג קידוד טקסט של CogVideo",
+        "inputs": {
+            "conditioning_1": "תנאי 1",
+            "conditioning_2": "תנאי 2"
+        },
+        "widgets": {
+            "combination_mode": "מצב מיזוג",
+            "weighted_average_ratio": "יחס ממוצע משוקלל"
+        },
+        "outputs": {
+            "conditioning": "תנאי"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "קידוד מסלול של Tora",
+        "inputs": {
+            "tora_model": "מודל Tora",
+            "vae": "VAE",
+            "coordinates": "קואורדינטות"
+        },
+        "widgets": {
+            "width": "רוחב",
+            "height": "גובה",
+            "num_frames": "מספר פריימים",
+            "strength": "עוצמה",
+            "start_percent": "אחוז התחלה",
+            "end_percent": "אחוז סיום",
+            "enable_tiling": "הפעלת מקטעים"
+        },
+        "outputs": {
+            "tora_trajectory": "מסלול Tora",
+            "video_flow_images": "תמונת זרימת וידאו"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "קידוד זרימה אופטית של Tora",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "מודל Tora",
+            "optical_flow": "זרימה אופטית"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "start_percent": "אחוז התחלה",
+            "end_percent": "אחוז סיום"
+        },
+        "outputs": {
+            "tora_trajectory": "מסלול Tora"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "קידוד תמונה FunInP של CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "תמונת התחלה",
+            "end_image": "תמונת סיום"
+        },
+        "widgets": {
+            "num_frames": "מספר פריימים",
+            "enable_tiling": "הפעלת עיבוד במקטעים",
+            "noise_aug_strength": "עוצמת שיפור רעש"
+        },
+        "outputs": {
+            "image_cond_latents": "Latent של תנאי תמונה"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "מטמון מהיר של CogVideo X",
+        "inputs": {
+            "num_blocks_to_cache": "מספר בלוקים במטמון"
+        },
+        "widgets": {
+            "start_step": "צעד התחלה",
+            "hf_step": "צעדים בתדר גבוה",
+            "lf_step": "צעדים בתדר נמוך",
+            "cache_device": "התקן מטמון",
+            "num_blocks_to_cache": "מספר בלוקים במטמון"
+        },
+        "outputs": {
+            "fastercache": "מטמון מהיר"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "מטמון Tea של CogVideo X",
+        "widgets": {
+            "rel_l1_thresh": "סף L1 יחסי"
+        },
+        "outputs": {
+            "teacache_args": "פרמטרי מטמון Tea"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "CogVideo ControlNet",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "תמונה"
+        },
+        "widgets": {
+            "control_strength": "עוצמת שליטה",
+            "control_start_percent": "אחוז התחלת השליטה",
+            "control_end_percent": "אחוז סיום השליטה"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "כוונון CogVideoX לגודל ה-bucket הקרוב",
+        "inputs": {
+            "images": "תמונה"
+        },
+        "widgets": {
+            "base_resolution": "רזולוציה בסיסית",
+            "upscale_method": "שיטת הגדלה",
+            "crop": "חיתוך"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "images": "תמונה",
+            "width": "רוחב",
+            "height": "גובה",
+            "int": "מספר שלם"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "תצוגה מקדימה של Latent ב-CogVideo",
+        "inputs": {
+            "samples": "דגימה"
+        },
+        "widgets": {
+            "seed": "זרע",
+            "min_val": "ערך מינימלי",
+            "max_val": "ערך מקסימלי",
+            "r_bias": "הטיה R",
+            "g_bias": "הטיה G",
+            "b_bias": "הטיה B"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "images": "תמונה",
+            "latent_rgb_factors": "גורמי RGB של Latent",
+            "string": "מחרוזת"
+        }
+    }
+}

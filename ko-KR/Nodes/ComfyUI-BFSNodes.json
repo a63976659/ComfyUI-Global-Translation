@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "BFS AMV 가이던스 생성기",
+        "inputs": {
+            "video": "비디오",
+            "images": "이미지",
+            "audio": "오디오"
+        },
+        "widgets": {
+            "mode": "모드",
+            "length": "길이",
+            "hold": "유지",
+            "fill": "채우기",
+            "placement": "배치",
+            "fps": "프레임 레이트",
+            "indices": "인덱스",
+            "scene_threshold": "장면 임계값"
+        },
+        "outputs": {
+            "guide": "가이던스",
+            "debug": "디버그"
+        },
+        "description": "AMV 가이드(키프레임+빈 프레임)를 생성합니다. external_images를 사용하면 이미지를 음악 비트에 자동 배치할 수 있습니다(placement를 audio_beats로 설정). `가이드`를 VAE 또는 참조 모듈에 입력하세요."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "BFS Bernini 애니메이션→사실적 컨디셔닝 생성",
+        "inputs": {
+            "positive": "긍정",
+            "negative": "부정",
+            "vae": "VAE",
+            "guide_video": "가이드 비디오"
+        },
+        "widgets": {
+            "length": "길이"
+        },
+        "outputs": {
+            "positive": "긍정",
+            "negative": "부정",
+            "latent": "Latent",
+            "debug": "디버그"
+        },
+        "description": "Bernini-R 애니메이션→사실적 변환 LoRA를 위한 순수 비디오-투-비디오(v2v) 애니메이션→사실적 컨디셔닝 생성입니다. guide_video는 source_id 1(애니메이션 캔버스)에 대응하고 | 출력은 source_id 0(사실적 사진)에 대응합니다. 참조 모듈은 없습니다. 가이드를 긍정과 부정 모두에 적용하므로 CFG는 참조가 아니라 텍스트 프롬프트(사실적 사진 스타일)만 증폭합니다. 적당한 CFG를 사용하세요; 가이드는 모션/레이아웃을 보존합니다. 이 LoRA를 얼굴 교체 노드와 함께 사용하지 마세요: 얼굴 교체가 source_id 2 토큰을 주입하는데, 애니메이션→사실적 변환 LoRA는 학습에서 해당 토큰을 한 번도 본 적이 없습니다."
+    },
+    "LTXColorMask": {
+        "title": "LTX 색상 마스크",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "color": "색상",
+            "style": "스타일",
+            "marker_radius_frac": "마커 반경 비율",
+            "custom_r": "사용자 정의 R",
+            "custom_g": "사용자 정의 G",
+            "custom_b": "사용자 정의 B",
+            "background_black": "검은색 배경"
+        },
+        "outputs": {
+            "colored_mask": "컬러 마스크"
+        },
+        "description": "순백색/이진 SAM2 스타일 마스크를 scail2v2 학습 규칙에 맞게 다시 채색합니다. 'silhouette'은 가이드 마스크 슬롯에, 'flat_marker'(작은 색 점, 형태 없음)는 정체성 마스크 슬롯에 사용합니다 — 두 입력이 다른 이유는 각 입력의 안내를 확인하세요."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "BFS Bernini 얼굴 교체 컨디셔닝 생성",
+        "inputs": {
+            "positive": "긍정",
+            "negative": "부정",
+            "vae": "VAE",
+            "guide_video": "가이드 비디오",
+            "head_image": "머리 이미지"
+        },
+        "widgets": {
+            "length": "길이",
+            "amplify_reference": "참조 업스케일"
+        },
+        "outputs": {
+            "positive": "긍정",
+            "negative": "부정",
+            "latent": "Latent",
+            "debug": "디버그"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "BFS 얼굴 교체 LoRA 디버그",
+        "inputs": {
+            "model": "모델"
+        },
+        "outputs": {
+            "model": "모델",
+            "debug": "디버그"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV 임의 내용 편집 LoRA 분할",
+        "inputs": {
+            "lora_name": "LoRA 이름"
+        },
+        "widgets": {
+            "overwrite": "덮어쓰기"
+        },
+        "outputs": {
+            "standard_lora_name": "표준 LoRA 이름",
+            "editanything_module_name": "임의 내용 편집 모듈 이름"
+        },
+        "description": "임의 내용 편집 체크포인트를 표준 LoRA와 보조 모듈로 분할합니다."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV 임의 내용 편집 모듈 로더",
+        "widgets": {
+            "module_name": "모듈 이름"
+        },
+        "outputs": {
+            "editanything_module": "임의 내용 편집 모듈"
+        },
+        "description": "LTXV 임의 내용 편집 LoRA 분할 노드에서 생성된 보조 모듈을 로드합니다."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV 임의 내용 편집 LoRA 로더",
+        "inputs": {
+            "model": "모델",
+            "lora_name": "LoRA 이름"
+        },
+        "widgets": {
+            "strength_model": "모델 강도"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "임의 내용 편집 체크포인트용 LoRA 로더입니다."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV 임의 내용 편집 적용",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정",
+            "negative": "부정",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "참조 이미지",
+            "lora_name": "LoRA 이름",
+            "guide_frames": "가이드 프레임",
+            "ref_temporal_offset_latents": "참조 시간 오프셋 Latent"
+        },
+        "widgets": {
+            "resize_mode": "스케일 모드",
+            "guide_strength": "가이드 강도",
+            "ref_strength": "참조 강도",
+            "role_strength": "캐릭터 강도",
+            "adaln_scale": "AdaLN 스케일",
+            "enable_adaln": "AdaLN 활성화",
+            "enable_role_embedding": "역할 임베딩 활성화",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정",
+            "negative": "부정",
+            "latent": "Latent",
+            "ref_image_preview": "참조 이미지 미리보기"
+        },
+        "description": "비디오-투-비디오 참조 AdaLN LoRA를 위한 통합 임의 내용 편집 컨디셔닝입니다. 단일 노드에서 하나의 LoRA 체크포인트가 제공하는 3가지 컨디셔닝 신호를 모두 적용합니다: ① IC-LoRA 시퀀스 — 참조 이미지와 선택적 가이드 비디오를 인코딩해 깨끗한 컨디션 프레임으로 Latent에 첨부합니다. Transformer 내 레이아웃: [대상 토큰 | 참조 토큰 @ t=-1 | 가이드 토큰 @ t=0..T] ② 역할 임베딩(role_embedding.embedding.가중치[0]) — patchify_proj 전에 참조 이미지 토큰에 학습된 128차원 지문을 추가해 모델이 셀프 어텐션으로 @참조 이미지와 가이드 프레임을 구분할 수 있게 합니다. ③ AdaLN 컨디셔닝(ref_adaln_proj: fc1 → SiLU → proj) — LoRA에 저장된 프로젝터 형태로 참조 이미지 Latent을 풀링한 뒤 2층 MLP로 AdaLN 타임스텝 공간에 투영해 각 Transformer 블록의 타임스텝 편향에 더합니다 — 지속되는 전역 외관 앵커입니다. 표준 LoRA 로더 뒤, KSampler 앞에 연결하세요."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "LTXV 중립 마스크 적용",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "background": "배경",
+            "hard_edges": "경직"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "마스크 처리된 이미지/비디오 영역을 깨끗한 단색 배경으로 교체합니다. 참고 이미지나 가이드 프레임을 LTXV 컨디셔닝에 입력하기 전에 유용합니다."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXV 마스크 기준 참조 크기 조정",
+        "inputs": {
+            "ref_image": "참조 이미지",
+            "size_mask": "크기 마스크",
+            "ref_mask": "참고 마스크"
+        },
+        "widgets": {
+            "fit": "맞춤",
+            "background": "배경",
+            "padding": "채우기",
+            "hard_edges": "경직"
+        },
+        "outputs": {
+            "image": "이미지",
+            "object_mask": "객체 마스크"
+        },
+        "description": "마스크 바운딩 박스를 대상 객체 크기로 사용해 깨끗한 캔버스에서 참조 객체의 크기를 조정합니다. 마스크 위치는 무시되며, 너비와 높이만 대상 스케일 비율을 결정합니다."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV 임의 내용 편집 반복 샘플러",
+        "inputs": {
+            "model": "모델",
+            "vae": "VAE",
+            "noise": "노이즈",
+            "sampler": "샘플러",
+            "sigmas": "시그마",
+            "guider": "가이더",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "latents": "Latent",
+            "editanything_module": "임의 내용 편집 모듈",
+            "ref_image": "참조 이미지",
+            "guide_frames": "가이드 프레임"
+        },
+        "widgets": {
+            "temporal_tile_size": "시간 블록 크기",
+            "temporal_overlap": "시간 중복",
+            "blend_overlap": "블렌드 중첩",
+            "lora_name": "LORA 이름",
+            "ref_resize_mode": "참조 스케일 모드",
+            "ref_strength": "참조 강도",
+            "guide_strength": "가이드 강도",
+            "role_strength": "캐릭터 강도",
+            "adaln_scale": "AdaLN 스케일",
+            "enable_ic_lora": "IC-LORA 활성화",
+            "enable_role_embedding": "역할 임베딩 활성화",
+            "enable_adaln": "AdaLN 활성화",
+            "reapply_per_chunk": "블록마다 재적용",
+            "enable_visual_crossattn": "비전 교차 어텐션 활성화",
+            "ref_context_scale": "참조 컨텍스트 스케일",
+            "ref_token_scale": "참조 토큰 스케일",
+            "ref_start_block": "참조 시작 블록",
+            "ref_end_block": "참조 종료 블록",
+            "ref_init_from": "참조 초기화 소스",
+            "ref_init_seed": "참조 초기화 랜덤 시드",
+            "ref_attn_lora_strength": "참조 어텐션 LORA 강도",
+            "debug_ea": "디버그 EA",
+            "ref_temporal_offset_latents": "참조 시간 오프셋 Latent"
+        },
+        "outputs": {
+            "denoised_output": "디노이즈 출력",
+            "ref_image_preview": "참조 이미지 미리보기",
+            "diff_vs_previous_run": "이전 실행과의 차이"
+        },
+        "description": "시간 순환 샘플러로, 각 블록에 완전한 임의 내용 편집 컨디셔닝을 적용합니다.\n\nLTXVEditAnythingApply와 유사하지만 비디오를 시간축으로 슬라이스하고 각 블록에 참조+가이드 IC-LoRA 토큰(LTXVAddGuide.append_keyframe 경유), 역할 임베딩, AdaLN을 재적용합니다. 각 블록은 가이드 비디오의 한 슬라이스에 해당합니다.\n\n입력은 명시적인 긍정/부정 컨디셔닝이며, GUIDER 입력은 샘플링 메커니즘(CFG/STG 파라미터)만 제공하고 그 컨디셔닝은 guider.set_conds를 통해 각 블록에서 덮어써집니다."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "LTXV Latent 차이 지표",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "레이블",
+            "print_console": "콘솔에 출력",
+            "compare_noise_mask": "비교 노이즈 마스크"
+        },
+        "outputs": {
+            "metrics": "지표",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "코사인 유사도"
+        },
+        "description": "두 Latent을 비교하고 MSE/RMSE/L1/PSNR/코사인 유사도를 보고합니다.\n\nA/B 테스트 전환에 사용합니다: 설정 A로 샘플러를 실행하고 Latent을 저장 → 설정 B로 실행 → SaveLatent.A과 새 출력을 이 노드에 연결합니다. 출력에는 UI/콘솔용 형식화 문자열과 별도의 부동소수점 값이 모두 담겨 있어 드로이어에 연결하거나 텍스트로 노드에 저장할 수 있습니다.\n\n두 Latent의 모양이 다른 경우(예: VAE 차이로 공간이 맞지 않는 경우)에는 중복된 하위 영역을 비교하는 방식으로 대체합니다."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "LTXV 이미지 차이 지표",
+        "inputs": {
+            "image_a": "이미지A",
+            "image_b": "이미지B"
+        },
+        "widgets": {
+            "label": "레이블",
+            "print_console": "콘솔에 출력"
+        },
+        "outputs": {
+            "metrics": "지표",
+            "image_a": "이미지A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "LTXVLatentDiffMetrics와 유사하지만 디코딩된 이미지(VAE 이후)에 적용됩니다 — PSNR은 [0,1] 픽셀 범위를 사용합니다. 두 실행을 디코딩한 뒤 시각적으로 관련 있는 픽셀 오차를 비교하는 데 유용합니다."
+    },
+    "LTXIdentityCAN": {
+        "title": "LTX 정체성 CAN",
+        "inputs": {
+            "model": "모델",
+            "reference_image": "참조 이미지",
+            "can_weights": "CAN 가중치"
+        },
+        "widgets": {
+            "strength": "강도"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "LTX 정체성 Gemma 비전",
+        "inputs": {
+            "clip": "클립",
+            "reference_image": "참조 이미지"
+        },
+        "widgets": {
+            "prompt": "프롬프트"
+        },
+        "outputs": {
+            "conditioning": "컨디셔닝"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "LTX 멀티뷰 정체성",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "참조 정면 얼굴",
+            "reference_back_head": "참조 뒷머리",
+            "reference_body_front": "참조 정면 신체",
+            "reference_side_profile": "참조 측면 윤곽"
+        },
+        "widgets": {
+            "identity_projector": "정체성 프로젝터",
+            "phase_scale": "위상 스케일",
+            "id_strength": "정체성 강도",
+            "arcface_mode": "ArcFace 모드",
+            "debug_log": "디버그 로그",
+            "reference_temporal_offset_latents": "참조 시간 오프셋 Latent"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "latent": "Latent",
+            "debug": "디버그"
+        },
+        "description": "멀티뷰 정체성 전달: 정면 얼굴(필수) + 선택적인 뒷머리/신체/측면 참조 뷰를 각 뷰별로 중첩+소스 위상 세그먼트(source_id 2/3/4/5)로 주입해 멀티뷰 학습과 일치시킵니다. 먼저 MODEL에 멀티뷰 LoRA를 로드하세요."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "LTX 중첩 정체성 컨디셔닝",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "참조 이미지"
+        },
+        "widgets": {
+            "source_id": "소스 ID",
+            "phase_scale": "위상 스케일",
+            "ref_resize_mode": "참조 스케일 모드",
+            "debug_log": "디버그 로그",
+            "crop_anchor": "크롭 앵커",
+            "layout": "레이아웃",
+            "reference_guidance_scale": "참조 가이던스 강도",
+            "reference_temporal_offset_latents": "참조 시간 오프셋 Latent"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "latent": "Latent",
+            "debug": "디버그",
+            "ref_preview": "참조 미리보기",
+            "crop_overlay": "크롭 중첩"
+        },
+        "description": "모델 패치로 구현한 중첩/st_drc/strata + 소스 위상 참조 컨디셔닝. 실험적인 참조 전용 시간 오프셋을 통해 0번 프레임의 합성 누출을 줄입니다. 참조는 독립 토큰(I2V 아님)이므로 얼굴뿐 아니라 모든 피사체에 적용됩니다. 스택드 참조로 학습한 체크포인트(레이아웃='strata')에는 이미지 배치를 사용할 수 있습니다. 먼저 MODEL에 LoRA를 로드하세요. ref_preview/crop_overlay 출력으로 인코딩되는 내용과 match_target에서 크롭 후 보존되는 부분(녹색 상자)과 버려지는 부분을 정확히 확인할 수 있습니다."
+    },
+    "LTXIdentityTransfer": {
+        "title": "LTX 정체성 전달",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "참조 이미지"
+        },
+        "widgets": {
+            "source_id": "소스 ID",
+            "phase_scale": "위상 스케일",
+            "ref_resize_mode": "참조 스케일 모드",
+            "debug_log": "디버그 로그",
+            "crop_anchor": "크롭 앵커",
+            "layout": "레이아웃",
+            "reference_guidance_scale": "참조 가이던스 강도",
+            "reference_temporal_offset_latents": "참조 시간 오프셋 Latent"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "latent": "Latent",
+            "debug": "디버그",
+            "ref_preview": "참조 미리보기",
+            "crop_overlay": "크롭 중첩"
+        },
+        "description": "모델 패치로 구현한 중첩/st_drc/strata + 소스 위상 참조 컨디셔닝. 실험적인 참조 전용 시간 오프셋을 통해 0번 프레임의 합성 누출을 줄입니다. 참조는 독립 토큰(이미지-투-비디오 아님)이므로 얼굴뿐 아니라 모든 피사체에 적용됩니다. 스택드 참조로 학습한 체크포인트(레이아웃='strata')에는 이미지 배치를 사용할 수 있습니다. 먼저 MODEL에 LoRA를 로드하세요. ref_preview/crop_overlay 출력으로 인코딩되는 내용과 match_target에서 크롭 후 보존되는 부분(녹색 상자)과 버려지는 부분을 정확히 확인할 수 있습니다."
+    },
+    "LTXMultipleControls": {
+        "title": "LTX 다중 컨트롤",
+        "inputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "가이드 비디오",
+            "mask_video": "마스크 비디오",
+            "identity_image": "정체성 이미지",
+            "identity_mask_image": "정체성 마스크 이미지"
+        },
+        "widgets": {
+            "guide_source_id": "가이던스 소스 ID",
+            "guide_phase_scale": "가이드 위상 스케일",
+            "guide_layout": "가이드 레이아웃",
+            "guide_ref_resize_mode": "가이드 참고 이미지 스케일 모드",
+            "guide_downscale_factor": "가이던스 다운스케일 계수",
+            "mask_source_id": "마스크 소스 ID",
+            "mask_phase_scale": "마스크 위상 스케일",
+            "mask_layout": "마스크 레이아웃",
+            "mask_ref_resize_mode": "마스크 참고 이미지 스케일 모드",
+            "mask_downscale_factor": "마스크 다운스케일 계수",
+            "auto_mask_guide": "자동 마스크 가이드",
+            "mask_white_thresh": "마스크 흰색 임계값",
+            "identity_source_id": "정체성 소스 ID",
+            "identity_phase_scale": "정체성 위상 스케일",
+            "identity_layout": "정체성 레이아웃",
+            "identity_ref_resize_mode": "정체성 참고 이미지 스케일 모드",
+            "identity_downscale_factor": "정체성 다운스케일 계수",
+            "identity_mask_source_id": "정체성 마스크 소스 ID",
+            "identity_mask_phase_scale": "정체성 마스크 위상 스케일",
+            "identity_mask_layout": "정체성 마스크 레이아웃",
+            "identity_mask_ref_resize_mode": "정체성 마스크 참고 이미지 스케일 모드",
+            "identity_mask_downscale_factor": "정체성 마스크 다운스케일 계수",
+            "crop_anchor": "크롭 앵커",
+            "reference_guidance_scale": "참조 가이던스 스케일",
+            "debug_log": "디버그 로그",
+            "identity_temporal_offset_latents": "정체성 시간 오프셋 Latent"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝",
+            "latent": "Latent",
+            "debug": "디버그 정보"
+        },
+        "description": "하나의 노드 호출에서 가이드, 마스크, 정체성 및 정체성 마스크 참조 컨디셔닝을 통합하므로 활성화된 모든 슬롯의 RoPE 참조 사양이 실제로 병합됩니다(LTXIdentityOverlapConditioning 노드를 체이닝하면 병합되지 않으며 호출마다 이전 사양을 덮어씁니다). 각 슬롯은 선택 사항이고 각각의 소스 ID/위상 스케일/레이아웃/참조 스케일 모드를 가지며 — 하드코딩 없이 기본값만 scail2v2_r128_v13과 일치합니다(가이드=0, 마스크=0, 둘 다 위상 없음; 정체성=2, 위상 있음). 가이드 비디오는 v13 학습 방식에 맞추기 위해 교체 영역에 자동으로 검은 마스크(auto_mask_guide)를 적용합니다 — 정체성 전달이 실제로 작동하게 하는 수정입니다. identity_mask는 v13에서 사용되지 않으므로(빈 상태로 두거나 연결하지 마세요) 구버전 체크포인트 호환성을 위해 유지했습니다."
+    },
+    "LTXMultishotPrompt": {
+        "title": "LTX 멀티 샷 프롬프트",
+        "inputs": {
+            "image_1": "참고 이미지1",
+            "image_2": "참고 이미지2",
+            "image_3": "참고 이미지3",
+            "image_4": "참고 이미지4"
+        },
+        "widgets": {
+            "shot_modifier_1": "샷 보정1",
+            "shot_size_1": "샷 사이즈1",
+            "camera_move_1": "카메라 무브1",
+            "shot_modifier_2": "샷 보정2",
+            "shot_size_2": "샷 사이즈2",
+            "camera_move_2": "카메라 무브2",
+            "shot_modifier_3": "샷 보정3",
+            "shot_size_3": "샷 사이즈3",
+            "camera_move_3": "카메라 무브3",
+            "shot_modifier_4": "샷 보정4",
+            "shot_size_4": "샷 사이즈4",
+            "camera_move_4": "카메라 무브4"
+        },
+        "outputs": {
+            "prompt": "프롬프트",
+            "references": "참고 이미지",
+            "num_shots": "샷 수"
+        },
+        "description": "ShotPlan 형식의 멀티 샷 프롬프트와 멀티 샷 계층 LoRA에 필요한 순서가 정해진 회색 채움 참조 배치를 생성합니다. `references`는 LTX 정체성 전달에 입력하고(레이아웃='strata', 소스 ID=2, 위상 스케일=1.0), `프롬프트`는 LTX 텍스트 인코딩 노드에 입력하세요."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX 첫 프레임 잘라내기",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "trim": "트리밍 프레임 수"
+        },
+        "outputs": {
+            "images": "이미지"
+        },
+        "description": "비디오(이미지 배치)의 처음 N 프레임을 삭제합니다 — 참조 프레임 0의 누출 문제를 제거합니다."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "BFS 다중 참고 이미지 결합기",
+        "inputs": {
+            "ref_image_1": "참고 이미지1",
+            "ref_image_2": "참고 이미지2",
+            "ref_image_3": "참고 이미지3",
+            "ref_image_4": "참고 이미지4",
+            "ref_image_5": "참고 이미지5"
+        },
+        "widgets": {
+            "fit_mode": "맞춤 모드"
+        },
+        "outputs": {
+            "sheet": "연결 시트",
+            "n_refs": "참고 이미지 수량",
+            "debug": "디버그 정보"
+        },
+        "description": "연결된 참고 이미지 1-5장을 다중 참고 LoRA 학습용 고정 1536x1024 병합 시트로 합칩니다. 슬롯을 비우면 참고 이미지 수가 줄어듭니다. 빈 슬롯은 건너뛰며 빈 내용으로 채우지 않습니다."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "엔티티 2x2 병합 시트",
+        "inputs": {
+            "person": "인물",
+            "clothing": "의류",
+            "object_or_person2": "사물/인물2",
+            "scene": "장면"
+        },
+        "outputs": {
+            "sheet": "연결 시트",
+            "n_refs": "참고 이미지 수량",
+            "debug": "디버그 정보"
+        },
+        "description": "humoset_sheets_v7 다중 참고 LoRA 학습용 고정 1536x1024 2x2 엔티티 병합 시트를 생성합니다. 사분면 의미는 고정입니다(좌상: 인물, 우상: 의류, 좌하: 사물/인물2, 우하: 장면). 입력을 비우면 해당 사분면은 흰색이 됩니다. LTXIdentityOverlapConditioning과 함께 사용: 레이아웃=중첩도, 소스 ID=2, 위상 스케일=1.0, 참조 스케일 모드=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "프레임 범위 얼굴 로더",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "frame_start": "시작 프레임",
+            "frame_end": "종료 프레임"
+        },
+        "outputs": {
+            "face_sequence": "얼굴 시퀀스"
+        },
+        "description": "단일 얼굴 이미지를 프레임 범위 [시작 프레임, 종료 프레임]로 래핑합니다. 얼굴 시퀀스 — ReservedRegionFrameComposer가 사용하는 사전 목록 — 를 반환합니다. 종료 프레임=-1은 「마지막 프레임까지」(상한 없음)를 의미합니다."
+    },
+    "FaceSequenceBatch": {
+        "title": "얼굴 시퀀스 배치 처리",
+        "inputs": {
+            "face_sequence_a": "얼굴 시퀀스 A",
+            "face_sequence_b": "얼굴 시퀀스 B"
+        },
+        "outputs": {
+            "face_sequence": "얼굴 시퀀스"
+        },
+        "description": "두 얼굴 시퀀스 목록을 하나로 병합합니다. 여러 노드를 체이닝하면 여러 범위를 포함한 배치를 만들 수 있습니다."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "예약 영역 프레임 합성기",
+        "inputs": {
+            "frames": "프레임",
+            "face_sequence": "얼굴 시퀀스",
+            "face_images": "얼굴 이미지"
+        },
+        "widgets": {
+            "region_position": "영역 위치",
+            "region_size_px": "영역 픽셀 크기",
+            "face_distribution": "얼굴 분포",
+            "interval_frames": "간격 프레임 수",
+            "overflow_mode": "오버플로 모드",
+            "stack_direction": "스택 방향",
+            "face_scale_pct": "얼굴 스케일 백분율",
+            "face_padding_px": "얼굴 픽셀 여백",
+            "face_gap_px": "얼굴 픽셀 간격",
+            "face_align_main": "얼굴 주 정렬",
+            "face_align_cross": "얼굴 교차 정렬",
+            "chroma_r": "색도 R",
+            "chroma_g": "색도 G",
+            "chroma_b": "색도 B"
+        },
+        "outputs": {
+            "frames_out": "출력 프레임"
+        },
+        "description": "ComfyUI 노드로, 각 프레임에 예약된 영역(좌/우/상/하)을 합성하면서도 원본 출력 프레임 크기를 유지합니다. 주요 기능: - 최종 출력 해상도를 원본 프레임 해상도와 일치 유지 - 크롭 없이 나머지 영역에 비디오 콘텐츠 맞춤 - 색도 색상으로 예약 영역 채우기 - 해당 영역에 하나 이상의 얼굴 이미지 배치 - 얼굴 배치(이미지 입력)의 시간 분포 모드 지원 - 얼굴 시퀀스 입력으로 프레임별 범위 설정 지원"
+    }
+}

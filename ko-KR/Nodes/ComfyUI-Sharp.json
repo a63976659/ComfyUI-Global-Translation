@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "Sharp 이미지 속성을 PLY로 변환",
+        "inputs": {
+            "gaussian_attrs": "가우시언 속성",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "output_prefix": "출력 접두사",
+            "focal_length_px": "초점 거리 픽셀"
+        },
+        "outputs": {
+            "ply_path": "PLY 파일 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "픽셀당 14채널 MULTIBAND_IMAGE（예: SharpPredictGaussianAttrs의 첫 레이어 가우시안 속성 출력）+ 일치하는 카메라 외부 파라미터/내부 파라미터로 3D 가우시안 포인트 클라우드 PLY 파일을 생성합니다. 멀티밴드는 NDC 위치를 저장하며, 이 노드는 SHARP의 unproject_gaussians로 저장 전에 세계 좌표계로 변환합니다."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp 파노라마 큐브 분할",
+        "widgets": {
+            "panorama": "파노라마",
+            "image_w": "이미지 너비",
+            "image_h": "이미지 높이",
+            "fov_x_deg": "X 시야각",
+            "fov_y_deg": "Y 시야각",
+            "rot_deg": "회전 각도",
+            "pitch_up": "상방 피치 각도",
+            "pitch_down": "하방 피치 각도"
+        },
+        "outputs": {
+            "face_images": "면 이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "fov_x_deg": "X축 시야각",
+            "num_faces": "면 수"
+        },
+        "description": "2:1 가로세로비의 구면 파노라마에서 고정 피치각/요우각 격자로 N개의 투시 크롭을 샘플링합니다（기본값 3피치 x 3요우 = 27개 시점）. WorldStereoPanoramaCubeSplit의 기하 구조와 일치하며——각 면 깊이 모델의 입력 단계로 쓰고, 출력은 SharpDepthMerge로 다시 이어 붙일 수 있습니다.\n\nFOV+중첩으로 격자를 유도하고 정사각형으로 출력하는 Sharp의 SamplePanorama（（와 달리, 이 노드는 고정 피치 격자와 직사각형 가로세로비（기본값 832x480）를 가지며 WorldStereo의 pano_bank가 사용하는 카메라/내부 파라미터 규칙을 따릅니다."
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp 전경 예측",
+        "inputs": {
+            "model": "모델",
+            "image": "이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "mode": "모드",
+            "focal_length_mm": "초점 거리 mm",
+            "output_prefix": "출력 접두사"
+        },
+        "outputs": {
+            "ply_path": "PLY 파일 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "Sharp로 이미지에서 3D 가우시안 포인트 클라우드 PLY 파일을 생성하며, 보이는 표면의 가우시안만 유지하고 가려진 부분은 버립니다. SharpPredict 대비 이미지당 가우시안 포인트 클라우드 수가 절반으로 줄어듭니다. 배치 입력은 번호가 매겨진 PLY 파일 폴더를 만듭니다."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "메트릭 깊이에서 가우시안 포인트 클라우드 예측",
+        "inputs": {
+            "model": "모델",
+            "image": "이미지",
+            "metric_depth_layer0": "미터법 깊이 레이어 0",
+            "metric_depth_layer1": "미터법 깊이 레이어 1",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "focal_length_mm": "초점 거리 mm",
+            "output_prefix": "출력 접두사",
+            "save_background_layer": "배경 레이어 저장",
+            "snap_to_external_depth": "외부 깊이와 연결",
+            "depth_convention": "깊이 규칙",
+            "edge_crop": "가장자리 크롭"
+        },
+        "outputs": {
+            "ply_path": "PLY 파일 경로",
+            "ply_folder": "PLY 폴더 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "외부에서 제공한 메트릭 깊이를 정렬 대상으로 사용하여 Sharp의 가우시안 디코더를 실행합니다. 외부 깊이가 `init_모델` 가우시안 기저값의 일관된 기하 골격이 되어, 가우시안 포인트 클라우드가 여러 뷰에서 일관된 표면을 공유합니다——면별 이음매 문제가 해결됩니다.\n\nPLY 파일을 저장합니다（단일 이미지->하나의 .ply; 배치->NNN.ply N개 폴더）. MergeGaussians 파이프라인으로 하나의 PLY 파일로 조합합니다."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp 가우시안 속성 예측",
+        "inputs": {
+            "model": "모델",
+            "image": "이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "focal_length_mm": "초점 거리 mm"
+        },
+        "outputs": {
+            "metric_depth": "메트릭 깊이",
+            "extrinsics_mdepth": "외부 파라미터_미터법 깊이",
+            "intrinsics_mdepth": "내부 파라미터_메트릭 깊이",
+            "first_layer_depth_refined": "레이어 1 깊이 정제",
+            "first_layer_gaussian_attrs": "레이어 1 가우시언 속성",
+            "second_layer_depth_refined": "레이어 2 깊이 정제",
+            "second_layer_gaussian_attrs": "레이어 2 가우시언 속성",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "Sharp 추론을 실행하고 픽셀별 가우시언 디코더 출력을 평면화된 PLY 파일로 저장하는 대신, 구조화된 계층형 텐서（깊이 + 모든 가우시언 속성의 MULTIBAND_IMAGE）로 노출합니다.\n\n깊이 출력으로 AlignDepthMaps를 구동해 면별 배율을 복원한 뒤, PLY 파일을 재구성하기 전에 다중 대역 위치 채널에 그 배율을 곱합니다."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp 메트릭 깊이 예측",
+        "widgets": {
+            "model": "모델",
+            "image": "이미지",
+            "focal_length_mm": "초점 거리 mm",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "레이어 0 미터법 깊이",
+            "layer_1_metric_depth": "레이어 1 미터법 깊이",
+            "extrinsics_mdepth": "외부 파라미터_미터법 깊이",
+            "intrinsics_mdepth": "내부 파라미터_메트릭 깊이",
+            "layer_0_points_raw": "레이어 0 원시 점군",
+            "layer_1_points_raw": "레이어 1 원시 점군"
+        },
+        "description": "Sharp의 인코더+변위 헤드만 실행합니다（가우시안 디코더는 건너뜁니다）. 픽셀별 메트릭 깊이와 해당 외부 파라미터/내부 파라미터를 출력합니다. 깊이만 필요할 때 SharpPredictGaussianAttrs의 약 2배 속도입니다. 깨끗한 구면 깊이 병합을 위해 SharpDepthMerge에 연결하세요."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "가우시안 분포에서 샤프닝 정제 깊이 가져오기",
+        "inputs": {
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "ply_path": "PLY 경로",
+            "out_size": "출력 사이즈"
+        },
+        "outputs": {
+            "depth_maps": "깊이 맵",
+            "valid_mask": "유효 마스크",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "Sharp가 예측한 PLY 가우시안 점을 각 면의 카메라 공간에 재투영하여 정제된 픽셀별 깊이를 복원합니다(실제로는 디코더가 생성한 z값이며 정제 전 시차 헤드가 아닙니다). 각 픽셀의 최소 깊이=레이어 0(가시 표면)입니다.\n\n깊이 맵을 AlignDepthMaps에 전달해 로그 스케일 정렬을 수행하고, 결과의 면별 배율을 가우시안 점에 적용한 뒤에 가우시안을 병합하십시오."
+    },
+    "ScaleImageValues": {
+        "title": "이미지 값 조정",
+        "widgets": {
+            "image": "이미지"
+        },
+        "description": "이미지의 모든 값을 [0, 1] 범위로 선형 재매핑합니다. 깊이 맵에는 미터와 같은 단위가 포함될 수 있는 반면 ComfyUI의 PreviewImage는 [0, 1] 범위의 값을 기대하므로 깊이 맵을 미리 볼 때 유용합니다. 각 배치 항목은 자체 (H, W, C)의 최소/최대 값을 기준으로 독립적으로 스케일링됩니다. 상수 이미지는 모두 0이 됩니다(0으로 나누기로 인한 NaN 대신)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "Sharp 레이를 평면 깊이로 변환",
+        "inputs": {
+            "image": "이미지",
+            "intrinsics": "내부 파라미터",
+            "extrinsics": "외부 파라미터"
+        },
+        "outputs": {
+            "image": "이미지",
+            "intrinsics": "내부 파라미터",
+            "extrinsics": "외부 파라미터"
+        },
+        "description": "면 깊이 규칙 변환기입니다. 레이 거리 깊이에 면별 코사인 매핑(1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1))을 곱해 Sharp 가우시언 디코더와 역투영이 기대하는 평면 Z 깊이를 생성합니다. 파노라마 분할 깊이 소스（등각 깊이 파노라마의 PanoramaSplit）와 Sharp 예측 노드 사이에 배치합니다. 내부 파라미터가 정규화된 형태로 전달된 경우 픽셀 K 단위로 재조정해 모든 다운스트림 노드가 일관된 단위를 보도록 합니다."
+    },
+    "AlignDepthMaps": {
+        "title": "깊이 맵 정렬",
+        "inputs": {
+            "depth_maps": "깊이 맵",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "reference_view": "참고 뷰",
+            "method": "방법"
+        },
+        "outputs": {
+            "aligned_depth_maps": "정렬된 깊이 맵",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "alignment_info": "정렬 정보"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "EXIF 정보 포함 이미지 로드",
+        "widgets": {
+            "image": "이미지",
+            "default_focal_mm": "기본 초점 거리（밀리미터）"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "focal_length_mm": "초점 거리（mm）"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "Sharp 모델 로드",
+        "widgets": {
+            "precision": "정밀도",
+            "checkpoint_path": "체크포인트 경로"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "가우시안 분포 병합",
+        "widgets": {
+            "ply_folder": "PLY 폴더",
+            "output_prefix": "출력 접두사",
+            "max_depth": "최대 깊이",
+            "min_opacity": "최소 투명도"
+        },
+        "outputs": {
+            "ply_path": "PLY 경로",
+            "num_gaussians": "가우시언 분포 수"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp 예측",
+        "inputs": {
+            "model": "모델",
+            "image": "이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "focal_length_mm": "초점 거리（mm）",
+            "output_prefix": "출력 접두사"
+        },
+        "outputs": {
+            "ply_path": "PLY 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp 깊이 예측",
+        "inputs": {
+            "model": "모델",
+            "image": "이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "reference_depth": "참고 깊이"
+        },
+        "outputs": {
+            "depth_maps": "깊이 맵",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "alignment_maps": "정렬 맵"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "깊이를 파노라마에 투영",
+        "inputs": {
+            "depth_maps": "깊이 맵",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "panorama_width": "파노라마 너비",
+            "show_borders": "경계 표시",
+            "disagreement_scale": "불일치 스케일",
+            "blend_mode": "블렌드 모드",
+            "border_color": "테두리 색상"
+        },
+        "outputs": {
+            "panoramic_depth": "파노라마 깊이",
+            "debug_overlay": "디버그 오버레이",
+            "disagreement_heatmap": "불일치 히트맵"
+        },
+        "description": "카테고리: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "파노라마 샘플링",
+        "inputs": {
+            "panorama": "파노라마"
+        },
+        "widgets": {
+            "fov_degrees": "시야각（도）",
+            "overlap_percent": "중복 비율",
+            "output_size": "출력 사이즈",
+            "skip_poles": "극점 건너뛰기"
+        },
+        "outputs": {
+            "images": "이미지",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터",
+            "num_horizontal": "가로 개수",
+            "num_vertical": "세로 개수"
+        },
+        "description": "카테고리: Sharp"
+    }
+}

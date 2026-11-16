@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪Якорь внимания к лицам LTX",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "face_bbox_norm": "Нормализация рамки лица",
+            "strength": "Интенсивность",
+            "inject_mode": "Режим внедрения",
+            "anchor_frame": "Опорный кадр",
+            "anchor_upsample": "Апскейл якоря",
+            "track_threshold": "Порог отслеживания",
+            "face_threshold": "Порог лица",
+            "identity_threshold": "Порог идентичности",
+            "depth_curve": "Кривая глубины",
+            "spatial_prior": "Пространственный приоритет",
+            "block_index_filter": "Фильтр индексов блоков",
+            "bypass": "Обход",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "model": "Модель",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: якорь идентичности для области лица. Кэшируемые признаки перенесены в узел LTXLatentAnchor (стабилизация сцены). Этот узел по-прежнему нацелен на объект лица.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "Якорь Latent LTX",
+        "inputs": {
+            "model": "Модель",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "cache_at_step": "Кэшировать на шаге",
+            "similarity_threshold": "Порог сходства",
+            "decay_with_distance": "Затухание с расстоянием",
+            "bypass": "Обход",
+            "advanced_mode": "Расширенный режим",
+            "cache_mode": "Режим кэша",
+            "forwards_per_step": "Форвардных проходов на шаг",
+            "cache_warmup": "Прогрев кэша",
+            "anchor_frame": "Опорный кадр",
+            "depth_curve": "Кривая глубины",
+            "block_index_filter": "Фильтр индексов блоков",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Якорь Latent для сцены в целом для LTX2.x. Стабилизирует промпт, условие и физически осознанные силы, сохраняя согласованность при длительной сэмплизации. Подключите SIGMAS для предсказуемого времени кэширования. Переключитесь в расширенный режим для доступа к исследовательским параметрам."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "Осведомлённый якорь Latent LTX",
+        "inputs": {
+            "model": "Модель",
+            "reference_image": "Опорное изображение",
+            "vae": "VAE",
+            "energy_latent": "Энергетический Latent",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "cache_at_step": "Кэшировать на шаге",
+            "similarity_threshold": "Порог сходства",
+            "decay_with_distance": "Затухание с расстоянием",
+            "energy_threshold": "Порог энергии",
+            "bypass": "Обход",
+            "debug": "Отладка",
+            "advanced_mode": "Расширенный режим",
+            "cache_mode": "Режим кэша",
+            "forwards_per_step": "Форвардных проходов на шаг",
+            "cache_warmup": "Прогрев кэша",
+            "anchor_frame": "Опорный кадр",
+            "depth_curve": "Кривая глубины",
+            "block_index_filter": "Фильтр индексов блоков"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Якорь Latent с опциональной пространственной модуляцией энергии от внешнего референса. Референсное изображение (или вход Latent) задаёт пространственные веса; сопоставление с самим собой использует текущий Latent (правильное пространство признаков)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "Усилитель текстового внимания LTX",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "text_amplification": "Усиление текстового внимания",
+            "spatial_focus": "Пространственный фокус",
+            "block_index_filter": "Фильтр индексов блоков",
+            "bypass": "Обход",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Усиливает перекрёстное текстовое внимание (attn2) LTX2 в каждом блоке, компенсируя разбавление условия при большом количестве токенов аугментации. Используйте на стадии апскейла — восстанавливает следование промпту и стабильность цвета."
+    },
+    "LTXTiledSampler": {
+        "title": "Плиточный сэмплер LTX",
+        "inputs": {
+            "noise": "Шум",
+            "guider": "Гидратор",
+            "sampler": "Сэмплер",
+            "sigmas": "sigma",
+            "latent_image": "Latent-изображение"
+        },
+        "widgets": {
+            "bypass_tiling": "Пропуск плиток",
+            "tile_axis": "Ось плиток",
+            "n_tiles": "Количество плиток",
+            "tile_overlap": "Наложение плиток",
+            "max_size_for_no_tile": "Макс. размер без плиток",
+            "audio_pass": "Проход аудио",
+            "audio_carrier_tile": "Несущая плитка аудио",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "output": "Выход",
+            "denoised_output": "Выход после шумоподавления"
+        },
+        "description": "Плиточная drop-in замена SamplerCustomAdvanced для лёгкой доработки на стадии апскейла LTX2. Каждая плитка выполняет полноценную сэмплизацию с числом токенов обучающего распределения, затем косинусное смешивание. Только для лёгкого шумоподавления. Аудио проходит по умолчанию; audio_carrier_tile выполняет аудиосэмплирование одновременно с выбранной плиткой (без дополнительных шагов). Установите bypass_tiling=true для прозрачного прохода со стандартной одиночной сэмплизацией — удобно для отладки или когда плитки не нужны."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "Плиточный апсемплер Latent LTXV",
+        "inputs": {
+            "samples": "Образцы",
+            "upscale_model": "Модель сверхразрешения",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "Размер плитки",
+            "overlap": "Наложение",
+            "max_size_for_no_tile": "Макс. размер без плиток",
+            "rotate_for_landscape": "Поворот под альбомную ориентацию",
+            "debug": "Отладка"
+        },
+        "description": "Плиточная drop-in замена LTXVLatentUpsampler. Апскейл выполняется по пространственным плиткам с косинусным сглаживанием перекрытий, что устраняет смещение цвета и искажения при экстремальных соотношениях сторон. При безопасных соотношениях выход почти идентичен неплиточной версии; при экстремальных значениях не возникает нестабильности модели сверхразрешения."
+    },
+    "LTXModelInspector": {
+        "title": "Инспектор моделей LTX",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "name_filter": "Фильтр имён",
+            "focus_path": "Путь фокуса",
+            "max_modules_listed": "Макс. количество модулей в списке",
+            "trace_path_contains": "Отслеживаемый путь содержит",
+            "max_modules_traced": "Макс. количество отслеживаемых модулей",
+            "trace_calls_per_module": "Число отслеживаемых вызовов на модуль",
+            "print_top_level": "Печатать сведения верхнего уровня"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Инспекция диффузионной модели: структура верхнего уровня, фильтр имён, путь фокуса и хуки отслеживания."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Автоконкатенация Latent с перекрёстным затуханием",
+        "inputs": {
+            "frames_0": "Кадры_0",
+            "frames_1": "Кадры_1"
+        },
+        "widgets": {
+            "match_spatial": "Пространственное сопоставление",
+            "interpolate_mode": "Режим интерполяции",
+            "cross_fade_frames": "Кадры перекрёстного затухания",
+            "fade_curve": "Кривая затухания"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Автоматическое пространственное сопоставление + временная конкатенация с опциональным перекрёстным затуханием."
+    },
+    "AudioLatentStretch": {
+        "title": "Растяжение аудио-Latent",
+        "inputs": {
+            "audio_latent": "Аудио-Latent"
+        },
+        "widgets": {
+            "source_fps": "Исходный FPS",
+            "target_fps": "Целевой FPS",
+            "interp_mode": "Режим интерполяции"
+        },
+        "outputs": {
+            "audio_latent": "Аудио-Latent"
+        },
+        "description": "Пересэмплирование аудио-Latent к целевому FPS. Рекомендуется режим Hermite."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Временной апсемплер Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Исходный FPS",
+            "target_fps": "Целевой FPS",
+            "interp_mode": "Режим интерполяции",
+            "auto_retime": "Авто-ретайм",
+            "motion_scale": "Масштаб движения",
+            "spatial_sharpen": "Пространственная резкость",
+            "ltx_safe": "Безопасно для LTX",
+            "override_frames": "Переопределить количество кадров"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Временной апскейл на основе Hermite с автоматической коррекцией темпа."
+    },
+    "LatentMotionSharpener": {
+        "title": "Усилитель резкости движения Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "Базовая резкость",
+            "motion_sharpen": "Резкость движения",
+            "motion_thresh": "Порог движения",
+            "temporal_smooth_mask": "Маска временного сглаживания"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Адаптивное усиление резкости в зависимости от амплитуды движения между кадрами."
+    },
+    "LatentMotionRetime": {
+        "title": "Ретайм движения Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Исходный FPS",
+            "target_fps": "Целевой FPS",
+            "strength": "Интенсивность",
+            "manual_scale": "Ручной масштаб"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Ослабляет амплитуду движения для коррекции темпа 24->30fps на апскейленном Latent."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Временной инпейнтер Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "Сигма якоря",
+            "ghost_sigma": "Сигма призраков",
+            "score_gamma": "Гамма оценок",
+            "anchor_blend": "Смешивание якоря",
+            "seed": "Зерно",
+            "debug_scores": "Отладочные оценки"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Обнаружение призраков по кадрам + целевой шум. Фиксирует подлинные опорные кадры. Затем шумоподавление KSampler на 0.3-0.45."
+    },
+    "LTXActionAmplifier": {
+        "title": "Усилитель действий LTX",
+        "inputs": {
+            "model": "Модель",
+            "clip": "clip",
+            "positive": "Позитивный промпт"
+        },
+        "widgets": {
+            "amplification_strength": "Интенсивность усиления",
+            "action_vocabulary_text": "Текст словаря действий",
+            "scale_ceiling": "Верхний предел масштабирования",
+            "auto_threshold": "Автопорог",
+            "similarity_threshold": "Порог сходства",
+            "similarity_sharpness": "Резкость сходства",
+            "amplification_floor": "Нижний предел усиления",
+            "top_k": "Top-K",
+            "bypass": "Обход",
+            "debug": "Отладка"
+        },
+        "description": "Выборочно усиливает текстовые токены действий/движения в позитивном промпте, увеличивая амплитуду K/V совпанных глагольных токенов, оставляя описательные токены неизменными. Симметрично противоположен LikenessSemanticClamp и заменяет равномерное масштабирование TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "Детектор распознавания лиц LTX",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "padding": "Отступ",
+            "fallback_bbox": "Запасная рамка",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "face_bbox": "Рамка лица"
+        },
+        "description": "Обнаруживает лица на изображении и выдаёт нормализованную строку рамки. Подключите выход к face_bbox_within_reference у LikenessGuide, к override_face_bbox/frame_0_bbox у LikenessAnchor или к face_bbox_norm у face_anchor. Разделяет обнаружение и логику узлов, позволяя нескольким узлам использовать одну рамку."
+    },
+    "LTXLikenessAnchor": {
+        "title": "Якорь сходства LTX",
+        "inputs": {
+            "model": "Модель",
+            "reference_info": "Информация о референсе"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "reference_source": "Источник референса",
+            "frame_0_bbox": "Рамка кадра 0",
+            "similarity_threshold": "Порог сходства",
+            "decay_with_distance": "Затухание с расстоянием",
+            "bypass": "Обход",
+            "debug": "Отладка",
+            "advanced_mode": "Расширенный режим",
+            "depth_curve": "Кривая глубины",
+            "block_index_filter": "Фильтр индексов блоков",
+            "similarity_sharpness": "Резкость сходства",
+            "override_face_bbox": "Переопределить рамку лица",
+            "skip_when_sigma_above": "Пропуск при превышении sigma",
+            "pull_mode": "Режим подтягивания",
+            "late_block_falloff": "Затухание поздних блоков"
+        },
+        "description": "Подтягивает внимание каждого блока к референсным признакам для сохранения идентичности. Два режима: (1) получение информации о референсе из LikenessGuide и использование его приложенного референсного кадра; (2) без подключённой информации о референсе узел использует кадр 0 Latent как референс — подходит для рабочих процессов i2v, где кадр 0 является исходным изображением условия. В v1.2 направленная подтяжка с сохранением цвета."
+    },
+    "LTXLikenessGuide": {
+        "title": "Гид сходства LTX",
+        "inputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "Опорное изображение"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "placement_mode": "Режим размещения",
+            "face_detect": "Обнаружение лиц",
+            "reference_mask_mode": "Режим маски референса",
+            "face_padding": "Отступ лица",
+            "crf": "CRF",
+            "blur_radius": "Радиус размытия",
+            "interpolation": "Интерполяция",
+            "crop": "Обрезка",
+            "attention_strength": "Интенсивность внимания",
+            "face_bbox_within_reference": "Рамка лица внутри референса",
+            "emit_latent": "Выпуск Latent",
+            "debug": "Отладка"
+        },
+        "outputs": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "latent": "latent",
+            "reference_info": "Информация о референсе"
+        },
+        "description": "Прилагает референсное изображение сходства к условию для сохранения идентичности. Выдаёт изменённые позитивное/негативное условия (для Гидратора) и метаданные информации о референсе (для LikenessAnchor). По умолчанию выход Latent — сквозная передача входного Latent: без расширения и без обрезки. Ценность гида — во взаимодействии условия с моделью и её метаданными bbox, а не в модификации Latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "Обрезка сходства LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "Информация о референсе"
+        },
+        "widgets": {
+            "debug": "Отладка"
+        },
+        "description": "Обрезает референсные кадры сходства из Latent перед декодированием VAE. Обращает режим emit_latent=расширение у LTXLikenessGuide. Используйте только когда гид выпускает расширенный Latent. Если гид в режиме сквозной передачи (по умолчанию) — узел не нужен, подключайте Latent к VAE-декодеру напрямую."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "Семантический ограничитель сходства LTX",
+        "inputs": {
+            "model": "Модель",
+            "clip": "clip",
+            "positive": "Позитивный промпт",
+            "reference_info": "Информация о референсе"
+        },
+        "widgets": {
+            "suppression_strength": "Интенсивность подавления",
+            "face_modifier_text": "Текст модификаторов лица",
+            "similarity_threshold": "Порог сходства",
+            "auto_threshold": "Автопорог",
+            "similarity_sharpness": "Резкость сходства",
+            "suppression_floor": "Нижний предел подавления",
+            "top_k": "top_k",
+            "soft_edge_frac": "Доля мягких краёв",
+            "override_face_bbox": "Переопределить рамку лица",
+            "bypass": "Обход",
+            "debug": "Отладка"
+        },
+        "description": "Семантическое подавление текстовых токенов в области рамки лица внутри зон attn2. По соответствию в пространстве эмбеддингов со словарём модификаторов распознаёт токены-модификаторы лица в промпте и выборочно подавляет их внимание к этой области. Заменяет прежнее равномерное масштабирование амплитуды устаревшего LikenessClamp."
+    }
+}

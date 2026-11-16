@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪نقطة تثبيت انتباه وجه LTX",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "face_bbox_norm": "توحيد حدود الوجه",
+            "strength": "قوة",
+            "inject_mode": "وضع الحقن",
+            "anchor_frame": "الإطار المثبَّت",
+            "anchor_upsample": "تكبير التثبيت",
+            "track_threshold": "عتبة التتبّع",
+            "face_threshold": "عتبة الوجه",
+            "identity_threshold": "عتبة الهوية",
+            "depth_curve": "منحنى العمق",
+            "spatial_prior": "البادئ المكاني",
+            "block_index_filter": "مصنِّف فهارس الكتل",
+            "bypass": "تجاوز",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "MODEL": "MODEL"
+        },
+        "description": "إصدار 4.0: نقطة تثبيت هوية لمنطقة الوجه. نُقلت الميزات المخزَّنة إلى عقدة LTXLatentAnchor (ثبات على مستوى المشهد). تبقى هذه العقدة موجَّهة نحو أهداف الوجه.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "نقطة تثبيت Latent لـ LTX",
+        "inputs": {
+            "model": "النموذج",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "cache_at_step": "التخزين المؤقت عند الخطوة",
+            "similarity_threshold": "عتبة التشابه",
+            "decay_with_distance": "تلاشٍ مع المسافة",
+            "bypass": "تجاوز",
+            "advanced_mode": "الوضع المتقدم",
+            "cache_mode": "وضع التخزين المؤقت",
+            "forwards_per_step": "عدد التمريرات الأمامية لكل خطوة",
+            "cache_warmup": "تسخين التخزين المؤقت",
+            "anchor_frame": "الإطار المثبَّت",
+            "depth_curve": "منحنى العمق",
+            "block_index_filter": "تصفية فهرس الكتلة",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "نقطة تثبيت كامنة (Latent) للمشهد بالكامل من أجل LTX2.x. تُثبّت الموجّه والشرط وقوة إدراك الفيزياء لتحافظ على اتساقها خلال العيّنة الطويلة. اوصل SIGMAS للحصول على زمن تخزين مؤقت يمكن توقعه. بدّل إلى الوضع المتقدم للوصول إلى معاملات البحث."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "نقطة تثبيت Latent الواعية لـ LTX",
+        "inputs": {
+            "model": "النموذج",
+            "reference_image": "صورة مرجعية",
+            "vae": "VAE",
+            "energy_latent": "Latent الطاقة",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "cache_at_step": "التخزين المؤقت عند الخطوة",
+            "similarity_threshold": "عتبة التشابه",
+            "decay_with_distance": "تلاشٍ مع المسافة",
+            "energy_threshold": "عتبة الطاقة",
+            "bypass": "تجاوز",
+            "debug": "التنقيح",
+            "advanced_mode": "الوضع المتقدم",
+            "cache_mode": "وضع التخزين المؤقت",
+            "forwards_per_step": "عدد التمريرات الأمامية لكل خطوة",
+            "cache_warmup": "تسخين التخزين المؤقت",
+            "anchor_frame": "الإطار المثبَّت",
+            "depth_curve": "منحنى العمق",
+            "block_index_filter": "تصفية فهرس الكتلة"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "نقطة تثبيت كامنة (Latent) مع ضبط مكاني اختياري للطاقة انطلاقًا من مرجع خارجي. تقدّم الصورة المرجعية (أو إدخال الـ Latent) الأوزان المكانية؛ أما المطابقة فتستخدم الـ Latent الجاري (فضاء الميزات الصحيح)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "مضخّم الانتباه النصي لـ LTX",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "text_amplification": "تضخيم الانتباه النصي",
+            "spatial_focus": "التركيز المكاني",
+            "block_index_filter": "تصفية فهرس الكتلة",
+            "bypass": "تجاوز",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "يضخّم الانتباه التبادلي النصي في LTX2 (attn2) لكل كتلة لتعويض تخفيف الشرط عند التوسّع بعدد رموز (tokens) مرتفع. يُستخدم في مرحلة الترقية العلوية لاستعادة الالتزام بالموجّه واستقرار الألوان."
+    },
+    "LTXTiledSampler": {
+        "title": "عيّان LTX البلاطي",
+        "inputs": {
+            "noise": "ضوضاء",
+            "guider": "الموجِّه",
+            "sampler": "العيّان",
+            "sigmas": "sigma",
+            "latent_image": "صورة Latent"
+        },
+        "widgets": {
+            "bypass_tiling": "تخطي البلاطات",
+            "tile_axis": "محور البلاطات",
+            "n_tiles": "عدد البلاطات",
+            "tile_overlap": "تراكب البلاطات",
+            "max_size_for_no_tile": "أقصى حجم بلا بلاطات",
+            "audio_pass": "تمرير الصوت",
+            "audio_carrier_tile": "بلاطة حاملة للصوت",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "output": "إخراج",
+            "denoised_output": "مخرج إزالة الضوضاء"
+        },
+        "description": "بديل بلاطي جاهز (drop-in) لـ SamplerCustomAdvanced من أجل التحسين الخفيف في مرحلة الترقية العلوية لـ LTX2. ينفّذ كل بلاط عيّنة كاملة بعدد رموز وفق توزيع التدريب ثم يمزجها بجيب التمام. للتخفيف الخفيف من الضوضاء فقط. تمرير الصوت مفعَّل افتراضيًا؛ يجعل audio_carrier_tile عيّنة الصوت تجري بالتزامن مع بلاط محدَّد (دون خطوات إضافية). اضبط bypass_tiling=true ليعمل كتمرير شفاف لعيّنة قياسية واحدة، وهو مفيد للتنقيح أو عند عدم الحاجة إلى البلاطات."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "مرقٍّ Latent علوي لـ LTXV (نسخة البلاطات)",
+        "inputs": {
+            "samples": "عيّنة",
+            "upscale_model": "نموذج الدقة الفائقة",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "حجم البلاطة",
+            "overlap": "تراكب",
+            "max_size_for_no_tile": "أقصى حجم بلا بلاطات",
+            "rotate_for_landscape": "تدوير لملاءمة الوضع الأفقي",
+            "debug": "التنقيح"
+        },
+        "description": "بديل بلاطي جاهز لـ LTXVLatentUpsampler. يجري الترقية العلوية على بلاطات مكانية ويمزج التراكبات بنافذة جيب التمام، ما يحلّ انحراف اللون والتشوّه عند نسب الأبعاد المتطرفة. في المشاهد ذات النسب الآمنة يكاد المخرج يطابق نسخة غير البلاطات؛ أما في الحالات المتطرفة فيتجنّب عدم استقرار نموذج الدقة الفائقة."
+    },
+    "LTXModelInspector": {
+        "title": "كاشف نموذج LTX",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "name_filter": "مصنِّف الأسماء",
+            "focus_path": "مسار التركيز",
+            "max_modules_listed": "أقصى عدد وحدات مدرجة",
+            "trace_path_contains": "مسار التتبّع يحتوي على",
+            "max_modules_traced": "أقصى عدد وحدات متتبَّعة",
+            "trace_calls_per_module": "عدد استدعاءات التتبّع لكل وحدة",
+            "print_top_level": "طباعة المعلومات العلوية"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "يفحص نماذج الانتشار: البنية العلوية، وتصفية الأسماء، ومسار التركيز، وشصّات التتبّع."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "ضمّ ذاتي بتلاشٍ متقاطع للـ Latent",
+        "inputs": {
+            "frames_0": "الإطارات_0",
+            "frames_1": "الإطارات_1"
+        },
+        "widgets": {
+            "match_spatial": "المطابقة المكانية",
+            "interpolate_mode": "وضع الاستيفاء",
+            "cross_fade_frames": "إطارات التلاشي المتقاطع",
+            "fade_curve": "منحنى التلاشي"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "مطابقة مكانية تلقائية + ضمّ زمني مع تلاشٍ متقاطع اختياري."
+    },
+    "AudioLatentStretch": {
+        "title": "تمطيط الـ Latent الصوتي",
+        "inputs": {
+            "audio_latent": "صوت كامن Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS المصدر",
+            "target_fps": "FPS الهدف",
+            "interp_mode": "وضع الاستيفاء"
+        },
+        "outputs": {
+            "audio_latent": "صوت كامن Latent"
+        },
+        "description": "يعيد خلخلة الـ Latent الصوتي إلى معدّل الإطارات (FPS) الهدف. يُنصح بوضع Hermite."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "المرقّي الزمني للـ Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS المصدر",
+            "target_fps": "FPS الهدف",
+            "interp_mode": "وضع الاستيفاء",
+            "auto_retime": "إعادة التوقيت التلقائية",
+            "motion_scale": "نسبة الحركة",
+            "spatial_sharpen": "الشحذ المكاني",
+            "ltx_safe": "أمان LTX",
+            "override_frames": "تجاوز عدد الإطارات"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "ترقية علوية زمنية بالاستعانة بـ Hermite مع تصحيح إيقاعي تلقائي."
+    },
+    "LatentMotionSharpener": {
+        "title": "شحّاذ حركة الـ Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "شحذ أساسي",
+            "motion_sharpen": "شحذ الحركة",
+            "motion_thresh": "عتبة الحركة",
+            "temporal_smooth_mask": "قناع تنعيم المجال الزمني"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "شحذ تكيّفي بحسب مقدار الحركة بين الإطارات."
+    },
+    "LatentMotionRetime": {
+        "title": "إعادة توقيت حركة الـ Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS المصدر",
+            "target_fps": "FPS الهدف",
+            "strength": "قوة",
+            "manual_scale": "التحجيم اليدوي"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "يُخمِد مقدار الحركة لتصحيح إيقاع 24 إلى 30 إطارًا/ثانية على الـ Latent المُرقّى علويًا."
+    },
+    "LatentTemporalInpainter": {
+        "title": "مرمّم الـ Latent الزمني",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "σ نقطة التثبيت",
+            "ghost_sigma": "σ الشوائب",
+            "score_gamma": "γ الدرجة",
+            "anchor_blend": "مزج نقطة التثبيت",
+            "seed": "البذرة",
+            "debug_scores": "درجات التنقيح"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "كشف للشوائب في كل إطار + ضوضاء مستهدفة. يثبّت الإطارات المثبَّتة الحقيقية، ثم يخفّف الضوضاء بقيمة 0.3-0.45 باستخدام KSampler."
+    },
+    "LTXActionAmplifier": {
+        "title": "مضخّم الحركة لـ LTX",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "clip",
+            "positive": "موجّه موجب"
+        },
+        "widgets": {
+            "amplification_strength": "قوة التضخيم",
+            "action_vocabulary_text": "نص مفردات الحركة",
+            "scale_ceiling": "الحد الأعلى للتحجيم",
+            "auto_threshold": "العتبة التلقائية",
+            "similarity_threshold": "عتبة التشابه",
+            "similarity_sharpness": "حِدّة التشابه",
+            "amplification_floor": "الحد الأدنى للتضخيم",
+            "top_k": "Top-K",
+            "bypass": "تجاوز",
+            "debug": "التنقيح"
+        },
+        "description": "يضخّم بشكل انتقائي الرموز النصية للحركة/الحركة داخل الموجّه الموجب، ويقوّي سعة K/V للرموز الفعلية المطابقة مع إبقاء الرموز الوصفية كما هي. عكسٌ متناظر لـ LikenessSemanticClamp، ويحلّ محل نهج التعديل التناسبي الشامل في TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "كاشف تعرّف الوجوه LTX",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "padding": "حشو",
+            "fallback_bbox": "حدود احتياطية",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "face_bbox": "حدود الوجه"
+        },
+        "description": "يكشف الوجوه في الصورة ويُصدر سلسلة نصية لحدود مُوحَّدة. اوصل المخرج بـ face_bbox_within_reference في LikenessGuide، أو override_face_bbox/frame_0_bbox في LikenessAnchor، أو face_bbox_norm في face_anchor. يفصل الكشف عن منطق العقد ما يتيح مشاركة الحدود نفسها بين عدة عقد."
+    },
+    "LTXLikenessAnchor": {
+        "title": "نقطة تثبيت الشبه لـ LTX",
+        "inputs": {
+            "model": "النموذج",
+            "reference_info": "معلومات المرجع"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "reference_source": "مصدر المرجع",
+            "frame_0_bbox": "حدود الإطار 0",
+            "similarity_threshold": "عتبة التشابه",
+            "decay_with_distance": "تلاشٍ مع المسافة",
+            "bypass": "تجاوز",
+            "debug": "التنقيح",
+            "advanced_mode": "الوضع المتقدم",
+            "depth_curve": "منحنى العمق",
+            "block_index_filter": "تصفية فهرس الكتلة",
+            "similarity_sharpness": "حِدّة التشابه",
+            "override_face_bbox": "تجاوز حدود الوجه",
+            "skip_when_sigma_above": "تخطٍّ عند تجاوز sigma",
+            "pull_mode": "وضع السحب",
+            "late_block_falloff": "تلاشي الكتل المتأخرة"
+        },
+        "description": "يجذب انتباه كل كتلة نحو ميزات المرجع للحفاظ على اتساق الهوية. وضعان: (1) يأخذ معلومات المرجع من LikenessGuide ويستخدم الإطارات المرجعية المرفقة به؛ (2) عند عدم توصيل معلومات المرجع تستخدم العقدة الإطار 0 من الـ Latent كمرجع — مناسب لسير عمل i2v حيث الإطار 0 هو صورة البدء الشرطية. إصدار 1.2 يستخدم وضع السحب الاتجاهي (يحافظ على الألوان)."
+    },
+    "LTXLikenessGuide": {
+        "title": "موجّه الشبه لـ LTX",
+        "inputs": {
+            "positive": "موجّه موجب",
+            "negative": "موجّه سالب",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "صورة مرجعية"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "placement_mode": "وضع المواضع",
+            "face_detect": "كشف الوجوه",
+            "reference_mask_mode": "وضع قناع المرجع",
+            "face_padding": "حشو الوجه",
+            "crf": "CRF",
+            "blur_radius": "نصف قطر التمويه",
+            "interpolation": "استيفاء",
+            "crop": "اقتصاص",
+            "attention_strength": "قوة الانتباه",
+            "face_bbox_within_reference": "حدود الوجه ضمن المرجع",
+            "emit_latent": "إصدار latent",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "positive": "موجّه موجب",
+            "negative": "موجّه سالب",
+            "latent": "latent",
+            "reference_info": "معلومات المرجع"
+        },
+        "description": "يرفق صورة مرجعية شبيهة بإعدادات الشرط للحفاظ على الهوية. يُصدر الشرط الموجب/السالب بعد التعديل (لـ Guider) والبيانات الوصفية لمعلومات المرجع (لـ LikenessAnchor). افتراضيًا يكون خرج الـ latent تمريرًا للمدخل — لا توسيع ولا اقتصاص. تكمن قيمة التوجيه في تفاعل الشرط مع النموذج وبيانات bbox الوصفية، لا في تعديل الـ latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "اقتصاص الشبه لـ LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "معلومات المرجع"
+        },
+        "widgets": {
+            "debug": "التنقيح"
+        },
+        "description": "يقصّ إطارات المرجع الشبيه من الـ latent قبل فك ترميز VAE. يعكس وضع التوسيع emit_latent في LTXLikenessGuide. يُستخدم فقط عندما يُصدر الموجّه latent موسَّعًا؛ فإذا كان في وضع التمرير (الافتراضي) فلا حاجة لهذه العقدة — اوصل الـ latent مباشرة بفك ترميز VAE."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "المقيد الدلالي لشبه LTX",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "clip",
+            "positive": "موجّه موجب",
+            "reference_info": "معلومات المرجع"
+        },
+        "widgets": {
+            "suppression_strength": "قوة الكبت",
+            "face_modifier_text": "نص تعديل الوجه",
+            "similarity_threshold": "عتبة التشابه",
+            "auto_threshold": "العتبة التلقائية",
+            "similarity_sharpness": "حِدّة التشابه",
+            "suppression_floor": "الحد الأدنى للكبت",
+            "top_k": "top_k",
+            "soft_edge_frac": "نسبة الحواف الناعمة",
+            "override_face_bbox": "تجاوز حدود الوجه",
+            "bypass": "تجاوز",
+            "debug": "التنقيح"
+        },
+        "description": "يطبّق كبتًا دلاليًا للرموز النصية داخل حدود الوجه في نطاق attn2. يحدّد رموز تعديل الوجه في الموجّه عبر مطابقة فضاء التضمين مع قاموس التعديلات، ويكبت انتباه تلك الرموز إلى المنطقة المذكورة بشكل انتقائي. يحلّ محل أسلوب تحجيم السعة الموحَّد في LikenessClamp المتوقَّف."
+    }
+}

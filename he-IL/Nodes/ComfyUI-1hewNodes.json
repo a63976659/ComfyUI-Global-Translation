@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "התאמת צבעי תמונה",
+        "inputs": {
+            "source_image": "תמונת מקור",
+            "reference_image": "תמונת ייחוס"
+        },
+        "widgets": {
+            "method": "שיטה"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "מעביר את צבעי תמונת הייחוס אל תמונת המקור. תומך בעיבוד אצוות; כאשר מספר תמונות הייחוס שונה מגודל אצוות המקור, תמונות הייחוס משמשות במחזוריות (i % ref_count). שיטות wavelet/adain פועלות באופן מקורי; שיטות mkl/hm/reinhard/mvgg והגרסאות המעורבות שלהן משתמשות בחבילת 'color-matcher'."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "שחזור צבעי תמונה",
+        "inputs": {
+            "edit_image": "תמונה לעריכה",
+            "org_image": "תמונה מקורית"
+        },
+        "widgets": {
+            "background_threshold": "סף רקע",
+            "unchanged_threshold": "סף ללא שינוי",
+            "seam_max_distance": "מרחק מרבי של תפר",
+            "seam_decay": "דעיכת תפר",
+            "seam_residual_blur": "טשטוש שאריות תפר",
+            "seam_color_sigma": "סטיית תקן של צבע התפר",
+            "occlusion_residual_blur": "טשטוש שאריות הסתרה",
+            "occlusion_bridge_width": "רוחב גשר להסתרה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "unchanged_mask": "מסכה לא-שגרתית"
+        },
+        "description": "מחזיר את צבעי העריכה של ה־AI שיושרו אל הייחוס המקורי, תוך החלקת תפרי ההסתרה שנוצרו מהסרת אובייקטים. משתמש בהתאמת צבע אפינית אמידה ובשדה תפרים רציף (ניקוי מסכה במבנה לא שונה הושבת). אם לתמונה הערוכה יש ערוץ Alpha הוא ישמר."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "מסכת שינויים ליישור תמונה",
+        "inputs": {
+            "edit_image": "תמונה לעריכה",
+            "org_image": "תמונה מקורית"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "max_offset": "היסט מרבי",
+            "max_rotation": "סיבוב מרבי",
+            "max_scale": "קנה מידה מרבי",
+            "min_align_score": "ציון יישור מינימלי",
+            "color_compensation": "פיצוי צבע",
+            "sensitivity": "רגישות",
+            "min_component_area": "שטח מינימלי ברכיב",
+            "expand": "הרחבה",
+            "feather": "החלקת קצה"
+        },
+        "outputs": {
+            "align_image": "יישור תמונה",
+            "clean_mask": "מסכה נקייה",
+            "raw_mask": "מסכה גולמית",
+            "change_score": "ציון שינוי",
+            "overlay_image": "תמונת Overlay"
+        },
+        "description": "מיישר את התמונה שנערכה על ידי AI מול התמונה המקורית, תוך שימוש בפיקסלי רקע יציבים לדיכוי סטות צבע גלובליות קטנות, ומפיק מסכות שינוי גולמיות ונקיות."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "עיבוד קצוות בתמונה עם Alpha",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "edge": "שוליים",
+            "feather": "החלקת קצה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "כוונון שולי האזור האטום בתמונה עם ערוץ Alpha: כיווץ פנימה / הרחבה החוצה + טשטוש (נץ).\n\nתרחיש טיפוסי: לאחר חיתוך (הסרת רקע) עדיין נותרת סביב קצוות\nהאלמנט טבעת למחצה־שקופה של “קצה שעיר / קצה צבעוני” שזוהמה על ידי\nצבע הרקע. נוד זה מכווץ תחילה את הקצה פנימה בפעולות מורפולוגיות,\nחותך ישירות את פיקסלי השוליים המזוהמים, ואז מבצע נץ גאוסי שמניב\nמעבר נקי; לפני הנץ מוזרף בכוח צבע האזור האטום אל רצועת המעבר\n(bleed), כדי למנוע קצה כהה / קצה צבעוני אחרי הנץ.\n\nסדר העיבוד: כיווץ / הרחבה → הזרקת צבע → נץ.\nהפלט הוא תמונה בת 4 ערוצים עם Alpha, ולצידה גם מסכת Alpha המעובדת.\n\nכיווץ / הרחבה הם מורפולוגיה בגווני אפור (סינון מינימום / מקסימום)\nהפועלת ישירות על ה־Alpha: לגדה רכה שהיא ליניארית מקומית, סינון\nברדיוס r שווה בדיוק להזזת השיפוע ב־r פיקסלים, ולכן כל קו שווה־ערך\nשל ה־Alpha מוזז בשלמותו ב־r והאנטי־אלייסינג ש־matte כבר כולל\nנשמר במלואו ואינו מתדרדר למדרגה של 1px. מילוי חורים שייך\nלתיקוני מסכות ולכן מטופל בנודים אחרים."
+    },
+    "1hew_ImageBlur": {
+        "title": "טשטוש תמונה",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "blur": "מידת טשטוש"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "מבצע טשטוש גאוסי על כל התמונה, בהתנהגות הזהה ל־LayerFilter: Gaussian Blur V2 של LayerStyle.\n\n- פרמטר הטשטוש תומך בערכים עשרוניים (FLOAT), הקרוב יותר במשמעותו לגרסת V2;\n- כאשר הטשטוש הוא 0 מועברת תמונת המקור כמות שהיא;\n- העיבוד מתבצע פריים אחר פריים בכל אצווה, מספר הערוצים וסוג הנתונים נשמרים."
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "שינוי גודל תמונה Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "native_image": "תמונה מקומית",
+            "native_mask": "מסכה מקומית"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "שינוי גודל תמונה Qwen Image 3.0",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "native_image": "תמונה מקומית",
+            "native_mask": "מסכה מקומית"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "שינוי גודל תמונה Qwen Image 3.0 Pro",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "native_image": "תמונה מקומית",
+            "native_mask": "מסכה מקומית"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "שטח מינימלי לתמונה",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "length_to_sq_area": "אורך צלע לריבוע שטח",
+            "method": "שיטה",
+            "divisible_by": "מתחלק ב-",
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "resize_bool": "האם לשנות גודל"
+        },
+        "description": "מגדילה את התמונה עד שהשטח שלה מגיע לשטח הריבוע המינימלי של הייחוס.\n\n- ``length_to_sq_area`` מגדיר את אורך הצלע של ריבוע הייחוס (שטח היעד = N²).\n- ``התאמה`` מתנהגת כמו “שינוי גודל תמונה כללי”: חיתוך/מילוי/מתיחה.\n- ``מתחלק ב-`` מעגלת את הממדים הסופיים כלפי מעלה לכפולה של מספר נתון.\n- ``resize_bool`` מדווחת אם אכן בוצעה הגדלה."
+    },
+    "1hew_StringRandom": {
+        "title": "מחרוזת אקראית",
+        "widgets": {
+            "custom_text": "טקסט מותאם אישית",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "string": "מחרוזת"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "השוואת טקסט",
+        "widgets": {
+            "a": "a",
+            "operator": "אופרטור",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "ערך בוליאני"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "פעולות מתמטיות על מסכות מרובות",
+        "inputs": {
+            "mask_1": "מסכה 1",
+            "mask_2": "מסכה 2"
+        },
+        "widgets": {
+            "operation": "פעולה"
+        },
+        "outputs": {
+            "mask": "מסכה"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "יחס טקסט Jimeng",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "selection": "בחירה"
+        },
+        "outputs": {
+            "string": "מחרוזת"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "רמת מסכה",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "black_point": "נקודה שחורה",
+            "white_point": "נקודה לבנה"
+        },
+        "outputs": {
+            "mask": "מסכה"
+        },
+        "description": "משמש להגדרת ספים של נקודה שחורה ונקודה לבנה בתמונת המסכה, כדי לכוון את הניגודיות ואת הטווח של המסכה."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "השוואת מספרים שלמים",
+        "inputs": {
+            "a": "ערך a",
+            "operator": "אופרטור",
+            "b": "ערך b"
+        },
+        "widgets": {
+            "bool": "ערך בוליאני"
+        },
+        "description": "השוואת הגודל בין שני מספרים שלמים"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "השוואת מספרים צפים",
+        "widgets": {
+            "a": "ערך a",
+            "operator": "אופרטור",
+            "b": "ערך b"
+        },
+        "outputs": {
+            "bool": "ערך בוליאני"
+        },
+        "description": "השוואת גודל בין שני מספרים צפים"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "שיוף קצוות בשחור־לבן",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "gamma": "גאמה",
+            "shrink_radius": "רדיוס כיווץ",
+            "blur_radius": "רדיוס טשטוש"
+        },
+        "outputs": {
+            "mask": "מסכה"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "קו מתאר למסכה",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "fill_hole": "מילוי חורים",
+            "stroke_width": "רוחב קו מתאר",
+            "include_mask": "כולל מסכה"
+        },
+        "outputs": {
+            "mask": "מסכה"
+        },
+        "description": "הוספת עיבוד קו מתאר למסכה."
+    },
+    "1hew_VideoToURL": {
+        "title": "המרת וידאו ל-URL",
+        "inputs": {
+            "video": "נתיב קובץ הווידאו"
+        },
+        "widgets": {
+            "timeout": "פקיעת זמן (שניות)"
+        },
+        "outputs": {
+            "url": "כתובת URL שנוצרה"
+        },
+        "description": "המרת קובץ הווידאו לקישור URL נגיש"
+    },
+    "1hew_VideoToImage": {
+        "title": "וידאו לתמונה",
+        "inputs": {
+            "video": "וידאו"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "audio": "אודיו",
+            "fps": "קצב פריימים",
+            "frame_count": "מספר פריימים"
+        },
+        "description": "המרת הווידאו לתמונות, לשמע, לקצב פריימים ולמספר פריימים"
+    },
+    "1hew_IntVideoCount": {
+        "title": "מונה סרטונים",
+        "inputs": {
+            "video_1": "וידאו1"
+        },
+        "outputs": {
+            "int": "מספר שלם"
+        },
+        "description": "צומת המשמש לספירת סרטונים"
+    },
+    "1hew_ImageToMask": {
+        "title": "המרת תמונה למסכה",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "outputs": {
+            "mask": "מסכה"
+        },
+        "description": "המרת התמונה למסכה."
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "אינדקס אצוות תמונות",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "index": "אינדקס"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "האחדת אצוות תמונות",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "num_frame": "מספר פריימים"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "שזירת רשימת תמונות",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "segment_count": "מספר מקטעים"
+        },
+        "outputs": {
+            "image_list": "רשימת תמונות"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "מילוי תיבה מקיפה",
+        "inputs": {
+            "paste_image": "תמונת הדבקה",
+            "bbox_mask": "מסכת תיבה מקיפה"
+        },
+        "widgets": {
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "ממלא תמונה לפי תיבה מקיפה - מניח את התמונה לפי התיבה המקיפה החיצונית של bbox_מסכה וממלא את יתר האזור בצבע הנתון."
+    },
+    "1hew_IntImageCount": {
+        "title": "מספר תמונות (מספר שלם)",
+        "inputs": {
+            "image_1": "תמונה1"
+        },
+        "outputs": {
+            "int": "מספר שלם"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "טעינת PS",
+        "widgets": {
+            "file": "קובץ",
+            "index": "אינדקס",
+            "include_hidden": "כולל פריטים מוסתרים",
+            "group_mode": "מצב קיבוץ",
+            "output_mode": "מצב פלט",
+            "preview": "תצוגה מקדימה",
+            "choose psd to upload": "בחר קובץ PSD להעלאה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "filename": "שם קובץ",
+            "layer_name": "שם שכבה"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "המרת מסכה למסכת תיבה תוחמת",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "output_mode": "מצב פלט",
+            "divisible_by": "מתחלק ב-"
+        },
+        "outputs": {
+            "bbox_mask": "מסכת תיבה מקיפה"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "רשימת תמונות מרובות",
+        "inputs": {
+            "image_1": "תמונה1"
+        },
+        "widgets": {
+            "image_1": "תמונה1"
+        },
+        "outputs": {
+            "image_list": "רשימת תמונות"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "ניקוי זיכרון",
+        "widgets": {
+            "anything": "כל תוכן",
+            "unload_model": "שחרור מודל"
+        },
+        "description": "בקשה מ-ComfyUI לפנות את מטמון הביצוע ואת מקום האחסון של המודלים בסיום המשימה הנוכחית; מתאים לניקוי RAM/VRAM בין הרצות מרובות בתור."
+    },
+    "1hew_AudioDuration": {
+        "title": "משך אודיו",
+        "inputs": {
+            "audio": "אודיו"
+        },
+        "description": "קבלת משך האודיו."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "חילוץ מאצוות תמונות",
+        "inputs": {
+            "image": "תמונה",
+            "mode": "מצב",
+            "index": "אינדקס",
+            "step": "גודל צעד",
+            "uniform": "אחיד",
+            "max_keep": "מספר מרבי לשמירה"
+        },
+        "description": "חילוץ תמונות מתוך אצוות תמונות לפי תבנית נתונה."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "חלוקת אצוות תמונות לקבוצות",
+        "inputs": {
+            "image": "תמונה",
+            "batch_size": "גודל אצווה",
+            "overlap": "חפיפה",
+            "last_batch_mode": "מצב האצווה האחרונה",
+            "color": "צבע"
+        },
+        "description": "מקבץ אצוות תמונות לקבוצות."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "טווח באצוות תמונות",
+        "inputs": {
+            "image": "תמונה",
+            "start_index": "אינדקס התחלתי",
+            "num_frame": "מספר פריימים"
+        },
+        "description": "חילוץ תמונות מתוך אצוות תמונות לפי טווח נתון."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "חלוקת אצוות תמונות",
+        "inputs": {
+            "image": "תמונה",
+            "take_count": "כמות פריימים",
+            "from_start": "מההתחלה"
+        },
+        "description": "חלוקת אצוות תמונות לקבוצות לפי גודל נתון."
+    },
+    "1hew_ImageListAppend": {
+        "title": "הוספה לרשימת תמונות",
+        "inputs": {
+            "image_1": "תמונה1",
+            "image_2": "תמונה2"
+        },
+        "description": "מוסיף שתי תמונות אל הרשימה."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "פעולות מתמטיות על אצוות מסכות",
+        "inputs": {
+            "mask": "מסכה",
+            "operation": "פעולה"
+        },
+        "description": "ביצוע פעולות מתמטיות על אצוות מסכות."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "טווח באצוות מסכות",
+        "inputs": {
+            "mask": "מסכה",
+            "start_index": "אינדקס התחלתי",
+            "num_frame": "מספר פריימים"
+        },
+        "description": "חילוץ המסכות שבטווח מוגדר מתוך אצוות מסכות."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "פיצול אצוות מסכות",
+        "inputs": {
+            "mask": "מסכה",
+            "take_count": "כמות פריימים",
+            "from_start": "מההתחלה"
+        },
+        "description": "חלוקת המסכות שבאצוות לכמויות נתונות."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "קיבוץ קטעי וידאו",
+        "inputs": {
+            "image": "תמונה",
+            "threshold_base": "בסיס הסף",
+            "threshold_range": "טווח הסף",
+            "threshold_count": "ספירת הסף",
+            "kernel": "גרעין",
+            "min_frame_count": "מספר פריימים מינימלי",
+            "max_frame_count": "מספר פריימים מרבי",
+            "fast": "מהיר",
+            "add_frame": "הוספת פריים",
+            "delete_frame": "מחיקת פריים"
+        },
+        "description": "קיבוץ קטעי וידאו על סמך התמונות."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "התאמת בהירות וניגודיות",
+        "inputs": {
+            "source_image": "תמונת מקור",
+            "reference_image": "תמונת ייחוס",
+            "edge_amount": "מידת קצה",
+            "consistency": "עקביות",
+            "method": "שיטה"
+        },
+        "description": "התאמת הבהירות והניגודיות בין תמונת המקור לתמונת הייחוס."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "קידוד טקסט Qwen לעריכת תמונה",
+        "description": "קידוד הטקסט באמצעות מודל Qwen לשם עריכת תמונה."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "המרת אצוות תמונות לרשימה",
+        "inputs": {
+            "image_batch": "אצוות תמונות"
+        },
+        "description": "ממיר אצוות תמונות לרשימת תמונות."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "המרת רשימת תמונות לאצווה",
+        "inputs": {
+            "image_list": "רשימת תמונות"
+        },
+        "description": "ממיר רשימת תמונות לאצוות תמונות."
+    },
+    "1hew_ImageToURL": {
+        "title": "המרת תמונה לקישור URL",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "timeout": "פקיעת זמן"
+        },
+        "outputs": {
+            "url": "קישור URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "המרת אצוות מסכות לרשימה",
+        "inputs": {
+            "mask_batch": "אצוות מסכות"
+        },
+        "description": "המרת אצוות מסכות לרשימת מסכות."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "המרת רשימת מסכות לאצווה",
+        "description": "המרת מסכות מרובות לאצווה אחת.",
+        "inputs": {
+            "mask_list": "רשימת מסכות"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "המרת מסכה ל-Sam3Box",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "condition": "מצב",
+            "output_mode": "מצב פלט"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "המרת קואורדינטות ממחרוזת לתיבה תוחמת",
+        "description": "יצירת תיבה תוחמת ממחרוזת קואורדינטות.",
+        "inputs": {
+            "coordinates_string": "מחרוזת קואורדינטות"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "המרת קואורדינטות ממחרוזת למסכת תיבה תוחמת",
+        "description": "יצירת מסכת תיבה תוחמת ממחרוזת קואורדינטות.",
+        "inputs": {
+            "image": "תמונה",
+            "coordinates_string": "מחרוזת קואורדינטות",
+            "output_mode": "מצב פלט"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "המרת רשימת טקסטים למחרוזת",
+        "description": "איחוד רשימת טקסטים למחרוזת אחת.",
+        "inputs": {
+            "text_list": "רשימת טקסטים",
+            "prefix": "קידומת",
+            "suffix": "סיומת",
+            "separator": "מפריד"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "המרת טקסט לכל פורמט",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "outputs": {
+            "any": "כלשהו"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "המרת URL לווידאו",
+        "description": "השגת וידאו מכתובת URL.",
+        "inputs": {
+            "video_url": "כתובת URL של וידאו",
+            "timeout": "פקיעת זמן"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "זיהוי קווי הנחיה",
+        "description": "זיהוי קווי הנחיה בתמונה.",
+        "inputs": {
+            "image": "תמונה",
+            "canny_low": "סף תחתון של Canny",
+            "canny_high": "סף עליון של Canny",
+            "seg_min_len": "אורך מינימלי של מקטע",
+            "seg_max_gap": "מרווח מרבי בין מקטעים",
+            "guide_filter": "מסנן הנחיה",
+            "guide_width": "רוחב קווי הנחיה",
+            "cluster_eps": "ערך ε של אשכולות"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "הסרת רקע",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "model": "מודל",
+            "add_background": "הוספת רקע"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "אופטימיזציה להסרת רקע",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "type": "סוג",
+            "subject_protect": "הגנה על הנושא",
+            "feather": "החלקת קצה",
+            "decolor_edge": "הסרת צבע בשוליים"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "זיהוי Yolo",
+        "description": "זיהוי עצמים בתמונה בעזרת מודל YOLO.",
+        "inputs": {
+            "image": "תמונה",
+            "yolo_model": "מודל YOLO",
+            "threshold": "סף",
+            "mask_index": "אינדקס מסכה",
+            "label": "תווית",
+            "label_size": "גודל תווית"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "הוספת תווית לתמונה",
+        "description": "הוספת תוויות טקסט לתמונה.",
+        "inputs": {
+            "image": "תמונה",
+            "height_pad": "מילוי בגובה",
+            "font_size": "גודל הגופן",
+            "invert_color": "היפוך צבעים",
+            "font": "גופן",
+            "text": "טקסט",
+            "direction": "כיוון",
+            "input1": "כניסה 1",
+            "input2": "כניסה 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "ניקוי ערוץ Alpha",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "clean_strength": "עוצמת ניקוי",
+            "detect_only": "זיהוי בלבד"
+        },
+        "outputs": {
+            "mask": "מסכה",
+            "noise_mask": "מסכת רעש"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "הפרדת ערוץ Alpha",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "background_color": "צבע רקע"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "ציור תיבה מקיפה על התמונה בעזרת מסכה",
+        "description": "מציירת תיבות מקיפות על התמונה בעזרת מסכה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "bbox_color": "צבע התיבה המקיפה",
+            "stroke_width": "רוחב קו מתאר",
+            "fill": "מילוי",
+            "padding": "ריפוד פנימי",
+            "output_mode": "מצב פלט"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "חבור תמונות אחרי עריכה",
+        "description": "עורך ומחבר תמונות.",
+        "inputs": {
+            "reference_image": "תמונת ייחוס",
+            "edit_image": "תמונה לעריכה",
+            "edit_mask": "מסכת עריכה",
+            "edit_image_position": "מיקום תמונת העריכה",
+            "match_edit_size": "התאמת גודל העריכה",
+            "spacing": "מרווחים",
+            "spacing_color": "צבע מרווח",
+            "pad_color": "צבע מילוי"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "חבור תמונות",
+        "description": "חיבור התמונות העיקרי.",
+        "inputs": {
+            "image_1": "תמונה1",
+            "image_2": "תמונה2",
+            "image_3": "תמונה3",
+            "direction": "כיוון",
+            "match_image_size": "התאמת מידות תמונה",
+            "spacing_width": "רוחב מרווח",
+            "spacing_color": "צבע מרווח",
+            "pad_color": "צבע מילוי"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "לולאת תמונות",
+        "description": "מעבד את התמונה הלוך ושוב.",
+        "inputs": {
+            "image": "תמונה",
+            "pre_reverse": "היפוך מוקדם",
+            "ops_count": "מספר פעולות",
+            "frame_count": "מספר פריימים",
+            "remove_link_frame": "הסרת פריים מקושר"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "ציור תמונה",
+        "description": "מצייר פריסת רשת של תמונות.",
+        "inputs": {
+            "image": "תמונה",
+            "layout": "פריסה",
+            "spacing": "מרווחים",
+            "grid_columns": "מספר עמודות הרשת",
+            "background_color": "צבע רקע"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "סיבוב תמונה עם מסכה",
+        "description": "סיבוב התמונה והחלת מסכה עליה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "angle": "זווית",
+            "pad_color": "צבע מילוי",
+            "expand": "הרחבה",
+            "mask_center": "מרכז מסיכה"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "יצירת תמונה בצבע אחיד",
+        "description": "יצירת תמונה בצבע אחיד.",
+        "inputs": {
+            "get_image_size": "השגת מידות תמונה",
+            "preset_size": "גודל מוגדר מראש",
+            "width": "רוחב",
+            "height": "גובה",
+            "color": "צבע",
+            "alpha": "שקיפות",
+            "invert": "היפוך",
+            "mask_opacity": "אטימות מסכה",
+            "divisible_by": "מתחלק ב-"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "ציור קו מתאר באמצעות מסכה",
+        "description": "ציור קו מתאר על התמונה באמצעות מסכה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "stroke_width": "רוחב קו מתאר",
+            "stroke_color": "צבע קו מתאר"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "מצב ערבוב לפי Alpha",
+        "description": "מערבב בין תמונת ה־Overlay לתמונת הבסיס לפי ערכי Alpha.",
+        "inputs": {
+            "overlay_image": "תמונת Overlay",
+            "base_image": "תמונת בסיס",
+            "overlay_mask": "מסכת Overlay",
+            "blend_mode": "מצב ערבוב",
+            "opacity": "אטימות",
+            "invert_mask": "היפוך המסכה"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "מצב ערבוב CSS",
+        "description": "מערבב בין תמונת ה־Overlay לתמונת הבסיס לפי מצבי ערבוב של CSS.",
+        "inputs": {
+            "overlay_image": "תמונת Overlay",
+            "base_image": "תמונת בסיס",
+            "blend_mode": "מצב ערבוב",
+            "blend_percentage": "אחוז ערבוב",
+            "overlay_mask": "מסכת Overlay",
+            "invert_mask": "היפוך המסכה"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "ערבוב תמונות בעזרת מסכה",
+        "description": "מערבב בין תמונות בעזרת מסכה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "fill_hole": "מילוי חורים",
+            "invert": "היפוך",
+            "feather": "החלקת קצה",
+            "opacity": "אטימות",
+            "expansion": "הרחבה",
+            "background_color": "צבע רקע",
+            "background_opacity": "שקיפות רקע",
+            "output_mask_invert": "היפוך המסכה בפלט"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "חיתוך לתמונה ריבועית",
+        "description": "חותך את התמונה לריבוע.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "scale_factor": "מקדם קנה מידה",
+            "extra_padding": "ריפוד נוסף",
+            "fill_color": "צבע מילוי",
+            "apply_mask": "החלת מסכה",
+            "divisible_by": "מתחלק ב-"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "חיתוך תיבה מקיפה",
+        "widgets": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "preset_ratio": "יחס מוגדר מראש",
+            "get_crop_ratio": "השגת יחס חיתוך",
+            "scale_strength": "עוצמת קנה מידה",
+            "crop_to_side": "חיתוך לצלע",
+            "crop_to_length": "חיתוך לאורך",
+            "divisible_by": "כפולה לחלוקה"
+        },
+        "description": "חוצץ תמונה - חותך את התמונה לפי המסכה ומחזיר את נתוני התיבה המקיפה כדי שהדבקה חזרה למיקום המקורי",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "חיתוך וריפוד שוליים",
+        "description": "מבצע חיתוך והוספת ריפוד בשולי התמונה.",
+        "inputs": {
+            "image": "תמונה",
+            "uniform_amount": "כמות ריפוד אחידה",
+            "top_amount": "כמות ריפוד בחלק העליון",
+            "bottom_amount": "כמות ריפוד בתחתית",
+            "left_amount": "כמות ריפוד בצד שמאל",
+            "right_amount": "כמות ריפוד בצד ימין",
+            "pad_color": "צבע מילוי",
+            "divisible_by": "מתחלק ב-"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "חלוקת תמונה לרשת",
+        "description": "מחלק את התמונה לרשת.",
+        "inputs": {
+            "image": "תמונה",
+            "rows": "מספר שורות",
+            "columns": "מספר עמודות",
+            "index": "אינדקס",
+            "all": "הכול"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "חיתוך תמונה בעזרת מסכה",
+        "description": "חותך את התמונה בעזרת המסכה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "output_crop": "חיתוך הפלט",
+            "output_alpha": "שקיפות הפלט"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "הדבקת תמונה בעזרת מסכת תיבה מקיפה",
+        "description": "מדביק על גבי התמונה בעזרת מסכת תיבה מקיפה.",
+        "inputs": {
+            "paste_image": "תמונת הדבקה",
+            "base_image": "תמונת בסיס",
+            "bbox_mask": "מסכת תיבה מקיפה",
+            "paste_mask": "מסכת הדבקה",
+            "position_x": "מיקום X",
+            "position_y": "מיקום Y",
+            "scale": "קנה מידה",
+            "rotation": "סיבוב",
+            "opacity": "אטימות",
+            "apply_paste_mask": "החלת מסכת ההדבקה"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "שילוב תמונות תדר גבוה ונמוך",
+        "description": "משלב תמונת תדר גבוה ותמונת תדר נמוך.",
+        "inputs": {
+            "high_freq": "תמונת תדר גבוה",
+            "low_freq": "תמונת תדר נמוך",
+            "method": "שיטה",
+            "high_strength": "עוצמת תדר גבוה",
+            "low_strength": "עוצמת תדר נמוך"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "הפרדת תדרים גבוהים ונמוכים בתמונה",
+        "inputs": {
+            "image": "תמונה",
+            "method": "שיטה",
+            "blur_radius": "רדיוס טשטוש"
+        },
+        "description": "מפריד בין הרכיבים בתדר גבוה ותדר נמוך שבתמונה."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "טרנספורם תדרים גבוהים ונמוכים בתמונה",
+        "inputs": {
+            "generate_image": "תמונה שנוצרה",
+            "detail_image": "תמונת פרטים",
+            "detail_mask": "מסכת פרטים",
+            "method": "שיטה",
+            "blur_radius": "רדיוס טשטוש"
+        },
+        "description": "מבצע פעולות טרנספורם על רכיבי התדר הגבוה והנמוך שבתמונה."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "שינוי גודל תמונה Flux Kontext",
+        "description": "שינוי גודל התמונה באמצעות Flux Kontext.",
+        "inputs": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי",
+            "image": "תמונה",
+            "mask": "מסכה"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "שינוי גודל תמונה Gemini 3.0 Pro",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "שינוי גודל תמונה Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי",
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "שינוי גודל תמונה Jimeng",
+        "description": "שינוי גודל התמונה באמצעות Jimeng.",
+        "inputs": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי",
+            "image": "תמונה",
+            "mask": "מסכה"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "שינוי גודל תמונה Qwen Image",
+        "description": "שינוי גודל התמונה.",
+        "inputs": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי",
+            "image": "תמונה",
+            "mask": "מסכה"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "שינוי גודל תמונה לריבוע",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "שינוי גודל תמונה כללי",
+        "description": "שינוי גודל כללי של התמונה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "get_image_size": "השגת מידות תמונה",
+            "preset_ratio": "יחס מוגדר מראש",
+            "proportional_width": "קנה מידה לפי רוחב",
+            "proportional_height": "קנה מידה לפי גובה",
+            "method": "שיטה",
+            "scale_to_side": "שינוי גודל לצלע",
+            "scale_to_length": "שינוי גודל לאורך",
+            "fit": "שיטת התאמה",
+            "pad_color": "צבע מילוי",
+            "divisible_by": "מתחלק ב-"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "איחוד אריחי תמונה",
+        "inputs": {
+            "tile": "אריח",
+            "tile_meta": "מטא-נתוני אריח",
+            "blend_strength": "עוצמת מיזוג"
+        },
+        "description": "איחוד תמונות-אריח רבות לתמונה שלמה אחת."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "חלוקת תמונה למקטעים",
+        "inputs": {
+            "image": "תמונה",
+            "get_tile_size": "קבלת גודל מקטע",
+            "mode": "מצב",
+            "overlap_amount": "כמות חפיפה",
+            "grid_row": "מספר שורות",
+            "grid_col": "מספר עמודות",
+            "divisible_by": "מספר לחלוקה שלמה"
+        },
+        "description": "חלוקת התמונה למספר מקטעים."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "אורך צלע תמונה במספר שלם",
+        "inputs": {
+            "image": "תמונה",
+            "mode": "מצב"
+        },
+        "description": "חישוב או הגדרת אורך צלע התמונה כערך שלם."
+    },
+    "1hew_IntImageSize": {
+        "title": "מימדי תמונה במספרים שלמים",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "description": "קבלת מימדי התמונה כמספרים שלמים."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "אורך צלע מסכה במספר שלם",
+        "inputs": {
+            "mask": "מסכה",
+            "mode": "מצב"
+        },
+        "description": "חישוב או הגדרת אורך צלע המסכה כערך שלם."
+    },
+    "1hew_IntSplit": {
+        "title": "פיצול מספר שלם",
+        "inputs": {
+            "total": "סה הכול",
+            "split_point": "נקודת פיצול"
+        },
+        "description": "פיצול מספר שלם לשני חלקים לפי מיקום מוגדר."
+    },
+    "1hew_IntWan": {
+        "title": "ספרת הרבבות במספר שלם",
+        "inputs": {
+            "value": "ערך"
+        },
+        "description": "קבלה או הגדרה של ספרת הרבבות (10,000) במספר שלם."
+    },
+    "1hew_GetFileCount": {
+        "title": "קבלת מספר הקבצים",
+        "inputs": {
+            "folder": "תיקייה",
+            "type": "סוג",
+            "include_subdir": "כולל תיקיות משנה"
+        },
+        "description": "ספירת מספר הקבצים בתיקייה הנתונה ובתתי־התיקיות שבה."
+    },
+    "1hew_LoadImage": {
+        "title": "טעינת תמונה",
+        "inputs": {
+            "get_image_size": "השגת מידות תמונה",
+            "file": "קובץ",
+            "index": "אינדקס",
+            "include_subdir": "כולל תיקיות משנה",
+            "all": "הכול"
+        },
+        "description": "טעינת קובץ תמונה מנתיב נתון."
+    },
+    "1hew_LoadTxt": {
+        "title": "טעינת טקסט",
+        "widgets": {
+            "file": "קובץ",
+            "encode": "קידוד",
+            "index": "אינדקס",
+            "include_subdir": "כולל תיקיות משנה"
+        },
+        "outputs": {
+            "text": "טקסט",
+            "filename": "שם קובץ"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "טעינת וידאו",
+        "inputs": {
+            "file": "קובץ",
+            "frame_limit": "מגבלת פריימים",
+            "fps": "קצב פריימים",
+            "start_skip": "דילוג בתחילה",
+            "end_skip": "דילוג בסיום",
+            "format": "פורמט",
+            "video_index": "אינדקס וידאו",
+            "include_subdir": "כולל תיקיות משנה"
+        },
+        "description": "טעינת קובץ וידאו מנתיב נתון."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "וידאו לתמונה",
+        "inputs": {
+            "file": "קובץ",
+            "frame_limit": "מגבלת פריימים",
+            "fps": "קצב פריימים",
+            "start_skip": "דילוג בתחילה",
+            "end_skip": "דילוג בסיום",
+            "format": "פורמט",
+            "video_index": "אינדקס וידאו",
+            "include_subdir": "כולל תיקיות משנה"
+        },
+        "description": "המרת קובץ הווידאו לסדרת פריימים של תמונות."
+    },
+    "1hew_SaveImage": {
+        "title": "שמירת תמונה",
+        "inputs": {
+            "image": "תמונה",
+            "filename_prefix": "קידומת שם קובץ",
+            "save_output": "שמירת פלט",
+            "save_metadata": "שמירת מטא־נתונים"
+        },
+        "description": "שמירת התמונה בנתיב נתון."
+    },
+    "1hew_SaveTxt": {
+        "title": "שמירת טקסט",
+        "inputs": {
+            "any": "כלשהו"
+        },
+        "widgets": {
+            "filename": "שם קובץ",
+            "auto_increment": "הגדלה אוטומטית",
+            "save_output": "שמירת פלט",
+            "encode": "קידוד"
+        },
+        "outputs": {
+            "file_path": "נתיב קובץ"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "שמירת וידאו",
+        "inputs": {
+            "video": "וידאו",
+            "filename_prefix": "קידומת שם קובץ",
+            "save_output": "שמירת פלט",
+            "save_metadata": "שמירת מטא־נתונים"
+        },
+        "description": "שמירת הווידאו בנתיב נתון."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "שמירת תמונות כוידאו",
+        "description": "שמירת וידאו על סמך תמונות ושמע.",
+        "inputs": {
+            "image": "תמונה",
+            "audio": "אודיו",
+            "fps": "קצב פריימים",
+            "filename_prefix": "קידומת שם קובץ",
+            "save_output": "שמירת פלט",
+            "save_metadata": "שמירת מטא־נתונים"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "כל בוליאני ריק",
+        "description": "בדיקה האם ערך בוליאני ריק.",
+        "inputs": {
+            "any": "ערך כלשהו"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "כל מספר שלם ריק",
+        "description": "בדיקה האם ערך שלם ריק.",
+        "inputs": {
+            "any": "ערך כלשהו",
+            "empty": "ערך ריק",
+            "not_empty": "ערך לא ריק"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "כל מתג בוליאני",
+        "description": "החלפה בין שתי אפשרויות לפי ערך בוליאני.",
+        "inputs": {
+            "boolean": "ערך בוליאני",
+            "on_true": "אם אמת",
+            "on_false": "אם שגוי"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "מתג בוחר",
+        "inputs": {
+            "input_1": "כניסה 1"
+        },
+        "widgets": {
+            "select": "בחירה"
+        },
+        "outputs": {
+            "output": "פלט",
+            "select": "בחירה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "החלפה בין בוחרים מרובים",
+        "inputs": {
+            "input_1": "כניסה 1"
+        },
+        "widgets": {
+            "select": "בחירה"
+        },
+        "outputs": {
+            "output_1": "פלט 1",
+            "select": "בחירה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "מספר השורה שתואם לטקסט",
+        "widgets": {
+            "text_multiline": "טקסט מרובה שורות",
+            "text_single": "טקסט חד־שורי"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "הערך שתואם לטקסט",
+        "widgets": {
+            "text_multiline": "טקסט מרובה שורות",
+            "text_single": "טקסט חד־שורי"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "ניקוי אטימות מסכה",
+        "widgets": {
+            "mask": "מסכה",
+            "clean_strength": "עוצמת ניקוי",
+            "detect_only": "זיהוי בלבד"
+        },
+        "outputs": {
+            "mask": "מסכה",
+            "noise_mask": "מסכת רעש"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "חיתוך מסכה באמצעות מסכת תיבה תוחמת",
+        "description": "חיתוך מסכה באמצעות מסכת תיבה תוחמת.",
+        "inputs": {
+            "mask": "מסכה",
+            "bbox_mask": "מסכת תיבה מקיפה"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "מילוי חורים במסכה",
+        "description": "מילוי החורים שבתוך המסכה.",
+        "inputs": {
+            "mask": "מסכה",
+            "invert_mask": "היפוך המסכה"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "הדבקת מסכה באמצעות מסכת תיבה תוחמת",
+        "description": "הדבקת מסכה באמצעות מסכת תיבה תוחמת.",
+        "inputs": {
+            "paste_mask": "מסכת הדבקה",
+            "bbox_mask": "מסכת תיבה מקיפה",
+            "base_mask": "מסכה בסיסית"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "העתקת מסכה",
+        "description": "חזרה על המסכה.",
+        "inputs": {
+            "mask": "מסכה",
+            "invert": "היפוך",
+            "count": "ספירה"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "הפרדת מסכה",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "threshold": "סף",
+            "min_area": "שטח מינימלי",
+            "sort_mode": "מצב מיון",
+            "connectivity": "חיבוריות"
+        },
+        "outputs": {
+            "mask": "מסכה",
+            "count": "מספר שלם"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "המרת מסכה לתמונה",
+        "inputs": {
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "fill_hole": "מילוי חורים",
+            "white_area_color": "צבע האזור הלבן",
+            "black_area_color": "צבע האזור השחור",
+            "output_alpha": "פלט ערוץ Alpha"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "עיבוד באצווה של תמונות מרובות",
+        "description": "עיבוד באצווה של מספר תמונות.",
+        "inputs": {
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי",
+            "image_1": "תמונה1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "הערמת תמונות מרובות",
+        "inputs": {
+            "image_1": "תמונה 1"
+        },
+        "widgets": {
+            "fit_mode": "מצב התאמה",
+            "color": "צבע"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": "הערמה של שכבות מרובות:\n- image_1 היא השכבה העליונה ביותר; ככל שהמספר גדול יותר השכבה רחוקה יותר למטה\n- קלט RGBA משתמש ב-alpha להרכבת שכבות רגילה\n- קלט RGB נחשב לשכבה אטומית",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "חיבור תמונות מרובות",
+        "description": "חיבור של מספר תמונות.",
+        "inputs": {
+            "direction": "כיוון",
+            "match_image_size": "התאמת גודל התמונה",
+            "spacing_width": "רוחב מרווח",
+            "spacing_color": "צבע מרווח",
+            "pad_color": "צבע מילוי",
+            "image_1": "תמונה1",
+            "image_2": "תמונה2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "חיבור מסכות מרובות",
+        "description": "עיבוד באצווה של מסכות מרובות.",
+        "inputs": {
+            "fit": "התאמה",
+            "pad_color": "צבע מילוי",
+            "mask_1": "מסכה 1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "פעולות מתמטיות על מסכות מרובות",
+        "description": "ביצוע פעולות מתמטיות על מסכות מרובות.",
+        "inputs": {
+            "mask_1": "מסכה 1",
+            "mask_2": "מסכה 2",
+            "operation": "פעולה"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "חיבור מחרוזות מרובות",
+        "description": "חיבור של מספר מחרוזות.",
+        "inputs": {
+            "filter_empty_line": "סינון שורות ריקות",
+            "filter_comment": "סינון הערות",
+            "separator": "מפריד",
+            "input": "קלט"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "רשימת מספרי צף מותאמת אישית",
+        "description": "רשימת מספרי צף מותאמת אישית.",
+        "inputs": {
+            "custom_text": "טקסט מותאם אישית"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "רשימת מספרים שלמים מותאמים אישית",
+        "inputs": {
+            "custom_text": "טקסט מותאם אישית"
+        },
+        "description": "יצירת רשימה המכילה מספרים שלמים מותאמים אישית."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "רשימת זרעים מותאמת אישית",
+        "inputs": {
+            "seed": "זרע",
+            "count": "כמות"
+        },
+        "description": "יצירת רשימה המכילה מספר נתון של זרעים אקראיים."
+    },
+    "1hew_ListCustomString": {
+        "title": "רשימת מחרוזות מותאמות אישית",
+        "inputs": {
+            "custom_text": "טקסט מותאם אישית"
+        },
+        "description": "יצירת רשימה המכילה מחרוזות מותאמות אישית."
+    },
+    "1hew_StringFilter": {
+        "title": "סינון מחרוזות",
+        "inputs": {
+            "text": "טקסט",
+            "filter_empty_line": "סינון שורות ריקות",
+            "filter_comment": "סינון הערות",
+            "input": "קלט"
+        },
+        "description": "סינון שורות ריקות והערות מתוך הטקסט."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "חיבור מחרוזות מרובות",
+        "inputs": {
+            "text1": "טקסט 1",
+            "text2": "טקסט 2",
+            "text3": "טקסט 3",
+            "text4": "טקסט 4",
+            "text5": "טקסט 5",
+            "filter_empty_line": "סינון שורות ריקות",
+            "filter_comment": "סינון הערות",
+            "separator": "מפריד",
+            "input": "קלט"
+        },
+        "description": "חיבור מספר טקסטים למחרוזת אחת, עם אפשרות לסנן שורות ריקות והערות."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "חילוץ מותאם אישית מטקסט",
+        "inputs": {
+            "json_data": "נתוני JSON",
+            "key": "מפתח",
+            "precision_match": "התאמה מדויקת",
+            "label_filter": "סינון תגיות"
+        },
+        "description": "חילוץ הערך של מפתח ספציפי מתוך נתוני JSON, כולל התאמה מדויקת וסינון תגיות."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "קידומת וסיומת לטקסט",
+        "inputs": {
+            "text": "טקסט",
+            "prefix": "קידומת",
+            "suffix": "סיומת"
+        },
+        "description": "הוספת קידומת וסיומת מוגדרות לפני הטקסט ואחריו."
+    },
+    "1hew_RangeMapping": {
+        "title": "מיפוי טווח",
+        "inputs": {
+            "value": "ערך",
+            "min": "ערך מינימלי",
+            "max": "ערך מקסימלי",
+            "rounding": "עיגול"
+        },
+        "description": "מיפוי ערך בטווח 0-1 אל [min,max], כולל שליטה בדיוק העשרוני."
+    },
+    "1hew_WorkflowName": {
+        "title": "שם זרימת העבודה",
+        "inputs": {
+            "prefix": "קידומת",
+            "suffix": "סיומת",
+            "date_format": "פורמט תאריך",
+            "full_path": "נתיב מלא",
+            "strip_extension": "הסרת סיומת קובץ"
+        },
+        "description": "יצירת שם זרימת עבודה עם קידומת, סיומת ופורמט תאריך."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "חיתוך תמונה בעזרת מסכת תיבה מקיפה",
+        "description": "חותך את התמונה בעזרת מסכת תיבה מקיפה.",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה",
+            "preset_ratio": "יחס מוגדר מראש",
+            "get_crop_ratio": "השגת יחס חיתוך",
+            "scale_strength": "עוצמת קנה מידה",
+            "crop_to_side": "חיתוך לצלע",
+            "crop_to_length": "חיתוך לאורך",
+            "divisible_by": "מתחלק ב-"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "חיבור תמונות עם Alpha",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "invert_mask": "היפוך המסכה"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "שזירת אצוות תמונות",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "segment_count": "מספר מקטעים"
+        },
+        "outputs": {
+            "image": "תמונה"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "יחס מחרוזת לתמונה Gemini 3.1 Flash",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "selection": "בחירה"
+        },
+        "outputs": {
+            "string": "מחרוזת"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "יחס מחרוזת לתמונה GPT 2.0",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "selection": "בחירה"
+        },
+        "outputs": {
+            "string": "מחרוזת"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "שינוי גודל תמונה GPT Image 2.0",
+        "inputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "widgets": {
+            "preset_size": "גודל מוגדר מראש",
+            "fit": "שיטה",
+            "pad_color": "צבע רקע"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסכה"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "פיענוח מחרוזת",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "selection": "בחירה"
+        },
+        "outputs": {
+            "string": "מחרוזת"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "כל מתג של מספר שלם",
+        "description": "החלפה בין אפשרויות לפי ערך שלם."
+    }
+}

@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪LTX Yüz Dikkat Sabitleyicisi",
+        "inputs": {
+            "model": "Model girdisi"
+        },
+        "widgets": {
+            "face_bbox_norm": "Normalleştirilmiş yüz sınır kutusu",
+            "strength": "Şiddet",
+            "inject_mode": "Enjeksiyon modu",
+            "anchor_frame": "Sabitleme karesi",
+            "anchor_upsample": "Sabitleme upscale'i",
+            "track_threshold": "İzleme eşiği",
+            "face_threshold": "Yüz eşiği",
+            "identity_threshold": "Kimlik eşiği",
+            "depth_curve": "Derinlik eğrisi",
+            "spatial_prior": "Uzamsal öncül",
+            "block_index_filter": "Blok dizin filtresi",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "model": "Model çıkışı",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: yüz bölgesi kimlik sabitlemesi. Önbelleğe alınan özellikler LTXLatentAnchor düğümüne taşındı (sahne düzeyinde kararlılık). Bu düğüm yine yüz hedeflerine yöneliktir.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "LTXLatent Sabitleyici",
+        "inputs": {
+            "model": "Model girdisi",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "cache_at_step": "Adımda önbelleğe al",
+            "similarity_threshold": "Benzerlik eşiği",
+            "decay_with_distance": "Mesafeyle sönümleme",
+            "bypass": "Atla",
+            "advanced_mode": "Gelişmiş mod",
+            "cache_mode": "Önbellek modu",
+            "forwards_per_step": "Adım başına ileri geçiş sayısı",
+            "cache_warmup": "Önbellek ısıtma",
+            "anchor_frame": "Sabitleme karesi",
+            "depth_curve": "Derinlik eğrisi",
+            "block_index_filter": "Blok dizin filtreleme",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "model": "Model çıkışı"
+        },
+        "description": "LTX2.x için sahne geneli latent sabitleme. İstem + koşulu ve fizik farkındalığındaki kuvveti uzun örnekleme süreçleri boyunca tutarlı tutar. Öngörülebilir önbellekleme zamanı için SIGMAS bağlayın. Araştırma parametrelerine erişmek için gelişmiş moda geçin."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "LTXLatent Sabitleyici (Farkındalıklı)",
+        "inputs": {
+            "model": "Model girdisi",
+            "reference_image": "Referans görseli",
+            "vae": "VAE",
+            "energy_latent": "Enerji latent'i",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "cache_at_step": "Adımda önbelleğe al",
+            "similarity_threshold": "Benzerlik eşiği",
+            "decay_with_distance": "Mesafeyle sönümleme",
+            "energy_threshold": "Enerji eşiği",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama",
+            "advanced_mode": "Gelişmiş mod",
+            "cache_mode": "Önbellek modu",
+            "forwards_per_step": "Adım başına ileri geçiş sayısı",
+            "cache_warmup": "Önbellek ısıtma",
+            "anchor_frame": "Sabitleme karesi",
+            "depth_curve": "Derinlik eğrisi",
+            "block_index_filter": "Blok dizin filtreleme"
+        },
+        "outputs": {
+            "model": "Model çıkışı"
+        },
+        "description": "Harici referanstan, isteğe bağlı uzamsal enerji ayarlamalı latent sabitleme. Referans görseli (veya latent girişi) uzamsal ağırlıkları sağlar; öz-eşleştirme için çalışan latent kullanılır (doğru özellik uzayı)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "LTX Metin Dikkati Güçlendirici",
+        "inputs": {
+            "model": "Model girdisi"
+        },
+        "widgets": {
+            "text_amplification": "Metin dikkat güçlendirmesi",
+            "spatial_focus": "Uzamsal odak",
+            "block_index_filter": "Blok dizin filtreleme",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "model": "Model çıkışı"
+        },
+        "description": "LTX2'de metin çapraz dikkatini (attn2) blok başına güçlendirir; yüksek jeton sayısında artırım sırasında oluşan koşul seyrelmesini telafi eder. Upscale aşamasında kullanıldığında istem takipini ve renk kararlılığını geri getirir."
+    },
+    "LTXTiledSampler": {
+        "title": "LTX Döşemeli Örneklemeleyici",
+        "inputs": {
+            "noise": "Gürültü",
+            "guider": "Güdüleyici",
+            "sampler": "Örneklemeleyici",
+            "sigmas": "sigma",
+            "latent_image": "Latent görseli"
+        },
+        "widgets": {
+            "bypass_tiling": "Döşemeyi atla",
+            "tile_axis": "Döşeme ekseni",
+            "n_tiles": "Döşeme sayısı",
+            "tile_overlap": "Döşeme örtüşmesi",
+            "max_size_for_no_tile": "Döşemesiz en büyük boyut",
+            "audio_pass": "Ses geçişi",
+            "audio_carrier_tile": "Ses taşıyıcı döşemesi",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "output": "Çıkış",
+            "denoised_output": "Denoise edilmiş çıkış"
+        },
+        "description": "LTX2 upscale aşamasında hafif iyileştirme için döşemeli, doğrudan değiştirilebilir SamplerCustomAdvanced alternatifi. Her döşeme, eğitim dağılımındaki tam jeton sayısıyla örnekleme yapar, ardından kosinüs karışımı uygulanır. Yalnızca hafif denoise için kullanın. Varsayılan olarak ses geçer; audio_carrier_tile ses örneklemesini seçili bir döşeme ile eşzamanlı çalıştırır (ek adım gerekmez). bypass_tiling=true ayarlanırsa standart tek geçişli örneklemede şeffaf geçiş olur; hata ayıklama veya döşemenin gerekmediği durumlar için uygundur."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "LTXV Latent Upscaler (Döşemeli)",
+        "inputs": {
+            "samples": "Örnek",
+            "upscale_model": "Süper çözünürlük modeli",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "Döşeme boyutu",
+            "overlap": "Örtüşme",
+            "max_size_for_no_tile": "Döşeme gerektirmeyen en büyük boyut",
+            "rotate_for_landscape": "Yatay ekran için döndür",
+            "debug": "Hata ayıklama"
+        },
+        "description": "LTXVLatentUpsampler'ın döşemeli, doğrudan değiştirilebilir alternatifi. Uzamsal döşemeler üzerinde upscale yapılıp kosinüs penceresiyle örtüşmeli kaynaştırma kullanılarak aşırı en-boy oranlarındaki renk kayması ve bozulma sorunları giderilir. Güvenli en-boy oranlarında çıktı, döşemesiz sürümle neredeyse aynıdır; aşırı durumlarda süper çözünürlük modelinin kararsızlığı önlenir."
+    },
+    "LTXModelInspector": {
+        "title": "LTX Model İnceleyicisi",
+        "inputs": {
+            "model": "Model girdisi"
+        },
+        "widgets": {
+            "name_filter": "Ad filtresi",
+            "focus_path": "Odak yolu",
+            "max_modules_listed": "Listelenecek en fazla modül sayısı",
+            "trace_path_contains": "İzleme yolu içeriği",
+            "max_modules_traced": "İzlenecek en fazla modül sayısı",
+            "trace_calls_per_module": "Modül başına izleme çağrısı sayısı",
+            "print_top_level": "Üst düzey bilgiyi yazdır"
+        },
+        "outputs": {
+            "model": "Model çıkışı"
+        },
+        "description": "Diffusion modelini inceler: üst düzey yapı, ad filtreleme, odak yolu ve izleme kancaları."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Latent Çapraz Geçişli Otomatik Birleştirme",
+        "inputs": {
+            "frames_0": "Kare_0",
+            "frames_1": "Kare_1"
+        },
+        "widgets": {
+            "match_spatial": "Uzamsal eşleştirme",
+            "interpolate_mode": "Enterpolasyon modu",
+            "cross_fade_frames": "Çapraz geçiş kareleri",
+            "fade_curve": "Sönümleme eğrisi"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Otomatik uzamsal eşleştirme + zamansal birleştirme, isteğe bağlı çapraz geçiş ile."
+    },
+    "AudioLatentStretch": {
+        "title": "Ses Latent Uzantısı",
+        "inputs": {
+            "audio_latent": "Ses latent'i"
+        },
+        "widgets": {
+            "source_fps": "Kaynak FPS",
+            "target_fps": "Hedef FPS",
+            "interp_mode": "Enterpolasyon modu"
+        },
+        "outputs": {
+            "audio_latent": "Ses latent'i"
+        },
+        "description": "Ses latent'ini hedef FPS'e yeniden örnekle. Hermite modu önerilir."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Latent Zamansal Upscaler",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Kaynak FPS",
+            "target_fps": "Hedef FPS",
+            "interp_mode": "Enterpolasyon modu",
+            "auto_retime": "Otomatik yeniden zamanlama",
+            "motion_scale": "Hareket oranı",
+            "spatial_sharpen": "Uzamsal keskinleştirme",
+            "ltx_safe": "LTX güvenli",
+            "override_frames": "Kare sayısını geçersiz kıl"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Hermite tabanlı zamansal upscale, otomatik hız düzeltmesi ile."
+    },
+    "LatentMotionSharpener": {
+        "title": "Latent Hareket Keskinleştirici",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "Temel keskinleştirme",
+            "motion_sharpen": "Hareket keskinleştirme",
+            "motion_thresh": "Hareket eşiği",
+            "temporal_smooth_mask": "Zamansal yumuşatma maskesi"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Kareler arası hareket genliğine göre uyarlanabilir keskinleştirme."
+    },
+    "LatentMotionRetime": {
+        "title": "Latent Hareket Yeniden Zamanlama",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "Kaynak FPS",
+            "target_fps": "Hedef FPS",
+            "strength": "Şiddet",
+            "manual_scale": "Manuel ölçekleme"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Upscale edilmiş latent'te 24->30fps hızını düzeltmek için hareket genliğini azaltır."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Latent Zamansal Onarıcı",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "Sabitleme σ",
+            "ghost_sigma": "Hayalet σ",
+            "score_gamma": "Puan γ",
+            "anchor_blend": "Sabitleme karışımı",
+            "seed": "Tohum",
+            "debug_scores": "Hata ayıklama puanları"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Kare başına hayalet tespiti + hedef gürültü. Gerçek sabitleme kareleri kilitlenir. Ardından KSampler ile 0.3-0.45 denoise uygulanır."
+    },
+    "LTXActionAmplifier": {
+        "title": "LTX Hareket Güçlendirici",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "clip",
+            "positive": "Olumlu istem"
+        },
+        "widgets": {
+            "amplification_strength": "Güçlendirme şiddeti",
+            "action_vocabulary_text": "Hareket kelime listesi metni",
+            "scale_ceiling": "Ölçek üst sınırı",
+            "auto_threshold": "Otomatik eşik",
+            "similarity_threshold": "Benzerlik eşiği",
+            "similarity_sharpness": "Benzerlik keskinleştirme",
+            "amplification_floor": "Güçlendirme alt sınırı",
+            "top_k": "Top-K",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama"
+        },
+        "description": "Olumlu istemde hareket/eylem metin jetonlarını seçici olarak güçlendirir; eşleşen fiil jetonlarının K/V genliğini artırır, açıklayıcı jetonları olduğu gibi bırakır. LikenessSemanticClamp'ın tersi olan bu yaklaşım, TextAmplifier'ın genel ölçekleme yöntemini değiştirir."
+    },
+    "LTXFaceDetector": {
+        "title": "LTX Yüz Algılama Dedektörü",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "padding": "Dolgu",
+            "fallback_bbox": "Yedek sınır kutusu",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "face_bbox": "Yüz sınır kutusu"
+        },
+        "description": "Görselde yüzleri algılar ve normalleştirilmiş sınır kutusu dizisi üretir. Çıkışı LikenessGuide'ın face_bbox_within_reference alanına, LikenessAnchor'ın override_face_bbox/frame_0_bbox alanlarına veya face_anchor'ın face_bbox_norm değerine bağlayın. Algılama düğüm mantığından ayrıldığı için aynı sınır kutusu birden çok düğüm tarafından paylaşılabilir."
+    },
+    "LTXLikenessAnchor": {
+        "title": "LTX Benzerlik Sabitleyici",
+        "inputs": {
+            "model": "Model girdisi",
+            "reference_info": "Referans bilgisi"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "reference_source": "Referans kaynağı",
+            "frame_0_bbox": "Kare 0 sınır kutusu",
+            "similarity_threshold": "Benzerlik eşiği",
+            "decay_with_distance": "Mesafeyle sönümleme",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama",
+            "advanced_mode": "Gelişmiş mod",
+            "depth_curve": "Derinlik eğrisi",
+            "block_index_filter": "Blok dizin filtreleme",
+            "similarity_sharpness": "Benzerlik keskinleştirme",
+            "override_face_bbox": "Yüz sınır kutusunu geçersiz kıl",
+            "skip_when_sigma_above": "Sigma aşıldığında atla",
+            "pull_mode": "Çekme modu",
+            "late_block_falloff": "Son blok sönümlemesi"
+        },
+        "description": "Kimlik tutarlılığını korumak için blok başına dikkat, referans özelliklere doğru çekilir. İki mod: (1) referans bilgisi LikenessGuide'dan alınır ve ona iliştirilmiş referans kare kullanılır; (2) referans bilgisi bağlanmazsa düğüm, latent'in kare 0'ını referans alır — kare 0'ın koşullandırma başlangıç görseli olduğu i2v akışları için uygundur. v1.2 yönlü çekme modunu kullanır (renkler korunur)."
+    },
+    "LTXLikenessGuide": {
+        "title": "LTX Benzerlik Kılavuzu",
+        "inputs": {
+            "positive": "Olumlu istem",
+            "negative": "Olumsuz istem",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "Referans görseli"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "placement_mode": "Yerleştirme modu",
+            "face_detect": "Yüz algılama",
+            "reference_mask_mode": "Referans maske modu",
+            "face_padding": "Yüz dolgusu",
+            "crf": "CRF",
+            "blur_radius": "Bulanıklık yarıçapı",
+            "interpolation": "Enterpolasyon",
+            "crop": "Kırp",
+            "attention_strength": "Dikkat şiddeti",
+            "face_bbox_within_reference": "Referans içindeki yüz sınır kutusu",
+            "emit_latent": "Latent yay",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "positive": "Olumlu istem",
+            "negative": "Olumsuz istem",
+            "latent": "latent",
+            "reference_info": "Referans bilgisi"
+        },
+        "description": "Kimliği korumak için koşullandırmaya benzerlik referans görseli iliştirir. Değiştirilmiş olumlu/olumsuz koşulları (Guider için) ve referans bilgisi üst verisini (LikenessAnchor için) yayar. Varsayılan olarak latent çıkışı girdinin geçişidir — ne yayma ne kırpma gerekir. Kılavuzun değeri latent değişikliklerinden değil, modelin ve bbox üst verisinin koşullarla etkileşiminden gelir."
+    },
+    "LTXLikenessCrop": {
+        "title": "LTX Benzerlik Kırpma",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "Referans bilgisi"
+        },
+        "widgets": {
+            "debug": "Hata ayıklama"
+        },
+        "description": "Benzerlik referans karelerini VAE çözümlemesinden önce latent üzerinden kırpar. LTXLikenessGuide'ın emit_latent=yayma modunu geri alır. Yalnızca kılavuz genişletilmiş latent yaydığında kullanın. Kılavuz geçiş modundaysa (varsayılan) bu düğüm gerekli değildir — latent'i doğrudan VAE decode'a bağlayabilirsiniz."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "LTX Benzerlik Semantik Sınırlayıcı",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "clip",
+            "positive": "Olumlu istem",
+            "reference_info": "Referans bilgisi"
+        },
+        "widgets": {
+            "suppression_strength": "Bastırma şiddeti",
+            "face_modifier_text": "Yüz nitelendirme metni",
+            "similarity_threshold": "Benzerlik eşiği",
+            "auto_threshold": "Otomatik eşik",
+            "similarity_sharpness": "Benzerlik keskinliği",
+            "suppression_floor": "Bastırma alt sınırı",
+            "top_k": "top_k",
+            "soft_edge_frac": "Yumuşak kenar oranı",
+            "override_face_bbox": "Yüz sınır kutusunu geçersiz kıl",
+            "bypass": "Atla",
+            "debug": "Hata ayıklama"
+        },
+        "description": "attn2 alanında yüz sınır kutusu bölgesine semantik tabanlı metin jetonu bastırması uygular. Gömme uzayı ile nitelendirme kelime listesi eşleşmesi üzerinden istemdeki yüz niteliklerini tanır ve bu jetonların ilgili alandaki dikkatini seçici olarak bastırır. Kullanımdan kaldırılan LikenessClamp'ın tek tip genlik ölçekleme yönteminin yerini alır."
+    }
+}

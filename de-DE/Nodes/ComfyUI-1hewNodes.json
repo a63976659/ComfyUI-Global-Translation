@@ -1,0 +1,1702 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "Farbabgleich des Bildes",
+        "inputs": {
+            "source_image": "Quellbild",
+            "reference_image": "Referenzbild"
+        },
+        "widgets": {
+            "method": "Methode"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Überträgt die Farben des Referenzbildes auf das Quellbild. Batch-Verarbeitung wird unterstützt; weicht die Anzahl der Referenzbilder vom Quell-Batch ab, werden die Referenzbilder zyklisch wiederverwendet (i % ref_count). wavelet/adain laufen nativ; mkl/hm/reinhard/mvgd und deren Mischversionen nutzen das Paket 'Farbe-Matcher'."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "Wiederherstellung der Bildfarben",
+        "inputs": {
+            "edit_image": "Bearbeitetes Bild",
+            "org_image": "Originalbild"
+        },
+        "widgets": {
+            "background_threshold": "Hintergrund-Schwellenwert",
+            "unchanged_threshold": "Unveränderlichkeits-Schwelle",
+            "seam_max_distance": "Max. Nahtdistanz",
+            "seam_decay": "Nahtabfall",
+            "seam_residual_blur": "Unschärfe des Naht-Residuals",
+            "seam_color_sigma": "Standardabweichung der Nahtfarbe",
+            "occlusion_residual_blur": "Unschärfe des Okklusions-Residuals",
+            "occlusion_bridge_width": "Breite der Okklusionsbrücke"
+        },
+        "outputs": {
+            "image": "Bild",
+            "unchanged_mask": "Unveränderte Maske"
+        },
+        "description": "Stellt die ausgerichten KI-Bearbeitungsfarben wieder auf die Originalreferenz her, während die durch die Objektentfernung entstandenen Okklusionsnähte lokal geglättet werden. Verwendet werden eine zuverlässige affine Farbanpassung und ein kontinuierliches Nahtfeld (die Bereinigung der strukturell unveränderten Maske ist deaktiviert). Ist im bearbeiteten Bild ein Alpha-Kanal vorhanden, bleibt er erhalten."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "Bildausrichtung – Änderungsmaske",
+        "inputs": {
+            "edit_image": "Bearbeitetes Bild",
+            "org_image": "Originalbild"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "max_offset": "Max. Versatz",
+            "max_rotation": "Max. Rotation",
+            "max_scale": "Max. Skalierung",
+            "min_align_score": "Min. Ausrichtungsscore",
+            "color_compensation": "Farbkompensation",
+            "sensitivity": "Empfindlichkeit",
+            "min_component_area": "Min. Komponentenfläche",
+            "expand": "Erweiterung",
+            "feather": "Kantenweichzeichnung"
+        },
+        "outputs": {
+            "align_image": "Bild ausrichten",
+            "clean_mask": "Saubere Maske",
+            "raw_mask": "Rohmaske",
+            "change_score": "Änderungsscore",
+            "overlay_image": "Overlay-Bild"
+        },
+        "description": "Richtet das KI-bearbeitete Bild am Originalbild aus und nutzt stabile Hintergrundpixel, um geringe globale Farbdrifts zu verwerfen; gibt die Roh- und die bereinigte Änderungsmaske aus."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "Alpha-Randbearbeitung des Bildes",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "edge": "Kante",
+            "feather": "Kantenweichzeichnung"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "Kantet die undurchsichtigen Bereiche eines Bildes mit Alpha-Kanal nach innen ab / dehnt sie nach außen aus und wendet anschließend eine Weichzeichnung an.\n\nTypischer Anwendungsfall: Nach dem Freistellen (Hintergrund entfernen) bleibt am Rand des Elements ein halbtransparenter,\nvon der Hintergrundfarbe verunreinigter „Fransensaum / Farbsaum“ zurück. Dieser Knoten entfernt zuerst per morphologischer Innenabtragung die verunreinigten\nRandpixel direkt und erzeugt danach über eine gaussische Weichzeichnung einen sauberen Übergang; vor der Weichzeichnung werden die Farben des\nundurchsichtigen Bereichs fest in den Übergangsbereich ausgedehnt (bleed), damit nach der Weichzeichnung keine dunklen Ränder oder Farbsäume entstehen.\n\nVerarbeitungsreihenfolge: Innenabtragung / Außenabdichtung → Farbausdehnung → Weichzeichnung.\nAusgegeben wird ein 4-Kanal-Bild mit Alpha, zusätzlich die verarbeitete Alpha-Maske.\n\nDie Innen- / Außenabtragung ist Grauwert-Morphologie (Mindestwert- / Maximalwert-Filter) und wirkt direkt auf dem Alpha:\nBei lokal linearen weichen Kanten entspricht eine Filterung mit dem Radius r genau einer Verschiebung dieser Rampe um r Pixel,\ndaher wird jede Alpha-Isolinie insgesamt um r verschoben, und das Antialiasing der Matte bleibt\nvollständig erhalten, statt zu einer 1-px-Stufe zu verfallen. Das Füllen von Löchern ist eine Maskenreparatur und bleibt anderen Knoten überlassen."
+    },
+    "1hew_ImageBlur": {
+        "title": "Bild-Weichzeichnung",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Wendet auf das gesamte Bild einen gaussischen Weichzeichner an; das Verhalten entspricht LayerFilters LayerFilter: Gaussian Blur V2.\n\n- Der Parameter „Blur“ unterstützt Dezimalwerte (FLOAT) und entspricht damit stärker der Semantik von V2;\n- bei einem Blur-Wert von 0 wird das Originalbild unverändert durchgereicht;\n- die Verarbeitung erfolgt Frame für Frame pro Batch, wobei Kanalanzahl und Datentyp unverändert bleiben."
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "Bildskalierung Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassung",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "native_image": "Natives Bild",
+            "native_mask": "Native Maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "Bildskalierung Qwen-Image 3.0",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassung",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "native_image": "Natives Bild",
+            "native_mask": "Native Maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "Bildskalierung Qwen-Image 3.0 Pro",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassung",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "native_image": "Natives Bild",
+            "native_mask": "Native Maske"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "Mindestfläche des Bildes",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "length_to_sq_area": "Referenz-Seitenlänge",
+            "method": "Methode",
+            "divisible_by": "Teilbar durch",
+            "fit": "Anpassung",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "resize_bool": "Resize-Boolescher Wert"
+        },
+        "description": "Vergrößert das Bild, bis seine Fläche die minimale quadratische Referenzfläche erreicht.\n\n- ``length_to_sq_area`` definiert die Seitenlänge des Referenzquadrats (Zielfläche = N²).\n- ``Anpassung`` verhält sich wie die allgemeine Bildskalierung: Zuschneiden / Auffüllen / Dehnen.\n- ``Teilbar durch`` rundet die Endmaße aufwärts auf ein Vielfaches einer Zahl.\n- ``resize_bool`` meldet, ob tatsächlich eine Vergrößerung stattgefunden hat."
+    },
+    "1hew_StringRandom": {
+        "title": "Zufällige Zeichenkette",
+        "widgets": {
+            "custom_text": "Individueller Text",
+            "seed": "Zufalls-Seed"
+        },
+        "outputs": {
+            "string": "Zeichenkette"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "Textvergleich",
+        "widgets": {
+            "a": "a",
+            "operator": "Rechenoperator",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "Boolescher Wert"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "Mehrfach-Masken-Berechnung",
+        "inputs": {
+            "mask_1": "Maske 1",
+            "mask_2": "Maske 2"
+        },
+        "widgets": {
+            "operation": "Berechnung"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "Jimeng-Textverhältnis",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "selection": "Auswahl"
+        },
+        "outputs": {
+            "string": "Zeichenkette"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "Maskenpegel",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "black_point": "Schwarzpunkt",
+            "white_point": "Weißpunkt"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Schwarz- und Weißpunkt-Schwellenwerte der Maskenbilder einstellen, um Kontrast und Bereich der Maske anzupassen."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "Ganzzahlvergleich",
+        "inputs": {
+            "a": "Wert a",
+            "operator": "Rechenoperator",
+            "b": "Wert b"
+        },
+        "widgets": {
+            "bool": "Boolescher Wert"
+        },
+        "description": "Die Größenbeziehung zweier Ganzzahlen vergleichen"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "Gleitkommazahlen vergleichen",
+        "widgets": {
+            "a": "Wert a",
+            "operator": "Rechenoperator",
+            "b": "Wert b"
+        },
+        "outputs": {
+            "bool": "Boolescher Wert"
+        },
+        "description": "Vergleicht die Größenrelation zweier Gleitkommazahlen."
+    },
+    "1hew_ImageBWMatte": {
+        "title": "Schwarz-Weiß-Kante des Bildes",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "shrink_radius": "Schrumpfradius",
+            "blur_radius": "Unschärferadius"
+        },
+        "outputs": {
+            "mask": "Maske"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "Maske konturieren",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "fill_hole": "Löcher füllen",
+            "stroke_width": "Linienbreite",
+            "include_mask": "Maske einbeziehen"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Die Maske mit einer Kontur umranden"
+    },
+    "1hew_VideoToURL": {
+        "title": "Video zu URL",
+        "inputs": {
+            "video": "Videodateipfad"
+        },
+        "widgets": {
+            "timeout": "Zeitüberschreitung in Sekunden"
+        },
+        "outputs": {
+            "url": "Erzeugte URL"
+        },
+        "description": "Videodatei in einen zugreifbaren URL-Link umwandeln"
+    },
+    "1hew_VideoToImage": {
+        "title": "Video in Bilder umwandeln",
+        "inputs": {
+            "video": "Videos"
+        },
+        "outputs": {
+            "image": "Bild",
+            "audio": "Audiodaten",
+            "fps": "Bildrate",
+            "frame_count": "Frameanzahl"
+        },
+        "description": "Video in Bilder, Audio, Framerate und Frameanzahl umwandeln"
+    },
+    "1hew_IntVideoCount": {
+        "title": "Videozähler",
+        "inputs": {
+            "video_1": "Video 1"
+        },
+        "outputs": {
+            "int": "Ganzzahl"
+        },
+        "description": "Ein Knoten zum Zählen von Videos"
+    },
+    "1hew_ImageToMask": {
+        "title": "Bild zu Maske",
+        "inputs": {
+            "image": "Bild"
+        },
+        "outputs": {
+            "mask": "Maske"
+        },
+        "description": "Das Bild in eine Maske umwandeln."
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "Bild-Batch-Index",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "index": "Elementindex"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "Bild-Batch-Uniformierung",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "num_frame": "Frameanzahl"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "Bild-Liste-Interlacing",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "segment_count": "Segmentanzahl"
+        },
+        "outputs": {
+            "image_list": "Bildliste"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "Begrenzungsrahmen-Füllung",
+        "inputs": {
+            "paste_image": "Bild zum Einfügen",
+            "bbox_mask": "Begrenzungsrahmen-Maske"
+        },
+        "widgets": {
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Bild-Begrenzungsrahmen-Füller - platziert das Bild gemäß dem Hüllrahmen der BBox-Maske und füllt den übrigen Bereich mit der angegebenen Farbe."
+    },
+    "1hew_IntImageCount": {
+        "title": "Ganzzahlige Bildanzahl",
+        "inputs": {
+            "image_1": "Bild 1"
+        },
+        "outputs": {
+            "int": "Ganzzahl"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "PS laden",
+        "widgets": {
+            "file": "Datei",
+            "index": "Elementindex",
+            "include_hidden": "Ausgeblendete einbeziehen",
+            "group_mode": "Gruppenmodus",
+            "output_mode": "Ausgabemodus",
+            "preview": "Vorschau",
+            "choose psd to upload": "PSD-Datei zum Hochladen auswählen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "filename": "Dateiname",
+            "layer_name": "Ebenenname"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "Maske zu Bounding-Box-Maske",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "output_mode": "Ausgabemodus",
+            "divisible_by": "Teilbar durch"
+        },
+        "outputs": {
+            "bbox_mask": "Begrenzungsrahmen-Maske"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "Liste mehrerer Bilder",
+        "inputs": {
+            "image_1": "Bild 1"
+        },
+        "widgets": {
+            "image_1": "Bild 1"
+        },
+        "outputs": {
+            "image_list": "Bildliste"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "Speicherbereinigung",
+        "widgets": {
+            "anything": "Beliebiger Inhalt",
+            "unload_model": "Modell entladen"
+        },
+        "description": "Fordert ComfyUI auf, nach Abschluss der aktuellen Aufgabe den Ausführungs-Cache und die Modellbelegung freizugeben; geeignet, um zwischen mehreren Ausführungen in der Warteschlange RAM/VRAM zu reinigen."
+    },
+    "1hew_AudioDuration": {
+        "title": "Audiodauer",
+        "inputs": {
+            "audio": "Audiodaten"
+        },
+        "description": "Ermittelt die Dauer eines Audios."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "Bild-Batch-Extraktion",
+        "inputs": {
+            "image": "Bild",
+            "mode": "Modus",
+            "index": "Elementindex",
+            "step": "Schrittweite",
+            "uniform": "Gleichmäßig",
+            "max_keep": "Max. Aufbewahrungsanzahl"
+        },
+        "description": "Extrahiert Bilder mit einem angegebenen Muster aus einem Bild-Batch."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "Bild-Batch-Gruppierung",
+        "inputs": {
+            "image": "Bild",
+            "batch_size": "Stapelgröße",
+            "overlap": "Überlappung",
+            "last_batch_mode": "Modus für letzten Batch",
+            "color": "Farbe"
+        },
+        "description": "Gruppiert die Bilder eines Bild-Batch."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "Bild-Batch-Bereich",
+        "inputs": {
+            "image": "Bild",
+            "start_index": "Startindex",
+            "num_frame": "Frameanzahl"
+        },
+        "description": "Extrahiert Bilder aus einem Bild-Batch innerhalb eines angegebenen Bereichs."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "Bild-Batch-Aufteilung",
+        "inputs": {
+            "image": "Bild",
+            "take_count": "Anzahl zu entnehmender Frames",
+            "from_start": "Ab Anfang"
+        },
+        "description": "Teilt die Bilder eines Bild-Batch nach einer angegebenen Anzahl."
+    },
+    "1hew_ImageListAppend": {
+        "title": "Bild-Liste anhängen",
+        "inputs": {
+            "image_1": "Bild 1",
+            "image_2": "Bild 2"
+        },
+        "description": "Fügt zwei Bilder an eine Liste an."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "Masken-Batch-Mathematik",
+        "inputs": {
+            "mask": "Maske",
+            "operation": "Operationen"
+        },
+        "description": "Mathematische Operationen auf einen Masken-Batch anwenden."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "Masken-Batch-Bereich",
+        "inputs": {
+            "mask": "Maske",
+            "start_index": "Startindex",
+            "num_frame": "Frameanzahl"
+        },
+        "description": "Masken aus einem angegebenen Bereich des Masken-Batches extrahieren."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "Masken-Batch-Aufteilung",
+        "inputs": {
+            "mask": "Maske",
+            "take_count": "Anzahl zu entnehmender Frames",
+            "from_start": "Ab Anfang"
+        },
+        "description": "Masken im Masken-Batch nach angegebener Anzahl aufteilen."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "Videoclip-Gruppierung",
+        "inputs": {
+            "image": "Bild",
+            "threshold_base": "Schwellenwert-Basis",
+            "threshold_range": "Schwellenwertebereich",
+            "threshold_count": "Schwellenwert-Anzahl",
+            "kernel": "Kern",
+            "min_frame_count": "Minimale Frameanzahl",
+            "max_frame_count": "Maximale Frameanzahl",
+            "fast": "SCHNELL",
+            "add_frame": "Frame hinzufügen",
+            "delete_frame": "Frame löschen"
+        },
+        "description": "Videoclips basierend auf den Bildern gruppieren."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "Helligkeit und Kontrast abgleichen",
+        "inputs": {
+            "source_image": "Quellbild",
+            "reference_image": "Referenzbild",
+            "edge_amount": "Kantenmenge",
+            "consistency": "Konsistenz",
+            "method": "Methode"
+        },
+        "description": "Die Helligkeit und den Kontrast zwischen Quell- und Referenzbild angleichen."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "Text-Encoding Qwen-Bildbearbeitung",
+        "description": "Qwen-Modell zum Kodieren von Texten für die Bildbearbeitung verwenden."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "Bild-Batch in Liste umwandeln",
+        "inputs": {
+            "image_batch": "Bild-Batch"
+        },
+        "description": "Wandelt einen Bild-Batch in eine Bild-Liste um."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "Bild-Liste in Batch umwandeln",
+        "inputs": {
+            "image_list": "Bildliste"
+        },
+        "description": "Wandelt eine Bild-Liste in einen Bild-Batch um."
+    },
+    "1hew_ImageToURL": {
+        "title": "Bild zu URL-Link",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "timeout": "Zeitüberschreitung"
+        },
+        "outputs": {
+            "url": "URL-Link"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "Masken-Batch zu Liste",
+        "inputs": {
+            "mask_batch": "Masken-Batch"
+        },
+        "description": "Masken-Batch in eine Maskenliste umwandeln."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "Maskenliste in Batch umwandeln",
+        "description": "Mehrere Masken in einen Batch umwandeln.",
+        "inputs": {
+            "mask_list": "Maskenliste"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "Maske zu Sam3Box",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "condition": "Zustand",
+            "output_mode": "Ausgabemodus"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "Zeichenketten-Koordinaten zu Bounding-Box",
+        "description": "Aus einer Koordinaten-Zeichenkette eine Bounding-Box erzeugen.",
+        "inputs": {
+            "coordinates_string": "Koordinaten-Zeichenkette"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "Zeichenketten-Koordinaten zu Bounding-Box-Maske",
+        "description": "Aus einer Koordinaten-Zeichenkette eine Bounding-Box-Maske erzeugen.",
+        "inputs": {
+            "image": "Bild",
+            "coordinates_string": "Koordinaten-Zeichenkette",
+            "output_mode": "Ausgabemodus"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "Textliste zu Zeichenkette",
+        "description": "Textliste zu einer Zeichenkette zusammenführen.",
+        "inputs": {
+            "text_list": "Textliste",
+            "prefix": "Präfix",
+            "suffix": "Dateinamen-Suffix",
+            "separator": "Trennzeichen"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "Text in beliebiges Format",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "outputs": {
+            "any": "Beliebig"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "URL zu Video",
+        "description": "Video von einer URL abrufen.",
+        "inputs": {
+            "video_url": "Video-URL",
+            "timeout": "Zeitüberschreitung"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "Führungslinien erkennen",
+        "description": "Erkennt Führungslinien im Bild.",
+        "inputs": {
+            "image": "Bild",
+            "canny_low": "Canny-Unterer-Schwellenwert",
+            "canny_high": "Canny-Oberer-Schwellenwert",
+            "seg_min_len": "Min. Segmentlänge",
+            "seg_max_gap": "Max. Segmentlücke",
+            "guide_filter": "Führungslinien-Filter",
+            "guide_width": "Führungslinienbreite",
+            "cluster_eps": "Cluster-Epsilon-Wert"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "Hintergrund entfernen",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "model": "Modell",
+            "add_background": "Hintergrund hinzufügen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "Optimierte Hintergrundentfernung",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "type": "Typ",
+            "subject_protect": "Motivschutz",
+            "feather": "Kantenweichzeichnung",
+            "decolor_edge": "Kanten entsättigen"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "YOLO-Erkennung",
+        "description": "Erkennt Objekte im Bild mit einem YOLO-Modell.",
+        "inputs": {
+            "image": "Bild",
+            "yolo_model": "YOLO-Modell",
+            "threshold": "Schwellenwert",
+            "mask_index": "Maskenindex",
+            "label": "Beschriftung",
+            "label_size": "Labelgröße"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "Label zu Bild hinzufügen",
+        "description": "Fügt dem Bild ein Textlabel hinzu.",
+        "inputs": {
+            "image": "Bild",
+            "height_pad": "Höhen-Randabstand",
+            "font_size": "Schriftgröße",
+            "invert_color": "Farbinvertierung",
+            "font": "Schriftart",
+            "text": "Textinhalt",
+            "direction": "Richtung",
+            "input1": "Eingang 1",
+            "input2": "Eingang 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "Alpha-Kanal bereinigen",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "clean_strength": "Bereinigungsintensität",
+            "detect_only": "Nur Erkennung"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "noise_mask": "Rauschmaske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "Alpha-Kanal trennen",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "background_color": "Hintergrundfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "Begrenzungsrahmen per Maske auf Bild zeichnen",
+        "description": "Zeichnet per Maske einen Begrenzungsrahmen auf das Bild.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "bbox_color": "Begrenzungsrahmen-Farbe",
+            "stroke_width": "Linienbreite",
+            "fill": "Füllung",
+            "padding": "Innenabstand",
+            "output_mode": "Ausgabemodus"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "Bildbearbeitung zusammenfügen",
+        "description": "Bearbeitet Bilder und fügt sie zusammen.",
+        "inputs": {
+            "reference_image": "Referenzbild",
+            "edit_image": "Bearbeitetes Bild",
+            "edit_mask": "Bearbeitete Maske",
+            "edit_image_position": "Position des bearbeiteten Bildes",
+            "match_edit_size": "Bearbeitete Größe angleichen",
+            "spacing": "Abstand",
+            "spacing_color": "Abstandsfarbe",
+            "pad_color": "Füllfarbe"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "Bilder zusammenfügen",
+        "description": "Haupt-Zusammenfügen von Bildern.",
+        "inputs": {
+            "image_1": "Bild 1",
+            "image_2": "Bild 2",
+            "image_3": "Bild 3",
+            "direction": "Richtung",
+            "match_image_size": "Bildgröße abgleichen",
+            "spacing_width": "Abstandsbreite",
+            "spacing_color": "Abstandsfarbe",
+            "pad_color": "Füllfarbe"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "Bildschleife",
+        "description": "Bild-Ping-Pong-Verarbeitung.",
+        "inputs": {
+            "image": "Bild",
+            "pre_reverse": "Vorab-Umkehrung",
+            "ops_count": "Anzahl der Operationen",
+            "frame_count": "Frameanzahl",
+            "remove_link_frame": "Verknüpfte Frames entfernen"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "Bild zeichnen",
+        "description": "Das Rasterlayout der Bilder zeichnen.",
+        "inputs": {
+            "image": "Bild",
+            "layout": "Anordnung",
+            "spacing": "Abstand",
+            "grid_columns": "Anzahl der Rasterspalten",
+            "background_color": "Hintergrundfarbe"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "Bild mit Maske rotieren",
+        "description": "Das Bild rotieren und eine Maske anwenden.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "angle": "Winkel",
+            "pad_color": "Füllfarbe",
+            "expand": "Erweiterung",
+            "mask_center": "Maskenmittelpunkt"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "Einfarbiges Bild erzeugen",
+        "description": "Ein einfarbiges Bild erzeugen.",
+        "inputs": {
+            "get_image_size": "Bildgröße ermitteln",
+            "preset_size": "Preset-Größe",
+            "width": "Breite",
+            "height": "Höhe",
+            "color": "Farbe",
+            "alpha": "Transparenz",
+            "invert": "Umkehren",
+            "mask_opacity": "Maskentransparenz",
+            "divisible_by": "Teilbar durch"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "Konturen anhand einer Maske zeichnen",
+        "description": "Konturen anhand einer Maske auf das Bild zeichnen.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "stroke_width": "Konturbreite",
+            "stroke_color": "Konturfarbe"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "Mischen per Alpha-Mischmodus",
+        "description": "Mischt Überlagerungs- und Basisbild anhand des Alpha-Werts.",
+        "inputs": {
+            "overlay_image": "Overlay-Bild",
+            "base_image": "Basisbild",
+            "overlay_mask": "Overlay-Maske",
+            "blend_mode": "Mischmodus",
+            "opacity": "Deckkraft",
+            "invert_mask": "Maske umkehren"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "Mischen per CSS-Mischmodus",
+        "description": "Mischt Überlagerungs- und Basisbild anhand von CSS-Mischmodi.",
+        "inputs": {
+            "overlay_image": "Overlay-Bild",
+            "base_image": "Basisbild",
+            "blend_mode": "Mischmodus",
+            "blend_percentage": "Mischanteil",
+            "overlay_mask": "Overlay-Maske",
+            "invert_mask": "Maske umkehren"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "Bilder per Maske mischen",
+        "description": "Mischt Bilder anhand einer Maske.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "fill_hole": "Löcher füllen",
+            "invert": "Umkehren",
+            "feather": "Kantenweichzeichnung",
+            "opacity": "Deckkraft",
+            "expansion": "Erweiterung",
+            "background_color": "Hintergrundfarbe",
+            "background_opacity": "Hintergrund-Deckkraft",
+            "output_mask_invert": "Ausgabemaske invertieren"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "Bild auf Quadrat zuschneiden",
+        "description": "Schneidet das Bild auf ein Quadrat zu.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "scale_factor": "Skalierungsfaktor",
+            "extra_padding": "zusätzliche Polsterung",
+            "fill_color": "Füllfarbe",
+            "apply_mask": "Maske anwenden",
+            "divisible_by": "Teilbar durch"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "Begrenzungsrahmen-Zuschnitt",
+        "widgets": {
+            "image": "Bild",
+            "mask": "Maske",
+            "preset_ratio": "Preset-Seitenverhältnis",
+            "get_crop_ratio": "Zuschnittverhältnis ermitteln",
+            "scale_strength": "Skalierungsintensität",
+            "crop_to_side": "Auf Seitenlänge zuschneiden",
+            "crop_to_length": "Auf Länge zuschneiden",
+            "divisible_by": "Teilbarer Faktor"
+        },
+        "description": "Bild-Cropper - schneidet das Bild anhand der Maske zu und gibt die Begrenzungsrahmen-Maskeninformation zurück, damit das Ergebnis später an die ursprüngliche Position zurückgefügt werden kann",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "Rand zuschneiden und auffüllen",
+        "description": "Schneidet das Bild am Rand zu und füllt die Ränder auf.",
+        "inputs": {
+            "image": "Bild",
+            "uniform_amount": "Gleichmäßiger Randabstand",
+            "top_amount": "Randabstand oben",
+            "bottom_amount": "Randabstand unten",
+            "left_amount": "Randabstand links",
+            "right_amount": "Randabstand rechts",
+            "pad_color": "Füllfarbe",
+            "divisible_by": "Teilbar durch"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "Bild-Rasteraufteilung",
+        "description": "Teilt das Bild in ein Raster auf.",
+        "inputs": {
+            "image": "Bild",
+            "rows": "Zeilenanzahl",
+            "columns": "Spaltenanzahl",
+            "index": "Elementindex",
+            "all": "Alle"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "Bild per Maske zuschneiden",
+        "description": "Schneidet das Bild anhand einer Maske zu.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "output_crop": "Ausgabe-Zuschnitt",
+            "output_alpha": "Alpha-Ausgabe"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "Bild per Begrenzungsrahmen-Maske einfügen",
+        "description": "Fügt ein Bild anhand einer Begrenzungsrahmen-Maske ein.",
+        "inputs": {
+            "paste_image": "Bild zum Einfügen",
+            "base_image": "Basisbild",
+            "bbox_mask": "Begrenzungsrahmen-Maske",
+            "paste_mask": "Einfüge-Maske",
+            "position_x": "X-Position",
+            "position_y": "Y-Position",
+            "scale": "Zoom",
+            "rotation": "Drehen",
+            "opacity": "Deckkraft",
+            "apply_paste_mask": "Einfügemaske anwenden"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "Kombination aus Hoch- und Niederfrequenzbild",
+        "description": "Kombiniert Hoch- und Niederfrequenzbild.",
+        "inputs": {
+            "high_freq": "Hochfrequenzbild",
+            "low_freq": "Niederfrequenzbild",
+            "method": "Methode",
+            "high_strength": "Hochfrequenzintensität",
+            "low_strength": "Niederfrequenzintensität"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "Hoch- und Niederfrequenz-Trennung des Bildes",
+        "inputs": {
+            "image": "Bild",
+            "method": "Methode",
+            "blur_radius": "Unschärferadius"
+        },
+        "description": "Trennt die Hoch- und Niederfrequenzanteile eines Bildes zur getrennten Verarbeitung."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "Hoch- und Niederfrequenz-Transformation des Bildes",
+        "inputs": {
+            "generate_image": "Generiertes Bild",
+            "detail_image": "Detailbild",
+            "detail_mask": "Detailmaske",
+            "method": "Methode",
+            "blur_radius": "Unschärferadius"
+        },
+        "description": "Führt Transformationsoperationen auf den Hoch- und Niederfrequenzanteilen des Bildes aus."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "Bildskalierung Flux Kontext",
+        "description": "Bildgröße mit Flux Kontext anpassen.",
+        "inputs": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe",
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "Bildskalierung Gemini 3.0 Pro",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "Bildskalierung Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe",
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "Bildskalierung Jimeng",
+        "description": "Bildgröße mit Jimeng anpassen.",
+        "inputs": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe",
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "Bildskalierung Qwen-Bild",
+        "description": "Das Bild skalieren.",
+        "inputs": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe",
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "Bildskalierung Quadrat",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "Allgemeine Bildskalierung",
+        "description": "Das Bild allgemein skalieren.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "get_image_size": "Bildgröße ermitteln",
+            "preset_ratio": "Preset-Seitenverhältnis",
+            "proportional_width": "Proportional zur Breite skalieren",
+            "proportional_height": "Proportional zur Höhe skalieren",
+            "method": "Methode",
+            "scale_to_side": "Auf Seitenlänge skalieren",
+            "scale_to_length": "Auf Länge skalieren",
+            "fit": "Anpassungsart",
+            "pad_color": "Füllfarbe",
+            "divisible_by": "Teilbar durch"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "Kachelbilder zusammenfügen",
+        "inputs": {
+            "tile": "Kachel",
+            "tile_meta": "Kachel-Metadaten",
+            "blend_strength": "Mischstärke"
+        },
+        "description": "Mehrere Kachelbilder zu einem vollständigen Bild zusammenfügen."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "Bildunterteilung",
+        "inputs": {
+            "image": "Bild",
+            "get_tile_size": "Kachelgröße abrufen",
+            "mode": "Modus",
+            "overlap_amount": "Überlappungsmenge",
+            "grid_row": "Zeilenanzahl",
+            "grid_col": "Spaltenanzahl",
+            "divisible_by": "Teilbar durch"
+        },
+        "description": "Das Bild in mehrere Kacheln unterteilen."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "Ganzzahlige Bildseitenlänge",
+        "inputs": {
+            "image": "Bild",
+            "mode": "Modus"
+        },
+        "description": "Die Seitenlänge des Bildes als ganzzahligen Wert berechnen oder einstellen."
+    },
+    "1hew_IntImageSize": {
+        "title": "Ganzzahlige Bildgröße",
+        "inputs": {
+            "image": "Bild"
+        },
+        "description": "Die ganzzahligen Abmessungen des Bildes abrufen."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "Ganzzahlige Maskenseitenlänge",
+        "inputs": {
+            "mask": "Maske",
+            "mode": "Modus"
+        },
+        "description": "Die Seitenlänge der Maske als ganzzahligen Wert berechnen oder einstellen."
+    },
+    "1hew_IntSplit": {
+        "title": "Ganzzahlaufteilung",
+        "inputs": {
+            "total": "Gesamt",
+            "split_point": "Teilungspunkt"
+        },
+        "description": "Eine Ganzzahl an einer angegebenen Position in zwei Teile aufteilen."
+    },
+    "1hew_IntWan": {
+        "title": "Zehntausenderstelle (Ganzzahl)",
+        "inputs": {
+            "value": "Wert"
+        },
+        "description": "Die Zehntausenderstelle einer Ganzzahl abrufen oder einstellen."
+    },
+    "1hew_GetFileCount": {
+        "title": "Anzahl der Dateien ermitteln",
+        "inputs": {
+            "folder": "Ordner",
+            "type": "Typ",
+            "include_subdir": "Unterverzeichnisse einbeziehen"
+        },
+        "description": "Zählt die Dateien in einem Ordner und seinen Unterverzeichnissen."
+    },
+    "1hew_LoadImage": {
+        "title": "Bild laden",
+        "inputs": {
+            "get_image_size": "Bildgröße ermitteln",
+            "file": "Datei",
+            "index": "Elementindex",
+            "include_subdir": "Unterverzeichnisse einbeziehen",
+            "all": "Alle"
+        },
+        "description": "Bilddatei aus dem angegebenen Pfad laden."
+    },
+    "1hew_LoadTxt": {
+        "title": "Text laden",
+        "widgets": {
+            "file": "Datei",
+            "encode": "Kodieren",
+            "index": "Elementindex",
+            "include_subdir": "Unterverzeichnisse einbeziehen"
+        },
+        "outputs": {
+            "text": "Textinhalt",
+            "filename": "Dateiname"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "Video laden",
+        "inputs": {
+            "file": "Datei",
+            "frame_limit": "Framebegrenzung",
+            "fps": "Bildrate",
+            "start_skip": "Am Anfang überspringen",
+            "end_skip": "Am Ende überspringen",
+            "format": "Formatierung",
+            "video_index": "Videoindex",
+            "include_subdir": "Unterverzeichnisse einbeziehen"
+        },
+        "description": "Videodatei aus dem angegebenen Pfad laden."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "Video in Bilder umwandeln",
+        "inputs": {
+            "file": "Datei",
+            "frame_limit": "Framebegrenzung",
+            "fps": "Bildrate",
+            "start_skip": "Am Anfang überspringen",
+            "end_skip": "Am Ende überspringen",
+            "format": "Formatierung",
+            "video_index": "Videoindex",
+            "include_subdir": "Unterverzeichnisse einbeziehen"
+        },
+        "description": "Videodatei in eine Reihe von Bild-Frames umwandeln."
+    },
+    "1hew_SaveImage": {
+        "title": "Bild speichern",
+        "inputs": {
+            "image": "Bild",
+            "filename_prefix": "Dateiname-Präfix",
+            "save_output": "Ausgabe speichern",
+            "save_metadata": "Metadaten speichern"
+        },
+        "description": "Bild unter dem angegebenen Pfad speichern."
+    },
+    "1hew_SaveTxt": {
+        "title": "Text speichern",
+        "inputs": {
+            "any": "Beliebig"
+        },
+        "widgets": {
+            "filename": "Dateiname",
+            "auto_increment": "Automatische Erhöhung",
+            "save_output": "Ausgabe speichern",
+            "encode": "Kodieren"
+        },
+        "outputs": {
+            "file_path": "Dateipfad"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "Video speichern",
+        "inputs": {
+            "video": "Videos",
+            "filename_prefix": "Dateiname-Präfix",
+            "save_output": "Ausgabe speichern",
+            "save_metadata": "Metadaten speichern"
+        },
+        "description": "Video unter dem angegebenen Pfad speichern."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "Bild als Video speichern",
+        "description": "Video basierend auf Bild und Audio speichern.",
+        "inputs": {
+            "image": "Bild",
+            "audio": "Audiodaten",
+            "fps": "Bildrate",
+            "filename_prefix": "Dateiname-Präfix",
+            "save_output": "Ausgabe speichern",
+            "save_metadata": "Metadaten speichern"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "Irgendein leerer Bool-Wert",
+        "description": "Prüft, ob ein Boolescher Wert leer ist.",
+        "inputs": {
+            "any": "Beliebiger Wert"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "Irgendeine leere Ganzzahl",
+        "description": "Prüft, ob ein Ganzzahlwert leer ist.",
+        "inputs": {
+            "any": "Beliebiger Wert",
+            "empty": "Leerer Wert",
+            "not_empty": "Nicht leerer Wert"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "Irgendein Bool-Schalter",
+        "description": "Schaltet zwei Optionen anhand eines Booleschen Werts um.",
+        "inputs": {
+            "boolean": "Boolescher Wert",
+            "on_true": "Wenn wahr",
+            "on_false": "Wenn falsch"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "Selektor-Schalter",
+        "inputs": {
+            "input_1": "Eingang 1"
+        },
+        "widgets": {
+            "select": "Auswählen"
+        },
+        "outputs": {
+            "output": "Ausgabe",
+            "select": "Auswählen"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "Mehrfach-Selektor umschalten",
+        "inputs": {
+            "input_1": "Eingang 1"
+        },
+        "widgets": {
+            "select": "Auswählen"
+        },
+        "outputs": {
+            "output_1": "Ausgabe 1",
+            "select": "Auswählen"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "Zeilennummer bei Textübereinstimmung",
+        "widgets": {
+            "text_multiline": "Mehrzeiliger Text",
+            "text_single": "Einzeiliger Text"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "Wert bei Textübereinstimmung",
+        "widgets": {
+            "text_multiline": "Mehrzeiliger Text",
+            "text_single": "Einzeiliger Text"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "Bereinigung der Maskentransparenz",
+        "widgets": {
+            "mask": "Maske",
+            "clean_strength": "Bereinigungsintensität",
+            "detect_only": "Nur Erkennung"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "noise_mask": "Rauschmaske"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "Maske per Bounding-Box-Maske zuschneiden",
+        "description": "Maske anhand einer Bounding-Box-Maske zuschneiden.",
+        "inputs": {
+            "mask": "Maske",
+            "bbox_mask": "Begrenzungsrahmen-Maske"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "Maskenlöcher füllen",
+        "description": "Löcher in der Maske füllen.",
+        "inputs": {
+            "mask": "Maske",
+            "invert_mask": "Maske umkehren"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "Maske per Bounding-Box-Maske einfügen",
+        "description": "Maske anhand einer Bounding-Box-Maske einfügen.",
+        "inputs": {
+            "paste_mask": "Einfüge-Maske",
+            "bbox_mask": "Begrenzungsrahmen-Maske",
+            "base_mask": "Basismaske"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "Maske kopieren",
+        "description": "Maske wiederholen.",
+        "inputs": {
+            "mask": "Maske",
+            "invert": "Umkehren",
+            "count": "Anzahl"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "Maskentrennung",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "threshold": "Schwellenwert",
+            "min_area": "Minimale Fläche",
+            "sort_mode": "Sortiermodus",
+            "connectivity": "Konnektivität"
+        },
+        "outputs": {
+            "mask": "Maske",
+            "count": "Ganzzahl"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "Maske zu Bild",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "fill_hole": "Löcher füllen",
+            "white_area_color": "Farbe der weißen Bereiche",
+            "black_area_color": "Farbe der schwarzen Bereiche",
+            "output_alpha": "Alpha-Kanal ausgeben"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "Batch-Verarbeitung mehrerer Bilder",
+        "description": "Mehrere Bilder in einem Batch verarbeiten.",
+        "inputs": {
+            "fit": "Letterbox",
+            "pad_color": "Füllfarbe",
+            "image_1": "Bild 1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "Überlagerung mehrerer Bilder",
+        "inputs": {
+            "image_1": "Bild 1"
+        },
+        "widgets": {
+            "fit_mode": "Anpassungsmodus",
+            "color": "Farbe"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Mehrebenen-Überlagerung:\n- image_1 ist die oberste Ebene; je größer die Zahl, desto weiter unten liegt die Ebene\n- RGBA-Eingaben verwenden den alpha-Kanal für normale Ebenenkomposition\n- RGB-Eingaben werden als undurchsichtige Ebenen behandelt",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "Zusammenfügen mehrerer Bilder",
+        "description": "Mehrere Bilder aneinanderfügen.",
+        "inputs": {
+            "direction": "Richtung",
+            "match_image_size": "Bildgröße anpassen",
+            "spacing_width": "Abstandsbreite",
+            "spacing_color": "Abstandsfarbe",
+            "pad_color": "Füllfarbe",
+            "image_1": "Bild 1",
+            "image_2": "Bild 2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "Zusammenfügen mehrerer Masken",
+        "description": "Mehrere Masken in einem Batch verarbeiten.",
+        "inputs": {
+            "fit": "Letterbox",
+            "pad_color": "Füllfarbe",
+            "mask_1": "Maske 1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "Mehrfach-Masken-Berechnung",
+        "description": "Mathematische Operationen auf mehrere Masken ausführen.",
+        "inputs": {
+            "mask_1": "Maske 1",
+            "mask_2": "Maske 2",
+            "operation": "Operationen"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "Mehrere Zeichenketten verknüpfen",
+        "description": "Mehrere Zeichenketten verknüpfen.",
+        "inputs": {
+            "filter_empty_line": "Leere Zeilen filtern",
+            "filter_comment": "Kommentare filtern",
+            "separator": "Trennzeichen",
+            "input": "Eingang"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "Benutzerdefinierte Gleitkommaliste",
+        "description": "Eine benutzerdefinierte Liste von Gleitkommazahlen.",
+        "inputs": {
+            "custom_text": "Individueller Text"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "Benutzerdefinierte Ganzzahlliste",
+        "inputs": {
+            "custom_text": "Individueller Text"
+        },
+        "description": "Eine Liste mit benutzerdefinierten Ganzzahlen erzeugen."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "Benutzerdefinierte Seed-Liste",
+        "inputs": {
+            "seed": "Zufalls-Seed",
+            "count": "Anzahl"
+        },
+        "description": "Eine Liste mit der angegebenen Anzahl zufälliger Seeds erzeugen."
+    },
+    "1hew_ListCustomString": {
+        "title": "Benutzerdefinierte Zeichenkettenliste",
+        "inputs": {
+            "custom_text": "Individueller Text"
+        },
+        "description": "Eine Liste mit benutzerdefinierten Zeichenketten erzeugen."
+    },
+    "1hew_StringFilter": {
+        "title": "Zeichenkettenfilter",
+        "inputs": {
+            "text": "Textinhalt",
+            "filter_empty_line": "Leere Zeilen filtern",
+            "filter_comment": "Kommentare filtern",
+            "input": "Eingang"
+        },
+        "description": "Leere Zeilen und Kommentare im Text herausfiltern."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "Mehrere Zeichenketten verknüpfen",
+        "inputs": {
+            "text1": "Eingabetext 1",
+            "text2": "Eingabetext 2",
+            "text3": "Eingabetext 3",
+            "text4": "Eingabetext 4",
+            "text5": "Eingabetext 5",
+            "filter_empty_line": "Leere Zeilen filtern",
+            "filter_comment": "Kommentare filtern",
+            "separator": "Trennzeichen",
+            "input": "Eingang"
+        },
+        "description": "Mehrere Texte zu einer Zeichenkette verbinden, optional mit Herausfiltern leerer Zeilen und Kommentare."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "Benutzerdefinierte Textextraktion",
+        "inputs": {
+            "json_data": "JSON-Daten",
+            "key": "Schlüssel",
+            "precision_match": "Exakte Übereinstimmung",
+            "label_filter": "Label-Filter"
+        },
+        "description": "Werte bestimmter Schlüssel aus JSON-Daten extrahieren, mit exakter Übereinstimmung und Filterung nach Labels."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "Text-Präfix und -Suffix",
+        "inputs": {
+            "text": "Textinhalt",
+            "prefix": "Präfix",
+            "suffix": "Dateinamen-Suffix"
+        },
+        "description": "Ein angegebenes Präfix vor dem und ein Suffix nach dem Text hinzufügen."
+    },
+    "1hew_RangeMapping": {
+        "title": "Bereichszuordnung",
+        "inputs": {
+            "value": "Wert",
+            "min": "Minimum",
+            "max": "Maximum",
+            "rounding": "Rundung"
+        },
+        "description": "Werte aus dem Bereich 0-1 auf [min,max] abbilden, mit Steuerung der Dezimalgenauigkeit."
+    },
+    "1hew_WorkflowName": {
+        "title": "Workflow-Bezeichnung",
+        "inputs": {
+            "prefix": "Präfix",
+            "suffix": "Dateinamen-Suffix",
+            "date_format": "Datumsformat",
+            "full_path": "Vollständiger Pfad",
+            "strip_extension": "Erweiterung entfernen"
+        },
+        "description": "Einen Workflow-Namen mit Präfix, Suffix und Datumsformat erzeugen."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "Bild per Begrenzungsrahmen-Maske zuschneiden",
+        "description": "Schneidet das Bild mit einer Begrenzungsrahmen-Maske zu.",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske",
+            "preset_ratio": "Preset-Seitenverhältnis",
+            "get_crop_ratio": "Zuschnittverhältnis ermitteln",
+            "scale_strength": "Skalierungsintensität",
+            "crop_to_side": "Auf Seitenlänge zuschneiden",
+            "crop_to_length": "Auf Länge zuschneiden",
+            "divisible_by": "Teilbar durch"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "Alpha-Kanal-Verbindung des Bildes",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "invert_mask": "Maske umkehren"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "Bild-Batch-Interlacing",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "segment_count": "Segmentanzahl"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "Zeichenkettenverhältnis Gemini 3.1 Flash-Bild",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "selection": "Auswahl"
+        },
+        "outputs": {
+            "string": "Zeichenkette"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "Zeichenkettenverhältnis GPT-Bild 2.0",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "selection": "Auswahl"
+        },
+        "outputs": {
+            "string": "Zeichenkette"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "Bildgrößenanpassung GPT-Bild 2.0",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "preset_size": "Preset-Größe",
+            "fit": "Methode",
+            "pad_color": "Hintergrundfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "Zeichenkettenanalyse",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "selection": "Auswahl"
+        },
+        "outputs": {
+            "string": "Zeichenkette"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "Irgendein Ganzzahl-Schalter",
+        "description": "Schaltet Optionen anhand eines Ganzzahlwerts um."
+    }
+}

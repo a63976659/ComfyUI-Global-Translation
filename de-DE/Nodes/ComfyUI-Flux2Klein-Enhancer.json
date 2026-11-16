@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Flux2Klein K-Abtaster (experimentelle Version)",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "latent_image": "Latent-Bild",
+            "negative": "Negativ-Bedingung"
+        },
+        "widgets": {
+            "steps": "Schritte",
+            "seed": "Zufalls-Seed",
+            "denoise": "Entrauschungsintensität",
+            "base_shift": "Basis-Verschiebung",
+            "max_shift": "Maximale Verschiebung",
+            "cfg_scale": "CFG-Skalierungsfaktor",
+            "guidance_embed": "Guidance-Einbettung"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Flux2Klein Farbanker",
+        "inputs": {
+            "model": "Modell",
+            "conditioning": "Konditioniert"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "ramp_curve": "Verlaufskurve",
+            "ref_index": "Referenzindex",
+            "channel_weights": "Kanal-Gewichte",
+            "debug": "Debug-Modus"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Flux2Klein Verstärker",
+        "inputs": {
+            "conditioning": "Konditioniert",
+            "device": "Ausführungsgerät"
+        },
+        "widgets": {
+            "active_scale": "Aktivbereich-Skalierung",
+            "per_token_whiten": "Tokenweise Whitening",
+            "norm_equalize": "Normausgleich",
+            "early_layer_scale": "Skalierungsfaktor der frühen Schichten",
+            "mid_layer_scale": "Skalierungsfaktor der mittleren Schichten",
+            "late_layer_scale": "Skalierungsfaktor der späten Schichten",
+            "preserve_original": "Originaldaten beibehalten",
+            "active_end_override": "Überschreibung des Aktivbereichs-Endpunkts",
+            "debug": "Debug-Modus"
+        },
+        "description": "Führt reine Skalar-/Whitening-Operationen im Aktivbereich der Klein-Konditionierung aus und stellt zugleich die Klein-spezifische Qwen3-Schichtenskalierung bereit."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Flux2Klein Detailregler",
+        "inputs": {
+            "conditioning": "Konditioniert",
+            "device": "Ausführungsgerät"
+        },
+        "widgets": {
+            "front_mult": "Faktor vorderer Abschnitt",
+            "mid_mult": "Faktor mittlerer Abschnitt",
+            "end_mult": "Faktor hinterer Abschnitt",
+            "emphasis_start": "Position des Betonungsbeginns",
+            "emphasis_end": "Position des Betonungsendes",
+            "emphasis_mult": "Betonungsfaktor",
+            "preserve_original": "Originaldaten beibehalten",
+            "debug": "Debug-Modus"
+        },
+        "description": "Regler für die Faktor-Anpassung von Abschnitts-Einbettungen.\n\nEchter Modus (empfohlen): zusammen mit dem Abschnitts-Encoder verwenden. Der Encoder erzeugt Token-Bereiche pro Abschnitt als Konditionierungs-Metadaten (`meta[\"klein_sections\"]`); dieser Knoten passt die Aktivierungs-Einbettungen im jeweiligen Bereich mit den vom Benutzer eingestellten Faktoren an.\n\nKompatibilitätsmodus (alt/nicht empfohlen): Wenn keine Abschnitts-Metadaten vorhanden sind, teilt der Knoten den Aktivbereich automatisch im festen Verhältnis 25%/50%/25% auf. Diese Grenzen sind beliebig – Qwen3-Token haben keine feste Positionssemantik – Version 1 dieses Knotens hat in diesem Modus praktisch keine Wirkung. Der Modus bleibt nur zur Kompatibilität mit alten Workflows erhalten; wechseln Sie zum Abschnitts-Encoder, um eine sinnvolle abschnittsbewusste Skalierung zu erhalten."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Flux2Klein Masken-Referenzregler",
+        "inputs": {
+            "conditioning": "Konditioniert",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "invert_mask": "Maske umkehren",
+            "feather": "Maskenkanten weichzeichnen",
+            "reference_index": "Referenzindex",
+            "debug": "Debug-Modus"
+        },
+        "description": "Wendet auf das Referenz-Latent eine räumliche Dämpfung an, die aus der gezeichneten Maske erzeugt wird.\n\nDas Referenz-Latent wird mit den pixelweisen Skalaren der Maske multipliziert. Das konditionierte Latent wird direkt an Ort und Stelle geändert (ersetzt meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Flux2Klein Referenz-Latent-Regler",
+        "inputs": {
+            "model": "Modell",
+            "conditioning": "Konditioniert"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "reference_index": "Referenzindex",
+            "spatial_fade": "Räumliches Ausblenden",
+            "spatial_fade_strength": "Intensität des räumlichen Ausblendens",
+            "debug": "Debug-Modus"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Flux2Klein Text-Referenz-Ausgleicher",
+        "inputs": {
+            "model": "Modell",
+            "conditioning": "Konditioniert"
+        },
+        "widgets": {
+            "balance": "Ausgleichsfaktor",
+            "debug": "Debug-Modus"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Flux2Klein Referenz-Latent-Gewichtsregler",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "reference_index": "Referenzindex",
+            "weight": "Gewichte"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Flux2Klein Text-Verstärker",
+        "inputs": {
+            "conditioning": "Konditioniert"
+        },
+        "widgets": {
+            "magnitude": "Globale Amplitude",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalisierungsintensität",
+            "skip_bos": "Anfangs-Token überspringen",
+            "debug": "Debug-Modus"
+        },
+        "description": "Ändert die Token der Text-Konditionierung.\n\nReihenfolge der Operationen:\n1. Normalisieren: die Amplituden der Token ausgleichen\n2. Kontrast: die Unterschiede zwischen den Token vergrößern/verkleinern\n3. Amplitude: globale Skalierung"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Flux2Klein Abschnitts-Encoder",
+        "inputs": {
+            "clip": "CLIP-Encoder",
+            "separator": "Trennzeichen"
+        },
+        "widgets": {
+            "front_text": "Vorderer Text",
+            "mid_text": "Mittlerer Text",
+            "end_text": "Hinterer Text",
+            "combined_prompt": "Zusammengeführter Prompt",
+            "show_preview": "Vorschau anzeigen",
+            "debug": "Debug-Modus"
+        },
+        "outputs": {
+            "conditioning": "Konditioniert",
+            "front_section": "Vorderer Abschnitt",
+            "mid_section": "Mittlerer Abschnitt",
+            "end_section": "Hinterer Abschnitt",
+            "full_prompt": "Vollständiger Prompt"
+        },
+        "description": "Tokenisiert den dreiteiligen Prompt und erzeugt Token-Bereiche pro Abschnitt als Konditionierungs-Metadaten, die vom Detailregler gelesen werden."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "Identitätsmerkmal-Übertragung",
+        "inputs": {
+            "model": "Modell"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "start_block": "Anfangsblock",
+            "end_block": "Endblock",
+            "mode": "Modus",
+            "top_k_percent": "Top-K-Prozentsatz"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "Identitätsmerkmal-Übertragung (erweitert)",
+        "inputs": {
+            "model": "Modell",
+            "subject_mask": "Subjektmaske"
+        },
+        "widgets": {
+            "reference_index": "Referenzindex",
+            "mode": "Modus",
+            "top_k_percent": "Top-K-Prozentsatz",
+            "double_enable": "Doppelte Übertragung aktivieren",
+            "double_strength": "Intensität der doppelten Übertragung",
+            "double_start": "Startpunkt der doppelten Übertragung",
+            "double_end": "Endpunkt der doppelten Übertragung",
+            "single_enable": "Einfache Übertragung aktivieren",
+            "single_strength": "Intensität der einfachen Übertragung",
+            "single_start": "Startpunkt der einfachen Übertragung",
+            "single_end": "Endpunkt der einfachen Übertragung",
+            "block_schedule": "Block-Zeitplan",
+            "sim_floor": "Ähnlichkeitsuntergrenze",
+            "mask_threshold": "Maskenschwelle"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "Identitätsmerkmal-Übertragung V3",
+        "inputs": {
+            "model": "Modell",
+            "subject_mask": "Subjektmaske"
+        },
+        "widgets": {
+            "preset": "Voreinstellung",
+            "reference_index": "Referenzindex",
+            "double_schedule": "Zeitplan der doppelten Übertragung",
+            "single_schedule": "Zeitplan der einfachen Übertragung",
+            "double_sim": "Ähnlichkeit der doppelten Übertragung",
+            "single_sim": "Ähnlichkeit der einfachen Übertragung",
+            "commit_margin": "Übergabe-Spielraum",
+            "commit_confirm": "Übergabe-Bestätigung",
+            "commit_anchor": "Übergabe-Anker",
+            "mask_threshold": "Maskenschwelle",
+            "debug": "Debug-Modus"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "Finale Identitätsmerkmal-Übertragung",
+        "inputs": {
+            "model": "Modell",
+            "subject_mask_1": "Subjektmaske 1",
+            "subject_mask_2": "Subjektmaske 2",
+            "subject_mask_3": "Subjektmaske 3",
+            "subject_mask_4": "Subjektmaske 4",
+            "subject_mask_5": "Subjektmaske 5",
+            "subject_mask_6": "Subjektmaske 6",
+            "subject_mask_7": "Subjektmaske 7",
+            "subject_mask_8": "Subjektmaske 8"
+        },
+        "widgets": {
+            "preset": "Voreinstellung",
+            "enabled": "Aktivieren",
+            "reference_index": "Referenzindex",
+            "reference_indices": "Liste der Referenzindizes",
+            "similarity_floor": "Ähnlichkeitsuntergrenze",
+            "softmax_temperature": "Softmax-Temperaturfaktor",
+            "mask_threshold": "Maskenschwelle",
+            "double_blocks": "Doppelblock-Bereich",
+            "single_blocks": "Einzelblock-Bereich",
+            "total_sampling_steps": "Gesamte Sampling-Schritte",
+            "debug": "Debug-Modus"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "Identitäts-Guidance",
+        "inputs": {
+            "model": "Modell",
+            "identity_latent": "Identitäts-Latent"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "start_percent": "Wirksamer Start-Prozent",
+            "end_percent": "Wirksamer Ende-Prozent",
+            "mode": "Modus"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Flux2 Klein Verarbeitung mehrerer Referenz-Latents",
+        "inputs": {
+            "conditioning": "Konditioniert",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "Konditioniert"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "FLUX.2 Klein K-Abtaster",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Prompt",
+            "negative": "Negativ-Prompt",
+            "latent_image": "Bild-Latent"
+        },
+        "widgets": {
+            "steps": "Schritte",
+            "guidance_scale": "Guidance-Stärke",
+            "seed": "Seed (Zufall)",
+            "denoise": "Entrauscht",
+            "base_shift": "Basisversatz",
+            "max_shift": "Max. Versatz"
+        },
+        "description": "Der FLUX.2 Klein KSampler-Knoten dient der Bildgenerierung im Latent-Raum."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Flux2 Klein Verstärker",
+        "inputs": {
+            "conditioning": "Bedingung"
+        },
+        "widgets": {
+            "magnitude": "Amplitude",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalisierungsintensität",
+            "preserve_original": "Original beibehalten",
+            "preserve_mode": "Beibehaltungsmodus",
+            "edit_text_weight": "Gewicht des bearbeiteten Texts",
+            "active_end_override": "Überschreibung des Aktivierungsendes",
+            "low_vram": "Wenig VRAM",
+            "device": "Gerät",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Bedingung"
+        },
+        "description": "Verstärker für FLUX. .Klein-Konditionen.\n\nDie Operationen umfassen:\n- Amplitude: die Einbettungen des Aktivbereichs direkt skalieren\n- Kontrast: die Unterschiede zwischen den Markern vergrößern\n- Normalisieren: die Markergrößen angleichen\n- Original beibehalten: die ursprünglichen Einbettungen in verschiedenen Modi wieder beimischen\n\nAlle Operationen ändern nur den aktiven Textbereich (der Füllbereich bleibt unberührt).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Flux2 Klein Detailregler",
+        "inputs": {
+            "conditioning": "Bedingung"
+        },
+        "widgets": {
+            "front_mult": "Multiplikator vorderer Teil",
+            "mid_mult": "Multiplikator mittlerer Teil",
+            "end_mult": "Multiplikator letzter Teil",
+            "emphasis_start": "Betonungsstart",
+            "emphasis_end": "Betonungsende",
+            "emphasis_mult": "Betonungs-Multiplikator",
+            "preserve_original": "Original beibehalten",
+            "preserve_mode": "Beibehaltungsmodus",
+            "low_vram": "Wenig VRAM",
+            "device": "Gerät",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Bedingung"
+        },
+        "description": "Bereichssteuerung für FLUX. .Klein-Konditionen.\n\nTeilt die aktiven Marker in Bereiche:\n- Vorderer Teil: Motiv/Hauptkonzept\n- Mittlerer Teil: Details/Modifikatoren\n- Letzter Teil: Stil-/Qualitätsbegriffe",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Flux2 Klein Referenz-Latent-Regler",
+        "inputs": {
+            "model": "Modell",
+            "conditioning": "Bedingung"
+        },
+        "widgets": {
+            "strength": "Intensität",
+            "reference_index": "Referenzindex",
+            "spatial_fade": "Räumliche Abschwächung",
+            "spatial_fade_strength": "Intensität der räumlichen Abschwächung",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "MODEL": "Modell",
+            "CONDITIONING": "Bedingung"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Flux2 Klein Balance zwischen Text und Referenz",
+        "inputs": {
+            "model": "Modell",
+            "conditioning": "Bedingung"
+        },
+        "widgets": {
+            "balance": "Ausgewogen",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "MODEL": "Modell",
+            "CONDITIONING": "Bedingung"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Flux2 Klein Text-Verstärker",
+        "inputs": {
+            "conditioning": "Bedingung"
+        },
+        "widgets": {
+            "magnitude": "Amplitude",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalisierungsintensität",
+            "skip_bos": "Anfangszeichen überspringen",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Bedingung"
+        },
+        "description": "Ändert die Marker der Textkondition.\n\nReihenfolge der Operationen:\n1. Normalisieren: Markergrößen angleichen\n2. Kontrast: Unterschiede zwischen den Markern vergrößern/verringern\n3. Amplitude: globale Skalierung",
+        "api_version": "V1"
+    }
+}

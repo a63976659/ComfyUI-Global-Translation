@@ -1,0 +1,396 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪LTX 얼굴 어텐션 앵커",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "face_bbox_norm": "얼굴 바운딩 박스 정규화",
+            "strength": "강도",
+            "inject_mode": "인젝션 모드",
+            "anchor_frame": "앵커 프레임",
+            "anchor_upsample": "앵커 업스케일",
+            "track_threshold": "추적 임계값",
+            "face_threshold": "얼굴 임계값",
+            "identity_threshold": "정체성 임계값",
+            "depth_curve": "깊이 곡선",
+            "spatial_prior": "공간 사전 정보",
+            "block_index_filter": "블록 인덱스 필터",
+            "bypass": "바이패스",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "model": "모델",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: 얼굴 영역 정체성 앵커. 캐시 기능이 LTXLatentAnchor 노드(장면 단위 안정화)로 이동했습니다. 이 노드는 여전히 얼굴만을 대상으로 합니다.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "LTXLatent 앵커",
+        "inputs": {
+            "model": "모델",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "강도",
+            "cache_at_step": "캐시 스텝",
+            "similarity_threshold": "유사도 임계값",
+            "decay_with_distance": "거리에 따른 감쇠",
+            "bypass": "바이패스",
+            "advanced_mode": "고급 모드",
+            "cache_mode": "캐시 모드",
+            "forwards_per_step": "스텝당 순방향 전달 횟수",
+            "cache_warmup": "캐시 워밍업",
+            "anchor_frame": "앵커 프레임",
+            "depth_curve": "깊이 곡선",
+            "block_index_filter": "블록 인덱스 필터",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "LTX2.x용 전체 장면 Latent 앵커입니다. 긴 샘플링 과정에서도 프롬프트+컨디셔닝과 물리 인지 힘을 일정하게 유지합니다. SIGMAS를 연결하면 예측 가능한 캐시 시점을 얻을 수 있습니다. 고급 모드로 전환하면 연구용 파라미터를 사용할 수 있습니다."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "LTXLatent 앵커 인지",
+        "inputs": {
+            "model": "모델",
+            "reference_image": "참조 이미지",
+            "vae": "VAE",
+            "energy_latent": "에너지 Latent",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "강도",
+            "cache_at_step": "캐시 스텝",
+            "similarity_threshold": "유사도 임계값",
+            "decay_with_distance": "거리에 따른 감쇠",
+            "energy_threshold": "에너지 임계값",
+            "bypass": "바이패스",
+            "debug": "디버그",
+            "advanced_mode": "고급 모드",
+            "cache_mode": "캐시 모드",
+            "forwards_per_step": "스텝당 순방향 전달 횟수",
+            "cache_warmup": "캐시 워밍업",
+            "anchor_frame": "앵커 프레임",
+            "depth_curve": "깊이 곡선",
+            "block_index_filter": "블록 인덱스 필터"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "외부 참조에서 얻은 공간 에너지 조절(선택 사항)을 지원하는 Latent 앵커입니다. 참조 이미지(또는 Latent 입력)가 공간 가중치를 제공하며, 자기 자신과 매칭할 때는 실행 중인 Latent(올바른 특성 공간)를 사용합니다."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "LTX 텍스트 어텐션 증폭기",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "text_amplification": "텍스트 어텐션 증폭",
+            "spatial_focus": "공간 포커스",
+            "block_index_filter": "블록 인덱스 필터",
+            "bypass": "바이패스",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "LTX2의 텍스트 교차 어텐션(attn2)을 블록별로 증폭하여 토큰 수 증가 시 발생하는 컨디셔닝 희석 현상을 보완합니다. 업스케일 단계에서 사용하면 프롬프트 준수도와 색상 안정성을 복원할 수 있습니다."
+    },
+    "LTXTiledSampler": {
+        "title": "LTX 타일 샘플러",
+        "inputs": {
+            "noise": "노이즈",
+            "guider": "가이더",
+            "sampler": "샘플러",
+            "sigmas": "sigma",
+            "latent_image": "Latent 이미지"
+        },
+        "widgets": {
+            "bypass_tiling": "타일 건너뛰기",
+            "tile_axis": "타일 축",
+            "n_tiles": "타일 개수",
+            "tile_overlap": "타일 중복",
+            "max_size_for_no_tile": "타일 없이 사용할 수 있는 최대 크기",
+            "audio_pass": "오디오 패스",
+            "audio_carrier_tile": "오디오 캐리어 타일",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "output": "출력",
+            "denoised_output": "디노이즈 출력"
+        },
+        "description": "LTX2 업스케일 단계의 가벼운 세밀화용 타일 방식 drop-in SamplerCustomAdvanced 대체 노드입니다. 각 타일에서 완전한 훈련 분포 토큰 개수 샘플링을 실행한 뒤 코사인 블렌딩합니다. 가벼운 디노이즈에만 사용하세요. 기본값은 오디오 패스이며, audio_carrier_tile은 오디오 샘플링을 선택한 타일 하나와 동시에 실행합니다(추가 스텝 없음). bypass_tiling=true로 설정하면 표준 단일 샘플링을 그대로 통과하므로 디버그나 타일이 필요 없는 경우에 적합합니다."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "LTXV Latent 업스케일러(타일 버전)",
+        "inputs": {
+            "samples": "샘플",
+            "upscale_model": "초해상도 모델",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "타일 크기",
+            "overlap": "중복",
+            "max_size_for_no_tile": "타일 없이 사용할 수 있는 최대 크기",
+            "rotate_for_landscape": "가로 화면에 맞추어 회전",
+            "debug": "디버그"
+        },
+        "outputs": {},
+        "description": "LTXVLatentUpsampler의 타일 방식 drop-in 대체 노드입니다. 공간 타일별로 업스케일을 수행하고 코사인 윈도우 중복 블렌딩을 사용하여 극단적인 종횡비에서의 색상 이탈과 왜곡을 해결합니다. 안전한 종횡비에서는 비타일 버전과 거의 동일한 출력을 주고, 극단적인 경우에도 초해상도 모델의 불안정을 피할 수 있습니다."
+    },
+    "LTXModelInspector": {
+        "title": "LTX 모델 검사기",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "name_filter": "이름 필터",
+            "focus_path": "포커스 경로",
+            "max_modules_listed": "표시할 최대 모듈 수",
+            "trace_path_contains": "추적 경로 포함",
+            "max_modules_traced": "추적할 최대 모듈 수",
+            "trace_calls_per_module": "모듈당 추적 호출 횟수",
+            "print_top_level": "최상위 정보 출력"
+        },
+        "outputs": {
+            "model": "모델"
+        },
+        "description": "확산 모델을 검사합니다: 최상위 구조, 이름 필터, 포커스 경로, 추적 훅."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Latent 크로스페이드 자체 연결",
+        "inputs": {
+            "frames_0": "프레임_0",
+            "frames_1": "프레임_1"
+        },
+        "widgets": {
+            "match_spatial": "공간 매칭",
+            "interpolate_mode": "보간 모드",
+            "cross_fade_frames": "크로스페이드 프레임",
+            "fade_curve": "페이드 아웃 곡선"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "자동 공간 매칭 + 시간 연결, 선택적 크로스페이드 지원."
+    },
+    "AudioLatentStretch": {
+        "title": "오디오 Latent 스트레칭",
+        "inputs": {
+            "audio_latent": "오디오 Latent"
+        },
+        "widgets": {
+            "source_fps": "소스 FPS",
+            "target_fps": "대상 FPS",
+            "interp_mode": "보간 모드"
+        },
+        "outputs": {
+            "audio_latent": "오디오 Latent"
+        },
+        "description": "오디오 Latent를 대상 FPS로 리샘플링합니다. Hermite 모드를 권장합니다."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Latent 시간 업스케일러",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "소스 FPS",
+            "target_fps": "대상 FPS",
+            "interp_mode": "보간 모드",
+            "auto_retime": "자동 리타임",
+            "motion_scale": "모션 배율",
+            "spatial_sharpen": "공간 선명화",
+            "ltx_safe": "LTX 안전",
+            "override_frames": "프레임 수 재정의"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Hermite 기반 시간 업스케일링이며 자동 리타임 보정 기능을 제공합니다."
+    },
+    "LatentMotionSharpener": {
+        "title": "Latent 모션 선명화기",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "기본 선명화",
+            "motion_sharpen": "모션 선명화",
+            "motion_thresh": "모션 임계값",
+            "temporal_smooth_mask": "시간 영역 스무딩 마스크"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "프레임 간 움직임 크기에 따라 적응형으로 선명화합니다."
+    },
+    "LatentMotionRetime": {
+        "title": "Latent 모션 리타임",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "소스 FPS",
+            "target_fps": "대상 FPS",
+            "strength": "강도",
+            "manual_scale": "수동 배율"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "업스케일된 Latent에서 24->30fps 리듬을 보정하도록 움직임 크기를 감쇠시킵니다."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Latent 시간 인페인트",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "앵커 σ",
+            "ghost_sigma": "고스트 σ",
+            "score_gamma": "점수 γ",
+            "anchor_blend": "앵커 융합",
+            "seed": "시드",
+            "debug_scores": "디버그 점수"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "프레임별 고스트 감지 + 대상 노이즈. 실제 앵커 프레임을 고정하고, 이후 KSampler로 0.3-0.45 범위를 디노이즈합니다."
+    },
+    "LTXActionAmplifier": {
+        "title": "LTX 액션 증폭기",
+        "inputs": {
+            "model": "모델",
+            "clip": "clip",
+            "positive": "긍정 프롬프트"
+        },
+        "widgets": {
+            "amplification_strength": "증폭 강도",
+            "action_vocabulary_text": "액션 어휘 텍스트",
+            "scale_ceiling": "배율 상한",
+            "auto_threshold": "자동 임계값",
+            "similarity_threshold": "유사도 임계값",
+            "similarity_sharpness": "유사도 선명화",
+            "amplification_floor": "증폭 하한",
+            "top_k": "Top-K",
+            "bypass": "바이패스",
+            "debug": "디버그"
+        },
+        "outputs": {},
+        "description": "긍정 프롬프트에서 동작/모션 텍스트 토큰만 선택적으로 증폭하고, 일치하는 동사 토큰의 K/V 진폭을 강화하며 서술적 토큰은 그대로 유지합니다. LikenessSemanticClamp와 대칭적으로 반대이며, TextAmplifier의 전체 비율 조정 방식을 대체합니다."
+    },
+    "LTXFaceDetector": {
+        "title": "LTX 얼굴 인식 검출기",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "padding": "패딩",
+            "fallback_bbox": "대체 바운딩 박스",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "face_bbox": "얼굴 바운딩 박스"
+        },
+        "description": "이미지에서 얼굴을 검출하여 정규화된 바운딩 박스 문자열을 출력합니다. 출력을 LikenessGuide의 face_bbox_within_reference, LikenessAnchor의 override_face_bbox/frame_0_bbox, 또는 face_anchor의 face_bbox_norm에 연결하세요. 검출을 노드 로직에서 분리하여 여러 노드가 동일한 박스를 공유할 수 있습니다."
+    },
+    "LTXLikenessAnchor": {
+        "title": "LTX 유사성 앵커",
+        "inputs": {
+            "model": "모델",
+            "reference_info": "참조 정보"
+        },
+        "widgets": {
+            "strength": "강도",
+            "reference_source": "참조 소스",
+            "frame_0_bbox": "프레임 0 박스",
+            "similarity_threshold": "유사도 임계값",
+            "decay_with_distance": "거리에 따른 감쇠",
+            "bypass": "바이패스",
+            "debug": "디버그",
+            "advanced_mode": "고급 모드",
+            "depth_curve": "깊이 곡선",
+            "block_index_filter": "블록 인덱스 필터",
+            "similarity_sharpness": "유사도 선명화",
+            "override_face_bbox": "얼굴 박스 재정의",
+            "skip_when_sigma_above": "sigma 초과 시 건너뛰기",
+            "pull_mode": "풀(pull) 모드",
+            "late_block_falloff": "후반 블록 감쇠"
+        },
+        "outputs": {},
+        "description": "블록별 어텐션을 참조 특성 쪽으로 당겨 정체성 일관성을 유지합니다. 두 가지 모드: (1) LikenessGuide에서 참조 정보를 받아 함께 포함된 참조 프레임을 사용합니다. (2) 참조 정보를 연결하지 않으면 이 노드가 Latent의 프레임 0을 참조로 사용합니다 - 프레임 0이 컨디셔닝 시작 이미지인 i2v 워크플로우에 적합합니다. v1.2는 방향성 풀 모드를 사용하며 색상을 보존합니다."
+    },
+    "LTXLikenessGuide": {
+        "title": "LTX 유사성 가이던스",
+        "inputs": {
+            "positive": "긍정 프롬프트",
+            "negative": "부정 프롬프트",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "참조 이미지"
+        },
+        "widgets": {
+            "strength": "강도",
+            "placement_mode": "배치 모드",
+            "face_detect": "얼굴 감지",
+            "reference_mask_mode": "참조 마스크 모드",
+            "face_padding": "얼굴 패딩",
+            "crf": "CRF",
+            "blur_radius": "블러 반경",
+            "interpolation": "보간",
+            "crop": "크롭",
+            "attention_strength": "어텐션 강도",
+            "face_bbox_within_reference": "참조 내부 얼굴 박스",
+            "emit_latent": "Latent 출력",
+            "debug": "디버그"
+        },
+        "outputs": {
+            "positive": "긍정 프롬프트",
+            "negative": "부정 프롬프트",
+            "latent": "latent",
+            "reference_info": "참조 정보"
+        },
+        "description": "정체성 유지를 위해 유사성 참조 이미지를 컨디셔닝 설정에 추가합니다. 수정된 긍정/부정 컨디셔닝(Guider용)과 참조 정보 메타데이터(LikenessAnchor용)를 출력합니다. 기본설정에서는 Latent 출력이 입력을 그대로 통과시키므로 확장도 크롭도 필요 없습니다. 가이던스의 효과는 Latent 수정이 아니라 모델 및 bbox 메타데이터와의 컨디셔닝 상호작용에서 발생합니다."
+    },
+    "LTXLikenessCrop": {
+        "title": "LTX 유사성 크롭",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "참조 정보"
+        },
+        "widgets": {
+            "debug": "디버그"
+        },
+        "outputs": {},
+        "description": "VAE 디코딩 전에 Latent에서 유사성 참조 프레임을 크롭합니다. LTXLikenessGuide의 emit_latent=확장 모드를 되돌립니다. 가이던스가 확장 Latent를 출력한 경우에만 사용하세요. 가이던스가 통과 모드(기본값)라면 이 노드가 필요 없으며 Latent를 바로 VAE 디코딩에 연결하면 됩니다."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "LTX 유사성 시맨틱 클램프",
+        "inputs": {
+            "model": "모델",
+            "clip": "clip",
+            "positive": "긍정 프롬프트",
+            "reference_info": "참조 정보"
+        },
+        "widgets": {
+            "suppression_strength": "억제 강도",
+            "face_modifier_text": "얼굴 수식 텍스트",
+            "similarity_threshold": "유사도 임계값",
+            "auto_threshold": "자동 임계값",
+            "similarity_sharpness": "유사도 선명도",
+            "suppression_floor": "억제 하한",
+            "top_k": "top_k",
+            "soft_edge_frac": "소프트 엣지 비율",
+            "override_face_bbox": "얼굴 박스 재정의",
+            "bypass": "바이패스",
+            "debug": "디버그"
+        },
+        "outputs": {},
+        "description": "attn2 영역 내부의 얼굴 바운딩 박스 영역에서 시맨틱 텍스트 토큰 억제를 구현합니다. 임베딩 공간과 수식 어휘 표의 대응 관계를 이용해 프롬프트 속 얼굴 수식 토큰을 인식하고, 해당 토큰의 이 영역에 대한 어텐션을 선택적으로 억제합니다. 지원 중단된 LikenessClamp의 균일 진폭 배율 방식을 대체합니다."
+    }
+}

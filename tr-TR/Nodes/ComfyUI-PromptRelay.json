@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "İstem Rölesi Kodlama",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Boş Latent video — boyutlar şeklinden okunur.",
+            "global_prompt": "Genel istem",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Tüm video için koşullandırma ayarlar. Kalıcı karakterleri, nesneleri ve sahne arka planını çapalar.",
+            "local_prompts": "Bölüm istemleri",
+            "Ordered prompts for each temporal segment, separated by |": "Her zaman dilimi için sıralı istemler, | ile ayrılmış",
+            "segment_lengths": "Bölüm uzunluğu",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "Her bölüm için virgülle ayrılmış piksel uzayı kare sayısı. Boş bırakılırsa otomatik olarak eşit dağıtılır.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Ceza sönümleme parametresi. Yaklaşık 0.1'in altındaki değerler keskin sınırlar üretir (makaledeki varsayılan değer 0.001). Daha yumuşak geçişler için 0.5 veya daha yüksek değerleri deneyebilirsiniz.",
+            "relay_options": "Röle seçenekleri",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "İsteğe bağlı akış düzeyinde gelişmiş ayar. İstem Rölesi Gelişmiş Seçenekleri düğümüne bağlayın."
+        },
+        "outputs": {
+            "model": "Model çıkışı",
+            "positive": "Olumlu koşullandırma"
+        },
+        "description": "Genel istemi zamansal bölüm istemleriyle birlikte kodlar ve modele istem rölesi zamanlama kontrolü yaması uygular. Bölüm istemleri | ile ayrılır. Negatif istem için lütfen standart CLIP metin kodlama düğümünü kullanın."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "İstem Rölesi Kodlama (Zaman Çizelgesi)",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "Boş Latent video — boyutlar şeklinden okunur.",
+            "global_prompt": "Genel istem",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "Tüm video için koşullandırma ayarlar. Kalıcı karakterleri, nesneleri ve sahne arka planını çapalar.",
+            "max_frames": "Maks kare sayısı",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "Zaman çizelgesinin toplam uzunluğu (piksel uzayı kare sayısı). Yalnızca düzenleyicinin görsel ölçeği için kullanılır.",
+            "timeline_data": "Zaman çizelgesi verisi",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "Zaman çizelgesi düzenleyicinin JSON durumu (otomatik yönetilir, lütfen elle düzenlemeyin).",
+            "local_prompts": "Bölüm istemleri",
+            "Auto-populated from the timeline editor.": "Zaman çizelgesi düzenleyiciden otomatik doldurulur.",
+            "segment_lengths": "Bölüm uzunluğu",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "Zaman çizelgesi düzenleyiciden otomatik doldurulur (piksel uzayı kare sayısı).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "Ceza sönümleme parametresi. Yaklaşık 0.1'in altındaki değerler keskin sınırlar üretir (makaledeki varsayılan değer 0.001). Daha yumuşak geçişler için 0.5 veya daha yüksek değerleri deneyebilirsiniz.",
+            "fps": "Kare hızı",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "Saniye başına kare sayısı — yalnızca time_units '秒' olarak ayarlandığında zaman çizelgesi düzenleyicideki zaman gösterimini etkiler.",
+            "time_units": "Zaman birimi",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "Cetveli, bölüm aralıklarını, uzunluk girdilerini ve toplamı kare veya saniye olarak gösterir. Dahili depolama her zaman piksel uzayı kare sayısıdır.",
+            "relay_options": "Röle seçenekleri",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "İsteğe bağlı akış düzeyinde gelişmiş ayar. İstem Rölesi Gelişmiş Seçenekleri düğümüne bağlayın."
+        },
+        "widgets": {
+            "max_frames": "Maks kare sayısı",
+            "fps": "Kare hızı",
+            "time_units": "Zaman birimi",
+            "frames": "Kare",
+            "seconds": "Saniye"
+        },
+        "outputs": {
+            "model": "Model çıkışı",
+            "positive": "Olumlu koşullandırma"
+        },
+        "description": "İstem Rölesi Kodlama ile aynıdır, ancak bölüm istemleri ve bölüm uzunlukları, zaman çizelgesinde sürüklenebilir bloklar olarak görsel şekilde düzenlenir. max_frames girdisi yalnızca zaman çizelgesi ölçeğini ayarlar (piksel uzayı) — gerçek kare sayısı yine latent'ten okunur."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "İstem Rölesi Kodlama (Akıllı)",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "Genel istem",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "Tüm video için koşullandırma ayarlar. Boş bırakılırsa, smart_prompt içinde ayrıştırılan ilk bölüm otomatik olarak genel çapa olarak kullanılır.",
+            "smart_prompt": "Akıllı istem",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Akıllı sözdizimiyle istem girin:\n1. Satır içi: '第一段文字 [0-50] | 第二段文字 [50-100]'\n2. Blok: '第一段：\n第一段文字\n第二段：\n第二段文字'\nSözdizimi otomatik olarak kaldırılır ve eşit veya orantılı olarak normalleştirilir.",
+            "normalize_by_tokens": "Token bazında normalleştir",
+            "If true, scales the calculated length of each segment by its token count.": "Doğruysa, hesaplanan uzunluğu her bölümün token sayısına göre ölçekler.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token bazında normalleştir"
+        },
+        "outputs": {
+            "model": "Model çıkışı",
+            "positive": "Olumlu koşullandırma"
+        },
+        "description": "[0-50] veya blok başlığı ('第一段：' gibi) sözdizimini ayrıştırır ve bölüm uzunluklarını otomatik olarak hesaplar."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "İstem Rölesi Akıllı Kodlama Testi",
+        "inputs": {
+            "smart_prompt": "Akıllı istem",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "Akıllı sözdizimiyle istem girin:\n1. Satır içi: '第一段文字 [0-50] | 第二段文字 [50-100]'\n2. Blok: '第一段：\n第一段文字\n第二段：\n第二段文字'\nSözdizimi otomatik olarak kaldırılır ve eşit veya orantılı olarak normalleştirilir.",
+            "normalize_by_tokens": "Token bazında normalleştir",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token bazında normalleştir"
+        },
+        "outputs": {
+            "parsed_output": "Ayrıştırma çıkışı"
+        },
+        "description": "Test amacıyla ayrıştırılmış sözdizimini çıkarır."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "İstem Rölesi Gelişmiş Seçenekleri",
+        "inputs": {
+            "video_strength": "Video şiddeti",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "Video zaman cezasının çarpanı. 0, video bölümlendirmeyi devre dışı bırakır. En çok 0-1 aralığında kullanışlıdır ve sınırları yumuşatır; >1 değerleri varsayılan epsilon (1e-3) ile hızla doygunlaşır; çünkü sapma, uzak token'ları sıfırlamak için zaten yeterince büyüktür. >1'in belirgin bir etki yaratması için epsilon'u yaklaşık 0.1 veya daha yüksek bir değere çıkarmanız gerekir.",
+            "video_window_scale": "Video pencere ölçekleme",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Sabit saplama bölgesini ölçekler (varsayılan L/2 - 2 kare). <1 yumuşak zayıflamanın daha erken başlamasını sağlar; >1 sert bölgesini genişletir. 0 saplamayı bir noktaya indirger — zayıflama doğrudan bölümün orta noktasından başlar (varsayılandan daha keskin, daha yumuşak değil).",
+            "audio_epsilon": "Ses epsilon",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "Ses akışının epsilon değeri. 0 = kodlayıcının ana epsilon değerini devralır.",
+            "audio_strength": "Ses şiddeti",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "Ses zaman cezasının çarpanı. 0, sesin görsel geçişler arasında sızmasına izin verir. En çok 0-1 aralığında kullanışlıdır; >1 değerleri varsayılan epsilon (1e-3) ile hızla doygunlaşır — >1'in belirgin bir etki yaratması için audio_epsilon'u yaklaşık 0.1 veya daha yüksek bir değere çıkarmanız gerekir.",
+            "audio_window_scale": "Ses penceresi ölçeği",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "Ses akışının düz çapa bölgesinin genişliğini ölçekler. <1, yumuşak sönümlemenin daha erken başlamasını sağlar; >1, katı bölgeyi genişletir. 0, çapayı tek bir noktaya daraltır — sönümleme hemen bölümün orta noktasından başlar (varsayılandan daha yumuşak değil, daha keskindir)."
+        },
+        "widgets": {
+            "video_strength": "Video şiddeti",
+            "video_window_scale": "Video pencere ölçekleme",
+            "audio_epsilon": "Ses epsilon",
+            "audio_strength": "Ses şiddeti",
+            "audio_window_scale": "Ses penceresi ölçeği"
+        },
+        "outputs": {
+            "relay_options": "Röle seçenekleri"
+        },
+        "description": "İsteğe bağlı akış düzeyinde zamanlama cezası ayarı. İstem rölesi kodlayıcının Röle seçenekleri girdisine bağlayın. Ses alanı yalnızca LTX2'yi etkiler."
+    }
+}

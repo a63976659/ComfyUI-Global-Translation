@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "קידוד ממסר פרומפטים",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "וידאו Latent ריק — הממדים נקראים מהצורה שלו.",
+            "global_prompt": "פרומפט גלובלי",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "מגדיר את התנאים לכל הווידאו. מעגן דמויות, אובייקטים ורקעי סצנה מתמשכים.",
+            "local_prompts": "פרומפט מקוטע",
+            "Ordered prompts for each temporal segment, separated by |": "פרומפטים לפי סדר לכל מקטע זמן, מופרדים ב-|",
+            "segment_lengths": "אורך קטע",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "מספר פריימים במרחב הפיקסלים לכל קטע, מופרדים בפסיקים. השאר ריק לחלוקה אחידה אוטומטית.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "פרמטר דעיכת העונש. כל ערך נמוך מ-0.1 בערך ייצור גבולות חדים (ברירת המחדל במאמר היא 0.001). למעבר רך יותר, אפשר לנסות 0.5 או גבוה יותר.",
+            "relay_options": "אפשרויות ממסר",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "כוונון מתקדם אופציונלי ברמת הזרם. חבר את צומת האפשרויות המתקדמות של ממסר הפרומפטים."
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי"
+        },
+        "description": "מקודד יחד את הפרומפט הגלובלי עם פרומפטים מחולקים לפי זמן, ומחיל על המודל טלאי של בקרת תזמון מסוג ממסר פרומפטים. הפרומפטים של המקטעים מופרדים ב-|. לפרומפט השלילי השתמש בצומת קידוד הטקסט הסטנדרטי של CLIP."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "קידוד ממסר פרומפטים (ציר זמן)",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "וידאו Latent ריק — הממדים נקראים מהצורה שלו.",
+            "global_prompt": "פרומפט גלובלי",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "מגדיר את התנאים לכל הווידאו. מעגן דמויות, אובייקטים ורקעי סצנה מתמשכים.",
+            "max_frames": "מספר פריימים מרבי",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "האורך הכולל של ציר הזמן (מספר פריימים במרחב הפיקסלים). לשימוש בקנה המידה החזותי של העורך בלבד.",
+            "timeline_data": "נתוני ציר הזמן",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "מצב JSON של עורך ציר הזמן (מנוהל אוטומטית; אין לערוך ידנית).",
+            "local_prompts": "פרומפט מקוטע",
+            "Auto-populated from the timeline editor.": "ממולא אוטומטית מעורך ציר הזמן.",
+            "segment_lengths": "אורך קטע",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "מילוי אוטומטי מעורך ציר הזמן (מספר פריימים במרחב הפיקסלים).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "פרמטר דעיכת העונש. כל ערך נמוך מ-0.1 בערך ייצור גבולות חדים (ברירת המחדל במאמר היא 0.001). למעבר רך יותר, אפשר לנסות 0.5 או גבוה יותר.",
+            "fps": "קצב פריימים",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "פריימים לשנייה — משפיע על תצוגת הזמן בעורך ציר הזמן רק כש-time_units מוגדר ל-'שניות'.",
+            "time_units": "יחידות זמן",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "מציג את הסרגל, טווחי המקטעים, קלטי האורך והסכום הכולל בפריימים או בשניות. האחסון הפנימי הוא תמיד מספר פריימים במרחב הפיקסלים.",
+            "relay_options": "אפשרויות ממסר",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "כוונון מתקדם אופציונלי ברמת הזרם. חבר את צומת האפשרויות המתקדמות של ממסר הפרומפטים."
+        },
+        "widgets": {
+            "max_frames": "מספר פריימים מרבי",
+            "fps": "קצב פריימים",
+            "time_units": "יחידות זמן",
+            "frames": "פריים",
+            "seconds": "שניות"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי"
+        },
+        "description": "זהה לקידוד ממסר הפרומפטים, אבל הפרומפט המקוטע ואורך הקטע נערכים חזותית כבלוקים נגררים על ציר הזמן. קלט max_frames רק מגדיר את קנה המידה של ציר הזמן (מרחב פיקסלים) — מספר הפריימים בפועל עדיין נקרא מ-latent."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "קידוד ממסר פרומפטים (חכם)",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "פרומפט גלובלי",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "מגדיר את התנאים לכל הווידאו. אם משאירים ריק, נעשה שימוש אוטומטי במקטע הראשון שפוענח מ-smart_prompt כעוגן גלובלי.",
+            "smart_prompt": "פרומפט חכם",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "הזן פרומפטים בתחביר חכם:\n1. סגנון בשורה: 'טקסט המקטע הראשון [0-50] | טקסט המקטע השני [50-100]'\n2. סגנון בלוקים: 'מקטע ראשון：\nטקסט המקטע הראשון\nמקטע שני：\nטקסט המקטע השני'\nהתחביר מוסר אוטומטית והאורכים מנורמלים באופן אחיד או פרופורציונלי.",
+            "normalize_by_tokens": "נרמול לפי Token",
+            "If true, scales the calculated length of each segment by its token count.": "אם הערך הוא אמת, האורך מחושב בקנה מידה לפי מספר ה-token של כל מקטע.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "נרמול לפי Token"
+        },
+        "outputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי"
+        },
+        "description": "מנתח תחביר כמו [0-50] או כותרות בלוקים (למשל 'מקטע ראשון：'), ומחשב אוטומטית את אורך המקטעים."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "בדיקת קידוד חכם של ממסר פרומפטים",
+        "inputs": {
+            "smart_prompt": "פרומפט חכם",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "הזן פרומפטים בתחביר חכם:\n1. סגנון בשורה: 'טקסט המקטע הראשון [0-50] | טקסט המקטע השני [50-100]'\n2. סגנון בלוקים: 'מקטע ראשון：\nטקסט המקטע הראשון\nמקטע שני：\nטקסט המקטע השני'\nהתחביר מוסר אוטומטית והאורכים מנורמלים באופן אחיד או פרופורציונלי.",
+            "normalize_by_tokens": "נרמול לפי Token",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "נרמול לפי Token"
+        },
+        "outputs": {
+            "parsed_output": "פלט הפענוח"
+        },
+        "description": "פולט את התחביר המנותח למטרות בדיקה."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "אפשרויות מתקדמות של ממסר פרומפטים",
+        "inputs": {
+            "video_strength": "עוצמת וידאו",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "מכפיל של עונש הזמן של הווידאו. 0 משבית את קיטוע הווידאו. הכי שימושי בטווח 0-1, שמרכך את הגבולות; ערך >1 מגיע לרוויה במהירות עם epsilon ברירת המחדל (1e-3), כי הסטייה כבר גדולה מספיק כדי לאפס token רחוקים. כדי שערך >1 ייתן אפקט בולט, צריך להעלות את epsilon לכ-0.1 או יותר.",
+            "video_window_scale": "קנה מידה של חלון הווידאו",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "משנה את קנה המידע של אזור העוגן השטוח (ברירת המחדל L/2 - 2 פריימים). ערכים <1 גורמים לדעיכה הרכה להתחיל מוקדם יותר; >1 מרחיבים את האזור הקשיח. 0 מצמצם את העוגן לנקודה — הדעיכה מתחילה מיד מאמצע הקטע (חד מברירת המחדל, לא רך יותר).",
+            "audio_epsilon": "אודיו epsilon",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "ה-epsilon של זרם האודיו. 0 = יורש את ה-epsilon הראשי של המקודד.",
+            "audio_strength": "עוצמת אודיו",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "מכפיל של עונש הזמן באודיו. 0 מאפשר לאודיו לדלוף בין מעברים חזותיים. הכי שימושי בטווח 0-1; ערכים >1 רווים במהירות עם epsilon ברירת המחדל (1e-3) — צריך להעלות את audio_epsilon לכ-0.1 או יותר כדי שערכים >1 ייצרו אפקט בולט.",
+            "audio_window_scale": "קנה מידה של חלון אודיו",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "קונה מידה את רוחב אזור העגינה השטוח של זרם האודיו. <1 מתחיל את הדעיכה הרכה מוקדם יותר; >1 מרחיב את האזור הקשיח. 0 מכווץ את העגינה לנקודה אחת — הדעיכה מתחילה מיד מנקודת האמצע של הקטע (חד יותר מברירת המחדל, לא רך יותר)."
+        },
+        "widgets": {
+            "video_strength": "עוצמת וידאו",
+            "video_window_scale": "קנה מידה של חלון הווידאו",
+            "audio_epsilon": "אודיו epsilon",
+            "audio_strength": "עוצמת אודיו",
+            "audio_window_scale": "קנה מידה של חלון אודיו"
+        },
+        "outputs": {
+            "relay_options": "אפשרויות ממסר"
+        },
+        "description": "כוונון אופציונלי של עונש תזמון ברמת הזרם. חבר אל קלט אפשרויות הממסר של מקודד ממסר הפרומפטים. שדות האודיו משפיעים רק על LTX2."
+    }
+}

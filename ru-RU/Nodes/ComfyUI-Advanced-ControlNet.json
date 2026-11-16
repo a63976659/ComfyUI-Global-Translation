@@ -1,0 +1,656 @@
+{
+    "ACN_ControlNet++LoaderSingle": {
+        "title": "Загрузчик ControlNet++ (отдельный)🛂🅐🅒🅝",
+        "widgets": {
+            "name": "Имя",
+            "control_type": "Тип контроля"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ControlNetLoaderAdvanced": {
+        "title": "Загрузка модели Advanced ControlNet🛂🅐🅒🅝",
+        "inputs": {
+            "tk_optional": "Интервал кадров"
+        },
+        "widgets": {
+            "control_net_name": "Имя ControlNet"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "DiffControlNetLoaderAdvanced": {
+        "title": "Загрузка модели Advanced ControlNet (обновлённая) 🛂🅐🅒🅝",
+        "inputs": {
+            "model": "Модель",
+            "tk_optional": "Интервал кадров"
+        },
+        "widgets": {
+            "control_net_name": "Имя ControlNet"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_ControlNet++LoaderAdvanced": {
+        "title": "Загрузчик ControlNet++ (расширенный)🛂🅐🅒🅝",
+        "inputs": {
+            "plus_input": "Группа входа ControlNet++"
+        },
+        "widgets": {
+            "name": "Имя"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet",
+            "IMAGE": "Изображение"
+        }
+    },
+    "ACN_ControlNet++InputNode": {
+        "title": "Вход ControlNet++🛂🅐🅒🅝",
+        "inputs": {
+            "image": "Изображение",
+            "prev_plus_input": "Предыдущая группа входа"
+        },
+        "widgets": {
+            "control_type": "Тип контроля"
+        },
+        "outputs": {
+            "PLUS_INPUT": "Группа входа ControlNet++"
+        }
+    },
+    "TimestepKeyframe": {
+        "title": "Интервал кадров",
+        "inputs": {
+            "control_net_weights": "Веса ControlNet",
+            "t2i_adapter_weights": "Веса адаптера T2I",
+            "latent_keyframe": "Ключевой кадр Latent",
+            "prev_timestep_keyframe": "Интервал кадров",
+            "prev_timestep_kf": "Интервал кадров",
+            "cn_weights": "Веса ControlNet",
+            "mask_optional": "Маска"
+        },
+        "widgets": {
+            "start_percent": "Начальная позиция",
+            "strength": "Интенсивность",
+            "null_latent_kf_stre": "Интенсивность пустого ключевого кадра Latent",
+            "null_latent_kf_strength": "Интенсивность пустого ключевого кадра Latent",
+            "inherit_missing": "Автонаследование недостающих значений",
+            "gurantee_usage": "gurantee_usage",
+            "guarantee_steps": "Минимальное число шагов сэмплирования"
+        },
+        "outputs": {
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "TIMESTEP_KF": "Интервал кадров"
+        }
+    },
+    "ACN_TimestepKeyframeInterpolation": {
+        "title": "Интерполяция ключевых кадров по интервалу кадров🛂🅐🅒🅝",
+        "inputs": {
+            "prev_timestep_kf": "Интервал кадров",
+            "cn_weights": "Веса ControlNet",
+            "latent_keyframe": "Ключевой кадр Latent",
+            "mask_optional": "Маска (необязательно)"
+        },
+        "widgets": {
+            "start_percent": "Начальная позиция",
+            "end_percent": "Конечная позиция",
+            "strength_start": "Начальная интенсивность",
+            "strength_end": "Конечная интенсивность",
+            "interpolation": "Способ интерполяции",
+            "intervals": "Количество итераций",
+            "null_latent_kf_strength": "Интенсивность пустого ключевого кадра Latent",
+            "inherit_missing": "Автонаследование недостающих значений",
+            "print_keyframes": "Вывод ключевых кадров в консоль"
+        },
+        "outputs": {
+            "TIMESTEP_KF": "Интервал кадров"
+        }
+    },
+    "ACN_TimestepKeyframeFromStrengthList": {
+        "title": "Интервал кадров: список интенсивностей → ключевые кадры🛂🅐🅒🅝",
+        "inputs": {
+            "prev_timestep_kf": "Интервал кадров",
+            "cn_weights": "Веса ControlNet",
+            "latent_keyframe": "Ключевой кадр Latent",
+            "mask_optional": "Маска (необязательно)",
+            "float_strengths": "Группа интенсивностей (float)"
+        },
+        "widgets": {
+            "start_percent": "Начальная позиция",
+            "end_percent": "Конечная позиция",
+            "null_latent_kf_strength": "Интенсивность пустого ключевого кадра Latent",
+            "inherit_missing": "Автонаследование недостающих значений",
+            "print_keyframes": "Вывод ключевых кадров в консоль"
+        },
+        "outputs": {
+            "TIMESTEP_KF": "Интервал кадров"
+        }
+    },
+    "LatentKeyframe": {
+        "title": "Ключевой кадр Latent",
+        "inputs": {
+            "prev_latent_keyframe": "Ключевой кадр Latent",
+            "prev_latent_kf": "Ключевой кадр Latent"
+        },
+        "widgets": {
+            "batch_index": "Индекс пакета",
+            "strength": "Интенсивность"
+        },
+        "outputs": {
+            "LATENT_KEYFRAME": "Ключевой кадр Latent",
+            "LATENT_KF": "Ключевой кадр Latent"
+        }
+    },
+    "LatentKeyframeGroup": {
+        "title": "Группа ключевых кадров Latent",
+        "inputs": {
+            "prev_latent_keyframe": "Ключевой кадр Latent",
+            "latent_image_opt": "Latent",
+            "prev_latent_kf": "Ключевой кадр Latent",
+            "latent_optional": "Latent"
+        },
+        "widgets": {
+            "index_strengths": "Интенсивности по индексам",
+            "print_keyframes": "Вывод ключевых кадров в консоль"
+        },
+        "outputs": {
+            "LATENT_KEYFRAME": "Ключевой кадр Latent",
+            "LATENT_KF": "Ключевой кадр Latent"
+        }
+    },
+    "LatentKeyframeBatchedGroup": {
+        "title": "Комбинация ключевых кадров Latent",
+        "inputs": {
+            "prev_latent_keyframe": "Ключевой кадр Latent",
+            "prev_latent_kf": "Ключевой кадр Latent",
+            "float_strengths": "Группа интенсивностей (float)"
+        },
+        "widgets": {
+            "strengths": "Интенсивность",
+            "float_strength": "Интенсивность (float)",
+            "print_keyframes": "Вывод ключевых кадров в консоль"
+        },
+        "outputs": {
+            "LATENT_KEYFRAME": "Ключевой кадр Latent",
+            "LATENT_KF": "Ключевой кадр Latent"
+        }
+    },
+    "LatentKeyframeTiming": {
+        "title": "Интерполяция ключевых кадров Latent",
+        "inputs": {
+            "prev_latent_keyframe": "Ключевой кадр Latent",
+            "prev_latent_kf": "Ключевой кадр Latent"
+        },
+        "widgets": {
+            "batch_index_from": "Индекс батча: от",
+            "batch_index_to_excl": "Индекс батча: до (не включая)",
+            "strength_from": "Интенсивность: от",
+            "strength_to": "Интенсивность: до",
+            "interpolation": "Способ интерполяции",
+            "ease-in-out": "Ускорение и замедление",
+            "ease-in": "Ускорение",
+            "ease-out": "Замедление",
+            "linear": "Линейный",
+            "flip_weights": "Инверсия весов",
+            "print_keyframes": "Вывод ключевых кадров в консоль"
+        },
+        "outputs": {
+            "LATENT_KEYFRAME": "Ключевой кадр Latent",
+            "LATENT_KF": "Ключевой кадр Latent"
+        }
+    },
+    "ACN_ReferencePreprocessor": {
+        "title": "Опорный предпроцессор🛂🅐🅒🅝",
+        "inputs": {
+            "image": "Изображение",
+            "vae": "VAE",
+            "latent_size": "Latent"
+        },
+        "outputs": {
+            "proc_IMAGE": "Изображение"
+        }
+    },
+    "ACN_ReferenceControlNet": {
+        "title": "Опорный ControlNet🛂🅐🅒🅝",
+        "widgets": {
+            "reference_type": "Тип опорных данных",
+            "style_fidelity": "Точность стиля",
+            "ref_weight": "Опорный вес"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_ReferenceControlNetFinetune": {
+        "title": "Опорный ControlNet (тонкая настройка)🛂🅐🅒🅝",
+        "widgets": {
+            "attn_style_fidelity": "Точность стиля внимания",
+            "attn_ref_weight": "Опорный вес внимания",
+            "attn_strength": "Интенсивность внимания",
+            "adain_style_fidelity": "Адаптивная инстанс-нормализация (AdaIN): точность стиля",
+            "adain_ref_weight": "Адаптивная инстанс-нормализация (AdaIN): опорный вес",
+            "adain_strength": "Адаптивная инстанс-нормализация (AdaIN): интенсивность"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_ControlNetLoaderAdvanced": {
+        "title": "Загрузчик модели Advanced ControlNet🛂🅐🅒🅝",
+        "inputs": {
+            "_tk_opt": "Интервал кадров"
+        },
+        "widgets": {
+            "cnet": "Имя ControlNet"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_DiffControlNetLoaderAdvanced": {
+        "title": "Загрузчик модели Advanced ControlNet (обновлённый)🛂🅐🅒🅝",
+        "inputs": {
+            "model": "Модель",
+            "_tk_opt": "Интервал кадров"
+        },
+        "widgets": {
+            "cnet": "Имя ControlNet"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_AdvancedControlNetApply": {
+        "title": "Применить Advanced ControlNet🛂🅐🅒🅝",
+        "inputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "control_net": "ControlNet",
+            "image": "Изображение",
+            "mask_optional": "Маска",
+            "timestep_kf": "Интервал кадров",
+            "latent_kf_override": "Переопределение ключевых кадров Latent",
+            "weights_override": "Переопределение весов ControlNet",
+            "model_optional": "Модель (необязательно)"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Начальная позиция",
+            "end_percent": "Конечная позиция"
+        },
+        "outputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "model": "Модель"
+        }
+    },
+    "ScaledSoftControlNetWeights": {
+        "title": "Масштабирование мягких весов ControlNet",
+        "widgets": {
+            "base_multiplier": "Коэффициент",
+            "flip_weights": "Инверсия весов"
+        },
+        "outputs": {
+            "CONTROL_NET_WEIGHTS": "Веса ControlNet",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "SoftControlNetWeights": {
+        "title": "Мягкие веса ControlNet",
+        "widgets": {
+            "weight_00": "Вес 00",
+            "weight_01": "Вес 01",
+            "weight_02": "Вес 02",
+            "weight_03": "Вес 03",
+            "weight_04": "Вес 04",
+            "weight_05": "Вес 05",
+            "weight_06": "Вес 06",
+            "weight_07": "Вес 07",
+            "weight_08": "Вес 08",
+            "weight_09": "Вес 09",
+            "weight_10": "Вес 10",
+            "weight_11": "Вес 11",
+            "weight_12": "Вес 12",
+            "flip_weights": "Инверсия весов"
+        },
+        "outputs": {
+            "CONTROL_NET_WEIGHTS": "Веса ControlNet",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "CustomControlNetWeights": {
+        "title": "Пользовательские веса ControlNet",
+        "widgets": {
+            "weight_00": "Вес 00",
+            "weight_01": "Вес 01",
+            "weight_02": "Вес 02",
+            "weight_03": "Вес 03",
+            "weight_04": "Вес 04",
+            "weight_05": "Вес 05",
+            "weight_06": "Вес 06",
+            "weight_07": "Вес 07",
+            "weight_08": "Вес 08",
+            "weight_09": "Вес 09",
+            "weight_10": "Вес 10",
+            "weight_11": "Вес 11",
+            "weight_12": "Вес 12",
+            "flip_weights": "Инверсия весов"
+        },
+        "outputs": {
+            "CONTROL_NET_WEIGHTS": "Веса ControlNet",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "SoftT2IAdapterWeights": {
+        "title": "Мягкие веса T2I-адаптера",
+        "widgets": {
+            "weight_00": "Вес 00",
+            "weight_01": "Вес 01",
+            "weight_02": "Вес 02",
+            "weight_03": "Вес 03",
+            "flip_weights": "Инверсия весов"
+        },
+        "outputs": {
+            "T2I_ADAPTER_WEIGHTS": "Веса адаптера T2I",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "CustomT2IAdapterWeights": {
+        "title": "Пользовательские веса T2I-адаптера",
+        "widgets": {
+            "weight_00": "Вес 00",
+            "weight_01": "Вес 01",
+            "weight_02": "Вес 02",
+            "weight_03": "Вес 03",
+            "flip_weights": "Инверсия весов"
+        },
+        "outputs": {
+            "T2I_ADAPTER_WEIGHTS": "Веса адаптера T2I",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "LoadImagesFromDirectory": {
+        "title": "Загрузка изображения из пути",
+        "widgets": {
+            "directory": "Путь",
+            "image_load_cap": "Лимит загрузки изображений",
+            "start_index": "Начальный индекс"
+        },
+        "outputs": {
+            "IMAGE": "Изображение",
+            "MASK": "Маска",
+            "INT": "Целое число"
+        }
+    },
+    "ScaledSoftMaskedUniversalWeights": {
+        "title": "Масштабирование мягких весов маски",
+        "inputs": {
+            "mask": "Маска",
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "min_base_multiplier": "Минимальный множитель",
+            "max_base_multiplier": "Максимальный множитель",
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_DefaultUniversalWeights": {
+        "title": "Стандартные веса🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_SparseCtrlRGBPreprocessor": {
+        "title": "Предпроцессор SparseCtrl Sparse Control🛂🅐🅒🅝",
+        "inputs": {
+            "image": "Изображение",
+            "vae": "VAE",
+            "latent_size": "Latent"
+        },
+        "outputs": {
+            "proc_IMAGE": "Изображение"
+        }
+    },
+    "ACN_SparseCtrlMergedLoaderAdvanced": {
+        "title": "Загрузчик SparseCtrl Sparse Control (слияние)🛂🅐🅒🅝",
+        "inputs": {
+            "sparse_method": "Метод разреживания (sparse)",
+            "tk_optional": "Интервал кадров"
+        },
+        "widgets": {
+            "sparsectrl_name": "Имя модели SparseCtrl",
+            "control_net_name": "Имя ControlNet",
+            "use_motion": "Использовать движение",
+            "motion_strength": "Интенсивность движения",
+            "motion_scale": "Масштаб движения"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_SparseCtrlWeightExtras": {
+        "title": "Дополнительные веса SparseCtrl Sparse Control🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "sparse_hint_mult": "Sparse: множитель подсказки",
+            "sparse_nonhint_mult": "Sparse: множитель без подсказки",
+            "sparse_mask_mult": "Sparse: множитель маски"
+        },
+        "outputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        }
+    },
+    "ACN_SparseCtrlLoaderAdvanced": {
+        "title": "Загрузчик SparseCtrl Sparse Control🛂🅐🅒🅝",
+        "inputs": {
+            "sparse_method": "Метод разреживания (sparse)",
+            "tk_optional": "Интервал кадров"
+        },
+        "widgets": {
+            "sparsectrl_name": "Имя модели SparseCtrl",
+            "use_motion": "Использовать движение",
+            "motion_strength": "Интенсивность движения",
+            "motion_scale": "Масштаб движения",
+            "context_aware": "Учёт контекста",
+            "sparse_hint_mult": "Sparse: множитель подсказки",
+            "sparse_nonhint_mult": "Sparse: множитель без подсказки",
+            "sparse_mask_mult": "Sparse: множитель маски"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet"
+        }
+    },
+    "ACN_SparseCtrlIndexMethodNode": {
+        "title": "Метод индексирования SparseCtrl Sparse Control🛂🅐🅒🅝",
+        "widgets": {
+            "indexes": "Индексы"
+        },
+        "outputs": {
+            "SPARSE_METHOD": "Метод разреживания (sparse)"
+        }
+    },
+    "ACN_SparseCtrlSpreadMethodNode": {
+        "title": "Метод распределения SparseCtrl Sparse Control🛂🅐🅒🅝",
+        "widgets": {
+            "spread": "Распределение",
+            "uniform": "Равномерно",
+            "starting": "Начало",
+            "ending": "Конец",
+            "center": "Средняя точка"
+        },
+        "outputs": {
+            "SPARSE_METHOD": "Метод Sparse"
+        }
+    },
+    "ACN_SoftControlNetWeightsSD15": {
+        "title": "Мягкие веса ControlNet (SD15)🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_CustomControlNetWeightsSD15": {
+        "title": "Пользовательские веса ControlNet (SD15)🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_CustomControlNetWeightsFlux": {
+        "title": "Пользовательские веса ControlNet (Flux)🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_SoftT2IAdapterWeights": {
+        "title": "Мягкие веса T2IAdapter🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_CustomT2IAdapterWeights": {
+        "title": "Пользовательские веса T2IAdapter🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_AdvancedControlNetApply_v2": {
+        "title": "Применить Advanced ControlNet V2🛂🅐🅒🅝",
+        "inputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "control_net": "ControlNet",
+            "vae_optional": "Выбор VAE",
+            "image": "Изображение",
+            "timestep_kf": "Интервал кадров",
+            "latent_kf_override": "Переопределение ключевых кадров Latent",
+            "weights_override": "Переопределение весов",
+            "mask_optional": "Необязательная маска"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Время начала",
+            "end_percent": "Время окончания"
+        },
+        "outputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие"
+        }
+    },
+    "ACN_AdvancedControlNetApplySingle_v2": {
+        "title": "Применить Advanced ControlNet, один узел V2🛂🅐🅒🅝",
+        "inputs": {
+            "conditioning": "Условие",
+            "control_net": "ControlNet",
+            "vae_optional": "Выбор VAE",
+            "image": "Изображение",
+            "timestep_kf": "Интервал кадров",
+            "latent_kf_override": "Переопределение ключевых кадров Latent",
+            "weights_override": "Переопределение весов",
+            "mask_optional": "Необязательная маска"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Время начала",
+            "end_percent": "Время окончания"
+        },
+        "outputs": {
+            "CONDITIONING": "Условие",
+            "model_opt": "Выход модели"
+        }
+    },
+    "ACN_CtrLoRALoader": {
+        "title": "Загрузка LoRA ControlNet🛂🅐🅒🅝",
+        "widgets": {
+            "base": "Базовая модель",
+            "lora": "Lora"
+        },
+        "outputs": {
+            "CONTROL_NET": "ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    },
+    "ACN_ExtrasMiddleMult": {
+        "title": "Дополнительная функция: средние веса🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "middle_mult": "Средние веса"
+        },
+        "outputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        }
+    },
+    "ACN_ScaledSoftControlNetWeights": {
+        "title": "Масштабирование мягких весов ControlNet🛂🅐🅒🅝",
+        "inputs": {
+            "cn_extras": "Группа дополнений ControlNet"
+        },
+        "widgets": {
+            "base_multiplier": "Коэффициент",
+            "uncond_multiplier": "Множитель безусловного условия"
+        },
+        "outputs": {
+            "CONTROL_NET_WEIGHTS": "Веса ControlNet",
+            "TIMESTEP_KEYFRAME": "Интервал кадров",
+            "CN_WEIGHTS": "Веса ControlNet",
+            "TK_SHORTCUT": "Интервал кадров"
+        }
+    }
+}

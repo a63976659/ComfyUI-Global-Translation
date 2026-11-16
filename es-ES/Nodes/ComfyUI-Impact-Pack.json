@@ -1,0 +1,3409 @@
+{
+    "ONNXDetectorForEach": {
+        "title": "Detector ONNX fotograma a fotograma",
+        "inputs": {
+            "onnx_detector": "Detector ONNX",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Coeficiente de dilatación",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Umbral de filtro de tamaño mínimo"
+        },
+        "description": ""
+    },
+    "ImpactIntConstSender": {
+        "title": "Emisor de constante entera Impact",
+        "inputs": {
+            "signal": "Señal"
+        },
+        "widgets": {
+            "value": "valor",
+            "link_id": "ID de enlace"
+        },
+        "description": ""
+    },
+    "ImagePasteMasked": {
+        "title": "Pegar imagen con máscara",
+        "inputs": {
+            "destination": "Imagen de destino",
+            "source": "Imagen de origen",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "x": "Coordenada X",
+            "y": "Coordenada Y",
+            "resize_source": "Ajustar el tamaño de la imagen de origen"
+        },
+        "description": ""
+    },
+    "Unsampler": {
+        "title": "Muestreador inverso",
+        "inputs": {
+            "model": "Modelo",
+            "positive": "Texto de prompt positivo",
+            "negative": "Texto de prompt negativo",
+            "latent_image": "Imagen latent"
+        },
+        "widgets": {
+            "steps": "Total de steps",
+            "end_at_step": "Step final",
+            "cfg": "Valor CFG",
+            "sampler_name": "Nombre del muestreador",
+            "scheduler": "Planificador",
+            "normalize": "Normalizar"
+        },
+        "description": ""
+    },
+    "ImpactKSamplerBasicPipe": {
+        "title": "Muestreador K (conducto)",
+        "inputs": {
+            "basic_pipe": "Conducto básico",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Versión en conducto del Muestreador K.\n Al convertir el widget del planificador en entrada, consulte el nodo Adaptador de planificador para resolver problemas de compatibilidad."
+    },
+    "ImpactKSamplerAdvancedBasicPipe": {
+        "title": "Muestreador K (conducto avanzado)",
+        "inputs": {
+            "basic_pipe": "Conducto básico",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "add_noise": "Añadir ruido",
+            "noise_seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "start_at_step": "Paso inicial de denoizado",
+            "end_at_step": "Paso final de denoizado",
+            "return_with_leftover_noise": "Devolver con ruido residual"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "Versión avanzada en conducto del Muestreador K.\n Al convertir el widget del planificador en entrada, consulte el nodo Adaptador de planificador para resolver problemas de compatibilidad."
+    },
+    "CLIPSegDetectorProvider": {
+        "title": "Detector CLIPSeg",
+        "widgets": {
+            "text": "Texto",
+            "blur": "Desenfoque",
+            "threshold": "Umbral",
+            "dilation_factor": "Dilatar"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Detector BBox"
+        },
+        "description": "Envoltorio de CLIPSeg para ofrecer detección BBox."
+    },
+    "SEGSOrderedFilterDetailerHookProvider": {
+        "title": "Gancho de optimización con filtro por orden de Seg",
+        "widgets": {
+            "target": "Objetivo",
+            "order": "Secuencial",
+            "take_start": "Número de orden inicial",
+            "take_count": "Cantidad"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "Gancho de optimización con filtro por rango de Seg, Gancho de optimización con filtro por etiqueta de Seg: existe un nodo envoltorio que ofrece nodos Filtro de Seg creando una Restricción de optimización, para aplicarla en la Optimización facial o en el Detector."
+    },
+    "SEGSRangeFilterDetailerHookProvider": {
+        "title": "Gancho de optimización con filtro por rango de Seg",
+        "widgets": {
+            "target": "Objetivo",
+            "mode": "Modo",
+            "min_value": "Valor mínimo",
+            "max_value": "Valor máximo"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        }
+    },
+    "SEGSLabelFilterDetailerHookProvider": {
+        "title": "Gancho de optimización con filtro por etiqueta de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "Preajuste",
+            "labels": "Etiqueta"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        }
+    },
+    "CustomSamplerDetailerHookProvider": {
+        "title": "Gancho de optimización de muestreo personalizado",
+        "inputs": {
+            "sampler": "Muestreador"
+        },
+        "widgets": {
+            "preset": "Preajuste",
+            "labels": "Etiqueta"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        }
+    },
+    "LamaRemoverDetailerHookProvider": {
+        "title": "Gancho de optimización del algoritmo de inpainting LaMa",
+        "inputs": {
+            "sampler": "Muestreador"
+        },
+        "widgets": {
+            "mask_threshold": "Umbral de máscara",
+            "gaussblur_radius": "Radio del desenfoque gaussiano",
+            "skip_sampling": "Omitir el muestreo"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        }
+    },
+    "EmptySegs": {
+        "title": "Seg vacío",
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Proporciona un Seg vacío."
+    },
+    "SetDefaultImageForSEGS": {
+        "title": "Definir la imagen predeterminada del Seg",
+        "inputs": {
+            "segs": "Seg",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "override": "Sobrescribir"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Si no pasa por el realce de optimización, SEGS solo contendrá información de las regiones detectadas, sin imágenes. Este nodo define una imagen predeterminada para SEGS."
+    },
+    "RemoveImageFromSEGS": {
+        "title": "Quitar imagen del Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactControlNetApplySEGS": {
+        "title": "Aplicar ControlNet a Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Preprocesado de Seg",
+            "control_image": "Imagen de ControlNet"
+        },
+        "widgets": {
+            "strength": "Intensidad"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Para aplicar ControlNet a un Seg debe usar el nodo Preprocessor Provider del Inspire Pack para aprovechar este nodo.\n El Preprocesado Seg y la Imagen de ControlNet pueden aplicarse de forma opcional. Si se proporciona una Imagen de ControlNet, el Preprocesado Seg se ignorará.\n Si se configura como Imagen de ControlNet, puede previsualizar la imagen recortada centrada con Vista previa de Seg (Imagen de ControlNet). La imagen generada por el Preprocesado Seg debe comprobarse mediante la salida Imagen de ControlNet de cada procesador de optimización.\n Este Preprocesado Seg se ejecuta durante la optimización preprocesando en tiempo real la imagen recortada, mientras que la Imagen de ControlNet se recorta y se usa como entrada del Seg al que se aplica ControlNet."
+    },
+    "ImpactControlNetApplyAdvancedSEGS": {
+        "title": "Aplicar ControlNet (avanzado) a Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Preprocesado de Seg",
+            "control_image": "Imagen"
+        },
+        "widgets": {
+            "strength": "Intensidad",
+            "start_percent": "Tiempo de inicio",
+            "end_percent": "Tiempo de fin"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Para aplicar ControlNet a un Seg debe usar el nodo Preprocessor Provider del Inspire Pack para aprovechar este nodo.\n El Preprocesado Seg y la Imagen de ControlNet pueden aplicarse de forma opcional. Si se proporciona una Imagen de ControlNet, el Preprocesado Seg se ignorará.\n Si se configura como Imagen de ControlNet, puede previsualizar la imagen recortada centrada con Vista previa de Seg (Imagen de ControlNet). La imagen generada por el Preprocesado Seg debe comprobarse mediante la salida Imagen de ControlNet de cada procesador de optimización.\n Este Preprocesado Seg se ejecuta durante la optimización preprocesando en tiempo real la imagen recortada, mientras que la Imagen de ControlNet se recorta y se usa como entrada del Seg al que se aplica ControlNet."
+    },
+    "ImpactControlNetClearSEGS": {
+        "title": "Quitar ControlNet del Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Borra el ControlNet aplicado al Seg"
+    },
+    "ImpactDecomposeSEGS": {
+        "title": "Descomposición de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS_HEADER": "Información de cabecera del Seg",
+            "SEG_ELT": "Seg_Elemento"
+        }
+    },
+    "ImpactAssembleSEGS": {
+        "title": "Composición de Seg",
+        "inputs": {
+            "seg_header": "Información de cabecera del Seg",
+            "seg_elt": "Seg_Elemento"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactFrom_SEG_ELT": {
+        "title": "Del elemento Seg",
+        "inputs": {
+            "seg_elt": "Seg_Elemento"
+        },
+        "outputs": {
+            "seg_elt": "Seg_Elemento",
+            "cropped_image": "Imágenes recortadas",
+            "cropped_mask": "Máscaras recortadas",
+            "crop_region": "Región de recorte",
+            "BBox": "Elemento de Seg_BBox",
+            "Seg_ELT_bbox": "BBox del elemento Seg",
+            "control_net_wrapper": "Permutación de ControlNet",
+            "confidence": "Confianza",
+            "label": "Etiqueta"
+        }
+    },
+    "ImpactEdit_SEG_ELT": {
+        "title": "Editar Seg_Elemento",
+        "inputs": {
+            "seg_elt": "Seg_Elemento",
+            "cropped_image_opt": "Imágenes recortadas",
+            "cropped_mask_opt": "Máscaras recortadas",
+            "crop_region_opt": "Región de recorte",
+            "bbox_opt": "Selección de BBox",
+            "control_net_wrapper_opt": "Permutación de ControlNet",
+            "confidence_opt": "Confianza",
+            "label_opt": "Etiqueta"
+        },
+        "outputs": {
+            "Seg_ELT": "Seg_Elemento",
+            "SEG_ELT": "Seg_Elemento"
+        }
+    },
+    "ImpactDilate_Mask_SEG_ELT": {
+        "title": "Dilatación de elementos Seg",
+        "inputs": {
+            "seg_elt": "Seg_Elemento"
+        },
+        "widgets": {
+            "dilation": "Dilatar"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_Elemento"
+        }
+    },
+    "ImpactDilateMask": {
+        "title": "Dilatación de la máscara",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "dilation": "Dilatar"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "ImpactGaussianBlurMask": {
+        "title": "Desenfoque gaussiano de la máscara",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "kernel_size": "Tamaño",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "ImpactDilateMaskInSEGS": {
+        "title": "Dilatación de la máscara de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "dilation": "Dilatar"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactGaussianBlurMaskInSEGS": {
+        "title": "Desenfoque gaussiano de la máscara de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "kernel_size": "Tamaño",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactScaleBy_BBOX_SEG_ELT": {
+        "title": "Escalado de elementos Seg",
+        "inputs": {
+            "seg": "Seg"
+        },
+        "widgets": {
+            "scale_by": "Coeficiente"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_Elemento"
+        }
+    },
+    "ImpactSEGSToMaskBatch": {
+        "title": "De Seg a grupo de máscaras",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "PreviewBridge": {
+        "title": "Vista previa de imagen mediante puente",
+        "inputs": {
+            "images": "Imagen"
+        },
+        "widgets": {
+            "image": "Imagen",
+            "block": "Bloques",
+            "restore_mask": "Restaurar máscara"
+        },
+        "outputs": {
+            "IMAGE": "Imagen",
+            "MASK": "Máscara"
+        },
+        "description": "Este nodo personalizado puede usarse junto con el puente de imágenes al emplear la función Editor de máscaras del espacio Clip."
+    },
+    "PreviewBridgeLatent": {
+        "title": "Vista previa de Latent mediante puente",
+        "inputs": {
+            "latent": "Latent",
+            "vae_opt": "Selección de VAE"
+        },
+        "widgets": {
+            "image": "Imagen",
+            "block": "Bloques",
+            "restore_mask": "Restaurar máscara",
+            "preview_method": "Método de vista previa"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "MASK": "Máscara"
+        },
+        "description": "Este nodo personalizado puede usarse junto con el puente para el espacio latent al emplear la función Editor de máscaras del espacio Clip.\n Si la entrada aporta una variable latent con máscara, muestra dicha máscara; además, la salida de máscara ofrece la máscara definida dentro de la variable latent.\n Si la entrada es un latent sin máscara, devuelve directamente el latent original, pero la salida de máscara devuelve un resultado con toda el área marcada.\n Cuando se define una máscara con el Editor de máscaras, se aplica una máscara al latent y la salida incluye la máscara almacenada; esa misma máscara se emite también como salida de máscara.\n Al conectarlo a Selección de VAE tiene prioridad sobre el Método de vista previa."
+    },
+    "ImageSender": {
+        "title": "Emisor de imágenes",
+        "inputs": {
+            "images": "Imagen"
+        },
+        "widgets": {
+            "filename_prefix": "Prefijo del nombre de archivo",
+            "link_id": "ID de enlace"
+        },
+        "description": "Las imágenes generadas por Emisor de imágenes se envían automáticamente al Receptor de imágenes a través del mismo ID de enlace."
+    },
+    "ImageReceiver": {
+        "title": "Receptor de imágenes",
+        "widgets": {
+            "image": "Imagen",
+            "save_to_workflow": "Guardar en flujos de trabajo",
+            "image_data": "Datos de imagen",
+            "trigger_always": "Activar siempre",
+            "link_id": "ID de enlace"
+        },
+        "outputs": {
+            "IMAGE": "Imagen",
+            "MASK": "Máscara"
+        },
+        "description": "Las imágenes generadas por Emisor de imágenes se envían automáticamente al Receptor de imágenes a través del mismo ID de enlace."
+    },
+    "LatentSender": {
+        "title": "Emisor de Latent",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "widgets": {
+            "filename_prefix": "Prefijo del nombre de archivo",
+            "preview_method": "Método de vista previa",
+            "link_id": "ID de enlace"
+        },
+        "description": "El espacio latent generado en Emisor de Latent se envía automáticamente al Receptor de Latent a través del mismo ID de enlace.\n Además, Emisor de Latent se implementa mediante Vista previa de Latent, que almacena el Latent como carga útil dentro de una miniatura de imagen.\n Debido a la estructura actual de ComfyUI no se puede distinguir entre latentes SDXL y SD1.5/SD2.1, así que las miniaturas se generan decodificándolos con el método de SD1.5."
+    },
+    "LatentReceiver": {
+        "title": "Receptor de Latent",
+        "widgets": {
+            "latent": "Latent",
+            "trigger_always": "Activar siempre",
+            "link_id": "ID de enlace"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "El espacio latent generado en Emisor de Latent se envía automáticamente al Receptor de Latent a través del mismo ID de enlace.\n Además, Emisor de Latent se implementa mediante Vista previa de Latent, que almacena el Latent como carga útil dentro de una miniatura de imagen.\n Debido a la estructura actual de ComfyUI no se puede distinguir entre latentes SDXL y SD1.5/SD2.1, así que las miniaturas se generan decodificándolos con el método de SD1.5."
+    },
+    "ImageMaskSwitch": {
+        "title": "Interruptor de máscara de imagen",
+        "inputs": {
+            "images1": "Imagen1",
+            "mask1": "Máscara 1",
+            "images2": "Imagen2",
+            "mask2": "Máscara 2",
+            "images3": "Imagen 3",
+            "mask3": "Máscara 3",
+            "images4": "Imagen4",
+            "mask4": "Máscara 4",
+            "select": "Selección",
+            "mask1_opt": "Máscara 1",
+            "images2_opt": "Imagen2",
+            "mask2_opt": "Máscara 2",
+            "images3_opt": "Imagen 3",
+            "mask3_opt": "Máscara 3",
+            "images4_opt": "Imagen4",
+            "mask4_opt": "Máscara 4"
+        },
+        "widgets": {
+            "select": "Selección",
+            "sel_mode": "Modo de selección"
+        },
+        "outputs": {
+            "IMAGE": "Imagen",
+            "MASK": "Máscara"
+        },
+        "description": "Entre varias entradas, selecciona y devuelve la indicada por el selector. La primera entrada es obligatoria y las demás son opcionales. No obstante, si la entrada señalada por el selector no está conectada, puede producirse un error."
+    },
+    "LatentSwitch": {
+        "title": "Interruptor de Latent",
+        "inputs": {
+            "input1": "Entrada 1",
+            "latent1": "Latent1",
+            "latent2_opt": "Latent2",
+            "latent3_opt": "Latent3",
+            "latent4_opt": "Latent4"
+        },
+        "widgets": {
+            "select": "Selección",
+            "sel_mode": "Modo de selección"
+        },
+        "outputs": {
+            "selected_index": "Índice de selección",
+            "selected_value": "Seleccionar valor",
+            "selected_label": "Seleccionar etiqueta"
+        },
+        "description": "Entre varias entradas, selecciona y devuelve la indicada por el selector. La primera entrada es obligatoria y las demás son opcionales. No obstante, si la entrada señalada por el selector no está conectada, puede producirse un error."
+    },
+    "SEGSSwitch": {
+        "title": "Interruptor de Seg",
+        "inputs": {
+            "input1": "Entrada 1",
+            "Seg": "Seg1",
+            "segs2_opt": "Seg2",
+            "segs3_opt": "Seg3",
+            "segs4_opt": "Seg4"
+        },
+        "widgets": {
+            "select": "Selección",
+            "sel_mode": "Modo de selección"
+        },
+        "outputs": {
+            "selected_index": "Índice de selección",
+            "selected_value": "Seleccionar valor",
+            "selected_label": "Seleccionar etiqueta"
+        },
+        "description": "Entre varias entradas, selecciona y devuelve la indicada por el selector. La primera entrada es obligatoria y las demás son opcionales. No obstante, si la entrada señalada por el selector no está conectada, puede producirse un error."
+    },
+    "ImpactSwitch": {
+        "title": "Interruptor",
+        "inputs": {
+            "input1": "Entrada 1",
+            "input2": "Entrada 2",
+            "input3": "Entrada 3",
+            "input4": "Entrada 4"
+        },
+        "widgets": {
+            "select": "Selección",
+            "sel_mode": "Modo de selección",
+            "select_on_execution": "Al ejecutar",
+            "select_on_prompt": "Prompt"
+        },
+        "outputs": {
+            "selected_index": "Índice de selección",
+            "selected_value": "Seleccionar valor",
+            "selected_label": "Seleccionar etiqueta"
+        }
+    },
+    "ImpactInversedSwitch": {
+        "title": "Interruptor de inversión",
+        "inputs": {
+            "input": "Entrada"
+        },
+        "widgets": {
+            "sel_mode": "Modo de selección",
+            "select": "Selección"
+        },
+        "outputs": {
+            "*": "Salida"
+        },
+        "description": "A diferencia de Crear lista (cualquiera), acepta una entrada y devuelve una sola de varias salidas"
+    },
+    "ImpactInversedSwtich": {
+        "title": "Interruptor de inversión",
+        "inputs": {
+            "input": "Entrada"
+        },
+        "widgets": {
+            "select": "Selección"
+        },
+        "outputs": {
+            "output1": "Salida 1"
+        }
+    },
+    "SEGSToImageList": {
+        "title": "De Seg a lista de imágenes",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Imagen de reserva"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "ImpactSEGSToMaskList": {
+        "title": "De Seg a lista de máscaras",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "ImpactSEGSConcat": {
+        "title": "Combinar Segs",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSPicker": {
+        "title": "Selección de Seg",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Imagen de reserva"
+        },
+        "widgets": {
+            "picks": "Selección",
+            "pick": "Selección"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Ofrece la función de seleccionar SEGS concretos entre los SEGS de entrada."
+    },
+    "ReencodeLatent": {
+        "title": "Recodificar Latent",
+        "inputs": {
+            "samples": "Latent",
+            "input_vae": "VAE de decodificación",
+            "output_vae": "VAE de codificación"
+        },
+        "widgets": {
+            "overlap": "Zona de solapamiento",
+            "tile_mode": "Modo de bloques",
+            "tile_size": "Tamaño de tesela"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ReencodeLatentPipe": {
+        "title": "Recodificar Latent (conducto)",
+        "inputs": {
+            "samples": "Latent",
+            "input_basic_pipe": "Conducto de decodificación",
+            "output_basic_pipe": "Conducto de codificación"
+        },
+        "widgets": {
+            "tile_mode": "Modo de bloques"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ImpactImageBatchToImageList": {
+        "title": "Lote de imágenes a lista de imágenes",
+        "inputs": {
+            "image": "Imagen"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Convierte un lote de imágenes en una lista de imágenes.\n Puede usar las imágenes generadas en varios lotes para procesarlas."
+    },
+    "ImpactMakeImageList": {
+        "title": "Crear lista de imágenes",
+        "inputs": {
+            "image1": "Imagen"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Convierte varias imágenes en una lista de imágenes."
+    },
+    "ImpactMakeImageBatch": {
+        "title": "Crear lote de imágenes",
+        "inputs": {
+            "image1": "Imagen"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Convierte varias imágenes en un lote de imágenes.\n Las entradas de imagen se pueden ampliar según sea necesario."
+    },
+    "ImpactCombineConditionings": {
+        "title": "Combinar condición",
+        "inputs": {
+            "conditioning1": "Condición 1",
+            "conditioning2": "Condición 2",
+            "conditioning3": "Condición 3",
+            "conditioning4": "Condición 4",
+            "conditioning5": "Condición 5",
+            "conditioning6": "Condición 6",
+            "conditioning7": "Condición 7",
+            "conditioning8": "Condición 8",
+            "conditioning9": "Condición 9",
+            "conditioning10": "Condición 10"
+        },
+        "outputs": {
+            "CONDITIONING": "Condición"
+        },
+        "description": "Acepta varias entradas de condición y las combina en una sola condición."
+    },
+    "ImpactSEGSLabelFilter": {
+        "title": "Filtro por etiqueta de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "Preajuste",
+            "labels": "Etiqueta"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg bloqueado",
+            "remained_SEGS": "Seg restante"
+        }
+    },
+    "ImpactSEGSRangeFilter": {
+        "title": "Filtro por rango de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "Objetivo",
+            "min_value": "Valor mínimo",
+            "max_value": "Valor máximo",
+            "mode": "Modo"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg bloqueado",
+            "remained_SEGS": "Seg restante"
+        }
+    },
+    "ImpactSEGSOrderedFilter": {
+        "title": "Filtro por orden de Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "Objetivo",
+            "order": "Secuencial",
+            "take_start": "Número de orden inicial",
+            "take_count": "Cantidad"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "Seg bloqueado",
+            "remained_SEGS": "Seg restante"
+        }
+    },
+    "ImpactStringSelector": {
+        "title": "Selección de cadena",
+        "widgets": {
+            "strings": "Cadena",
+            "multiline": "Texto multilínea",
+            "select": "Selección"
+        },
+        "outputs": {
+            "STRING": "Cadena"
+        },
+        "description": "Selecciona y devuelve una parte de la cadena. Cuando el modo Texto multilínea está desactivado, devuelve simplemente la cadena de la línea indicada por el selector. Cuando el modo Texto multilínea está activado, divide la cadena según las líneas que empiezan por # y las devuelve. Si el valor de Selección supera el número de elementos, vuelve a contar desde la primera línea y devuelve la que corresponda."
+    },
+    "BitwiseAndMaskForEach": {
+        "title": "Intersección de Seg",
+        "inputs": {
+            "base_segs": "seg base",
+            "mask_segs": "seg enmascarado"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "SubtractMaskForEach": {
+        "title": "Sustracción de Seg",
+        "inputs": {
+            "base_segs": "seg base",
+            "mask_segs": "seg enmascarado"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BitwiseAndMask": {
+        "title": "Intersección de máscaras",
+        "inputs": {
+            "mask1": "Máscara 1",
+            "mask2": "Máscara 2"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "SubtractMask": {
+        "title": "Sustracción de máscaras",
+        "inputs": {
+            "mask1": "Máscara 1",
+            "mask2": "Máscara 2"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "AddMask": {
+        "title": "Suma de máscaras",
+        "inputs": {
+            "mask1": "Máscara 1",
+            "mask2": "Máscara 2"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "ImpactSegsAndMask": {
+        "title": "Máscara de Seg",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Máscara"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSegsAndMaskForEach": {
+        "title": "Máscara de Seg (lote)",
+        "inputs": {
+            "segs": "Seg",
+            "masks": "Máscara"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask": {
+        "title": "Máscara de Seg",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Máscara"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask ForEach": {
+        "title": "Máscara de Seg (lote)",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "Máscara",
+            "masks": "Máscaras"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "MediaPipeFaceMeshToSEGS": {
+        "title": "Malla facial de MediaPipe a Seg",
+        "inputs": {
+            "image": "Imagen"
+        },
+        "widgets": {
+            "crop_factor": "Factor de recorte",
+            "bbox_fill": "Rellenar BBox",
+            "crop_min_size": "Tamaño mínimo de recorte",
+            "drop_size": "Garantizar tamaño mínimo",
+            "dilation": "Dilatar",
+            "face": "Rostro",
+            "mouth": "Boca",
+            "left_eyebrow": "Ceja izquierda",
+            "left_eye": "Ojo izquierdo",
+            "left_pupil": "Pupila izquierda",
+            "right_eyebrow": "Ceja derecha",
+            "right_eye": "Ojo derecho",
+            "right_pupil": "Pupila derecha"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Separa cada punto de referencia de la imagen de la malla facial de mediapipe para crear Segs etiquetados.\n Normalmente la imagen creada por el Preprocesador de malla facial MediaPipe tiene un tamaño reducido.\n Ajusta la imagen de la malla facial de MediaPipe al tamaño original indicado en Selección de imagen de referencia para que las dimensiones coincidan durante el procesado."
+    },
+    "MaskToSEGS_for_AnimateDiff": {
+        "title": "De máscara a Seg (difusión dinámica)",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "crop_factor": "Factor de recorte",
+            "combined": "¿Combinar?",
+            "bbox_fill": "Rellenar BBox",
+            "drop_size": "Garantizar tamaño mínimo",
+            "contour_fill": "Rellenar contorno"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Genera Segs para la difusión dinámica según la máscara."
+    },
+    "MaskToSEGS": {
+        "title": "De máscara a Seg",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "crop_factor": "Factor de recorte",
+            "combined": "¿Combinar?",
+            "bbox_fill": "Rellenar BBox",
+            "drop_size": "Garantizar tamaño mínimo",
+            "contour_fill": "Rellenar contorno"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Genera Segs a partir de la máscara."
+    },
+    "ToBinaryMask": {
+        "title": "Binarización de la máscara",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "threshold": "Umbral"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Separa la máscara generada, con valores alfa entre 0 y 255, en 0 y 255. Las partes no nulas siempre se fijan a 255."
+    },
+    "MasksToMaskList": {
+        "title": "De máscara a lista de máscaras",
+        "inputs": {
+            "masks": "Máscara"
+        },
+        "widgets": {
+            "threshold": "Umbral"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Este nodo convierte máscaras en formato de lote en una lista de máscaras individuales."
+    },
+    "MaskListToMaskBatch": {
+        "title": "De lista de máscaras a máscara",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Este nodo convierte una lista de máscaras en un lote de máscaras."
+    },
+    "ImageListToImageBatch": {
+        "title": "Lista de imágenes a lote de imágenes",
+        "inputs": {
+            "images": "Imagen"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Convierte una lista de imágenes en un lote de imágenes."
+    },
+    "SegsToCombinedMask": {
+        "title": "De Seg a máscara",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "RemoveNoiseMask": {
+        "title": "Quitar máscara de ruido",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "DetailerForEach": {
+        "title": "Optimización local",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "scheduler_func_opt": "Función del planificador",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "wildcard": "Prompt",
+            "max_retries": "Número máximo de reintentos"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS) amplía según el Tamaño de guía y después repara, reforzando así la optimización.\n Prompt ofrece una función parecida al ‘Codificador de prompts (Impact)’ y admite prompts y carga de LoRA. Además, permite aplicar prompts distintos a regiones detectadas diferentes.\n Consulte la página del tutorial para más información.\n Nota: si deja este Prompt vacío se ignorará esta entrada."
+    },
+    "DetailerForEachAutoRetry": {
+        "title": "Optimización (segs) con reintento automático",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "scheduler_func_opt": "Función del planificador",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "wildcard": "Prompt",
+            "max_retries": "Número máximo de reintentos"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "DetailerForEachPipe": {
+        "title": "Optimización local (conducto)",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "detailer_hook": "Restricción de optimización",
+            "scheduler_func_opt": "Función del planificador",
+            "refiner_basic_pipe_opt": "Selección del conducto base de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "wildcard": "Prompt",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "refiner_ratio": "Relación de optimización"
+        },
+        "outputs": {
+            "IMAGE": "Imagen",
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS) amplía según el Tamaño de guía y después repara, reforzando así la optimización."
+    },
+    "DetailerForEachDebug": {
+        "title": "Optimización local (avanzada)",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "scheduler_func_opt": "Función del planificador",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "wildcard": "Prompt"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "cropped": "Imágenes recortadas",
+            "cropped_refined": "Imagen de optimización",
+            "cropped_refined_alpha": "Canal de optimización",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS) amplía según el Tamaño de guía y después repara, reforzando así la optimización."
+    },
+    "DetailerForEachDebugPipe": {
+        "title": "Optimización local (conducto avanzado)",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "detailer_hook": "Restricción de optimización",
+            "scheduler_func_opt": "Función del planificador",
+            "refiner_basic_pipe_opt": "Selección del conducto base de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "wildcard": "Prompt",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "refiner_ratio": "Relación de optimización"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "cropped": "Imágenes recortadas",
+            "cropped_refined": "Imagen de optimización",
+            "cropped_refined_alpha": "Canal de optimización",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS) amplía según el Tamaño de guía y después repara, reforzando así la optimización."
+    },
+    "DetailerForEachPipeForAnimateDiff": {
+        "title": "Optimización local de AnimatedDiff (conducto)",
+        "inputs": {
+            "image_frames": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "detailer_hook": "Restricción de optimización",
+            "scheduler_func_opt": "Función del planificador",
+            "refiner_basic_pipe_opt": "Conducto base de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "refiner_ratio": "Relación de optimización"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (Seg), amplía tomando el Tamaño de guía como base y refuerza la optimización mediante inpainting.\nEste nodo es un realce de optimización especial diseñado para mejorar vídeos como los de AnimateDiff, capaz de gestionar máscaras por lote repartidas en varios fotogramas dentro de Seg."
+    },
+    "NoiseInjectionDetailerHookProvider": {
+        "title": "Gancho de optimización de inserción de ruido",
+        "widgets": {
+            "schedule_for_cycle": "Programación periódica",
+            "source": "Dispositivo de generación",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "start_strength": "Intensidad inicial",
+            "end_strength": "Intensidad final",
+            "strength": "Intensidad"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "Restricción de optimización es un Gancho dentro de la Optimización que inyecta ruido al procesar cada Seg."
+    },
+    "CoreMLDetailerHookProvider": {
+        "title": "Gancho de optimización CoreML",
+        "widgets": {
+            "mode": "Modo"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "CoreML solo admite el muestreo en los tamaños 512x512, 512x768, 768x512 y 768x768.\n El Gancho de optimización CoreML fija con precisión el factor de ampliado del área recortada a este tamaño.\n Al usar este gancho siempre elegirá este tamaño, sea cual sea el Tamaño de guía. Sin embargo, si el Tamaño de guía es demasiado pequeño, se omitirá el paso."
+    },
+    "NoiseInjectionHookProvider": {
+        "title": "Gancho de inserción de ruido",
+        "widgets": {
+            "scheduler": "Planificador",
+            "schedule_for_iteration": "Bucle programado",
+            "source": "Dispositivo de generación",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "start_strength": "Intensidad inicial",
+            "end_strength": "Intensidad final"
+        },
+        "outputs": {
+            "PK_HOOK": "Hook PK"
+        },
+        "description": "En cada iteración del Ampliado iterativo se inyecta ruido en el espacio latent y su intensidad se ajusta según la programación.\n Debe instalar la extensión de nodos BlenderNeko/ComfyUI_Noise.\n La semilla actúa como valor inicial para generar el ruido y se incrementa en 1 en cada iteración a medida que avanza el proceso.\n La fuente determina el tipo de ruido de CPU y de GPU que se va a configurar.\n Actualmente solo hay una programación sencilla disponible: a lo largo de cada iteración la intensidad del ruido cambia de la Intensidad inicial a la Intensidad final."
+    },
+    "UnsamplerDetailerHookProvider": {
+        "title": "Gancho de optimización de muestreo inverso",
+        "inputs": {
+            "model": "Modelo",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "widgets": {
+            "steps": "Pasos",
+            "start_end_at_step": "Inicio y fin en pasos",
+            "end_end_at_step": "Paso final",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "normalize": "Estandarizar",
+            "schedule_for_cycle": "Bucle programado"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "Aplica el muestreador inverso en cada ciclo. Para usar este nodo debe estar instalado ComfyUI_Noise."
+    },
+    "DenoiseSchedulerDetailerHookProvider": {
+        "title": "Gancho de optimización de la programación de denoizado",
+        "widgets": {
+            "schedule_for_cycle": "Bucle programado",
+            "target_denoise": "Denoizado objetivo"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "A medida que avanza el ciclo, la optimización del denoizador cambia hasta llegar al Denoizado objetivo."
+    },
+    "SEGSDetailer": {
+        "title": "Optimización de Seg",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "scheduler_func_opt": "Función del planificador",
+            "refiner_basic_pipe_opt": "Conducto base de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "batch_size": "Tamaño del lote",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "refiner_ratio": "Relación de optimización"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "segs": "Seg",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS), amplía tomando el Tamaño de guía como base y refuerza la optimización mediante inpainting.\n Este nodo actúa directamente sobre SEGS y no sobre la imagen original; si necesita aplicarlo a la imagen original use el nodo 'Pegar SEGS'."
+    },
+    "SEGSDetailerForAnimateDiff": {
+        "title": "Difusión dinámica de la optimización de Seg",
+        "inputs": {
+            "image_frames": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "scheduler_func_opt": "Función del planificador",
+            "refiner_basic_pipe_opt": "Conducto base de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "refiner_ratio": "Relación de optimización"
+        },
+        "outputs": {
+            "segs": "Seg",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Para cada región del conjunto de información de regiones detectadas (SEGS), amplía tomando el Tamaño de guía como base y refuerza la optimización mediante inpainting.\n Este nodo actúa directamente sobre SEGS y no sobre la imagen original; si necesita aplicarlo a la imagen original use el nodo 'Pegar SEGS'.\n Este nodo es un realce de optimización especial diseñado para mejorar vídeos como los de AnimateDiff, capaz de gestionar máscaras por lote repartidas en varios fotogramas dentro de SEGS."
+    },
+    "SEGSPaste": {
+        "title": "Pegar Seg",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "ref_image_opt": "Imagen de referencia"
+        },
+        "widgets": {
+            "feather": "Difuminado"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Nodo que pega de vuelta en la imagen original los SEGS optimizados por el realce de optimización de SEGS."
+    },
+    "SEGSPreview": {
+        "title": "Vista previa de Seg",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "Imagen de reserva"
+        },
+        "widgets": {
+            "alpha_mode": "Modo alfa",
+            "min_alpha": "Valor mínimo de alpha"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "SEGSPreviewCNet": {
+        "title": "Vista previa de Seg (CNet)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "SAMDetectorCombined": {
+        "title": "Fusión de detecciones SAM",
+        "inputs": {
+            "sam_model": "Modelo SAM",
+            "segs": "Seg",
+            "images": "Imagen",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "detection_hint": "Pista de detección",
+            "dilation": "Dilatar",
+            "threshold": "Umbral",
+            "bbox_expansion": "Expansión de BBox",
+            "mask_hint_threshold": "Umbral de detección de máscaras",
+            "mask_hint_use_negative": "Pista de máscara negativa"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Emplea la técnica SAM para extraer de la imagen de entrada el fragmento de la posición indicada por el Seg de entrada y lo devuelve como una máscara unificada."
+    },
+    "SAMDetectorSegmented": {
+        "title": "Segmentación por detección SAM",
+        "inputs": {
+            "sam_model": "Modelo SAM",
+            "segs": "Seg",
+            "images": "Imagen",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "detection_hint": "Pista de detección",
+            "dilation": "Dilatar",
+            "threshold": "Umbral",
+            "bbox_expansion": "Expansión de BBox",
+            "mask_hint_threshold": "Umbral de detección de máscaras",
+            "mask_hint_use_negative": "Pista de máscara negativa"
+        },
+        "outputs": {
+            "combined_mask": "Combinar máscaras",
+            "batch_masks": "Máscaras"
+        },
+        "description": "Es similar a Fusión de detecciones SAM, pero separa y devuelve los segmentos detectados. En una misma región detectada puede haber varios segmentos y por ahora se agrupan de forma arbitraria en tres conjuntos; se espera que esto mejore en el futuro.\n Por eso devuelve Combinar máscaras, que es una máscara unificada, y Máscaras, que son varias máscaras agrupadas en formato de lote.\n Aunque Máscaras quizá no logre una separación completa, ofrece la función de realizar un cierto nivel de división."
+    },
+    "ImpactSAM2VideoDetectorSEGS": {
+        "title": "Detección de vídeo SAM2 a Seg",
+        "inputs": {
+            "sam2_model": "Modelo SAM",
+            "segs": "Seg",
+            "bbox_detector": "Detector BBox",
+            "image_frames": "Fotograma de imagen"
+        },
+        "widgets": {
+            "bbox_threshold": "Umbral de BBox",
+            "sam2_threshold": "Umbral de sam2",
+            "crop_factor": "Coeficiente de distancia focal",
+            "drop_size": "Tamaño del goteo"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Es similar a Detección Seg sencilla, pero usa la técnica de seguimiento de vídeo de SAM2 para generar un objeto SEGS con varias máscaras.\n Para usar este nodo debe seleccionar un modelo SAM2 en SAMLoader."
+    },
+    "BboxDetectorSEGS": {
+        "title": "Detección BBox a Seg",
+        "inputs": {
+            "bbox_detector": "Detector BBox",
+            "detailer_hook": "Restricción de optimización",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Dilatar",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Umbral: controla la magnitud de la reparación; cuanto menor es el umbral, mayor es el efecto de reparación\n ."
+    },
+    "SegmDetectorSEGS": {
+        "title": "Detección Segm a Seg",
+        "inputs": {
+            "segm_detector": "Detector Segm",
+            "detailer_hook": "Restricción de optimización",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Dilatar",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ONNXDetectorSEGS": {
+        "title": "Detección ONNX a Seg",
+        "inputs": {
+            "bbox_detector": "Detector BBox",
+            "detailer_hook": "Restricción de optimización",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Dilatar",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS_for_AD": {
+        "title": "Detección Seg sencilla con difusión dinámica",
+        "inputs": {
+            "bbox_detector": "Detector BBox",
+            "image_frames": "Imagen",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm"
+        },
+        "widgets": {
+            "bbox_threshold": "Umbral de BBox",
+            "bbox_dilation": "Dilatación de BBox",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo",
+            "sub_threshold": "Umbral secundario",
+            "sub_dilation": "Dilatación secundaria",
+            "sub_bbox_expansion": "Expansión de BBox secundaria",
+            "sam_mask_hint_threshold": "Umbral de pista de máscara SAM",
+            "masking_mode": "Modo de bloqueo",
+            "segs_pivot": "Seg principal"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS": {
+        "title": "Detección Seg sencilla",
+        "inputs": {
+            "bbox_detector": "Detector BBox",
+            "image": "Imagen",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm"
+        },
+        "widgets": {
+            "bbox_threshold": "Umbral de BBox",
+            "bbox_dilation": "Dilatación de BBox",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo",
+            "sub_threshold": "Umbral secundario",
+            "sub_dilation": "Dilatación secundaria",
+            "sub_bbox_expansion": "Expansión de BBox secundaria",
+            "sam_mask_hint_threshold": "Umbral de pista de máscara SAM",
+            "post_dilation": "Después de dilatar"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Usa principalmente el Detector BBox y ofrece además un Modelo SAM o el Detector Segm; este nodo genera internamente un Seg mejorado aplicando operaciones de máscara sobre el BBox y el contorno.\nActúa como una herramienta práctica para simplificar un flujo algo complejo."
+    },
+    "ImpactSimpleDetectorSEGSPipe": {
+        "title": "Detección Seg sencilla (conducto)",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "bbox_threshold": "Umbral de BBox",
+            "bbox_dilation": "Dilatación de BBox",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo",
+            "sub_threshold": "Umbral secundario",
+            "sub_dilation": "Dilatación secundaria",
+            "sub_bbox_expansion": "Expansión de BBox secundaria",
+            "sam_mask_hint_threshold": "Umbral de pista de máscara SAM",
+            "post_dilation": "Después de dilatar"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BboxDetectorCombined_v2": {
+        "title": "Detector BBox v2",
+        "inputs": {
+            "bbox_detector": "Detector BBox",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Dilatar"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Detecta cuadros delimitadores y devuelve una máscara desde la imagen de entrada."
+    },
+    "SegmDetectorCombined_v2": {
+        "title": "Detector Segm v2",
+        "inputs": {
+            "segm_detector": "Detector Segm",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "threshold": "Umbral",
+            "dilation": "Dilatar"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Detecta la segmentación y devuelve una máscara desde la imagen de entrada."
+    },
+    "FaceDetailer": {
+        "title": "Optimización facial",
+        "inputs": {
+            "image": "Imagen",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "max_size": "Tamaño máximo",
+            "guide_size_for": "Objetivo de la guía",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "bbox_threshold": "Umbral de BBox",
+            "bbox_dilation": "Dilatación de BBox",
+            "bbox_crop_factor": "Coeficiente de recorte de BBox",
+            "sam_detection_hint": "Pista de detección SAM",
+            "sam_dilation": "Dilatación SAM",
+            "sam_threshold": "Umbral SAM",
+            "sam_bbox_expansion": "Expansión de BBox SAM",
+            "sam_mask_hint_threshold": "Umbral de pista de máscara SAM",
+            "sam_mask_hint_use_negative": "Pista de máscara negativa SAM",
+            "drop_size": "Garantizar tamaño mínimo",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "cropped_refined": "Imagen de optimización",
+            "cropped_enhanced_alpha": "Sección de optimización",
+            "mask": "Máscara",
+            "detailer_pipe": "Conducto de optimización",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Detecta automáticamente objetos concretos en la imagen de entrada con un modelo de detección (bbox, segm, sam) y amplía la región detectada tomando el Tamaño de guía como base para repararla, lo que refuerza la optimización.\nAunque es un nodo diseñado para simplificar el flujo habitual de realce de optimización facial, según el modelo de detección también sirve para diversos usos de reparación automática."
+    },
+    "FaceDetailerPipe": {
+        "title": "Optimización facial (conducto)",
+        "inputs": {
+            "image": "Imagen",
+            "detailer_pipe": "Conducto de optimización",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "max_size": "Tamaño máximo",
+            "guide_size_for": "Objetivo de la guía",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "noise_mask": "Generar solo máscara",
+            "force_inpaint": "Forzar repintado",
+            "bbox_threshold": "Umbral de BBox",
+            "bbox_dilation": "Dilatación de BBox",
+            "bbox_crop_factor": "Coeficiente de recorte de BBox",
+            "sam_detection_hint": "Pista de detección SAM",
+            "sam_dilation": "Dilatación SAM",
+            "sam_threshold": "Umbral SAM",
+            "sam_bbox_expansion": "Expansión de BBox SAM",
+            "sam_mask_hint_threshold": "Umbral de pista de máscara SAM",
+            "sam_mask_hint_use_negative": "Pista de máscara negativa SAM",
+            "drop_size": "Garantizar tamaño mínimo",
+            "refiner_ratio": "Relación de optimización",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "cropped_refined": "Imagen de optimización",
+            "cropped_enhanced_alpha": "Sección de optimización",
+            "mask": "Máscara",
+            "detailer_pipe": "Conducto de optimización",
+            "cnet_images": "Imagen de control"
+        },
+        "description": "Detecta automáticamente objetos concretos en la imagen de entrada con un modelo de detección (bbox, segm, sam) y amplía la región detectada tomando el Tamaño de guía como base para repararla, lo que refuerza la optimización.\nAunque es un nodo diseñado para simplificar el flujo habitual de realce de optimización facial, según el modelo de detección también sirve para diversos usos de reparación automática."
+    },
+    "MaskDetailerPipe": {
+        "title": "Optimización con máscara (conducto)",
+        "inputs": {
+            "image": "Imagen",
+            "mask": "Máscara",
+            "basic_pipe": "Conducto básico",
+            "refiner_basic_pipe_opt": "Conducto base de optimización",
+            "scheduler_func_opt": "Función del planificador",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "guide_size": "Tamaño de guía",
+            "guide_size_for": "Objetivo de la guía",
+            "max_size": "Tamaño máximo",
+            "mask_mode": "Modo de máscara",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Difuminado",
+            "crop_factor": "Factor de recorte",
+            "drop_size": "Garantizar tamaño mínimo",
+            "refiner_ratio": "Relación de optimización",
+            "cycle": "Número de bucles",
+            "inpaint_model": "Modelo de restauración",
+            "noise_mask_feather": "Difuminado de la máscara de ruido",
+            "tiled_encode": "Codificación por bloques",
+            "tiled_decode": "Decodificación por teselas",
+            "bbox_fill": "Relleno de bbox",
+            "contour_fill": "Relleno de contornos",
+            "batch_size": "Tamaño del lote"
+        },
+        "outputs": {
+            "image": "Imagen",
+            "cropped_refined": "Imagen de optimización",
+            "cropped_enhanced_alpha": "Sección de optimización",
+            "basic_pipe": "Conducto básico",
+            "refiner_basic_pipe_opt": "Conducto base de optimización"
+        },
+        "description": "Este nodo de realce de optimización refuerza la optimización ampliando la región indicada por la máscara y reparándola con un escalado basado en el Tamaño de guía."
+    },
+    "ToDetailerPipe": {
+        "title": "Al conducto de optimización",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "Select to add LoRA": "Añadir LoRA",
+            "Select to add Wildcard": "Seleccionar para añadir prompt"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "ToDetailerPipeSDXL": {
+        "title": "Al conducto de optimización (SDXL)",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "refiner_model": "Modelo (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condición positiva (Refiner)",
+            "refiner_negative": "Condición negativa (Refiner)",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "Select to add LoRA": "Añadir LoRA",
+            "Select the LoRA to add to the text": "Seleccionar LoRA",
+            "Select to add Wildcard": "Seleccionar para añadir prompt"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "FromDetailerPipe": {
+        "title": "Desde el conducto de optimización",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "FromDetailerPipe_v2": {
+        "title": "Desde el conducto de optimización v2",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados.\nAñade una salida extra respecto a la generación anterior que exporta directamente la tubería de entrada. Resulta muy útil al Editar conducto base y Editar conducto de optimización."
+    },
+    "FromDetailerPipeSDXL": {
+        "title": "Desde el conducto de optimización (SDXL)",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización",
+            "refiner_model": "Modelo (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condición positiva (Refiner)",
+            "refiner_negative": "Condición negativa (Refiner)"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "EditDetailerPipe": {
+        "title": "Editar conducto de optimización",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "sam_model": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "segm_detector": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Seleccionar para añadir prompt",
+            "Select the LoRA to add to the text": "Seleccionar LoRA",
+            "Select to add LoRA": "Añadir LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para sustituir algunos elementos del Conducto base o del Conducto de optimización."
+    },
+    "DetailerPipeToBasicPipe": {
+        "title": "Del conducto de optimización al conducto base",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "base_basic_pipe": "Conducto básico",
+            "refiner_basic_pipe": "Conducto base de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar el modelo, CLIP, el VAE, la condición positiva y la condición negativa en un Conducto base, o para extraer cada elemento del Conducto base."
+    },
+    "AnyPipeToBasic": {
+        "title": "De cualquier conducto al conducto base",
+        "inputs": {
+            "any_pipe": "Cualquier conducto"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico",
+            "refiner_basic_pipe": "Conducto base de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar el modelo, CLIP, el VAE, la condición positiva y la condición negativa en un Conducto base, o para extraer cada elemento del Conducto base."
+    },
+    "ToBasicPipe": {
+        "title": "Al conducto base",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico"
+        },
+        "description": "Estos nodos sirven para agrupar el modelo, CLIP, el VAE, la condición positiva y la condición negativa en un Conducto base, o para extraer cada elemento del Conducto base."
+    },
+    "FromBasicPipe": {
+        "title": "Desde el conducto base",
+        "inputs": {
+            "basic_pipe": "Conducto básico"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "description": "Estos nodos sirven para agrupar el modelo, CLIP, el VAE, la condición positiva y la condición negativa en un Conducto base, o para extraer cada elemento del Conducto base."
+    },
+    "FromBasicPipe_v2": {
+        "title": "Desde el conducto base v2",
+        "inputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados.\nAñade una salida extra respecto a la generación anterior que exporta directamente la tubería de entrada. Resulta muy útil al Editar conducto base y Editar conducto de optimización."
+    },
+    "EditBasicPipe": {
+        "title": "Editar conducto base",
+        "inputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "outputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico"
+        },
+        "description": "Estos nodos sirven para sustituir algunos elementos del Conducto base o del Conducto de optimización."
+    },
+    "BasicPipeToDetailerPipe": {
+        "title": "Del conducto base al conducto de optimización",
+        "inputs": {
+            "BASIC_PIPE": "Conducto básico",
+            "basic_pipe": "Conducto básico",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Seleccionar para añadir prompt",
+            "Select the LoRA to add to the text": "Seleccionar LoRA",
+            "Select to add LoRA": "Añadir LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "Conducto de optimización",
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "BasicPipeToDetailerPipeSDXL": {
+        "title": "Del conducto base al conducto de optimización (SDXL)",
+        "inputs": {
+            "base_basic_pipe": "Conducto de nodos base",
+            "refiner_basic_pipe": "Conducto base de optimización",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "detailer_hook": "Restricción de optimización"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Seleccionar para añadir prompt",
+            "Select the LoRA to add to the text": "Seleccionar LoRA",
+            "Select to add LoRA": "Añadir LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "Conducto de optimización",
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para agrupar varias entradas (modelo, VAE, etc.) en un Conducto de optimización, o para extraer del Conducto de optimización los elementos agrupados."
+    },
+    "EditDetailerPipeSDXL": {
+        "title": "Editar conducto de optimización (SDXL)",
+        "inputs": {
+            "detailer_pipe": "Conducto de optimización",
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "bbox_detector": "Detector BBox",
+            "sam_model_opt": "Modelo SAM",
+            "sam_model": "Modelo SAM",
+            "segm_detector_opt": "Detector Segm",
+            "segm_detector": "Detector Segm",
+            "detailer_hook": "Restricción de optimización",
+            "refiner_model": "Modelo (Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "Condición positiva (Refiner)",
+            "refiner_negative": "Condición negativa (Refiner)"
+        },
+        "widgets": {
+            "Select to add Wildcard": "Seleccionar para añadir prompt",
+            "Select the LoRA to add to the text": "Seleccionar LoRA",
+            "Select to add LoRA": "Añadir LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "Conducto de optimización"
+        },
+        "description": "Estos nodos sirven para sustituir algunos elementos del Conducto base o del Conducto de optimización."
+    },
+    "LatentPixelScale": {
+        "title": "Escalado de píxeles Latent",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAE",
+            "upscale_model_opt": "Modelo de escalado"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "scale_factor": "Factor de escala",
+            "use_tiled_vae": "Usar VAE por teselas"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "IMAGE": "Imagen"
+        },
+        "description": "Este nodo convierte el espacio latent en espacio de píxeles, lo amplía y lo convierte de nuevo a espacio latent.\n Si se indica un Modelo de escalado, lo usará para ampliar los píxeles y luego los reducirá a la resolución de destino con el método de interpolación indicado en el Método de escalado."
+    },
+    "PixelKSampleUpscalerProvider": {
+        "title": "Escalador de píxeles con muestreo K",
+        "inputs": {
+            "model": "Modelo",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "upscale_model_opt": "Modelo de escalado",
+            "scheduler_func_opt": "Función del planificador",
+            "pk_hook_opt": "Hook PK"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "use_tiled_vae": "Usar VAE por teselas",
+            "tile_size": "Tamaño de tesela"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        },
+        "description": "Ofrece un muestreador K que usa el VAE de decodificación para convertir el latent en píxeles, los amplía y luego usa el VAE de codificación para devolverlo a latent; finalmente realiza el muestreo K.\n Este escalador puede adjuntarse a nodos como Escalado iterativo de Latent para su uso.\n Al igual que Escalado de píxeles Latent, si se indica un Modelo de escalado, lo usará para ampliar los píxeles."
+    },
+    "PixelKSampleUpscalerProviderPipe": {
+        "title": "Escalador de píxeles con muestreo K (conducto)",
+        "inputs": {
+            "basic_pipe": "Conducto básico",
+            "upscale_model_opt": "Modelo de escalado",
+            "scheduler_func_opt": "Función del planificador",
+            "tile_cnet_opt": "Selección de ControlNet en teselas",
+            "pk_hook_opt": "Hook PK"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "use_tiled_vae": "Usar VAE por teselas",
+            "tile_size": "Tamaño de tesela",
+            "tile_cnet_strength": "Intensidad de ControlNet en teselas"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        }
+    },
+    "IterativeLatentUpscale": {
+        "title": "Escalado iterativo de Latent",
+        "inputs": {
+            "samples": "Latent",
+            "upscaler": "Escala"
+        },
+        "widgets": {
+            "upscale_factor": "Factor de escala",
+            "steps": "Pasos",
+            "temp_prefix": "Prefijo",
+            "step_mode": "Modo de pasos"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Toma la escala de entrada y divide el Factor de escala en pasos, luego aplica la Escala de forma iterativa. Usa el espacio latent como entrada y devuelve un espacio latent como resultado."
+    },
+    "IterativeImageUpscale": {
+        "title": "Escalado iterativo de imágenes",
+        "inputs": {
+            "pixels": "Imagen",
+            "upscaler": "Escala",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "upscale_factor": "Factor de escala",
+            "steps": "Pasos",
+            "temp_prefix": "Prefijo",
+            "step_mode": "Modo de pasos"
+        },
+        "outputs": {
+            "image": "Imagen"
+        },
+        "description": "Toma la Escala de entrada y divide el Factor de escala en pasos, luego aplica la Escala de forma iterativa. Recibe imágenes como entrada y devuelve imágenes como resultado.\n Internamente este nodo usa Escalado iterativo (espacio latent)"
+    },
+    "PixelTiledKSampleUpscalerProvider": {
+        "title": "Escalador de píxeles con muestreo K (por teselas)",
+        "inputs": {
+            "model": "Modelo",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "upscale_model_opt": "Modelo de escalado",
+            "pk_hook_opt": "Hook PK",
+            "tile_cnet_opt": "Selección de ControlNet en teselas"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "tile_width": "Anchura de la tesela",
+            "tile_height": "Altura de la tesela",
+            "tiling_strategy": "Estrategia de teselas",
+            "tile_cnet_strength": "Intensidad de ControlNet en teselas",
+            "overlap": "Zona de solapamiento"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        },
+        "description": "Es similar al Escalador de píxeles con muestreo K, pero usa el Muestreador K en teselas y el decodificador/codificador VAE en teselas para evitar problemas de VRAM de GPU a alta resolución.\n Debe instalar la extensión de nodos BlenderNeko/ComfyUI_TiledKSampler."
+    },
+    "SEGSUpscaler": {
+        "title": "Avanzado (Seg)",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "model": "Modelo",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "upscale_model_opt": "Modelo de escalado",
+            "upscaler_hook_opt": "Selección de ganchos avanzada",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "rescale_factor": "Método de escalado",
+            "resampling_method": "Método de remuestreo",
+            "supersample": "Sobremuestreo",
+            "rounding_modulus": "Módulo de redondeo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Anchura de la tesela",
+            "inpaint_model": "Altura de la tesela",
+            "noise_mask_feather": "Difuminado de la máscara de ruido"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "SEGSUpscalerPipe": {
+        "title": "Avanzado (conducto Seg)",
+        "inputs": {
+            "image": "Imagen",
+            "segs": "Seg",
+            "basic_pipe": "Conducto básico",
+            "model": "Modelo",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "upscale_model_opt": "Modelo de escalado",
+            "upscaler_hook_opt": "Selección de ganchos avanzada",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "rescale_factor": "Método de escalado",
+            "resampling_method": "Método de remuestreo",
+            "supersample": "Sobremuestreo",
+            "rounding_modulus": "Módulo de redondeo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "feather": "Anchura de la tesela",
+            "inpaint_model": "Altura de la tesela",
+            "noise_mask_feather": "Difuminado de la máscara de ruido"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    },
+    "PixelTiledKSampleUpscalerProviderPipe": {
+        "title": "Escalador de píxeles con muestreo K (conducto por teselas)",
+        "inputs": {
+            "model": "Modelo",
+            "vae": "VAE",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "upscale_model_opt": "Modelo de escalado",
+            "pk_hook_opt": "Hook PK",
+            "basic_pipe": "Conducto básico",
+            "tile_cnet_opt": "Selección de ControlNet en teselas"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "tile_width": "Anchura de la tesela",
+            "tile_height": "Altura de la tesela",
+            "tiling_strategy": "Estrategia de teselas",
+            "tile_cnet_strength": "Intensidad de ControlNet en teselas"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProvider": {
+        "title": "Escalador de muestreo doble",
+        "inputs": {
+            "base_sampler": "Muestreador básico",
+            "mask_sampler": "Muestreador de máscara",
+            "mask": "Máscara",
+            "vae": "VAE",
+            "full_sampler_opt": "Muestreador global",
+            "upscale_model_opt": "Modelo de escalado",
+            "pk_hook_base_opt": "Restricción base",
+            "pk_hook_mask_opt": "Restricción de máscara",
+            "pk_hook_full_opt": "Restricción global"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "nearest-exact": "Vecino más próximo exacto",
+            "bilinear": "Bilineal",
+            "area": "Área",
+            "full_sample_schedule": "Planificador de muestreo",
+            "interleave1": "Intercalado 1",
+            "interleave2": "Intercalado 2",
+            "interleave3": "Intercalado 3",
+            "last1": "Últimos 1",
+            "last2": "Últimos 2",
+            "interleave1+last1": "Intercalado 1 + últimos 1",
+            "interleave2+last1": "Intercalado 2 + últimos 1",
+            "interleave3+last1": "Intercalado 3 + últimos 1",
+            "use_tiled_vae": "Usar VAE por teselas",
+            "tile_size": "Tamaño de tesela"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProviderPipe": {
+        "title": "Escalador de muestreo doble (conducto)",
+        "inputs": {
+            "base_sampler": "Muestreador básico",
+            "mask_sampler": "Muestreador de máscara",
+            "mask": "Máscara",
+            "basic_pipe": "Conducto básico",
+            "full_sampler_opt": "Muestreador global",
+            "upscale_model_opt": "Modelo de escalado",
+            "pk_hook_base_opt": "Restricción base",
+            "pk_hook_mask_opt": "Restricción de máscara",
+            "pk_hook_full_opt": "Restricción global"
+        },
+        "widgets": {
+            "scale_method": "Método de escalado",
+            "full_sample_schedule": "Planificador de muestreo",
+            "use_tiled_vae": "Usar VAE por teselas",
+            "tile_size": "Tamaño de tesela"
+        },
+        "outputs": {
+            "UPSCALER": "Escala"
+        },
+        "description": "Muestreador que amplía el Muestreador doble para usarlo con el Ampliado iterativo.\n Escalador de muestreo doble (conducto): versión en conducto del Escalador de muestreo doble."
+    },
+    "PixelKSampleHookCombine": {
+        "title": "Combinación de ganchos del muestreador K de píxeles",
+        "inputs": {
+            "hook1": "Gancho 1",
+            "hook2": "Gancho 2"
+        },
+        "outputs": {
+            "PK_HOOK": "Gancho del muestreador K de píxeles"
+        },
+        "description": "Sirve para enlazar dos Ganchos del muestreador K de píxeles. El Gancho 1 se ejecuta primero y después el Gancho 2."
+    },
+    "DenoiseScheduleHookProvider": {
+        "title": "Gancho de denoizado",
+        "widgets": {
+            "schedule_for_iteration": "Bucle programado",
+            "target_denoise": "Denoizado objetivo"
+        },
+        "outputs": {
+            "PK_HOOK": "Hook PK"
+        },
+        "description": "El Ampliado iterativo ofrece un gancho que ajusta de forma progresiva el denoizado hasta el Denoizado objetivo a medida que avanzan los pasos de la iteración.\n Si quiere cambiar a la vez cfg y el denoizado, puede combinar los ganchos del Gancho de CFG y de la Combinación de ganchos del muestreador K de píxeles."
+    },
+    "CfgScheduleHookProvider": {
+        "title": "Gancho de CFG",
+        "widgets": {
+            "schedule_for_iteration": "Bucle programado",
+            "target_cfg": "CFG de destino"
+        },
+        "outputs": {
+            "PK_HOOK": "Hook PK"
+        },
+        "description": "El Ampliado iterativo ofrece un gancho que ajusta de forma progresiva cfg hasta el cfg de destino a medida que avanzan los pasos de la iteración."
+    },
+    "StepsScheduleHookProvider": {
+        "title": "Proveedor de gancho de programación de pasos",
+        "widgets": {
+            "schedule_for_iteration": "Bucle programado",
+            "target_steps": "Pasos objetivo"
+        },
+        "outputs": {
+            "PK_HOOK": "Hook PK"
+        },
+        "description": "El Ampliado iterativo ofrece un gancho que ajusta de forma progresiva los Pasos de muestreo hasta los Pasos objetivo a medida que avanzan los pasos de la iteración."
+    },
+    "DetailerHookCombine": {
+        "title": "Fusión de restricciones de optimización",
+        "inputs": {
+            "hook1": "Gancho 1",
+            "hook2": "Gancho 2"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "Sirve para enlazar dos Restricciones de optimización.\n Similar a la Combinación de ganchos del muestreador K de píxeles."
+    },
+    "UnsamplerHookProvider": {
+        "title": "Gancho de muestreo inverso",
+        "inputs": {
+            "model": "Modelo",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "widgets": {
+            "steps": "Pasos",
+            "start_end_at_step": "Paso de inicio",
+            "end_end_at_step": "Paso final",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "normalize": "Estandarizar",
+            "schedule_for_iteration": "Bucle programado"
+        },
+        "outputs": {
+            "PK_HOOK": "Hook PK"
+        },
+        "description": "Aplica el muestreador inverso en cada iteración. Para usar este nodo debe estar instalado ComfyUI_Noise."
+    },
+    "KSamplerProvider": {
+        "title": "Proveedor de muestreo K (conducto)",
+        "inputs": {
+            "basic_pipe": "Conducto básico",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar"
+        },
+        "outputs": {
+            "KSAMPLER": "Muestreador K"
+        },
+        "description": "Muestreador que permite usar el muestreo K en el Muestreador doble y en el Escalador de muestreo doble."
+    },
+    "TwoSamplersForMask": {
+        "title": "Muestreador doble",
+        "inputs": {
+            "latent_image": "Latent",
+            "base_sampler": "Muestreador básico",
+            "mask_sampler": "Muestreador de máscara",
+            "mask": "Máscara"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Este nodo puede aplicar dos muestreadores según la zona de la máscara. El Muestreador básico actúa donde la máscara vale 0 y el Muestreador de máscara donde vale 1.\n Nota: no se pueden usar las codificaciones latentes generadas con el Codificador VAE de inpainting."
+    },
+    "TiledKSamplerProvider": {
+        "title": "Proveedor de muestreo K (conducto por teselas)",
+        "inputs": {
+            "basic_pipe": "Conducto básico"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "denoise": "Denoizar",
+            "tile_width": "Anchura de la tesela",
+            "tile_height": "Altura de la tesela",
+            "tiling_strategy": "Estrategia de teselas"
+        },
+        "outputs": {
+            "KSAMPLER": "Muestreador K"
+        },
+        "description": "ComfyUI_TiledKSampler es un muestreador que ofrece un Muestreador K.\n Debe instalar la extensión de nodos BlenderNeko/ComfyUI_TiledKSampler."
+    },
+    "KSamplerAdvancedProvider": {
+        "title": "Proveedor de muestreo K (conducto avanzado)",
+        "inputs": {
+            "basic_pipe": "Conducto básico",
+            "sampler_opt": "Selección de muestreador",
+            "scheduler_func_opt": "Función del planificador"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "sampler_name": "Muestreador",
+            "scheduler": "Planificador",
+            "sigma_factor": "Coeficiente sigma"
+        },
+        "outputs": {
+            "KSAMPLER_ADVANCED": "KSampler (avanzado)"
+        },
+        "description": "Muestreador que permite usar el Muestreador K en el Muestreador doble (avanzado) y en el Muestreador regional.\n Al multiplicar la programación de denoizado por el Coeficiente sigma puede ajustar el grado de denoizado según la cantidad de denoizado configurada"
+    },
+    "TwoAdvancedSamplersForMask": {
+        "title": "Muestreador doble (avanzado)",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "Muestreador básico",
+            "mask_sampler": "Muestreador de máscara",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "denoise": "Denoizar",
+            "overlap_factor": "Coeficiente de cobertura"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Muestreador doble es similar a Muestreador doble (avanzado), pero difieren en su funcionamiento. Muestreador doble muestrea la zona de la máscara solo después de terminar todos los muestreos de la zona base.\n En cambio, Muestreador doble (avanzado) muestrea de forma secuencial la zona base y la zona de máscara en cada paso."
+    },
+    "ImpactWildcardProcessor": {
+        "title": "Procesador de prompts",
+        "widgets": {
+            "wildcard_text": "Texto del prompt",
+            "populated_text": "Texto de entrada",
+            "mode": "¿Tiene entrada?",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "Select to add Wildcard": "Seleccionar para añadir prompt"
+        },
+        "outputs": {
+            "processed text": "Procesar texto"
+        },
+        "description": "Este nodo procesa prompts de texto escritos con la sintaxis de prompts y devuelve el texto ya procesado.\nEl texto se genera mediante el prompt de Procesar texto. Si el modo se fija en «Relleno», cada ejecución genera un prompt dinámico y lo vuelca en el segundo cuadro de texto. Si el modo se fija en «Fijo», el contenido del segundo cuadro de texto permanece sin cambios.\n Cuando se genera una imagen con el modo «Fijo», el prompt usado en esa generación concreta se guarda en los metadatos."
+    },
+    "ImpactWildcardEncode": {
+        "title": "Codificación del prompt",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "wildcard_text": "Texto del prompt",
+            "populated_text": "Texto de entrada",
+            "mode": "¿Tiene entrada?",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "Select to add Wildcard": "Seleccionar para añadir prompt",
+            "Select to add LoRA": "Añadir LoRA"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "populated_text": "Texto de relleno",
+            "conditioning": "Condición"
+        },
+        "description": "Similar al procesador de prompts, también ofrece la carga de LoRA.\n(p. ej. <lora:some_awesome_lora:0.7:1.2>). El prompt rellenado se codifica con clip después de completar toda la carga de LoRA.\n Con 'Inspire Pack' instalado puede aplicarse la sintaxis LBW (pesos por bloques de LoRA).\n <lora:chunli:1.0:1.0:LBW=B11:0,0,0,0,0,0,0,0,0,0,A,0,0,0,0,0,0;A=0.;>, \n <lora:chunli:1.0:1.0:LBW=0,0,0,0,0,0,0,0,0,0,A,B,0,0,0,0,0;A=0.5;B=0.2;>,\n <lora:chunli:1.0:1.0:LBW=SD-MIDD;>"
+    },
+    "RegionalPrompt": {
+        "title": "Prompts regionales",
+        "inputs": {
+            "mask": "Máscara",
+            "advanced_sampler": "KSampler (avanzado)"
+        },
+        "widgets": {
+            "variation_seed": "Semilla variable",
+            "variation_strength": "Cambio de intensidad",
+            "variation_method": "Método de cambio"
+        },
+        "outputs": {
+            "regional_prompts": "Prompts regionales",
+            "REGIONAL_PROMPTS": "Prompts regionales"
+        },
+        "description": "Este nodo combina una máscara que indica las regiones y un muestreador aplicado a cada región para crear Prompts regionales."
+    },
+    "CombineRegionalPrompts": {
+        "title": "Combinar prompts regionales",
+        "inputs": {
+            "regional_prompts1": "Prompt regional 1",
+            "regional_prompts2": "Prompt regional 2"
+        },
+        "outputs": {
+            "REGIONAL_PROMPTS": "Prompts regionales"
+        },
+        "description": "Combina varios Prompts regionales en un único Prompt regional."
+    },
+    "RegionalSampler": {
+        "title": "Muestreador regional",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "KSampler (avanzado)",
+            "regional_prompts": "Prompts regionales"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "seed_2nd": "Segunda semilla",
+            "seed_2nd_mode": "Modo de la segunda semilla",
+            "steps": "Pasos",
+            "base_only_steps": "Solo pasos base",
+            "denoise": "Denoizar",
+            "overlap_factor": "Coeficiente de cobertura",
+            "restore_latent": "Latent temporal",
+            "additional_mode": "Modo adicional",
+            "additional_sampler": "Muestreador adicional",
+            "additional_sigma_ratio": "Proporción de sigma adicional"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Este nodo muestrea con un muestreador base y prompts regionales. El muestreador base actúa en cada paso, mientras que el muestreo de cada región lo realiza el muestreador vinculado a esa región.\n Coeficiente de cobertura - indica el solapamiento de cada región para que se fusione bien con las zonas de fuera de la máscara.\n Latent temporal - al muestrear cada región se restaura el área fuera de la máscara al espacio latent base, evitando que el muestreo regional introduzca ruido extra fuera de la máscara."
+    },
+    "RegionalSamplerAdvanced": {
+        "title": "Muestreador regional (avanzado)",
+        "inputs": {
+            "samples": "Latent",
+            "latent_image": "Latent",
+            "base_sampler": "KSampler (avanzado)",
+            "regional_prompts": "Prompts regionales"
+        },
+        "widgets": {
+            "add_noise": "Añadir ruido",
+            "seed": "Semilla",
+            "noise_seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "steps": "Pasos",
+            "start_at_step": "Paso inicial de denoizado",
+            "end_at_step": "Paso final de denoizado",
+            "overlap_factor": "Coeficiente de cobertura",
+            "restore_latent": "Latent temporal",
+            "return_with_leftover_noise": "Devolver con ruido residual",
+            "additional_mode": "Modo adicional",
+            "additional_sampler": "Muestreador adicional",
+            "additional_sigma_ratio": "Proporción de sigma adicional"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "Es la versión avanzada del Muestreador regional. Puede controlarla con los Pasos en lugar del Denoizado.\n Nota: los muestreadores sde y uni_pc introducen ruido extra en cada paso del muestreo. Para mitigarlo, al muestrear cada región el muestreador uni_pc aplica un dpmpp_fast adicional, mientras que el muestreador sde usa el muestreador dpmpp_2m como medida extra."
+    },
+    "ImpactConcatConditionings": {
+        "title": "Combinación de condiciones",
+        "inputs": {
+            "conditioning1": "Condición 1"
+        },
+        "outputs": {
+            "CONDITIONING": "Condición"
+        },
+        "description": "Acepta varias entradas de condición y las concatena en una sola condición."
+    },
+    "ImpactImageInfo": {
+        "title": "Información de la imagen",
+        "inputs": {
+            "value": "Imagen"
+        },
+        "outputs": {
+            "batch": "Tamaño del lote",
+            "height": "Altura",
+            "width": "Anchura",
+            "channel": "Canal"
+        }
+    },
+    "ImpactLatentInfo": {
+        "title": "Información de Latent",
+        "inputs": {
+            "value": "Latent"
+        },
+        "outputs": {
+            "batch": "Tamaño del lote",
+            "height": "Altura",
+            "width": "Anchura",
+            "channel": "Canal"
+        }
+    },
+    "ImpactMinMax": {
+        "title": "Buscar extremos",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "mode": "Modo"
+        },
+        "outputs": {
+            "INT": "Entero"
+        }
+    },
+    "ImpactQueueTrigger": {
+        "title": "Disparador de cola",
+        "inputs": {
+            "signal": "Señal"
+        },
+        "widgets": {
+            "mode": "Modo"
+        },
+        "outputs": {
+            "signal_opt": "Señal"
+        },
+        "description": "Al ejecutarse este nodo añade una nueva cola para ayudar con tareas repetitivas. Solo se ejecuta cuando cambia el estado de la señal."
+    },
+    "ImpactQueueTriggerCountdown": {
+        "title": "Disparador de cola (conteo)",
+        "inputs": {
+            "signal": "Señal"
+        },
+        "widgets": {
+            "total": "Total general",
+            "mode": "Modo",
+            "count": "Conteo"
+        },
+        "outputs": {
+            "total": "Total general",
+            "signal_opt": "Señal",
+            "count": "Conteo"
+        },
+        "description": "Similar al disparador de cola: añade una cola, pero no lo hace si el tamaño de la cola es menor o igual que 1. El contador se reduce en uno en cada ejecución."
+    },
+    "ImpactSetWidgetValue": {
+        "title": "Establecer valor del widget",
+        "inputs": {
+            "signal": "Señal",
+            "boolean_value": "Booleano",
+            "int_value": "Entero",
+            "float_value": "Flotante",
+            "string_value": "Cadena"
+        },
+        "widgets": {
+            "node_id": "ID del nodo",
+            "widget_name": "Nombre del widget"
+        },
+        "outputs": {
+            "signal_opt": "Señal"
+        },
+        "description": "Este nodo asigna una entrada opcional a un widget del nodo indicado. Si los tipos no coinciden, puede producirse un error."
+    },
+    "ImpactNodeSetMuteState": {
+        "title": "Desactivar nodo",
+        "inputs": {
+            "signal": "Señal"
+        },
+        "widgets": {
+            "node_id": "ID del nodo",
+            "set_state": "Estado"
+        },
+        "outputs": {
+            "signal_opt": "Señal"
+        },
+        "description": "Este nodo cambia el estado de silencio de un nodo concreto."
+    },
+    "ImpactSleep": {
+        "title": "Espera",
+        "inputs": {
+            "signal": "Señal"
+        },
+        "widgets": {
+            "seconds": "Segundos"
+        },
+        "outputs": {
+            "signal_opt": "Señal"
+        },
+        "description": "Espera el tiempo indicado (en segundos)"
+    },
+    "ImpactRemoteBoolean": {
+        "title": "Booleano remoto",
+        "widgets": {
+            "node_id": "ID del nodo",
+            "widget_name": "Nombre del widget",
+            "value": "Valor"
+        },
+        "description": "Al inicio del prompt, este nodo fuerza el ID del nodo del Nombre del widget indicado. Si el tipo del widget de destino es diferente, se ignorará."
+    },
+    "ImpactRemoteInt": {
+        "title": "Entero remoto",
+        "widgets": {
+            "node_id": "ID del nodo",
+            "widget_name": "Nombre del widget",
+            "value": "Valor"
+        },
+        "description": "Al inicio del prompt, este nodo fuerza el ID del nodo correspondiente al Nombre del widget. Si el tipo del widget de destino es distinto, se omite."
+    },
+    "ImpactControlBridge": {
+        "title": "Puente de control",
+        "inputs": {
+            "value": "Valor"
+        },
+        "widgets": {
+            "mode": "Modo"
+        },
+        "outputs": {
+            "value": "Valor"
+        },
+        "description": "Este nodo modifica el estado de los nodos de control conectados según el Modo y el Comportamiento. Si hay nodos que deban cambiarse, la ejecución actual se pausa, se actualiza el estado de silencio y se inserta una nueva cola de prompts.\n Cuando el Modo es Active, hace que los nodos de control conectados estén activos sea cual sea su comportamiento.\n Cuando el Modo es Omitir/Silenciar, el estado de los nodos conectados cambia según el comportamiento sea Omitir o Silenciar.\n Limitaciones: por su naturaleza no funciona bien cuando el conteo de lotes supera 1. Además, si la semilla se aleatoriza o el estado del nodo cambia con operaciones como Disparador de cola, Establecer valor del widget o Desactivar nodo, no se garantiza un funcionamiento correcto antes del puente de control.\n Al usar este nodo, estructure el workflow de modo que el Disparador de cola, Establecer valor del widget, Desactivar nodo y operaciones similares queden al final del workflow.\n Si desea cambiar el valor de la semilla en cada iteración, asegúrese de ejecutar Establecer valor del widget al final del workflow en lugar de usar Aleatorizar.\n Mientras la aleatorización se haga después de la sección del puente de control, no hay problema aunque la semilla cambie."
+    },
+    "ImpactCompare": {
+        "title": "Comparación",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "cmp": "Método de comparación"
+        },
+        "outputs": {
+            "BOOLEAN": "Booleano"
+        }
+    },
+    "ImpactConditionalBranchSelMode": {
+        "title": "Modo de interruptor de ramificación condicional",
+        "inputs": {
+            "tt_value": "Verdadero",
+            "ff_value": "Falso"
+        },
+        "widgets": {
+            "cond": "Condición"
+        },
+        "outputs": {
+            "*": "Salida"
+        }
+    },
+    "ImpactConditionalBranch": {
+        "title": "Interruptor de condición",
+        "inputs": {
+            "tt_value": "Verdadero",
+            "ff_value": "Falso"
+        },
+        "widgets": {
+            "cond": "Condición"
+        },
+        "outputs": {
+            "*": "Salida"
+        }
+    },
+    "ImpactIfNone": {
+        "title": "Si no existe",
+        "inputs": {
+            "signal": "Señal",
+            "any_input": "Cualquier entrada"
+        },
+        "widgets": {
+            "cond": "Condición"
+        },
+        "outputs": {
+            "signal_opt": "Selección de señal",
+            "bool": "Valor booleano"
+        },
+        "description": "Devuelve Verdadero si Cualquier entrada es None; de lo contrario devuelve Falso cuando no es None."
+    },
+    "ImpactBoolean": {
+        "title": "Booleano",
+        "inputs": {
+            "signal": "Señal",
+            "any_input": "Cualquier entrada"
+        },
+        "widgets": {
+            "value": "Valor"
+        },
+        "outputs": {
+            "signal_opt": "Selección de señal",
+            "BOOLEAN": "Booleano"
+        }
+    },
+    "ImpactConvertDataType": {
+        "title": "Convertir el tipo de datos",
+        "inputs": {
+            "value": "Valor"
+        },
+        "widgets": {
+            "cond": "Condición"
+        },
+        "outputs": {
+            "STRING": "Cadena",
+            "FLOAT": "Flotante",
+            "INT": "Entero",
+            "BOOLEAN": "Booleano"
+        }
+    },
+    "ImpactLogicalOperators": {
+        "title": "Operador lógico",
+        "inputs": {
+            "bool_a": "Booleano a",
+            "bool_b": "Booleano b"
+        },
+        "widgets": {
+            "operator": "Matemáticas"
+        },
+        "outputs": {
+            "STRING": "Cadena",
+            "FLOAT": "Flotante",
+            "INT": "Entero",
+            "BOOLEAN": "Booleano"
+        }
+    },
+    "ImpactInt": {
+        "title": "Entero",
+        "widgets": {
+            "value": "Valor"
+        },
+        "outputs": {
+            "INT": "Entero"
+        }
+    },
+    "ImpactFloat": {
+        "title": "Flotante",
+        "widgets": {
+            "value": "Valor"
+        },
+        "outputs": {
+            "FLOAT": "Flotante"
+        }
+    },
+    "ImpactValueSender": {
+        "title": "Enviar valor",
+        "inputs": {
+            "value": "Valor",
+            "signal_opt": "Selección de señal"
+        },
+        "widgets": {
+            "link_id": "ID de enlace"
+        },
+        "outputs": {
+            "signal": "Señal"
+        }
+    },
+    "ImpactValueReceiver": {
+        "title": "Recibir valor",
+        "widgets": {
+            "typ": "Tipo",
+            "value": "Valor",
+            "link_id": "ID de enlace"
+        },
+        "outputs": {
+            "*": "Salida"
+        }
+    },
+    "ImpactNeg": {
+        "title": "Invertir valor",
+        "inputs": {
+            "value": "Valor"
+        },
+        "outputs": {
+            "BOOLEAN": "Booleano"
+        }
+    },
+    "ImpactConditionalStopIteration": {
+        "title": "Condición de parada de iteración",
+        "inputs": {
+            "cond": "Condición"
+        }
+    },
+    "ImpactIsNotEmptySEGS": {
+        "title": "¿Es un Seg no vacío?",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "BOOLEAN": "Booleano"
+        },
+        "description": "Este nodo solo devuelve true cuando el Seg de entrada no está vacío"
+    },
+    "ImpactLogger": {
+        "title": "Registro de salida",
+        "inputs": {
+            "data": "Datos"
+        }
+    },
+    "ImpactDummyInput": {
+        "title": "Entrada virtual",
+        "outputs": {
+            "*": "Salida"
+        }
+    },
+    "ImpactHFTransformersClassifierProvider": {
+        "title": "Clasificador HFTransformer",
+        "widgets": {
+            "preset_repo_id": "ID de repositorio preestablecido",
+            "manual_repo_id": "ID de repositorio manual",
+            "device_mode": "Modo de dispositivo"
+        },
+        "outputs": {
+            "TRANSFORMERS_CLASSIFIER": "Clasificador TF"
+        },
+        "description": "Nodo basado en un clasificador proporcionado por un modelo transformers de HuggingFace.\n El parámetro “ID del repositorio” debe contener el ID del repositorio de HuggingFace. Cuando el ID de repositorio preestablecido se fija en ID de repositorio manual, se usa el ID escrito manualmente.\n Por ejemplo, 'rizvandwiki/gender-classification-2' es un repositorio que ofrece un modelo de clasificación de género."
+    },
+    "ImpactSEGSClassify": {
+        "title": "Clasificación de Seg",
+        "inputs": {
+            "classifier": "Clasificador",
+            "segs": "Seg",
+            "ref_image_opt": "Imagen de referencia"
+        },
+        "widgets": {
+            "preset_expr": "Expresión preestablecida",
+            "manual_expr": "Expresión manual"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg bloqueado",
+            "remained_SEGS": "Seg restante",
+            "detected_labels": "Etiqueta detectada"
+        },
+        "description": "Este nodo clasifica Segs usando el 'Clasificador HFTransformer' cargado por el Clasificador TF.\n La “Expresión” admite formas como label > number y, cuando la Expresión preestablecida es Manual expr, utiliza la expresión escrita en manual_expr.\n Por ejemplo, con male <= 0.4, si la puntuación de la etiqueta male en el resultado de la clasificación es menor o igual que 0.4, se clasifica como Seg bloqueado; en caso contrario, como Seg restante.\n Para ver las etiquetas admitidas, consulte el repositorio de HuggingFace correspondiente en config.json.\n #Female y #Male no son etiquetas individuales, sino símbolos que agrupan varias etiquetas (Female, women, woman, ...) para facilitar su uso."
+    },
+    "SAMLoader": {
+        "title": "Cargador de SAM",
+        "widgets": {
+            "model_name": "Nombre del modelo",
+            "device_mode": "Modo de dispositivo"
+        },
+        "outputs": {
+            "SAM_MODEL": "Modelo SAM"
+        },
+        "description": "Cargar el modelo SAM"
+    },
+    "ONNXDetectorProvider": {
+        "title": "Cargador ONNX",
+        "widgets": {
+            "model_name": "Nombre del modelo"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Detector BBox",
+            "ONNX_DETECTOR": "Detector ONNX"
+        },
+        "description": "Carga un modelo ONNX para ofrecer el Detector ONNX."
+    },
+    "PreviewDetailerHookProvider": {
+        "title": "Proveedor de gancho de realce de optimización con vista previa",
+        "widgets": {
+            "quality": "Calidad"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización",
+            "UPSCALER_HOOK": "Gancho de superresolución"
+        },
+        "description": "Conectar este nodo de gancho ayuda a ofrecer asistencia de vista previa al terminar las tareas de optimización de SEGS.\n Al procesar muchos Segs, por ejemplo con Generar Segs en teselas, permite supervisar la situación a medida que la mejora avanza paso a paso.\n Como es una restricción aplicada al pegado sobre la imagen original, no afecta a nodos como Optimización de Seg."
+    },
+    "BlackPatchRetryHookProvider": {
+        "title": "Proveedor de gancho de reintento con parche negro",
+        "widgets": {
+            "mean_thresh": "Umbral medio",
+            "var_thresh": "Umbral de cambio"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización",
+            "UPSCALER_HOOK": "Gancho de superresolución"
+        }
+    },
+    "ImpactIPAdapterApplySEGS": {
+        "title": "Aplicar IPAdapter (Seg)",
+        "inputs": {
+            "segs": "Seg",
+            "ipadapter_pipe": "Conducto de ipadapter",
+            "neg_image": "Imagen en negativo",
+            "reference_image": "Imagen de referencia"
+        },
+        "widgets": {
+            "weight": "Peso",
+            "noise": "Ruido",
+            "weight_type": "Tipo de peso",
+            "seed": "Semilla",
+            "start_at": "Paso de inicio",
+            "end_at": "Paso final",
+            "cfg": "CFG",
+            "unfold_batch": "Desplegar lote",
+            "faceid_v2": "FaceID_V2",
+            "weight_v2": "Peso_v2",
+            "context_crop_factor": "Coeficiente de recorte del contexto",
+            "combine_embeds": "Embeds fusionados"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Para aplicar IPAdapter a un Seg debe usar el nodo Preprocessor Provider del Inspire Pack para aprovechar este nodo."
+    },
+    "ImpactFrom_SEG_ELT_bbox": {
+        "title": "Del bbox del elemento SEG",
+        "inputs": {
+            "bbox": "BBox"
+        },
+        "outputs": {
+            "left": "Izquierda",
+            "top": "Arriba",
+            "right": "Derecha",
+            "bottom": "Abajo"
+        }
+    },
+    "ImpactFrom_SEG_ELT_crop_region": {
+        "title": "Del área recortada del elemento SEG",
+        "inputs": {
+            "crop_region": "Región de recorte"
+        },
+        "outputs": {
+            "left": "Izquierda",
+            "top": "Arriba",
+            "right": "Derecha",
+            "bottom": "Abajo"
+        }
+    },
+    "ImpactSEGSMerge": {
+        "title": "Combinar Segs",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "Un BBoxSeg contiene varios segs. La Combinación de Segs integra varios Segs en un único Seg fusionado: la etiqueta pasa a «Fusionado» y la confianza se convierte en la confianza mínima. Se eliminan el ControlNet aplicado y la imagen recortada."
+    },
+    "ImpactCount_Elts_in_SEGS": {
+        "title": "Elementos contados como SEGS",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "INT": "Entero"
+        }
+    },
+    "ImpactMakeAnyList": {
+        "title": "Crear lista (cualquiera)",
+        "inputs": {
+            "value1": "Valor 1"
+        },
+        "outputs": {
+            "INT": "Entero"
+        },
+        "description": "Crea una lista con valores arbitrarios; acepta cualquier cantidad de entradas y produce una salida. Su tipo se determina al conectarlo a cualquier nodo, y conectar entradas añade ranuras de conexión disponibles."
+    },
+    "ImpactMakeMaskList": {
+        "title": "Crear lista de máscaras",
+        "inputs": {
+            "mask1": "Máscara 1"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Tiene la misma funcionalidad que el nodo Crear lista de imágenes, pero usa máscaras como entrada en lugar de imágenes."
+    },
+    "ImpactMakeMaskBatch": {
+        "title": "Crear máscaras por lote",
+        "inputs": {
+            "mask1": "Máscara 1"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Tiene la misma funcionalidad que el nodo Crear lista de imágenes, pero usa máscaras como entrada en lugar de imágenes."
+    },
+    "ImpactSelectNthItemOfAnyList": {
+        "title": "Seleccionar el enésimo elemento (lista de cualquiera)",
+        "inputs": {
+            "any_list": "Lista de cualquiera"
+        },
+        "widgets": {
+            "index": "Exponencial"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Selecciona el enésimo elemento de una lista. Si el índice está fuera de rango, devuelve el último elemento de la lista."
+    },
+    "ImpactSEGSLabelAssign": {
+        "title": "Asignación de Seg (etiqueta)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSIntersectionFilter": {
+        "title": "Filtro de Seg (intersección)",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "widgets": {
+            "iou_threshold": "Umbral iou",
+            "ioa_threshold": "Umbral ioa"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg filtrado"
+        }
+    },
+    "ImpactSEGSNMSFilter": {
+        "title": "Filtro de Seg (supresión no máxima)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "iou_threshold": "Umbral iou"
+        },
+        "outputs": {
+            "filtered_SEGS": "Seg filtrado"
+        }
+    },
+    "StringListToString": {
+        "title": "De lista de cadenas a cadena",
+        "inputs": {
+            "string_list": "Lista de cadenas"
+        },
+        "widgets": {
+            "join_with": "Unirse"
+        },
+        "outputs": {
+            "STRING": "Cadena"
+        },
+        "description": "Convierte una lista de cadenas en una cadena."
+    },
+    "WildcardPromptFromString": {
+        "title": "Generar prompt a partir de una cadena",
+        "inputs": {
+            "string": "Cadena"
+        },
+        "widgets": {
+            "delimiter": "Separador",
+            "prefix_all": "Todos los prefijos",
+            "postfix_all": "Ambos sufijos",
+            "restrict_to_tags": "Limitar a etiquetas",
+            "exclude_tags": "Excluir etiquetas"
+        },
+        "outputs": {
+            "wildcard": "Prompt",
+            "segs_labels": "Etiqueta del Seg"
+        },
+        "description": "Crea prompts etiquetados para los detalles a partir de una cadena.\n Este nodo funciona bien junto con Generar Segs en teselas."
+    },
+    "ImpactExecutionOrderController": {
+        "title": "Controlador de comandos de ejecución",
+        "inputs": {
+            "signal": "Señal",
+            "value": "Valor"
+        },
+        "outputs": {
+            "signal": "Señal",
+            "value": "Valor"
+        },
+        "description": "Nodo auxiliar que ayuda a forzar el orden de ejecución de los nodos.\n Conecte la salida del nodo que debe ejecutarse primero a la señal y haga que la entrada del nodo que debe ejecutarse después pase por este nodo."
+    },
+    "ImpactListBridge": {
+        "title": "Puente de listas",
+        "inputs": {
+            "list_input": "Entrada de lista"
+        },
+        "outputs": {
+            "list_output": "Salida de lista"
+        },
+        "description": "Cuando se transmite una salida de lista por este nodo, recopila y ordena los datos antes de reenviarlos, lo que garantiza que el subworkflow de la etapa anterior haya terminado."
+    },
+    "ImpactSchedulerAdapter": {
+        "title": "Adaptador del planificador",
+        "widgets": {
+            "scheduler": "Planificador",
+            "extra_scheduler": "Planificador adicional"
+        },
+        "outputs": {
+            "scheduler": "Planificador"
+        },
+        "description": "Tras añadirse AYS a los planificadores de Impact Pack e Inspire Pack, surgen problemas de incompatibilidad al convertir los widgets de planificador existentes en entradas. El Adaptador del planificador permite realizar conexiones indirectas."
+    },
+    "ImpactFlattenMask": {
+        "title": "De lista de máscaras a máscara",
+        "inputs": {
+            "masks": "Máscara"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        },
+        "description": "Tiene la misma funcionalidad que el nodo Crear lista de imágenes, pero usa máscaras como entrada en lugar de imágenes."
+    },
+    "MaskRectArea": {
+        "title": "Área rectangular de la máscara",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "width": "Anchura",
+            "height": "Altura",
+            "w": "Anchura",
+            "h": "Altura",
+            "image_width": "Anchura de la imagen",
+            "image_height": "Altura de la imagen",
+            "blur_radius": "Radio de desenfoque",
+            "extra_scheduler": "Planificador adicional"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "MaskRectAreaAdvanced": {
+        "title": "Área rectangular de la máscara (avanzado)",
+        "inputs": {
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "width": "Anchura",
+            "height": "Altura",
+            "image_width": "Anchura de la imagen",
+            "image_height": "Altura de la imagen",
+            "blur_radius": "Radio de desenfoque",
+            "extra_scheduler": "Planificador adicional"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "ImpactNegativeConditioningPlaceholder": {
+        "title": "Marcador de posición de condición negativa",
+        "outputs": {
+            "CONDITIONING": "Condición"
+        },
+        "description": "Modelos como FLUX.1 no usan condición negativa. Este es su nodo de marcador de posición. Puede usar FLUX.1 sustituyendo la condición negativa empleada en Impact Muestreador K, Muestreador K (Inspire) y Optimización por este nodo."
+    },
+    "GITSSchedulerFuncProvider": {
+        "title": "Proveedor de funciones del planificador GITS",
+        "widgets": {
+            "coeff": "Coeficiente",
+            "denoise": "Intensidad de denoizado"
+        },
+        "outputs": {
+            "SCHEDULER_FUNC": "Función del programador"
+        },
+        "description": "Proporciona funciones de planificador para el planificador GITS"
+    },
+    "VariationNoiseDetailerHookProvider": {
+        "title": "Proveedor de gancho de realce de optimización de ruido de variantes",
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "strength": "Intensidad"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "Restricción de optimización"
+        },
+        "description": "Aplica la semilla de variantes al procesador de optimización. Puede aplicarse en varias etapas mediante combinaciones."
+    },
+    "ImpactMakeTileSEGS": {
+        "title": "Generar Segs en teselas",
+        "inputs": {
+            "images": "Imagen",
+            "filter_in_segs_opt": "Filtro en las opciones de Seg",
+            "filter_out_segs_opt": "Excluir las opciones de Seg"
+        },
+        "widgets": {
+            "bbox_size": "Tamaño de BBox",
+            "crop_factor": "Factor de recorte",
+            "min_overlap": "Solapamiento mínimo",
+            "filter_segs_dilation": "Filtro de dilatación de regiones de segmentación",
+            "mask_irregularity": "Irregularidad de la máscara",
+            "irregular_mask_mode": "Modo de máscara irregular"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "workflow>Impact::MAKE_BASIC_PIPE": {
+        "title": "Impact: crear conducto básico",
+        "inputs": {
+            "images": "Imagen",
+            "filter_in_segs_opt": "Filtro en las opciones de Seg",
+            "filter_out_segs_opt": "Excluir las opciones de Seg"
+        },
+        "widgets": {
+            "ckpt_name": "Nombre de ckpt",
+            "Positive prompt": "Prompt positivo",
+            "Negative prompt": "Prompt negativo",
+            "filter_segs_dilation": "Filtro de dilatación de regiones de segmentación",
+            "mask_irregularity": "Irregularidad de la máscara",
+            "irregular_mask_mode": "Modo de máscara irregular"
+        },
+        "outputs": {
+            "basic_pipe": "Conducto básico"
+        }
+    },
+    "workflow>MAKE_BASIC_PIPE": {
+        "title": "Crear conducto básico",
+        "inputs": {
+            "images": "Imagen",
+            "filter_in_segs_opt": "Filtro en las opciones de Seg",
+            "filter_out_segs_opt": "Excluir las opciones de Seg"
+        },
+        "widgets": {
+            "ckpt_name": "Nombre de ckpt",
+            "text": "Texto",
+            "CLIPTextEncode text": "Texto de codificación de texto CLIP",
+            "vae_name": "Nombre de VAE",
+            "mask_irregularity": "Irregularidad de la máscara",
+            "irregular_mask_mode": "Modo de máscara irregular"
+        },
+        "outputs": {
+            "basic_pipe": "Conducto básico"
+        }
+    },
+    "UltralyticsDetectorProvider": {
+        "title": "Cargador de detección",
+        "widgets": {
+            "model_name": "Nombre del modelo"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "Detector BBox",
+            "SEGM_DETECTOR": "Detector SEGM"
+        }
+    }
+}

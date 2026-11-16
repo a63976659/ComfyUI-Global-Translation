@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "نمونه‌گیر K Flux2Klein (آزمایشی)",
+        "inputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "latent_image": "تصویر Latent",
+            "negative": "شرط معکوس"
+        },
+        "widgets": {
+            "steps": "تعداد گام",
+            "seed": "بذر تصادفی",
+            "denoise": "شدت نویززدایی",
+            "base_shift": "افست پایه",
+            "max_shift": "بیشینهٔ افست",
+            "cfg_scale": "ضریب مقیاس CFG",
+            "guidance_embed": "جاسازی هدایت"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "لنگر رنگ Flux2Klein",
+        "inputs": {
+            "model": "مدل",
+            "conditioning": "کنترل شرط"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "ramp_curve": "منحنی گرادیان",
+            "ref_index": "شاخص مرجع",
+            "channel_weights": "وزن کانال‌ها",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "تقویت‌کننده Flux2Klein",
+        "inputs": {
+            "conditioning": "کنترل شرط",
+            "device": "دستگاه اجرا"
+        },
+        "widgets": {
+            "active_scale": "مقیاس ناحیه فعال",
+            "per_token_whiten": "سفیدسازی توکن‌به‌توکن",
+            "norm_equalize": "تعادل نرم",
+            "early_layer_scale": "ضریب مقیاس لایه‌های کم‌عمق",
+            "mid_layer_scale": "ضریب مقیاس لایه‌های میانی",
+            "late_layer_scale": "ضریب مقیاس لایه‌های عمیق",
+            "preserve_original": "حفظ داده اصلی",
+            "active_end_override": "بازنویسی نقطه پایان فعال‌سازی",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": "روی ناحیه‌های فعال کنترل شرط Klein عملیات مقیاس/سفیدسازی خالص اجرا می‌کند و هم‌زمان قابلیت مقیاس‌گذاری لایه‌ای اختصاصی Qwen3 برای Klein را فراهم می‌کند."
+    },
+    "Flux2KleinDetailController": {
+        "title": "کنترل‌کننده جزئیات Flux2Klein",
+        "inputs": {
+            "conditioning": "کنترل شرط",
+            "device": "دستگاه اجرا"
+        },
+        "widgets": {
+            "front_mult": "ضریب بخش ابتدایی",
+            "mid_mult": "ضریب بخش میانی",
+            "end_mult": "ضریب بخش پایانی",
+            "emphasis_start": "موقعیت شروع تأکید",
+            "emphasis_end": "موقعیت پایان تأکید",
+            "emphasis_mult": "ضریب تأکید",
+            "preserve_original": "حفظ داده اصلی",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": "تنظیم‌کننده ضریب جاسازی‌های بخش‌بندی‌شده.\n\nحالت واقعی (توصیه‌شده): همراه با رمزگذار بخش‌بندی استفاده می‌شود. رمزگذار بازه توکن‌های بخش‌بندی‌شده را به‌عنوان فراداده کنترل شرط تولید می‌کند (`meta[\"klein_sections\"]`)؛ این گره جاسازی‌های فعالِ درون همان بازه را بر پایه ضرایب تعیین‌شده توسط کاربر تنظیم می‌کند.\n\nحالت سازگار (قدیمی/توصیه‌نشده): اگر فراداده بخش‌بندی وجود نداشته باشد، گره به‌طور خودکار ناحیه فعال را با نسبت ثابت 25%/50%/25% تقسیم می‌کند. این مرزهای تقسیم دل‌خواه‌اند — توکن‌های Qwen3 معناشناسی مکانی ثابتی ندارند — نسخه v1 این گره در این حالت عملاً بی‌اثر است. این حالت برای سازگاری با جریان‌های کاری قدیمی نگه داشته شده؛ برای بهره‌مندی از مقیاس‌گذاری آگاه از بخش‌ها توصیه می‌شود به رمزگذار بخش‌بندی جابه‌جا شوید."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "کنترل‌کننده مرجع ماسک Flux2Klein",
+        "inputs": {
+            "conditioning": "کنترل شرط",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "invert_mask": "معکوس‌سازی ماسک",
+            "feather": "محو ماسک",
+            "reference_index": "شاخص مرجع",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": "با استفاده از ماسک رسم‌شده، افت مکانی روی Latent مرجع اعمال می‌کند.\n\nLatent مرجع را در مقیاس هر پیکسلِ تولیدشده از ماسک ضرب می‌کند. Latent کنترل شرط مستقیماً درجا تغییر می‌کند (meta['reference_Latents'] جایگزین می‌شود)."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "کنترل‌کننده Latent مرجع Flux2Klein",
+        "inputs": {
+            "model": "مدل",
+            "conditioning": "کنترل شرط"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "reference_index": "شاخص مرجع",
+            "spatial_fade": "محو تدریجی مکانی",
+            "spatial_fade_strength": "شدت محو تدریجی مکانی",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "تعادل‌دهنده متن و مرجع Flux2Klein",
+        "inputs": {
+            "model": "مدل",
+            "conditioning": "کنترل شرط"
+        },
+        "widgets": {
+            "balance": "ضریب تعادل",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "تنظیم‌کننده وزن Latent مرجع Flux2Klein",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "reference_index": "شاخص مرجع",
+            "weight": "وزن"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "تقویت‌کننده متن Flux2Klein",
+        "inputs": {
+            "conditioning": "کنترل شرط"
+        },
+        "widgets": {
+            "magnitude": "دامنه سراسری",
+            "contrast": "کنتراست",
+            "normalize_strength": "شدت نرمال‌سازی",
+            "skip_bos": "گذر از توکن آغازین",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": "توکن‌های کنترل شرط متن را تغییر می‌دهد.\n\nترتیب عملیات:\n1. نرمال‌سازی: دامنه توکن‌ها را متعادل می‌کند\n2. کنتراست: تفاوت میان توکن‌ها را زیاد/کم می‌کند\n3. دامنه: مقیاس سراسری"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "رمزگذار بخش‌بندی Flux2Klein",
+        "inputs": {
+            "clip": "تدوین",
+            "separator": "جداکننده"
+        },
+        "widgets": {
+            "front_text": "متن بخش ابتدایی",
+            "mid_text": "متن بخش میانی",
+            "end_text": "متن بخش پایانی",
+            "combined_prompt": "کلمات پرامپت ادغام‌شده",
+            "show_preview": "نمایش پیش‌نمایش",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "outputs": {
+            "conditioning": "کنترل شرط",
+            "front_section": "بخش ابتدایی",
+            "mid_section": "بخش میانی",
+            "end_section": "بخش پایانی",
+            "full_prompt": "کلمات کامل پرامپت"
+        },
+        "description": "کلمات پرامپت سه‌بخشی را توکن‌بندی می‌کند و بازه توکن بخش‌بندی‌شده را به‌عنوان فراداده کنترل شرط تولید می‌کند تا کنترل‌کننده جزئیات آن را بخواند."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "انتقال ویژگی هویت",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "start_block": "بلوک شروع",
+            "end_block": "بلوک پایان",
+            "mode": "حالت",
+            "top_k_percent": "درصد Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "انتقال ویژگی هویت (نسخه پیشرفته)",
+        "inputs": {
+            "model": "مدل",
+            "subject_mask": "ماسک سوژه"
+        },
+        "widgets": {
+            "reference_index": "شاخص مرجع",
+            "mode": "حالت",
+            "top_k_percent": "درصد Top K",
+            "double_enable": "فعال‌سازی انتقال دوبل",
+            "double_strength": "شدت انتقال دوبل",
+            "double_start": "نقطه شروع انتقال دوبل",
+            "double_end": "نقطه پایان انتقال دوبل",
+            "single_enable": "فعال‌سازی انتقال تک‌نوبتی",
+            "single_strength": "شدت انتقال تک‌نوبتی",
+            "single_start": "نقطه شروع انتقال تک‌نوبتی",
+            "single_end": "نقطه پایان انتقال تک‌نوبتی",
+            "block_schedule": "زمان‌بندی بلوک",
+            "sim_floor": "کف شباهت",
+            "mask_threshold": "آستانه ماسک"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "انتقال ویژگی هویت V3",
+        "inputs": {
+            "model": "مدل",
+            "subject_mask": "ماسک سوژه"
+        },
+        "widgets": {
+            "preset": "پیش‌تنظیم",
+            "reference_index": "شاخص مرجع",
+            "double_schedule": "زمان‌بندی انتقال دوبل",
+            "single_schedule": "زمان‌بندی انتقال تک‌نوبتی",
+            "double_sim": "شباهت انتقال دوبل",
+            "single_sim": "شباهت انتقال تک‌نوبتی",
+            "commit_margin": "حاشیه ثبت",
+            "commit_confirm": "تأیید ثبت",
+            "commit_anchor": "لنگر ثبت",
+            "mask_threshold": "آستانه ماسک",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "انتقال نهایی ویژگی هویت",
+        "inputs": {
+            "model": "مدل",
+            "subject_mask_1": "ماسک سوژه 1",
+            "subject_mask_2": "ماسک سوژه 2",
+            "subject_mask_3": "ماسک سوژه 3",
+            "subject_mask_4": "ماسک سوژه 4",
+            "subject_mask_5": "ماسک سوژه 5",
+            "subject_mask_6": "ماسک سوژه 6",
+            "subject_mask_7": "ماسک سوژه 7",
+            "subject_mask_8": "ماسک سوژه 8"
+        },
+        "widgets": {
+            "preset": "پیش‌تنظیم",
+            "enabled": "فعال",
+            "reference_index": "شاخص مرجع",
+            "reference_indices": "فهرست شاخص مراجع",
+            "similarity_floor": "کف شباهت",
+            "softmax_temperature": "ضریب دمای Softmax",
+            "mask_threshold": "آستانه ماسک",
+            "double_blocks": "بازه ماژول‌های دوتایی",
+            "single_blocks": "بازه ماژول‌های تکی",
+            "total_sampling_steps": "مجموع گام‌های نمونه‌برداری",
+            "debug": "حالت اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "هدایت ویژگی هویت",
+        "inputs": {
+            "model": "مدل",
+            "identity_latent": "Latent ویژگی هویت"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "start_percent": "درصد شروع اثرگذاری",
+            "end_percent": "درصد پایان اثرگذاری",
+            "mode": "حالت"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "پردازش Latent چندمرجعی Flux2 Klein",
+        "inputs": {
+            "conditioning": "کنترل شرط",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "کنترل شرط"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "نمونه‌گیر K FLUX.2 Klein",
+        "inputs": {
+            "model": "مدل",
+            "positive": "پرامپت مثبت",
+            "negative": "پرامپت منفی",
+            "latent_image": "Latent تصویر"
+        },
+        "widgets": {
+            "steps": "تعداد گام",
+            "guidance_scale": "نسبت هدایت",
+            "seed": "بذر",
+            "denoise": "حذف نویز",
+            "base_shift": "آفست پایه",
+            "max_shift": "بیشینه آفست"
+        },
+        "description": "گره FLUX.2 Klein KSampler برای تولید تصویر در فضای Latent استفاده می‌شود."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "تقویت‌کننده Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "magnitude": "دامنه",
+            "contrast": "کنتراست",
+            "normalize_strength": "شدت نرمال‌سازی",
+            "preserve_original": "حفظ نسخه اصلی",
+            "preserve_mode": "حالت حفظ",
+            "edit_text_weight": "وزن متن ویرایش",
+            "active_end_override": "بازنویسی پایان فعال‌سازی",
+            "low_vram": "حافظهٔ گرافیکی کم",
+            "device": "دستگاه",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "تقویت‌کننده شرط FLUX. .Klein.\n\nعملیات شامل:\n- دامنه: مقیاس مستقیم جاسازی‌های ناحیه فعال\n- کنتراست: افزایش تفاوت میان نشانه‌ها\n- نرمال‌سازی: یکسان‌سازی اندازه نشانه‌ها\n- حفظ نسخه اصلی: مخلوط کردن مجدد جاسازی‌های اصلی در چند حالت\n\nهمه عملیات فقط ناحیه متن فعال را تغییر می‌دهند (بخش پُر کردن دست‌نخورده می‌ماند).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "کنترل‌کننده جزئیات Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "front_mult": "مضرب بخش ابتدایی",
+            "mid_mult": "مضرب بخش میانی",
+            "end_mult": "مضرب بخش پایانی",
+            "emphasis_start": "آغاز تأکید",
+            "emphasis_end": "پایان تأکید",
+            "emphasis_mult": "مضرب تأکید",
+            "preserve_original": "حفظ نسخه اصلی",
+            "preserve_mode": "حالت حفظ",
+            "low_vram": "حافظهٔ گرافیکی کم",
+            "device": "دستگاه",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "کنترل ناحیه‌ای شرط FLUX. .Klein.\n\nنشانه‌های فعال را به ناحیه‌ها تقسیم می‌کند:\n- ابتدایی: سوژه/مفهوم اصلی\n- میانی: جزئیات/صفت‌ها\n- پایانی: سبک/اصطلاحات کیفیت",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "کنترل‌کننده Latent مرجع Flux2 Klein",
+        "inputs": {
+            "model": "مدل",
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "strength": "شدت",
+            "reference_index": "شاخص مرجع",
+            "spatial_fade": "کم‌رنگی مکانی",
+            "spatial_fade_strength": "شدت کم‌رنگی مکانی",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "MODEL": "مدل",
+            "CONDITIONING": "شرط"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "تعادل متن و مرجع Flux2 Klein",
+        "inputs": {
+            "model": "مدل",
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "balance": "تعادل",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "MODEL": "مدل",
+            "CONDITIONING": "شرط"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "تقویت‌کننده متن Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "magnitude": "دامنه",
+            "contrast": "کنتراست",
+            "normalize_strength": "شدت نرمال‌سازی",
+            "skip_bos": "گذر از نشانه آغازین",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "نشانه‌های شرط متن را تغییر می‌دهد.\n\nترتیب عملیات:\n1. نرمال‌سازی: یکسان‌سازی اندازه نشانه‌ها\n2. کنتراست: افزایش/کاهش تفاوت میان نشانه‌ها\n3. دامنه: مقیاس سراسری",
+        "api_version": "V1"
+    }
+}

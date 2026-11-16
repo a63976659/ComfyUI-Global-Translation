@@ -1,0 +1,442 @@
+{
+    "WanVideoAnimateEmbeds": {
+        "title": "WanAnimate アニメーション埋め込み",
+        "description": "WanAnimate の中核埋め込みノード、参考画像・ポーズ・面部・背景・prefix_frames・transition_video に対応",
+        "inputs": {
+            "vae": "VAEモデル",
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "総フレーム数",
+            "force_offload": "強制アンロード",
+            "frame_window_size": "コンテキストウィンドウサイズ",
+            "colormatch": "カラーマッチング",
+            "pose_strength": "ポーズ強度",
+            "face_strength": "面部強度",
+            "clip_embeds": "CLIPビジョン埋め込み",
+            "ref_images": "参考画像",
+            "pose_images": "ポーズ画像",
+            "face_images": "面部画像",
+            "bg_images": "背景画像",
+            "mask": "マスク",
+            "start_ref_image": "開始参考画像",
+            "transition_video": "遷移動画フレーム",
+            "prefix_frames": "プレフィックス参照フレーム",
+            "tiled_vae": "分割VAEエンコード"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoSampler": {
+        "title": "WanAnimate サンプラー",
+        "description": "WanAnimate 動画サンプラー、CFG/APG/APGチェーンガイダンス対応",
+        "inputs": {
+            "model": "WanVideoモデル",
+            "image_embeds": "画像埋め込み",
+            "steps": "サンプリングステップ数",
+            "cfg": "CFGスケール",
+            "shift": "ノイズシフト",
+            "seed": "ランダムシード",
+            "force_offload": "強制アンロード",
+            "scheduler": "スケジューラ",
+            "riflex_freq_index": "RIFLEX周波数インデックス",
+            "text_embeds": "テキスト埋め込み",
+            "samples": "初期Latent",
+            "denoise_strength": "ノイズ除去強度",
+            "feta_args": "Enhance-A-Videoパラメータ",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "flowedit_args": "FlowEditパラメータ",
+            "batched_cfg": "バッチCFG",
+            "slg_args": "SLGパラメータ",
+            "rope_function": "RoPE関数",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験的パラメータ",
+            "sigmas": "Sigma値",
+            "unianimate_poses": "UniAnimateポーズ",
+            "fantasytalking_embeds": "FantasyTalking埋め込み",
+            "uni3c_embeds": "Uni3C埋め込み",
+            "multitalk_embeds": "MultiTalk埋め込み",
+            "freeinit_args": "FreeInitパラメータ",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ",
+            "add_noise_to_samples": "サンプルにノイズを追加",
+            "guidance_mode": "ガイダンスモード",
+            "apg_eta": "APG eta値",
+            "apg_momentum": "APGモーメンタム",
+            "apg_norm_threshold": "APGノルムしきい値",
+            "apg_omega": "APG omega値",
+            "apg_omega_I": "APG omega_I値",
+            "apg_omega_TI": "APG omega_TI値",
+            "chain_omega_V": "チェーンCFG omega_V値",
+            "chain_omega_I": "チェーンCFG omega_I値",
+            "chain_omega_TI": "チェーンCFG omega_TI値"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "ノイズ除去後サンプル"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "WanAnimate サンプラー v2",
+        "description": "WanAnimate サンプラー v2 バージョン",
+        "inputs": {
+            "model": "WanVideoモデル",
+            "image_embeds": "画像埋め込み",
+            "steps": "サンプリングステップ数",
+            "cfg": "CFGスケール",
+            "shift": "ノイズシフト",
+            "seed": "ランダムシード",
+            "force_offload": "強制アンロード",
+            "scheduler": "スケジューラ",
+            "text_embeds": "テキスト埋め込み",
+            "samples": "初期Latent",
+            "denoise_strength": "ノイズ除去強度",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "batched_cfg": "バッチCFG",
+            "slg_args": "SLGパラメータ",
+            "rope_function": "RoPE関数",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験的パラメータ",
+            "sigmas": "Sigma値",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "ノイズ除去後サンプル"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "WanAnimate スケジューラ",
+        "description": "WanAnimate ノイズスケジューラ",
+        "inputs": {
+            "steps": "サンプリングステップ数",
+            "shift": "ノイズシフト",
+            "scheduler": "スケジューラタイプ",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "sample_scheduler": "サンプルスケジューラ",
+            "timesteps": "タイムステップ"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "WanAnimate スケジューラ v2",
+        "description": "WanAnimate スケジューラ v2 バージョン",
+        "inputs": {
+            "steps": "サンプリングステップ数",
+            "shift": "ノイズシフト",
+            "scheduler": "スケジューラタイプ"
+        },
+        "outputs": {
+            "sample_scheduler": "サンプルスケジューラ",
+            "timesteps": "タイムステップ"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "WanAnimate サンプラー設定",
+        "description": "サンプリングパラメータを設定オブジェクトにまとめ、再利用しやすくする",
+        "inputs": {
+            "steps": "サンプリングステップ数",
+            "cfg": "CFGスケール",
+            "shift": "ノイズシフト",
+            "scheduler": "スケジューラ",
+            "riflex_freq_index": "RIFLEX周波数インデックス",
+            "guidance_mode": "ガイダンスモード",
+            "apg_eta": "APG eta値",
+            "apg_momentum": "APGモーメンタム",
+            "apg_norm_threshold": "APGノルムしきい値"
+        },
+        "outputs": {
+            "sampler_settings": "サンプラー設定"
+        }
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "WanAnimate 設定からサンプリング",
+        "description": "プリセットのサンプラー設定でサンプリング",
+        "inputs": {
+            "model": "WanVideoモデル",
+            "image_embeds": "画像埋め込み",
+            "sampler_settings": "サンプラー設定",
+            "seed": "ランダムシード",
+            "force_offload": "強制アンロード",
+            "text_embeds": "テキスト埋め込み",
+            "samples": "初期Latent",
+            "denoise_strength": "ノイズ除去強度",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "batched_cfg": "バッチCFG",
+            "slg_args": "SLGパラメータ",
+            "rope_function": "RoPE関数",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験的パラメータ",
+            "sigmas": "Sigma値",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "denoised_samples": "ノイズ除去後サンプル"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "WanAnimate VAEエンコード",
+        "description": "画像/動画をLatentにエンコード",
+        "inputs": {
+            "vae": "VAEモデル",
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "総フレーム数",
+            "noise_aug_strength": "ノイズ強化強度",
+            "start_latent_strength": "開始Latent強度",
+            "end_latent_strength": "終了Latent強度",
+            "force_offload": "強制アンロード",
+            "start_image": "開始画像",
+            "end_image": "終了画像",
+            "clip_embeds": "CLIPビジョン埋め込み",
+            "control_embeds": "コントロール埋め込み",
+            "fun_or_fl2v_model": "Fun/FL2Vモデル",
+            "temporal_mask": "時間マスク",
+            "extra_latents": "追加Latent",
+            "tiled_vae": "分割VAEエンコード",
+            "add_cond_latents": "追加条件Latent",
+            "augment_empty_frames": "空白フレームを強化",
+            "empty_frame_pad_image": "空白フレーム塗りつぶし画像"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoDecode": {
+        "title": "WanAnimate VAEデコード",
+        "description": "Latentを動画ピクセルへデコード",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAEモデル",
+            "enable_tiling": "タイル分割有効",
+            "force_offload": "強制アンロード"
+        },
+        "outputs": {
+            "images": "画像"
+        }
+    },
+    "WanVideoModelLoader": {
+        "title": "WanAnimate モデルローダー",
+        "description": "Wan Animate 動画生成モデルを読み込む",
+        "inputs": {
+            "model_path": "モデルパス",
+            "precision": "精度",
+            "attention_mode": "アテンションモード",
+            "load_device": "読み込みデバイス",
+            "enable_5b": "5Bモデルを有効化"
+        },
+        "outputs": {
+            "model": "WanVideoモデル"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "WanAnimate VAEローダー",
+        "description": "VAE モデルを読み込む",
+        "inputs": {
+            "model_path": "モデルパス"
+        },
+        "outputs": {
+            "vae": "VAEモデル"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "WanAnimate コンテキストオプション",
+        "description": "コンテキストウィンドウサンプリングパラメータを設定",
+        "inputs": {
+            "context_schedule": "コンテキストスケジュール",
+            "context_frames": "コンテキストフレーム数",
+            "context_stride": "コンテキストステップ",
+            "context_overlap": "コンテキスト重複",
+            "freenoise": "FreeNoise",
+            "verbose": "詳細出力"
+        },
+        "outputs": {
+            "context_options": "コンテキストオプション"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "WanAnimate テキストエンコード(キャッシュ)",
+        "description": "テキストプロンプトを埋め込みにエンコード、ディスクキャッシュと Qwen LLM 拡張に対応",
+        "inputs": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "positive_prompt": "ポジティブプロンプト",
+            "negative_prompt": "ネガティブプロンプト",
+            "quantization": "量子化方法",
+            "use_disk_cache": "ディスクキャッシュを使用",
+            "device": "実行デバイス",
+            "extender_args": "プロンプト拡張パラメータ"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込み",
+            "negative_text_embeds": "ネガティブテキスト埋め込み",
+            "positive_prompt": "ポジティブプロンプト"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "WanAnimate CLIPビジョンエンコード",
+        "description": "CLIPビジョンモデルで参考画像をエンコード",
+        "inputs": {
+            "clip_vision": "CLIPビジョンモデル",
+            "image_1": "画像1",
+            "strength_1": "強度1",
+            "strength_2": "強度2",
+            "crop": "トリミング方法",
+            "combine_embeds": "結合埋め込み方法",
+            "force_offload": "強制アンロード",
+            "image_2": "画像2",
+            "negative_image": "ネガティブ画像",
+            "tiles": "チャンク数",
+            "ratio": "分割比率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoLoraSelect": {
+        "title": "WanAnimate LoRA選択",
+        "description": "単一のLoRAモデルを選択し重みを設定",
+        "inputs": {
+            "model_path": "モデルパス",
+            "strength": "重み"
+        },
+        "outputs": {
+            "lora": "LoRA設定"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "WanAnimate 複数LoRA選択",
+        "description": "複数のLoRAモデルを選択し、個別に重みを設定",
+        "inputs": {
+            "lora_1": "LoRA 1",
+            "strength_1": "重み1",
+            "lora_2": "LoRA 2",
+            "strength_2": "重み2",
+            "lora_3": "LoRA 3",
+            "strength_3": "重み3",
+            "lora_4": "LoRA 4",
+            "strength_4": "重み4"
+        },
+        "outputs": {
+            "loras": "LoRAリスト"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "WanAnimate LoRA適用",
+        "description": "LoRA設定を動画モデルに適用",
+        "inputs": {
+            "model": "WanVideoモデル",
+            "lora": "LoRA設定",
+            "loras": "LoRAリスト"
+        },
+        "outputs": {
+            "model": "WanVideoモデル"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "WanAnimate ブロックスワップ設定",
+        "description": "モデルのブロックスワップ戦略を設定しVRAMを節約",
+        "inputs": {
+            "blocks_to_swap": "ブロックスワップ数",
+            "use_non_blocking": "非ブロッキング転送を使用",
+            "vace_blocks_to_swap": "VACEブロックスワップ数",
+            "prefetch_blocks": "プリフェッチブロック数",
+            "block_swap_debug": "ブロックスワップデバッグ",
+            "offload_img_emb": "画像埋め込みアンロード",
+            "offload_txt_emb": "テキスト埋め込みアンロード"
+        },
+        "outputs": {
+            "block_swap_args": "ブロックスワップパラメータ"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "WanAnimate ブロックスワップ設定",
+        "description": "ブロックスワップ設定をモデルに適用",
+        "inputs": {
+            "model": "WanVideoモデル",
+            "block_swap_args": "ブロックスワップパラメータ"
+        },
+        "outputs": {
+            "model": "WanVideoモデル"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "WanAnimate Torchコンパイル設定",
+        "description": "torch.compile を設定してモデル推論を高速化",
+        "inputs": {
+            "compile_mode": "コンパイルモード",
+            "fullgraph": "完全な計算グラフ",
+            "dynamic": "動的形状",
+            "backend": "バックエンド",
+            "options": "オプション"
+        },
+        "outputs": {
+            "compile_args": "コンパイルパラメータ"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "WanAnimate Uni3C ControlNetローダー",
+        "description": "Uni3C ControlNet モデルを読み込む",
+        "inputs": {
+            "model_path": "モデルパス"
+        },
+        "outputs": {
+            "uni3c_controlnet": "Uni3C ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "WanAnimate Uni3C埋め込み",
+        "description": "Uni3C ControlNet のコントロール埋め込みを生成",
+        "inputs": {
+            "uni3c_controlnet": "Uni3C ControlNet",
+            "control_images": "制御画像",
+            "strength": "制御強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "uni3c_embeds": "Uni3C埋め込み"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "WanAnimate サンプラー追加パラメータ",
+        "description": "サンプラーの追加パラメータ（任意CFG、任意ノイズシフトなど）を設定",
+        "inputs": {
+            "optional_cfg": "任意CFG",
+            "optional_noise_offset": "任意ノイズシフト",
+            "optional_cfg_scale": "任意CFGスケール",
+            "optional_sigma_max": "任意Sigma最大値",
+            "optional_sigma_min": "任意Sigma最小値"
+        },
+        "outputs": {
+            "sampler_extra_args": "サンプラー追加パラメータ"
+        }
+    },
+    "WanAnimatePlusBernini": {
+        "title": "WanAnimate Bernini条件生成",
+        "description": "Berniniモデル条件生成、v2v/rv2v/r2v/t2vタスク対応",
+        "inputs": {
+            "vae": "VAEモデル",
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "総フレーム数",
+            "source_video": "元動画",
+            "reference_video": "参考動画",
+            "reference_images": "参考画像",
+            "ref_max_size": "参考メディア最大辺長",
+            "force_offload": "強制アンロード",
+            "tiled_vae": "分割VAEエンコード"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    }
+}

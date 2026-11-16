@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "Converter atributos de imagem Sharp para PLY",
+        "inputs": {
+            "gaussian_attrs": "Atributos gaussianos",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "output_prefix": "Prefixo de saída",
+            "focal_length_px": "Distância focal em pixels"
+        },
+        "outputs": {
+            "ply_path": "Caminho do Arquivo PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Gera um arquivo PLY de nuvem de pontos gaussianos 3D a partir de um MULTIBAND_IMAGE de 14 canais por pixel (ex.: a primeira camada de saída de atributos gaussianos do SharpPredictGaussianAttrs) + os parâmetros extrínsecos/intrínsecos de câmera correspondentes. As bandas múltiplas armazenam posições NDC; este nó as converte para o espaço do mundo via unproject_gaussians do SHARP antes de salvar."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp Divisão de Cubo Panorâmico",
+        "widgets": {
+            "panorama": "Imagem Panorâmica",
+            "image_w": "Largura da imagem",
+            "image_h": "Altura da imagem",
+            "fov_x_deg": "Ângulo de Visão X",
+            "fov_y_deg": "Ângulo de Visão Y",
+            "rot_deg": "Ângulo de rotação",
+            "pitch_up": "Inclinação para cima",
+            "pitch_down": "Inclinação para baixo"
+        },
+        "outputs": {
+            "face_images": "Imagens das faces",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "fov_x_deg": "Campo de Visão do Eixo X",
+            "num_faces": "Número de faces poligonais"
+        },
+        "description": "Amostra N recortes em perspectiva com inclinação e guinada fixas a partir de um panorama esférico 2:1 (padrão: 3 inclinações x 3 guinadas = 27 vistas). Compatível com a geometria do WorldStereoPanoramaCubeSplit — atua como etapa de entrada do modelo de profundidade por face, e suas saídas podem ser remontadas pelo SharpDepthMerge.\n\nDiferente do SamplePanorama do Sharp ((que deriva a grade a partir de FOV + sobreposição e produz quadrados), este nó usa grade de inclinação fixa e proporção retangular (padrão 832x480), seguindo a convenção de câmera/parâmetros intrínsecos do pano_bank do WorldStereo."
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp Previsão de Primeiro Plano",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "mode": "Modo",
+            "focal_length_mm": "Distância focal em milímetros",
+            "output_prefix": "Prefixo de saída"
+        },
+        "outputs": {
+            "ply_path": "Caminho do Arquivo PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Gera arquivos PLY de nuvem de pontos gaussianos 3D a partir de imagens usando o Sharp, mantendo apenas os gaussianos da superfície visível e descartando as partes ocluídas. Metade da quantidade de gaussianos por imagem em relação ao SharpPredict. A entrada em lote cria uma pasta numerada de arquivos PLY."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "Prever Nuvem de Pontos Gaussianos a Partir de Profundidade Métrica",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "metric_depth_layer0": "Profundidade métrica camada 0",
+            "metric_depth_layer1": "Profundidade métrica camada 1",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "focal_length_mm": "Distância focal em milímetros",
+            "output_prefix": "Prefixo de saída",
+            "save_background_layer": "Salvar Camada de Fundo",
+            "snap_to_external_depth": "Ajustar à profundidade externa",
+            "depth_convention": "Convenção de profundidade",
+            "edge_crop": "Corte de borda"
+        },
+        "outputs": {
+            "ply_path": "Caminho do Arquivo PLY",
+            "ply_folder": "Caminho da Pasta PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Executa o decodificador gaussiano do Sharp usando a profundidade métrica fornecida externamente como alvo de alinhamento. A profundidade externa vira uma estrutura geométrica consistente para os valores base gaussianos de `init_modelo`, de modo que os gaussianos compartilham superfícies coerentes entre as vistas — corrigindo as emendas por face.\n\nSalva arquivos PLY (uma imagem->um .ply; lote->pasta de NNN.ply). Combine em um único PLY pelo fluxo do MergeGaussians."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp Previsão de Atributos Gaussianos",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "focal_length_mm": "Distância focal em milímetros"
+        },
+        "outputs": {
+            "metric_depth": "Profundidade Métrica",
+            "extrinsics_mdepth": "Parâmetros extrínsecos_profundidade métrica",
+            "intrinsics_mdepth": "Parâmetros Intrínsecos_Profundidade Métrica",
+            "first_layer_depth_refined": "Profundidade refinada da primeira camada",
+            "first_layer_gaussian_attrs": "Atributos gaussianos da primeira camada",
+            "second_layer_depth_refined": "Profundidade refinada da segunda camada",
+            "second_layer_gaussian_attrs": "Atributos gaussianos da segunda camada",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Executa a inferência Sharp e expõe a saída do decodificador gaussiano de cada pixel como tensores hierárquicos estruturados (profundidade + todos os atributos gaussianos como MULTIBAND_IMAGE) em vez de achatar tudo em um arquivo PLY.\n\nUse a saída de profundidade para acionar AlignDepthMaps e recuperar a escala de cada face, depois multiplique essa escala nos canais de posição multibanda antes de reconstruir o arquivo PLY."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp Previsão de Profundidade Métrica",
+        "widgets": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "focal_length_mm": "Distância focal em milímetros",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "Profundidade métrica da camada 0",
+            "layer_1_metric_depth": "Profundidade métrica da camada 1",
+            "extrinsics_mdepth": "Parâmetros extrínsecos_profundidade métrica",
+            "intrinsics_mdepth": "Parâmetros Intrínsecos_Profundidade Métrica",
+            "layer_0_points_raw": "Nuvem de pontos bruta da camada 0",
+            "layer_1_points_raw": "Nuvem de pontos bruta da camada 1"
+        },
+        "description": "Executa apenas o codificador + cabeça de deslocamento do Sharp (ignora o decodificador gaussiano). Produz a profundidade métrica por pixel e os parâmetros extrínsecos/intrínsecos correspondentes. Quando você só precisa da profundidade, a velocidade é cerca do dobro da SharpPredictGaussianAttrs. Conecte ao SharpDepthMerge para uma fusão esférica limpa da profundidade."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "Obter Profundidade Refinada da Distribuição Gaussiana",
+        "inputs": {
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "ply_path": "Caminho do PLY",
+            "out_size": "Tamanho de saída"
+        },
+        "outputs": {
+            "depth_maps": "Mapa de profundidade",
+            "valid_mask": "Máscara válida",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Reprojeta os pontos gaussianos PLY previstos pelo Sharp de volta ao espaço da câmera de cada face, para recuperar a profundidade refinada por pixel (na verdade os valores z produzidos pelo decodificador, e não a cabeça de disparidade pré-refinada). A profundidade mínima de cada pixel = camada 0 (superfície visível).\n\nPasse os mapas de profundidade pelo AlignDepthMaps para o alinhamento em escala logarítmica e aplique o fator de escala por face resultante aos pontos gaussianos antes de mesclá-los."
+    },
+    "ScaleImageValues": {
+        "title": "Ajustar valores da imagem",
+        "widgets": {
+            "image": "Imagem"
+        },
+        "description": "Remapeia linearmente todos os valores de uma imagem para o intervalo [0, 1]. Isso é útil ao visualizar mapas de profundidade (porque um mapa de profundidade pode conter unidades como metros, enquanto o PreviewImage do ComfyUI espera valores na faixa de [0, 1]). Cada item do lote é escalonado de forma independente com base nos valores mínimo/máximo do próprio (H, W, C). Imagens de valor constante se tornam todas zeros (em vez de NaN por divisão por zero)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "Converter raio Sharp em profundidade planar",
+        "inputs": {
+            "image": "Imagem",
+            "intrinsics": "Parâmetros intrínsecos",
+            "extrinsics": "Parâmetros extrínsecos"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "intrinsics": "Parâmetros intrínsecos",
+            "extrinsics": "Parâmetros extrínsecos"
+        },
+        "description": "Conversor de convenção de profundidade por face. Gera a profundidade Z planar esperada pelo decodificador de gaussianos Sharp e pela reprojecção inversa, multiplicando a profundidade da distância do raio pelo mapa de cosseno de cada face (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)). Coloque-o entre as fontes de profundidade da divisão de panorama (PanoramaSplit sobre um panorama de profundidade isométrica) e os nós de previsão Sharp. Se os parâmetros intrínsecos forem passados em forma normalizada, eles serão reescalados para unidades de pixels de K, de modo que todos os nós a jusante vejam unidades consistentes."
+    },
+    "AlignDepthMaps": {
+        "title": "Alinhar mapas de profundidade",
+        "inputs": {
+            "depth_maps": "Mapa de profundidade",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "reference_view": "Vista de Referência",
+            "method": "Método"
+        },
+        "outputs": {
+            "aligned_depth_maps": "Mapas de profundidade alinhados",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "alignment_info": "Informações de alinhamento"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "Carregar Imagem com Informações EXIF",
+        "widgets": {
+            "image": "Imagem",
+            "default_focal_mm": "Distância focal padrão (mm)"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "mask": "Máscara",
+            "focal_length_mm": "Distância focal（milímetros）"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "Carregar Modelo Sharp",
+        "widgets": {
+            "precision": "Precisão",
+            "checkpoint_path": "Caminhos do checkpoint"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "Mesclar distribuição gaussiana",
+        "widgets": {
+            "ply_folder": "Pasta PLY",
+            "output_prefix": "Prefixo de saída",
+            "max_depth": "profundidade máxima",
+            "min_opacity": "Transparência mínima"
+        },
+        "outputs": {
+            "ply_path": "Caminho do PLY",
+            "num_gaussians": "Número de gaussianas"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp Previsão",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "focal_length_mm": "Distância focal（milímetros）",
+            "output_prefix": "Prefixo de saída"
+        },
+        "outputs": {
+            "ply_path": "Caminho do PLY",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp Previsão de Profundidade",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "reference_depth": "Profundidade de Referência"
+        },
+        "outputs": {
+            "depth_maps": "Mapa de profundidade",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "alignment_maps": "Mapas de alinhamento"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "Projetar profundidade no panorama",
+        "inputs": {
+            "depth_maps": "Mapa de profundidade",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos"
+        },
+        "widgets": {
+            "panorama_width": "Largura do Panorama",
+            "show_borders": "Mostrar bordas",
+            "disagreement_scale": "Escala de Divergência",
+            "blend_mode": "Modo de mistura",
+            "border_color": "Cor da borda"
+        },
+        "outputs": {
+            "panoramic_depth": "Profundidade Panorâmica",
+            "debug_overlay": "Sobreposição de depuração",
+            "disagreement_heatmap": "Mapa de Calor de Divergência"
+        },
+        "description": "Categoria: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "Amostrar panorama",
+        "inputs": {
+            "panorama": "Imagem Panorâmica"
+        },
+        "widgets": {
+            "fov_degrees": "Campo de visão (graus)",
+            "overlap_percent": "Porcentagem de sobreposição",
+            "output_size": "Tamanho de saída",
+            "skip_poles": "Ignorar polos"
+        },
+        "outputs": {
+            "images": "Imagem",
+            "extrinsics": "Parâmetros extrínsecos",
+            "intrinsics": "Parâmetros intrínsecos",
+            "num_horizontal": "Quantidade horizontal",
+            "num_vertical": "Quantidade vertical"
+        },
+        "description": "Categoria: Sharp"
+    }
+}

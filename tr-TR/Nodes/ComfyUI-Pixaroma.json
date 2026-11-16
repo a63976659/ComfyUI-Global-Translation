@@ -1,0 +1,742 @@
+{
+    "Pixaroma3D": {
+        "title": "Pixaroma 3D",
+        "widgets": {
+            "Open 3D Builder": "3D oluşturucuyu aç"
+        },
+        "outputs": {
+            "image": "Oluşturulmuş 3B sahne",
+            "width": "Görsel genişliği (piksel)",
+            "height": "Görsel yüksekliği (piksel)"
+        },
+        "description": "3D Oluşturma Aracı Pixaroma — ComfyUI içinde çalışan eksiksiz bir 3D sahne düzenleyici. Düğümde tam ekran düzenleyiciyi açarak temel şekiller (küp, küre, silindir, torus, blob, arazi, kaya, çaydanlık, içi boş kap), hazır varlıklar (ağaçlar, evler, mobilyalar, çiçekler) ekleyebilir veya kendi .glb/.obj modellerinizi içe aktarabilirsiniz.\n\nYerleşik kamera kontrolleri (yörünge, kaydırma, yakınlaştırma), gerçekçi ışıklandırma, geri al/yinele ve gerçek zamanlı önizleme. Klavye kısayolları Blender düzenini kullanır (G taşıma, S ölçekleme, R döndürme, Shift+D kopyalama, görünüm ön ayarları için sayısal tuş takımı 1/3/7).\n\nNihai render sonucunu IMAGE olarak, ayrıca genişliğini ve yüksekliğini çıkarır; böylece doğrudan ControlNet'e (derinlik haritası, çizgi sanatı, normal harita için ideal) veya herhangi bir img2img iş akışına bağlayabilirsiniz.\n\nGirdiler, arka plan görseli katmanı eklediğinizde düzenleyicinin oluşturduğu dinamik yer tutucu yuvalardır; ipuçları JS tarafında bulunur."
+    },
+    "PixaromaAudioStudio": {
+        "title": "Pixaroma Ses Stüdyosu",
+        "inputs": {
+            "image": "Görsel",
+            "audio": "Ses"
+        },
+        "widgets": {
+            "Open AudioReact": "Ses izini aç"
+        },
+        "outputs": {
+            "video_frames": "Video karesi dizisi",
+            "audio": "Ses",
+            "fps": "Kare hızı"
+        },
+        "description": "Pixaroma SesTepki — tek bir görseli ses tepkili videoya dönüştürür. Düğümde tam ekran düzenleyiciyi açarak ses zaman çizelgesini sürükleyebilir, hareket modunu seçebilir (15 seçenek: nabız ölçekleme, kamera sarsıntısı, glitch, büzülme, dalga, eğme, pikselleştirme, RGB bölme vb.) ve en fazla 8 efekti üst üste bindirebilirsiniz (kroma kayması, parıltı, vinyet, ton kayması, sinematik camgöbeği-turuncu renk düzeni, letterbox efekti, tarama çizgileri, film taneciği). Canlı WebGL önizlemesi, siz sürüklerken ritme gerçek zamanlı tepki verir.\n\nEk model gerekmez. Sonucu doğrudan MP4 olarak kodlamak ve sesi yeniden kullanmak için Pixaroma MP4 Kaydet düğümüyle birlikte kullanılabilir. WebGL2 desteği gerektirir.\n\nİki girdi de isteğe bağlıdır — üst akış IMAGE/AUDIO'yu herhangi bir kaynaktan bağlayabilir veya düzenleyici içinde satır içi yükleyebilirsiniz (sürükle-bırak ya da dosya seçme). Satır içi seçim, satır içi pin anahtarını kapatana kadar üst akış bağlantısını geçersiz kılar."
+    },
+    "PixaromaCombine": {
+        "title": "Pixaroma Birleştir",
+        "inputs": {
+            "any1": "Herhangi 1",
+            "any2": "Herhangi 2"
+        },
+        "outputs": {
+            "batch": "Yığın"
+        },
+        "description": "İki girdiyi tek bir yığında birleştirir. Herhangi iki şeyi Herhangi 1 ve Herhangi 2'ye bağlayın; birleştirme düğümü onları birleştirir: görseller ve video kareleri tek bir yığında üst üste yığılır, Latent toplu işleme alınır, sayılar ve metinler liste olarak toplanır. Bir taraf boşsa diğer taraf olduğu gibi iletilir; bu yüzden döngü içinde biriktirici olarak güvenle kullanılabilir (1. turda henüz eklenecek bir şey yoktur). Herhangi bir bağlantı türüyle çalışır."
+    },
+    "PixaromaCompare": {
+        "title": "Pixaroma Karşılaştırma",
+        "inputs": {
+            "image1": "Görsel 1",
+            "image2": "Görsel 2"
+        },
+        "description": "Pixaroma Görsel Karşılaştırma — iki görsel arasındaki farkları görmenin en kolay yolu. Herhangi iki IMAGE çıkışını Görsel 1 ve Görsel 2'ye bağlayın (örneğin: büyütme öncesi/sonrası, orijinal/yeniden boyanmış, iki checkpoint varyantı) ve iş akışını çalıştırın.\n\nDüğümdeki görüntüleyici üç mod sunar: sürüklenebilir kaydırıcılı yan yana mod, ayarlanabilir opaklıklı bindirme modu veya iki görsel arasındaki belirli değişiklikleri vurgulayan “Fark” modu. Yeni karşılaştırma düğümlerinin başlangıç modu, düğümün ayarlarında belirlenir; ayarlar, düğüm araç çubuğundaki dişli düğmesiyle veya düğüme sağ tıklayarak açılır.\n\nİki girdi de isteğe bağlıdır. Yalnızca bir görsel bağlıysa (örneğin girdilerden birine bağlanan dal susturulduğunda veya atlandığında), düğüm yalnızca o görseli gösterir; hiçbiri bağlı değilse kısa bir ipucu gösterir — asla sistem hatası vermez; bu yüzden metinden görsele ve görselden görsele arasında geçiş yapan iş akışlarında güvenle bırakılabilir."
+    },
+    "PixaromaImageComposition": {
+        "title": "Pixaroma Görsel Oluşturucu",
+        "widgets": {
+            "Open Image Composer": "Görsel oluşturucuyu aç"
+        },
+        "outputs": {
+            "image": "Birleştirilmiş görsel",
+            "width": "Görsel genişliği (piksel)",
+            "height": "Görsel yüksekliği (piksel)"
+        },
+        "description": "Pixaroma Görsel Oluşturucu — katmanlı bir tuvalde birden çok görseli birleştirin ve düzenleyin. Bir görseli kapalı düğüm gövdesinin üzerine sürüklemek, onu yeni katman olarak ekler (düzenleyiciyi açar ve sürüklenen görseli mevcut katmanların üzerine yığar, asla değiştirmez). Tam ekran düzenleyicide ayrıca sürükleyip bırakarak, panodan yapıştırarak veya üst akış IMAGE girdisini yer tutucu yuvaya bağlayarak katman ekleyebilir, ardından tutamaçlarla onları taşıyabilir/ölçekleyebilir/döndürebilir ve katman başına efektler uygulayabilirsiniz: opaklık, karma modu (Normal, Çoğalt, Ekran, Bindirme, Karart, Aydınlat, Renk Açma, Renk Koyulaştırma, Sert Işık, Yumuşak Işık, Fark, Dışlama, Ton, Doygunluk, Renk, Parlaklık), Gauss bulanıklığı ve AI arka plan kaldırma (rembg tarafından desteklenir; kurulu en iyi modeli otomatik seçer: birefnet -> isnet -> u2net).\n\nSilgi aracı, herhangi bir katmanı tahribatsız şekilde masklemenize olanak tanır. Katman başına bulanıklık ikinci dereceden bir eğri kullanır (kaydırıcı 0-100 → 0-50 piksel), böylece düşük değerler ince kontrol sağlar. Seçili katmanda Shift+Kaydırma yapmak, onu yerinde ölçekler.\n\nNihai birleştirme sonucunu IMAGE olarak, ayrıca genişliğini ve yüksekliğini çıkarır.\n\nGirdiler, yer tutucu katman eklediğinizde düzenleyicinin oluşturduğu dinamik yer tutucu yuvalardır — herhangi bir üst akış IMAGE kaynağını eşleşen yuvaya bağlayın. İpuçları JS tarafında bulunur."
+    },
+    "PixaromaCrop": {
+        "title": "Pixaroma Kırp",
+        "widgets": {
+            "Open Crop": "Kırpmayı aç"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "crop_info": "Kırpma bilgisi",
+            "width": "Genişlik (piksel)",
+            "height": "Yükseklik (piksel)"
+        },
+        "description": "Pixaroma Görsel Kırpma - herhangi bir görseli piksel koordinatı girmeden görsel olarak kırpın. Kaynak görseli sağlamanın üç yolu: herhangi bir üst akış görselini girdi yuvasına bağlayın (Görsel Yükle, VAE Çözümleme, ControlNet çıkışı vb.), bir görsel dosyasını düğüm gövdesine sürükleyip bırakın veya Ctrl+V ile panodan yapıştırın. Sürükle-bırak ve yapıştırma, üst akış bağlantısını otomatik olarak keser ve elle yüklenen görseli kullanır.\n\nDüğüm panelindeki genişlik/yükseklik/X/Y/oran/hizalama alanları - sayı alanları '1024+512' veya '512*2' gibi matematiksel ifadeleri destekler. Serbest olmayan bir hizalama seçmek, kırpma çerçevesini kaynak görseli göre otomatik olarak yeniden ortalar; bu yüzden merkez kırpma seçiliyken genişliği veya yüksekliği 512 yapmak, X/Y'yi ortalanmış kaymaya otomatik olarak hizalar. Tam ekran düzenleyici, tutamaçlarıyla birlikte sürüklenebilir bir kırpma dikdörtmeni, sosyal medyaya uygun standart ön ayarlı oranlar (1:1, 16:9, 9:16 vb.) ve düzenleyici içinde kaynak görseli değiştiren bir Görsel Yükle düğmesi gösterir (bu da üst akış bağlantısını otomatik olarak keser).\n\nKırpılmış görseli, eşleşen kırpma maskesini (aynı çerçeveyle kırpma şeffaflığını aktarmak için Görsel Yükle'nin maske çıkışı gibi bir maske girdisini bağlayın), yeni genişlik ve yüksekliği ve 'crop_info' bağlantısını çıkarır. crop_info'yu Pixaroma Kırpma Geri Alma'ya vermek, düzenlenmiş kırpma parçasını orijinal görseldeki karşılık gelen konuma tam olarak geri yapıştırır (kırp, yeniden boyama/büyütme, sonra geri koyma).\n\n'图像' girdisi isteğe bağlıdır - üst akış görselini bağlayabilir veya görseli doğrudan sürükle-bırak, Ctrl+V ile yapıştırma ya da düzenleyicinin Görsel Yükle düğmesiyle yükleyebilirsiniz (bunlar bağlantıyı geçersiz kılar)"
+    },
+    "PixaromaFindReplace": {
+        "title": "Pixaroma Bul ve Değiştir",
+        "inputs": {
+            "text": "Metin"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma Bul ve Değiştir - bu düğümü, bir metin kaynağı (LLM düğümü, Metni Göster, Pixaroma Metin, herhangi bir dize çıkışı) ile o metni kullanan düğüm arasındaki bağlantıya yerleştirin. Metni yakalar, bul/değiştir kurallarını uygular ve düzenlenmiş sonucu iletir. Ayrıca düğümde önce/sonra karşılaştırmasını önizler.\n\nHer düzenleme için bir kural ekleyin: bulunacak içeriği ve yerine konacak içeriği girin. Değiştirme tarafı boş bırakılırsa bulunan metin silinir. Bir kuralın anahtarını kapatmak, onu silmeden atlar; sırayı değiştirmek için tutamacı sürükleyin. Kurallar yukarıdan aşağıya uygulanır.\n\nGenel anahtarlar: büyük/küçük harf (harf büyüklüğünü tam eşleştir), tam sözcük (yalnızca tam sözcükleri eşleştirir; böylece 'art', 'artist' ile eşleşmez), düzenli ifade (bulunan içeriği düzenli ifade olarak ele alır), toparla (düzenlemeden sonra çift boşlukları birleştirir ve fazla veya çift virgülleri düzeltir)"
+    },
+    "PixaromaGroupSwitch": {
+        "title": "Pixaroma Grup Anahtarı",
+        "description": "Pixaroma Grup Anahtarı - Pixaroma grupları için kompakt bir anahtar paneli. Her anahtar, o gruptaki tüm düğümleri susturabilir veya atlayabilir; böylece iş akışının bütün bölümlerini bağlantı yapmadan açıp kapatabilirsiniz.\n\nPaneli açın (dişli simgesi veya düğüme sağ tıklama); bu anahtarın susturacağını mı yoksa atlayacağını mı, hangi grupları kontrol edeceğini (tümü veya elle seçilen, aramaya göre sıralanmış grup kümesi) ve geçiş kuralını (herhangi bir sayıda açık, yalnızca biri açık veya her zaman biri açık) seçebilirsiniz.\n\nFarklı görevler için bu türden birden çok düğüm ekleyin - biri susturmak için, biri atlamak için. Hepsi grubun canlı durumunu okuyup ayarladığından, birbirleriyle ve grupların kendi başlık düğmeleriyle senkronize olurlar"
+    },
+    "PixaromaImageInfo": {
+        "title": "Pixaroma Görüntü Bilgisi",
+        "inputs": {
+            "image_info": "Görüntü bilgisi"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik (piksel)",
+            "height": "Yükseklik (piksel)",
+            "filename": "Dosya adı"
+        },
+        "description": "Pixaroma Görüntü Bilgisi - Pixaroma mini yükleyicisinin görüntü bilgisi veri paketini görsel, maske, genişlik, yükseklik ve dosya adı çıkışlarına açar. Yalnızca bu ek bilgiler gerektiğinde bağlayın; yükleyiciyi kompakt tutar. Genişlik, yükseklik ve dosya adı düğüm yüzeyinde de gösterilir"
+    },
+    "PixaromaImageResize": {
+        "title": "Pixaroma Görsel Yeniden Boyutlandır",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "longest_side": "En uzun kenar"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik (piksel)",
+            "height": "Yükseklik (piksel)",
+            "longest_side": "En uzun kenar"
+        },
+        "description": "İş akışında görselin (ve maskesinin) boyutunu değiştirin. Mod seçin - kapalı, maksimum megapiksel, en uzun kenar, orantılı ölçekleme, içine sığdır, doldurmak için kırp, en-boy oranını eşleştir veya doldur (dışa boyama için kenarlık ekler). Boyutu yönlendirmek için isteğe bağlı olarak genişlik/yükseklik bağlayın (örneğin Pixaroma Çözünürlük'ten) veya tek bir en uzun kenar değeri bağlayarak uzun kenarı o değere ölçekleyin (dikey veya yatay; yön seçmeye gerek yok). Görsel, maske, genişlik, yükseklik çıkarır"
+    },
+    "PixaromaInpaintCrop": {
+        "title": "Pixaroma Yeniden Boyama Kırpması",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "size_mode": "Boyut modu",
+            "blend_mode": "Karma modu",
+            "target": "Hedef",
+            "multiple": "Çarpan",
+            "context_px": "Bağlam pikselleri",
+            "mask_grow": "Maske genişletme",
+            "mask_blur": "Maske bulanıklığı",
+            "softness": "Yumuşaklık",
+            "invert_mask": "Maskeyi ters çevir",
+            "Open mask editor": "Maske düzenleyiciyi aç"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "crop_info": "Kırpma bilgisi",
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Pixaroma Yeniden Boyama Kırpması: yeniden boyama ayarlamasının kolay yolu. Tam ekran düzenleyiciyi açın ve düzeltilmesi gereken bölgenin üzerine maske çizin (fırça, silme, temizleme, ters çevirme, fırça boyutu ayarı desteklenir). Düğüm, maskenin çevresindeki bölgeyi otomatik olarak algılar, bağlam kenar boşluğu ekler ve modele uygun bir parça kırpır (boyutlar 8'in katlarıdır, hedefe göre ölçeklenir; böylece küçük maske bölgeleri bile yeterli çözünürlüğe sahip olur).\n\ninvert_mask öğesini açmak maskeyi ters çevirir ve karşı bölgede yeniden boyama yapar (örneğin öznenin yerine kesilmiş görselin arka planı) — ek bir maske ters çevirme düğümü gerekmez.\n\nKırpılmış görseli ve maskeyi yeniden boyama modelinize (KSampler, Flux, düzenleme modelleri) bağlayın, ardından crop_info'yu Pixaroma Yeniden Boyama Dikişi düğümüne bağlayın; sonuç tam olarak orijinal konumuna geri yapıştırılır.\n\nKırpılmış görseli, karşılık gelen maskeyi, kırpma bilgisi bağlantısını ve kırpmanın genişlik/yüksekliğini çıkarır (Boş Latent için kullanışlıdır). Kırpma bilgisi bağlantısı, Görsel Kırpma düğümünün kullandığı türle aynıdır; ikisi birbirinin yerine kullanılabilir."
+    },
+    "PixaromaInpaintStitch": {
+        "title": "Pixaroma Yeniden Boyama Dikişi",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "crop_info": "Kırpma bilgisi"
+        },
+        "widgets": {
+            "softness": "Yumuşaklık",
+            "blend_mode": "Karma modu",
+            "color_match": "Renk eşleştirme"
+        },
+        "outputs": {
+            "image": "Görsel.",
+            "original": "Orijinal görsel"
+        },
+        "description": "Pixaroma Yeniden Boyama Dikişi: yeniden boyama kırpma sonucunu, orijinal görseldeki kaynak konumuna tam olarak geri yapıştırır ve harmanlayarak dikiş izlerini ortadan kaldırır.\n\nPixaroma Yeniden Boyama Kırpması düğümünün crop_info çıkışını buradaki crop_info'ya bağlayın, ardından yeniden boyama kırpma sonucunu (model işleminden sonra) görsele bağlayın. Düğüm, kırpılan bölgeyi varsayılan olarak özgün konumuna geri yerleştirir, yalnızca boyanan alanı harmanlar ve maske dışındaki içerik piksel düzeyinde kesin kalır.\n\nDikiş yumuşaklığı ve karma modu, crop_info üzerindeki yeniden boyama kırpması düğümünden gelir, ancak burada üzerine yazılabilir (softness=-1 olduğunda kırpma düğümünün ayarları kullanılır). Düğüm örneklemeleyiciden sonra geldiğinden, yumuşaklığı, karma modunu veya renk eşleştirmeyi değiştirmek yalnızca bu düğümü yeniden çalıştırır — örneklemeleyici sabit rastgele tohumu önbelleğe alır, böylece yeniden üretmeye gerek kalmadan harmanlama efektini anında ince ayarlayabilirsiniz. Renk eşleştirme, modelin getirdiği renk/ton kaymalarını düzeltmek için kullanılır.\n\nTamamlanmış görselin tamamını ve orijinal kırpılmamış görseli çıkarır; ikisi birlikte anında önce/sonra karşılaştırması için Pixaroma Görsel Karşılaştırma düğümüne bağlanabilir."
+    },
+    "KreaLoraConvertPixaroma": {
+        "title": "Krea LoRA'yı Pixaroma'ya dönüştür",
+        "widgets": {
+            "lora_name": "lora adı",
+            "output_name": "Çıkış adı",
+            "overwrite": "Üzerine yaz"
+        },
+        "description": "fal.ai üzerinde eğitilmiş Krea 2 LoRA'larını ComfyUI uyumlu dosyalara dönüştürür. fal.ai'nin Krea 2 LoRA'ları, ComfyUI'nin tanımadığı katman adları kullanır ve bu yüzden yüklenemez; bu düğüm o katmanları yeniden adlandırır ve loras klasörünüzde yeni bir kopya kaydeder; herhangi bir LoRA yükleyici bunu kullanabilir. Ağırlıklar birebir kopyalanır; sonuç tamamen aynıdır, yalnızca yüklenebilir hale gelir. Bir LoRA seçin, okumaları inceleyin, Dönüştür'e tıklayın. Yalnızca dosyanızı okur ve yeni bir dosya yazar: orijinal dosyayı asla değiştirmez ve hiçbir şey indirmez. Bağımsız bir araçtır; Krea veya fal.ai ile bağlantılı değildir ve onlar tarafından onaylanmamıştır."
+    },
+    "PixaromaLabel": {
+        "title": "Pixaroma Etiket",
+        "widgets": {
+            "label_json": "Etiket JSON"
+        },
+        "description": "Pixaroma Etiket: iş akışı belgelendirmesi için basit bir metin etiketi. Düğüme tıklayarak tam ekran düzenleyiciyi açın; metin içeriğini, yazı tipini, yazı boyutunu (en fazla 256 piksel), metin rengini ve arka plan rengini ayarlayabilirsiniz.\n\nYalnızca açıklama işlevi: görsel işleme yok, girdi bağlantısı gerekmez, çıkış zinciri yok. Stilli etiket doğrudan düğüm gövdesinde oluşturulur ve iş akışıyla birlikte kaydedilip geri yüklenir."
+    },
+    "PixaromaLoadImage": {
+        "title": "Pixaroma Görsel Yükle",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik (piksel)",
+            "height": "Yükseklik (piksel)",
+            "filename": "Dosya adı",
+            "original_width": "Orijinal görsel genişliği",
+            "original_height": "Orijinal görsel yüksekliği"
+        },
+        "description": "Pixaroma Görsel Yükle: yerel görsel yükleme işlevi (yükleme, sürükle-bırak, yapıştırma, çoklu kare, Alpha'dan maskeye) artı satır içi ayarlar: maksimum megapiksel, en uzun kenar, orantılı ölçekleme, içine sığdır, doldurmak için kırp, en-boy oranını eşleştir. Hizalama çipleri, yeniden örnekleme seçici ve büyütme çözünürlüğü koruması desteklenir. Çıkışlar: görsel, maske, genişlik, yükseklik, dosya adı, orijinal genişlik, orijinal yükseklik. Çoğu iş akışında alt akıştaki görsel boyutu alma + görsel ölçekleme + görsel kırpma kombinasyonuna gerek kalmaz."
+    },
+    "PixaromaLoadImagesFolder": {
+        "title": "Pixaroma Klasörden Görsel Yükle",
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "filename": "Dosya adı",
+            "index": "Dizin",
+            "total": "Toplam"
+        },
+        "description": "Diskteki herhangi bir klasörden birden çok görsel yükler ve iş akışında tek tek işler — her görsel bir sonuç üretir. Tümünü, ilk N tanesini seçebilir veya küçük resim galerisinde belirli görselleri elle seçebilirsiniz. Yeniden boyutlandırma seçenekleri Pixaroma Görsel Yükle düğümüyle aynıdır (maksimum megapiksel, en uzun kenar, orantılı ölçekleme, içine sığdır, doldurmak için kırp, en-boy oranını eşleştir). Çıkışlar liste olarak verilir: görsel, maske, genişlik, yükseklik, dosya adı, dizin, toplam. Her sonucun orijinal adını korumak için dosya adını bir kaydetme düğümüne bağlayın; her görselin boyutlarını eşleştirmek için genişlik/yüksekliği Boş Latent'e bağlayın. Çalıştır'a bir kez tıklayın; yığın sayısı 1 olarak kalır."
+    },
+    "PixaromaLoadImageMini": {
+        "title": "Pixaroma Mini Görsel Yükle",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "image_info": "Görüntü bilgisi"
+        },
+        "description": "Pixaroma Mini Görsel Yükle — kompakt bir görsel yükleme düğümü. Yükleme, sürükle-bırak, yapıştırma veya dosya seçmeyi destekler; Görsel Yükle ile aynı satır içi yeniden boyutlandırma seçenekleri (maksimum megapiksel, en uzun kenar, orantılı ölçekleme, içine sığdır, doldurmak için kırp, oranı eşleştir) ayarlar panelinde bulunur, böylece düğüm arayüzü son derece sade kalır. Maske düzenleyici ve kopyala/yapıştır (Clipspace) işlevleri normal şekilde çalışır.\n\nYalnızca görseli ve küçük bir image_info veri paketini çıkarır. Maske, genişlik, yükseklik veya dosya adı gerektiğinde, image_info'yu Pixaroma Görüntü Bilgisi düğümüne bağlayın — bu, yükleyiciyi küçük tutar."
+    },
+    "PixaromaLoadVideo": {
+        "title": "Pixaroma Video Yükle",
+        "widgets": {
+            "video": "Video (Klip)",
+            "max_frames": "Maks kare sayısı",
+            "force_fps": "Kare hızını zorla",
+            "skip_first_frames": "İlk kareleri atla",
+            "custom_width": "Özel genişlik",
+            "custom_height": "Özel yükseklik"
+        },
+        "outputs": {
+            "video_frames": "Video dizi kareleri",
+            "audio": "Ses",
+            "frame_count": "Kare sayısı",
+            "fps": "Kare hızı",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "duration": "Süre (saniye)"
+        },
+        "description": "Pixaroma Video Yükle — bir video yükleyin veya seçin ve kare yığınına çözümleyin; düğümde yerleşik video önizlemesi vardır, kaynak videoyu ComfyUI'den ayrılmadan görüntüleyebilirsiniz.\n\nÇıkışlar: video_frames (video, görsel yığını olarak), ses, kare sayısı, kare hızı, genişlik, yükseklik ve süre — bu yüzden genellikle ayrı bir video bilgisi düğümü gerekmez. Pixaroma MP4 Kaydet düğümüyle birlikte çalışır: video_frames ve sesi doğrudan bağlayın.\n\nYükleme kontrolleri: maksimum kare sayısı, baştan yüklenecek kare sayısını ayarlar (uzun videolar için güvenlik mekanizması); ilk kareleri atla, başlangıcı kırpar; kare hızını zorla, sabit bir kare hızına yeniden örnekler; özel genişlik/yükseklik her kareyi yeniden boyutlandırır (ikisini birden ayarlamak, görseli germeden o boyuta doldurmak için kırpır).\n\nOkumak için öncelikle PyAV kullanılır, aksi halde 图像io kullanılır; ses ffmpeg ile çıkarılır. Çoğu ComfyUI kurulumunda ek ayar gerekmez."
+    },
+    "PixaromaLoadVideoFrame": {
+        "title": "Pixaroma Video Kareleri Yükle",
+        "widgets": {
+            "video": "Video (Klip)",
+            "choose video to upload": "Yüklenecek videoyu seçin",
+            "frame": "Kare"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "frame_count": "Toplam kare sayısı",
+            "fps": "Kare hızı",
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Pixaroma Video Kareleri Yükle — bir video yükler ve iş akışına görsel olarak göndermek üzere bir kare seçer. Görsel Yükle düğümüne benzer, ancak video içindir.\n\nDüğümde kaydırıcılı bir önizleme bulunur: kaydırıcıyı herhangi bir konuma sürükleyin, ok düğmeleriyle kare kare geri veya ileri gidin ya da tam kare numarasını girin. Toplam kare sayısı otomatik olarak okunur; böylece kaydırıcı videoda kaç kare olduğunu bilir.\n\nÇıkışlar: görsel (seçili kare), maske, kare sayısı, kare hızı, genişlik ve yükseklik. Kare numaraları 0'dan başlar; yani 0 ilk karedir.\n\nOkumak için öncelikle PyAV kullanılır, aksi halde 图像io kullanılır. Uzun videoların derinliklerindeki kareleri almak bile hızlı kalır; çünkü videonun tamamını okumak yerine doğrudan o kareye konumlanılır."
+    },
+    "PixaromaLoopStart": {
+        "title": "Pixaroma Döngü Başlangıcı",
+        "widgets": {
+            "total": "Toplam"
+        },
+        "description": "Döngünün başlangıç işaretçisi. Düğümü döngü başlangıcı ile döngü sonu arasına yerleştirin; tüm bölüm tekrar tekrar çalıştırılır. 'Toplam' değerini döngü sayısı olarak ayarlayın. 'Dizin', döngü turlarını 0'dan itibaren sayar. Değer yuvaları, bir turdan sonraki tura taşınması gereken içeriği tutar (örneğin o ana kadar üretilen kareler veya bir çalıştırma sayacı) — karşılık gelen döngü sonu değer yuvasını geri bağlayın; böylece her tur önceki turdan kaldığı yerden devam eder. Döngünün hiçbir şey taşıması gerekmiyorsa değer yuvalarını boş bırakın."
+    },
+    "PixaromaLoopEnd": {
+        "title": "Pixaroma Döngü Sonu",
+        "description": "Döngünün bitiş işaretçisi. Döngü başlangıcının 'loop' çıkışına bağlayın. Sonraki tura taşınması gereken değerleri değer yuvalarına koyun (örneğin her turun karelerini biriktiren bir birleştirme düğümü). Tüm döngü yürütmeleri tamamlandığında değer yuvaları, taşınan nihai değerleri çıkarır. Döngü başlangıcı ile bitişi arasındaki her şey tekrar tekrar çalıştırılır."
+    },
+    "PixaromaLoopEngine": {
+        "title": "Pixaroma Döngü Motoru",
+        "inputs": {
+            "loop": "Döngü sayısı",
+            "index_in": "Geçerli dizin",
+            "total": "Toplam sayı"
+        },
+        "description": "Loop Start / Loop End'in dahili özyineleme sürücüsü. Kullanıcıların bu düğümü elle yerleştirmesi gerekmez — Loop End onu otomatik olarak oluşturur. Her turda, bir sonraki döngü turunun gerekli olup olmadığını denetler (dizin+1 < toplam sayı); gerekirse döngü gövdesini ve kendisini klonlar, bir sonraki dizin ve güncellenmiş taşınan değerlerle yeniden çalıştırır; gerekmiyorsa nihai taşınan değerleri çıkarır."
+    },
+    "PixaromaLoraLoader": {
+        "title": "Pixaroma LoRA yükleyici",
+        "inputs": {
+            "model": "Model girdisi",
+            "clip": "Klip"
+        },
+        "outputs": {
+            "MODEL": "Model çıkışı",
+            "triggers": "Tetikleyici sözcükler"
+        },
+        "description": "Tek bir düğümde istediğiniz sayıda LoRA'yı yığabilirsiniz. Her LoRA'nın kendi anahtarı ve gücü vardır; modeli ve klibi bu türden birden çok düğümden geçirerek zincirleyebilirsiniz. Bir satırdaki “i” öğesine tıklayarak LoRA bilgilerini görüntüleyin ve tetikleyici sözcüklerini seçin; etkinleştirilen tetikleyici sözcükler triggers çıkışından düz metin olarak verilir ve isteminize bağlanır. Tetikleyici sözcükler doğrudan dosyadan okunur; ağ bağlantısı gerekmeden çalışır. İsteğe bağlı LoRA başına Civitai arama özelliği, istediğinizde resmi tetikleyici sözcükleri ve önizlemeleri getirir. LoRA ekledikten sonra tüm anahtarlar ve ayarlar düğümün ortasında bulunur; bir satırı taşımak, kopyalamak veya silmek için ona sağ tıklayın."
+    },
+    "PixaromaMuteSwitch": {
+        "title": "Pixaroma Susturma Anahtarı",
+        "outputs": {
+            "out": "Susturma verisi"
+        },
+        "description": "Pixaroma Susturma Anahtarı — iş akışının bütün bir dalını tek bir düğümle açıp kapatın. Her sahnenin son düğümünü (genellikle KSampler) bir satıra bağlayın ve satırdaki hap öğesine tıklayarak o sahneyi bir sonraki çalıştırmada atlayın veya etkinleştirin. Sol üstteki hap, tek mod (aynı anda yalnızca bir sahne çalışır, radyo düğmeleri gibi) ile çok mod (sahnelerin herhangi bir kombinasyonu çalışabilir) arasında geçiş yapar. Sağ üstteki hap, susturma (sahne hiç çalışmaz) ile atlama (sahnedeki her düğüm girdilerini olduğu gibi iletir) arasında geçiş yapar. Birden çok sahne üst akış düğümlerini paylaştığında, bir düğüm yalnızca ona bağımlı tüm sahneler kapalıyken susturulur — böylece hâlâ çalışan bir sahneyi yanlışlıkla kesmezsiniz."
+    },
+    "PixaromaNote": {
+        "title": "Pixaroma Not",
+        "widgets": {
+            "note_json": "Not JSON"
+        },
+        "description": "Pixaroma Not — tuval üzerinde zengin metinli açıklama düzenleyici. Tam ekran düzenleyiciyi açarak çok paragraflı notlar yazabilirsiniz; kalın/italik/altı çizili/üstü çizili, başlıklar (H1/H2/H3), madde işaretli ve numaralı listeler, kod blokları (kopyala düğmeli), satır içi simgeler (CLIP, LoRA, GGUF, model sürümleri ve 30+ çeşit daha), tablolar, ayraçlar, özel renkli düğmeler (İndir/Sayfayı görüntüle/Daha fazla oku/Normal), klasör ipuçları ve önceden stillendirilmiş YouTube ve Discord hap etiketleri desteklenir. Her bloğun kendi rengi vardır; tuvalin üzerinde açılan ortalanmış bir modal pencereden seçilir. Kod görünümü, alttaki HTML'yi elle düzenlemenize izin verir; assets/note-pixaroma-llm-prompt.txt dosyasındaki gömülü LLM istemi, ChatGPT veya Gemini'nin sizin için kod görünümüyle uyumlu HTML üretmesini sağlar. Yalnızca açıklama — görsel işleme yok, girdi bağlantısı yok, çıkış zinciri yok. Kaydetme ve geri yüklemede stiliniz tamamen korunur."
+    },
+    "NotifyPixaroma": {
+        "title": "Pixaroma Bildirici",
+        "inputs": {
+            "any": "Herhangi bir sinyal"
+        },
+        "widgets": {
+            "enabled": "Etkinleştir",
+            "volume": "Ses düzeyi",
+            "label": "Etiket",
+            "sound": "Ses efekti",
+            "Preview": "Önizleme"
+        },
+        "description": "İş akışı bu düğüme ulaştığında bir bildirim sesi çalar. İş akışının sonuna yerleştirerek render tamamlandığında sesli bir bildirim duyabilir veya grafikteki herhangi bir düğüm dalına ekleyerek kontrol noktalarında hatırlatma alabilirsiniz. ComfyUI çalışırken başka bir tarayıcı sekmesinde veya uygulamadayken çok kullanışlıdır. Ses dosyaları assets/sounds/ klasöründen otomatik olarak listelenir — .mp3, .wav veya .ogg dosyaları koyarak daha fazlasını ekleyebilirsiniz (yeni dosyaları yüklemek için ComfyUI'yi yeniden başlatın). Her düğüm aynı zamanda bir kontrol noktası zamanlayıcısıdır: her çalıştırmada iş akışının bu düğüme ulaşma süresini ölçer, bu süreyi düğüm üzerinde gösterir ve sağ tıkla açılabilen düğüm başına bir geçmiş tutar (bildirim zamanı geçmişi). Zamanlama ile ses birbirinden bağımsızdır (ses kapalıyken de kayıt yapılır) ve sağ tık menüsünden her düğüm için kapatılabilir. Saat satırındaki küçük ok, düğümü yalnızca saati gösterecek şekilde daraltabilir (kompakt mod) veya genişletebilir (sağ tık menüsünde Daralt/Genişlet). Her düğümün kendi ses anahtarı vardır; ayrıca tüm bildirim düğümlerini aynı anda geçersiz kılan bir ana ses anahtarı bulunur — bu, düğümün ayarlarında yer alır; düğüm araç çubuğundaki dişli düğmesiyle veya düğüme sağ tıklayarak açılır ve sağ tık menüsünde “Mute all notification sounds” olarak geçer. Önizleme düğmesi her iki anahtarı da atlar; çünkü ona tıklamak, sesi hemen duymak için elle yapılmış bir istektir."
+    },
+    "PixaromaNumber": {
+        "title": "Pixaroma Sayı",
+        "widgets": {
+            "value": "Değer"
+        },
+        "outputs": {
+            "int": "Tamsayı",
+            "float": "Ondalık"
+        },
+        "description": "Pixaroma Sayı — sayı alanlı küçük bir düğüm. Aynı değeri iki kez çıkarır: biri INT (en yakın tamsayıya yuvarlanmış), biri FLOAT (ondalık kısmı korunmuş). Bir alt akış düğümü INT, diğeri FLOAT gerektirdiğinde veya iş akışının ortasında ondalığı temizce tamsayıya dönüştürmek istediğinizde kullanışlıdır. Sayı alanı tamsayıları (42), ondalıkları (3.14) ve matematiksel ifadeleri (1024+64, 1024/3, 512*2) kabul eder. Ondalıktan tamsayıya dönüşümde en yakın tamsayıya yuvarlanır: 3.5, 4 olur; 3.4, 3 olur; -2.5, -2 olur."
+    },
+    "PixaromaOutpaint": {
+        "title": "Pixaroma Dışa Boyama",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "width": "Genişlik",
+            "height": "Yükseklik",
+            "outpaint_info": "Dışa boyama bilgisi"
+        },
+        "description": "Görselin kenarlarını düz bir renkle doldurur; böylece dışa boyama modeli yeni bölgeleri doldurabilir. Ardından isteğe bağlı olarak sonucu megapiksel sınırına ölçekler ve nihai boyutları bildirir.\n\nOrta gri varsayılan doldurma rengidir; herhangi bir renk kullanılabilir, ancak çok koyu doldurmalar üretilen görselin genelinde renk kaymasına yol açar; çünkü dolguyu değiştirmek üzere eğitilen model rengi ve şekli birlikte öğrenir. Gri nötr bir renktir; ton taşması olmaz.\n\nGörseli hedef şekle orantılı olarak genişletir; çapa, yeni alanın hangi tarafta görüneceğini belirler. Kenar başına mod, her kenar için tam piksel sayısını ayarlar. Megapiksel sınırı isteğe bağlıdır: kapalıyken görsel doldurulmuş boyutlarını korur.\n\nGenişlik ve yükseklik çıkışları nihai boyutları bildirir; böylece doğrudan Boş Latent'e girdi olarak verilebilir."
+    },
+    "PixaromaOutpaintStitch": {
+        "title": "Pixaroma Dışa Boyama Dikişi",
+        "inputs": {
+            "image": "Görsel",
+            "outpaint_info": "Dışa boyama bilgisi"
+        },
+        "widgets": {
+            "feather": "Tüyleme",
+            "color_match": "Renk eşleştirme"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "description": "Orijinal görseli dışa boyama sonucuna geri yerleştirir; yalnızca modelin yeni ürettiği kısımları korur. Model için büyük bir görseli küçültmeniz gerektiğinde, Pixaroma Dışa Boyama'dan sonra kullanın: orijinal kısımlar tam kalitede geri döner; model işleminden sonra yumuşamış ve küçülmüş bir sürüm olarak değil.\n\nPixaroma Dışa Boyama'nın 'outpaint_info' çıkışını buradaki 'outpaint_info' girdisine bağlayın ve tamamlanmış görseli (VAE çözümlemesinden sonra) '图像' girdisine bağlayın. Düğüm, sonucu doldurulmuş tam boyuta geri büyütür, orijinal görseli tam olarak yerine geri koyar ve dikişleri harmanlar.\n\n'Tüyleme', orijinal görsel ile yeni bölgeler arasındaki dikişleri yumuşatır. Dikişler tamamen görünmez olamaz; çünkü yeni bölgeler, orijinal görselin yeniden kodlanmış bir kopyasıyla harmanlanır, orijinal görselin kendisiyle değil — bu yüzden az miktarda tüyleme genellikle en iyi sonucu verir. Yalnızca yeni bölgelere bitişik kenarlar yumuşatılır; gerçek görsel kenarları keskin kalır.\n\n'颜色 match', yeni bölgeler ile orijinal görselin birleştiği yerde ara sıra ortaya çıkan ton basamaklarını düzeltmek için kullanılır; bunu, dikiş boyunca orijinal görselin rengini yeni bölgelere uzatarak yapar. Bölgeye göre arka planı izler; böylece yalnızca tek bir düz renk yerine açık renkli duvar/koyu zeminli sahneleri dengeleyebilir. 0 kapalıdır, 100 tam eşleştirmedir (genellikle en iyi değer); 100'ün üzeri aşırı eşleştirmedir ve nadir görülen inatçı basamaklar içindir. Yalnızca tonu dengeler, dokuyu veya ayrıntıları etkilemez; bu yüzden artefakt üretmez.\n\nYeniden birleştirilmiş tam çözünürlüklü görseli ve yeni üretilen bölgeleri (beyaz) ile değiştirilmemiş orijinal bölgeleri (siyah) işaretleyen bir maskeyi çıkarır — daha sonra yalnızca yeni kısımları hafifçe iyileştirmek isterseniz bu maske kullanışlıdır."
+    },
+    "PixaromaPaint": {
+        "title": "Pixaroma Boya",
+        "widgets": {
+            "Open Paint": "Boya'yı aç"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "width": "Görsel genişliği (piksel)",
+            "height": "Görsel yüksekliği (piksel)"
+        },
+        "description": "Pixaroma Boya — hızlı, basit, katmanlı bir boyama düzenleyici. Bir görseli kapalı düğüm gövdesinin üzerine sürüklemek, onu yeni en üst katman olarak ekler (düzenleyiciyi açar ve sürüklenen görseli otomatik oluşturulan arka planın üzerine yığar, mevcut katmanları asla değiştirmez). Tam ekran düzenleyiciyi açarak kalem/fırça/silgi/bulaştırma/doldurma/şekil/renk seçici araçlarıyla yığılmış katmanlar üzerinde boyayabilirsiniz; Photoshop tarzı kontroller (sürükleyerek sıralama, opaklık, karma modu, birleştirme, düzleştirme) mevcuttur. Fırça motoru özel sertlik/opaklık destekler, bulaştırma aracı yumuşak renk karışımı sağlar.\n\nGörsel kaynak katmanındaki AI arka plan kaldırma düğmesi (rembg tabanlı), özneyi tek tıkla çıkarır. Araç çubuğundaki onay kutusuyla görseli doğrudan şeffaf arka planla diske kaydedebilirsiniz.\n\nNihai birleştirilmiş görseli ve genişliğini/yüksekliğini çıkarır. Düzenleyici içinde daha fazla görseli sürükleyip bırakarak ek katman olarak ekleyebilir veya herhangi bir üst akış görsel kaynağını düzenleyicinin oluşturduğu isteğe bağlı girdi yuvalarına bağlayabilirsiniz.\n\nGirdiler, düzenleyicinin oluşturduğu dinamik yer tutucu yuvalardır; ipuçları JS tarafında bulunur."
+    },
+    "PixaromaPauseImage": {
+        "title": "Pixaroma Görseli Duraklat",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Pixaroma Görseli Duraklat — iş akışını burada duraklatarak, sonraki pahalı adımları (yükseltme, ikinci geçiş, son işlem) çalıştırmadan önce görseli incelemenizi sağlayan dahili bir kapı. Herhangi bir görsel kaynağını girdiye, sonraki düğümü çıkışa bağlayın.\n\nAnahtar 'Duraklat' olarak ayarlandığında, 'Çalıştır'a basmak burada durur ve görseli gösterir; iş akışının geri kalanı çalışmaz. 'Devam'a basmak yalnızca alt akışı çalıştırır ve gördüğünüz görselin aynısını kullanır — model, örneklemeleyici ve kod çözme atlanır, bu yüzden hızlıdır. 'Yeniden oluştur'a basmak burada yeni bir görsel üretir (örneklemeleyicinin rastgele tohumu rastgele olarak ayarlanmışsa farklı bir görsel üretilir). Anahtarı 'Geçiş' konumuna getirmek, tüm iş akışını tek seferde çalıştırır.\n\nAnlık görüntüler ComfyUI'nin geçici klasöründe saklanır ve ComfyUI yeniden başlatıldığında temizlenir; bu yüzden yeniden başlattıktan sonra 'Devam'ı kullanmadan önce bir kez duraklatmanız gerekir."
+    },
+    "PixaromaPauseText": {
+        "title": "Pixaroma Metni Duraklat",
+        "inputs": {
+            "text": "Metin"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma Metni Duraklat - iş akışını burada duraklatarak, sonraki adımlar çalışmadan önce metni okumanızı ve değiştirmenizi sağlayan dahili bir kapı düğümü. İçeriği denetlenemeyen dil modeli metinleri için uygundur. Metin kaynağınızı girdiye, sonraki düğümü çıkışa bağlayın.\n\nAnahtar duraklatma modundayken Çalıştır'a tıklamak burada durur ve modelin ürettiği metni gösterir; iş akışının geri kalanı çalışmaz. Metni düzenledikten sonra Devam'a tıklayın; yalnızca alt akış çalışır ve onayladığınız metni kullanır - model atlanır, bu yüzden hızlıdır. Yeni metin almak için Yeniden Oluştur'a tıklayın: düğüm bağlantıları geriye doğru izler, metni üreten kaynağı bulur ve onun 随机随机种子 değerini yeni bir rastgele değere kaydırarak farklı bir sonuç elde eder. Anahtarı geçiş moduna getirmek tüm iş akışını tek seferde çalıştırır. Anahtarı koruma moduna getirmek, her çalıştırmada geçerli metni yeniden kullanır - model atlanır ve her çalıştırma aynı istemden yeni bir görsel üretir; böylece düzenlemelerinizi koruyarak hızlıca toplu varyantlar üretebilirsiniz."
+    },
+    "PixaromaPortraitLandscape": {
+        "title": "Pixaroma Yatay/Dikey Anahtarı",
+        "widgets": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "outputs": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Genişlik ve yüksekliği seçtiğiniz yönde çıkarır. İki boyut girin (veya başka düğümlerden bağlayın), ardından Dikey veya Yatay'a tıklayın. Dikey mod, dikey yerleşimdir (küçük değer genişlik olur); yatay mod, yatay yerleşimdir (büyük değer genişlik olur). Yönü tek tıkla değiştirirsiniz; iki WH düğümü ve bir geçiş anahtarı tutmaya gerek yok. İki değerin girilme sırası sonucu etkilemez. Genişlik ve yükseklik çıkarır."
+    },
+    "PixaromaPreview": {
+        "title": "Pixaroma Önizleme",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "filename_prefix": "Dosya adı ön eki",
+            "save_mode": "Kaydetme modu"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Pixaroma Görsel Önizleme - diske kaydet, çıktıyı kaydet, kopyala ve aç düğmeleriyle satır içi görsel önizleme; toplu işlemeyi destekler. Herhangi bir IMAGE kaynağını girdiye bağlayın. Tüm yığın kareleri düğüm gövdesinde oluşturulur; herhangi bir küçük resme tıklamak onu satır içinde genişletir. Ok tuşları yığınlar arasında geçiş yapar, açık görselde herhangi bir yere tıklamak ilerler, Esc veya X tuşu küçültür. Önizleme alanının sağ üst köşesindeki küçük simgeyle ızgara/şerit düzeni arasında geçiş yapın.\n\nDiske kaydet, bilgisayarınızda herhangi bir klasör seçmenize izin verir; önerilen dosya adı her tıklamada otomatik artar. Çıktıyı kaydet, ComfyUI'nin output/ klasörüne yazar. Kopyala, seçili kareyi PNG olarak sistem panonuza koyar; doğrudan diğer düğümlere, çizim uygulamalarına, mesajlara vb. yapıştırabilirsiniz. Aç, seçili kareyi tam ekran görüntülemek veya birden çok görseli yan yana karşılaştırmak için yeni bir tarayıcı sekmesinde açar. Dört düğüm de geçerli seçili kare üzerinde çalışır; diske kaydet ve çıktıyı kaydet, iş akışını PNG'ye gömer, böylece onu daha sonra ComfyUI'ye geri sürükleyebilirsiniz.\n\nsave_mode modunu 'save' olarak değiştirirseniz düğüm, SaveImage'in doğrudan yerini alabilir: her çalıştırmada tüm yığın kareleri otomatik olarak output/ klasörüne yazılır ve iş akışı meta verileri gömülür. Önizleme, iş akışı sekmeleri arasında geçiş yaptıktan sonra da korunur, böylece belirli bir karede durup geri dönebilirsiniz.\n\nDosya adı ön eki alanı, '/' içeren alt klasör sözdizimini (örneğin 'SDXL/portrait'), VHS/VideoHelperSuite tarzı tarih belirteçlerini (örneğin '%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png') ve yerel ComfyUI belirteçlerini (%year%, %month%, %day%, %hour%, %minute%, %second%, %width%, %height%) destekler. Tarih biçimi kodları yyyy, yy, MM, dd, HH, mm, ss'dir. Ayrıca, diğer düğümlerin alan değerlerini dosya adına ekleyen, yerel SaveImage düğümüne benzer düğüm başvuru belirteçleri de desteklenir; örneğin %Seed Pixaroma.seed% (veya %KSampler.seed%). Tam belirteç referansı için projenin README dosyasına bakın.\n\nDüğüme sağ tıklamak, önizleme görseli ayarlarını açar. Civitai üretim bilgisi ekle seçeneği, ayarları Civitai'nin okuyabileceği biçimde de yazar; böylece burada yayımlanan görseller checkpoint, LoRAs ve güçlerini, ayrıca adımları, rastgele tohumu, örneklemeleyiciyi ve boyutları gösterir. Değerler iş akışınızdan otomatik olarak gelir, ek bağlantı gerekmez. Varsayılan olarak kapalıdır."
+    },
+    "PixaromaPrompt": {
+        "title": "Pixaroma İstem",
+        "inputs": {
+            "text_in": "Girdi metni"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma İstem - tek metin çıkışlı bir istem kutusu, ayrıca yeniden kullanılabilir @tag'lerden oluşan kişisel bir kütüphane ve birleştirilebilen isteğe bağlı bir metin girdisi.\n\nİsteminizi girin ve tekrar kullanılan bölümler için @tag'leri sürükleyip bırakın. oilpainting adlı bir tag kaydedin; tam metni 'oil painting, thick brush strokes, Rembrandt lighting, ...' gibi uzun bir dize olsun, sonra yalnızca @oilpainting yazmanız yeterli. Kutuya @ yazmak, kategorilere göre gruplanmış aranabilir bir listeyi gösterir; bilinen tag'ler vurgulanır, bilinmeyen tag'ler için yazım hatası uyarısı verilir. Her @tag, çalıştırma sırasında tam metniyle değiştirilir, böylece kutu kısa kalır. Gönderilecek içeriği önizlemek için 'Geniş göster'i açın.\n\nBir istemi metin girdisine bağlamak, onu isteminizle birleştirir - 'Önce benim istemim' veya 'Önce bağlı istem' seçeneğini ve ayıracı belirlersiniz. Bağlantı yokken çıkış yalnızca isteminizdir.\n\nTag'leri Tags düğmesiyle yönetin: kategorili tam ekran kütüphane. Kütüphaneniz ComfyUI ayarlarında saklanır, bu yüzden size özeldir ve eklenti güncellendiğinde de korunur; dışa/içe aktarma ile başkalarıyla paylaşabilirsiniz."
+    },
+    "PixaromaPromptFromList": {
+        "title": "Pixaroma İstem Listesi Seçici",
+        "inputs": {
+            "prompts": "İstem listesi"
+        },
+        "widgets": {
+            "index": "Dizin"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma İstem Listesi Seçici - küçük bir seçim aracı. Pixaroma Çoklu İstem düğümünün (liste moduna ayarlanmış) `提示词s` çıkışını alır ve dizin numarasına göre içinden bir istem seçip çıkarır.\n\nİş akışına bu türden birden çok düğüm yerleştirin (hepsi aynı çoklu istem düğümüne bağlı); böylece sahne 1 istem 1'i, sahne 2 istem 2'yi alır vb. — kütüphane düğümünde aşırı sayıda çıkış noktası yığmaya gerek kalmaz.\n\nDizin 1'den başlar: 1, kütüphanedeki ilk istemi seçer. Dizin aralık dışındaysa çıkış boş bir dizedir."
+    },
+    "PixaromaPromptMulti": {
+        "title": "Pixaroma Çoklu İstem",
+        "outputs": {
+            "text": "Metin",
+            "prompts": "İstem"
+        },
+        "description": "Pixaroma Çoklu İstem — üstteki düğmelerle iki çalıştırma modu arasında geçiş yapılabilen tek bir düğüm.\n\nKuyruk modu: Çalıştır'a tıkladıktan sonra iş akışı, etkinleştirilen her istem için bir kez döngüyle çalışır. Boş satırlar otomatik olarak atlanır. Her istem, kuyruk panelinde ayrı bir öğe olur; böylece tek tek iptal edilebilir. `文本` çıkışını CLIP Text Encode'a bağlayın. Farklı istem varyantlarını karşılaştırmanız gerektiğinde bu modu kullanın (her istem bir görsele karşılık gelir).\n\nListe modu: Çalıştır'a bir kez tıklarsınız; düğüm, etkinleştirilen tüm istemleri liste olarak gönderir (kuyruk döngüsü yok). `提示词s` çıkışını alt akıştaki bir veya daha fazla Pixaroma İstem Listesi Seçici düğümüne bağlayın; her düğüm numarasına göre farklı bir istem seçer. Aynı iş akışının farklı bölümlerinin (sahne 1, sahne 2……) aynı kütüphaneden ayrı ayrı farklı istemler alması gerektiğinde ve her yere ek düğüm eklemek istemediğinizde bu modu kullanın.\n\nİki çıkış her zaman görünür — mod düğmeleri yalnızca kuyruğun döngü yapıp yapmayacağını denetler. Bir satır eklemek için “+ Add 提示词” öğesine tıklayın. Geçiş anahtarı, satırı dahil eder/hariç tutar. Sırayı değiştirmek için soldaki tutamacı sürükleyin. İstemleri temizle, metni siler ancak satırları korur. Sıfırla, iki boş satır durumuna geri döner."
+    },
+    "PixaromaPromptPack": {
+        "title": "Pixaroma İstem Paketi",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma İstem Paketi — bir istem metni yapıştırın; her istem, iş akışı kuyruğunda bir çalıştırmaya karşılık gelir.\n\nÜstteki düğmelerle bölme yöntemini seçin: paragraf (varsayılan; boş satırlara göre böler, uzun istemler için uygundur) veya satır (her yeni satır karakterine göre böler, kısa istem listeleri için uygundur).\n\nMetin kutusunun sağ alt köşesindeki sayaç, toplam istem sayısını gösterir. Çalıştırma sırasında “geçerli/toplam” biçimine geçer, böylece ilerlemeyi izlemek kolaylaşır.\n\nBoş istemler (yalnızca boşluk karakteri içerenler) otomatik olarak atlanır. Çalıştır'a tıkladığınızda metin kutusu boşsa kuyruğa eklenmez ve bir uyarı açılır."
+    },
+    "PixaromaPromptReader": {
+        "title": "Pixaroma İstem Okuyucu",
+        "inputs": {
+            "image": "Görsel",
+            "filename": "Dosya adı"
+        },
+        "outputs": {
+            "text": "Görsel istem bilgisi"
+        },
+        "description": "Pixaroma İstem Okuyucu — ComfyUI (veya Automatic1111/Forge) tarafından üretilen bir görseli yükler ve PNG meta verilerinde kayıtlı olumlu istemi okur. Görsel önizlemesi yoktur; yalnızca metni gösterir. İstemi dize olarak çıkarır; yeniden kullanmak için CLIPTextEncode'a veya diğer metin girdisi düğümlerine bağlanabilir. PNG'yi düğümün üzerine sürükleyip bırakın, Görsel Yükle'ye tıklayın veya dosya açılır kutusundan seçin. Dosya seçildikten sonra gösterilen içerik anında güncellenir; böylece iş akışını çalıştırmadan önce istemi inceleyebilirsiniz. Görselde gömülü istem yoksa (JPG, ekran görüntüsü veya meta verileri kaybolmuş PNG), gösterilen içerik kısa bir açıklama sunar ve dize çıkışı da aynı açıklamayı taşır; böylece alt akış bağlantıları kesintiye uğramaz. Zincirleme metin düğümleri (ConditioningCombine, StringConcatenate, SDXL çift metin kodlayıcı) içeren ComfyUI iş akışlarını ve Automatic1111/Forge'un 'parameters' biçimini işlemeyi destekler. Dosya adını isteğe bağlı 'filename' girdisine de bağlayabilirsiniz (örneğin Pixaroma Görsel Yükle düğümünün 'filename' çıkışından) — bağlandığında düğüm kendi seçicisini yok sayar ve bunun yerine o görselden istemi okur. Bir dosya seçmek, yüklemek veya sürükleyip bırakmak kontrolü devralır; bağlantı otomatik olarak kesilir."
+    },
+    "PixaromaPromptStack": {
+        "title": "Pixaroma İstem Yığını",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma İstem Yığını — sıralı bir istem bloğu listesi tutar; etkinleştirme/devre dışı bırakma arasında geçiş yapabilir, etiket ekleyebilir ve sırayı değiştirebilirsiniz. Etkinleştirilen tüm bloklar, seçilen ayraçla tek bir dize olarak birleştirilip çıkarılır (varsayılan olarak virgül ve boşluk; düğüm ayarlarında değiştirilebilir — ayarlar, düğüm araç çubuğundaki dişli düğmesiyle veya düğüme sağ tıklayarak açılır).\n\nBir blok eklemek için '+ Add row'a tıklayın. Bloğu susturmak/susturmayı kaldırmak için geçiş düğmesine tıklayın. Sırayı değiştirmek için soldaki tutamacı sürükleyin."
+    },
+    "PixaromaReferenceNode": {
+        "title": "Pixaroma Referans Düğümü",
+        "outputs": {
+            "output": "Çıkış"
+        },
+        "description": "Düğümde test DOM HTML nesneleri oluşturmak için örnek düğüm"
+    },
+    "Pixaroma_VueReferenceNode": {
+        "title": "Pixaroma Vue Referans Düğümü",
+        "widgets": {
+            "image": "Görsel",
+            "count": "Adet",
+            "prompt": "İstem",
+            "mode": "Mod",
+            "mask": "Maske",
+            "pixaroma_data": "pixaroma verisi"
+        },
+        "description": "Nodes 2.0 uyumlu yeni Pixaroma Vue referans düğümü"
+    },
+    "PixaromaRemoveBackground": {
+        "title": "Pixaroma Arka Plan Kaldırma",
+        "inputs": {
+            "image": "Görsel",
+            "model": "Model girdisi"
+        },
+        "outputs": {
+            "image": "Alfa kanallı görsel",
+            "mask": "Maske",
+            "inverted_mask": "Maskeyi ters çevir"
+        },
+        "description": "BiRefNet modelini kullanarak görselin arka planını kaldırır; tek bir düğümde kesilmiş görseli (RGBA), ön plan maskesini ve ters çevrilmiş maskeyi döndürür.\n\nModel ComfyUI/models/background_removal/ klasöründen yüklenir. Dosya adı ön işlem çözünürlüğünü denetler: adında 'matt' veya 'hr' geçenler (büyük/küçük harf duyarsız) 2048 çözünürlükte ön işlenir, diğerleri 1024 çözünürlükte işlenir. Önerilen dosya adları: birefnet.safetensors (standart), birefnet-hr.safetensors (yüksek çözünürlük), birefnet-matting.safetensors (saç/tüy için yüksek çözünürlüklü kesim).\n\nİndirme adresleri:\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/background_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
+    },
+    "PixaromaResizeCrop": {
+        "title": "Pixaroma Yeniden Boyutlandır ve Kırp",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Görseli belirtilen tam genişlik ve yüksekliğe kırpar. Görsel, hedef boyutları tamamen dolduracak şekilde ölçeklenir, ardından taşan kısımlar merkezden kırpılır; böylece sonuç her zaman ayarladığınız tam en-boy olur, gerilme veya letterbox efekti olmaz. Küçük görseller doldurmak için büyütülür. Boyutları genişlik ve yükseklik alanlarına girebilir veya başka düğümlerden bağlayabilirsiniz (Pixaroma Çözünürlük düğümü veya sayı düğümü gibi). İsteğe bağlı maske aynı şekilde kırpılır. Görsel, maske, genişlik ve yükseklik çıkarır — görselleri veya video karelerini 512×896 veya 704×1280 gibi sabit boyutlara zorlamak için uygundur."
+    },
+    "PixaromaResolution": {
+        "title": "Pixaroma Çözünürlük",
+        "outputs": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Pixaroma Çözünürlük — tek tıkla çözünürlük seçici. Düğüm arayüzü, her biri en sık kullanılan 8 boyutu içeren 3×3 oran çipi ızgarası gösterir (1:1, 16:9, 9:16, 2:1, 3:2, 2:3, 4:3, 3:4, 4:5). SDXL, AI video ve sosyal medya uyumlu boyutları kapsar. Çipe tıklayın, boyutu seçin, tamam.\n\nÖzel oran modu, herhangi bir en-boy oranını (21:9, 16:10 vb.) girmenize izin verir ve AI dostu boyutları otomatik hesaplar. Özel çözünürlük modu, tam boyutları girmenize izin verir; genişlik/yükseklik alanları '1024+128' veya '512*2' gibi matematiksel ifadeleri destekler. Hizalama çipleri (16/32/64/hizalama yok), çıkışı VAE kodlayıcının tercih ettiği çarpanlara yuvarlar.\n\nÇıkış genişliği ve yüksekliği tamsayıdır. Durum, iş akışıyla birlikte kaydedilir ve geri yüklenir.\n\nTüm arayüz JS tarafındadır; tek Python girdisi, yürütme sırasında enjekte edilen gizli serileştirilmiş durum dizesidir."
+    },
+    "PixaromaRunLog": {
+        "title": "Pixaroma Çalışma Günlüğü",
+        "description": "Pixaroma Çalışma Günlüğü — Çalışma Zamanlayıcısı'nın eşlikçisi; mevcut iş akışının son 10 çalıştırma süresini düğüm üzerinde gösterir. Çalıştır'a her tıkladığınızda tüm iş akışının süresini ölçer ve tamamlanma süresini listenin başına ekler (en yeni önce); böylece iş akışının hızlanıp hızlanmadığını izleyebilir veya ani yavaşlamaları fark edebilirsiniz.\n\nEn son çalıştırma vurgulanır, en hızlı çalıştırma işaretlenir. Herhangi bir satıra çift tıklayarak o çalıştırma için kısa bir not ekleyebilirsiniz; örneğin 风格lora veya 随机随机种子 12345 kullanımı gibi — böylece farklı zamanları ayırt edebilirsiniz. Not, karşılık gelen çalıştırmayla birlikte kaydedilir; yeni çalıştırmalar onu listenin aşağısına iter. Liste yalnızca geçerli iş akışı içindir. Süreyi kopyalamak veya listeyi temizlemek için düğüme sağ tıklayın.\n\nHiçbir düğüme bağlanması gerekmez. Liste iş akışıyla birlikte kaydedilir; böylece sekme değiştirdikten, sayfayı yeniden yükledikten veya ComfyUI'yi yeniden başlattıktan sonra da kalır. Yalnızca tamamlanan çalıştırmalar kaydedilir; durdurulan veya hata veren çalıştırmalar atlanır."
+    },
+    "PixaromaRunTimer": {
+        "title": "Pixaroma Çalışma Zamanlayıcısı",
+        "description": "Pixaroma Çalışma Zamanlayıcısı — iş akışının ne kadar sürdüğünü ölçen bir saat. Çalıştır'a tıkladığınızda sıfırlanır, iş akışı çalışırken süre ölçer, tamamlandığında toplam süreyi dondurur ve ardından bir bildirim sesi çalar; böylece başka bir sekmede olsanız bile tamamlandığını bilirsiniz.\n\nDüğüm yalnızca saati gösterir. Ayarlar için düğüme sağ tıklayın: bildirim sesini açın veya kapatın, ses ve ses düzeyi seçin (önizleme düğmesiyle), gösterilecek ondalık basamak sayısını ayarlayın ve saat rengini belirleyin.\n\nBildirim sesi kitaplığı Pixaroma Bildirici ile aynıdır — basit adlı (harf, rakam, kısa çizgi) .mp3, .wav veya .ogg dosyalarını assets/sounds/ klasörüne koyarak daha fazla bildirim sesi ekleyebilirsiniz (ComfyUI'yi yeniden başlattıktan sonra etkinleşir). Tüm çalışma zamanlayıcısı bildirim sesleri için genel susturma ayarı, düğüm ayarlarının üst kısmında bulunur; düğüm araç çubuğundaki dişli düğmesiyle veya düğüme sağ tıklayarak açılır."
+    },
+    "PixaromaSaveImage": {
+        "title": "Pixaroma Görsel Kaydet",
+        "inputs": {
+            "images": "Görsel",
+            "name": "Ad"
+        },
+        "description": "Pixaroma Görsel Kaydet - görselleri bilgisayarınızda herhangi bir klasöre kaydeder; ComfyUI'nin çıktı klasörüyle sınırlı değildir. Yolu yazabilir veya yapıştırabilir ya da Gözat'a tıklayarak normal bir Windows iletişim kutusuyla klasör seçebilirsiniz; boş bırakırsanız çıktı klasörü kullanılır. Dosya adı alanı belirteçleri destekler ve kaydedilecek dosyanın önizlemesini gerçek zamanlı gösterir. Belirteçler: %input% (bağlı ad girdisi, örneğin Pixaroma Görsel Yükle'den gelen dosya adı), %date:yyyy-MM-dd% (ve herhangi bir tarih/saat biçimi), %counter% (otomatik artar, asla üzerine yazmaz), %width%, %height%, %batch_num% ve %Seed Pixaroma.seed% gibi düğüm başvuruları. Ad içinde / kullanmak alt klasörler oluşturur. Biçim PNG (kayıpsız, iş akışını gömer; böylece dosya ComfyUI'ye geri sürüklenebilir) veya JPG'dir (daha küçük boyut, kalite ayarı sağ tık menüsünde; ComfyUI iş akışını JPG'den yeniden yükleyemez). Düğüme sağ tıklayarak tarih stilini, sayaç basamak sayısını, JPG kalitesini, iş akışı gömmeyi ve Civitai üretim bilgisini ayarlayabilirsiniz. Yığın kaydetmede sayaç her kareyle artar.\n\nCivitai üretim bilgisi ekle (sağ tık), ayarları Civitai'nin okuyabileceği biçimde de yazar; böylece platforma yüklenen görseller checkpoint'i, LoRA'ları ve ağırlıklarını, adım sayısını, 随机随机种子, örneklemeleyiciyi ve boyutları gösterir. Değerler iş akışından otomatik olarak okunur; bu düğüme bağlanmaları gerekmez. Yeni bir model eklendikten sonraki ilk kaydetme, parmak izini çıkarmak için kısa süre duraklar; sonrasında model hatırlanır.\n\nKaydedilen görseller düğümde büyük bir önizleme gösterir: tek görsel alanı doldurur, yığın ise ızgara olarak gösterilir. Izgaradaki bir görsele tıklayarak büyütebilirsiniz; oklar, tıklandığında veya üzerine gelindiğinde sayfalar arasında geçiş yapar, X tuşu ızgaraya döner. Kopyala, gösterilen görseli panoya koyar; Aç, yeni bir tarayıcı sekmesinde gösterir. Düğümü yeniden boyutlandırmak önizlemeyi büyütür. Mod anahtarı “Kaydet” (her çalıştırmada dosya yazar) ile “Önizleme” (görsel düğümde gösterilir, klasöre yazılmaz) arasında geçiş yapar; böylece önizleme düğümü olarak da kullanılabilir. Klasörü aç, kaydetme konumunu dosya gezgininde gösterir; pencere görev çubuğunda görünebilir."
+    },
+    "PixaromaSaveMp4": {
+        "title": "Pixaroma MP4 Kaydet",
+        "inputs": {
+            "video_frames": "Video karesi",
+            "audio": "Ses"
+        },
+        "widgets": {
+            "fps": "Kare hızı",
+            "filename_prefix": "Dosya adı ön eki",
+            "save_mode": "Kaydetme modu",
+            "trim_to_audio": "Ses uzunluğuna kırp"
+        },
+        "description": "Pixaroma MP4 Kaydet - görsel yığınını (ve isteğe bağlı sesi) tek bir H.264 biçimli MP4 dosyasına kodlar; düğüm gövdesinde yerleşik <视频> önizlemesi vardır, sonuçları ComfyUI'den ayrılmadan görüntüleyebilirsiniz.\n\nKareler doğrudan ffmpeg'in standart girdisine akıtılır (geçici PNG dosyaları yok); ses AAC 192k biçiminde çoğullanır (mux). Pixaroma SesTepki düğümüyle birlikte çalışır, ancak kare+ses üreten herhangi bir kaynakla da kullanılabilir.\n\nİş akışı, kaydedilen MP4'e gömülür (açıklama meta verisi olarak); böylece videoyu ComfyUI'ye geri sürükleyerek grafı geri yükleyebilirsiniz - okumak için VideoHelperSuite gibi bir video paketinin kurulu olması gerekir.\n\nffmpeg ikili dosyası otomatik olarak bulunur: önce imageio-ffmpeg ile gelen exe kullanılır (sistem kurulumu gerekmez - 'pip install imageio-ffmpeg' çalıştırın), ardından PATH'teki ffmpeg kullanılır. yuv420p, genişlik ve yüksekliğin çift olmasını gerektirir; boyutlar tekse düğüm, ffmpeg'in belirsiz çökmesi yerine anlaşılır bir hata gösterir.\n\nKodlayıcı libx264 / medium ön ayarı / CRF 19 olarak sabit kodlanmıştır. İş akışınız klip başına kontrol gerektiriyorsa bu parametreler INPUT_TYPES'a taşınabilir."
+    },
+    "PixaromaSeed": {
+        "title": "Pixaroma Rastgele Tohum",
+        "outputs": {
+            "seed": "Rastgele tohum"
+        },
+        "description": "Pixaroma Rastgele Tohum - KSampler'a (veya rastgele tohum girdisi olan herhangi bir düğüme) bağlanabilen bir rastgele tohum kaynağı. Tek bir tohum düğümü, aynı anda birden çok örneklemeleyiciyi besleyerek aynı rastgele tohumu paylaşmalarını sağlar.\n\nİki mod: rastgele mod her çalıştırmada yeni bir rastgele tohum üretir; sabit mod, tekrarlanabilir sonuçlar için aynı rastgele tohumu korur. Düğmeler: Yeni sabit rastgele, yeni bir rastgele tohum üretir ve kilitler; Son tohumu kullan, önceki çalıştırmanın rastgele tohumunu geri getirir; Kopyala, geçerli rastgele tohumu panoya kopyalar. Rastgele modda “Son çalıştırma” satırı, son görseli gerçekten üreten rastgele tohumu gösterir.\n\nRastgele tohumu tamsayı olarak çıkarır. Durum, iş akışıyla birlikte kaydedilir ve geri yüklenir.\n\nRastgele tohumu kaydedilen dosya adına yazdırmak için, Pixaroma Görsel Kaydet, Pixaroma MP4 Kaydet veya Pixaroma Görsel Önizleme düğümlerinin dosya adı alanına %Seed Pixaroma.seed% girin (örneklemeleyicinin değil, bu düğümün adını kullanın; düğümü yeniden adlandırmak belirteci değiştirir)."
+    },
+    "PixaromaSetNode": {
+        "title": "Pixaroma Düğüm Ayarla",
+        "inputs": {
+            "value": "Değer"
+        },
+        "widgets": {
+            "name": "Ad"
+        },
+        "outputs": {
+            "*": "Herhangi"
+        },
+        "description": "Herhangi bir bağlantıyı bir adla saklar; böylece daha sonra Pixaroma Düğüm Getir ile istediğiniz konumdan okuyabilirsiniz. Bu, tuvali düzenli tutan kablosuz bir bağlantıdır. Ayrıca bir geçiş çıkışı vardır; böylece yakındaki düğümler doğrudan ona bağlanabilir, uzaktaki düğümler ise Düğüm Getir ile okuyabilir. Yalnızca düzenleyicide bulunur: çalıştırma sırasında değerler doğrudan orijinal kaynaktan akar, bu yüzden sonuçları değiştirmez veya hızı düşürmez. Herhangi bir şeyi bağlayın, bir ad girin ve düzenli kalması için düğümü daraltılmış tutun."
+    },
+    "PixaromaGetNode": {
+        "title": "Pixaroma Düğüm Getir",
+        "outputs": {
+            "*": "Herhangi eşleşme"
+        },
+        "description": "Pixaroma Düğüm Ayarla'nın bir adla sakladığı değerleri bağlantı yapmadan okur. Açılır menüden adı seçin; çıkış, o ayar düğümünün değerini türü eşleşecek şekilde taşır. Pixaroma Düğüm Ayarla gibi, yalnızca düzenleyicide bulunur; çalıştırma sırasında doğrudan orijinal kaynağa çözümlenir, bu yüzden ek yük yoktur. Bir değeri dağıtmak için aynı ada istediğiniz sayıda Düğüm Getir ekleyebilirsiniz."
+    },
+    "PixaromaShowText": {
+        "title": "Pixaroma Metni Göster",
+        "inputs": {
+            "source": "Kaynak"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma Metni Göster düğümü - düğümden geçen içeriği, seçilebilir ve kopyalanabilir salt okunur bir metin kutusunda inceleyin. source girdisine herhangi bir şey bağlayın - dize, tamsayı, ondalık sayı, Latent, IMAGE tensörü, hatta bilinmeyen türler - düğüm sıkı ve okunaklı bir biçimde yazdırır:\n\n- Tensör: şekil, veri türü, minimum, maksimum\n- Latent: örnek şekli\n- Diğer her şey: str(değer)\n\nDüğümü serbestçe yeniden boyutlandırabilirsiniz; uzun metinler düğümü büyümeye zorlamak yerine kaydırma çubuğuyla kayar. Aynı dize, 'Metin' dize çıkışına da aktarılır, böylece onu diğer düğümlere zincirleyebilirsiniz (istemleri iletmeden önce denetlemek için kullanışlıdır)."
+    },
+    "PixaromaSizes": {
+        "title": "Pixaroma Boyut",
+        "outputs": {
+            "width": "Seçili genişlik (piksel)",
+            "height": "Seçili yükseklik (piksel)"
+        },
+        "description": "Pixaroma Boyut - kendi sık kullandığınız çözünürlük listeniz. Kullandığınız tam genişlik×yükseklik boyutlarını ekleyin, listeden birini seçin; genişlik ve yüksekliği tamsayı olarak çıkarır.\n\nDikey/Yatay düğmeleri seçili boyutu çevirir; böylece 1024×1536 gibi bir boyutu yalnızca bir kez eklersiniz ve her iki yönde de yeniden kullanabilirsiniz (kare boyutlar etkilenmez). Yeni düğümler varsayılan olarak 1024×1024 ile başlar; ayarları açın (dişli simgesi) boyut eklemek, silmek ve yeniden sıralamak, sık kullanılan bir boyut kümesini yüklemek veya genişlik ve yüksekliği VAE dostu boyutlar için 8, 16, 32 veya 64'ün katlarına hizalamak için.\n\nDurum, iş akışıyla birlikte kaydedilir ve geri yüklenir."
+    },
+    "PixaromaSliders": {
+        "title": "Pixaroma Kaydırıcı",
+        "description": "Pixaroma Kaydırıcı - önemsediğiniz düğmeleri, anahtarları ve ayarları tek bir düğümde toplayan ve her birini doğrudan ait olduğu yere bağlayan bir kontrol paneli. Bir kontrol ekleyin, adlandırın ve çıkışını herhangi bir girdiye bağlayın. Her kontrol, taktığınız şeye göre ilgili türe dönüşür: sayılar için kaydırıcı (adım sayısı, CFG, gürültü azaltma, LoRA gücü), boole ayarları için anahtar, seçiciler için açılır menü (örneklemeleyici, zamanlayıcı, checkpoint) — yalnızca kullandığınız seçeneklere budayabilirsiniz, rastgeleleştirmeli rastgele tohum veya istemler için metin alanı. Bir kontrolü yeniden bağladığınızda, eşleşecek şekilde otomatik olarak ayarlanır. Ayarları açmak için düğüme sağ tıklayın. Kontrol paneli, kaydırıcı, anahtar, geçiş, açılır kutu, kombinasyon kutusu, rastgele tohum veya metin aramasıyla bulabilirsiniz."
+    },
+    "PixaromaSwitch": {
+        "title": "Pixaroma Anahtar",
+        "outputs": {
+            "output": "Olduğu gibi ilet"
+        },
+        "description": "Pixaroma Anahtar - birden fazla bağlı girdiden birini seçip çıkıştan akmasını sağlayan geçiş anahtarı. İstediğiniz sayıda üst akış düğümünü (en fazla 32) satırlara bağlayın, ardından bir satırın değiştirme düğmesine tıklayarak onu etkinleştirin. Etkin satırın hattı olduğu gibi akar - herhangi bir hat türüyle çalışır (MODEL, CLIP, IMAGE, STRING, AUDIO vb.).\n\nDüğüm, hat bağlandıkça otomatik olarak büyür: altta her zaman bir sonraki bağlantıyı bekleyen boş bir kuyruk satırı bulunur. Bir hattı ayırmak, karşılık gelen satırını siler. Her satırın tıklayabileceğiniz bir etiketi vardır; her girdinin neye karşılık geldiğini hatırlamak için onu yeniden adlandırabilirsiniz."
+    },
+    "PixaromaSwitchSource": {
+        "title": "Pixaroma Kaynak Anahtarı",
+        "description": "Pixaroma Kaynak Anahtarı - tek bir geçiş düğmesiyle bir grup hattın tamamını iki kaynak (A ve B) arasında çevirir. Her satırda bir A girdisi ve bir B girdisi bulunur ve bunlardan biri o satırın çıkışına gönderilir; A/B geçiş düğmesi, tüm satırlar için tarafı tek seferde seçer. “Yerel” düğümlerinizi A girdisine, “API” düğümlerinizi B girdisine bağlayın (veya herhangi iki kurulumu), ardından birden çok ayrı anahtarı değiştirmek yerine tek bir tıklamayla aralarında geçiş yapın.\n\nİhtiyacınız olan satır sayısını ayarlamak için satır sayısı alanını kullanın. Herhangi bir hat türüyle çalışır (MODEL, CLIP, VAE, IMAGE, Latent, STRING vb.). Etkin taraf, çalışan tek taraftır - diğer tarafın üst akış düğümleri atlanır. A/B geçişinin altındaki düğmeler, etkin tarafta bir satırın hattı olmadığında ne yapılacağını belirler: “Boşa izin ver”, o çıkışı sessizce boş bırakır (hatlar simetrik olmadığında kullanışlıdır; örneğin B tarafında 3 bağlantı, A tarafında yalnızca 1 bağlantı varsa); “Hata göster”, diğer taraf bağlıysa açık bir hata verir (bir hattı yanlışlıkla yanlış tarafa sürüklediğiniz durumları yakalar)."
+    },
+    "PixaromaSwitchWH": {
+        "title": "Pixaroma G/Y Anahtarı",
+        "inputs": {
+            "width_a": "Genişlik a",
+            "height_a": "Yükseklik a",
+            "width_b": "Genişlik b",
+            "height_b": "Yükseklik b"
+        },
+        "outputs": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Pixaroma G/Y Anahtarı - tek tıklamayla iki girdi kaynağından genişlik/yükseklik seçin. İki genişlik/yükseklik çiftini (örneğin Load Image Pixaroma'nın genişlik/yükseklik ve Resolution Pixaroma'nın genişlik/yükseklik değerleri) A ve B girdilerine bağlayın, ardından düğümdeki A veya B'ye tıklayarak hangi çiftin çıkıştan akacağını seçin. Kaynak görselin orijinal boyutları ile elle seçilen çözünürlük arasında, yeniden bağlantı yapmadan geçiş yapmanızı sağlar.\n\nYalnızca bir çift bağlıysa, geçiş düğmesinin durumundan bağımsız olarak o çift kullanılır - böylece iş akışını erken kurarken kullanılmayan girdilerin bağlantısını kesebilirsiniz."
+    },
+    "PixaromaText": {
+        "title": "Pixaroma Metin",
+        "widgets": {
+            "text": "Metin"
+        },
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Pixaroma Metin - STRING çıkışlı çok satırlı bir metin kutusu. İstemler ve tek bir yerde yazılıp birden çok alt akış düğümüne zincirlenmesi gereken diğer uzun metinler (olumlu istemler, negatif istemler, altyazılar, açıklamalar vb.) için uygundur.\n\nMetin kutusu düğümle birlikte büyür: uzun istemlerle çalışırken sağ alt köşeyi sürükleyerek metin kutusunun yüksekliğini veya genişliğini artırabilirsiniz.\n\nDinamik istem anahtarı (varsayılan olarak kapalı): kapalıyken metin girildiği gibi gönderilir ve tüm küme parantezleri korunur; bu, JSON istemleri için gereklidir. Anahtarı açmak {a|b} joker karakterlerini etkinleştirir (her kuyruk çalıştırmasında seçeneklerden biri rastgele seçilir; {a|{b|c}} gibi serbestçe iç içe yerleştirilebilir); küme parantezlerini olduğu gibi yazmak için \\{ ve \\} kullanılır ve yorumlar kaldırılır (// satır sonuna kadar ve /* ... */ blokları)."
+    },
+    "_TextJoinBase": {
+        "title": "_Metin birleştirme temel sınıfı",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Two/Three/Four düğümlerinin paylaşılan mantığı. Alt sınıflar N'yi (alan sayısı) ve kendi DESCRIPTION/OUTPUT_TOOLTIPS değerlerini ayarlar. Girdiler ve çıktılar N'den oluşturulur; böylece text_1 - text_N, join()/IS_CHANGED() çağrısına anahtar sözcük bağımsız değişkenleri olarak iletilir."
+    },
+    "PixaromaTextOverlay": {
+        "title": "Pixaroma Metin Bindirmesi",
+        "inputs": {
+            "image": "Görsel",
+            "text": "Metin"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Girdi görselinin üzerine tek bir stillendirilmiş metin bindirmesi ekler. Yazı tipi, boyut, kalınlık, italik, hizalama, satır yüksekliği, harf aralığı, opaklık, döndürme açısı, konum, metin rengi ve isteğe bağlı arka plan şeridi doğrudan düğüm üzerinde ayarlanabilir. “Metin düzenleyiciyi aç”a tıklamak; sürükleyerek taşıma, köşe noktalarını sürükleyerek ölçekleme, tutamaçları sürükleyerek döndürme, hizalama kılavuzları, tuval hizalama düğmeleri, genişliğe sığdır/yüksekliğe sığdır, geri al/yinele ve diske kaydetme destekli tam ekran bir tuval açar. İsteğe bağlı “Metin” girdisini bağlamak, panel metnini herhangi bir üst akış dize kaynağıyla geçersiz kılar. Yeni düğüm ilk çalıştırmasında metni gerçek görsel boyutlarına göre otomatik olarak ortalar."
+    },
+    "PixaromaTextWatermark": {
+        "title": "Pixaroma Metin Filigranı",
+        "inputs": {
+            "image": "Görsel",
+            "text": "Metin"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Tek bir görsele veya tüm bir yığına stillendirilmiş metin filigranı ekler. 9 noktadan bir çapa (köşeler, kenarlar veya merkez) ve iç kenar boşluğu seçin; görsel boyutu ne olursa olsun filigran her görselde aynı konuma yerleşir. Boyut, sabit piksel değeri veya her görselin genişliğinin yüzdesi olabilir; böylece karışık boyutlu yığınlar görsel olarak tutarlı kalır. Yazı tipi, kalınlık, italik, renk, opaklık, döndürme açısı ve isteğe bağlı arka plan şeridi düğüm üzerinde ayarlanabilir. İsteğe bağlı “Metin” girdisini bağlamak, filigran metnini bir üst akış dize kaynağından besler. Tam ekran düzenleyici yoktur — bu, yapılandırılıp çalıştırılan bir düğümdür."
+    },
+    "PixaromaUncrop": {
+        "title": "Pixaroma Kırpma Geri Alma",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "crop_info": "Kırpma bilgisi"
+        },
+        "widgets": {
+            "feather": "Tüyleme"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "crop_info": "Kırpma bilgisi"
+        },
+        "description": "Pixaroma Kırpma Geri Alma — düzenlenmiş kırpma bölgesini orijinal görseldeki kaynak konumuna geri yapıştırır; klasik kırp, yeniden boyama veya büyütüp geri koyma iş akışıdır.\n\n“Görsel Kırpma Pixaroma” düğümünün “Kırpma bilgisi” çıkışını buradaki “Kırpma bilgisi” girdisine bağlayın ve düzenlenmiş kırpma bölgesini (büyütme, yeniden boyama, renk işleme vb. sonrası herhangi bir içerik) “Görsel” girdisine bağlayın. Düğüm, düzenlenmiş kırpma bölgesini gerektiği gibi orijinal kırpma bölgesi boyutuna getirir ve tam orijinal görselin üzerine birleştirir; kırpma bölgesi dışındaki her şey değişmeden kalır.\n\nŞeffaflık tam kare boyunca aktarılır: “Maske” çıkışı, kırpma bölgesi güncellenmiş orijinal maskedir; böylece görsel kırpmasının maskesini doğrudan bağlamak tüm görselin şeffaflığını korur (veya yalnızca o bölgeyi değiştirmek için düzenlenmiş bölge maskesini bağlayın). “Tüyleme”, dikişleri yumuşatarak sorunsuz bir harmanlama sağlar.\n\nYeniden birleştirilmiş tam görseli ve tam kare maskesini çıkarır."
+    },
+    "PixaromaVersionCheck": {
+        "title": "Pixaroma Sürüm Kontrolü",
+        "description": "Pixaroma Sürüm Kontrolü — hata bildirirken gereken temel sürümleri gösteren küçük bir tuval paneli: ComfyUI (arka uç) sürümü, ComfyUI ön yüz sürümü, etkin düğüm arayüzü (Nodes 2.0 / Legacy) ve kurulu Pixaroma sürümü. Kopyala düğmesi dört satırın tamamını kopyalar; doğrudan hata raporuna yapıştırabilirsiniz.\n\nTamamen teşhis amaçlı — girdi bağlantısı gerekmez, çıkış zinciri yok, çalıştırma sırasında Python işlemi yok. Ayarlar değiştirildiğinde düğüm arayüzü satırları gerçek zamanlı güncellenir."
+    },
+    "PixaromaWH": {
+        "title": "Pixaroma G/Y",
+        "widgets": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "outputs": {
+            "width": "Genişlik",
+            "height": "Yükseklik"
+        },
+        "description": "Pixaroma G/Y — yalnızca genişlik ve yükseklik için iki sayı alanı ve eşleşen genişlik/yükseklik çıkışları içeren küçük bir düğüm. Girdi yok. İstediğiniz boyutları doğrudan düğüme girin.\n\nHedef çözünürlüğü elle girmeniz ve bunu, elle girilen değerler ile başka düğümlerin çıkış boyutları (örneğin Görsel Yükle'nin genişlik/yükseklik çıkışları) arasında geçiş yapmak için “Pixaroma G/Y Anahtarı” gibi bir düğüme vermeniz gerektiğinde kullanın."
+    },
+    "PixaromaTextJoinTwo": {
+        "title": "Pixaroma Metin Birleştirme İki",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "İki metin parçasını tek bir metinde birleştirir. Her alana içerik yazın veya başka bir düğümün metnini noktasına bağlayın (bağlantı varsa hat belirler). Parçalar arasına ayraç eklenir (virgül, boşluk, yeni satır, ayraç yok veya özel ayraç)\n\nBoş parçalar ise atlanır, böylece fazladan ayraç oluşmaz. Ayraç ayarlarını içeren düğüme sağ tıklayarak boş parçaları atlama işlemini yapabilirsiniz."
+    },
+    "PixaromaTextJoinThree": {
+        "title": "Pixaroma Metin Birleştirme Üç",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Üç metin parçasını tek bir metinde birleştirir. Her alana ayrı ayrı içerik yazın veya başka bir düğümün metnini noktasına bağlayın (bağlantı varsa nokta kazanır). Parçalar arasında ayraç kullanılabilir (virgül, boşluk, yeni satır, ayraç yok veya özel ayraç) ve boş parçalar atlanır, böylece fazladan ayraçlarla karşılaşmazsınız.\n\n Ayraç için kullanılan düğüme sağ tıklayarak boş parçaları atlama işlevini ayarlayabilirsiniz."
+    },
+    "PixaromaTextJoinFour": {
+        "title": "Pixaroma Metin Birleştirme Dört",
+        "outputs": {
+            "text": "Metin"
+        },
+        "description": "Dört metin parçasını tek bir metinde birleştirir. Her sütuna içerik yazın veya başka bir düğümün metnini noktasına bağlayın (bağlantı varsa nokta kazanır). Parçalar arasına ayraç eklenir (virgül, boşluk, yeni satır, ayraç yok veya özel ayraç) ve boş parçalar atlanır, böylece fazladan ayraç oluşmaz.\n\n Ayraç ayarlarını içeren düğüme sağ tıklayarak boş parçaları atlama işlemini yapabilirsiniz."
+    },
+    "PixaromaXYPlot": {
+        "title": "Pixaroma XY Grafiği",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "filename_prefix": "Dosya adı ön eki"
+        },
+        "outputs": {
+            "grid": "Ağ"
+        },
+        "description": "Pixaroma XY Grafiği — ayarları tek bakışta karşılaştırın. Bu düğümü iş akışının sonuna yerleştirin ve nihai görseli, bir önizleme düğümünde olduğu gibi ona bağlayın. Düğüm gövdesinde, grafikte zaten bulunan düğümlerin açılır menülerinden X ekseni (yatay) ve Y ekseni (dikey) boyunca neyin değişeceğini seçin — ek bağlantı gerekmez. Değer kutuları seçime göre uyarlanır: sayılar “Başlangıç/Bitiş/Adım sayısı” aralığı verir, açılır menüler (örneklemeleyici, model) onay listesi verir, istemler ise bul ve değiştir sunar. Çalıştır'a bir kez tıklayın: iş akışı her kombinasyon için çalışır ve sonuçlar düğüm içindeki etiketli ızgarayı doldurur; “Diske kaydet”/“Çıktıyı kaydet”/“Kopyala”/“Aç” düğmeleri içerir. Rastgele tohumlar hücreler arasında sabitlenir (rastgele tohum çekmediğiniz sürece), böylece gördüğünüz tek fark test ettiğiniz şeydir."
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "DownloadAndLoadControlNeXt": {
+        "title": "ControlNeXtをダウンロードして読み込み",
+        "widgets": {
+            "precision": "精度"
+        },
+        "outputs": {
+            "controlnext_pipeline": "ControlNeXt"
+        }
+    },
+    "ControlNextGetPoses": {
+        "title": "ControlNeXt ポーズ取得",
+        "inputs": {
+            "ref_image": "参考画像",
+            "pose_images": "ポーズ画像"
+        },
+        "widgets": {
+            "include_body": "ボディ",
+            "include_hand": "手",
+            "include_face": "顔"
+        },
+        "outputs": {
+            "poses_with_ref": "ポーズと参照画像",
+            "pose_images": "ポーズ画像"
+        }
+    },
+    "ControlNextDiffusersScheduler": {
+        "title": "ControlNeXt 拡散スケジューラ",
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "sigma_min": "sigma_min",
+            "sigma_max": "sigma_max"
+        },
+        "outputs": {
+            "scheduler": "スケジューラ"
+        }
+    },
+    "ControlNextSVDApply": {
+        "title": "ControlNeXt SVD適用",
+        "inputs": {
+            "model": "モデル",
+            "pose_images": "ポーズ画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "blocks": "blocks",
+            "input_block_patch_after_skip": "input_block_patch_after_skip"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "ControlNextSampler": {
+        "title": "ControlNeXt サンプラー",
+        "inputs": {
+            "controlnext_pipeline": "ControlNeXt",
+            "ref_image": "参考画像",
+            "pose_images": "ポーズ画像",
+            "optional_scheduler": "スケジューラ(任意)"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "motion_bucket_id": "ダイナミックbucketID",
+            "cfg_min": "最小CFG",
+            "cfg_max": "最大CFG",
+            "seed": "シード",
+            "control_before_generate": "実行前操作",
+            "fps": "フレームレート",
+            "controlnext_cond_scale": "ControlNeXt条件係数",
+            "noise_aug_strength": "ノイズ強化",
+            "context_size": "コンテキスト長",
+            "context_overlap": "コンテキストオーバーラップ",
+            "keep_model_loaded": "モデル読み込みを保持"
+        },
+        "outputs": {
+            "samples": "Latent"
+        }
+    },
+    "ControlNextDecode": {
+        "title": "ControlNeXt デコード",
+        "inputs": {
+            "controlnext_pipeline": "ControlNeXt",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "decode_chunk_size": "decode_chunk_size"
+        },
+        "outputs": {
+            "images": "画像"
+        }
+    }
+}

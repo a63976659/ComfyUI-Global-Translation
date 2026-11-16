@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "Début de boucle de tenseurs",
+        "inputs": {
+            "initial_value": "Valeur initiale"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)",
+            "iterations": "Nombre d'itérations"
+        },
+        "outputs": {
+            "flow_control": "Contrôle de flux",
+            "accumulated_count": "Quantité cumulée",
+            "previous_value": "Valeur précédente",
+            "current_iteration": "Nombre d'itérations actuel"
+        },
+        "description": "Ouvre une boucle destinée à collecter les sorties. Deux modes sont pris en charge :\n- Nombre d'itérations : exécute un nombre fixe d'itérations\n- Nombre total de trames : s'exécute jusqu'à ce que le nombre de trames cible soit accumulé\nConnectez flow_control à TensorLoopClose, utilisez `previous_value` comme entrée de génération, et connectez la sortie générée à TensorLoopClose.processed.\nPrend en charge les types image, masque et Latent."
+    },
+    "TensorLoopClose": {
+        "title": "Fin de boucle de tenseurs",
+        "widgets": {
+            "flow_control": "Contrôle de flux",
+            "processed": "Traité",
+            "accumulate": "Accumuler",
+            "overlap": "Chevauchement",
+            "stop": "Arrêter"
+        },
+        "outputs": {
+            "output": "Sortie"
+        },
+        "description": "Ferme la boucle ouverte par TensorLoopOpen.\nConnexions :\n  - flow_control provenant de TensorLoopOpen\n  - processed : la sortie générée par cette itération\nPrend en charge les types image, masque et Latent."
+    },
+    "_AccumulateNode": {
+        "title": "Nœud d'accumulation",
+        "widgets": {
+            "to_add": "À ajouter",
+            "accumulation": "Valeur accumulée"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "Début de boucle conditionnelle",
+        "widgets": {
+            "condition": "Condition booléenne"
+        },
+        "outputs": {
+            "flow_control": "Contrôle de flux"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "Fin de boucle conditionnelle",
+        "widgets": {
+            "flow_control": "Contrôle de flux",
+            "condition": "Condition booléenne"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "Opération entière",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "Opération"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "Accumulation vers lot d'images",
+        "widgets": {
+            "accumulation": "Valeur accumulée",
+            "overlap_frames": "Nombre de trames de chevauchement",
+            "overlap_mode": "Mode de chevauchement"
+        },
+        "outputs": {
+            "result": "Résultat"
+        },
+        "description": "Concatène les valeurs accumulées de tenseurs d'image/de masque ou de dictionnaires Latent en un seul lot."
+    },
+    "_ConditionalSelect": {
+        "title": "Sélection conditionnelle",
+        "widgets": {
+            "condition": "Condition booléenne",
+            "value_if_true": "Valeur si la condition est vraie",
+            "value_if_false": "Valeur si la condition est fausse"
+        },
+        "outputs": {
+            "result": "Résultat"
+        },
+        "description": "Renvoie value_if_true si la condition est True, sinon value_if_false.\nUtilise l'évaluation paresseuse : seule la branche sélectionnée est résolue."
+    },
+    "_ImageAccumStatePack": {
+        "title": "Empaqueter l'état d'accumulation d'images",
+        "widgets": {
+            "remaining": "Quantité restante",
+            "accum": "Valeur accumulée",
+            "previous_value": "Valeur précédente",
+            "count": "Nombre",
+            "open_node_id": "ID du nœud de début",
+            "total_frames": "Nombre total de trames",
+            "prev_accumulated_count": "Quantité accumulée précédente",
+            "blend_overlap": "Chevauchement de mélange"
+        },
+        "outputs": {
+            "loop_state": "État de la boucle",
+            "should_continue": "Continuer ?"
+        },
+        "description": "Empaquette l'état de la boucle en un seul dictionnaire, destiné à initial_value0 de TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "Dépaqueter l'état d'accumulation d'images",
+        "widgets": {
+            "loop_state": "État de la boucle"
+        },
+        "outputs": {
+            "remaining": "Quantité restante",
+            "accumulation": "Valeur accumulée",
+            "previous_value": "Valeur précédente",
+            "accumulated_count": "Quantité cumulée",
+            "count": "Nombre",
+            "open_node_id": "ID du nœud de début",
+            "total_frames": "Nombre total de trames"
+        },
+        "description": "Dépaquette l'état de la boucle depuis TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "Opérations sur le lot",
+        "widgets": {
+            "batch": "Lot",
+            "operation": "Opération",
+            "amount": "Quantité",
+            "batch_b": "Lot B"
+        },
+        "outputs": {
+            "output": "Sortie"
+        },
+        "description": "Opérations de découpage, de rognage et d'assemblage de lots."
+    }
+}

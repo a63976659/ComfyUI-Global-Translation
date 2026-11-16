@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "프롬프트 릴레이 인코드",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "빈 Latent 비디오 — 크기는 해당 shape에서 읽습니다.",
+            "global_prompt": "전역 프롬프트",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "전체 비디오에 대한 컨디셔닝을 설정합니다. 지속적으로 등장하는 캐릭터, 오브젝트, 장면 배경을 고정합니다.",
+            "local_prompts": "세그먼트 프롬프트",
+            "Ordered prompts for each temporal segment, separated by |": "각 시간 세그먼트의 순차 프롬프트, | 로 구분",
+            "segment_lengths": "세그먼트 길이",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "각 세그먼트의 픽셀 공간 프레임 수를 쉼표로 구분합니다. 비워 두면 자동으로 균등 분배됩니다.",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "페널티 감쇠 매개변수입니다. 약 0.1 미만의 값은 모두 날카로운 경계를 만듭니다(논문 기본값 0.001). 더 부드러운 전환이 필요하면 0.5 이상을 시도해 보세요.",
+            "relay_options": "릴레이 옵션",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "선택적 스트림 수준 고급 조정입니다. 프롬프트 릴레이 고급 옵션 노드에 연결합니다."
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝"
+        },
+        "description": "전역 프롬프트와 시간순 세그먼트 프롬프트를 결합하여 인코딩하고, 모델에 프롬프트 릴레이 시간 제어 패치를 적용합니다. 세그먼트 프롬프트는 | 로 구분합니다. 부정 프롬프트는 표준 CLIP 텍스트 인코드 노드를 사용하세요."
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "프롬프트 릴레이 인코드(타임라인)",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "빈 Latent 비디오 — 크기는 해당 shape에서 읽습니다.",
+            "global_prompt": "전역 프롬프트",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "전체 비디오에 대한 컨디셔닝을 설정합니다. 지속적으로 등장하는 캐릭터, 오브젝트, 장면 배경을 고정합니다.",
+            "max_frames": "최대 프레임 수",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "타임라인 총 길이(픽셀 공간 프레임 수). 에디터의 시각적 비율에만 사용됩니다.",
+            "timeline_data": "타임라인 데이터",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "타임라인 에디터의 JSON 상태(자동 관리되므로 수동으로 편집하지 마세요).",
+            "local_prompts": "세그먼트 프롬프트",
+            "Auto-populated from the timeline editor.": "타임라인 에디터에서 자동으로 채워집니다.",
+            "segment_lengths": "세그먼트 길이",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "타임라인 에디터에서 자동 채움(픽셀 공간 프레임 수).",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "페널티 감쇠 매개변수입니다. 약 0.1 미만의 값은 모두 날카로운 경계를 만듭니다(논문 기본값 0.001). 더 부드러운 전환이 필요하면 0.5 이상을 시도해 보세요.",
+            "fps": "프레임 레이트",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "초당 프레임 수 — time_units가 '초'로 설정된 경우에만 타임라인 에디터의 시간 표시에 영향을 줍니다.",
+            "time_units": "시간 단위",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "눈금자, 세그먼트 범위, 길이 입력, 합계를 프레임 또는 초 단위로 표시합니다. 내부 저장은 항상 픽셀 공간 프레임 수입니다.",
+            "relay_options": "릴레이 옵션",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "선택적 스트림 수준 고급 조정입니다. 프롬프트 릴레이 고급 옵션 노드에 연결합니다."
+        },
+        "widgets": {
+            "max_frames": "최대 프레임 수",
+            "fps": "프레임 레이트",
+            "time_units": "시간 단위",
+            "frames": "프레임",
+            "seconds": "초"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝"
+        },
+        "description": "프롬프트 릴레이 인코딩과 동일하지만, 세그먼트 프롬프트와 세그먼트 길이를 타임라인의 드래그 가능한 블록으로 시각적으로 편집합니다. max_frames 입력은 타임라인 비율(픽셀 공간)만 설정하며, 실제 프레임 수는 여전히 latent에서 읽습니다."
+    },
+    "PromptRelaySmartEncode": {
+        "title": "프롬프트 릴레이 인코드(스마트)",
+        "inputs": {
+            "model": "모델",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "전역 프롬프트",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "전체 비디오에 대한 컨디셔닝을 설정합니다. 비워 두면 smart_prompt에서 해석된 첫 번째 세그먼트를 전역 앵커로 자동 사용합니다.",
+            "smart_prompt": "스마트 프롬프트",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "스마트 구문을 사용해 프롬프트를 입력하세요:\n1. 인라인 방식: '第一段文字 [0-50] | 第二段文字 [50-100]'\n2. 블록 방식: '第一段：\n第一段文字\n第二段：\n第二段文字'\n구문은 자동으로 제거되며 균등 또는 비례로 정규화됩니다.",
+            "normalize_by_tokens": "Token별 정규화",
+            "If true, scales the calculated length of each segment by its token count.": "참이면 각 세그먼트의 token 수에 따라 길이를 스케일링하여 계산합니다.",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token별 정규화"
+        },
+        "outputs": {
+            "model": "모델",
+            "positive": "긍정 컨디셔닝"
+        },
+        "description": "[0-50] 또는 블록 제목(예: '第一段：') 같은 구문을 파싱하여 세그먼트 길이를 자동으로 계산합니다."
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "프롬프트 릴레이 스마트 인코딩 테스트",
+        "inputs": {
+            "smart_prompt": "스마트 프롬프트",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "스마트 구문을 사용해 프롬프트를 입력하세요:\n1. 인라인 방식: '第一段文字 [0-50] | 第二段文字 [50-100]'\n2. 블록 방식: '第一段：\n第一段文字\n第二段：\n第二段文字'\n구문은 자동으로 제거되며 균등 또는 비례로 정규화됩니다.",
+            "normalize_by_tokens": "Token별 정규화",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token별 정규화"
+        },
+        "outputs": {
+            "parsed_output": "파싱 출력"
+        },
+        "description": "테스트용으로 파싱된 구문을 출력합니다."
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "프롬프트 릴레이 고급 옵션",
+        "inputs": {
+            "video_strength": "비디오 강도",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "비디오 시간 페널티의 승수입니다. 0은 비디오 세그먼트를 비활성화합니다. 0-1 범위에서 가장 유용하며 경계를 부드럽게 합니다. 값>1은 기본 epsilon(1e-3)에서 빠르게 포화되는데, 편차가 이미 충분히 커서 멀리 있는 token을 0으로 만들 수 있기 때문입니다. >1이 뚜렷한 효과를 내게 하려면 epsilon을 약 0.1 이상으로 높여야 합니다.",
+            "video_window_scale": "비디오 윈도우 스케일",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "평탄한 앵커링 영역을 스케일링합니다 (기본값 L/2 - 2프레임). <1이면 부드러운 감쇠가 더 일찍 시작하고, >1이면 강성 영역을 넓힙니다. 0이면 앵커를 한 점으로 줄여 — 감쇠가 섹션의 중간 지점에서 즉시 시작합니다 (기본보다 더 선명해지지, 더 부드러워지는 것이 아닙니다).",
+            "audio_epsilon": "오디오 epsilon",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "오디오 스트림의 epsilon입니다. 0 = 인코더의 기본 epsilon을 상속합니다.",
+            "audio_strength": "오디오 강도",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "오디오 시간 페널티의 배수입니다. 0은 오디오가 시각 전환을 넘어 새어 나오는 것을 허용합니다. 0-1 범위에서 가장 유용합니다. 값>1은 기본 epsilon(1e-3)에서 빠르게 포화되므로 — >1이 뚜렷한 효과를 내려면 audio_epsilon을 약 0.1 이상으로 높여야 합니다.",
+            "audio_window_scale": "오디오 창 스케일링",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "오디오 스트림의 평탄 앵커 영역 너비를 스케일링합니다. <1은 소프트 감쇠를 더 일찍 시작하게 하고, >1은 강성 영역을 확대합니다. 0은 앵커를 한 점으로 수축시켜 감쇠가 세그먼트 중점에서 즉시 시작됩니다(기본값보다 더 날카로우며, 더 부드럽지 않음)."
+        },
+        "widgets": {
+            "video_strength": "비디오 강도",
+            "video_window_scale": "비디오 윈도우 스케일",
+            "audio_epsilon": "오디오 epsilon",
+            "audio_strength": "오디오 강도",
+            "audio_window_scale": "오디오 창 스케일링"
+        },
+        "outputs": {
+            "relay_options": "릴레이 옵션"
+        },
+        "description": "선택적 스트림 수준 시간 페널티 조정입니다. 프롬프트 릴레이 인코더의 릴레이 옵션 입력에 연결합니다. 오디오 필드는 LTX2에만 영향을 줍니다."
+    }
+}

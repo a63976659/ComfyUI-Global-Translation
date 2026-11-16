@@ -1,0 +1,567 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "Générateur de guidage BFS AMV",
+        "inputs": {
+            "video": "Vidéo",
+            "images": "Image"
+        },
+        "widgets": {
+            "length": "Longueur",
+            "hold": "Conserver",
+            "fill": "Remplissage",
+            "fps": "Fréquence d'images",
+            "indices": "Index",
+            "scene_threshold": "Seuil de scène"
+        },
+        "outputs": {
+            "guide": "Guidage",
+            "debug": "Débogage"
+        },
+        "description": "Génère un guidage AMV (images clés + trames vides). external_images peut placer automatiquement les images sur les battements de la musique (réglez placement sur audio_beats). Injectez `guidage` dans le VAE ou dans le module de référence."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "Conditions BFS Bernini anime vers réalisme",
+        "inputs": {
+            "positive": "Positif",
+            "negative": "Négatif",
+            "vae": "VAE",
+            "guide_video": "Vidéo de guidage"
+        },
+        "widgets": {
+            "length": "Longueur"
+        },
+        "outputs": {
+            "positive": "Positif",
+            "negative": "Négatif",
+            "latent": "Latent",
+            "debug": "Débogage"
+        },
+        "description": "Génération de conditions anime vers réalisme purement vidéo vers vidéo (v2v) pour la LoRA Bernini-R anime vers réalisme. guide_video correspond à source_id 1 (canevas anime) | la sortie correspond à source_id 0 (photo réaliste). Pas de module de référence. Le guidage s'applique aux conditions positive et négative, donc le CFG n'amplifie que l'invite textuelle (style photo réaliste), pas la référence. Utilisez un CFG modéré ; le guidage conserve le mouvement/la disposition. Ne pas associer cette LoRA aux nœuds d'échange de visage : ils injectent des jetons source_id 2 que la LoRA anime vers réalisme n'a jamais vus à l'entraînement."
+    },
+    "LTXColorMask": {
+        "title": "Masque de couleur LTX",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "color": "Couleur",
+            "marker_radius_frac": "Ratio du rayon du marqueur",
+            "custom_r": "Personnalisé R",
+            "custom_g": "Personnalisé G",
+            "custom_b": "Personnalisé B",
+            "background_black": "Fond noir"
+        },
+        "outputs": {
+            "colored_mask": "Masque coloré"
+        },
+        "description": "Recolorise les masques SAM2 purs (blancs/binaires) selon les conventions d'entraînement scail2v2. 'silhouette' pour les emplacements de masque de guidage, 'flat_marker' (petit point de couleur, sans forme) pour les emplacements de masque d'identité — consultez l'aide de chaque entrée pour comprendre la différence."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "Conditions BFS Bernini d'échange de visage",
+        "inputs": {
+            "positive": "Positif",
+            "negative": "Négatif",
+            "vae": "VAE",
+            "guide_video": "Vidéo de guidage",
+            "head_image": "Image de la tête"
+        },
+        "widgets": {
+            "length": "Longueur",
+            "amplify_reference": "Amplifier la référence"
+        },
+        "outputs": {
+            "positive": "Positif",
+            "negative": "Négatif",
+            "latent": "Latent",
+            "debug": "Débogage"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "Débogage LoRA d'échange de visage BFS",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "debug": "Débogage"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV Séparation du LoRA d'édition libre",
+        "inputs": {
+            "lora_name": "Nom du LoRA"
+        },
+        "widgets": {
+            "overwrite": "Écraser"
+        },
+        "outputs": {
+            "standard_lora_name": "Nom standard du LoRA",
+            "editanything_module_name": "Nom du module d'édition libre"
+        },
+        "description": "Sépare un point de contrôle d'édition libre en un LoRA standard et un module auxiliaire."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV Chargeur de module d'édition libre",
+        "widgets": {
+            "module_name": "Nom du module"
+        },
+        "outputs": {
+            "editanything_module": "Module d'édition libre"
+        },
+        "description": "Charge les modules auxiliaires générés par la séparation LoRA d'édition libre LTXV."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV Chargeur LoRA d'édition libre",
+        "inputs": {
+            "model": "Modèle",
+            "lora_name": "Nom du LoRA"
+        },
+        "widgets": {
+            "strength_model": "Intensité du modèle"
+        },
+        "outputs": {
+            "model": "Modèle"
+        },
+        "description": "Chargeur LoRA pour les points de contrôle d'édition libre."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV Application d'édition libre",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Positif",
+            "negative": "Négatif",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "Image de référence",
+            "lora_name": "Nom du LoRA",
+            "guide_frames": "Trames de guidage",
+            "ref_temporal_offset_latents": "Latents de référence décalés dans le temps"
+        },
+        "widgets": {
+            "resize_mode": "Mode de mise à l'échelle",
+            "guide_strength": "Intensité de guidage",
+            "ref_strength": "Intensité de la référence",
+            "role_strength": "Intensité du rôle",
+            "adaln_scale": "Échelle AdaLN",
+            "enable_adaln": "Activer AdaLN",
+            "enable_role_embedding": "Activer les embeddings de rôle",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Positif",
+            "negative": "Négatif",
+            "latent": "Latent",
+            "ref_image_preview": "Aperçu de l'image de référence"
+        },
+        "description": "Génération unifiée de conditions d'édition libre pour la LoRA AdaLN de référence vidéo vers vidéo. Applique dans un seul nœud les 3 signaux de condition issus d'un seul point de contrôle LoRA : ① Séquence IC-LoRA — encode les images de référence et la vidéo de guidage facultative, puis les ajoute au latent comme trames de condition propres. Disposition dans le Transformer : [jetons cible | jetons de référence @ t=-1 | jetons de guidage @ t=0..T] ② Embeddings de rôle (role_embedding.embedding.poids[0]) — avant patchify_proj, ajoute une empreinte apprise de 128 dimensions aux jetons d'image de référence afin que le modèle distingue, via l'auto-attention, les images de référence des trames de guidage. ③ Génération de conditions AdaLN (ref_adaln_proj : fc1 → SiLU → proj) — utilise la forme du projecteur enregistrée dans le LoRA pour agréger le latent d'image de référence, le projette dans l'espace des pas de temps AdaLN via un MLP à 2 couches et l'ajoute au biais de pas de temps de chaque bloc Transformer ; c'est une ancre d'apparence globale persistante. À connecter après le chargeur LoRA standard et avant le KSampler."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "Application d'un masque neutre LTXV",
+        "inputs": {
+            "mask": "Masque"
+        },
+        "widgets": {
+            "background": "Arrière-plan",
+            "hard_edges": "Bord dur"
+        },
+        "description": "Remplace les zones d'image/vidéo masquées par un fond uni propre, utile avant de fournir des images de référence ou des trames de guidage à la génération de conditions LTXV."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXV Ajustement de la taille de référence par masque",
+        "inputs": {
+            "ref_image": "Image de référence",
+            "size_mask": "Masque de taille",
+            "ref_mask": "Masque de référence"
+        },
+        "widgets": {
+            "fit": "Adaptation",
+            "background": "Arrière-plan",
+            "padding": "Remplissage",
+            "hard_edges": "Bord dur"
+        },
+        "outputs": {
+            "object_mask": "Masque d'objet"
+        },
+        "description": "Utilise la boîte englobante du masque comme taille cible de l'objet et redimensionne l'objet de référence sur un canevas propre. La position du masque est ignorée ; seuls sa largeur et sa hauteur définissent le ratio d'échelle cible."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV Échantillonneur en boucle d'édition libre",
+        "inputs": {
+            "model": "Modèle",
+            "vae": "VAE",
+            "noise": "Bruit",
+            "sampler": "Échantillonneur",
+            "sigmas": "Sigma",
+            "guider": "Guideur",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "latents": "Latent",
+            "editanything_module": "Module d'édition libre",
+            "ref_image": "Image de référence",
+            "guide_frames": "Trames de guidage"
+        },
+        "widgets": {
+            "temporal_tile_size": "Taille du bloc temporel",
+            "temporal_overlap": "Chevauchement temporel",
+            "blend_overlap": "Chevauchement de mélange",
+            "lora_name": "Nom LoRA",
+            "ref_resize_mode": "Mode de mise à l'échelle de référence",
+            "ref_strength": "Intensité de la référence",
+            "guide_strength": "Intensité de guidage",
+            "role_strength": "Intensité du rôle",
+            "adaln_scale": "Échelle AdaLN",
+            "enable_ic_lora": "Activer IC-LORA",
+            "enable_role_embedding": "Activer les embeddings de rôle",
+            "enable_adaln": "Activer AdaLN",
+            "reapply_per_chunk": "Réappliquer par bloc",
+            "enable_visual_crossattn": "Activer l'attention croisée visuelle",
+            "ref_context_scale": "Échelle du contexte de référence",
+            "ref_token_scale": "Échelle des jetons de référence",
+            "ref_start_block": "Bloc de départ de référence",
+            "ref_end_block": "Bloc de fin de référence",
+            "ref_init_from": "Source d'initialisation de référence",
+            "ref_init_seed": "Graine aléatoire d'initialisation de référence",
+            "ref_attn_lora_strength": "Intensité LoRA d'attention de référence",
+            "debug_ea": "Débogage EA",
+            "ref_temporal_offset_latents": "Latents de référence décalés dans le temps"
+        },
+        "outputs": {
+            "denoised_output": "Sortie débruitée",
+            "ref_image_preview": "Aperçu de l'image de référence",
+            "diff_vs_previous_run": "Différence avec la précédente exécution"
+        },
+        "description": "Échantillonneur en boucle temporelle appliquant des conditions d'édition libre complètes sur chaque bloc.\n\nSemblable à LTXVEditAnythingApply, mais découpe la vidéo dans le temps et réapplique dans chaque bloc les jetons IC-LoRA de référence + guidage (via LTXVAddGuide.append_keyframe), les embeddings de rôle et AdaLN. Chaque bloc correspond à une tranche de la vidéo de guidage.\n\nLes entrées sont des conditions positives/négatives explicites ; l'entrée GUIDER ne fournit que le mécanisme d'échantillonnage (paramètres CFG/STG), ses conditions étant remplacées par guider.set_conds dans chaque bloc."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "Métriques de différence Latent LTXV",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "Étiquette",
+            "print_console": "Imprimer dans la console",
+            "compare_noise_mask": "Comparer le masque de bruit"
+        },
+        "outputs": {
+            "metrics": "Métriques",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "Similarité cosinus"
+        },
+        "description": "Compare deux latents et rapporte MSE/RMSE/L1/PSNR/similarité cosinus.\n\nPour les tests A/B de bascules : exécutez l'échantillonneur avec la configuration A, enregistrez le latent → exécutez avec la configuration B → reliez SaveLatent.A et le nouveau résultat à ce nœud. La sortie contient une chaîne formatée pour l'interface/la console ainsi que des valeurs flottantes séparées, pour que vous puissiez la relier à un traceur ou l'enregistrer comme nœud de texte.\n\nSi les deux latents ont des formes différentes (par exemple un décalage spatial dû au VAE), le nœud compare la sous-zone qui se chevauche."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "Métriques de différence d'images LTXV",
+        "inputs": {
+            "image_a": "Image A",
+            "image_b": "Image B"
+        },
+        "widgets": {
+            "label": "Étiquette",
+            "print_console": "Imprimer dans la console"
+        },
+        "outputs": {
+            "metrics": "Métriques",
+            "image_a": "Image A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "Semblable à LTXVLatentDiffMetrics, mais pour les images décodées (après le VAE) — le PSNR utilise la plage de pixels [0,1]. Utile pour comparer l'erreur visuelle entre pixels après le décodage de deux exécutions."
+    },
+    "LTXIdentityCAN": {
+        "title": "CAN d'identité LTX",
+        "inputs": {
+            "model": "Modèle",
+            "reference_image": "Image de référence",
+            "can_weights": "Poids CAN"
+        },
+        "widgets": {
+            "strength": "Intensité"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "Vision Gemma d'identité LTX",
+        "inputs": {
+            "reference_image": "Image de référence"
+        },
+        "outputs": {
+            "conditioning": "Condition"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "Identité multi-angles LTX",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "Visage de face de référence",
+            "reference_back_head": "Arrière de la tête de référence",
+            "reference_body_front": "Corps de face de référence",
+            "reference_side_profile": "Profil de référence"
+        },
+        "widgets": {
+            "identity_projector": "Projecteur d'identité",
+            "phase_scale": "Échelle de phase",
+            "id_strength": "Intensité de l'identité",
+            "arcface_mode": "Mode ArcFace",
+            "debug_log": "Journal de débogage",
+            "reference_temporal_offset_latents": "Latents de référence décalés dans le temps"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "latent": "Latent",
+            "debug": "Débogage"
+        },
+        "description": "Transfert d'identité multi-angles : visage de face (obligatoire) + vues de référence facultatives de l'arrière de la tête, du corps et du profil, injectées chacune comme un segment distinct de chevauchement + phase source (source_id 2/3/4/5), conformément à l'entraînement multi-vues. Chargez d'abord le LoRA multi-vues sur MODEL."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "Conditions d'identité en chevauchement LTX",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Image de référence"
+        },
+        "widgets": {
+            "source_id": "ID source",
+            "phase_scale": "Échelle de phase",
+            "ref_resize_mode": "Mode de mise à l'échelle de référence",
+            "debug_log": "Journal de débogage",
+            "crop_anchor": "Point d'ancrage du recadrage",
+            "layout": "Disposition",
+            "reference_guidance_scale": "Intensité du guidage de référence",
+            "reference_temporal_offset_latents": "Latents de référence décalés dans le temps"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "latent": "Latent",
+            "debug": "Débogage",
+            "ref_preview": "Aperçu de référence",
+            "crop_overlay": "Superposition de recadrage"
+        },
+        "description": "Conditions de référence par chevauchement/st_drc/strata + phase source, implémentées via un patch de modèle, avec un décalage temporel de référence purement expérimental pour réduire les fuites synthétiques de la trame 0. Les références sont des jetons indépendants (et non I2V), compatibles avec n'importe quel sujet, pas seulement les visages. Pour les points de contrôle entraînés sur des références empilées (disposition='strata'), les lots d'images sont acceptés. Chargez d'abord le LoRA sur MODEL. Les sorties ref_preview/crop_overlay montrent exactement ce qui est encodé et, pour match_target, quelles parties de la référence sont conservées après recadrage (cadre vert) et lesquelles sont écartées."
+    },
+    "LTXIdentityTransfer": {
+        "title": "Transfert d'identité LTX",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Image de référence"
+        },
+        "widgets": {
+            "source_id": "ID source",
+            "phase_scale": "Échelle de phase",
+            "ref_resize_mode": "Mode de mise à l'échelle de référence",
+            "debug_log": "Journal de débogage",
+            "crop_anchor": "Point d'ancrage du recadrage",
+            "layout": "Disposition",
+            "reference_guidance_scale": "Intensité du guidage de référence",
+            "reference_temporal_offset_latents": "Latents de référence décalés dans le temps"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "latent": "Latent",
+            "debug": "Débogage",
+            "ref_preview": "Aperçu de référence",
+            "crop_overlay": "Superposition de recadrage"
+        },
+        "description": "Conditions de référence par chevauchement/st_drc/strata + phase source, implémentées via un patch de modèle, avec un décalage temporel de référence purement expérimental pour réduire les fuites synthétiques de la trame 0. Les références sont des jetons indépendants (et non de l'image-vidéo), compatibles avec n'importe quel sujet, pas seulement les visages. Pour les points de contrôle entraînés sur des références empilées (disposition='strata'), les lots d'images sont acceptés. Chargez d'abord le LoRA sur MODEL. Les sorties ref_preview/crop_overlay montrent exactement ce qui est encodé et, pour match_target, quelles parties de la référence sont conservées après recadrage (cadre vert) et lesquelles sont écartées."
+    },
+    "LTXMultipleControls": {
+        "title": "LTX multi-contrôles",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "Vidéo de guidage",
+            "mask_video": "Vidéo de masque",
+            "identity_image": "Image d'identité",
+            "identity_mask_image": "Image du masque d'identité"
+        },
+        "widgets": {
+            "guide_source_id": "ID source du guidage",
+            "guide_phase_scale": "Échelle de phase du guidage",
+            "guide_layout": "Disposition du guidage",
+            "guide_ref_resize_mode": "Mode de mise à l'échelle de l'image de référence de guidage",
+            "guide_downscale_factor": "Facteur de sous-échantillonnage du guidage",
+            "mask_source_id": "ID source du masque",
+            "mask_phase_scale": "Échelle de phase du masque",
+            "mask_layout": "Disposition du masque",
+            "mask_ref_resize_mode": "Mode de mise à l'échelle de l'image de référence du masque",
+            "mask_downscale_factor": "Facteur de sous-échantillonnage du masque",
+            "auto_mask_guide": "Guidage de masque automatique",
+            "mask_white_thresh": "Seuil de blanc du masque",
+            "identity_source_id": "ID source de l'identité",
+            "identity_phase_scale": "Échelle de phase de l'identité",
+            "identity_layout": "Disposition de l'identité",
+            "identity_ref_resize_mode": "Mode de mise à l'échelle de l'image de référence d'identité",
+            "identity_downscale_factor": "Facteur de sous-échantillonnage de l'identité",
+            "identity_mask_source_id": "ID source du masque d'identité",
+            "identity_mask_phase_scale": "Échelle de phase du masque d'identité",
+            "identity_mask_layout": "Disposition du masque d'identité",
+            "identity_mask_ref_resize_mode": "Mode de mise à l'échelle de l'image de référence du masque d'identité",
+            "identity_mask_downscale_factor": "Facteur de sous-échantillonnage du masque d'identité",
+            "crop_anchor": "Point d'ancrage du recadrage",
+            "reference_guidance_scale": "Échelle du guidage de référence",
+            "debug_log": "Journal de débogage",
+            "identity_temporal_offset_latents": "Latents d'identité décalés dans le temps"
+        },
+        "outputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "latent": "Latent",
+            "debug": "Informations de débogage"
+        },
+        "description": "Regroupe en un seul appel de nœud les conditions de référence de guidage, de masque, d'identité et de masque d'identité, si bien que les spécifications RoPE de référence de tous les emplacements actifs sont réellement fusionnées (chaîner les nœuds LTXIdentityOverlapConditioning ne le fait pas — chaque appel remplace la spécification précédente). Chaque emplacement est facultatif et dispose de son propre ID source / échelle de phase / disposition / mode de mise à l'échelle de référence — rien n'est codé en dur, seules les valeurs par défaut correspondent à scail2v2_r128_v13 (guidage=0, masque=0, sans phase ; identité=2, avec phase). La vidéo de guidage reçoit automatiquement un masque noir dans la zone de remplacement (auto_mask_guide), pour respecter l'entraînement de v13 — c'est le correctif qui rend le transfert d'identité réellement efficace. identity_mask n'est pas utilisé par v13 (laissez-le vide, non connecté) ; il est conservé pour la compatibilité avec les anciens points de contrôle."
+    },
+    "LTXMultishotPrompt": {
+        "title": "Prompts multi-plans LTX",
+        "inputs": {
+            "image_1": "Image de référence 1",
+            "image_2": "Image de référence 2",
+            "image_3": "Image de référence 3",
+            "image_4": "Image de référence 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "Correction de plan 1",
+            "shot_size_1": "Taille de plan 1",
+            "camera_move_1": "Mouvement de caméra 1",
+            "shot_modifier_2": "Correction de plan 2",
+            "shot_size_2": "Taille de plan 2",
+            "camera_move_2": "Mouvement de caméra 2",
+            "shot_modifier_3": "Correction de plan 3",
+            "shot_size_3": "Taille de plan 3",
+            "camera_move_3": "Mouvement de caméra 3",
+            "shot_modifier_4": "Correction de plan 4",
+            "shot_size_4": "Taille de plan 4",
+            "camera_move_4": "Mouvement de caméra 4"
+        },
+        "outputs": {
+            "references": "Image de référence",
+            "num_shots": "Nombre de plans"
+        },
+        "description": "Génère des prompts multi-plans au format ShotPlan, ainsi que les lots de références ordonnés et remplis de gris requis par l'entraînement LoRA multi-plans en couches. Injectez `references` dans le transfert d'identité LTX (disposition='strata', ID source=2, échelle de phase=1.0) et `Prompt` dans votre nœud d'encodage de texte LTX."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX Coupure des premières trames",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "trim": "Nombre de trames à couper"
+        },
+        "outputs": {
+            "images": "Image"
+        },
+        "description": "Supprime les N premières trames de la vidéo (lot d'images) — élimine le problème de fuite de la trame de référence 0."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "Assembleur multi-références BFS",
+        "inputs": {
+            "ref_image_1": "Image de référence 1",
+            "ref_image_2": "Image de référence 2",
+            "ref_image_3": "Image de référence 3",
+            "ref_image_4": "Image de référence 4",
+            "ref_image_5": "Image de référence 5"
+        },
+        "widgets": {
+            "fit_mode": "Mode d'adaptation"
+        },
+        "outputs": {
+            "sheet": "Planche assemblée",
+            "n_refs": "Nombre d'images de référence",
+            "debug": "Informations de débogage"
+        },
+        "description": "Combine 1 à 5 images de référence connectées en une planche fixe de 1536x1024 pour l'entraînement LoRA multi-références. Un emplacement vide réduit le nombre d'images de référence ; les emplacements vides sont ignorés, sans remplissage par du contenu vide."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "Planche d'entités 2x2",
+        "inputs": {
+            "person": "Personnage",
+            "clothing": "Vêtements",
+            "object_or_person2": "Objet/Personnage 2",
+            "scene": "Scène"
+        },
+        "outputs": {
+            "sheet": "Planche assemblée",
+            "n_refs": "Nombre d'images de référence",
+            "debug": "Informations de débogage"
+        },
+        "description": "Génère une planche d'entités 2x2 fixe de 1536x1024 pour l'entraînement LoRA multi-références humoset_sheets_v7. La signification des quadrants est fixe (en haut à gauche : personnage, en haut à droite : vêtements, en bas à gauche : objet/personnage 2, en bas à droite : scène) ; une entrée vide laisse le quadrant en blanc. À utiliser avec LTXIdentityOverlapConditioning : disposition=chevauchement, ID source=2, échelle de phase=1.0, mode de mise à l'échelle de référence=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "Chargeur de visages par plage de trames",
+        "widgets": {
+            "frame_start": "Image de début",
+            "frame_end": "Image de fin"
+        },
+        "outputs": {
+            "face_sequence": "Séquence de visages"
+        },
+        "description": "Emballe une image de visage unique dans une plage de trames [trame de début, trame de fin]. Renvoie une séquence de visages — la liste de dictionnaires utilisée par ReservedRegionFrameComposer. trame de fin=-1 signifie « jusqu'à la dernière trame » (sans limite)."
+    },
+    "FaceSequenceBatch": {
+        "title": "Traitement en lot de séquences de visages",
+        "inputs": {
+            "face_sequence_a": "Séquence de visages A",
+            "face_sequence_b": "Séquence de visages B"
+        },
+        "outputs": {
+            "face_sequence": "Séquence de visages"
+        },
+        "description": "Fusionne deux listes de séquences de visages en une seule. Chaînez plusieurs nœuds pour créer un lot contenant plusieurs plages."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "Compositeur de trames à zone réservée",
+        "inputs": {
+            "frames": "Trame",
+            "face_sequence": "Séquence de visages",
+            "face_images": "Images de visages"
+        },
+        "widgets": {
+            "region_position": "Position de la zone",
+            "region_size_px": "Taille de la zone en pixels",
+            "face_distribution": "Répartition des visages",
+            "interval_frames": "Intervalle de trames",
+            "overflow_mode": "Mode de débordement",
+            "stack_direction": "Direction d'empilement",
+            "face_scale_pct": "Pourcentage d'échelle des visages",
+            "face_padding_px": "Marge en pixels des visages",
+            "face_gap_px": "Espacement en pixels des visages",
+            "face_align_main": "Alignement principal des visages",
+            "face_align_cross": "Alignement croisé des visages",
+            "chroma_r": "Chroma R",
+            "chroma_g": "Chroma G",
+            "chroma_b": "Chroma B"
+        },
+        "outputs": {
+            "frames_out": "Trames de sortie"
+        },
+        "description": "Nœud ComfyUI pour composer une zone réservée (gauche/droite/haut/bas) dans chaque trame, tout en conservant la taille de trame de sortie d'origine. Principales fonctionnalités : - Conserver la résolution de sortie finale identique à la résolution d'origine des trames - Adapter le contenu vidéo à la zone restante, sans recadrage - Remplir la zone réservée avec une couleur de chroma - Placer une ou plusieurs images de visage dans cette zone - Prendre en charge un mode de répartition temporelle des lots de visages (entrée d'image) - Prendre en charge la définition de plages par trame via l'entrée de séquence de visages"
+    }
+}

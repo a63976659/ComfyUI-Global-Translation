@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "Скачать и загрузить модель CogVideo",
+        "inputs": {
+            "block_edit": "Редактирование блоков",
+            "lora": "Модель Lora",
+            "compile_args": "Параметры компиляции"
+        },
+        "widgets": {
+            "model": "Модель",
+            "precision": "Точность",
+            "quantization": "Квантование",
+            "enable_sequential_cpu_offload": "Включить последовательную выгрузку на CPU",
+            "attention_mode": "Режим внимания",
+            "load_device": "Загрузить на устройство",
+            "compile": "Компиляция"
+        },
+        "outputs": {
+            "model": "Модель",
+            "cogvideomodel": "Модель CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "Кодирование изображения CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "Изображение",
+            "vae": "VAE",
+            "start_image": "Начальное изображение",
+            "end_image": "Конечное изображение"
+        },
+        "widgets": {
+            "enable_tiling": "Включить разбиение на плитки",
+            "noise_aug_strength": "Интенсивность усиления шума",
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "Декодирование CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Включить плиточный режим VAE",
+            "tile_sample_min_height": "Мин. высота плитки сэмпла",
+            "tile_sample_min_width": "Мин. ширина плитки сэмпла",
+            "tile_overlap_factor_height": "Коэфф. перекрытия плиток по высоте",
+            "tile_overlap_factor_width": "Коэфф. перекрытия плиток по ширине",
+            "auto_tile_size": "Автоматический размер плитки",
+            "pipeline": "Конвейер"
+        },
+        "outputs": {
+            "images": "Изображение"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "Кодирование текста CogVideo",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "Промпт",
+            "strength": "Интенсивность",
+            "force_offload": "Принудительная выгрузка"
+        },
+        "outputs": {
+            "conditioning": "Условие",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "Сэмплер CogVideo",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "samples": "Latent",
+            "model": "Модель",
+            "image_cond_latents": "Условные Latent-изображения",
+            "context_options": "Параметры контекста",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "Траектория Tora",
+            "fastercache": "Быстрый кэш",
+            "feta_args": "Параметры улучшения видео",
+            "teacache_args": "Параметры кэша Tea"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров",
+            "fps": "Частота кадров",
+            "steps": "Количество шагов",
+            "cfg": "CFG",
+            "seed": "Зерно",
+            "control_after_generate": "Действие после выполнения",
+            "scheduler": "Планировщик",
+            "t_tile_length": "Длина плитки",
+            "t_tile_overlap": "Перекрытие плиток",
+            "denoise_strength": "Шумоподавление"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "Селектор LoRA CogVideo",
+        "inputs": {
+            "lora": "Модель Lora",
+            "strength": "Интенсивность",
+            "prev_lora": "Предыдущая LoRA",
+            "fuse_lora": "Объединить LoRA"
+        },
+        "widgets": {
+            "lora": "Модель Lora",
+            "strength": "Интенсивность",
+            "prev_lora": "Предыдущая LoRA",
+            "fuse_lora": "Объединить LoRA"
+        },
+        "outputs": {
+            "lora": "LoRA CogVideo"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "Селектор LoRA CogVideo (Comfy)",
+        "inputs": {
+            "lora": "Модель Lora",
+            "strength": "Интенсивность",
+            "prev_lora": "Предыдущая LoRA",
+            "fuse_lora": "Объединить LoRA"
+        },
+        "widgets": {
+            "lora": "Модель Lora",
+            "strength": "Интенсивность",
+            "prev_lora": "Предыдущая LoRA",
+            "fuse_lora": "Объединить LoRA"
+        },
+        "outputs": {
+            "lora": "LoRA CogVideo"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "Скачать и загрузить модель GGUF CogVideo",
+        "inputs": {
+            "block_edit": "Редактирование блоков"
+        },
+        "widgets": {
+            "model": "Модель",
+            "vae_precision": "Точность VAE",
+            "fp8_fastmode": "Быстрый режим FP8",
+            "load_device": "Загрузить на устройство",
+            "enable_sequential_cpu_offload": "Включить последовательную выгрузку на CPU",
+            "attention_mode": "Режим внимания",
+            "compile_args": "Параметры компиляции"
+        },
+        "outputs": {
+            "model": "Модель",
+            "cogvideomodel": "Модель CogVideo",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "Загрузчик модели CogVideoX",
+        "inputs": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "quantization": "Квантование",
+            "load_device": "Загрузить на устройство",
+            "enable_sequential_cpu_offload": "Включить последовательную выгрузку на CPU",
+            "block_edit": "Редактирование блоков",
+            "lora": "Модель Lora",
+            "compile_args": "Параметры компиляции",
+            "attention_mode": "Режим внимания"
+        },
+        "outputs": {
+            "cogvideomodel": "Модель CogVideo"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "Загрузчик VAE CogVideoX",
+        "inputs": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "compile_args": "Параметры компиляции"
+        },
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "compile_args": "Параметры компиляции"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "Скачать и загрузить модель Tora",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "tora_model": "Модель Tora"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "Скачать и загрузить ControlNet CogVideo",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "Модель ControlNet CogVideo"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "Улучшение видео CogVideo",
+        "widgets": {
+            "weight": "Вес",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "feta_args": "Параметры улучшения видео"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "Параметры контекста CogVideo",
+        "inputs": {
+            "freenoise": "Свободный шум"
+        },
+        "widgets": {
+            "context_schedule": "План контекста",
+            "context_frames": "Количество контекстных кадров",
+            "context_stride": "Шаг контекста",
+            "context_overlap": "Перекрытие контекста",
+            "freenoise": "Свободный шум"
+        },
+        "outputs": {
+            "context_options": "Параметры контекста"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "Редактирование Transformer CogVideo",
+        "inputs": {
+            "remove_blocks": "Удалить блоки"
+        },
+        "outputs": {
+            "block_list": "Список блокировки",
+            "transformerblocks": "Блоки Transformer"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "Настройки компиляции Torch CogVideo",
+        "widgets": {
+            "backend": "Бэкенд",
+            "fullgraph": "Полный граф",
+            "mode": "Режим",
+            "dynamic": "Динамический",
+            "dynamo_cache_size_limit": "Ограничение размера кэша Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "Параметры компиляции Torch",
+            "compileargs": "Параметры компиляции"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "Объединение кодирования текста CogVideo",
+        "inputs": {
+            "conditioning_1": "Условие 1",
+            "conditioning_2": "Условие 2"
+        },
+        "widgets": {
+            "combination_mode": "Режим объединения",
+            "weighted_average_ratio": "Коэффициент взвешенного среднего"
+        },
+        "outputs": {
+            "conditioning": "Условие"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "Кодирование траектории Tora",
+        "inputs": {
+            "tora_model": "Модель Tora",
+            "vae": "VAE",
+            "coordinates": "Координаты"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров",
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания",
+            "enable_tiling": "Включить разбиение на плитки"
+        },
+        "outputs": {
+            "tora_trajectory": "Траектория Tora",
+            "video_flow_images": "Изображения видеопотока"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "Кодирование оптического потока Tora",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "Модель Tora",
+            "optical_flow": "Оптический поток"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "tora_trajectory": "Траектория Tora"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "Кодирование изображения FunInP CogVideo",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "Начальное изображение",
+            "end_image": "Конечное изображение"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "enable_tiling": "Включить обработку по плиткам",
+            "noise_aug_strength": "Интенсивность усиления шума"
+        },
+        "outputs": {
+            "image_cond_latents": "Условные Latent-изображения"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "Быстрый кэш CogVideoX",
+        "inputs": {
+            "num_blocks_to_cache": "Число блоков кэша"
+        },
+        "widgets": {
+            "start_step": "Начальный шаг",
+            "hf_step": "Шаг высоких частот",
+            "lf_step": "Шаг низких частот",
+            "cache_device": "Устройство кэша",
+            "num_blocks_to_cache": "Число блоков кэша"
+        },
+        "outputs": {
+            "fastercache": "Быстрый кэш"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "Кэш Tea CogVideoX",
+        "widgets": {
+            "rel_l1_thresh": "Относительный порог L1"
+        },
+        "outputs": {
+            "teacache_args": "Параметры кэша Tea"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "ControlNet CogVideo",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "Изображение"
+        },
+        "widgets": {
+            "control_strength": "Интенсивность управления",
+            "control_start_percent": "Начальный процент управления",
+            "control_end_percent": "Конечный процент управления"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "ControlNet CogVideo"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "Автоматический выбор ближайшего бакета CogVideoX",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "base_resolution": "Базовое разрешение",
+            "upscale_method": "Метод увеличения",
+            "crop": "Обрезка"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "images": "Изображение",
+            "width": "Ширина",
+            "height": "Высота",
+            "int": "Целое число"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "Предпросмотр Latent CogVideo",
+        "inputs": {
+            "samples": "Сэмплирование"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "min_val": "Минимум",
+            "max_val": "Максимум",
+            "r_bias": "Смещение R",
+            "g_bias": "Смещение G",
+            "b_bias": "Смещение B"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "images": "Изображение",
+            "latent_rgb_factors": "Факторы RGB Latent",
+            "string": "Строка"
+        }
+    }
+}

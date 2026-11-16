@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "画像カラーマッチング",
+        "inputs": {
+            "source_image": "元画像",
+            "reference_image": "参考画像"
+        },
+        "widgets": {
+            "method": "手法"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "参照画像の色調を元画像に転写します。バッチ処理に対応しており、参照画像の枚数が元バッチと異なる場合は参照画像を循環使用します（i % ref_count）。wavelet/adain はネイティブで動作します。mkl/hm/reinhard/mvgd とその混合バージョンは 'color-matcher' パッケージを使用します。"
+    },
+    "1hew_ImageColorRestore": {
+        "title": "画像カラー復元",
+        "inputs": {
+            "edit_image": "編集画像",
+            "org_image": "元画像"
+        },
+        "widgets": {
+            "background_threshold": "背景閾値",
+            "unchanged_threshold": "不変閾値",
+            "seam_max_distance": "シーム最大距離",
+            "seam_decay": "シーム減衰",
+            "seam_residual_blur": "シーム残差ぼかし",
+            "seam_color_sigma": "シーム色の標準偏差",
+            "occlusion_residual_blur": "遮蔽残差ぼかし",
+            "occlusion_bridge_width": "遮蔽ブリッジ幅"
+        },
+        "outputs": {
+            "image": "画像",
+            "unchanged_mask": "不変マスク"
+        },
+        "description": "整合済みのAI編集後の色を元の参照へ復元しつつ、オブジェクト削除で生じた遮蔽シームを局所的に平滑化します。信頼性の高いアフィン色フィットと連続的なシームフィールドを使用します（構造不変マスクのクリーニングは無効化済み）。編集画像にAlphaチャンネルがある場合は保持されます。"
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "画像整合変更マスク",
+        "inputs": {
+            "edit_image": "編集画像",
+            "org_image": "元画像"
+        },
+        "widgets": {
+            "mode": "モード",
+            "max_offset": "最大オフセット",
+            "max_rotation": "最大回転",
+            "max_scale": "最大スケール",
+            "min_align_score": "最小整合スコア",
+            "color_compensation": "カラー補償",
+            "sensitivity": "感度",
+            "min_component_area": "最小コンポーネント面積",
+            "expand": "拡張",
+            "feather": "フェザー"
+        },
+        "outputs": {
+            "align_image": "整列画像",
+            "clean_mask": "クリーンマスク",
+            "raw_mask": "生マスク",
+            "change_score": "変更スコア",
+            "overlay_image": "オーバーレイ画像"
+        },
+        "description": "AI編集後の画像を元画像と整合し、安定した背景ピクセルを利用して小規模な大域カラードリフトを除外し、生／クリーンな変更マスクを出力します。"
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "画像Alphaエッジ処理",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "edge": "エッジ",
+            "feather": "フェザー"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "Alphaチャンネル付き画像の不透明領域の縁を調整します：内側への縮小エッジ／外側への拡張エッジ＋フェザー。\n\n典型シナリオ：切り抜き（背景削除）後、要素の縁に背景色に汚染された半透明の「ボヤけたフチ／カラーフチ」がリング状に残ることがあります。本ノードはまず形態学処理で内側に縁を縮め、汚染された縁のピクセルを直接除去してから、ガウシアンフェザーでなめらかなグラデーションを得ます。フェザー前には必ず不透明領域の色を移行帯へ拡散（bleed）させ、フェザー後の暗いフチ／カラーフチの発生を防ぎます。\n\n処理順序：縮小エッジ／拡張エッジ → 色のはみ出し → フェザー。\nAlpha付き4チャンネル画像を出力し、同時に処理後のAlphaマスクも返します。\n\n縮小／拡張エッジはグレースケール形態学処理（最小値／最大値フィルター）で、Alphaに直接作用します：局所的に線形なソフトエッジでは、半径rのフィルターはそのスロープをちょうどrピクセル平行移動させるのと等しいため、Alphaの各等値線が全体としてrだけ平行移動し、matte本来のアンチエイリアスが完全に保持され、1pxの段差に劣化しません。穴埋めはマスク修復に属するため、他のノードの処理に任せます。"
+    },
+    "1hew_ImageBlur": {
+        "title": "画像ぼかし",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "blur": "ぼかし"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "画像全体にガウシアンブラーを適用します。挙動は LayerStyle の LayerFilter: Gaussian Blur V2 と一致します。\n\n- 「ぼかし」パラメータは小数（FLOAT）に対応しており、意味的には V2 バージョンにより近いです；\n- 「ぼかし」が 0 の場合は元画像をそのまま透過します；\n- バッチ単位でフレームごとに処理し、チャンネル数と「データ型」を維持します。"
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "画像リサイズ 豆包 Seedream 5.0 Pro",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "native_image": "ネイティブ画像",
+            "native_mask": "ネイティブマスク"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "画像リサイズ Qwen Image 3.0",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "native_image": "ネイティブ画像",
+            "native_mask": "ネイティブマスク"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "画像リサイズ Qwen Image 3.0 Pro",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "native_image": "ネイティブ画像",
+            "native_mask": "ネイティブマスク"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "画像最小面積",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "length_to_sq_area": "参照一辺",
+            "method": "手法",
+            "divisible_by": "割り切れる数",
+            "fit": "適合",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "resize_bool": "リサイズするか"
+        },
+        "description": "画像の面積が最小有効面積参考値に到達するまで画像を拡大します。\n\n- ``length_to_sq_area`` は参照正方形の一辺の長さを定義します（目標面積 = N²）。\n- ``フィッティング`` は「汎用画像リサイズ」に似た挙動です：切り抜き／パディング／引き伸ばし。\n- ``割り切れる`` は最終サイズを指定数の倍数へ切り上げます。\n- ``resize_bool`` は実際に拡大が行われたかどうかを報告します。"
+    },
+    "1hew_StringRandom": {
+        "title": "ランダム文字列",
+        "widgets": {
+            "custom_text": "カスタムテキスト",
+            "seed": "ランダムシード"
+        },
+        "outputs": {
+            "string": "文字列"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "テキスト比較",
+        "widgets": {
+            "a": "a",
+            "operator": "演算子",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "ブール値"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "複数マスク数学演算",
+        "inputs": {
+            "mask_1": "マスク1",
+            "mask_2": "マスク2"
+        },
+        "widgets": {
+            "operation": "操作"
+        },
+        "outputs": {
+            "mask": "マスク"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "Jimeng テキスト比率",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "selection": "選択項目"
+        },
+        "outputs": {
+            "string": "文字列"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "マスクレベル",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "black_point": "黒点",
+            "white_point": "白点"
+        },
+        "outputs": {
+            "mask": "マスク"
+        },
+        "description": "マスク画像の白点と黒点の閾値を設定し、マスクのコントラストと範囲を調整するためのノードです。"
+    },
+    "1hew_IntNumberCompare": {
+        "title": "整数比較",
+        "inputs": {
+            "a": "数値 a",
+            "operator": "演算子",
+            "b": "数値 b"
+        },
+        "widgets": {
+            "bool": "ブール値"
+        },
+        "description": "2つの整数の大小関係を比較します"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "浮動小数点数の比較",
+        "widgets": {
+            "a": "数値 a",
+            "operator": "演算子",
+            "b": "数値 b"
+        },
+        "outputs": {
+            "bool": "ブール値"
+        },
+        "description": "2つの浮動小数点数の大小を比較します"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "画像白黒縁加工",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "gamma": "ガンマ",
+            "shrink_radius": "収縮半径",
+            "blur_radius": "ぼかし半径"
+        },
+        "outputs": {
+            "mask": "マスク"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "マスク輪郭処理",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "fill_hole": "穴を充填",
+            "stroke_width": "ストローク幅",
+            "include_mask": "マスクを含む"
+        },
+        "outputs": {
+            "mask": "マスク"
+        },
+        "description": "マスクに輪郭処理を適用します"
+    },
+    "1hew_VideoToURL": {
+        "title": "動画をURLに変換",
+        "inputs": {
+            "video": "動画ファイルパス"
+        },
+        "widgets": {
+            "timeout": "タイムアウト時間（秒）"
+        },
+        "outputs": {
+            "url": "生成されたURL"
+        },
+        "description": "動画ファイルをアクセス可能なURLリンクに変換します"
+    },
+    "1hew_VideoToImage": {
+        "title": "動画から画像へ変換",
+        "inputs": {
+            "video": "動画"
+        },
+        "outputs": {
+            "image": "画像",
+            "audio": "音声",
+            "fps": "フレームレート",
+            "frame_count": "フレーム数"
+        },
+        "description": "動画を画像・音声・フレームレート・フレーム数に変換します"
+    },
+    "1hew_IntVideoCount": {
+        "title": "動画カウンター",
+        "inputs": {
+            "video_1": "動画1"
+        },
+        "outputs": {
+            "int": "整数"
+        },
+        "description": "動画をカウントするためのノード"
+    },
+    "1hew_ImageToMask": {
+        "title": "画像をマスクに変換",
+        "inputs": {
+            "image": "画像"
+        },
+        "outputs": {
+            "mask": "マスク"
+        },
+        "description": "画像をマスクに変換します"
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "画像バッチインデックス",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "index": "インデックス"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "画像バッチの均一化",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "num_frame": "フレーム数"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "画像リスト交互配置",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "segment_count": "セグメント数"
+        },
+        "outputs": {
+            "image_list": "画像リスト"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "バウンディングボックス塗りつぶし",
+        "inputs": {
+            "paste_image": "貼り付け画像",
+            "bbox_mask": "バウンディングボックスマスク"
+        },
+        "widgets": {
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "画像バウンディングボックスフィラー - bbox_マスク の外接矩形に従って画像を配置し、残りの領域を指定色で塗りつぶします。"
+    },
+    "1hew_IntImageCount": {
+        "title": "整数画像数",
+        "inputs": {
+            "image_1": "画像1"
+        },
+        "outputs": {
+            "int": "整数"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "PSD読み込み",
+        "widgets": {
+            "file": "ファイル",
+            "index": "インデックス",
+            "include_hidden": "非表示アイテムを含む",
+            "group_mode": "グループモード",
+            "output_mode": "出力モード",
+            "preview": "プレビュー",
+            "choose psd to upload": "アップロードする PSD ファイルを選択"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "filename": "ファイル名",
+            "layer_name": "レイヤー名"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "マスクをバウンディングボックスマスクに変換",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "output_mode": "出力モード",
+            "divisible_by": "割り切れる数"
+        },
+        "outputs": {
+            "bbox_mask": "バウンディングボックスマスク"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "多画像リスト",
+        "inputs": {
+            "image_1": "画像1"
+        },
+        "widgets": {
+            "image_1": "画像1"
+        },
+        "outputs": {
+            "image_list": "画像リスト"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "メモリクリーンアップ",
+        "widgets": {
+            "anything": "任意の内容",
+            "unload_model": "モデルをアンロード"
+        },
+        "description": "現在のタスク完了後に実行キャッシュとモデル占用の解放を ComfyUI に要求します。複数回キュー投入の実行間に RAM/VRAM を整理するのに適しています。"
+    },
+    "1hew_AudioDuration": {
+        "title": "音声の長さ",
+        "inputs": {
+            "audio": "音声"
+        },
+        "description": "音声の長さを取得します。"
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "画像バッチ抽出",
+        "inputs": {
+            "image": "画像",
+            "mode": "モード",
+            "index": "インデックス",
+            "step": "ステップ",
+            "uniform": "均一",
+            "max_keep": "最大保持数"
+        },
+        "description": "画像バッチから指定モードの画像を抽出します。"
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "画像バッチグループ化",
+        "inputs": {
+            "image": "画像",
+            "batch_size": "バッチサイズ",
+            "overlap": "オーバーラップ",
+            "last_batch_mode": "最終バッチモード",
+            "color": "色"
+        },
+        "description": "画像バッチをグループ単位で処理します。"
+    },
+    "1hew_ImageBatchRange": {
+        "title": "画像バッチ範囲",
+        "inputs": {
+            "image": "画像",
+            "start_index": "開始インデックス",
+            "num_frame": "フレーム数"
+        },
+        "description": "画像バッチから指定範囲内の画像を抽出します。"
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "画像バッチ分割",
+        "inputs": {
+            "image": "画像",
+            "take_count": "取得フレーム数",
+            "from_start": "開始位置から"
+        },
+        "description": "画像バッチを指定数量で分割します。"
+    },
+    "1hew_ImageListAppend": {
+        "title": "画像リスト追加",
+        "inputs": {
+            "image_1": "画像1",
+            "image_2": "画像2"
+        },
+        "description": "2つの画像をリストに追加します。"
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "マスクバッチ数学演算",
+        "inputs": {
+            "mask": "マスク",
+            "operation": "操作"
+        },
+        "description": "マスクバッチに対して数学演算を実行します。"
+    },
+    "1hew_MaskBatchRange": {
+        "title": "マスクバッチ範囲",
+        "inputs": {
+            "mask": "マスク",
+            "start_index": "開始インデックス",
+            "num_frame": "フレーム数"
+        },
+        "description": "マスクバッチから指定範囲のマスクを取り出します。"
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "マスクバッチ分割",
+        "inputs": {
+            "mask": "マスク",
+            "take_count": "取得フレーム数",
+            "from_start": "開始位置から"
+        },
+        "description": "マスクバッチから指定数でマスクを分割します。"
+    },
+    "1hew_VideoCutGroup": {
+        "title": "動画クリップグループ化",
+        "inputs": {
+            "image": "画像",
+            "threshold_base": "閾値基準",
+            "threshold_range": "閾値範囲",
+            "threshold_count": "閾値カウント",
+            "kernel": "カーネル",
+            "min_frame_count": "最小フレーム数",
+            "max_frame_count": "最大フレーム数",
+            "fast": "高速",
+            "add_frame": "フレームを追加",
+            "delete_frame": "フレームを削除"
+        },
+        "description": "画像に基づいて動画クリップをグループ化します。"
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "明るさコントラスト一致",
+        "inputs": {
+            "source_image": "元画像",
+            "reference_image": "参考画像",
+            "edge_amount": "エッジ量",
+            "consistency": "一貫性",
+            "method": "手法"
+        },
+        "description": "ソース画像と参照画像の明るさコントラストを一致させます。"
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "テキストエンコード Qwen 画像編集",
+        "description": "Qwen モデルを使用して画像編集用のテキストをエンコードします。"
+    },
+    "1hew_ImageBatchToList": {
+        "title": "画像バッチをリストに変換",
+        "inputs": {
+            "image_batch": "画像バッチ"
+        },
+        "description": "画像バッチを画像リストに変換します。"
+    },
+    "1hew_ImageListToBatch": {
+        "title": "画像リストをバッチに変換",
+        "inputs": {
+            "image_list": "画像リスト"
+        },
+        "description": "画像リストを画像バッチに変換します。"
+    },
+    "1hew_ImageToURL": {
+        "title": "画像をURLリンクに変換",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "mode": "モード",
+            "timeout": "タイムアウト"
+        },
+        "outputs": {
+            "url": "URLリンク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "マスクバッチをリストに変換",
+        "inputs": {
+            "mask_batch": "マスクバッチ"
+        },
+        "description": "マスクバッチをマスクリストに変換します。"
+    },
+    "1hew_MaskListToBatch": {
+        "title": "マスクリストをバッチに変換",
+        "description": "複数のマスクを1つのバッチに変換します。",
+        "inputs": {
+            "mask_list": "マスクリスト"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "マスクをSam3Boxに変換",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "condition": "状態",
+            "output_mode": "出力モード"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "文字列座標をバウンディングボックスに変換",
+        "description": "座標文字列からバウンディングボックスを生成します。",
+        "inputs": {
+            "coordinates_string": "座標文字列"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "文字列座標をバウンディングボックスマスクに変換",
+        "description": "座標文字列からバウンディングボックスマスクを生成します。",
+        "inputs": {
+            "image": "画像",
+            "coordinates_string": "座標文字列",
+            "output_mode": "出力モード"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "テキストリストを文字列に変換",
+        "description": "テキストリストを1つの文字列に統合します。",
+        "inputs": {
+            "text_list": "テキストリスト",
+            "prefix": "プレフィックス",
+            "suffix": "接尾辞",
+            "separator": "区切り文字"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "テキストを任意の形式に変換",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "outputs": {
+            "any": "任意"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "URLを動画に変換",
+        "description": "URLから動画を取得します。",
+        "inputs": {
+            "video_url": "動画URL",
+            "timeout": "タイムアウト時間"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "ガイド線検出",
+        "description": "画像内のガイド線を検出します。",
+        "inputs": {
+            "image": "画像",
+            "canny_low": "Canny低閾値",
+            "canny_high": "Canny高閾値",
+            "seg_min_len": "最小分割長",
+            "seg_max_gap": "最大分割ギャップ",
+            "guide_filter": "ガイドフィルター",
+            "guide_width": "ガイド線幅",
+            "cluster_eps": "クラスタリングε値"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "背景除去",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "model": "モデル",
+            "add_background": "背景追加"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "背景除去（最適化）",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "type": "タイプ",
+            "subject_protect": "主体保護",
+            "feather": "フェザー",
+            "decolor_edge": "エッジ脱色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "YOLO検出",
+        "description": "YOLOモデルを使用して画像内のオブジェクトを検出します。",
+        "inputs": {
+            "image": "画像",
+            "yolo_model": "YOLOモデル",
+            "threshold": "閾値",
+            "mask_index": "マスクインデックス",
+            "label": "ラベル",
+            "label_size": "ラベルサイズ"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "画像ラベル追加",
+        "description": "画像にテキストラベルを追加します。",
+        "inputs": {
+            "image": "画像",
+            "height_pad": "高さパディング",
+            "font_size": "フォントサイズ",
+            "invert_color": "色反転",
+            "font": "フォント",
+            "text": "テキスト",
+            "direction": "方向",
+            "input1": "入力1",
+            "input2": "入力2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "Alphaチャンネルクリーンアップ",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "clean_strength": "クリーン強度",
+            "detect_only": "検出のみ"
+        },
+        "outputs": {
+            "mask": "マスク",
+            "noise_mask": "ノイズマスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "Alphaチャンネル分離",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "background_color": "背景色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "マスクによるバウンディングボックス描画",
+        "description": "マスクを使用して画像にバウンディングボックスを描画します。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "bbox_color": "バウンディングボックスの色",
+            "stroke_width": "ストローク幅",
+            "fill": "塗りつぶし",
+            "padding": "パディング",
+            "output_mode": "出力モード"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "画像編集結合",
+        "description": "画像を編集して結合します。",
+        "inputs": {
+            "reference_image": "参考画像",
+            "edit_image": "編集画像",
+            "edit_mask": "編集マスク",
+            "edit_image_position": "編集画像の位置",
+            "match_edit_size": "編集サイズに合わせる",
+            "spacing": "間隔",
+            "spacing_color": "間隔の色",
+            "pad_color": "塗り色"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "画像合成",
+        "description": "メイン画像を合成します。",
+        "inputs": {
+            "image_1": "画像1",
+            "image_2": "画像2",
+            "image_3": "画像3",
+            "direction": "方向",
+            "match_image_size": "画像サイズに合わせる",
+            "spacing_width": "間隔幅",
+            "spacing_color": "間隔の色",
+            "pad_color": "塗り色"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "画像ループ",
+        "description": "画像を往復処理します。",
+        "inputs": {
+            "image": "画像",
+            "pre_reverse": "事前反転",
+            "ops_count": "操作回数",
+            "frame_count": "フレーム数",
+            "remove_link_frame": "リンクフレーム削除"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "画像描画",
+        "description": "画像グリッドレイアウトを描画します。",
+        "inputs": {
+            "image": "画像",
+            "layout": "レイアウト",
+            "spacing": "間隔",
+            "grid_columns": "グリッド列数",
+            "background_color": "背景色"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "マスク付き画像回転",
+        "description": "画像を回転し、マスクを適用します。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "angle": "角度",
+            "pad_color": "塗り色",
+            "expand": "拡張",
+            "mask_center": "マスク中心"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "単色画像生成",
+        "description": "単色画像を生成します。",
+        "inputs": {
+            "get_image_size": "画像サイズを取得",
+            "preset_size": "プリセットサイズ",
+            "width": "幅",
+            "height": "高さ",
+            "color": "色",
+            "alpha": "不透明度",
+            "invert": "反転",
+            "mask_opacity": "マスク不透明度",
+            "divisible_by": "割り切れる数"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "マスクによる輪郭描画",
+        "description": "マスクを介して画像に輪郭を描画します。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "stroke_width": "輪郭幅",
+            "stroke_color": "輪郭色"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "Alpha合成モードでブレンド",
+        "description": "Alpha値を使用してオーバーレイ画像とベース画像をブレンドします。",
+        "inputs": {
+            "overlay_image": "オーバーレイ画像",
+            "base_image": "ベース画像",
+            "overlay_mask": "オーバーレイマスク",
+            "blend_mode": "ブレンドモード",
+            "opacity": "不透明度",
+            "invert_mask": "マスクを反転"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "CSS合成モードでブレンド",
+        "description": "CSS合成モードを使用してオーバーレイ画像とベース画像をブレンドします。",
+        "inputs": {
+            "overlay_image": "オーバーレイ画像",
+            "base_image": "ベース画像",
+            "blend_mode": "ブレンドモード",
+            "blend_percentage": "ブレンド割合",
+            "overlay_mask": "オーバーレイマスク",
+            "invert_mask": "マスクを反転"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "マスクで画像をブレンド",
+        "description": "マスクを使用して画像間をブレンドします。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "fill_hole": "穴埋め",
+            "invert": "反転",
+            "feather": "フェザー",
+            "opacity": "不透明度",
+            "expansion": "拡張",
+            "background_color": "背景色",
+            "background_opacity": "背景の不透明度",
+            "output_mask_invert": "出力マスク反転"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "画像を正方形に切り抜き",
+        "description": "画像を正方形に切り抜きます。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "scale_factor": "スケール係数",
+            "extra_padding": "追加パディング",
+            "fill_color": "塗り色",
+            "apply_mask": "マスク適用",
+            "divisible_by": "割り切れる数"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "バウンディングボックス切り抜き",
+        "widgets": {
+            "image": "画像",
+            "mask": "マスク",
+            "preset_ratio": "プリセット比率",
+            "get_crop_ratio": "切り抜き比率を取得",
+            "scale_strength": "スケール強度",
+            "crop_to_side": "一辺に切り抜き",
+            "crop_to_length": "長さに切り抜き",
+            "divisible_by": "割り切れる倍数"
+        },
+        "description": "画像トリマー - マスクに基づいて画像を切り抜き、後で元の位置に貼り戻せるようバウンディングボックスのマスク情報を返します",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "エッジ切り抜きとパディング",
+        "description": "画像の縁を切り抜いてパディングします。",
+        "inputs": {
+            "image": "画像",
+            "uniform_amount": "均一パディング量",
+            "top_amount": "上部パディング量",
+            "bottom_amount": "下部パディング量",
+            "left_amount": "左側パディング量",
+            "right_amount": "右側パディング量",
+            "pad_color": "塗り色",
+            "divisible_by": "割り切れる数"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "画像グリッド分割",
+        "description": "画像をグリッドに分割します。",
+        "inputs": {
+            "image": "画像",
+            "rows": "行数",
+            "columns": "列数",
+            "index": "インデックス",
+            "all": "すべて"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "マスクで画像を切り抜き",
+        "description": "マスクを使用して画像を切り抜きます。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "output_crop": "出力切り抜き",
+            "output_alpha": "出力アルファ"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "バウンディングボックスマスクで画像を貼り付け",
+        "description": "バウンディングボックスマスクを使用して画像に貼り付けます。",
+        "inputs": {
+            "paste_image": "貼り付け画像",
+            "base_image": "ベース画像",
+            "bbox_mask": "バウンディングボックスマスク",
+            "paste_mask": "貼り付けマスク",
+            "position_x": "X位置",
+            "position_y": "Y位置",
+            "scale": "スケール",
+            "rotation": "回転",
+            "opacity": "不透明度",
+            "apply_paste_mask": "貼り付けマスクを適用"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "高周波低周波画像結合",
+        "description": "高周波画像と低周波画像を合成します。",
+        "inputs": {
+            "high_freq": "高周波画像",
+            "low_freq": "低周波画像",
+            "method": "手法",
+            "high_strength": "高周波強度",
+            "low_strength": "低周波強度"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "画像高低周波分離",
+        "inputs": {
+            "image": "画像",
+            "method": "手法",
+            "blur_radius": "ぼかし半径"
+        },
+        "description": "画像の高周波成分と低周波成分を分離して処理します。"
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "画像高低周波変換",
+        "inputs": {
+            "generate_image": "生成画像",
+            "detail_image": "ディテール画像",
+            "detail_mask": "ディテールマスク",
+            "method": "手法",
+            "blur_radius": "ぼかし半径"
+        },
+        "description": "画像の高周波成分と低周波成分に変換処理を適用します。"
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "画像リサイズ Flux Kontext",
+        "description": "Flux Kontext を使用して画像サイズを調整します。",
+        "inputs": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色",
+            "image": "画像",
+            "mask": "マスク"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "画像リサイズ Gemini 3.0 Pro",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "画像リサイズ Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色",
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "画像リサイズ Jimeng",
+        "description": "Jimeng を使用して画像サイズを調整します。",
+        "inputs": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色",
+            "image": "画像",
+            "mask": "マスク"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "画像リサイズ Qwen Image",
+        "description": "画像をリサイズします。",
+        "inputs": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色",
+            "image": "画像",
+            "mask": "マスク"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "画像リサイズ 正方形",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "適合方式",
+            "pad_color": "塗り色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "汎用画像リサイズ",
+        "description": "画像に汎用リサイズを適用します。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "get_image_size": "画像サイズを取得",
+            "preset_ratio": "プリセット比率",
+            "proportional_width": "幅比率でスケール",
+            "proportional_height": "高さ比率でスケール",
+            "method": "手法",
+            "scale_to_side": "辺長に合わせてスケール",
+            "scale_to_length": "長さに合わせてスケール",
+            "fit": "適合方式",
+            "pad_color": "塗り色",
+            "divisible_by": "割り切れる数"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "画像タイル結合",
+        "inputs": {
+            "tile": "タイル",
+            "tile_meta": "タイルメタデータ",
+            "blend_strength": "ブレンド強度"
+        },
+        "description": "複数のタイル画像を1つの完全な画像に結合します。"
+    },
+    "1hew_ImageTileSplit": {
+        "title": "画像チャンク分割",
+        "inputs": {
+            "image": "画像",
+            "get_tile_size": "チャンクサイズ取得",
+            "mode": "モード",
+            "overlap_amount": "重複量",
+            "grid_row": "行数",
+            "grid_col": "列数",
+            "divisible_by": "整除可能数"
+        },
+        "description": "画像を複数のチャンクに分割します。"
+    },
+    "1hew_IntImageSideLength": {
+        "title": "整数画像辺長",
+        "inputs": {
+            "image": "画像",
+            "mode": "モード"
+        },
+        "description": "画像の辺長を整数値として計算または設定します。"
+    },
+    "1hew_IntImageSize": {
+        "title": "整数画像サイズ",
+        "inputs": {
+            "image": "画像"
+        },
+        "description": "画像の整数サイズを取得します。"
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "整数マスク辺長",
+        "inputs": {
+            "mask": "マスク",
+            "mode": "モード"
+        },
+        "description": "マスクの辺長を整数値として計算または設定します。"
+    },
+    "1hew_IntSplit": {
+        "title": "整数分割",
+        "inputs": {
+            "total": "合計",
+            "split_point": "分割位置"
+        },
+        "description": "整数を指定位置で2部分に分割します。"
+    },
+    "1hew_IntWan": {
+        "title": "整数の万の位",
+        "inputs": {
+            "value": "値"
+        },
+        "description": "整数の万の位を取得または設定します。"
+    },
+    "1hew_GetFileCount": {
+        "title": "ファイル数取得",
+        "inputs": {
+            "folder": "フォルダ",
+            "type": "タイプ",
+            "include_subdir": "サブディレクトリを含める"
+        },
+        "description": "指定されたフォルダーとそのサブディレクトリ内のファイル数をカウントします。"
+    },
+    "1hew_LoadImage": {
+        "title": "画像読み込み",
+        "inputs": {
+            "get_image_size": "画像サイズを取得",
+            "file": "ファイル",
+            "index": "インデックス",
+            "include_subdir": "サブディレクトリを含める",
+            "all": "すべて"
+        },
+        "description": "指定パスから画像ファイルを読み込みます。"
+    },
+    "1hew_LoadTxt": {
+        "title": "テキスト読み込み",
+        "widgets": {
+            "file": "ファイル",
+            "encode": "エンコード",
+            "index": "インデックス",
+            "include_subdir": "サブディレクトリを含める"
+        },
+        "outputs": {
+            "text": "テキスト",
+            "filename": "ファイル名"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "動画読み込み",
+        "inputs": {
+            "file": "ファイル",
+            "frame_limit": "フレーム制限",
+            "fps": "フレームレート",
+            "start_skip": "先頭スキップ",
+            "end_skip": "末尾スキップ",
+            "format": "フォーマット",
+            "video_index": "動画インデックス",
+            "include_subdir": "サブディレクトリを含める"
+        },
+        "description": "指定パスから動画ファイルを読み込みます。"
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "動画から画像へ変換",
+        "inputs": {
+            "file": "ファイル",
+            "frame_limit": "フレーム制限",
+            "fps": "フレームレート",
+            "start_skip": "先頭スキップ",
+            "end_skip": "末尾スキップ",
+            "format": "フォーマット",
+            "video_index": "動画インデックス",
+            "include_subdir": "サブディレクトリを含める"
+        },
+        "description": "動画ファイルを画像フレームのシリーズに変換します。"
+    },
+    "1hew_SaveImage": {
+        "title": "画像保存",
+        "inputs": {
+            "image": "画像",
+            "filename_prefix": "ファイル名プレフィックス",
+            "save_output": "出力を保存",
+            "save_metadata": "メタデータを保存"
+        },
+        "description": "画像を指定パスに保存します。"
+    },
+    "1hew_SaveTxt": {
+        "title": "テキスト保存",
+        "inputs": {
+            "any": "任意"
+        },
+        "widgets": {
+            "filename": "ファイル名",
+            "auto_increment": "自動インクリメント",
+            "save_output": "出力を保存",
+            "encode": "エンコード"
+        },
+        "outputs": {
+            "file_path": "ファイルパス"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "動画保存",
+        "inputs": {
+            "video": "動画",
+            "filename_prefix": "ファイル名プレフィックス",
+            "save_output": "出力を保存",
+            "save_metadata": "メタデータを保存"
+        },
+        "description": "動画を指定パスに保存します。"
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "画像を動画として保存",
+        "description": "画像と音声に基づいて動画を保存します。",
+        "inputs": {
+            "image": "画像",
+            "audio": "音声",
+            "fps": "フレームレート",
+            "filename_prefix": "ファイル名プレフィックス",
+            "save_output": "出力を保存",
+            "save_metadata": "メタデータを保存"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "任意の空ブール",
+        "description": "ブール値が空かどうかを検出します。",
+        "inputs": {
+            "any": "任意値"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "任意の空整数",
+        "description": "整数値が空かどうかを検出します。",
+        "inputs": {
+            "any": "任意値",
+            "empty": "空の値",
+            "not_empty": "空でない値"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "任意のスイッチブール",
+        "description": "ブール値に応じて2つのオプションを切り替えます。",
+        "inputs": {
+            "boolean": "ブール値",
+            "on_true": "trueの場合",
+            "on_false": "falseの場合"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "セレクター切り替え",
+        "inputs": {
+            "input_1": "入力1"
+        },
+        "widgets": {
+            "select": "選択"
+        },
+        "outputs": {
+            "output": "出力",
+            "select": "選択"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "複数セレクタートグル",
+        "inputs": {
+            "input_1": "入力1"
+        },
+        "widgets": {
+            "select": "選択"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "select": "選択"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "テキスト一致行番号",
+        "widgets": {
+            "text_multiline": "複数行テキスト",
+            "text_single": "単一行テキスト"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "テキスト一致値",
+        "widgets": {
+            "text_multiline": "複数行テキスト",
+            "text_single": "単一行テキスト"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "マスク不透明度クリーンアップ",
+        "widgets": {
+            "mask": "マスク",
+            "clean_strength": "クリーン強度",
+            "detect_only": "検出のみ"
+        },
+        "outputs": {
+            "mask": "マスク",
+            "noise_mask": "ノイズマスク"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "バウンディングボックスマスクによるマスクトリミング",
+        "description": "バウンディングボックスマスクを使用してマスクをトリミングします。",
+        "inputs": {
+            "mask": "マスク",
+            "bbox_mask": "バウンディングボックスマスク"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "マスク穴埋め",
+        "description": "マスク内の穴を埋めます。",
+        "inputs": {
+            "mask": "マスク",
+            "invert_mask": "マスクを反転"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "バウンディングボックスマスクによるマスク貼り付け",
+        "description": "バウンディングボックスマスクを使用してマスクを貼り付けます。",
+        "inputs": {
+            "paste_mask": "貼り付けマスク",
+            "bbox_mask": "バウンディングボックスマスク",
+            "base_mask": "基本マスク"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "マスク複製",
+        "description": "マスクを複製します。",
+        "inputs": {
+            "mask": "マスク",
+            "invert": "反転",
+            "count": "回数"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "マスク分離",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "min_area": "最小面積",
+            "sort_mode": "ソートモード",
+            "connectivity": "接続性"
+        },
+        "outputs": {
+            "mask": "マスク",
+            "count": "整数"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "マスクを画像に変換",
+        "inputs": {
+            "mask": "マスク"
+        },
+        "widgets": {
+            "fill_hole": "穴を充填",
+            "white_area_color": "白領域の色",
+            "black_area_color": "黒領域の色",
+            "output_alpha": "Alphaチャンネルを出力"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "多画像一括処理",
+        "description": "複数の画像を一括処理します。",
+        "inputs": {
+            "fit": "適応",
+            "pad_color": "塗り色",
+            "image_1": "画像1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "多画像重ね合わせ",
+        "inputs": {
+            "image_1": "画像 1"
+        },
+        "widgets": {
+            "fit_mode": "適合モード",
+            "color": "色"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "マルチレイヤー合成：\n- image_1 が最上位レイヤー、数字が大きいほど下層\n- RGBA 入力は alpha を使って通常レイヤー合成\n- RGB 入力は不透明レイヤーとして扱われます",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "多画像スティッチ",
+        "description": "複数の画像を継ぎ合わせます。",
+        "inputs": {
+            "direction": "方向",
+            "match_image_size": "画像サイズを合わせる",
+            "spacing_width": "間隔幅",
+            "spacing_color": "間隔の色",
+            "pad_color": "塗り色",
+            "image_1": "画像1",
+            "image_2": "画像2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "多マスクスティッチ",
+        "description": "複数のマスクを一括処理します。",
+        "inputs": {
+            "fit": "適応",
+            "pad_color": "塗り色",
+            "mask_1": "マスク1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "複数マスク数学演算",
+        "description": "複数のマスクの数学演算を実行します。",
+        "inputs": {
+            "mask_1": "マスク1",
+            "mask_2": "マスク2",
+            "operation": "操作"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "複数文字列連結",
+        "description": "複数の文字列を連結します。",
+        "inputs": {
+            "filter_empty_line": "空行を除去",
+            "filter_comment": "コメントを除去",
+            "separator": "区切り文字",
+            "input": "入力"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "カスタム浮動小数点数リスト",
+        "description": "カスタム浮動小数点数リスト。",
+        "inputs": {
+            "custom_text": "カスタムテキスト"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "カスタム整数リスト",
+        "inputs": {
+            "custom_text": "カスタムテキスト"
+        },
+        "description": "カスタム整数を含むリストを生成します。"
+    },
+    "1hew_ListCustomSeed": {
+        "title": "カスタムシードリスト",
+        "inputs": {
+            "seed": "シード",
+            "count": "数"
+        },
+        "description": "指定数のランダムシードを含むリストを生成します。"
+    },
+    "1hew_ListCustomString": {
+        "title": "カスタム文字列リスト",
+        "inputs": {
+            "custom_text": "カスタムテキスト"
+        },
+        "description": "カスタム文字列を含むリストを生成します。"
+    },
+    "1hew_StringFilter": {
+        "title": "文字列フィルター",
+        "inputs": {
+            "text": "テキスト",
+            "filter_empty_line": "空行を除去",
+            "filter_comment": "コメントを除去",
+            "input": "入力"
+        },
+        "description": "テキスト内の空行とコメントを除外します。"
+    },
+    "1hew_StringJoinMulti": {
+        "title": "複数文字列連結",
+        "inputs": {
+            "text1": "テキスト1",
+            "text2": "テキスト2",
+            "text3": "テキスト3",
+            "text4": "テキスト4",
+            "text5": "テキスト5",
+            "filter_empty_line": "空行を除去",
+            "filter_comment": "コメントを除去",
+            "separator": "区切り文字",
+            "input": "入力"
+        },
+        "description": "複数のテキストを1つの文字列に連結し、空行とコメントの除外を選択できます。"
+    },
+    "1hew_TextCustomExtract": {
+        "title": "テキストカスタム抽出",
+        "inputs": {
+            "json_data": "JSONデータ",
+            "key": "キー",
+            "precision_match": "完全一致",
+            "label_filter": "ラベルフィルター"
+        },
+        "description": "JSON データから特定のキーの値を抽出し、完全一致とラベルフィルターを行います。"
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "テキストプレフィックス・サフィックス",
+        "inputs": {
+            "text": "テキスト",
+            "prefix": "プレフィックス",
+            "suffix": "接尾辞"
+        },
+        "description": "テキストの前後に指定したプレフィックスとサフィックスを追加します。"
+    },
+    "1hew_RangeMapping": {
+        "title": "範囲マッピング",
+        "inputs": {
+            "value": "値",
+            "min": "最小値",
+            "max": "最大値",
+            "rounding": "丸め"
+        },
+        "description": "0-1 範囲の値を [min,max] にマッピングします。小数精度の制御に対応。"
+    },
+    "1hew_WorkflowName": {
+        "title": "ワークフロー名",
+        "inputs": {
+            "prefix": "プレフィックス",
+            "suffix": "接尾辞",
+            "date_format": "日付形式",
+            "full_path": "完全パス",
+            "strip_extension": "拡張子を除く"
+        },
+        "description": "プレフィックス、サフィックス、日付形式付きのワークフロー名を生成します。"
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "バウンディングボックスマスクで切り抜き",
+        "description": "バウンディングボックスマスクを使用して画像を切り抜きます。",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "preset_ratio": "プリセット比率",
+            "get_crop_ratio": "切り抜き比率を取得",
+            "scale_strength": "スケール強度",
+            "crop_to_side": "一辺に切り抜き",
+            "crop_to_length": "長さに切り抜き",
+            "divisible_by": "割り切れる数"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "画像Alpha結合",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "invert_mask": "マスクを反転"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "画像バッチ交互配置",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "segment_count": "セグメント数"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "文字列比率 Gemini 3.1 Flash Image",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "selection": "選択"
+        },
+        "outputs": {
+            "string": "文字列"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "文字列比率 GPT 2.0 Image",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "selection": "選択"
+        },
+        "outputs": {
+            "string": "文字列"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "画像サイズ調整 GPT Image 2.0",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "preset_size": "プリセットサイズ",
+            "fit": "手法",
+            "pad_color": "背景色"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "文字列解析",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "selection": "選択"
+        },
+        "outputs": {
+            "string": "文字列"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "任意のスイッチ整数",
+        "description": "整数値に応じてオプションを切り替えます。"
+    }
+}

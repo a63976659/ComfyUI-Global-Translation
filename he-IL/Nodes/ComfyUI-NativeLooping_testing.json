@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "התחלת לולאת טנזור",
+        "inputs": {
+            "initial_value": "ערך התחלתי"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "iterations": "מספר איטרציות"
+        },
+        "outputs": {
+            "flow_control": "בקרת זרימה",
+            "accumulated_count": "כמות מצטברת",
+            "previous_value": "הערך הקודם",
+            "current_iteration": "מספר האיטרציות הנוכחי"
+        },
+        "description": "פתיחת לולאה לאיסוף פלטים. שני מצבים נתמכים:\n- מספר איטרציות: הרצת מספר קבוע של איטרציות\n- מספר הפריימים הכולל: הרצה עד שהצבירה מגיעה ליעד הפריימים\nחבר את flow_control אל TensorLoopClose, השתמש ב-`previous_value` כקלט של מה שנוצר, וחבר את הפלט שנוצר אל TensorLoopClose.processed.\nתומך בטיפוסי תמונה, מסיכה ו-Latent."
+    },
+    "TensorLoopClose": {
+        "title": "סיום לולאת טנזור",
+        "widgets": {
+            "flow_control": "בקרת זרימה",
+            "processed": "מעובד",
+            "accumulate": "מצטבר",
+            "overlap": "חפיפה",
+            "stop": "עצור"
+        },
+        "outputs": {
+            "output": "פלט"
+        },
+        "description": "סוגר את הלולאה שנפתחה על ידי TensorLoopOpen.\nחיבורים:\n  - flow_control מ-TensorLoopOpen\n  - processed: הפלט שנוצר באיטרציה הזו\nתומך בטיפוסי תמונה, מסיכה ו-Latent."
+    },
+    "_AccumulateNode": {
+        "title": "צומת צבירה",
+        "widgets": {
+            "to_add": "להוספה",
+            "accumulation": "ערך מצטבר"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "תחילת לולאת תנאי",
+        "widgets": {
+            "condition": "תנאי"
+        },
+        "outputs": {
+            "flow_control": "בקרת זרימה"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "סיום לולאת תנאי",
+        "widgets": {
+            "flow_control": "בקרת זרימה",
+            "condition": "תנאי"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "חישוב מספרים שלמים",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "פעולה"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "המרת צבירה לאצוות תמונות",
+        "widgets": {
+            "accumulation": "ערך מצטבר",
+            "overlap_frames": "מספר פריימי חפיפה",
+            "overlap_mode": "מצב חפיפה"
+        },
+        "outputs": {
+            "result": "תוצאה"
+        },
+        "description": "תפירת הערכים שנצברו של טנזורי תמונה/מסיכה או של מילון Latent לאצווה אחת."
+    },
+    "_ConditionalSelect": {
+        "title": "בחירת תנאי",
+        "widgets": {
+            "condition": "תנאי",
+            "value_if_true": "הערך כשהתנאי אמיתי",
+            "value_if_false": "ערך כאשר התנאי שקרי"
+        },
+        "outputs": {
+            "result": "תוצאה"
+        },
+        "description": "כשהתנאי הוא True מוחזר value_if_true, אחרת מוחזר value_if_false.\nנעשה שימוש בהערכה עצלה, ורק הענף שנבחר מפוענח."
+    },
+    "_ImageAccumStatePack": {
+        "title": "אריזת מצב צבירת תמונות",
+        "widgets": {
+            "remaining": "כמות נותרת",
+            "accum": "ערך מצטבר",
+            "previous_value": "הערך הקודם",
+            "count": "ספירה",
+            "open_node_id": "מזהה צומת ההתחלה",
+            "total_frames": "מספר הפריימים הכולל",
+            "prev_accumulated_count": "הכמות שנצברה קודם",
+            "blend_overlap": "חפיפת ערבוב"
+        },
+        "outputs": {
+            "loop_state": "מצב הלולאה",
+            "should_continue": "האם להמשיך"
+        },
+        "description": "אורז את מצב הלולאה למילון בודד, לשימוש ב-initial_value0 של TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "פריקת מצב צבירת התמונה",
+        "widgets": {
+            "loop_state": "מצב הלולאה"
+        },
+        "outputs": {
+            "remaining": "כמות נותרת",
+            "accumulation": "ערך מצטבר",
+            "previous_value": "הערך הקודם",
+            "accumulated_count": "כמות מצטברת",
+            "count": "ספירה",
+            "open_node_id": "מזהה צומת ההתחלה",
+            "total_frames": "מספר הפריימים הכולל"
+        },
+        "description": "פורק את מצב הלולאה מ-TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "פעולות אצווה",
+        "widgets": {
+            "batch": "אצווה",
+            "operation": "פעולה",
+            "amount": "כמות",
+            "batch_b": "אצווה B"
+        },
+        "outputs": {
+            "output": "פלט"
+        },
+        "description": "פעולות חיתוך לפרוסות, קיצוץ ותפירה של אצוות."
+    }
+}

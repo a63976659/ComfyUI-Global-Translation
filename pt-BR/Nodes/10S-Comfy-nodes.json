@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪Âncora de atenção facial LTX",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "face_bbox_norm": "Caixa delimitadora facial normalizada",
+            "strength": "Força",
+            "inject_mode": "Modo de injeção",
+            "anchor_frame": "Quadro de âncora",
+            "anchor_upsample": "Ampliação da âncora",
+            "track_threshold": "Limiar de rastreamento",
+            "face_threshold": "Limiar facial",
+            "identity_threshold": "Limiar de identidade",
+            "depth_curve": "Curva de profundidade",
+            "spatial_prior": "Prior espacial",
+            "block_index_filter": "Filtro de índice de blocos",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: âncora de identidade na região facial. Os recursos em cache foram movidos para o nó LTXLatentAnchor (estabilidade em nível de cena). Este nó ainda é voltado para alvos faciais.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "Âncora LTXLatent",
+        "inputs": {
+            "model": "Modelo",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "Força",
+            "cache_at_step": "Cache na etapa",
+            "similarity_threshold": "Limiar de similaridade",
+            "decay_with_distance": "Decaimento com a distância",
+            "bypass": "Ignorar (bypass)",
+            "advanced_mode": "Modo avançado",
+            "cache_mode": "Modo de cache",
+            "forwards_per_step": "Passadas forward por etapa",
+            "cache_warmup": "Pré-aquecimento do cache",
+            "anchor_frame": "Quadro de âncora",
+            "depth_curve": "Curva de profundidade",
+            "block_index_filter": "Filtro de índice de blocos",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Âncora Latent de cena inteira para LTX2.x. Estabiliza prompt + condição e as forças com consciência física, mantendo a consistência durante amostragens longas. Conecte SIGMAS para obter tempos de cache previsíveis. Mude para o modo avançado para acessar os parâmetros de pesquisa."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "Âncora LTXLatent consciente",
+        "inputs": {
+            "model": "Modelo",
+            "reference_image": "Imagem de referência",
+            "vae": "VAE",
+            "energy_latent": "Latent de energia",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "Força",
+            "cache_at_step": "Cache na etapa",
+            "similarity_threshold": "Limiar de similaridade",
+            "decay_with_distance": "Decaimento com a distância",
+            "energy_threshold": "Limiar de energia",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração",
+            "advanced_mode": "Modo avançado",
+            "cache_mode": "Modo de cache",
+            "forwards_per_step": "Passadas forward por etapa",
+            "cache_warmup": "Pré-aquecimento do cache",
+            "anchor_frame": "Quadro de âncora",
+            "depth_curve": "Curva de profundidade",
+            "block_index_filter": "Filtro de índice de blocos"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Âncora Latent com modulação espacial de energia opcional, vinda de uma referência externa. A imagem de referência (ou a entrada Latent) fornece os pesos espaciais; a correspondência é feita com o próprio Latent em execução (o espaço de recursos correto)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "Amplificador de atenção de texto LTX",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "text_amplification": "Amplificação da atenção de texto",
+            "spatial_focus": "Foco espacial",
+            "block_index_filter": "Filtro de índice de blocos",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Amplifica a cross-atenção de texto (attn2) do LTX2 em cada bloco, para compensar a diluição da condição quando o número de tokens é alto. Use na etapa de ampliação para recuperar o seguimento do prompt e a estabilidade das cores."
+    },
+    "LTXTiledSampler": {
+        "title": "Amostrador em mosaico LTX",
+        "inputs": {
+            "noise": "Ruído",
+            "guider": "Orientador (guider)",
+            "sampler": "Amostrador",
+            "sigmas": "sigma",
+            "latent_image": "Imagem Latent"
+        },
+        "widgets": {
+            "bypass_tiling": "Ignorar o mosaico",
+            "tile_axis": "Eixo do mosaico",
+            "n_tiles": "Quantidade de mosaicos",
+            "tile_overlap": "Sobreposição do mosaico",
+            "max_size_for_no_tile": "Tamanho máximo sem mosaico",
+            "audio_pass": "Passagem de áudio",
+            "audio_carrier_tile": "Mosaico portador de áudio",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "output": "Saída",
+            "denoised_output": "Saída com redução de ruído"
+        },
+        "description": "Substituição direta em mosaico do SamplerCustomAdvanced, pensada para o refino leve na etapa de ampliação do LTX2. Cada mosaico executa a amostragem completa com a contagem de tokens da distribuição de treinamento e depois é misturado por cosseno. Use apenas para redução leve de ruído. Por padrão o áudio passa direto; audio_carrier_tile executa a amostragem de áudio simultaneamente com um mosaico selecionado (sem etapas extras). Defina bypass_tiling=true para funcionar como uma passagem transparente de amostragem única padrão, útil para depuração ou quando o mosaico não é necessário."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "Ampliador Latent LTXV (versão em mosaico)",
+        "inputs": {
+            "samples": "Amostras",
+            "upscale_model": "Modelo de super-resolução",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "Tamanho do mosaico",
+            "overlap": "Sobreposição",
+            "max_size_for_no_tile": "Tamanho máximo sem mosaico",
+            "rotate_for_landscape": "Girar para caber em paisagem",
+            "debug": "Depuração"
+        },
+        "description": "Alternativa em mosaico do LTXVLatentUpsampler. Ao executar a ampliação sobre mosaicos espaciais e fundi-los com sobreposição de janela de cosseno, elimina a deriva de cor e a distorção em proporções extremas. Em proporções seguras, a saída é praticamente idêntica à versão sem mosaico; nos casos extremos, evita a instabilidade do modelo de super-resolução."
+    },
+    "LTXModelInspector": {
+        "title": "Detector de modelos LTX",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "name_filter": "Filtro de nomes",
+            "focus_path": "Caminho em foco",
+            "max_modules_listed": "Máximo de módulos listados",
+            "trace_path_contains": "Caminho de rastreamento contém",
+            "max_modules_traced": "Máximo de módulos rastreados",
+            "trace_calls_per_module": "Chamadas rastreadas por módulo",
+            "print_top_level": "Imprimir informações de nível superior"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Inspeciona o modelo de difusão: estrutura de nível superior, filtro de nomes, caminho em foco e hooks de rastreamento."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Autoconcatenação Latent com dissolução cruzada",
+        "inputs": {
+            "frames_0": "Quadros_0",
+            "frames_1": "Quadros_1"
+        },
+        "widgets": {
+            "match_spatial": "Correspondência espacial",
+            "interpolate_mode": "Modo de interpolação",
+            "cross_fade_frames": "Quadros de dissolução cruzada",
+            "fade_curve": "Curva de esmaecimento"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Correspondência espacial automática + concatenação temporal, com dissolução cruzada opcional."
+    },
+    "AudioLatentStretch": {
+        "title": "Esticamento do Latent de áudio",
+        "inputs": {
+            "audio_latent": "Latent de áudio"
+        },
+        "widgets": {
+            "source_fps": "FPS de origem",
+            "target_fps": "FPS de destino",
+            "interp_mode": "Modo de interpolação"
+        },
+        "outputs": {
+            "audio_latent": "Latent de áudio"
+        },
+        "description": "Reamostra o Latent de áudio até o FPS de destino. O modo Hermite é recomendado."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Ampliador temporal Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS de origem",
+            "target_fps": "FPS de destino",
+            "interp_mode": "Modo de interpolação",
+            "auto_retime": "Nova temporização automática",
+            "motion_scale": "Proporção do movimento",
+            "spatial_sharpen": "Nitidez espacial",
+            "ltx_safe": "Seguro para LTX",
+            "override_frames": "Substituir número de quadros"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Ampliação temporal baseada em Hermite, com correção automática de ritmo."
+    },
+    "LatentMotionSharpener": {
+        "title": "Afiador de movimento Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "Nitidez base",
+            "motion_sharpen": "Nitidez de movimento",
+            "motion_thresh": "Limiar de movimento",
+            "temporal_smooth_mask": "Máscara de suavização temporal"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Aplica nitidez de forma adaptativa conforme a amplitude do movimento entre quadros."
+    },
+    "LatentMotionRetime": {
+        "title": "Nova temporização de movimento Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS de origem",
+            "target_fps": "FPS de destino",
+            "strength": "Força",
+            "manual_scale": "Escala manual"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Reduz a amplitude do movimento para corrigir o ritmo de 24->30 fps no Latent ampliado."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Reparador temporal Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "σ da âncora",
+            "ghost_sigma": "σ do fantasma",
+            "score_gamma": "γ da pontuação",
+            "anchor_blend": "Fusão da âncora",
+            "seed": "Semente",
+            "debug_scores": "Pontuações de depuração"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Detecção de fantasma por quadro + ruído direcionado. Trava os quadros de âncora reais. Em seguida, aplique redução de ruído 0,3-0,45 com o KSampler."
+    },
+    "LTXActionAmplifier": {
+        "title": "Amplificador de ação LTX",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "clip",
+            "positive": "Prompt positivo"
+        },
+        "widgets": {
+            "amplification_strength": "Força da amplificação",
+            "action_vocabulary_text": "Texto do vocabulário de ações",
+            "scale_ceiling": "Limite superior da escala",
+            "auto_threshold": "Limiar automático",
+            "similarity_threshold": "Limiar de similaridade",
+            "similarity_sharpness": "Nitidez de similaridade",
+            "amplification_floor": "Limite inferior da amplificação",
+            "top_k": "Top-K",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração"
+        },
+        "description": "Amplifica seletivamente os tokens de texto de ação/movimento no prompt positivo, reforçando a magnitude K/V dos verbos correspondidos e mantendo os tokens descritivos inalterados. É o oposto simétrico do LikenessSemanticClamp e substitui o ajuste proporcional global do método TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "Detector de reconhecimento facial LTX",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "padding": "Preenchimento",
+            "fallback_bbox": "Caixa delimitadora reserva",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "face_bbox": "Caixa delimitadora facial"
+        },
+        "description": "Detecta rostos na imagem e emite uma cadeia de caixas delimitadoras normalizadas. Conecte a saída ao face_bbox_within_reference do LikenessGuide, ao override_face_bbox/frame_0_bbox do LikenessAnchor ou ao face_bbox_norm do face_anchor. Separa a detecção da lógica do nó, permitindo que vários nós compartilhem a mesma caixa."
+    },
+    "LTXLikenessAnchor": {
+        "title": "Âncora de similaridade LTX",
+        "inputs": {
+            "model": "Modelo",
+            "reference_info": "Informação de referência"
+        },
+        "widgets": {
+            "strength": "Força",
+            "reference_source": "Fonte da referência",
+            "frame_0_bbox": "Caixa do quadro 0",
+            "similarity_threshold": "Limiar de similaridade",
+            "decay_with_distance": "Decaimento com a distância",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração",
+            "advanced_mode": "Modo avançado",
+            "depth_curve": "Curva de profundidade",
+            "block_index_filter": "Filtro de índice de blocos",
+            "similarity_sharpness": "Nitidez de similaridade",
+            "override_face_bbox": "Substituir caixa delimitadora facial",
+            "skip_when_sigma_above": "Ignorar quando sigma exceder",
+            "pull_mode": "Modo de atração",
+            "late_block_falloff": "Decaimento dos blocos tardios"
+        },
+        "description": "Atrai a atenção de cada bloco para os recursos de referência, mantendo a identidade consistente. Dois modos: (1) obtém a informação de referência do LikenessGuide e usa os quadros de referência anexados; (2) sem conexão de informação de referência, o nó usa o quadro 0 do Latent como referência — indicado para fluxos i2v, em que o quadro 0 é a imagem inicial da condição. A v1.2 usa o modo de atração direcional (preserva as cores)."
+    },
+    "LTXLikenessGuide": {
+        "title": "Orientação de similaridade LTX",
+        "inputs": {
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "Imagem de referência"
+        },
+        "widgets": {
+            "strength": "Força",
+            "placement_mode": "Modo de posicionamento",
+            "face_detect": "Detecção facial",
+            "reference_mask_mode": "Modo de máscara de referência",
+            "face_padding": "Preenchimento facial",
+            "crf": "CRF",
+            "blur_radius": "Raio do desfoque",
+            "interpolation": "Interpolação",
+            "crop": "Recorte",
+            "attention_strength": "Força da atenção",
+            "face_bbox_within_reference": "Caixa facial dentro da referência",
+            "emit_latent": "Emitir Latent",
+            "debug": "Depuração"
+        },
+        "outputs": {
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "latent": "latent",
+            "reference_info": "Informação de referência"
+        },
+        "description": "Anexa uma imagem de referência de similaridade ao conjunto de condições para preservar a identidade. Emite as condições positiva/negativa modificadas (para o Orientador) e os metadados de informação de referência (para o LikenessAnchor). Por padrão, a saída Latent é uma passagem da entrada — sem expansão e sem recorte. O valor da orientação vem da interação dela com o modelo e com os metadados de bbox da condição, e não de modificações no Latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "Recorte de similaridade LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "Informação de referência"
+        },
+        "widgets": {
+            "debug": "Depuração"
+        },
+        "description": "Recorta os quadros de referência de similaridade do Latent antes da decodificação pelo VAE. Reverte o modo emit_latent=expansão do LTXLikenessGuide. Use apenas quando o Orientador emitir um Latent expandido. Se o Orientador estiver no modo de passagem (padrão), este nó não é necessário — conecte o Latent diretamente à decodificação VAE."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "Limitador semântico de similaridade LTX",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "clip",
+            "positive": "Prompt positivo",
+            "reference_info": "Informação de referência"
+        },
+        "widgets": {
+            "suppression_strength": "Força da supressão",
+            "face_modifier_text": "Texto de modificadores faciais",
+            "similarity_threshold": "Limiar de similaridade",
+            "auto_threshold": "Limiar automático",
+            "similarity_sharpness": "Nitidez de similaridade",
+            "suppression_floor": "Limite inferior da supressão",
+            "top_k": "top_k",
+            "soft_edge_frac": "Proporção de borda suave",
+            "override_face_bbox": "Substituir caixa delimitadora facial",
+            "bypass": "Ignorar (bypass)",
+            "debug": "Depuração"
+        },
+        "description": "Implementa a supressão semântica de tokens de texto na área do rosto dentro da região de attn2. Relacionando o espaço de embeddings com o vocabulário de modificadores, identifica os tokens de modificação facial no prompt e suprime seletivamente a atenção desses tokens nessa área. Substitui o método de escala de magnitude uniforme do LikenessClamp, agora descontinuado."
+    }
+}

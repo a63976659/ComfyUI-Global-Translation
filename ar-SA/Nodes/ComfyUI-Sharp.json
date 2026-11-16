@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "تحويل خصائص صورة Sharp إلى PLY",
+        "inputs": {
+            "gaussian_attrs": "خصائص غاوس",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "output_prefix": "بادئة الإخراج",
+            "focal_length_px": "البُعد البؤري بالبكسل"
+        },
+        "outputs": {
+            "ply_path": "مسار ملف PLY",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "من صورة MULTIBAND_IMAGE بـ 14 قناة لكل بكسل (مثل مخرج طبقة خصائص غاوس الأولى من SharpPredictGaussianAttrs) + المعاملات الخارجية/الداخلية المطابقة للكاميرا، يُنشئ ملف PLY لسحابة نقاط غاوس ثلاثية الأبعاد. تخزن عدة النطاقات مواضع NDC؛ وتحولها هذه العقدة إلى الإحداثيات العالمية عبر unproject_gaussians الخاص بـ SHARP قبل الحفظ."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp تقسيم المكعب البانورامي",
+        "widgets": {
+            "panorama": "صورة بانورامية",
+            "image_w": "عرض الصورة",
+            "image_h": "ارتفاع الصورة",
+            "fov_x_deg": "زاوية الرؤية X",
+            "fov_y_deg": "زاوية الرؤية Y",
+            "rot_deg": "زاوية الدوران",
+            "pitch_up": "زاوية الميل لأعلى",
+            "pitch_down": "زاوية الميل لأسفل"
+        },
+        "outputs": {
+            "face_images": "صور الأوجه",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "fov_x_deg": "زاوية مجال الرؤية على المحور X",
+            "num_faces": "عدد الوجوه"
+        },
+        "description": "أخذ N اقتصاصات منظورية من بانوراما كروية بنسبة عرض إلى ارتفاع 2:1 بشبكة زوايا ميل وانعراج ثابتة (افتراضيًا 3 ميل x 3 انعراج = 27 منظورًا). مطابقة للبنية الهندسية لـ WorldStereoPanoramaCubeSplit — كمرحلة إدخال لنموذج العمق لكل وجه، ويمكن وصل مخرجاتها مجددًا عبر SharpDepthMerge.\n\nعلى عكس SamplePanorama في Sharp ((الذي يشتق الشبكة من FOV+التداخل ويُخرج مربعات)، تتمتع هذه العقدة بشبكة ميل ثابتة ونسبة أبعاد مستطيلة (افتراضيًا 832x480)، وتتوافق مع اصطلاح الكاميرا/المعاملات الداخلية المستخدم في pano_bank لدى WorldStereo."
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp توقّع المقدمة",
+        "inputs": {
+            "model": "النموذج",
+            "image": "صورة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "focal_length_mm": "البعد البؤري بالمليمتر",
+            "output_prefix": "بادئة الإخراج"
+        },
+        "outputs": {
+            "ply_path": "مسار ملف PLY",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "توليد ملفات PLY لسحابة نقاط غاوس ثلاثية الأبعاد من الصور باستخدام Sharp، مع الإبقاء على سحابة نقاط الأسطح المرئية فقط وطرح الأجزاء المحجوبة. عدد سحائب نقاط غاوس لكل صورة نصف ما ينتجه SharpPredict. الإدخال بالدفعة يُنشئ مجلدًا لملفات PLY مرقمة."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "توقّع سحابة نقاط غاوس من العمق المتري",
+        "inputs": {
+            "model": "النموذج",
+            "image": "صورة",
+            "metric_depth_layer0": "العمق المتري للطبقة 0",
+            "metric_depth_layer1": "العمق المتري للطبقة 1",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "focal_length_mm": "البعد البؤري بالمليمتر",
+            "output_prefix": "بادئة الإخراج",
+            "save_background_layer": "حفظ طبقة الخلفية",
+            "snap_to_external_depth": "مواءمة العمق الخارجي",
+            "depth_convention": "اصطلاح العمق",
+            "edge_crop": "اقتصاص الحواف"
+        },
+        "outputs": {
+            "ply_path": "مسار ملف PLY",
+            "ply_folder": "مسار مجلد PLY",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "تشغيل مُفكّك غاوس الخاص بـ Sharp باستخدام العمق المتري المقدم خارجيًا كهدف محاذاة. يغدو العمق الخارجي الهيكل الهندسي المتسق لقيم غاوس الأساسية في `init_النموذج`، لذا تتشارك سحابة نقاط غاوس سطحًا متسقًا بين المناظر المتعددة — مما يصلح مشكلة الوصلات لكل وجه.\n\nحفظ ملفات PLY (صورة واحدة -> ملف .ply واحد؛ دفعة -> مجلد N من ملفات NNN.ply). تُجمع في ملف PLY واحد عبر مسار MergeGaussians."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp توقّع خصائص غاوس",
+        "inputs": {
+            "model": "النموذج",
+            "image": "صورة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "focal_length_mm": "البعد البؤري بالمليمتر"
+        },
+        "outputs": {
+            "metric_depth": "العمق المتري",
+            "extrinsics_mdepth": "معاملات خارجية_عمق متري",
+            "intrinsics_mdepth": "المعاملات الداخلية_العمق المتري",
+            "first_layer_depth_refined": "تحسين عمق الطبقة الأولى",
+            "first_layer_gaussian_attrs": "خصائص غاوس للطبقة الأولى",
+            "second_layer_depth_refined": "تحسين عمق الطبقة الثانية",
+            "second_layer_gaussian_attrs": "خصائص غاوس للطبقة الثانية",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "يشغّل استنتاج Sharp ويُخرج مفكّك غاوس لكل بكسل كموترات طبقية منظمة (العمق + جميع خصائص غاوس في MULTIBAND_IMAGE) بدلًا من تسطيحها في ملف PLY.\n\nاستخدم عمق الإخراج لتشغيل AlignDepthMaps لاستعادة مقياس كل وجه، ثم اضرب المقياس في قنوات الموضع متعددة النطاقات قبل إعادة بناء ملف PLY."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp توقّع العمق المتري",
+        "widgets": {
+            "model": "النموذج",
+            "image": "صورة",
+            "focal_length_mm": "البعد البؤري بالمليمتر",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "العمق المتري للطبقة 0",
+            "layer_1_metric_depth": "العمق المتري للطبقة 1",
+            "extrinsics_mdepth": "معاملات خارجية_عمق متري",
+            "intrinsics_mdepth": "المعاملات الداخلية_العمق المتري",
+            "layer_0_points_raw": "سحابة النقاط الخام للطبقة 0",
+            "layer_1_points_raw": "سحابة النقاط الخام للطبقة 1"
+        },
+        "description": "تشغيل مُرمِّز Sharp ورأس الإزاحة فقط (تخطي مُفكّك غاوس). يُخرج العمق المتري لكل بكسل مع المعاملات الخارجية/الداخلية المقابلة. عندما لا تحتاج سوى العمق تكون السرعة نحو ضعف SharpPredictGaussianAttrs. وصّله بـ SharpDepthMerge لتحقيق دمج عمق كروي نظيف."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "الحصول على العمق المُصقَّل والمُحدَّد من توزيع غاوس",
+        "inputs": {
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "ply_path": "مسار PLY",
+            "out_size": "أبعاد الخرج"
+        },
+        "outputs": {
+            "depth_maps": "خريطة العمق",
+            "valid_mask": "قناع صالح",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "أعد إسقاط نقاط غاوس بملف PLY التي تنبأ بها Sharp إلى فضاء الكاميرا لكل وجه لاستعادة العمق المحسّن لكل بكسل (هي فعليًا قيم z التي يولّدها فك الترميز، لا رأس المنظور المسبق التحسين). أدنى عمق لكل بكسل = الطبقة 0 (السطح المرئي).\n\nمرّر خرائط العمق إلى AlignDepthMaps للمحاذاة على مقياس لوغاريتمي، ثم طبّق معامل القياس الناتج لكل وجه على نقاط غاوس قبل دمج نقاط غاوس."
+    },
+    "ScaleImageValues": {
+        "title": "ضبط قيم الصورة",
+        "widgets": {
+            "image": "صورة"
+        },
+        "description": "تعيد هذه الأداة تعيين جميع قيم الصورة خطيًا إلى الفترة [0, 1]. هذا مفيد عند معاينة خريطة العمق (لأن خرائط العمق قد تستخدم وحدات مثل الأمتار، بينما يتوقع ComfyUI PreviewImage قيمًا ضمن النطاق [0, 1]). تتم معايرة كل عنصر في الدفعة بشكل مستقل بناءً على أدنى/أعلى قيمة لديه عبر (H, W, C). الصور ذات القيمة الثابتة تصبح أصفارًا بالكامل (بدلًا من NaN الناتج عن القسمة على صفر)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "تحويل شعاع Sharp إلى العمق المستوي",
+        "inputs": {
+            "image": "صورة",
+            "intrinsics": "معاملات داخلية",
+            "extrinsics": "معاملات خارجية"
+        },
+        "outputs": {
+            "image": "صورة",
+            "intrinsics": "معاملات داخلية",
+            "extrinsics": "معاملات خارجية"
+        },
+        "description": "محوّل أعراف عمق الأوجه. يُنتج عمق Z مستويًا كما يتوقعه مفكّك غاوس Sharp وإعادة الإسقاط الخلفي، وذلك بضرب عمق مسافة الشعاع في تعيين جيب التمام لكل وجه (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)). ضعه بين مصدر عمق تقسيم البانوراما (PanoramaSplit على بانوراما عمق متساوي القياس) وعقد تنبؤ Sharp. إذا مُرت المعاملات الداخلية بصيغة معايرة، فسيُعاد تحجيمها إلى وحدات K بالبكسل كي ترى جميع العقد التالية وحدات متسقة."
+    },
+    "AlignDepthMaps": {
+        "title": "محاذاة خرائط العمق",
+        "inputs": {
+            "depth_maps": "خريطة العمق",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "reference_view": "المنظر المرجعي",
+            "method": "الطريقة"
+        },
+        "outputs": {
+            "aligned_depth_maps": "خرائط العمق المحاذاة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "alignment_info": "معلومات المحاذاة"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "تحميل الصور مع معلومات EXIF",
+        "widgets": {
+            "image": "صورة",
+            "default_focal_mm": "البعد البؤري الافتراضي（ملم）"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "focal_length_mm": "البعد البؤري（مم）"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "تحميل نموذج Sharp",
+        "widgets": {
+            "precision": "الدقّة",
+            "checkpoint_path": "مسارات نقاط التفتيش"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "دمج التوزيعات الغاوسية",
+        "widgets": {
+            "ply_folder": "مجلد PLY",
+            "output_prefix": "بادئة الإخراج",
+            "max_depth": "أقصى عمق",
+            "min_opacity": "أدنى شفافية"
+        },
+        "outputs": {
+            "ply_path": "مسار PLY",
+            "num_gaussians": "عدد توزيعات غاوس"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "SharpPredict": {
+        "title": "توقّع Sharp",
+        "inputs": {
+            "model": "النموذج",
+            "image": "صورة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "focal_length_mm": "البعد البؤري（مم）",
+            "output_prefix": "بادئة الإخراج"
+        },
+        "outputs": {
+            "ply_path": "مسار PLY",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp توقّع العمق",
+        "inputs": {
+            "model": "النموذج",
+            "image": "صورة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "reference_depth": "العمق المرجعي"
+        },
+        "outputs": {
+            "depth_maps": "خريطة العمق",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "alignment_maps": "خرائط المحاذاة"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "إسقاط العمق على البانوراما",
+        "inputs": {
+            "depth_maps": "خريطة العمق",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية"
+        },
+        "widgets": {
+            "panorama_width": "عرض البانوراما",
+            "show_borders": "إظهار الحدود",
+            "disagreement_scale": "تحجيم التباين",
+            "blend_mode": "وضع المزج",
+            "border_color": "لون الحدود"
+        },
+        "outputs": {
+            "panoramic_depth": "العمق البانورامي",
+            "debug_overlay": "تراكب التصحيح",
+            "disagreement_heatmap": "خريطة حرارية للتباين"
+        },
+        "description": "الفئة: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "أخذ عينة من البانوراما",
+        "inputs": {
+            "panorama": "صورة بانورامية"
+        },
+        "widgets": {
+            "fov_degrees": "زاوية مجال الرؤية（بالدرجات）",
+            "overlap_percent": "نسبة التداخل",
+            "output_size": "أبعاد الخرج",
+            "skip_poles": "تخطي الأقطاب"
+        },
+        "outputs": {
+            "images": "صورة",
+            "extrinsics": "معاملات خارجية",
+            "intrinsics": "معاملات داخلية",
+            "num_horizontal": "العدد الأفقي",
+            "num_vertical": "العدد الرأسي"
+        },
+        "description": "الفئة: Sharp"
+    }
+}

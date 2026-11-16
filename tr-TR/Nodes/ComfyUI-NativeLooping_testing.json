@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "Tensör döngü başlangıcı",
+        "inputs": {
+            "initial_value": "Başlangıç değeri"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "iterations": "Yineleme sayısı"
+        },
+        "outputs": {
+            "flow_control": "Akış kontrolü",
+            "accumulated_count": "Birikimli sayı",
+            "previous_value": "Önceki değer",
+            "current_iteration": "Geçerli yineleme sayısı"
+        },
+        "description": "Çıkışları toplamak için bir döngü açar. İki mod desteklenir:\n- Yineleme sayısı: sabit sayıda yineleme çalıştırır\n- Toplam kare sayısı: birikim hedef kare sayısına ulaşana kadar çalışır\nflow_control'ü TensorLoopClose'a bağlayın, üretim girdisi olarak `previous_value` kullanın ve üretilen çıkışı TensorLoopClose.processed'a bağlayın.\nGörsel, maske ve Latent türlerini destekler."
+    },
+    "TensorLoopClose": {
+        "title": "Tensör döngü sonu",
+        "widgets": {
+            "flow_control": "Akış kontrolü",
+            "processed": "İşlendi",
+            "accumulate": "Kümülatif",
+            "overlap": "Örtüşme",
+            "stop": "Durdur"
+        },
+        "outputs": {
+            "output": "Çıkış"
+        },
+        "description": "TensorLoopOpen tarafından açılan döngüyü kapatır.\nBağlantılar:\n  - TensorLoopOpen'dan flow_control\n  - processed: bu yinelemede üretilen çıkış\nGörsel, maske ve Latent türlerini destekler."
+    },
+    "_AccumulateNode": {
+        "title": "Kümülatif düğüm",
+        "widgets": {
+            "to_add": "Eklenecek",
+            "accumulation": "Kümülatif değer"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "Koşullu döngü başlangıcı",
+        "widgets": {
+            "condition": "Koşullandırma"
+        },
+        "outputs": {
+            "flow_control": "Akış kontrolü"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "Koşullu döngü sonu",
+        "widgets": {
+            "flow_control": "Akış kontrolü",
+            "condition": "Koşullandırma"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "Tamsayı İşlemi",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "İşlem"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "Birikimi görsel yığınına dönüştür",
+        "widgets": {
+            "accumulation": "Kümülatif değer",
+            "overlap_frames": "Örtüşen kare sayısı",
+            "overlap_mode": "Örtüşme modu"
+        },
+        "outputs": {
+            "result": "Sonuç"
+        },
+        "description": "Görsel/maske tensörlerinin veya Latent sözlüklerinin birikmiş değerlerini tek bir yığında birleştirir."
+    },
+    "_ConditionalSelect": {
+        "title": "Koşullu seçim",
+        "widgets": {
+            "condition": "Koşullandırma",
+            "value_if_true": "Koşul doğru olduğundaki değer",
+            "value_if_false": "Koşul yanlış olduğundaki değer"
+        },
+        "outputs": {
+            "result": "Sonuç"
+        },
+        "description": "Koşul True olduğunda value_if_true değerini, aksi halde value_if_false değerini döndürür.\nTembel değerlendirme kullanır; yalnızca seçilen dalı çözümler."
+    },
+    "_ImageAccumStatePack": {
+        "title": "Görsel birikimli durum paketleme",
+        "widgets": {
+            "remaining": "Kalan Sayı",
+            "accum": "Kümülatif değer",
+            "previous_value": "Önceki değer",
+            "count": "Sayım",
+            "open_node_id": "Başlangıç düğümü ID'si",
+            "total_frames": "Toplam kare sayısı",
+            "prev_accumulated_count": "Önceki birikimli sayı",
+            "blend_overlap": "Karma örtüşmesi"
+        },
+        "outputs": {
+            "loop_state": "Döngü durumu",
+            "should_continue": "Devam edilsin mi"
+        },
+        "description": "Döngü durumunu, TensorLoopOpen'ın initial_value0 girdisi için tek bir sözlük olarak paketler."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "Görsel birikimli durum paket açma",
+        "widgets": {
+            "loop_state": "Döngü durumu"
+        },
+        "outputs": {
+            "remaining": "Kalan Sayı",
+            "accumulation": "Kümülatif değer",
+            "previous_value": "Önceki değer",
+            "accumulated_count": "Birikimli sayı",
+            "count": "Sayım",
+            "open_node_id": "Başlangıç düğümü ID'si",
+            "total_frames": "Toplam kare sayısı"
+        },
+        "description": "Döngü durumunun paketini TensorLoopOpen'dan açar."
+    },
+    "_BatchOps": {
+        "title": "Yığın işlemi",
+        "widgets": {
+            "batch": "Yığın",
+            "operation": "İşlem",
+            "amount": "Adet",
+            "batch_b": "Yığın B"
+        },
+        "outputs": {
+            "output": "Çıkış"
+        },
+        "description": "Yığın dilimleme, budama ve birleştirme işlemleri."
+    }
+}

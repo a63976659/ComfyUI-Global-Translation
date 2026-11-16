@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "تبدیل ویژگی‌های تصویر Sharp به PLY",
+        "inputs": {
+            "gaussian_attrs": "ویژگی‌های گاوسی",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "output_prefix": "پیشوند خروجی",
+            "focal_length_px": "فاصله کانونی بر حسب پیکسل"
+        },
+        "outputs": {
+            "ply_path": "مسیر فایل PLY",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "از یک MULTIBAND_IMAGE با 14 کانال برای هر پیکسل (مثلاً خروجی ویژگی‌های گاوسی لایه اول از SharpPredictGaussianAttrs) به‌همراه پارامترهای خارجی/داخلی متناظر دوربین، یک فایل PLY ابر نقاط گاوسی سه‌بعدی می‌سازد. چندباندی، موقعیت NDC را ذخیره می‌کند؛ این گره آن را پیش از ذخیره با unproject_gaussians در SHARP به دستگاه مختصات جهانی تبدیل می‌کند."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "تقسیم مکعبی پانوراما Sharp",
+        "widgets": {
+            "panorama": "تصویر پانوراما",
+            "image_w": "عرض تصویر",
+            "image_h": "ارتفاع تصویر",
+            "fov_x_deg": "زاویه دید X",
+            "fov_y_deg": "زاویه دید Y",
+            "rot_deg": "زاویه چرخش",
+            "pitch_up": "زاویه شیب رو به بالا",
+            "pitch_down": "زاویه شیب رو به پایین"
+        },
+        "outputs": {
+            "face_images": "تصاویر وجه‌ها",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "fov_x_deg": "زاویه دید محور X",
+            "num_faces": "تعداد وجه"
+        },
+        "description": "از یک پانورامای کروی با نسبت 2:1، تعداد N برش پرسپکتیو را با شبکه‌ای ثابت از زاویه پیچ و زاویه چرخش نمونه‌برداری می‌کند (پیش‌فرض 3 پیچ x 3 چرخش = 27 نما). با هندسه WorldStereoPanoramaCubeSplit هم‌خوان است — به‌عنوان مرحله ورودی مدل عمق هر وجه، و خروجی آن را می‌توان با SharpDepthMerge دوباره به هم چسباند.\n\nبرخلاف SamplePanorama در Sharp (که شبکه را از FOV به‌علاوه هم‌پوشانی استخراج می‌کند و خروجی مربع است)، این گره شبکه پیچ ثابت و نسبت ابعاد مستطیلی (پیش‌فرض 832x480) دارد و از قرارداد دوربین/پارامترهای داخلی pano_bank در WorldStereo پیروی می‌کند."
+    },
+    "SharpPredictForeground": {
+        "title": "پیش‌بینی پیش‌زمینه Sharp",
+        "inputs": {
+            "model": "مدل",
+            "image": "تصویر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "focal_length_mm": "فاصله کانونی میلی‌متر",
+            "output_prefix": "پیشوند خروجی"
+        },
+        "outputs": {
+            "ply_path": "مسیر فایل PLY",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "با Sharp از تصویر فایل PLY ابر نقاط گاوسی سه‌بعدی می‌سازد، فقط ابر نقاط گاوسی سطوح دیدنی را نگه می‌دارد و بخش‌های پوشیده را دور می‌ریزد. در مقایسه با SharpPredict تعداد گاوسی‌های هر تصویر نصف می‌شود. ورودی دسته‌ای یک پوشه فایل PLY شماره‌دار می‌سازد."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "پیش‌بینی ابر نقاط گاوسی از عمق متریک",
+        "inputs": {
+            "model": "مدل",
+            "image": "تصویر",
+            "metric_depth_layer0": "عمق متریک لایه 0",
+            "metric_depth_layer1": "عمق متریک لایه 1",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "focal_length_mm": "فاصله کانونی میلی‌متر",
+            "output_prefix": "پیشوند خروجی",
+            "save_background_layer": "ذخیره لایه پس‌زمینه",
+            "snap_to_external_depth": "هم‌ترازی با عمق خارجی",
+            "depth_convention": "قرارداد عمق",
+            "edge_crop": "برش لبه"
+        },
+        "outputs": {
+            "ply_path": "مسیر فایل PLY",
+            "ply_folder": "مسیر پوشه PLY",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "decoder گاوسی Sharp را با استفاده از عمق متریک ارائه‌شده از بیرون به‌عنوان هدف هم‌ترازی اجرا می‌کند. عمق بیرونی اسکلت هندسی سازگاری می‌شود که مقادیر پایه گاوسی‌های `init_مدل` بر آن استوارند، بنابراین ابر نقاط گاوسی در میان نماهای مختلف سطح یکسانی را به اشتراک می‌گذارد — مشکل درز هر وجه را برطرف می‌کند.\n\nفایل PLY را ذخیره می‌کند (تک تصویر->یک فایل .ply؛ دسته->پوشه‌ای با N فایل NNN.ply). از طریق خط لوله MergeGaussians در یک فایل PLY ترکیب می‌شود."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "پیش‌بینی ویژگی‌های گاوسی Sharp",
+        "inputs": {
+            "model": "مدل",
+            "image": "تصویر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "focal_length_mm": "فاصله کانونی میلی‌متر"
+        },
+        "outputs": {
+            "metric_depth": "عمق متریک",
+            "extrinsics_mdepth": "پارامترهای خارجی_عمق متریک",
+            "intrinsics_mdepth": "پارامترهای داخلی_عمق متریک",
+            "first_layer_depth_refined": "عمق بهینه‌شده لایه اول",
+            "first_layer_gaussian_attrs": "ویژگی‌های گاوسی لایه اول",
+            "second_layer_depth_refined": "عمق بهینه‌شده لایه دوم",
+            "second_layer_gaussian_attrs": "ویژگی‌های گاوسی لایه دوم",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "استنتاج Sharp را اجرا کرده و خروجی دکدر گاوسی هر پیکسل را به‌جای تخت‌سازی به فایل PLY، به‌صورت تانسورهای لایه‌ای ساختاریافته (عمق + همه ویژگی‌های گاوسی به‌صورت MULTIBAND_IMAGE) آشکار می‌کند.\n\nاز خروجی عمق برای هدایت AlignDepthMaps به‌منظور بازیابی مقیاس هر وجه استفاده کنید، سپس آن مقیاس را پیش از بازسازی فایل PLY در کانال‌های موقعیت چندباندی ضرب کنید."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "پیش‌بینی عمق متریک Sharp",
+        "widgets": {
+            "model": "مدل",
+            "image": "تصویر",
+            "focal_length_mm": "فاصله کانونی میلی‌متر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "عمق متریک لایه 0",
+            "layer_1_metric_depth": "عمق متریک لایه 1",
+            "extrinsics_mdepth": "پارامترهای خارجی_عمق متریک",
+            "intrinsics_mdepth": "پارامترهای داخلی_عمق متریک",
+            "layer_0_points_raw": "ابر نقاط خام لایه 0",
+            "layer_1_points_raw": "ابر نقاط خام لایه 1"
+        },
+        "description": "فقط encoder و head جابه‌جایی Sharp را اجرا می‌کند (decoder گاوسی را رد می‌کند). عمق متریک هر پیکسل و پارامترهای خارجی/داخلی متناظرش را خروجی می‌دهد. وقتی فقط عمق لازم دارید سرعتی حدود دو برابر SharpPredictGaussianAttrs دارد. برای ادغام تمیز عمق کروی آن را به SharpDepthMerge وصل کنید."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "گرفتن عمق تیزشده و پالایش‌شده از توزیع گاوسی",
+        "inputs": {
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "ply_path": "مسیر PLY",
+            "out_size": "ابعاد خروجی"
+        },
+        "outputs": {
+            "depth_maps": "نقشه عمق",
+            "valid_mask": "ماسک معتبر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "نقاط گوسی PLY پیش‌بینی‌شده توسط Sharp را دوباره به فضای دوربین هر وجه فرافکنی می‌کند تا عمق پالایش‌شده هر پیکسل بازگردانده شود（در واقع مقدار z تولیدشده توسط کدگشا، نه هد اختلاف منظر پیش‌پالایش）. کمینه عمق هر پیکسل = لایه 0（سطح قابل مشاهده）.\n\nنقشه‌های عمق را برای تراز در مقیاس لگاریتمی به AlignDepthMaps بدهید، سپس ضریب مقیاس هر وجه را پیش از ادغام نقاط گوسی روی آن‌ها اعمال کنید."
+    },
+    "ScaleImageValues": {
+        "title": "تنظیم مقادیر تصویر",
+        "widgets": {
+            "image": "تصویر"
+        },
+        "description": "همه مقادیر یک تصویر را به‌صورت خطی به بازه [0, 1] نگاشت مجدد می‌کند. این هنگام پیش‌نمایش نقشه عمق مفید است (چون نقشه عمق ممکن است واحدهایی مانند متر داشته باشد، در حالی که PreviewImage در ComfyUI مقادیر در بازه [0, 1] را انتظار دارد). هر مورد دسته به‌طور مستقل بر اساس کمینه/بیشینه خودش روی (H, W, C) مقیاس‌دهی می‌شود. تصویر با مقدار ثابت تماماً صفر می‌شود (نه NaN ناشی از تقسیم بر صفر)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "تبدیل پرتوهای Sharp به عمق صفحه‌ای",
+        "inputs": {
+            "image": "تصویر",
+            "intrinsics": "پارامترهای داخلی",
+            "extrinsics": "پارامترهای خارجی"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "intrinsics": "پارامترهای داخلی",
+            "extrinsics": "پارامترهای خارجی"
+        },
+        "description": "مبدل قرارداد عمق وجهی. با ضرب عمقِ فاصله پرتو در نگاشت کسینوسی هر وجه (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1))، عمق Z صفحه‌ای را تولید می‌کند که دکدرهای گاوسی و back-projection در Sharp انتظار دارند. بین منبع عمق تفکیک پانوراما (PanoramaSplit روی پانورمای عمق متقارن) و گره‌های پیش‌بینی Sharp قرار می‌گیرد. اگر پارامترهای داخلی به شکل نرمال‌شده پاس داده شوند، به واحدهای پیکسلی K بازمقیاس می‌شود تا همه گره‌های پایین‌دست واحدهای سازگار ببینند."
+    },
+    "AlignDepthMaps": {
+        "title": "تراز نقشه‌های عمق",
+        "inputs": {
+            "depth_maps": "نقشه عمق",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "reference_view": "نمای مرجع",
+            "method": "روش"
+        },
+        "outputs": {
+            "aligned_depth_maps": "نقشه‌های عمق ترازشده",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "alignment_info": "اطلاعات تراز"
+        },
+        "description": "دسته: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "بارگذاری تصویر با اطلاعات EXIF",
+        "widgets": {
+            "image": "تصویر",
+            "default_focal_mm": "فاصله کانونی پیش‌فرض（میلی‌متر）"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "focal_length_mm": "فاصله کانونی（میلی‌متر）"
+        },
+        "description": "دسته: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "بارگذاری مدل Sharp",
+        "widgets": {
+            "precision": "دقت",
+            "checkpoint_path": "مسیر چک‌پوینت"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "دسته: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "ادغام توزیع‌های گوسی",
+        "widgets": {
+            "ply_folder": "پوشه PLY",
+            "output_prefix": "پیشوند خروجی",
+            "max_depth": "بیشینه عمق",
+            "min_opacity": "کمینه کدری"
+        },
+        "outputs": {
+            "ply_path": "مسیر PLY",
+            "num_gaussians": "تعداد توزیع گاوسی"
+        },
+        "description": "دسته: Sharp"
+    },
+    "SharpPredict": {
+        "title": "پیش‌بینی Sharp",
+        "inputs": {
+            "model": "مدل",
+            "image": "تصویر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "focal_length_mm": "فاصله کانونی（میلی‌متر）",
+            "output_prefix": "پیشوند خروجی"
+        },
+        "outputs": {
+            "ply_path": "مسیر PLY",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "description": "دسته: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "پیش‌بینی عمق Sharp",
+        "inputs": {
+            "model": "مدل",
+            "image": "تصویر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "reference_depth": "عمق مرجع"
+        },
+        "outputs": {
+            "depth_maps": "نقشه عمق",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "alignment_maps": "نقشه تراز"
+        },
+        "description": "دسته: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "فرافکنی عمق بر تصویر پانوراما",
+        "inputs": {
+            "depth_maps": "نقشه عمق",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی"
+        },
+        "widgets": {
+            "panorama_width": "عرض پانوراما",
+            "show_borders": "نمایش مرزها",
+            "disagreement_scale": "مقیاس اختلاف",
+            "blend_mode": "حالت آمیزش",
+            "border_color": "رنگ حاشیه"
+        },
+        "outputs": {
+            "panoramic_depth": "عمق پانوراما",
+            "debug_overlay": "همپوشانی اشکال‌زدایی",
+            "disagreement_heatmap": "نقشه حرارتی اختلاف"
+        },
+        "description": "دسته: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "نمونه‌برداری پانوراما",
+        "inputs": {
+            "panorama": "تصویر پانوراما"
+        },
+        "widgets": {
+            "fov_degrees": "زاویه دید（درجه）",
+            "overlap_percent": "درصد همپوشانی",
+            "output_size": "ابعاد خروجی",
+            "skip_poles": "رد کردن قطب‌ها"
+        },
+        "outputs": {
+            "images": "تصویر",
+            "extrinsics": "پارامترهای خارجی",
+            "intrinsics": "پارامترهای داخلی",
+            "num_horizontal": "تعداد افقی",
+            "num_vertical": "تعداد عمودی"
+        },
+        "description": "دسته: Sharp"
+    }
+}

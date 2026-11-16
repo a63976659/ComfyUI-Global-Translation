@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "가우시안 분석",
+        "inputs": {
+            "ply_path": "경로"
+        },
+        "outputs": {
+            "report": "보고서"
+        },
+        "description": "3DGS PLY 파일을 검사하여 형식/SH 차수/정밀도/크기를 보고합니다."
+    },
+    "GaussianExport": {
+        "title": "가우시안 내보내기",
+        "inputs": {
+            "ply_path": "경로"
+        },
+        "widgets": {
+            "output_filename": "출력 파일명",
+            "format": "형식"
+        },
+        "outputs": {
+            "out_path": "출력 경로"
+        },
+        "description": "3DGS PLY를 다른 형식(PLY 패스스루, SH 제거 PLY 또는 SPZ)으로 변환합니다."
+    },
+    "GaussiansFromPointCloud": {
+        "title": "포인트 클라우드의 가우시안 분포",
+        "inputs": {
+            "ply_path": "경로"
+        },
+        "widgets": {
+            "output_filename": "출력 파일명",
+            "output_dir": "출력 디렉터리",
+            "init_scale": "초기 스케일",
+            "init_opacity": "초기 불투명도",
+            "knn_k": "Knn K",
+            "subsample_max": "서브샘플 최대값"
+        },
+        "outputs": {
+            "ply_path": "경로"
+        },
+        "description": "포인트 클라우드 PLY를 KNN 기반 스케일을 가진 3DGS PLY로 변환합니다."
+    },
+    "LoadPLY": {
+        "title": "`.ply` 파일 로드",
+        "widgets": {
+            "ply_file": "폴더"
+        },
+        "outputs": {
+            "ply_path": "경로"
+        },
+        "description": "ComfyUI의 input/ 디렉터리에서 `.ply` 파일을 탐색합니다."
+    },
+    "LoadPLYOutput": {
+        "title": "출력 `.ply` 로드",
+        "widgets": {
+            "ply_file": "PLY 파일"
+        },
+        "outputs": {
+            "ply_path": "PLY 경로"
+        },
+        "description": "ComfyUI의 output/ 디렉터리에서 재귀적으로 `.ply` 파일을 탐색합니다."
+    },
+    "GaussianMerge": {
+        "title": "가우시안 병합",
+        "inputs": {
+            "ply_path": "PLY 경로"
+        },
+        "widgets": {
+            "target_count": "타겟 개수",
+            "output_filename": "출력 파일명",
+            "opacity_threshold": "투명도 임계값",
+            "k": "k",
+            "backend": "백엔드"
+        },
+        "outputs": {
+            "ply_path": "PLY 경로"
+        },
+        "description": "3DGS PLY를 쌍 방식으로 병합하여 목표 가우시안 개수에 도달시킵니다."
+    },
+    "PreviewGaussians": {
+        "title": "가우시안 분포 미리보기",
+        "inputs": {
+            "ply_path": "PLY 경로"
+        },
+        "widgets": {
+            "camera_mode": "카메라 모드",
+            "fov_degrees": "시야각",
+            "renderer": "렌더러",
+            "transport_format": "전송 형식"
+        },
+        "description": "인터랙티브 가우시안 스팟 뷰어(gspalt.js).\n\n오빗(구체 회전)과 옵저버(WASD 비행 카메라) 두 가지 카메라 모드를 지원합니다."
+    },
+    "PreviewGaussianCamera": {
+        "title": "가우시안 카메라 미리보기",
+        "inputs": {
+            "ply_path": "PLY 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "widgets": {
+            "image_width": "이미지 너비",
+            "image_height": "이미지 높이",
+            "near_plane": "근거리 클리핑 평면",
+            "background": "배경",
+            "force_backend": "백엔드 강제"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "주어진 카메라 포즈로 3DGS PLY를 IMAGE 배치로 렌더링합니다."
+    },
+    "PreviewGaussianDual": {
+        "title": "가우시안 듀얼 미리보기",
+        "inputs": {
+            "ply_path_1": "PLY 경로1",
+            "ply_path_2": "PLY 경로2"
+        },
+        "widgets": {
+            "camera_mode": "카메라 모드",
+            "fov_degrees": "시야각",
+            "renderer": "렌더러",
+            "transport_format": "전송 형식",
+            "layout": "레이아웃"
+        },
+        "description": "두 가우시안 스팟을 나란히 비교하거나 슬라이더 형태로 표시합니다."
+    },
+    "PreviewGaussianSharp": {
+        "title": "가우시안 선명화 미리보기",
+        "widgets": {
+            "ply_path": "PLY 경로",
+            "extrinsics": "외부 파라미터",
+            "intrinsics": "내부 파라미터"
+        },
+        "description": "SHARP 가우시안 스팟 Ply 파일을 미리보기합니다(gspalt.js 뷰어).\n\nGeometryPack의 가우시안 미리보기를 복제합니다: EXTRINSICS/INTRINSICS를 받아 캡처된 카메라 시야를 재생성합니다(카메라는 외부 파라미터에서 추론한 위치에서 +Z 아래를 보며, FOV는 내부 파라미터에서 가져옵니다). SHARP/단일 심도 부채꼴 가우시안에 가장 잘 맞으며, 이러한 가우시안은 캡처 원점에서만 정확합니다."
+    },
+    "TransformGaussian": {
+        "title": "가우시안 변환",
+        "inputs": {
+            "ply_path": "PLY 경로"
+        },
+        "widgets": {
+            "rotate_x": "X축 기준 회전",
+            "rotate_y": "Y축 기준 회전",
+            "rotate_z": "Z축 기준 회전"
+        },
+        "outputs": {
+            "ply_path": "PLY 경로"
+        },
+        "description": "가우시안 스팟 Ply를 XYZ축 기준으로 회전시킵니다(도 단위).\n\n위치는 각 스팟의 쿼터니언과 함께 회전하며, 법선이 있으면 법선도 회전합니다. SH AC 계수는 변경되지 않습니다(올바른 Wigner-D 회전은 추후 단계)."
+    }
+}

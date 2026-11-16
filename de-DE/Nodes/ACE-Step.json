@@ -1,0 +1,166 @@
+{
+    "ACELoRALoader": {
+        "title": "ACE-Step LoRA-Lader",
+        "description": "Lädt und konfiguriert LoRA-Adapter für ACE-Step",
+        "inputs": {
+            "models": "ACE-Modell",
+            "lora_name": "LoRA-Name",
+            "lora_weight": "LoRA-Gewicht"
+        },
+        "outputs": {
+            "models": "ACE-Modell"
+        }
+    },
+    "ACEModelLoader": {
+        "title": "ACE-Step Modell-Lader",
+        "description": "Lädt alle für ACE-Step benötigten Modellkomponenten",
+        "inputs": {
+            "dcae_checkpoint": "DCAE-Checkpoint",
+            "vocoder_checkpoint": "Vocoder-Checkpoint",
+            "ace_step_checkpoint": "ACE-Step-Checkpoint",
+            "text_encoder_checkpoint": "Text-Encoder-Checkpoint",
+            "cpu_offload": "CPU-Auslagerung",
+            "torch_compile": "Torch-Kompilierung"
+        },
+        "outputs": {
+            "models": "ACE-Modell"
+        }
+    },
+    "LyricsLangSwitch": {
+        "title": "ACE-Step Liedtext-Sprachumschaltung",
+        "description": "Wechselt die Sprachversion des Liedtexts"
+    },
+    "ACEStepGen": {
+        "title": "ACE-Step Musikgenerierung",
+        "description": "Generiert Musik auf Basis von Text-Prompt und Liedtext",
+        "inputs": {
+            "models": "ACE-Modell",
+            "prompt": "Prompt (Eingabetext)",
+            "negative_prompt": "Negativ-Prompt",
+            "lyrics": "Liedtext",
+            "parameters": "Parameter",
+            "ref_audio": "Referenzaudio",
+            "delicious_song": "Beispielsong"
+        },
+        "widgets": {
+            "ref_audio_strength": "Referenzaudio-Intensität",
+            "overlapped_decode": "Überlappendes Dekodieren"
+        },
+        "outputs": {
+            "music": "Musik",
+            "delicious_song_prompt": "Beispielsong-Prompt",
+            "delicious_song_lyrics": "Beispielsong-Liedtext"
+        }
+    },
+    "GenerationParameters": {
+        "title": "ACE-Step Generierungsparameter",
+        "description": "Konfiguriert die verschiedenen Parameter der Musikgenerierung",
+        "widgets": {
+            "audio_duration": "Audiodauer",
+            "infer_step": "Inferenz-Schritte",
+            "guidance_scale": "Guidance-Skala",
+            "scheduler_type": "Scheduler-Typ",
+            "cfg_type": "CFG-Typ",
+            "omega_scale": "Omega-Skala",
+            "seed": "Zufalls-Seed",
+            "guidance_interval": "Guidance-Intervall",
+            "guidance_interval_decay": "Guidance-Intervall-Abklingung",
+            "min_guidance_scale": "Minimale Guidance-Skala",
+            "use_erg_tag": "ERG-Tags verwenden",
+            "use_erg_lyric": "ERG-Liedtext verwenden",
+            "use_erg_diffusion": "ERG-Diffusion verwenden",
+            "oss_steps": "OSS-Schritte",
+            "guidance_scale_text": "Text-Guidance-Skala",
+            "guidance_scale_lyric": "Liedtext-Guidance-Skala"
+        },
+        "outputs": {
+            "parameters": "Parameter"
+        }
+    },
+    "MultiLinePromptACES": {
+        "title": "ACE-Step Prompt-Eingabe",
+        "description": "Eingabe eines mehrzeiligen Text-Prompts",
+        "widgets": {
+            "multi_line_prompt": "Mehrzeiliger Prompt"
+        },
+        "outputs": {
+            "prompt": "Prompt (Eingabetext)"
+        }
+    },
+    "MultiLineLyrics": {
+        "title": "ACE-Step Liedtext-Eingabe",
+        "description": "Eingabe eines mehrzeiligen Liedtexts",
+        "widgets": {
+            "multi_line_prompt": "Mehrzeiliger Liedtext"
+        },
+        "outputs": {
+            "lyrics": "Liedtext"
+        }
+    },
+    "ACEStepRepainting": {
+        "title": "ACE-Step Audio-Repainting",
+        "description": "Teilweises Repainting von vorhandenem Audio",
+        "inputs": {
+            "models": "ACE-Modell",
+            "src_audio": "Quellaudio",
+            "prompt": "Prompt (Eingabetext)",
+            "negative_prompt": "Negativ-Prompt",
+            "lyrics": "Liedtext",
+            "parameters": "Parameter"
+        },
+        "widgets": {
+            "repaint_start": "Repainting-Startposition",
+            "repaint_end": "Repainting-Endposition",
+            "repaint_variance": "Repainting-Varianz",
+            "seed": "Zufalls-Seed",
+            "overlapped_decode": "Überlappendes Dekodieren"
+        },
+        "outputs": {
+            "music": "Musik"
+        }
+    },
+    "ACEStepEdit": {
+        "title": "ACE-Step Audio-Bearbeitung",
+        "description": "Bearbeitet den Inhalt vorhandenen Audios",
+        "inputs": {
+            "models": "ACE-Modell",
+            "src_audio": "Quellaudio",
+            "prompt": "Prompt (Eingabetext)",
+            "lyrics": "Liedtext",
+            "parameters": "Parameter",
+            "edit_prompt": "Bearbeitungs-Prompt",
+            "edit_lyrics": "Bearbeitungs-Liedtext"
+        },
+        "widgets": {
+            "edit_n_min": "Minimaler Bearbeitungsbereich",
+            "edit_n_max": "Maximaler Bearbeitungsbereich",
+            "seed": "Zufalls-Seed",
+            "overlapped_decode": "Überlappendes Dekodieren"
+        },
+        "outputs": {
+            "music": "Musik"
+        }
+    },
+    "ACEStepExtend": {
+        "title": "ACE-Step Audio-Erweiterung",
+        "description": "Dehnt die Dauer des Audios aus",
+        "inputs": {
+            "models": "ACE-Modell",
+            "src_audio": "Quellaudio",
+            "prompt": "Prompt (Eingabetext)",
+            "negative_prompt": "Negativ-Prompt",
+            "lyrics": "Liedtext",
+            "parameters": "Parameter"
+        },
+        "widgets": {
+            "left_extend_length": "Erweiterungslänge links",
+            "right_extend_length": "Erweiterungslänge rechts",
+            "seed": "Zufalls-Seed",
+            "overlapped_decode": "Überlappendes Dekodieren"
+        },
+        "outputs": {
+            "music": "Musik"
+        },
+        "备注": "Übersetzung von QQ-Nutzer 27589544"
+    }
+}

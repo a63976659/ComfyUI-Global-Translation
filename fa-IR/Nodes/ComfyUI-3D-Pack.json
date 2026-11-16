@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "پخت بافت روی مش",
+        "inputs": {
+            "reference_images": "تصویر مرجع",
+            "reference_masks": "ماسک مرجع",
+            "reference_orbit_camera_poses": "پوزهای مرجع دوربین مداری",
+            "mesh": "مش"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "لنز دوربین مداری مرجع",
+            "mesh_albedo_width": "عرض آلبدوی مش",
+            "mesh_albedo_height": "ارتفاع آلبدوی مش",
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "batch_size": "اندازه دسته",
+            "texture_learning_rate": "نرخ یادگیری بافت",
+            "train_mesh_geometry": "آموزش هندسهٔ مش",
+            "geometry_learning_rate": "نرخ یادگیری هندسه",
+            "ms_ssim_loss_weight": "وزن زیان MS-SSIM",
+            "force_cuda_rasterize": "رسترایز اجباری با CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "مش",
+            "baked_texture": "بافت"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "مدل CRM CCMs MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "نمونه‌بردار CRM_MVDiffusion",
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع",
+            "multiview_images": "چند نما"
+        },
+        "widgets": {
+            "prompt": "پرامپت مثبت",
+            "prompt_neg": "پرامپت منفی",
+            "seed": "بذر",
+            "control_after_generate": "عمل پس از اجرا",
+            "mv_guidance_scale": "ضریب راهنمایی MV",
+            "num_inference_steps": "مراحل استنتاج"
+        },
+        "outputs": {
+            "multiview_CCMs": "چندنمای CCMs"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "مدل CRM تصویر MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "نمونه‌بردار CRM_MVDiffusion",
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع"
+        },
+        "widgets": {
+            "prompt": "پرامپت مثبت",
+            "prompt_neg": "پرامپت منفی",
+            "seed": "بذر",
+            "control_after_generate": "عمل پس از اجرا",
+            "mv_guidance_scale": "ضریب راهنمایی MV",
+            "num_inference_steps": "مراحل استنتاج"
+        },
+        "outputs": {
+            "multiview_images": "چند نما"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "تبدیل 3DGS به مش با NeRF و Marching Cubes",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "تنظیمات Gaussian",
+            "force_cuda_rast": "رسترایز اجباری با CUDA"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "مدل بازسازی کانولوشنی",
+        "inputs": {
+            "crm_model": "مدل CRM",
+            "multiview_images": "چند نما",
+            "multiview_CCMs": "چندنمای CCMs"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "پیمایش چهاروجهی عمق",
+        "inputs": {
+            "reference_points_cloud": "ابر نقاط مرجع",
+            "reference_images": "تصویر مرجع",
+            "reference_masks": "ماسک مرجع"
+        },
+        "widgets": {
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "points_cloud_fitting_weight": "وزن فیلتر ابر نقاط",
+            "mesh_smoothing_weight": "وزن هموارسازی مش",
+            "chamfer_faces_sample_scale": "مقیاس نمونه‌برداری وجه پخ",
+            "mesh_scale": "مقیاس مش",
+            "grid_resolution": "وضوح شبکه",
+            "geometry_learning_rate": "نرخ یادگیری هندسه",
+            "positional_encoding_multires": "کدگذاری موقعیتی چندگانه",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "مش"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "مش برازش چند نما",
+        "inputs": {
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع",
+            "reference_orbit_camera_poses": "پوزهای مرجع دوربین مداری",
+            "mesh": "مش"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "لنز دوربین مداری مرجع",
+            "mesh_albedo_height": "ارتفاع آلبدوی مش",
+            "mesh_albedo_width": "عرض آلبدوی مش",
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "batch_size": "اندازه دسته",
+            "texture_learning_rate": "نرخ یادگیری بافت",
+            "train_mesh_geometry": "آموزش هندسهٔ مش",
+            "geometry_learning_rate": "نرخ یادگیری هندسه",
+            "ms_ssim_loss_weight": "وزن زیان MS-SSIM",
+            "remesh_after_n_iteration": "بازسازی مش هر N تکرار",
+            "force_cuda_rasterize": "رسترایز اجباری با CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "مش",
+            "baked_texture": "بافت"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "تصویر عمق مرجع",
+            "reference_normal_maps": "تصاویر مرجع نرمال",
+            "reference_masks": "ماسک مرجع",
+            "reference_orbit_camera_poses": "پوزهای مرجع دوربین مداری"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "لنز دوربین مداری مرجع",
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "batch_size": "اندازه دسته",
+            "learning_rate": "نرخ یادگیری",
+            "voxel_grids_resolution": "وضوح شبکهٔ ووکسل",
+            "depth_min_distance": "حداقل فاصلهٔ عمق",
+            "depth_max_distance": "حداکثر فاصلهٔ عمق",
+            "mask_loss_weight": "وزن زیان ماسک",
+            "depth_loss_weight": "وزن خطای عمق",
+            "normal_loss_weight": "وزن زیان نرمال",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "رسترایز اجباری با CUDA"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "پاشش Gaussian",
+        "inputs": {
+            "reference_images": "تصویر مرجع",
+            "reference_masks": "ماسک مرجع",
+            "reference_orbit_camera_poses": "پوزهای مرجع دوربین مداری",
+            "points_cloud_to_initialize_gaussian": "مقداردهی اولیهٔ ابر نقاط Gaussian",
+            "ply_to_initialize_gaussian": "مقداردهی اولیهٔ gs_ply",
+            "mesh_to_initialize_gaussian": "مقداردهی اولیهٔ مش Gaussian"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "لنز دوربین مداری مرجع",
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "batch_size": "اندازه دسته",
+            "ms_ssim_loss_weight": "وزن زیان MS-SSIM",
+            "alpha_loss_weight": "وزن خطای آلفا",
+            "offset_loss_weight": "وزن خطای جابه‌جایی",
+            "offset_opacity_loss_weight": "وزن خطای کدری جابه‌جایی",
+            "invert_background_probability": "احتمال وارونه‌کردن پس‌زمینه",
+            "feature_learning_rate": "نرخ یادگیری ویژگی",
+            "opacity_learning_rate": "نرخ یادگیری کدورت",
+            "scaling_learning_rate": "نرخ یادگیری مقیاس",
+            "rotation_learning_rate": "نرخ یادگیری چرخش",
+            "position_learning_rate_init": "مقدار اولیهٔ نرخ یادگیری مکان",
+            "position_learning_rate_final": "مقدار نهایی نرخ یادگیری مکان",
+            "position_learning_rate_delay_mult": "تأخیر نرخ یادگیری مکان",
+            "position_learning_rate_max_steps": "حداکثر گام‌های نرخ یادگیری مکان",
+            "initial_gaussians_num": "تعداد اولیهٔ Gaussian",
+            "K_nearest_neighbors": "تعداد همسایهٔ نزدیک K",
+            "percent_dense": "درصد چگالی",
+            "density_start_iterations": "تعداد اولیهٔ تکرار چگالی",
+            "density_end_iterations": "تعداد نهایی تکرار چگالی",
+            "densification_interval": "بازهٔ زمانی غلیظ‌سازی",
+            "opacity_reset_interval": "بازهٔ بازنشانی کدورت",
+            "densify_grad_threshold": "آستانهٔ گرادیان چگالی",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع",
+            "reference_orbit_camera_poses": "پوزهای مرجع دوربین مداری"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "لنز دوربین مداری مرجع",
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "training_resolution": "وضوح آموزش",
+            "marching_cude_threshold": "آستانهٔ marching cube",
+            "marching_cude_grids_resolution": "وضوح شبکهٔ منحنی‌پیمایی",
+            "marching_cude_grids_batch_size": "اندازهٔ دستهٔ شبکهٔ منحنی‌پیمایی",
+            "texture_resolution": "وضوح بافت",
+            "force_cuda_rast": "رسترایز اجباری با CUDA"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "مدل بزرگ Gaussian چند نمایه (LGM)",
+        "inputs": {
+            "multiview_images": "چند نما",
+            "lgm_model": "مدل LGM"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "مدل MVDream",
+        "inputs": {
+            "mvdream_pipe": "بستهٔ گره MVDream",
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع"
+        },
+        "widgets": {
+            "prompt": "پرامپت",
+            "prompt_neg": "پرامپت منفی",
+            "seed": "بذر",
+            "control_after_generate": "عمل پس از اجرا",
+            "mv_guidance_scale": "ضریب راهنمایی MV",
+            "num_inference_steps": "مراحل استنتاج",
+            "elevation": "زاویه ارتفاع"
+        },
+        "outputs": {
+            "multiview_images": "چند نما"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع",
+            "reference_normals": "تصاویر مرجع نرمال"
+        },
+        "widgets": {
+            "training_iterations": "تعداد تکرارهای آموزش",
+            "batch_size": "اندازه دسته",
+            "learning_rate": "نرخ یادگیری",
+            "learning_rate_alpha": "نرخ یادگیری آلفا",
+            "color_loss_weight": "وزن خطای رنگ",
+            "mesh_smoothing_weight": "وزن هموارسازی مش",
+            "mask_loss_weight": "وزن زیان ماسک",
+            "normal_loss_weight": "وزن زیان نرمال",
+            "sparse_loss_weight": "وزن خطای Sparse",
+            "warm_up_end": "پایان گرم‌کردن اولیه",
+            "anneal_end": "پایان آنیلینگ",
+            "use_white_background": "استفاده از پس‌زمینهٔ سفید",
+            "geometry_extract_resolution": "رزولوشن دقیق هندسه",
+            "marching_cude_threshold": "آستانهٔ marching cube"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع",
+            "tgs_model": "مدل TGS"
+        },
+        "widgets": {
+            "cam_dist": "فاصلهٔ دوربین"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "مدل TSR",
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "رزولوشن دقیق هندسه",
+            "marching_cude_threshold": "آستانهٔ marching cube"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "مدل Wonder3D MVDiffusion",
+        "inputs": {
+            "mvdiffusion_pipe": "بستهٔ گره MVDiffusion",
+            "reference_image": "تصویر مرجع",
+            "reference_mask": "ماسک مرجع"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "control_after_generate": "عمل پس از اجرا",
+            "mv_guidance_scale": "ضریب راهنمایی MV",
+            "num_inference_steps": "مراحل استنتاج"
+        },
+        "outputs": {
+            "multiview_images": "چند نما",
+            "multiview_normals": "نرمال چند نما"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "تبدیل 3DGS به ابر نقاط",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "ابر نقاط"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "تبدیل مش به ابر نقاط",
+        "inputs": {
+            "mesh": "مش"
+        },
+        "outputs": {
+            "points_cloud": "ابر نقاط"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "رندرگر مداری Gaussian Splatting",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "پوزهای دوربین مداری"
+        },
+        "widgets": {
+            "render_image_width": "عرض",
+            "render_iamge_height": "ارتفاع",
+            "render_orbit_camera_fovy": "زاویهٔ دید دوربین مداری",
+            "render_background_r": "پس‌زمینه R",
+            "render_background_g": "پس‌زمینه G",
+            "render_background_b": "پس‌زمینه B"
+        },
+        "outputs": {
+            "rendered_gs_images": "تصویر",
+            "rendered_gs_masks": "ماسک"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "تولید پوز دوربین مداری",
+        "inputs": {
+            "reference_images": "تصویر مرجع"
+        },
+        "widgets": {
+            "generate_pose_commnad": "دستور تولید"
+        },
+        "outputs": {
+            "orbit_camposes": "پوزهای دوربین مداری"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "انباشت پوزهای دوربین مداری",
+        "widgets": {
+            "orbit_radius_start": "آغاز شعاع مدار",
+            "orbit_radius_stop": "پایان شعاع مدار",
+            "orbit_radius_step": "گام شعاع مدار",
+            "elevation_start": "آغاز زاویهٔ ارتفاع",
+            "elevation_stop": "پایان زاویهٔ ارتفاع",
+            "elevation_step": "گام زاویهٔ ارتفاع",
+            "azimuth_start": "آغاز زاویهٔ آزیموت",
+            "azimuth_stop": "پایان زاویهٔ آزیموت",
+            "azimuth_step": "گام زاویهٔ آزیموت",
+            "orbit_center_X_start": "آغاز مرکز مدار X",
+            "orbit_center_X_stop": "پایان مرکز مدار X",
+            "orbit_center_X_step": "گام مرکز مدار X",
+            "orbit_center_Y_start": "آغاز مرکز مدار Y",
+            "orbit_center_Y_stop": "پایان مرکز مدار Y",
+            "orbit_center_Y_step": "گام مرکز مدار Y",
+            "orbit_center_Z_start": "آغاز مرکز مدار Z",
+            "orbit_center_Z_stop": "پایان مرکز مدار Z",
+            "orbit_center_Z_step": "گام مرکز مدار Z"
+        },
+        "outputs": {
+            "orbit_camposes": "پوزهای دوربین مداری",
+            "orbit_radius_list": "فهرست شعاع مدار",
+            "elevation_list": "فهرست زاویهٔ ارتفاع",
+            "azimuth_list": "فهرست زاویهٔ آزیموت",
+            "orbit_center_X_list": "فهرست مرکز مدار در X",
+            "orbit_center_Y_list": "فهرست مرکز مدار در Y",
+            "orbit_center_Z_list": "فهرست مرکز مدار در Z"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "تغییر محور 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "تبدیل محور X به",
+            "axis_y_to": "تبدیل محور Y به",
+            "axis_z_to": "تبدیل محور Z به"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "تغییر محور مش",
+        "inputs": {
+            "mesh": "مش"
+        },
+        "widgets": {
+            "axis_x_to": "تبدیل محور X به",
+            "axis_y_to": "تبدیل محور Y به",
+            "axis_z_to": "تبدیل محور Z به"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "بارگذاری 3DGS",
+        "widgets": {
+            "gs_file_path": "مسیر فایل gs"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "بارگذاری مش سه‌بعدی",
+        "widgets": {
+            "mesh_file_path": "مسیر فایل مش",
+            "resize": "مقیاس‌دهی مجدد",
+            "renormal": "بازنگاشت نرمال",
+            "retex": "تنظیم مجدد بافت",
+            "optimizable": "قابل بهینه‌سازی"
+        },
+        "outputs": {
+            "mesh": "مش"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "بارگذاری مدل CRM MVDiffusion",
+        "widgets": {
+            "model_name": "نام مدل",
+            "crm_config_path": "مسیر پیکربندی CRM"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "نمونه‌بردار CRM_MVDiffusion"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "بارگذاری مدل بازسازی کانولوشنی",
+        "widgets": {
+            "model_name": "نام مدل"
+        },
+        "outputs": {
+            "crm_model": "مدل CRM"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "بارگذاری پایپ‌لاین Diffusers",
+        "widgets": {
+            "diffusers_pipeline_name": "نام پایپ‌لاین"
+        },
+        "outputs": {
+            "pipe": "پایپ"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "بارگذاری مدل بزرگ Gaussian چند نمایه (LGM)",
+        "widgets": {
+            "model_name": "نام مدل",
+            "lgb_config": "تنظیمات lgb"
+        },
+        "outputs": {
+            "lgm_model": "مدل LGM"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "بارگذاری مدل Triplane Gaussian Transformers (TGS)",
+        "widgets": {
+            "model_name": "نام مدل"
+        },
+        "outputs": {
+            "tgs_model": "مدل TGS"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "بارگذاری مدل TripoSR (TSR)",
+        "widgets": {
+            "model_name": "نام مدل",
+            "chunk_size": "اندازهٔ بلوک"
+        },
+        "outputs": {
+            "tsr_model": "مدل TSR"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "ذخیرهٔ 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "مسیر ذخیره"
+        },
+        "outputs": {
+            "save_path": "مسیر ذخیره"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "ذخیرهٔ مش سه‌بعدی",
+        "inputs": {
+            "mesh": "مش"
+        },
+        "widgets": {
+            "save_path": "مسیر ذخیره"
+        },
+        "outputs": {
+            "save_path": "مسیر ذخیره"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "پیش‌نمایش 3DGS",
+        "widgets": {
+            "gs_file_path": "مسیر فایل gs"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "پیش‌نمایش مش سه‌بعدی",
+        "widgets": {
+            "mesh_file_path": "مسیر فایل مش"
+        }
+    }
+}

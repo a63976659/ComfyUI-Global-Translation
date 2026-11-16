@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "تولیدکننده هدایت AMV BFS",
+        "inputs": {
+            "video": "ویدیو",
+            "images": "تصویر",
+            "audio": "صدا"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "length": "طول",
+            "hold": "حفظ ردیابی",
+            "fill": "پرکردن",
+            "placement": "جای‌گذاری",
+            "fps": "نرخ فریم",
+            "indices": "نمایه",
+            "scene_threshold": "آستانه صحنه"
+        },
+        "outputs": {
+            "guide": "هدایت",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "راهنمای AMV را تولید می‌کند (فریم‌های کلیدی + فریم‌های خالی). external_images می‌تواند تصاویر را به‌طور خودکار روی ضرب‌آهنگ موسیقی جای‌گذاری کند (placement را روی audio_beats بگذارید). `هدایت` را به VAE یا ماژول مرجع وارد کنید."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "تولید شرطی انیمه به واقع‌گرایی BFS Bernini",
+        "inputs": {
+            "positive": "مثبت",
+            "negative": "منفی",
+            "vae": "VAE",
+            "guide_video": "ویدیوی هدایت"
+        },
+        "widgets": {
+            "length": "طول"
+        },
+        "outputs": {
+            "positive": "مثبت",
+            "negative": "منفی",
+            "latent": "Latent",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "تولید شرط انیمه به واقع‌گرایی به‌صورت کاملاً ویدیو به ویدیو (v2v) برای LoRA Bernini-R ویژه تبدیل انیمه به حس واقعی. guide_video با source_id 1 (بوم انیمه) مطابقت دارد | خروجی با source_id 0 (عکس واقعی). ماژول مرجع ندارد. هدایت هم‌زمان روی مثبت و منفی اعمال می‌شود، بنابراین CFG فقط پرامپت متنی (سبک عکس واقعی) را تقویت می‌کند، نه مرجع را. از CFG معتدل استفاده کنید؛ هدایت حرکت/چیدمان را حفظ می‌کند. این LoRA را با گره‌های تعویض چهره به کار نبرید: آن توکن‌های source_id 2 را تزریق می‌کند و LoRA انیمه به واقع‌گرایی هرگز در آموزش این توکن‌ها را ندیده است."
+    },
+    "LTXColorMask": {
+        "title": "ماسک رنگی LTX",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "color": "رنگ",
+            "style": "سبک",
+            "marker_radius_frac": "نسبت شعاع نشانگر",
+            "custom_r": "سفارشی R",
+            "custom_g": "سفارشی G",
+            "custom_b": "سفارشی B",
+            "background_black": "پس‌زمینه مشکی"
+        },
+        "outputs": {
+            "colored_mask": "ماسک رنگی"
+        },
+        "description": "ماسک‌های تمام‌سفید/دوینایى به سبک SAM2 را طبق قرارداد آموزش scail2v2 رنگ‌آمیزی مجدد کنید. 'silhouette' برای دهانه ماسک هدایت و 'flat_marker' (نقطه رنگی کوچک، بدون شکل) برای دهانه ماسک هویت استفاده شود — برای فهم دلیل این تفاوت، راهنمای هر ورودی را ببینید."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "تولید شرطی تعویض چهره BFS Bernini",
+        "inputs": {
+            "positive": "مثبت",
+            "negative": "منفی",
+            "vae": "VAE",
+            "guide_video": "ویدیوی هدایت",
+            "head_image": "تصویر سر"
+        },
+        "widgets": {
+            "length": "طول",
+            "amplify_reference": "بزرگ‌نمایی مرجع"
+        },
+        "outputs": {
+            "positive": "مثبت",
+            "negative": "منفی",
+            "latent": "Latent",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "اشکال‌زدایی LoRA تعویض چهره BFS",
+        "inputs": {
+            "model": "مدل"
+        },
+        "outputs": {
+            "model": "مدل",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "جداسازی LoRA Edit Any Content LTXV",
+        "inputs": {
+            "lora_name": "نام LoRA"
+        },
+        "widgets": {
+            "overwrite": "بازنویسی"
+        },
+        "outputs": {
+            "standard_lora_name": "نام استاندارد LoRA",
+            "editanything_module_name": "نام ماژول Edit Any Content"
+        },
+        "description": "چک‌پوینت Edit Any Content را به LoRA استاندارد و ماژول کمکی تفکیک می‌کند."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "بارگذار ماژول Edit Any Content LTXV",
+        "widgets": {
+            "module_name": "نام ماژول"
+        },
+        "outputs": {
+            "editanything_module": "ماژول Edit Any Content"
+        },
+        "description": "ماژول کمکی تولیدشده توسط گره جداسازی LoRA Edit Any Content LTXV را بارگذاری می‌کند."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "بارگذار LoRA Edit Any Content LTXV",
+        "inputs": {
+            "model": "مدل",
+            "lora_name": "نام LoRA"
+        },
+        "widgets": {
+            "strength_model": "شدت مدل"
+        },
+        "outputs": {
+            "model": "مدل"
+        },
+        "description": "بارگذار LoRA برای چک‌پوینت‌های Edit Any Content."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "اعمال Edit Any Content LTXV",
+        "inputs": {
+            "model": "مدل",
+            "positive": "مثبت",
+            "negative": "منفی",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "تصویر مرجع",
+            "lora_name": "نام LoRA",
+            "guide_frames": "فریم هدایت",
+            "ref_temporal_offset_latents": "Latent آفست زمانی مرجع"
+        },
+        "widgets": {
+            "resize_mode": "حالت مقیاس",
+            "guide_strength": "شدت هدایت",
+            "ref_strength": "شدت مرجع",
+            "role_strength": "شدت نقش",
+            "adaln_scale": "مقیاس AdaLN",
+            "enable_adaln": "فعال‌سازی AdaLN",
+            "enable_role_embedding": "فعال‌سازی جاسازی نقش",
+            "debug": "اشکال‌زدایی"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "مثبت",
+            "negative": "منفی",
+            "latent": "Latent",
+            "ref_image_preview": "پیش‌نمایش تصویر مرجع"
+        },
+        "description": "تولید شرطی یکپارچه Edit Any Content برای LoRA مرجع AdaLN ویدیو به ویدیو. این گره هر ۳ سیگنال شرطی را از یک چک‌پوینت LoRA در یک گره اعمال می‌کند: ① توالی IC-LoRA تصویر مرجع و ویدیوی هدایت اختیاری را رمزگذاری می‌کند و آن‌ها را به‌عنوان فریم‌های شرطی تمیز به Latent می‌افزاید. چیدمان در Transformer: [توکن هدف | توکن مرجع @ t=-1 | توکن هدایت @ t=0..T] ② جاسازی نقش (role_embedding.embedding.weights[0]) پیش از patchify_proj یک اثر انگشت ۱۲۸ بعدی اکتسابی به توکن‌های تصویر مرجع می‌افزاید تا مدل بتواند تصویر @مرجع و فریم‌های هدایت را با توجه خودانه تشخیص دهد. ③ تولید شرط AdaLN (ref_adaln_proj: fc1 → SiLU → proj) با استفاده از تصویرساز ذخیره‌شده در LoRA، Latent تصویر مرجع را استخرگیری شکلی می‌کند، طی یک MLP دوبلیری به فضای گام زمانی AdaLN تصویرساز می‌کند و آن را به بایاس گام زمانی هر بلوک Transformer می‌افزاید — این یک لنگر ظاهری سراسری و ماندگار است. پس از بارگذار استاندارد LoRA و پیش از KSampler وصل کنید."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "اعمال ماسک خنثی LTXV",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "background": "پس‌زمینه",
+            "hard_edges": "لبه سخت"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "ناحیه‌های ماسک‌شده تصویر/ویدیو را با پس‌زمینه تک‌رنگ تمیز جایگزین می‌کند؛ پیش از وارد کردن تصویر مرجع یا فریم هدایت به تولید شرط LTXV مفید است."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "تنظیم اندازه مرجع با ماسک LTXV",
+        "inputs": {
+            "ref_image": "تصویر مرجع",
+            "size_mask": "ماسک اندازه",
+            "ref_mask": "ماسک مرجع"
+        },
+        "widgets": {
+            "fit": "تطبیق",
+            "background": "پس‌زمینه",
+            "padding": "پرکردن",
+            "hard_edges": "لبه سخت"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "object_mask": "ماسک شیء"
+        },
+        "description": "از کادر محیطی ماسک به‌عنوان اندازه شیء هدف استفاده کنید و اندازه شیء مرجع را روی یک بوم تمیز تنظیم کنید. موقعیت ماسک نادیده گرفته می‌شود؛ فقط عرض و ارتفاع آن نسبت مقیاس هدف را تعیین می‌کنند."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "نمونه‌گیر چرخه‌ای Edit Any Content LTXV",
+        "inputs": {
+            "model": "مدل",
+            "vae": "VAE",
+            "noise": "نویز",
+            "sampler": "نمونه‌گیر",
+            "sigmas": "Sigma",
+            "guider": "هدایت‌گر",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "latents": "Latent",
+            "editanything_module": "ماژول Edit Any Content",
+            "ref_image": "تصویر مرجع",
+            "guide_frames": "فریم هدایت"
+        },
+        "widgets": {
+            "temporal_tile_size": "اندازه بلوک زمانی",
+            "temporal_overlap": "همپوشانی زمانی",
+            "blend_overlap": "هم‌پوشانی آمیزش",
+            "lora_name": "نام LORA",
+            "ref_resize_mode": "حالت مقیاس مرجع",
+            "ref_strength": "شدت مرجع",
+            "guide_strength": "شدت هدایت",
+            "role_strength": "شدت نقش",
+            "adaln_scale": "مقیاس AdaLN",
+            "enable_ic_lora": "فعال‌سازی IC-LORA",
+            "enable_role_embedding": "فعال‌سازی جاسازی نقش",
+            "enable_adaln": "فعال‌سازی AdaLN",
+            "reapply_per_chunk": "اعمال مجدد هر بلوک",
+            "enable_visual_crossattn": "فعال‌سازی توجه متقابل بینایی",
+            "ref_context_scale": "مقیاس زمینه مرجع",
+            "ref_token_scale": "مقیاس توکن مرجع",
+            "ref_start_block": "بلوک شروع مرجع",
+            "ref_end_block": "بلوک پایان مرجع",
+            "ref_init_from": "منبع مقداردهی اولیه مرجع",
+            "ref_init_seed": "بذر تصادفی مقداردهی اولیه مرجع",
+            "ref_attn_lora_strength": "شدت LORA توجه مرجع",
+            "debug_ea": "اشکال‌زدایی EA",
+            "ref_temporal_offset_latents": "Latent آفست زمانی مرجع"
+        },
+        "outputs": {
+            "denoised_output": "خروجی حذف نویز",
+            "ref_image_preview": "پیش‌نمایش تصویر مرجع",
+            "diff_vs_previous_run": "اختلاف با اجرای پیشین"
+        },
+        "description": "نمونه‌گیر چرخه زمانی که هر بلوک شرط کامل Edit Any Content دارد.\n\nمشابه LTXVEditAnythingApply است، اما ویدیو را در زمان برش می‌دهد و در هر بلوک توکن‌های مرجع+هدایت IC-LoRA (از طریق LTXVAddGuide.append_keyframe)، جاسازی نقش و AdaLN را دوباره اعمال می‌کند. هر بلوک با یک برش از ویدیوی هدایت مطابقت دارد.\n\nورودی‌ها شرط‌های مثبت/منفی صریح هستند؛ ورودی GUIDER فقط سازوکار نمونه‌گیری (پارامترهای CFG/STG) را فراهم می‌کند و شرط‌های آن طی guider.set_conds در هر بلوک بازنویسی می‌شود."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "شاخص اختلاف Latent LTXV",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "برچسب",
+            "print_console": "چاپ در کنترل",
+            "compare_noise_mask": "مقایسه ماسک نویز"
+        },
+        "outputs": {
+            "metrics": "شاخص",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "شباهت کسینوسی"
+        },
+        "description": "دو Latent را مقایسه کرده و MSE/RMSE/L1/PSNR/شباهت کسینوسی را گزارش می‌کند.\n\nبرای آزمون A/B روی گزینه‌های تغییر: نمونه‌گیر را با پیکربندی A اجرا کنید، Latent را ذخیره کنید ← با پیکربندی B اجرا کنید ← SaveLatent.A و خروجی جدید را به این گره وصل کنید. خروجی هم شامل رشته قالب‌بندی‌شده برای UI/کنترل است و هم اعداد اعشاری جداگانه تا بتوانید به ترسیم‌گر یا گره ذخیره به‌عنوان متن وصل کنید.\n\nاگر شکل دو Latent متفاوت باشد (مثلاً ناهماهنگی فضایی ناشی از تفاوت VAE)، به مقایسه زیرناحیه هم‌پوشانی بازمی‌گردد."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "شاخص اختلاف تصویر LTXV",
+        "inputs": {
+            "image_a": "تصویر A",
+            "image_b": "تصویر B"
+        },
+        "widgets": {
+            "label": "برچسب",
+            "print_console": "چاپ در کنترل"
+        },
+        "outputs": {
+            "metrics": "شاخص",
+            "image_a": "تصویر A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "مشابه LTXVLatentDiffMetrics است اما برای تصاویر رمزگشایی‌شده (پس از VAE) کاربرد دارد — PSNR از بازه پیکسل [0,1] استفاده می‌کند. برای مقایسه خطاهای پیکسلی مرتبط از نظر بصری پس از دو اجرای رمزگشایی بسیار مفید است."
+    },
+    "LTXIdentityCAN": {
+        "title": "CAN هویت LTX",
+        "inputs": {
+            "model": "مدل",
+            "reference_image": "تصویر مرجع",
+            "can_weights": "وزن CAN"
+        },
+        "widgets": {
+            "strength": "شدت"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "بینایی Gemma هویت LTX",
+        "inputs": {
+            "clip": "تدوین",
+            "reference_image": "تصویر مرجع"
+        },
+        "widgets": {
+            "prompt": "پرامپت"
+        },
+        "outputs": {
+            "conditioning": "شرط"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "چند دیدگاه هویتی LTX",
+        "inputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "چهره تمام‌رخ مرجع",
+            "reference_back_head": "پشت سر مرجع",
+            "reference_body_front": "بدن از نمای تمام مرجع",
+            "reference_side_profile": "پروفیل جانبی مرجع"
+        },
+        "widgets": {
+            "identity_projector": "تصویرساز هویت",
+            "phase_scale": "مقیاس فاز",
+            "id_strength": "شدت هویت",
+            "arcface_mode": "حالت ArcFace",
+            "debug_log": "گزارش اشکال‌زدایی",
+            "reference_temporal_offset_latents": "Latent آفست زمانی مرجع"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "latent": "Latent",
+            "debug": "اشکال‌زدایی"
+        },
+        "description": "انتقال هویت چنددیدگاهی: چهره تمام‌رخ (الزامی) + نمای‌های مرجع اختیاری پشت سر/تنه/نیمرخ، هر نما به‌عنوان قطعه هم‌پوشانی+فاز منبع مستقل (source_id 2/3/4/5) تزریق می‌شود و با آموزش چنددیدگاهی هم‌خوان است. ابتدا LoRA چنددیدگاهی را روی MODEL بارگذاری کنید."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "شرط هویت هم‌پوشانی LTX",
+        "inputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "تصویر مرجع"
+        },
+        "widgets": {
+            "source_id": "شناسه منبع",
+            "phase_scale": "مقیاس فاز",
+            "ref_resize_mode": "حالت مقیاس مرجع",
+            "debug_log": "گزارش اشکال‌زدایی",
+            "crop_anchor": "لنگر برش",
+            "layout": "چیدمان",
+            "reference_guidance_scale": "شدت هدایت مرجع",
+            "reference_temporal_offset_latents": "Latent آفست زمانی مرجع"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "latent": "Latent",
+            "debug": "اشکال‌زدایی",
+            "ref_preview": "پیش‌نمایش مرجع",
+            "crop_overlay": "هم‌پوشانی برش"
+        },
+        "description": "هم‌پوشانی/st_drc/strata + شرط مرجع فاز منبع که با ترقیع مدل پیاده شده است و آفست زمانی فقط-مرجع آزمایشی برای کاهش نشتی ساختگی فریم ۰ دارد. مرجع توکن مستقل است (نه I2V) و برای هر سوژه‌ای مناسب است، نه فقط چهره. برای چک‌پوینت‌های آموزش‌دیده روی مراجع انباشته (چیدمان='strata')، دسته تصویر مجاز است. ابتدا LoRA را روی MODEL بارگذاری کنید. خروجی‌های ref_preview/crop_overlay دقیقاً نشان می‌دهند چه چیزی رمزگذاری شده و برای match_target، کدام بخش‌های مرجع پس از برش حفظ شده (کادر سبز) و کدام حذف شده‌اند."
+    },
+    "LTXIdentityTransfer": {
+        "title": "انتقال هویت LTX",
+        "inputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "تصویر مرجع"
+        },
+        "widgets": {
+            "source_id": "شناسه منبع",
+            "phase_scale": "مقیاس فاز",
+            "ref_resize_mode": "حالت مقیاس مرجع",
+            "debug_log": "گزارش اشکال‌زدایی",
+            "crop_anchor": "لنگر برش",
+            "layout": "چیدمان",
+            "reference_guidance_scale": "شدت هدایت مرجع",
+            "reference_temporal_offset_latents": "Latent آفست زمانی مرجع"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "latent": "Latent",
+            "debug": "اشکال‌زدایی",
+            "ref_preview": "پیش‌نمایش مرجع",
+            "crop_overlay": "هم‌پوشانی برش"
+        },
+        "description": "هم‌پوشانی/st_drc/strata + شرط مرجع فاز منبع که با ترقیع مدل پیاده شده است و آفست زمانی فقط-مرجع آزمایشی برای کاهش نشتی ساختگی فریم 0 دارد. مرجع توکن مستقل است (نه تصویر به ویدیو) و برای هر سوژه‌ای مناسب است، نه فقط چهره. برای چک‌پوینت‌های آموزش‌دیده روی مراجع انباشته (چیدمان='strata')، دسته تصویر مجاز است. ابتدا LoRA را روی MODEL بارگذاری کنید. خروجی‌های ref_preview/crop_overlay دقیقاً نشان می‌دهند چه چیزی رمزگذاری شده و برای match_target، کدام بخش‌های مرجع پس از برش حفظ شده (کادر سبز) و کدام حذف شده‌اند."
+    },
+    "LTXMultipleControls": {
+        "title": "چند کنترل LTX",
+        "inputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "ویدیوی هدایت",
+            "mask_video": "ویدیوی ماسک",
+            "identity_image": "تصویر هویت",
+            "identity_mask_image": "تصویر ماسک هویت"
+        },
+        "widgets": {
+            "guide_source_id": "شناسه منبع هدایت",
+            "guide_phase_scale": "مقیاس فاز هدایت",
+            "guide_layout": "چیدمان هدایت",
+            "guide_ref_resize_mode": "حالت مقیاس تصویر مرجع هدایت",
+            "guide_downscale_factor": "ضریب زیرنمونه‌گیری هدایت",
+            "mask_source_id": "شناسه منبع ماسک",
+            "mask_phase_scale": "مقیاس فاز ماسک",
+            "mask_layout": "چیدمان ماسک",
+            "mask_ref_resize_mode": "حالت مقیاس تصویر مرجع ماسک",
+            "mask_downscale_factor": "ضریب زیرنمونه‌گیری ماسک",
+            "auto_mask_guide": "هدایت خودکار ماسک",
+            "mask_white_thresh": "آستانه سفیدی ماسک",
+            "identity_source_id": "شناسه منبع هویت",
+            "identity_phase_scale": "مقیاس فاز هویت",
+            "identity_layout": "چیدمان هویت",
+            "identity_ref_resize_mode": "حالت مقیاس تصویر مرجع هویت",
+            "identity_downscale_factor": "ضریب زیرنمونه‌گیری هویت",
+            "identity_mask_source_id": "شناسه منبع ماسک هویت",
+            "identity_mask_phase_scale": "مقیاس فاز ماسک هویت",
+            "identity_mask_layout": "چیدمان ماسک هویت",
+            "identity_mask_ref_resize_mode": "حالت مقیاس تصویر مرجع ماسک هویت",
+            "identity_mask_downscale_factor": "ضریب زیرنمونه‌گیری ماسک هویت",
+            "crop_anchor": "لنگر برش",
+            "reference_guidance_scale": "مقیاس هدایت مرجع",
+            "debug_log": "گزارش اشکال‌زدایی",
+            "identity_temporal_offset_latents": "Latent آفست زمانی هویت"
+        },
+        "outputs": {
+            "model": "مدل",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی",
+            "latent": "Latent",
+            "debug": "اطلاعات اشکال‌زدایی"
+        },
+        "description": "در یک فراخوانی تکی گره، شرط‌های مرجع هدایت، ماسک، هویت و ماسک هویت را یکپارچه می‌کند، بنابراین مشخصه RoPE مراجع تمام دهانه‌های فعال واقعاً ادغام می‌شود (فراخوانی زنجیره‌ای گره LTXIdentityOverlapConditioning این کار را نمی‌کند — هر فراخوانی مشخصه فراخوانی پیشین را بازنویسی می‌کند). هر دهانه اختیاری است و شناسه منبع/مقیاس فاز/چیدمان/حالت مقیاس مرجع خودش را دارد — بدون کدگذاری سخت، فقط پیش‌فرض‌ها با scail2v2_r128_v13 هم‌خوانی دارند (هدایت=0، ماسک=0، بدون فاز؛ هویت=2، با فاز). ویدیوی هدایت به‌طور خودکار در ناحیه جایگزینی با ماسک سیاه پوشانده می‌شود (auto_mask_guide) تا با روش آموزش v13 هم‌خوان شود — این اصلاحی است که انتقال هویت را واقعاً مؤثر می‌کند. identity_mask توسط v13 استفاده نمی‌شود (خالی و بدون اتصال رها کنید)؛ نگه‌داشتن آن فقط برای سازگاری با چک‌پوینت‌های قدیمی است."
+    },
+    "LTXMultishotPrompt": {
+        "title": "پرامپت چندنمایی LTX",
+        "inputs": {
+            "image_1": "تصویر مرجع 1",
+            "image_2": "تصویر مرجع 2",
+            "image_3": "تصویر مرجع 3",
+            "image_4": "تصویر مرجع 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "تصحیح لنز 1",
+            "shot_size_1": "اندازه لنز 1",
+            "camera_move_1": "حرکت دوربین 1",
+            "shot_modifier_2": "تصحیح لنز 2",
+            "shot_size_2": "اندازه لنز 2",
+            "camera_move_2": "حرکت دوربین 2",
+            "shot_modifier_3": "تصحیح لنز 3",
+            "shot_size_3": "اندازه لنز 3",
+            "camera_move_3": "حرکت دوربین 3",
+            "shot_modifier_4": "تصحیح لنز 4",
+            "shot_size_4": "اندازه لنز 4",
+            "camera_move_4": "حرکت دوربین 4"
+        },
+        "outputs": {
+            "prompt": "پرامپت",
+            "references": "تصویر مرجع",
+            "num_shots": "تعداد نما"
+        },
+        "description": "پرامپت‌های چندنمایه با فرمت ShotPlan و دسته مراجع ترتیب‌دار و پدینگ‌رمادی موردنیاز برای آموزش LoRA چندنمایه لایه‌ای را تولید کنید. `references` را به گره انتقال هویت LTX (چیدمان='strata'، شناسه منبع=2، مقیاس فاز=1.0) و `پرامپت` را به گره رمزگذاری متن LTX خود وارد کنید."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "برش فریم نخست LTX",
+        "inputs": {
+            "images": "تصویر"
+        },
+        "widgets": {
+            "trim": "تعداد فریم برش"
+        },
+        "outputs": {
+            "images": "تصویر"
+        },
+        "description": "N فریم نخست ویدیو (دسته تصویر) را حذف می‌کند — مشکل نشتی فریم مرجع 0 را برطرف می‌سازد."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "الحاق‌کننده مراجع چندگانه BFS",
+        "inputs": {
+            "ref_image_1": "تصویر مرجع 1",
+            "ref_image_2": "تصویر مرجع 2",
+            "ref_image_3": "تصویر مرجع 3",
+            "ref_image_4": "تصویر مرجع 4",
+            "ref_image_5": "تصویر مرجع 5"
+        },
+        "widgets": {
+            "fit_mode": "حالت تطبیق"
+        },
+        "outputs": {
+            "sheet": "تصویر الحاقی",
+            "n_refs": "تعداد تصاویر مرجع",
+            "debug": "اطلاعات اشکال‌زدایی"
+        },
+        "description": "۱ تا ۵ تصویر مرجع متصل را در یک تصویر الحاقی ثابت 1536x1024 برای آموزش LoRA چندمرجعی ادغام کنید. اگر دهانه خالی بماند، تعداد تصاویر مرجع کاهش می‌یابد؛ دهانه‌های خالی مستقیماً رد می‌شوند و با محتوای خالی پر نمی‌شوند."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "تصویر الحاقی موجودیت 2x2",
+        "inputs": {
+            "person": "فرد",
+            "clothing": "لباس",
+            "object_or_person2": "شیء/فرد 2",
+            "scene": "صحنه"
+        },
+        "outputs": {
+            "sheet": "تصویر الحاقی",
+            "n_refs": "تعداد تصاویر مرجع",
+            "debug": "اطلاعات اشکال‌زدایی"
+        },
+        "description": "تصویر الحاقی موجودیت 2x2 با اندازه ثابت 1536x1024 موردنیاز آموزش LoRA چندمرجعی humoset_sheets_v7 را تولید می‌کند. مفهوم ربع‌ها ثابت است (بالا-چپ: فرد، بالا-راست: لباس، پایین-چپ: شیء/فرد 2، پایین-راست: صحنه)؛ اگر ورودی خالی بماند ربع مربوطه سفید است. همراه با LTXIdentityOverlapConditioning به کار ببرید: چیدمان=هم‌پوشانی، شناسه منبع=2، مقیاس فاز=1.0، حالت مقیاس مرجع=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "بارگذار چهره با بازه فریم",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "frame_start": "فریم شروع",
+            "frame_end": "فریم پایان"
+        },
+        "outputs": {
+            "face_sequence": "دنبال چهره"
+        },
+        "description": "یک تصویر چهره را در بازه فریم [فریم شروع، فریم پایان] بسته‌بندی می‌کند. دنبال چهره — فهرست دیکشنری مصرفی ReservedRegionFrameComposer را برمی‌گرداند. فریم پایان = -1 یعنی «تا آخرین فریم» (بدون سقف)."
+    },
+    "FaceSequenceBatch": {
+        "title": "پردازش دسته دنبال چهره",
+        "inputs": {
+            "face_sequence_a": "دنبال A چهره",
+            "face_sequence_b": "دنبال B چهره"
+        },
+        "outputs": {
+            "face_sequence": "دنبال چهره"
+        },
+        "description": "دو فهرست دنبال چهره را در یکی ادغام می‌کند. با اتصال زنجیره‌ای چند گره می‌توان دسته‌ای با چند محدوده ساخت."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "سازنده فریم ناحیه رزرو",
+        "inputs": {
+            "frames": "فریم",
+            "face_sequence": "دنبال چهره",
+            "face_images": "تصویر چهره"
+        },
+        "widgets": {
+            "region_position": "موقعیت ناحیه",
+            "region_size_px": "اندازه پیکسلی ناحیه",
+            "face_distribution": "توزیع چهره",
+            "interval_frames": "تعداد فریم فاصله",
+            "overflow_mode": "حالت سرریز",
+            "stack_direction": "جهت انباشت",
+            "face_scale_pct": "درصد مقیاس چهره",
+            "face_padding_px": "حاشیه پیکسلی چهره",
+            "face_gap_px": "فاصله پیکسلی چهره",
+            "face_align_main": "تراز اصلی چهره",
+            "face_align_cross": "تراز متقابل چهره",
+            "chroma_r": "کرومینانس R",
+            "chroma_g": "کرومینانس G",
+            "chroma_b": "کرومینانس B"
+        },
+        "outputs": {
+            "frames_out": "فریم خروجی"
+        },
+        "description": "گره‌ای در ComfyUI برای ترکیب ناحیه رزرو (چپ/راست/بالا/پایین) در هر فریم، با حفظ اندازه اصلی فریم خروجی. ویژگی‌های اصلی: - همسان نگه‌داشتن وضوح خروجی نهایی با وضوح فریم اصلی - جای‌دادن محتوای ویدیو در ناحیه باقی‌مانده بدون برش - پرکردن ناحیه رزرو با رنگ کرومینانس - جای‌گذاری یک یا چند تصویر چهره در آن ناحیه - پشتیبانی از الگوی توزیع زمانی دسته چهره (ورودی تصویر) - پشتیبانی از تعیین محدوده فریم‌به‌فریم از طریق ورودی دنبال چهره"
+    }
+}

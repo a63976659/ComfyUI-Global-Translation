@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "ICLightモデルを読み込み",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "model_path": "モデル"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        },
+        "description": "少し厄介ですが効果的なIC-Lightモデルの読み込み方法。\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nICLight条件ノードと一緒に使用してください。"
+    },
+    "ICLightConditioning": {
+        "title": "ICLight条件を適用",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "foreground": "前景Latent",
+            "opt_background": "背景Latent(任意)"
+        },
+        "widgets": {
+            "multiplier": "乗数"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "empty_latent": "空 Latent"
+        },
+        "description": "IC-Lightモデル用の条件ノードです。「背景Latent」を使用する場合は、IC-Lightモデルを「fbc」バージョンに切り替える必要があります。"
+    },
+    "LightSource": {
+        "title": "簡易ライト",
+        "inputs": {
+            "prev_image": "前 画像"
+        },
+        "widgets": {
+            "light_position": "光源位置",
+            "multiplier": "値",
+            "start_color": "開始色",
+            "end_color": "終了色",
+            "width": "幅",
+            "height": "高さ",
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "簡易ライトソースに使用できるグラデーションのグレースケール画像を生成します。RGBまたはHEXで色を指定できます。"
+    },
+    "CalculateNormalsFromImages": {
+        "title": "法線を計算",
+        "inputs": {
+            "images": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "入力範囲 中心"
+        },
+        "outputs": {
+            "divided": "区切り",
+            "normal": "法線画像"
+        },
+        "description": "異なる角度の画像から法線を計算します。\n左、右、下、上の4枚を含む画像バッチが必要です。"
+    },
+    "LoadHDRImage": {
+        "title": "HDR画像を読み込み",
+        "widgets": {
+            "image": "画像",
+            "exposure": "露出",
+            "exposures": "露出"
+        },
+        "outputs": {
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        },
+        "description": "inputフォルダから.hdr画像を読み込みます。\nLDR画像バッチを出力します。"
+    },
+    "BackgroundScaler": {
+        "title": "背景グレースケール",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "scale": "スケール",
+            "invert": "反転"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        },
+        "description": "マスク領域をグレースケール画像に変換します"
+    },
+    "DetailTransfer": {
+        "title": "ディテール転送",
+        "inputs": {
+            "target": "対象画像",
+            "source": "参考画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "mode": "モード",
+            "blur_sigma": "ぼかしSigma",
+            "blend_factor": "混合係数"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    }
+}

@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "Charger le modèle ICLight",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "widgets": {
+            "model_path": "Modèle"
+        },
+        "outputs": {
+            "MODEL": "Modèle"
+        },
+        "description": "Une méthode un peu pénible mais efficace pour lire les modèles IC-Light.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nÀ utiliser avec le nœud de condition ICLight."
+    },
+    "ICLightConditioning": {
+        "title": "Appliquer la condition ICLight",
+        "inputs": {
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "vae": "VAE",
+            "foreground": "Latent du premier plan",
+            "opt_background": "Latent d'arrière-plan (facultatif)"
+        },
+        "widgets": {
+            "multiplier": "Multiplicateur"
+        },
+        "outputs": {
+            "positive": "Condition positive",
+            "negative": "Condition négative",
+            "empty_latent": "Latent vide"
+        },
+        "description": "Nœud de condition pour les modèles IC-Light. Pour utiliser l'« arrière-plan Latent », il faut passer le modèle IC-Light à la version « fbc »."
+    },
+    "LightSource": {
+        "title": "Source lumineuse simple",
+        "inputs": {
+            "prev_image": "Image  précédente"
+        },
+        "widgets": {
+            "light_position": "Position de la source lumineuse",
+            "multiplier": "Luminosité",
+            "start_color": "Couleur de départ",
+            "end_color": "Couleur finale",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "batch_size": "Taille du lot"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Génère une image en dégradé de gris utilisable avec la source lumineuse simple. Les couleurs peuvent être indiquées en RVB ou en HEX."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Calcul des normales",
+        "inputs": {
+            "images": "Image",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Plage d'entrée  centre"
+        },
+        "outputs": {
+            "divided": "Séparateur",
+            "normal": "Image des normales"
+        },
+        "description": "Calcule les normales à partir d'images prises sous des angles différents.\nNécessite un lot de 4 images : gauche, droite, bas, haut"
+    },
+    "LoadHDRImage": {
+        "title": "Charger une image HDR",
+        "widgets": {
+            "image": "Image (entrée)",
+            "exposure": "Exposition",
+            "exposures": "Exposition"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)",
+            "MASK": "Masque"
+        },
+        "description": "Charge les images .hdr depuis le dossier input.\nSort sous forme de lot d'images LDR."
+    },
+    "BackgroundScaler": {
+        "title": "Fond en niveaux de gris",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "scale": "Mise à l'échelle",
+            "invert": "Inverser"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        },
+        "description": "Ajuste la région du masque en image en niveaux de gris"
+    },
+    "DetailTransfer": {
+        "title": "Transfert de détails",
+        "inputs": {
+            "target": "Image cible",
+            "source": "Image de référence",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)",
+            "blur_sigma": "Sigma de flou",
+            "blend_factor": "Coefficient de mélange"
+        },
+        "outputs": {
+            "IMAGE": "Image (sortie)"
+        }
+    }
+}

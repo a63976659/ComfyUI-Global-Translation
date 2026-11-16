@@ -1,0 +1,622 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "Улучшенное объединение видео DaSiWa",
+        "inputs": {
+            "images": "Изображение",
+            "audio": "Аудио"
+        },
+        "widgets": {
+            "frame_rate": "Частота кадров",
+            "codec": "Формат кодирования",
+            "container": "Формат контейнера",
+            "bit_depth": "Глубина цвета",
+            "quality": "Качество",
+            "log_level": "Уровень логирования",
+            "pingpong": "Режим пинг-понга",
+            "save_metadata": "Сохранять метаданные",
+            "filename_prefix": "Префикс имени файла",
+            "save_output": "Сохранить вывод",
+            "pass_frames": "Пропустить кадры",
+            "crop_to_audio": "Обрезать по аудио",
+            "audio_codec": "Кодирование аудио",
+            "audio_bitrate": "Битрейт аудио",
+            "save_first_frame": "Сохранить первый кадр",
+            "save_last_frame": "Сохранить последний кадр"
+        },
+        "outputs": {
+            "frames": "Кадр",
+            "filename": "Имя файла"
+        },
+        "description": "Объединяет пакет изображений в видео высокого качества с автоматическим выбором NVENC/GPU, необязательным пинг-понгом, метаданными рабочего процесса ComfyUI и запасным вариантом MP4."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "Подготовка кадрирования инпейнта DaSiWa",
+        "inputs": {
+            "image": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "target_width": "Целевая ширина",
+            "target_height": "Целевая высота",
+            "mask_blur": "Размытие маски",
+            "mask_min": "Минимум маски",
+            "mask_max": "Максимум маски",
+            "grow_px": "Расширить пиксели",
+            "can_shrink": "Можно уменьшить"
+        },
+        "outputs": {
+            "cropped_image": "Изображение после обрезки",
+            "cropped_mask": "Маска после обрезки",
+            "bbox_x": "X координата рамки",
+            "bbox_y": "Y координата рамки",
+            "bbox_w": "Ширина рамки",
+            "bbox_h": "Высота рамки"
+        },
+        "description": "Подготовка изображения и маски для инпейнта: извлечение границ, кадрирование, масштабирование."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "Составление инпейнта DaSiWa",
+        "inputs": {
+            "destination": "Цель",
+            "source": "Источник",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "x": "Координата X",
+            "y": "Координата Y",
+            "w": "Ширина",
+            "h": "Высота",
+            "correction_method": "Метод коррекции"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "Составляет исправленную заплатку обратно в исходное изображение с коррекцией цвета."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "Селектор модели DaSiWa LLM",
+        "widgets": {
+            "model": "Модель",
+            "custom_path": "Пользовательский путь",
+            "hf_repo_id": "ID репозитория HF",
+            "hf_revision": "Ревизия HF",
+            "download_if_missing": "Скачать при отсутствии",
+            "backend": "Бэкенд",
+            "task": "Задача",
+            "device": "Устройство",
+            "dtype": "Тип данных",
+            "quantization": "Квантование",
+            "cache_mode": "Режим кэша",
+            "trust_remote_code": "Доверять удалённому коду",
+            "attention_implementation": "Реализация внимания",
+            "kv_cache_implementation": "Реализация кэша KV",
+            "kv_cache_quant_backend": "Бэкенд квантования кэша KV",
+            "kv_cache_nbits": "Разрядность кэша KV",
+            "kv_cache_residual_length": "Длина остатка кэша KV",
+            "llama_n_ctx": "Контекстное окно Llama",
+            "llama_n_gpu_layers": "Слоёв Llama на GPU",
+            "llama_n_threads": "Потоки Llama",
+            "llama_chat_format": "Формат чата Llama",
+            "ollama_model": "Модель Ollama",
+            "ollama_url": "Адрес Ollama",
+            "ollama_timeout": "Тайм-аут Ollama"
+        },
+        "outputs": {
+            "llm_config": "Конфигурация LLM"
+        },
+        "description": "Селектор модели DaSiWa LLM: выбор локальной папки transformers LLM/VLM из ComfyUI/models/llm с настройкой кэша, типа данных, устройства и поведения выгрузки."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "Анализ DaSiWa LLM",
+        "inputs": {
+            "llm_config": "Конфигурация LLM",
+            "images": "Изображение",
+            "text_input": "Вход текста"
+        },
+        "widgets": {
+            "system_prompt_preset": "Пресет системного промпта",
+            "system_prompt": "Системный промпт",
+            "prompt": "Промпт",
+            "max_new_tokens": "Макс. новых токенов",
+            "max_input_tokens": "Макс. входных токенов",
+            "temperature": "Температура",
+            "top_p": "Top_p",
+            "repetition_penalty": "Штраф за повторы",
+            "use_kv_cache": "Использовать кэш KV",
+            "seed": "Случайное зерно",
+            "max_frames": "Максимальное число кадров",
+            "frame_stride": "Шаг кадров",
+            "frame_strategy": "Стратегия кадров",
+            "resize_max_px": "Макс. пикселей при изменении",
+            "resize_algorithm": "Алгоритм изменения",
+            "memory_cleanup": "Очистка памяти"
+        },
+        "outputs": {
+            "response": "Ответ",
+            "info": "Информация"
+        },
+        "description": "Анализ DaSiWa LLM: запускает локальную текстовую или визуально-языковую модель на подключённом тексте, изображении или пакете кадров VHS/видео и возвращает строковый ответ."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "Загрузчик LoRA DaSiWa LTX2",
+        "inputs": {
+            "model": "Модель",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "Данные стека",
+            "model_type": "Тип модели",
+            "use_cache": "Включить кэш файлов LoRA",
+            "available_loras": "Список доступных LoRA"
+        },
+        "outputs": {
+            "MODEL": "Модель",
+            "CLIP": "CLIP"
+        },
+        "description": "Расширенный загрузчик LoRA DaSiWa: стек обычных LoRA для изображений/видео или видео/аудио LoRA LTX-2.3. Разделение аудио доступно только для LTX-2.3."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "Конфигурация метаданных DaSiWa",
+        "inputs": {
+            "node_positive": "Узел положительного условия",
+            "node_negative": "Узел негативного условия",
+            "node_model": "Узел модели",
+            "node_latent": "Узел Latent",
+            "node_noise": "Узел шума",
+            "node_sigmas": "Узел Sigma",
+            "node_sampler": "Узел сэмплера",
+            "extra_metadata": "Дополнительные метаданные",
+            "text_positive": "Положительный текст",
+            "text_negative": "Негативный текст",
+            "text_steps": "Текст числа шагов",
+            "text_cfg": "Текст CFG",
+            "text_sampler": "Текст сэмплера",
+            "text_scheduler": "Текст планировщика",
+            "text_seed": "Текст случайного зерна",
+            "text_model": "Текст модели",
+            "save_output": "Сохранить вывод"
+        },
+        "widgets": {
+            "save_workflow": "Сохранить рабочий процесс",
+            "model_hash": "Хеш модели"
+        },
+        "outputs": {
+            "config": "Конфигурация"
+        },
+        "description": "Конфигурация метаданных DaSiWa: сборка параметров метаданных рабочего процесса и необязательных автоопределяемых связей в компактный конфигурационный выход для сохранителя изображений."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "Сохранение изображения с метаданными DaSiWa",
+        "inputs": {
+            "images": "Изображение",
+            "metadata_config": "Конфигурация метаданных",
+            "extra_metadata": "Дополнительные метаданные"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "file_format": "Формат файла",
+            "compression": "Сжатие",
+            "save_output": "Сохранить вывод"
+        },
+        "outputs": {
+            "filename": "Имя файла",
+            "metadata": "Метаданные"
+        },
+        "description": "Сохранение изображения с метаданными DaSiWa: сохранение изображений PNG или WebP с данными рабочего процесса ComfyUI и метаданными генерации, совместимыми с A1111/Civitai."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "Сохранение изображения с метаданными DaSiWa (полный)",
+        "inputs": {
+            "images": "Группа изображений",
+            "metadata_config": "Конфигурация метаданных",
+            "extra_metadata": "Дополнительные метаданные",
+            "node_positive": "Узел положительного условия",
+            "node_negative": "Узел негативного условия",
+            "node_model": "Узел модели",
+            "node_latent": "Узел Latent",
+            "node_noise": "Узел шума",
+            "node_sigmas": "Узел Sigma",
+            "node_sampler": "Узел сэмплера",
+            "text_positive": "Позитивный промпт",
+            "text_negative": "Негативный промпт",
+            "text_steps": "Количество шагов",
+            "text_cfg": "Значение CFG",
+            "text_sampler": "Сэмплер",
+            "text_scheduler": "Планировщик",
+            "text_seed": "Случайное зерно",
+            "text_model": "Модель текста"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "file_format": "Формат файла",
+            "compression": "Уровень сжатия",
+            "save_output": "Сохранить вывод",
+            "save_workflow": "Сохранить рабочий процесс",
+            "model_hash": "Хеш модели"
+        },
+        "outputs": {
+            "filename": "Имя файла",
+            "metadata": "Метаданные"
+        },
+        "description": "Сохранение изображения с метаданными DaSiWa (полный): расширенный вариант сохранителя, все порты определения метаданных и ручной перезаписи выведены непосредственно на узел."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "Создание доп. метаданных DaSiWa",
+        "inputs": {
+            "extra_metadata": "Дополнительные метаданные"
+        },
+        "widgets": {
+            "key": "Ключ",
+            "value": "Значение"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "Дополнительные метаданные"
+        },
+        "description": "Создание доп. метаданных DaSiWa: создание или расширение пользовательских пар ключ-значение метаданных для сохранителя изображений."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "Генератор случайных строк DaSiWa",
+        "inputs": {
+            "text": "Текст"
+        },
+        "outputs": {
+            "text": "Текст"
+        },
+        "description": "Генератор случайных строк DaSiWa: передаёт текст, заменяя каждую группу {A|B|C} случайно выбранным вариантом"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "Увеличение и доработка DaSiWa RTX",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "denoise": "Шумоподавление",
+            "deblur": "Устранение размытия",
+            "scale": "Масштаб",
+            "megapixels": "Мегапиксели",
+            "width": "Ширина",
+            "height": "Высота",
+            "device_id": "ID устройства",
+            "empty_cache": "Очистить кэш",
+            "denoise_quality": "Качество шумоподавления",
+            "deblur_quality": "Качество устранения размытия",
+            "upscale": "Увеличить",
+            "upscale_quality": "Качество увеличения",
+            "resize_type": "Тип изменения размера",
+            "divisible_by": "Делитель нацело",
+            "ratio_preset": "Пресет соотношения",
+            "resize_method": "Метод изменения размера",
+            "use_mmap": "Использовать mmap",
+            "auto_unload_models": "Автовыгрузка моделей"
+        },
+        "outputs": {
+            "images": "Изображение"
+        },
+        "description": "DaSiWa RTX-апскейлер и доработка: высокопроизводительный узел с трёхэтапной обработкой. 1. Этап улучшения: работа в исходном разрешении с визуальными эффектами NVIDIA RTX для удаления шума или размытия. 2. Этап увеличения: 4-кратное увеличение изображения в режиме VSR или высокого битрейта. Покадровая обработка для низкого потребления VRAM при работе с видео."
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "Калькулятор масштаба разрешения DaSiWa",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "resolution_preset": "Пресет разрешения",
+            "aspect_preset_when_not_image": "Пресет соотношения при не-изображении",
+            "no_scale": "Без масштабирования",
+            "scale_from_image": "Масштаб от изображения",
+            "swap_aspect_when_not_image": "Менять соотношение при не-изображении",
+            "custom_aspect_width": "Пользовательская ширина соотношения",
+            "custom_aspect_height": "Пользовательская высота соотношения",
+            "mode": "Режим",
+            "custom_divisor": "Пользовательский делитель"
+        },
+        "outputs": {
+            "width_int": "Целочисленная ширина",
+            "height_int": "Целочисленная высота",
+            "width_float": "Ширина (float)",
+            "height_float": "Высота (float)"
+        },
+        "description": "Калькулятор масштаба разрешения DaSiWa: расчёт математически точного разрешения на основе целевой области в мегапикселях. - Стандартный режим: чистое математическое масштабирование. - Режим WAN/LTX: выравнивание по границе 32 пикселей (необходимо для VAE WAN/LTX). - Без масштабирования: перезапись всех вычислений, вывод исходного размера изображения"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "Изменение размера DaSiWa Torch",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "size_mode": "Режим размера",
+            "aspect_mode": "Режим соотношения",
+            "target_width": "Целевая ширина",
+            "target_height": "Целевая высота",
+            "scale_multiplier": "Коэффициент масштабирования",
+            "interpolation": "Интерполяция",
+            "gamma_correct": "Гамма-коррекция",
+            "divisible_by": "Делитель нацело",
+            "pad_color": "Цвет заливки",
+            "crop_position": "Позиция кадрирования",
+            "batch_size": "Размер пакета",
+            "max_batch_megapixels": "Макс. мегапиксели пакета",
+            "cache_size": "Размер кэша"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "Инструмент пакетного изменения размера PyTorch без зависимостей для изображений ComfyUI. Поддерживает точную по пикселям интерполяцию: ближайший сосед, билинейная, бикубическая, областная и кэшированная разделимая Lanczos-пересэмплирование"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "Переключатель состояния узла DaSiWa",
+        "widgets": {
+            "enabled": "Включено",
+            "trigger_on": "Условие срабатывания",
+            "action": "Операция"
+        },
+        "outputs": {
+            "enabled_out": "Включить вывод"
+        },
+        "description": "Переключатель состояния узла DaSiWa: заглушает или обходит подключённый целевой узел в зависимости от булева состояния, с выходом включения для цепочки переключателей"
+    },
+    "DaSiWa_Watermark": {
+        "title": "Водяной знак DaSiWa",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "watermark_path": "Путь к водяному знаку",
+            "position": "Расположение",
+            "scale": "Масштаб",
+            "resampling": "Пересэмплирование",
+            "transparency": "Прозрачность",
+            "rotation": "Поворот",
+            "padding_x": "Отступ по оси X",
+            "padding_y": "Отступ по оси Y",
+            "optical_padding": "Оптическое заполнение",
+            "optical_strength": "Оптическая интенсивность",
+            "random_switches": "Случайные переключатели",
+            "fade": "Затухание",
+            "fade_margin": "Отступ затухания",
+            "randomize_position": "Случайное расположение",
+            "random_seed": "Случайное зерно"
+        },
+        "description": "Водяной знак DaSiWa: профессиональный узел наложения водяных знаков со стабильной CPU-композитацией. Выходной пакет хранится в ОЗУ, смешивание начинается с инициализированного исходного кадра для предотвращения мерцания, поддержка бикубического/Lanczos-масштабирования, поворота и «оптического заполнения» для идеального визуального выравнивания"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "Конструктор промптов DaSiWa",
+        "inputs": {
+            "positive_input": "Положительный вход",
+            "negative_input": "Негативный вход"
+        },
+        "widgets": {
+            "style": "Стиль",
+            "seed": "Случайное зерно",
+            "token_budget": "Бюджет токенов",
+            "selection_state": "Состояние выбора",
+            "reroll": "Повторный случай",
+            "auto_reroll": "Автоматический повторный случай"
+        },
+        "outputs": {
+            "positive_prompt": "Позитивный промпт",
+            "negative_prompt": "Негативный промпт"
+        },
+        "description": "Создание положительных и негативных промптов из встроенной библиотеки стилей. Выбранные значения и веса сохраняются в рабочем процессе."
+    },
+    "DaSiWa_SeedControl": {
+        "title": "Независимый контроллер зерна DaSiWa",
+        "description": "Независимый узел управления зерном, воспроизводящий взаимодействие с зерном MiniMax H3 Director: режимы случайный/фиксированный, 64-битное беззнаковое зерно, повторный случайный/восстановление предыдущего зерна, история последних 10 зёрен, а также вывод объекта NOISE для прямого использования в сэмплере.",
+        "inputs": {
+            "seed": "Внешний вход зерна"
+        },
+        "widgets": {
+            "seed_value": "Локальное значение зерна",
+            "seed_control_state": "Состояние управления зерном",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "Локальное значение зерна, редактируется на передней панели; стандартный элемент управления скрыт.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "Сохранённое состояние управления зерном (JSON): режим, последнее зерно и список недавних зёрен.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "Необязательный внешний вход зерна: при подключении локальные элементы управления отключаются, значение передаётся напрямую."
+        },
+        "outputs": {
+            "seed": "Зерно",
+            "noise": "Шум"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_патч внимания Comfy Kitchen INT8",
+        "description": "Патч модели: при выполнении использует реализацию внимания Comfy Kitchen INT8 для экономии видеопамяти. Если Comfy Kitchen недоступен, используется стандартное внимание ComfyUI.",
+        "inputs": {
+            "model": "Модель"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_режиссёр MiniMax H3",
+        "description": "Узел режиссёра генерации видео/аудио MiniMax H3: объединяет временную шкалу, референсные медиа и конструктор промптов; на выходе — конфигурация режиссёра с полной направляющей информацией для узла MiniMax H3 Director Guide.",
+        "inputs": {
+            "fl2va_model": "Модель FL2VA",
+            "ref2va_model": "Модель REF2VA",
+            "external_width_overwrite": "Перезапись внешней ширины",
+            "external_height_overwrite": "Перезапись внешней высоты",
+            "external_prompt_overwrite": "Перезапись внешнего промпта"
+        },
+        "widgets": {
+            "mode": "Режим",
+            "prompt": "Промпт",
+            "width": "Ширина",
+            "height": "Высота",
+            "duration": "Продолжительность",
+            "ref_image_size": "Размер опорного изображения",
+            "frame_rate": "Частота кадров"
+        },
+        "outputs": {
+            "guide": "Режиссёрский гид",
+            "duration": "Продолжительность",
+            "positive_prompt": "Позитивный промпт",
+            "width": "Ширина",
+            "height": "Высота",
+            "model": "Модель",
+            "fl2va_requested": "Запрос FL2VA",
+            "inpaint_requested": "Запрос инпейнта",
+            "frame_rate": "Частота кадров"
+        },
+        "ui": {
+            "Model Mode:": "Режим модели:",
+            "Image Inpaint": "Инпейнт",
+            "Prompt Mode:": "Режим промпта:",
+            "Simple": "Простой",
+            "Structured": "Структурированный",
+            "Use the simple prompt editor": "Использовать простой редактор промптов",
+            "Use the structured prompt editor": "Использовать структурированный редактор промптов",
+            "One image reference; output exactly one frame through Get Image from Batch.": "Одно опорное изображение; вывод ровно одного кадра через «Получить изображение из пакета».",
+            "Remove": "Удалить",
+            "Clear": "Очистить",
+            "Remove all media and prompts": "Удалить все медиа и промпты",
+            "Nothing to clear yet": "Пока нечего очищать",
+            "Nothing to clear.": "Нечего очищать.",
+            "Open MiniMax H3 Director documentation on GitHub": "Открыть документацию режиссёра MiniMax H3 на GitHub",
+            "T2VA · no input frame": "T2VA · Без входного кадра",
+            "I2VA · one opening-frame slot": "I2VA · Слот начального кадра",
+            "FL2VA · opening and closing-frame slots": "FL2VA · Слоты начального и конечного кадров",
+            "L2VA · one closing-frame slot": "L2VA · Слот конечного кадра",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "Инпейнт · ровно одно изображение · вывод одного кадра через «Получить изображение из пакета» · без видео/аудио",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · До 9 слотов изображений, 3 видео и 3 аудио · максимум 12 файлов",
+            "ASPECT": "СООТНОШЕНИЕ",
+            "RESOLUTION": "Разрешение",
+            "INPUT SCALING": "МАСШТАБИРОВАНИЕ ВХОДА",
+            "Auto": "Авто",
+            "CUSTOM": "Пользовательский",
+            "Native (ShortEdge 768px)": "Исходное (короткая сторона 768 px)",
+            "Off": "Выкл.",
+            "Native (ShortEdge 2048px)": "Исходное (короткая сторона 2048 px)",
+            "Target · Selected Aspect & Resolution": "Цель · выбранное соотношение и разрешение",
+            "Fit": "Вписать",
+            "Fill and crop": "Заполнить и обрезать",
+            "Fit and pad": "Вписать и дополнить",
+            "Long side with divisible crop": "Длинная сторона с делимым кадрированием",
+            "0.26 MP - Preview": "0.26 МП — Предпросмотр",
+            "0.36 MP - Small": "0.36 МП — Малый",
+            "0.52 MP - SD": "0.52 МП — SD",
+            "0.65 MP - Balanced": "0.65 МП — Сбалансированный",
+            "0.83 MP - HD": "0.83 МП — HD",
+            "1.05 MP - HD+": "1.05 МП — HD+",
+            "1.20 MP - HD++": "1.20 МП — HD++",
+            "1.35 MP - 2K lite": "1.35 МП — 2K Lite",
+            "1.75 MP - QHD": "1.75 МП — QHD",
+            "2.10 MP - FHD": "2.10 МП — FHD",
+            "3.30 MP - QHD+": "3.30 МП — QHD+",
+            "4.75 MP - 2K Pro": "4.75 МП — 2K Pro",
+            "6.50 MP - Production": "6.50 МП — Production",
+            "8.30 MP - UHD": "8.30 МП — UHD",
+            "General": "Общие",
+            "Horizontal": "Горизонтальный",
+            "Square": "Квадрат",
+            "Vertical": "Вертикальный",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "Пропустить масштабирование входа — референсы отправляются в MiniMax в исходном размере.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "Уменьшать только если короткая сторона референсов превышает 2048 пикселей; меньшие входы проходят без изменений.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "Изменить размер референсов под выбранную рамку соотношения и разрешения (растяжение, пропорции не сохраняются).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "Масштабировать референсы для размещения внутри целевой рамки с сохранением пропорций.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "Масштабировать референсы с сохранением пропорций для заполнения целевой рамки, затем обрезать выходящее за края.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "Масштабировать референсы с сохранением пропорций для размещения внутри целевой рамки, затем заполнить пустые края.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "Масштабировать так, чтобы длинная сторона совпадала с целевой, затем обрезать до точного делимого целевого размера.",
+            "RATIO W": "Соотношение Ш",
+            "RATIO H": "Соотношение В",
+            "Megapixels": "Мегапиксели",
+            "Fixed pixels": "Фиксированные пиксели",
+            "WIDTH": "Ширина",
+            "HEIGHT": "Высота",
+            "External width/height overwrite · Director sizing and input scaling disabled": "Перезапись внешних размеров · настройка размеров режиссёра и масштабирование входа отключены",
+            "Image/Video": "Изображение/видео",
+            "Image/Video · selected": "Изображение/видео · выбрано",
+            "audio": "Аудио",
+            "audio · selected": "Аудио · выбрано",
+            "Video only": "Только видео",
+            "Audio only": "Только аудио",
+            "Video + embedded audio": "Видео + встроенное аудио",
+            "Full source-duration scale": "Масштаб полной длительности источника",
+            "Full audio waveform; crop markers show the selected reference window": "Полная аудиоволна; метки кадрирования показывают выбранный диапазон референса",
+            "Decoding audio waveform…": "Декодирование аудиоволны…",
+            "Open preview and details": "Открыть предпросмотр и сведения",
+            "T2VA prompt builder": "Конструктор промптов T2VA",
+            "I2VA prompt builder": "Конструктор промптов I2VA",
+            "FL2VA prompt builder": "Конструктор промптов FL2VA",
+            "L2VA prompt builder": "Конструктор промптов L2VA",
+            "REF2VA prompt builder": "Конструктор промптов REF2VA",
+            "Image Inpaint prompt builder": "Конструктор промптов инпейнта",
+            "T2VA simple prompt": "Простой промпт T2VA",
+            "I2VA simple prompt": "Простой промпт I2VA",
+            "FL2VA simple prompt": "Простой промпт FL2VA",
+            "L2VA simple prompt": "Простой промпт L2VA",
+            "REF2VA simple prompt": "Простой промпт REF2VA",
+            "Image Inpaint simple prompt": "Простой промпт инпейнта",
+            "REF2VA prompt builder — write freely; headers are added automatically": "Конструктор промптов REF2VA — пишите свободно, заголовки полей добавляются автоматически",
+            "Prompt": "Промпт",
+            "Insert [Shot N]": "Вставить [Shot N]",
+            "Prefill Labels & Summary": "Заполнить метки и описание",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "Создать метки субъектов/изображений/видео/аудио из вставленных медиа и заполнить шаблон описания",
+            "Preview Prompt": "Предпросмотр промпта",
+            "Show the full prompt that will be sent upstream": "Просмотр полного промпта, который будет отправлен выше по конвейеру",
+            "External prompt detected — builder fields are disabled.": "Обнаружен внешний промпт — поля конструктора отключены.",
+            "Write the complete MiniMax H3 prompt...": "Напишите полный промпт MiniMax H3 здесь…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] Начните описание сцены здесь…",
+            "Describe ambient sounds, dialogue, effects...": "Опишите фоновые звуки, диалоги, эффекты…",
+            "N/A or describe background score...": "Укажите N/A или опишите фоновую музыку…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> — женщина на <Picture 1>, с короткими чёрными волосами и в красном пальто.\n<Picture 1> — начальный кадр-якорь для [Shot 1].\n<Subject 2> — ходьба, взятая из <Video 1>.\n<Video 1> — задаёт траекторию камеры и структуру темпа.\n<Audio 1> — референс тембра голоса для <Subject 1>.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] Используйте <Subject 1> из <Picture 1>, движение и темп <Video 1>, а также голосовые характеристики <Audio 1>.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> (появляется в [Shot 1], [Shot 2]): fully_preserved — идентичность и одежда сохраняются.\n<Picture 1> ([Shot 1] начальный кадр): fully_preserved — якорь начальной композиции.\n<Subject 2> (движение перенесено на <Subject 1>): attribute_transfer — ритм ходьбы применён к <Subject 1>.\n<Video 1> (структура темпа): weak_reference — сохранены общий тайминг и ритм камеры.\n<Audio 1>: reference — тембр и манера подачи следуют оригиналу без копирования сигнала.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] На 00:04.500, ……",
+            "Audio environment description...": "Описание звуковой среды…",
+            "N/A or background score...": "Укажите N/A или опишите фоновую музыку…",
+            "Close and save (Escape or click outside)": "Закрыть и сохранить (Esc или клик вне окна)",
+            "Start:": "Начало:",
+            "End:": "Конец:",
+            "▶ Play crop": "▶ Воспроизвести обрезанный фрагмент",
+            "Playing crop…": "Воспроизведение кадрирования…",
+            "Play only the current crop range": "Воспроизвести только текущий диапазон кадрирования",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "Перетащите выделенную область кадрирования для перемещения; перетащите маркеры на концах для изменения размера.",
+            "Save": "Сохранить",
+            "Cancel": "Отмена",
+            "Full media preview": "Полный предпросмотр медиа",
+            "Done": "Готово",
+            "Copy": "Копировать",
+            "All media and prompts cleared.": "Все медиа и промпты очищены.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA поддерживает только референсы изображений; видео и аудио недоступны.",
+            "This media type is not available in the selected MiniMax mode.": "Данный тип медиа не поддерживается в выбранном режиме MiniMax.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA поддерживает только референсы изображений; выберите дорожку изображений/видео.",
+            "Upload failed": "Ошибка загрузки",
+            "T2VA has no input lanes.": "У T2VA нет входных дорожек.",
+            "This mode does not support audio references.": "Данный режим не поддерживает аудиореференсы.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "Дорожка аудио выбрана. Вставьте файлы здесь с помощью Ctrl+V.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "Дорожка изображений/видео выбрана. Вставьте файлы здесь с помощью Ctrl+V."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_исполнитель режиссёра MiniMax H3",
+        "description": "Преобразует режиссёрский гид в нативные вызовы узлов MiniMax H3: в зависимости от режима гида вызывает MiniMaxH3ImageToVideo или MiniMaxH3ReferenceToVideo, формируя conditioning и latent.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "Режиссёрский гид",
+            "audio_vae": "Аудио VAE"
+        },
+        "outputs": {
+            "positive": "Положительное conditioning",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_кэш остатков MiniMax H3",
+        "description": "Добавляет приблизительный кэш остатков для целых стеков блоков моделей MiniMax H3: в выбранном диапазоне шагов переиспользует предыдущий выход стека блоков, пропуская дорогостоящие пересчёты для ускорения. Чем выше порог, тем больше пропусков, что может снизить точность.",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "reuse_threshold": "Порог переиспользования",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания",
+            "max_steps": "Макс. пропускаемых шагов",
+            "device": "Устройство",
+            "verbose": "Подробный журнал"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        }
+    }
+}

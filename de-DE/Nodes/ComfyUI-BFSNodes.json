@@ -1,0 +1,571 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "BFS AMV-Guidance-Generator",
+        "inputs": {
+            "images": "Bild"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "length": "Länge",
+            "hold": "Halten",
+            "fill": "Füllung",
+            "placement": "Platzierung",
+            "fps": "Bildrate",
+            "indices": "Index",
+            "scene_threshold": "Szenen-Schwellenwert"
+        },
+        "outputs": {
+            "guide": "Guidance",
+            "debug": "Debugging"
+        },
+        "description": "Erzeugt AMV-Guidance (Keyframes + leere Frames). external_images kann Bilder automatisch auf die Musikbeats setzen (placement auf audio_beats stellen). Gib `Guidance` in den VAE oder das Referenzmodul ein."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "BFS Bernini Bedingte Generierung Anime-zu-Fotorealismus",
+        "inputs": {
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "vae": "VAE",
+            "guide_video": "Guidance-Video"
+        },
+        "widgets": {
+            "length": "Länge"
+        },
+        "outputs": {
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "latent": "Latent",
+            "debug": "Debugging"
+        },
+        "description": "Reine Video-zu-Video (v2v) Anime-zu-Fotorealismus-Bedingungsgenerierung für das Bernini-R Anime-zu-Realismus-LoRA. guide_video entspricht source_id 1 (Anime-Canvas) | die Ausgabe entspricht source_id 0 (echtes Foto). Keine Referenzmodule. Guidance wird gleichzeitig auf Positiv und Negativ angewendet, daher verstärkt CFG nur den Text-Prompt (Foto-Realismus-Stil) und nicht die Referenz. Verwende moderates CFG; Guidance erhält Bewegung/Layout. Bitte verwende dieses LoRA nicht zusammen mit Gesichtsaustausch-Knoten: sie injizieren source_id 2-Token, die das Anime-zu-Realismus-LoRA im Training nie gesehen hat."
+    },
+    "LTXColorMask": {
+        "title": "LTX-Farbmaske",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "color": "Farbe",
+            "style": "Stil",
+            "marker_radius_frac": "Marker-Radius-Verhältnis",
+            "custom_r": "Benutzerdefiniertes R",
+            "custom_g": "Benutzerdefiniertes G",
+            "custom_b": "Benutzerdefiniertes B",
+            "background_black": "Schwarzer Hintergrund"
+        },
+        "outputs": {
+            "colored_mask": "Farbmaske"
+        },
+        "description": "Färbt rein weiße/binäre SAM2-Masken gemäß der scail2v2-Trainingskonvention neu ein. 'silhouette' wird für Guidance-Masken-Slots verwendet, 'flat_marker' (kleiner Farbfleck, ohne Form) für Identitätsmasken-Slots – siehe Hinweis am jeweiligen Eingang, warum sich beide unterscheiden."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "BFS Bernini Bedingte Generierung für Gesichtsaustausch",
+        "inputs": {
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "vae": "VAE",
+            "guide_video": "Guidance-Video",
+            "head_image": "Kopfbild"
+        },
+        "widgets": {
+            "length": "Länge",
+            "amplify_reference": "Referenzverstärkung"
+        },
+        "outputs": {
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "latent": "Latent",
+            "debug": "Debugging"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "BFS Gesichtsaustausch-LoRA Debugging",
+        "inputs": {
+            "model": "Modell"
+        },
+        "outputs": {
+            "model": "Modell",
+            "debug": "Debugging"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV beliebige Inhalte bearbeiten LoRA aufteilen",
+        "inputs": {
+            "lora_name": "LoRA-Name"
+        },
+        "widgets": {
+            "overwrite": "Überschreiben"
+        },
+        "outputs": {
+            "standard_lora_name": "Standard-LoRA-Name",
+            "editanything_module_name": "Modulname für beliebige Inhalte bearbeiten"
+        },
+        "description": "Teilt einen Bearbeitung-beliebiger-Inhalte-Checkpoint in ein Standard-LoRA und Hilfsmodule auf."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV Bearbeitung beliebiger Inhalte Modul-Lader",
+        "widgets": {
+            "module_name": "Modulname"
+        },
+        "outputs": {
+            "editanything_module": "Bearbeitungsmodul für beliebige Inhalte"
+        },
+        "description": "Lädt die Hilfsmodule, die vom LTXV-Aufteilungs-LoRA für beliebige Inhalte erzeugt wurden."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV Bearbeitung beliebiger Inhalte LoRA-Lader",
+        "inputs": {
+            "model": "Modell",
+            "lora_name": "LoRA-Name"
+        },
+        "widgets": {
+            "strength_model": "Modellstärke"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "LoRA-Lader für Checkpoints, mit denen beliebige Inhalte bearbeitet werden."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV beliebige Inhalte bearbeiten anwenden",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "Referenzbild",
+            "lora_name": "LoRA-Name",
+            "guide_frames": "Guidance-Frames",
+            "ref_temporal_offset_latents": "Referenz-Zeitversatz-Latent"
+        },
+        "widgets": {
+            "resize_mode": "Skalierungsmodus",
+            "guide_strength": "Guidance-Stärke",
+            "ref_strength": "Referenzstärke",
+            "role_strength": "Rollenstärke",
+            "adaln_scale": "AdaLN-Skalierung",
+            "enable_adaln": "AdaLN aktivieren",
+            "enable_role_embedding": "Rollen-Einbettungen aktivieren",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modell",
+            "positive": "Positiv",
+            "negative": "Negativ",
+            "latent": "Latent",
+            "ref_image_preview": "Referenzbild-Vorschau"
+        },
+        "description": "Gemeinsame Bearbeitung-beliebiger-Inhalte-Bedingungsgenerierung für Video-zu-Video-Referenz-AdaLN-LoRA. In einem einzigen Knoten werden alle 3 Bedingungssignale aus einem einzigen LoRA-Checkpoint angewendet: ① IC-LoRA-Sequenz kodiert Referenzbilder und optionales Guidance-Video und hängt sie als saubere Bedingungsframes an das Latent an. Layout im Transformer: [Ziel-Token | Referenz-Token @ t=-1 | Guidance-Token @ t=0..T] ② Rollen-Einbettung (role_embedding.embedding.Gewichte[0]) fügt den Referenzbild-Token vor patchify_proj einen gelernten 128-dimensionalen Fingerabdruck hinzu, damit das Modell über Self-Attention zwischen Referenzbild und Guidance-Frame unterscheiden kann. ③ AdaLN-Bedingungsgenerierung (ref_adaln_proj: fc1 → SiLU → proj) poolt das Referenzbild-Latent über die im LoRA gespeicherte Projektor-Form, projiziert es mit einem 2-Schicht-MLP in den AdaLN-Zeitschritt-Raum und addiert es zum Zeitschritt-Bias jedes Transformer-Blocks – ein dauerhafter globaler Anker für das Erscheinungsbild. Nach dem normalen LoRA-Lader und vor dem KSampler anschließen."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "LTXV neutrale Maske anwenden",
+        "inputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "background": "Hintergrund",
+            "hard_edges": "Hart"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Ersetzt die maskierten Bild-/Videobereiche durch einen sauberen einfarbigen Hintergrund; nützlich, bevor Referenzbilder oder Guidance-Frames in die LTXV-Bedingungsgenerierung eingespeist werden."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXV Referenzgröße nach Maske anpassen",
+        "inputs": {
+            "ref_image": "Referenzbild",
+            "size_mask": "Größenmaske",
+            "ref_mask": "Referenzmaske"
+        },
+        "widgets": {
+            "fit": "Anpassung",
+            "background": "Hintergrund",
+            "padding": "Füllung",
+            "hard_edges": "Hart"
+        },
+        "outputs": {
+            "image": "Bild",
+            "object_mask": "Objektmaske"
+        },
+        "description": "Nutzt die Bounding-Box der Maske als Zielgröße des Objekts und skaliert die Referenzgröße auf einer sauberen Leinwand neu. Die Maskenposition wird ignoriert; nur Breite und Höhe bestimmen das Ziel-Skalierungsverhältnis."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV Loop-Sampler für beliebige Inhalte bearbeiten",
+        "inputs": {
+            "model": "Modell",
+            "vae": "VAE",
+            "noise": "Rauschen",
+            "sigmas": "Sigma",
+            "guider": "Guidance",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latents": "Latent",
+            "editanything_module": "Bearbeitungsmodul für beliebige Inhalte",
+            "ref_image": "Referenzbild",
+            "guide_frames": "Guidance-Frames"
+        },
+        "widgets": {
+            "temporal_tile_size": "Zeitblockgröße",
+            "temporal_overlap": "Zeitliche Überlappung",
+            "blend_overlap": "Misch-Überlappung",
+            "lora_name": "LoRA-Name",
+            "ref_resize_mode": "Referenz-Skalierungsmodus",
+            "ref_strength": "Referenzstärke",
+            "guide_strength": "Guidance-Stärke",
+            "role_strength": "Rollenstärke",
+            "adaln_scale": "AdaLN-Skalierung",
+            "enable_ic_lora": "IC-LoRA aktivieren",
+            "enable_role_embedding": "Rollen-Einbettungen aktivieren",
+            "enable_adaln": "AdaLN aktivieren",
+            "reapply_per_chunk": "Pro Block erneut anwenden",
+            "enable_visual_crossattn": "Visuelle Cross-Attention aktivieren",
+            "ref_context_scale": "Referenz-Kontext-Skalierung",
+            "ref_token_scale": "Referenz-Token-Skalierung",
+            "ref_start_block": "Referenz-Startblock",
+            "ref_end_block": "Referenz-Endblock",
+            "ref_init_from": "Quelle der Referenzinitialisierung",
+            "ref_init_seed": "Zufalls-Seed für Referenzinitialisierung",
+            "ref_attn_lora_strength": "Referenz-Attention-LoRA-Stärke",
+            "debug_ea": "EA-Debugging",
+            "ref_temporal_offset_latents": "Referenz-Zeitversatz-Latent"
+        },
+        "outputs": {
+            "denoised_output": "Entrauschte Ausgabe",
+            "ref_image_preview": "Referenzbild-Vorschau",
+            "diff_vs_previous_run": "Abweichung vom vorherigen Lauf"
+        },
+        "description": "Zeitlicher Loop-Sampler mit vollständiger Bearbeitung-beliebiger-Inhalte-Bedingung in jedem Block.\n\nAnalog zu LTXVEditAnythingApply, schneidet das Video aber zeitlich in Slices und wendet in jedem Block erneut die Referenz- plus Guidance-IC-LoRA-Token (über LTXVAddGuide.append_keyframe), die Rollen-Einbettungen und AdaLN an. Jeder Block entspricht einem Slice des Guidance-Videos.\n\nDie Eingaben sind explizite Positiv-/Negativ-Bedingungen; der GUIDER-Eingang liefert nur den Sampling-Mechanismus (CFG/STG-Parameter), dessen Bedingungen werden über guider.set_conds in jedem Block überschrieben."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "LTXV-Latent-Differenzmetriken",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "print_console": "In Konsole ausgeben",
+            "compare_noise_mask": "Rauschmasken vergleichen"
+        },
+        "outputs": {
+            "metrics": "Metriken",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "Kosinus-Ähnlichkeit"
+        },
+        "description": "Vergleicht zwei Latents und meldet MSE/RMSE/L1/PSNR/Kosinus-Ähnlichkeit.\n\nFür A/B-Vergleiche von Optionen: Sampler mit Konfiguration A ausführen, Latent speichern→mit Konfiguration B ausführen→SaveLatent.A und die neue Ausgabe mit diesem Knoten verbinden. Die Ausgabe enthält sowohl eine formatierte Zeichenkette für UI/Konsole als auch einzelne Fließkommazahlen, damit Sie sie mit einem Zeichnungs- oder Text-speichern-Knoten verketten können.\n\nWenn die beiden Latents unterschiedliche Formen haben (z. B. räumliche Abweichung durch VAE-Unterschiede), wird auf den Vergleich des überlappenden Teilbereichs zurückgefallen."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "LTXV-Bild-Differenzmetriken",
+        "inputs": {
+            "image_a": "Bild A",
+            "image_b": "Bild B"
+        },
+        "widgets": {
+            "print_console": "In Konsole ausgeben"
+        },
+        "outputs": {
+            "metrics": "Metriken",
+            "image_a": "Bild A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "Analog zu LTXVLatentDiffMetrics, aber für deodierte Bilder (nach dem VAE) – PSNR nutzt den Pixelbereich [0,1]. Hilfreich, um nach zwei Dekodierläufen visuell relevante Pixelabweichungen zu vergleichen."
+    },
+    "LTXIdentityCAN": {
+        "title": "LTX-Identitäts-CAN",
+        "inputs": {
+            "model": "Modell",
+            "reference_image": "Referenzbild",
+            "can_weights": "CAN-Gewichte"
+        },
+        "widgets": {
+            "strength": "Intensität"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "LTX-Identität Gemma Vision",
+        "inputs": {
+            "reference_image": "Referenzbild"
+        },
+        "outputs": {
+            "conditioning": "Bedingung"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "LTX Mehransichten-Identität",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "Referenzgesicht von vorn",
+            "reference_back_head": "Referenz-Hinterkopf",
+            "reference_body_front": "Referenz-Körperansicht von vorn",
+            "reference_side_profile": "Referenz-Seitenprofil"
+        },
+        "widgets": {
+            "identity_projector": "Identitäts-Projektor",
+            "phase_scale": "Phasen-Skalierung",
+            "id_strength": "Identitätsstärke",
+            "arcface_mode": "ArcFace-Modus",
+            "debug_log": "Debug-Protokoll",
+            "reference_temporal_offset_latents": "Referenz-Zeitversatz-Latent"
+        },
+        "outputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latent": "Latent",
+            "debug": "Debugging"
+        },
+        "description": "Mehransichten-Identitätstransfer: Gesicht von vorn (Pflicht) + optionale Referenzansichten von Hinterkopf/Körper/Seite; jede Ansicht wird als eigenes Überlappungs- plus Quellenphasensegment (source_id 2/3/4/5) injiziert, passend zum Mehransichten-Training. Bitte zuerst das Mehransichten-LoRA auf dem MODELL laden."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "LTX Überlappungs-Identitätsbedingung",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Referenzbild"
+        },
+        "widgets": {
+            "source_id": "Quellen-ID",
+            "phase_scale": "Phasen-Skalierung",
+            "ref_resize_mode": "Referenz-Skalierungsmodus",
+            "debug_log": "Debug-Protokoll",
+            "crop_anchor": "Zuschneide-Ankerpunkt",
+            "reference_guidance_scale": "Referenz-Guidance-Stärke",
+            "reference_temporal_offset_latents": "Referenz-Zeitversatz-Latent"
+        },
+        "outputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latent": "Latent",
+            "debug": "Debugging",
+            "ref_preview": "Referenzvorschau",
+            "crop_overlay": "Zuschnitt-Overlay"
+        },
+        "description": "Überlappungs-/st_drc/strata- plus Quellenphasen-Referenzbedingungen per Modell-Patch, mit experimentellem referenzonly-Zeitversatz zur Verringerung der synthetischen Leckage in Frame 0. Referenzen sind eigenständige Token (nicht I2V) und für jedes Motiv geeignet – nicht nur für Gesichter. Für Checkpoints, die auf gestapelten Referenzen trainiert wurden (Layout='strata'), werden Bildstapel akzeptiert. Bitte zuerst das LoRA auf dem MODELL laden. Die Ausgaben ref_preview/crop_overlay zeigen exakt, was kodiert wird, und bei match_target, welche Teile der Referenz nach dem Zuschneiden behalten (grüner Rahmen) und welche verworfen werden."
+    },
+    "LTXIdentityTransfer": {
+        "title": "LTX-Identitätstransfer",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Referenzbild"
+        },
+        "widgets": {
+            "source_id": "Quellen-ID",
+            "phase_scale": "Phasen-Skalierung",
+            "ref_resize_mode": "Referenz-Skalierungsmodus",
+            "debug_log": "Debug-Protokoll",
+            "crop_anchor": "Zuschneide-Ankerpunkt",
+            "reference_guidance_scale": "Referenz-Guidance-Stärke",
+            "reference_temporal_offset_latents": "Referenz-Zeitversatz-Latent"
+        },
+        "outputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latent": "Latent",
+            "debug": "Debugging",
+            "ref_preview": "Referenzvorschau",
+            "crop_overlay": "Zuschnitt-Overlay"
+        },
+        "description": "Überlappungs-/st_drc/strata- plus Quellenphasen-Referenzbedingungen per Modell-Patch, mit experimentellem referenzonly-Zeitversatz zur Verringerung der synthetischen Leckage in Frame 0. Referenzen sind eigenständige Token (nicht Bild-zu-Video) und für jedes Motiv geeignet – nicht nur für Gesichter. Für Checkpoints, die auf gestapelten Referenzen trainiert wurden (Layout='strata'), werden Bildstapel akzeptiert. Bitte zuerst das LoRA auf dem MODELL laden. Die Ausgaben ref_preview/crop_overlay zeigen exakt, was kodiert wird, und bei match_target, welche Teile der Referenz nach dem Zuschneiden behalten (grüner Rahmen) und welche verworfen werden."
+    },
+    "LTXMultipleControls": {
+        "title": "LTX Multi-Steuerung",
+        "inputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "Guidance-Video",
+            "mask_video": "Maskenvideo",
+            "identity_image": "Identitätsbild",
+            "identity_mask_image": "Identitätsmaskenbild"
+        },
+        "widgets": {
+            "guide_source_id": "Guidance-Quellen-ID",
+            "guide_phase_scale": "Guidance-Phasenskalierung",
+            "guide_layout": "Guidance-Layout",
+            "guide_ref_resize_mode": "Guidance-Referenzbild-Skalierungsmodus",
+            "guide_downscale_factor": "Guidance-Downsampling-Faktor",
+            "mask_source_id": "Masken-Quellen-ID",
+            "mask_phase_scale": "Masken-Phasenskalierung",
+            "mask_layout": "Masken-Layout",
+            "mask_ref_resize_mode": "Masken-Referenzbild-Skalierungsmodus",
+            "mask_downscale_factor": "Masken-Downsampling-Faktor",
+            "auto_mask_guide": "Automatische Masken-Guidance",
+            "mask_white_thresh": "Weißschwellenwert der Maske",
+            "identity_source_id": "Identitäts-Quellen-ID",
+            "identity_phase_scale": "Identitäts-Phasenskalierung",
+            "identity_layout": "Identitäts-Layout",
+            "identity_ref_resize_mode": "Identitäts-Referenzbild-Skalierungsmodus",
+            "identity_downscale_factor": "Identitäts-Downsampling-Faktor",
+            "identity_mask_source_id": "Identitätsmasken-Quellen-ID",
+            "identity_mask_phase_scale": "Identitätsmasken-Phasenskalierung",
+            "identity_mask_layout": "Identitätsmasken-Layout",
+            "identity_mask_ref_resize_mode": "Identitätsmasken-Referenzbild-Skalierungsmodus",
+            "identity_mask_downscale_factor": "Identitätsmasken-Downsampling-Faktor",
+            "crop_anchor": "Zuschneide-Ankerpunkt",
+            "reference_guidance_scale": "Referenz-Guidance-Skalierung",
+            "debug_log": "Debug-Protokoll",
+            "identity_temporal_offset_latents": "Identitäts-Zeitversatz-Latent"
+        },
+        "outputs": {
+            "model": "Modell",
+            "positive": "Positiv-Bedingung",
+            "negative": "Negativ-Bedingung",
+            "latent": "Latent",
+            "debug": "Debug-Info"
+        },
+        "description": "Bündelt Guidance-, Masken-, Identitäts- und Identitätsmasken-Referenzbedingungen in einem einzigen Knotenaufruf, sodass die RoPE-Referenzspezifikationen aller aktivierten Slots tatsächlich verschmolzen werden (verkettete Aufrufe der LTXIdentityOverlapConditioning-Knoten tun das nicht – jeder Aufruf überschreibt die Spezifikation des vorherigen). Jeder Slot ist optional und hat eigene Quellen-ID/Phasen-Skalierung/Layout/Referenz-Skalierungsmodus – nichts ist hartcodiert, nur die Standardanpassung an scail2v2_r128_v13 (Guidance=0, Maske=0, beide ohne Phase; Identität=2, mit Phase). Das Guidance-Video wird im ersetzten Bereich automatisch mit einer schwarzen Maske versehen (auto_mask_guide), um dem Trainingsverfahren von v13 zu entsprechen – dieser Fix ist nötig, damit der Identitätstransfer überhaupt funktioniert. identity_mask wird von v13 nicht verwendet (bitte leer und nicht verbinden); es ist nur für die Abwärtskompatibilität mit älteren Checkpoints geblieben."
+    },
+    "LTXMultishotPrompt": {
+        "title": "LTX Multi-Shot-Prompt",
+        "inputs": {
+            "image_1": "Referenzbild 1",
+            "image_2": "Referenzbild 2",
+            "image_3": "Referenzbild 3",
+            "image_4": "Referenzbild 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "Shot-Korrektur 1",
+            "shot_size_1": "Shot-Größe 1",
+            "camera_move_1": "Kamerabewegung 1",
+            "shot_modifier_2": "Shot-Korrektur 2",
+            "shot_size_2": "Shot-Größe 2",
+            "camera_move_2": "Kamerabewegung 2",
+            "shot_modifier_3": "Shot-Korrektur 3",
+            "shot_size_3": "Shot-Größe 3",
+            "camera_move_3": "Kamerabewegung 3",
+            "shot_modifier_4": "Shot-Korrektur 4",
+            "shot_size_4": "Shot-Größe 4",
+            "camera_move_4": "Kamerabewegung 4"
+        },
+        "outputs": {
+            "references": "Referenzbild",
+            "num_shots": "Anzahl der Shots"
+        },
+        "description": "Erzeugt Multi-Shot-Prompts im ShotPlan-Format sowie die geordneten, grau gefüllten Referenzstapel, die das Multi-Shot-Schichten-LoRA benötigt. Gib `references` in die LTX-Identitätsmigration ein (Layout='strata', Quellen-ID=2, Phasen-Skalierung=1.0) und `Prompt` in deinen LTX-Text-Encoding-Knoten."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX ersten Frame zuschneiden",
+        "inputs": {
+            "images": "Bild"
+        },
+        "widgets": {
+            "trim": "Anzahl beschnittener Frames"
+        },
+        "outputs": {
+            "images": "Bild"
+        },
+        "description": "Entfernt die ersten N Frames des Videos (Bildstapel) – beseitigt das Leckage-Problem über Referenzframe 0."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "BFS Multi-Referenz-Collage",
+        "inputs": {
+            "ref_image_1": "Referenzbild 1",
+            "ref_image_2": "Referenzbild 2",
+            "ref_image_3": "Referenzbild 3",
+            "ref_image_4": "Referenzbild 4",
+            "ref_image_5": "Referenzbild 5"
+        },
+        "widgets": {
+            "fit_mode": "Anpassungsmodus"
+        },
+        "outputs": {
+            "sheet": "Collagenbild",
+            "n_refs": "Anzahl der Referenzbilder",
+            "debug": "Debug-Info"
+        },
+        "description": "Fasst 1-5 angeschlossene Referenzbilder zu dem festen 1536x1024-Collagenbild zusammen, das für das Multi-Referenz-LoRA-Training verwendet wird. Leere Slots reduzieren die Anzahl der Referenzbilder; leere Slots werden einfach übersprungen und nicht mit leerem Inhalt gefüllt."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "Objekte-2x2-Collage",
+        "inputs": {
+            "clothing": "Kleidung",
+            "object_or_person2": "Objekt/Person 2",
+            "scene": "Szene"
+        },
+        "outputs": {
+            "sheet": "Collagenbild",
+            "n_refs": "Anzahl der Referenzbilder",
+            "debug": "Debug-Info"
+        },
+        "description": "Erzeugt das feste 1536x1024 große 2x2-Collagebild der Objekte, wie es für das humoset_sheets_v7 Multi-Referenz-LoRA-Training verwendet wird. Die Quadranten sind fest definiert (oben links: Person, oben rechts: Kleidung, unten links: Objekt/Person 2, unten rechts: Szene); leere Eingaben lassen den jeweiligen Quadranten weiß. Zusammen mit LTXIdentityOverlapConditioning verwenden: Layout=Überlappungsgrad, Quellen-ID=2, Phasen-Skalierung=1.0, Referenz-Skalierungsmodus=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "Framebereichs-Gesichts-Lader",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "frame_start": "Startframe",
+            "frame_end": "Endframe"
+        },
+        "outputs": {
+            "face_sequence": "Gesichtssequenz"
+        },
+        "description": "Verpackt ein einzelnes Gesichtsbild in den Framebereich [Startframe, Endframe]. Gibt eine Gesichtssequenz zurück – eine Liste von Wörterbüchern, wie sie ReservedRegionFrameComposer verwendet. Endframe=-1 bedeutet „bis zum letzten Frame“ (kein Limit)."
+    },
+    "FaceSequenceBatch": {
+        "title": "Gesichtssequenzen-Stapelverarbeitung",
+        "inputs": {
+            "face_sequence_a": "Gesichtssequenz A",
+            "face_sequence_b": "Gesichtssequenz B"
+        },
+        "outputs": {
+            "face_sequence": "Gesichtssequenz"
+        },
+        "description": "Fasst zwei Listen von Gesichtssequenzen zu einer zusammen. Durch Kettung mehrerer Knoten lässt sich ein Stapel mit mehreren Bereichen aufbauen."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "Frame-Composer für reservierte Bereiche",
+        "inputs": {
+            "frames": "Frame",
+            "face_sequence": "Gesichtssequenz",
+            "face_images": "Gesichtsbild"
+        },
+        "widgets": {
+            "region_position": "Bereichsposition",
+            "region_size_px": "Bereichs-Pixelgröße",
+            "face_distribution": "Gesichtsverteilung",
+            "interval_frames": "Anzahl der Intervall-Frames",
+            "overflow_mode": "Überlaufmodus",
+            "stack_direction": "Stapelrichtung",
+            "face_scale_pct": "Gesichts-Skalierungsprozent",
+            "face_padding_px": "Gesichtspolsterung (Pixel)",
+            "face_gap_px": "Gesichtspixelabstand",
+            "face_align_main": "Haupt-Gesichtsausrichtung",
+            "face_align_cross": "Kreuz-Gesichtsausrichtung",
+            "chroma_r": "Chroma R",
+            "chroma_g": "Chroma G",
+            "chroma_b": "Chroma B"
+        },
+        "outputs": {
+            "frames_out": "Ausgabe-Frames"
+        },
+        "description": "ComfyUI-Knoten, der in jedem Frame reservierte Bereiche (links/rechts/oben/unten) komponiert und dabei die ursprüngliche Ausgabe-Framegröße beibehält. Hauptfunktionen: - finale Ausgabeauflösung entspricht der ursprünglichen Frame-Auflösung - Videoinhalt ohne Zuschnitt in den verbleibenden Bereich eingefügt - reservierte Bereiche mit einer Chromafarbe gefüllt - ein oder mehrere Gesichtsbilder in diesem Bereich platziert - zeitliche Verteilungsmodi für Gesichts-Stapel (Bildeingang) unterstützt - frameweise Bereiche über den Gesichtssequenz-Eingang gesetzt werden"
+    }
+}

@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪עוגן קשב לפנים של LTX",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "face_bbox_norm": "נרמול תיבת גבולות של פנים",
+            "strength": "עוצמה",
+            "inject_mode": "מצב הזרקה",
+            "anchor_frame": "פריים מעוגן",
+            "anchor_upsample": "הגדלת העיגון",
+            "track_threshold": "סף מעקב",
+            "face_threshold": "סף פנים",
+            "identity_threshold": "סף זהות",
+            "depth_curve": "עקומת עומק",
+            "spatial_prior": "תחזית מרחבית",
+            "block_index_filter": "מסנן אינדקס בלוקים",
+            "bypass": "עקיפה",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "model": "מודל",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: עוגן זהות עבור אזור הפנים. מאפייני המטמון הועברו לצומת LTXLatentAnchor (יציבות ברמת הסצנה). צומת זה עדיין ממוקד במטרת הפנים.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "עוגן Latent של LTX",
+        "inputs": {
+            "model": "מודל",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "cache_at_step": "מטמון בצעד",
+            "similarity_threshold": "סף דמיון",
+            "decay_with_distance": "דעיכה לפי מרחק",
+            "bypass": "עקיפה",
+            "advanced_mode": "מצב מתקדם",
+            "cache_mode": "מצב מטמון",
+            "forwards_per_step": "מספר העברות קדימה לכל צעד",
+            "cache_warmup": "חימום מטמון",
+            "anchor_frame": "פריים מעוגן",
+            "depth_curve": "עקומת עומק",
+            "block_index_filter": "סינון אינדקס בלוקים",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "עוגן Latent לסצנה שלמה עבור LTX2.x. מייצב את הפרומפט, את התנאים ואת כושר ההבנה הפיזיקלית, ושומר על עקביות לאורך דגימה ממושכת. חבר SIGMAS לזמני מטמון צפויים. עבור למצב מתקדם כדי לגשת לפרמטרים מחקריים."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "עוגן Latent מודע של LTX",
+        "inputs": {
+            "model": "מודל",
+            "reference_image": "תמונת ייחוס",
+            "vae": "VAE",
+            "energy_latent": "Latent אנרגיה",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "cache_at_step": "מטמון בצעד",
+            "similarity_threshold": "סף דמיון",
+            "decay_with_distance": "דעיכה לפי מרחק",
+            "energy_threshold": "סף אנרגיה",
+            "bypass": "עקיפה",
+            "debug": "ניפוי",
+            "advanced_mode": "מצב מתקדם",
+            "cache_mode": "מצב מטמון",
+            "forwards_per_step": "מספר העברות קדימה לכל צעד",
+            "cache_warmup": "חימום מטמון",
+            "anchor_frame": "פריים מעוגן",
+            "depth_curve": "עקומת עומק",
+            "block_index_filter": "סינון אינדקס בלוקים"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "עוגן Latent עם כוונון אנרגיה מרחבית אופציונלי ממקור חיצוני. תמונת הייחוס (או קלט ה-Latent) מספקת משקולות מרחביות; ההתאמה העצמית משתמשת ב-Latent הפעיל (מרחב המאפיינים הנכון)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "מגביר קשב טקסט של LTX",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "text_amplification": "הגברת קשב טקסטואלי",
+            "spatial_focus": "מיקוד מרחבי",
+            "block_index_filter": "סינון אינדקס בלוקים",
+            "bypass": "עקיפה",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "מגביר את הקשב הצולב של הטקסט ב-LTX2 (attn2) בכל בלוק, כדי לפצות על דילול התנאים בעת הגדלת מספר הטוקנים. שימוש בשלב דגימת-העל מחזיר את הנאמנות לפרומפט ואת יציבות הצבעים."
+    },
+    "LTXTiledSampler": {
+        "title": "דוגם בריצוף של LTX",
+        "inputs": {
+            "noise": "רעש",
+            "guider": "מנחה",
+            "sampler": "דוגם",
+            "sigmas": "sigma",
+            "latent_image": "תמונת Latent"
+        },
+        "widgets": {
+            "bypass_tiling": "דילוג על ריצוף",
+            "tile_axis": "ציר ריצוף",
+            "n_tiles": "מספר אריחי ריצוף",
+            "tile_overlap": "חפיפת ריצוף",
+            "max_size_for_no_tile": "גודל מקסימלי ללא ריצוף",
+            "audio_pass": "העברת אודיו",
+            "audio_carrier_tile": "אריח נשא של אודיו",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "output": "פלט",
+            "denoised_output": "פלט לאחר הסרת רעש"
+        },
+        "description": "החלפת drop-in בריצוף ל-SamplerCustomAdvanced, לצורך עידון קל בשלב דגימת-העל של LTX2. כל אריח מריץ דגימה מלאה עם ספירת הטוקנים של התפלגות האימון, ואז ערבוב קוסינוסואידלי. לשימוש רק להסרת רעש קלה. ברירת המחדל מעבירה את האודיו; audio_carrier_tile מריץ את דגימת האודיו במקביל לאריח נבחר אחד (ללא צעדים נוספים). הגדר bypass_tiling=true להעברה שקופה של דגימה סטנדרטית יחידה, לנוחות הניפוי או כאשר ריצוף אינו נדרש."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "ממעלה קנה-מידה של Latent עבור LTXV (גרסת אריחים)",
+        "inputs": {
+            "samples": "דגימות",
+            "upscale_model": "מודל על-רזולוציה",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "גודל אריח",
+            "overlap": "חפיפה",
+            "max_size_for_no_tile": "גודל מקסימלי ללא אריחים",
+            "rotate_for_landscape": "סיבוב להתאמה למסך רחב",
+            "debug": "ניפוי"
+        },
+        "description": "חלופת drop-in באריחים ל-LTXVLatentUpsampler. ביצוע דגימת-על על אריחים מרחביים עם מיזוג חופף של חלון קוסינוס פותר ביעילות היסח צבע ועיוות ביחסי רוחב-גובה קיצוניים. בתסריטים עם יחס רוחב-גובה בטוח הפלט כמעט זהה לגרסה ללא אריחים; במקרים קיצוניים נמנעת אי-יציבות של מודל העל-רזולוציה."
+    },
+    "LTXModelInspector": {
+        "title": "בודק מודל של LTX",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "name_filter": "מסנן שמות",
+            "focus_path": "נתיב מיקוד",
+            "max_modules_listed": "מספר המודולים המרבי שיוצג",
+            "trace_path_contains": "נתיב מעקב מכיל",
+            "max_modules_traced": "מספר המודולים המרבי למעקב",
+            "trace_calls_per_module": "מספר קריאות מעקב לכל מודול",
+            "print_top_level": "הדפס מידע ברמה העליונה"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "בחינת מודל פיזור: מבנה עליון, סינון שמות, נתיבי מיקוד וקרסי מעקב."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "חיבור עצמי עם מעבר צולב של Latent",
+        "inputs": {
+            "frames_0": "פריים_0",
+            "frames_1": "פריים_1"
+        },
+        "widgets": {
+            "match_spatial": "התאמה מרחבית",
+            "interpolate_mode": "מצב אינטרפולציה",
+            "cross_fade_frames": "פריימי מעבר צולב",
+            "fade_curve": "עקומת עמעום"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "התאמה מרחבית אוטומטית + חיבור זמני, עם תמיכה במעבר צולב אופציונלי."
+    },
+    "AudioLatentStretch": {
+        "title": "מתיחת Latent אודיו",
+        "inputs": {
+            "audio_latent": "Latent אודיו"
+        },
+        "widgets": {
+            "source_fps": "FPS מקור",
+            "target_fps": "FPS יעד",
+            "interp_mode": "מצב אינטרפולציה"
+        },
+        "outputs": {
+            "audio_latent": "Latent אודיו"
+        },
+        "description": "דגימה מחדש של Latent האודיו ל-FPS יעד. מומלץ להשתמש במצב Hermite."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "ממעלה קנה-מידה זמני של Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS מקור",
+            "target_fps": "FPS יעד",
+            "interp_mode": "מצב אינטרפולציה",
+            "auto_retime": "שינוי תזמון אוטומטי",
+            "motion_scale": "יחס תנועה",
+            "spatial_sharpen": "חידוד מרחבי",
+            "ltx_safe": "מצב בטוח ל-LTX",
+            "override_frames": "דריסת מספר פריימים"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "דגימת-על זמנית מבוססת Hermite עם תיקון קצב אוטומטי."
+    },
+    "LatentMotionSharpener": {
+        "title": "מחדם תנועה של Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "חידוד בסיסי",
+            "motion_sharpen": "חידוד תנועה",
+            "motion_thresh": "סף תנועה",
+            "temporal_smooth_mask": "מסיכת החלקה במישור הזמן"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "חידוד המותאם באופן הסתגלותי למשרעת התנועה שבין הפריימים."
+    },
+    "LatentMotionRetime": {
+        "title": "שינוי תזמון תנועה של Latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS מקור",
+            "target_fps": "FPS יעד",
+            "strength": "עוצמה",
+            "manual_scale": "קנה מידה ידני"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "דעיכת משרעת התנועה כדי לתקן את קצב ‎24->30fps ב-Latent שעבר דגימת-על."
+    },
+    "LatentTemporalInpainter": {
+        "title": "משחזר זמני של Latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "σ עוגן",
+            "ghost_sigma": "σ רוח רפאים",
+            "score_gamma": "γ ציון",
+            "anchor_blend": "מיזוג עוגן",
+            "seed": "זרע",
+            "debug_scores": "ציוני ניפוי"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "זיהוי רוח רפאים לכל פריים + רעש ממוקד. נועל את הפריים המעוגן האמיתי. לאחר מכן הסר רעש בעוצמה 0.3-0.45 באמצעות KSampler."
+    },
+    "LTXActionAmplifier": {
+        "title": "מגביר פעולה של LTX",
+        "inputs": {
+            "model": "מודל",
+            "clip": "clip",
+            "positive": "פרומפט חיובי"
+        },
+        "widgets": {
+            "amplification_strength": "עוצמת הגברה",
+            "action_vocabulary_text": "טקסט מילון פעולות",
+            "scale_ceiling": "תקרת קנה מידה",
+            "auto_threshold": "סף אוטומטי",
+            "similarity_threshold": "סף דמיון",
+            "similarity_sharpness": "חידוד דמיון",
+            "amplification_floor": "רצפת הגברה",
+            "top_k": "Top-K",
+            "bypass": "עקיפה",
+            "debug": "ניפוי"
+        },
+        "description": "מגביר באופן סלקטיבי טוקנים של פעולה/תנועה בתוך הפרומפט החיובי, מחזק את משרעת ה-K/V של טוקני הפועלים התואמים, ומותיר את הטוקנים התיאוריים ללא שינוי. ההפך הסימטרי של LikenessSemanticClamp, ומחליף את שיטת כוונון היחס הכולל של TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "מזהה פנים של LTX",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "padding": "ריפוד",
+            "fallback_bbox": "תיבת גבול חלופית",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "face_bbox": "תיבת גבול פנים"
+        },
+        "description": "מזהה פנים בתוך התמונה ופולט מחרוזת תיבת גבול מנורמלת. חבר את הפלט אל face_bbox_within_reference של LikenessGuide, אל override_face_bbox/frame_0_bbox של LikenessAnchor, או אל face_bbox_norm של face_anchor. מפריד בין הזיהוי לבין לוגיקת הצומת, כך שמספר צמתים יכולים לשתף את אותה תיבת גבול."
+    },
+    "LTXLikenessAnchor": {
+        "title": "עוגן דמיון של LTX",
+        "inputs": {
+            "model": "מודל",
+            "reference_info": "מידע ייחוס"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "reference_source": "מקור הייחוס",
+            "frame_0_bbox": "תיבת גבול של פריים 0",
+            "similarity_threshold": "סף דמיון",
+            "decay_with_distance": "דעיכה לפי מרחק",
+            "bypass": "עקיפה",
+            "debug": "ניפוי",
+            "advanced_mode": "מצב מתקדם",
+            "depth_curve": "עקומת עומק",
+            "block_index_filter": "סינון אינדקס בלוקים",
+            "similarity_sharpness": "חידוד דמיון",
+            "override_face_bbox": "דריסת תיבת גבול הפנים",
+            "skip_when_sigma_above": "דילוג כאשר sigma חורג",
+            "pull_mode": "מצב משיכה",
+            "late_block_falloff": "דעיכת בלוקים מאוחרים"
+        },
+        "description": "הקשב בכל בלוק נמשך לעבר מאפייני הייחוס לשם שמירה על עקביות הזהות. שני מצבים: (1) קבלת מידע הייחוס מ-LikenessGuide ושימוש בפריים הייחוס המצורף שלו; (2) ללא חיבור מידע ייחוס — הצומת משתמש בפריים 0 של ה-Latent כייחוס, מתאים לזרי עבודת i2v שבהם פריים 0 הוא תמונת הפתיחה המותנית. בגרסה v1.2 משמש מצב המשיכה הכיוונית (שומר על הצבעים)."
+    },
+    "LTXLikenessGuide": {
+        "title": "מנחה דמיון של LTX",
+        "inputs": {
+            "positive": "פרומפט חיובי",
+            "negative": "פרומפט שלילי",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "תמונת ייחוס"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "placement_mode": "מצב הנחה",
+            "face_detect": "זיהוי פנים",
+            "reference_mask_mode": "מצב מסיכת ייחוס",
+            "face_padding": "ריפוד פנים",
+            "crf": "CRF",
+            "blur_radius": "רדיוס טשטוש",
+            "interpolation": "אינטרפולציה",
+            "crop": "חיתוך",
+            "attention_strength": "עוצמת קשב",
+            "face_bbox_within_reference": "תיבת גבול הפנים בתוך הייחוס",
+            "emit_latent": "פליטת latent",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "positive": "פרומפט חיובי",
+            "negative": "פרומפט שלילי",
+            "latent": "latent",
+            "reference_info": "מידע ייחוס"
+        },
+        "description": "מוסיף תמונת ייחוס דומה להגדרות התנאי כדי לשמור על הזהות. פולט את תנאי חיובי/שלילי שעברו שינוי (עבור ה-Guider) ואת מטא-הנתונים של מידע הייחוס (עבור LikenessAnchor). כברירת מחדל, פלט ה-latent הוא העברה של הקלט — ללא הרחבה וללא חיתוך. ערך ההנחיה נובע מהאינטראקציה התנאית שלו עם המודל ועם מטא-הנתונים של ה-bbox, ולא משינויים ב-latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "חיתוך דמיון של LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "מידע ייחוס"
+        },
+        "widgets": {
+            "debug": "ניפוי"
+        },
+        "description": "חותך את פריים הייחוס הדומה מתוך ה-Latent לפני פענוח VAE. הופך את מצב הרחבת emit_latent של LTXLikenessGuide. לשימוש רק כאשר המנחה פולט latent מורחב. אם המנחה נמצא במצב העברה (ברירת המחדל), אין צורך בצומת זה — ניתן לחבר את ה-latent ישירות לפענוח VAE."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "מגביל סמנטי של דמיון LTX",
+        "inputs": {
+            "model": "מודל",
+            "clip": "clip",
+            "positive": "פרומפט חיובי",
+            "reference_info": "מידע ייחוס"
+        },
+        "widgets": {
+            "suppression_strength": "עוצמת דיכוי",
+            "face_modifier_text": "טקסט תיאורי פנים",
+            "similarity_threshold": "סף דמיון",
+            "auto_threshold": "סף אוטומטי",
+            "similarity_sharpness": "חדות דמיון",
+            "suppression_floor": "רצפת דיכוי",
+            "top_k": "top_k",
+            "soft_edge_frac": "יחס שול רך",
+            "override_face_bbox": "דריסת תיבת גבול הפנים",
+            "bypass": "עקיפה",
+            "debug": "ניפוי"
+        },
+        "description": "מפעיל דיכוי סמנטי של טוקני טקסט באזור תיבת גבול הפנים בתוך אזור attn2. באמצעות ההתאמה בין מרחב ההטבעות למילון המילים המתארות, מזהה את טוקני תיאור הפנים שבלפרומפט ודורך באופן סלקטיבי את הקשב של טוקנים אלה לאזור זה. מחליף את שיטת כוונון המשרעת האחידה של LikenessClamp שכבר הושבת."
+    }
+}

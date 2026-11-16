@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "ガウシアン分析",
+        "inputs": {
+            "ply_path": "パス"
+        },
+        "outputs": {
+            "report": "レポート"
+        },
+        "description": "3DGS PLYファイルを確認し、フォーマット／SH次数／精度／サイズを報告します。"
+    },
+    "GaussianExport": {
+        "title": "ガウシアンエクスポート",
+        "inputs": {
+            "ply_path": "パス"
+        },
+        "widgets": {
+            "output_filename": "出力ファイル名",
+            "format": "フォーマット"
+        },
+        "outputs": {
+            "out_path": "出力パス"
+        },
+        "description": "3DGS PLYを別の変換形式（PLYパススルー、SH除去のPLY、SPZ）に変換します。"
+    },
+    "GaussiansFromPointCloud": {
+        "title": "点群内のガウシアン分布",
+        "inputs": {
+            "ply_path": "パス"
+        },
+        "widgets": {
+            "output_filename": "出力ファイル名",
+            "output_dir": "出力ディレクトリ",
+            "init_scale": "初期スケール",
+            "init_opacity": "初期透明度",
+            "knn_k": "Knn K",
+            "subsample_max": "サブサンプルの最大値"
+        },
+        "outputs": {
+            "ply_path": "パス"
+        },
+        "description": "点群PLYを、KNNから導出したスケールを持つ3DGS PLYに変換します。"
+    },
+    "LoadPLY": {
+        "title": "`.ply`ファイルを読み込み",
+        "widgets": {
+            "ply_file": "フォルダ"
+        },
+        "outputs": {
+            "ply_path": "パス"
+        },
+        "description": "ComfyUIのinput/ディレクトリから`.ply`ファイルを参照します。"
+    },
+    "LoadPLYOutput": {
+        "title": "`.ply`出力を読み込み",
+        "widgets": {
+            "ply_file": "PLYファイル"
+        },
+        "outputs": {
+            "ply_path": "PLYパス"
+        },
+        "description": "ComfyUIのoutput/ディレクトリを再帰的に走査して`.ply`ファイルを参照します。"
+    },
+    "GaussianMerge": {
+        "title": "ガウシアンマージ",
+        "inputs": {
+            "ply_path": "PLYパス"
+        },
+        "widgets": {
+            "target_count": "目標数",
+            "output_filename": "出力ファイル名",
+            "opacity_threshold": "不透明度閾値",
+            "k": "k",
+            "backend": "バックエンド"
+        },
+        "outputs": {
+            "ply_path": "PLYパス"
+        },
+        "description": "3DGS PLYをペア方式でガウシアンの目標数までマージします。"
+    },
+    "PreviewGaussians": {
+        "title": "ガウシアン分布をプレビュー",
+        "inputs": {
+            "ply_path": "PLYパス"
+        },
+        "widgets": {
+            "camera_mode": "カメラモード",
+            "fov_degrees": "視野角",
+            "renderer": "レンダラー",
+            "transport_format": "転送フォーマット"
+        },
+        "description": "インタラクティブなガウシアンスプラットビューアー（gspalt.js）です。\n\nオビット（回転ボール）とビューアー（WASD飛行カメラ）の2種類のカメラモードに対応しています。"
+    },
+    "PreviewGaussianCamera": {
+        "title": "ガウシアンカメラをプレビュー",
+        "inputs": {
+            "ply_path": "PLYパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "widgets": {
+            "image_width": "画像幅",
+            "image_height": "画像高さ",
+            "near_plane": "近クリップ平面",
+            "background": "背景",
+            "force_backend": "バックエンド強制"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "指定したカメラポーズで3DGS PLYをIMAGEバッチへレンダリングします。"
+    },
+    "PreviewGaussianDual": {
+        "title": "ガウシアンデュアルプレビュー",
+        "inputs": {
+            "ply_path_1": "PLYパス1",
+            "ply_path_2": "PLYパス2"
+        },
+        "widgets": {
+            "camera_mode": "カメラモード",
+            "fov_degrees": "視野角",
+            "renderer": "レンダラー",
+            "transport_format": "転送フォーマット",
+            "layout": "レイアウト"
+        },
+        "description": "2つのガウシアンスプラットをサイドバイサイドで比較するか、スライダー形式で表示します。"
+    },
+    "PreviewGaussianSharp": {
+        "title": "ガウシアンシャーププレビュー",
+        "widgets": {
+            "ply_path": "PLYパス",
+            "extrinsics": "外部パラメータ",
+            "intrinsics": "内部パラメータ"
+        },
+        "description": "SHARPガウシアンスプラットPlyファイル（gspalt.jsビューアー）をプレビューします。\n\nGeometryPackのガウシアンプレビューを複製：EXTRINSICS/INTRINSICSを受け取り、キャプチャしたカメラ視点を再生成します（カメラは外部パラメータから導出した位置から+Z下向きを看向、FOVは内部パラメータ由来）。キャプチャ原点でのみ正しくなるSHARP／単眼深度セクターガウシアンに最適です。"
+    },
+    "TransformGaussian": {
+        "title": "ガウシアン変換",
+        "inputs": {
+            "ply_path": "PLYパス"
+        },
+        "widgets": {
+            "rotate_x": "X軸周りの回転",
+            "rotate_y": "Y軸周りの回転",
+            "rotate_z": "Z軸周りの回転"
+        },
+        "outputs": {
+            "ply_path": "PLYパス"
+        },
+        "description": "ガウシアンスプラットPlyをXYZ軸周りに回転します（度数）。\n\n位置と各スプラットの四元数を一緒に回転します；存在する場合は法線も回転します。SH AC係数は変更していません（正しいWigner-D回転は今後のステップです）。"
+    }
+}

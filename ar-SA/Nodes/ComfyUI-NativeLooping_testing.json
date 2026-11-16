@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "بداية دورة الموتر",
+        "inputs": {
+            "initial_value": "القيمة الابتدائية"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "iterations": "عدد التكرارات"
+        },
+        "outputs": {
+            "flow_control": "التحكم بالتدفق",
+            "accumulated_count": "العدد التراكمي",
+            "previous_value": "القيمة السابقة",
+            "current_iteration": "عدد التكرارات الحالي"
+        },
+        "description": "يفتح حلقة لجمع المخرجات. يدعم وضعين:\n- عدد التكرارات: ينفّذ عددًا ثابتًا من التكرارات\n- إجمالي عدد الإطارات: يعمل حتى يبلغ التراكم عدد الإطارات المستهدف\nوصل flow_control إلى TensorLoopClose، واستعمل `previous_value` كمدخل للمولَّد، ووصل المخرجات المولَّدة إلى TensorLoopClose.processed.\nيدعم أنواع الصور والأقنعة وLatent."
+    },
+    "TensorLoopClose": {
+        "title": "نهاية حلقة Tensor",
+        "widgets": {
+            "flow_control": "التحكم بالتدفق",
+            "processed": "تمت المعالجة",
+            "accumulate": "تراكم",
+            "overlap": "تراكب",
+            "stop": "إيقاف"
+        },
+        "outputs": {
+            "output": "إخراج"
+        },
+        "description": "يغلق الحلقة التي فتحها TensorLoopOpen.\nالوصلات:\n  - flow_control من TensorLoopOpen\n  - processed: المخرج المولَّد في هذا التكرار\nيدعم أنواع الصور والأقنعة وLatent."
+    },
+    "_AccumulateNode": {
+        "title": "عقدة التراكم",
+        "widgets": {
+            "to_add": "المُراد إضافته",
+            "accumulation": "القيمة التراكمية"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "بداية دورة الشرط",
+        "widgets": {
+            "condition": "شرط"
+        },
+        "outputs": {
+            "flow_control": "التحكم بالتدفق"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "نهاية الحلقة الشرطية",
+        "widgets": {
+            "flow_control": "التحكم بالتدفق",
+            "condition": "شرط"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "حساب الأعداد الصحيحة",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "العمليات"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "تحويل التراكم إلى دفعة صور",
+        "widgets": {
+            "accumulation": "القيمة التراكمية",
+            "overlap_frames": "عدد الإطارات المتراكبة",
+            "overlap_mode": "وضع التراكب"
+        },
+        "outputs": {
+            "result": "النتيجة"
+        },
+        "description": "يضمّ القيم التراكمية لموترات الصور/الأقنعة أو لقواميس Latent في دفعة واحدة."
+    },
+    "_ConditionalSelect": {
+        "title": "اختيار الشرط",
+        "widgets": {
+            "condition": "شرط",
+            "value_if_true": "القيمة عندما يكون الشرط صحيحًا",
+            "value_if_false": "القيمة عندما يكون الشرط خاطئًا"
+        },
+        "outputs": {
+            "result": "النتيجة"
+        },
+        "description": "يعيد value_if_true عندما يكون الشرط True، وإلا يعيد value_if_false.\nيستعمل التقييم الكسول، فلا يحلّل إلا الفرع المختار."
+    },
+    "_ImageAccumStatePack": {
+        "title": "حزم حالة تراكم الصور",
+        "widgets": {
+            "remaining": "الكمية المتبقية",
+            "accum": "القيمة التراكمية",
+            "previous_value": "القيمة السابقة",
+            "count": "عدّ",
+            "open_node_id": "ID عقدة البداية",
+            "total_frames": "إجمالي عدد الإطارات",
+            "prev_accumulated_count": "العدد التراكمي السابق",
+            "blend_overlap": "تراكب المزج"
+        },
+        "outputs": {
+            "loop_state": "حالة الدورة",
+            "should_continue": "هل يُتابع"
+        },
+        "description": "احزم حالة الحلقة في قاموس واحد لاستخدامه في initial_value0 الخاص بـ TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "فكّ حالة تراكم الصور",
+        "widgets": {
+            "loop_state": "حالة الدورة"
+        },
+        "outputs": {
+            "remaining": "الكمية المتبقية",
+            "accumulation": "القيمة التراكمية",
+            "previous_value": "القيمة السابقة",
+            "accumulated_count": "العدد التراكمي",
+            "count": "عدّ",
+            "open_node_id": "ID عقدة البداية",
+            "total_frames": "إجمالي عدد الإطارات"
+        },
+        "description": "فكّ حالة الحلقة من TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "عمليات الدفعات",
+        "widgets": {
+            "batch": "دفعة",
+            "operation": "العمليات",
+            "amount": "العدد",
+            "batch_b": "الدفعة B"
+        },
+        "outputs": {
+            "output": "إخراج"
+        },
+        "description": "عمليات تقطيع الدفعات والاقتصاص والوصل."
+    }
+}

@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "Cargador de modelo SUPIR",
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "sdxl_model": "Modelo SDXL",
+            "fp8_unet": "Precisión FP8 de UNet",
+            "diffusion_dtype": "Tipo de datos de los pesos"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Cargador antiguo, no se recomienda.\n\nCarga el modelo SUPIR y el modelo SDXL y luego los fusiona."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "Cargador de modelo SUPIR_V2",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "fp8_unet": "Precisión FP8 de UNet",
+            "diffusion_dtype": "Tipo de datos de los pesos",
+            "high_vram": "VRAM alta"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Carga el modelo SUPIR y el modelo SDXL y los fusiona.\n\nEl tipo de poda debe dejarse en la opción Automática, salvo que la carga del modelo provoque un error.\n\nfp8_unet：llama a UNet con torch.float8_e4m3fn; reduce los requisitos de VRAM pero afecta levemente la calidad.\n\nAlta VRAM：carga el modelo en la GPU con Accelerate, lo que mejora ligeramente la velocidad de carga."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "Cargador de modelo SUPIR_V2（CLIP）",
+        "inputs": {
+            "model": "Modelo",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "fp8_unet": "Precisión FP8 de UNet",
+            "diffusion_dtype": "Tipo de datos de los pesos",
+            "high_vram": "VRAM alta"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Carga el modelo SUPIR y el modelo SDXL y los fusiona.\n\nEl tipo de poda debe dejarse en la opción Automática, salvo que la carga del modelo provoque un error.\n\nfp8_unet：llama a UNet con torch.float8_e4m3fn; reduce los requisitos de VRAM pero afecta levemente la calidad.\n\nAlta VRAM：carga el modelo en la GPU con Accelerate, lo que mejora ligeramente la velocidad de carga."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR Codificación",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE por bloques",
+            "encoder_tile_size": "Tamaño de fragmento de codificación",
+            "encoder_dtype": "Poda de codificación"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR Decodificación",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE por bloques",
+            "decoder_tile_size": "Tamaño de fragmento de decodificación"
+        },
+        "outputs": {
+            "image": "Imagen"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR Fase uno",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Imagen"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE por bloques",
+            "encoder_tile_size": "Tamaño de fragmento de codificación",
+            "decoder_tile_size": "Tamaño de fragmento de decodificación",
+            "encoder_dtype": "Poda de codificación"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "Imagen",
+            "denoised_latents": "Latent"
+        },
+        "description": "«Primera fase» de SUPIR. Codifica y decodifica la imagen con el denoise_encoder de SUPIR para reparar artefactos de compresión, aunque produce desenfoque en la imagen.\n\nPuede sustituirse por otro muestreador o desenfoque, u omitirse el nodo."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR Condición",
+        "inputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "latents": "Latent",
+            "captions": "Título/subtítulo"
+        },
+        "widgets": {
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo"
+        },
+        "outputs": {
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "description": "Crea la condición para el muestreador.\n La entrada de título es opcional; cuando recibe un título, lo añade al prompt positivo\n Si se aporta una lista de títulos para una sola imagen de entrada, los títulos deben coincidir con el número de teselas\n Consulte SUPIR Imagen por teselas\n Si se aporta una lista de títulos y esta coincide con el lote de imágenes entrante, cada imagen usará su título correspondiente"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR Muestreo",
+        "inputs": {
+            "SUPIR_model": "Modelo SUPIR",
+            "latents": "Latent",
+            "positive": "Condición positiva",
+            "negative": "Condición negativa"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_before_generate": "Acción antes de ejecutar",
+            "steps": "Pasos",
+            "cfg_scale_start": "Escala CFG inicial",
+            "cfg_scale_end": "Escala CFG final",
+            "EDM_s_churn": "Perturbación aleatoria EDM",
+            "s_noise": "Cantidad de ruido",
+            "DPMPP_eta": "Parámetro de tamaño de paso DPMPP",
+            "control_scale_start": "Escala de control inicial",
+            "control_scale_end": "Escala de control final",
+            "restore_cfg": "Restaurar CFG",
+            "keep_model_loaded": "Mantener el modelo cargado",
+            "sampler": "Muestreador",
+            "sampler_tile_size": "Tamaño de fragmento del muestreador",
+            "sampler_tile_stride": "Avance de fragmento del muestreador"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nLatent usado para el muestreo. Cuando se usa un Latent de SUPIR, este elemento solo afecta a la forma del ruido.\n\nEn los demás casos se comporta como el valor predeterminado de ComfyUI. \n\nSi hay una entrada Latent, se usará siempre esa.\n\n- **CFG：**\n\nControla el CFG con interpolación lineal: parte del valor inicial de Escalado CFG inicial y escala linealmente hasta el valor de Escalado CFG final.\n\nPoner ambos elementos en el mismo valor desactiva el escalado por interpolación.\n\n- **EDM_s_churn：**\n\nControla la rapidez con la que el muestreo se adapta a los cambios de ruido del Latent.\n\nSin efecto con el muestreador DPMPP.\n\n- **Cantidad de ruido s_noise：**\n\nControla la cantidad de ruido que se añade al Latent en cada paso del muestreo. \n\n- **DPMPP_eta：**\n\nFactor de escala que influye en la difusión según cómo la reducción de ruido se adapta a la variación del nivel de ruido con el tiempo.\n\nSin efecto con el muestreador EDM. \n\n- **Escala de control control_scale：**\n\nIntensidad del modelo de control de SUPIR, controlada con interpolación lineal de principio a fin.\n\nCuanto menor es el valor, menor es la intensidad de control.\n\n- **CFG de recuperación restore_cfg：**\n\nControla hasta qué punto se recupera la imagen original durante el muestreo.\n\nSirve para afinar el proceso de muestreo.\n\n- **Muestreador：**\n\nEDM necesita muchos pasos, pero suele dar mejor calidad.\n\nDPMPP necesita menos pasos y conviene para modelos Lighting.\n\nEl muestreador por teselas trabaja por bloques: es muy lento, pero permite obtener más resolución con menos VRAM.\n\nAntes de dividir la imagen hay que fijar el tamaño de tesela; el paso de teselado determina el solape entre teselas. Para el teselado puede consultarse el nodo SUPIR imagen por teselas."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR Imagen por teselas",
+        "inputs": {
+            "image": "Imagen"
+        },
+        "widgets": {
+            "tile_size": "Tamaño de tesela",
+            "tile_stride": "Paso de tesela"
+        },
+        "outputs": {
+            "image_tiles": "Teselas de imagen",
+            "tile_size": "Tamaño de tesela",
+            "tile_stride": "Paso de tesela"
+        },
+        "description": "Divide la imagen en teselas con el mismo método que el muestreador por teselas.\n\nSirve para previsualizar las teselas y revertir cada tesela（esta función aún está en desarrollo）."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR Escalado",
+        "inputs": {
+            "image": "Imagen",
+            "captions": "Título/subtítulo"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "sdxl_model": "Modelo SDXL",
+            "seed": "Semilla",
+            "control_before_generate": "Acción antes de ejecutar",
+            "resize_method": "Método de escalado",
+            "scale_by": "Factor de escala",
+            "steps": "Pasos",
+            "restoration_scale": "Escala de restauración",
+            "cfg_scale": "Escala CFG",
+            "a_prompt": "Prompt positivo",
+            "n_prompt": "Prompt negativo",
+            "s_churn": "Factor de atenuación de ruido",
+            "s_noise": "Cantidad de ruido",
+            "control_scale": "Escala de control",
+            "cfg_scale_start": "Intensidad inicial de guía CFG",
+            "control_scale_start": "Peso inicial de ControlNet",
+            "color_fix_type": "Tipo de corrección de color",
+            "keep_model_loaded": "Mantener el modelo cargado",
+            "use_tiled_vae": "VAE por bloques",
+            "encoder_tile_size": "Tamaño de fragmento de codificación",
+            "encoder_tile_size_pixels": "Tamaño de fragmento de decodificación de píxeles",
+            "decoder_tile_size": "Tamaño de fragmento de decodificación",
+            "decoder_tile_size_latent": "Tamaño de fragmento de decodificación Latent",
+            "diffusion_dtype": "Tipo de datos de los pesos",
+            "encoder_dtype": "Poda de codificación",
+            "batch_size": "Tamaño del lote",
+            "use_tiled_sampling": "Usar muestreo por teselas",
+            "used_tiled_sampling": "Usar muestreo por teselas",
+            "sampler_tile_size": "Tamaño de fragmento del muestreador",
+            "sampler_tile_stride": "Avance de fragmento del muestreador",
+            "fp8_unet": "Precisión FP8 de UNet",
+            "fp8_vae": "fp8_vae",
+            "sampler": "Muestreador"
+        },
+        "outputs": {
+            "upscaled_image": "Imagen"
+        }
+    }
+}

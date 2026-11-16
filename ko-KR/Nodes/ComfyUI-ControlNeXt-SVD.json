@@ -1,0 +1,92 @@
+{
+    "DownloadAndLoadControlNeXt": {
+        "title": "ControlNeXt 다운로드 및 로드",
+        "widgets": {
+            "precision": "정밀도"
+        },
+        "outputs": {
+            "controlnext_pipeline": "ControlNeXt"
+        }
+    },
+    "ControlNextGetPoses": {
+        "title": "ControlNeXt 포즈 가져오기",
+        "inputs": {
+            "ref_image": "참조 이미지",
+            "pose_images": "포즈 이미지"
+        },
+        "widgets": {
+            "include_body": "신체",
+            "include_hand": "손",
+            "include_face": "얼굴"
+        },
+        "outputs": {
+            "poses_with_ref": "포즈 및 참조 이미지",
+            "pose_images": "포즈 이미지"
+        }
+    },
+    "ControlNextDiffusersScheduler": {
+        "title": "ControlNeXt 확산 스케줄러",
+        "widgets": {
+            "scheduler": "스케줄러",
+            "sigma_min": "sigma_min",
+            "sigma_max": "sigma_max"
+        },
+        "outputs": {
+            "scheduler": "스케줄러"
+        }
+    },
+    "ControlNextSVDApply": {
+        "title": "ControlNeXt SVD 적용",
+        "inputs": {
+            "model": "모델",
+            "pose_images": "포즈 이미지"
+        },
+        "widgets": {
+            "strength": "강도",
+            "blocks": "blocks",
+            "input_block_patch_after_skip": "input_block_patch_after_skip"
+        },
+        "outputs": {
+            "model": "모델"
+        }
+    },
+    "ControlNextSampler": {
+        "title": "ControlNeXt 샘플러",
+        "inputs": {
+            "controlnext_pipeline": "ControlNeXt",
+            "ref_image": "참조 이미지",
+            "pose_images": "포즈 이미지",
+            "optional_scheduler": "스케줄러(선택)"
+        },
+        "widgets": {
+            "steps": "스텝 수",
+            "motion_bucket_id": "동적 bucketID",
+            "cfg_min": "최소 CFG",
+            "cfg_max": "최대 CFG",
+            "seed": "랜덤 시드",
+            "control_before_generate": "생성 전 제어",
+            "fps": "프레임 레이트",
+            "controlnext_cond_scale": "ControlNeXt 컨디셔닝 계수",
+            "noise_aug_strength": "노이즈 증강",
+            "context_size": "컨텍스트 길이",
+            "context_overlap": "컨텍스트 중복",
+            "keep_model_loaded": "모델 로드 유지"
+        },
+        "outputs": {
+            "samples": "Latent"
+        }
+    },
+    "ControlNextDecode": {
+        "title": "ControlNeXt 디코딩",
+        "inputs": {
+            "controlnext_pipeline": "ControlNeXt",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "decode_chunk_size": "decode_chunk_size"
+        },
+        "outputs": {
+            "images": "이미지"
+        }
+    }
+}

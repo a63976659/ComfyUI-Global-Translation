@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "Gauß-Analyse",
+        "inputs": {
+            "ply_path": "Pfad"
+        },
+        "outputs": {
+            "report": "Bericht"
+        },
+        "description": "Prüft eine 3DGS-PLY-Datei und meldet Format/SH-Ordnung/Genauigkeit/Größe."
+    },
+    "GaussianExport": {
+        "title": "Gauß-Export",
+        "inputs": {
+            "ply_path": "Pfad"
+        },
+        "widgets": {
+            "output_filename": "Ausgabedateiname",
+            "format": "Dateiformat"
+        },
+        "outputs": {
+            "out_path": "Ausgabepfad"
+        },
+        "description": "Wandelt eine 3DGS-PLY-Datei in eine andere Variante um (PLY-Passthrough, PLY ohne SH oder SPZ)."
+    },
+    "GaussiansFromPointCloud": {
+        "title": "Gauß-Verteilung in der Punktwolke",
+        "inputs": {
+            "ply_path": "Pfad"
+        },
+        "widgets": {
+            "output_filename": "Ausgabedateiname",
+            "output_dir": "Ausgabeverzeichnis",
+            "init_scale": "Initiale Skala",
+            "init_opacity": "Initiale Transparenz",
+            "knn_k": "Knn K",
+            "subsample_max": "Maximale Subsampling-Anzahl"
+        },
+        "outputs": {
+            "ply_path": "Pfad"
+        },
+        "description": "Wandelt eine Punktwolken-PLY in eine 3DGS-PLY mit aus KNN abgeleiteter Skala um."
+    },
+    "LoadPLY": {
+        "title": "`.ply`-Datei laden",
+        "widgets": {
+            "ply_file": "Ordner"
+        },
+        "outputs": {
+            "ply_path": "Pfad"
+        },
+        "description": "`.ply`-Dateien im Eingabe-/Ordner von ComfyUI durchsuchen."
+    },
+    "LoadPLYOutput": {
+        "title": "`.ply`-Ausgabe laden",
+        "widgets": {
+            "ply_file": "PLY-Datei"
+        },
+        "outputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "description": "`.ply`-Dateien rekursiv im Output-/Ordner von ComfyUI durchsuchen."
+    },
+    "GaussianMerge": {
+        "title": "Gauß-Zusammenführung",
+        "inputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "widgets": {
+            "target_count": "Zielanzahl",
+            "output_filename": "Ausgabedateiname",
+            "opacity_threshold": "Deckkraftschwelle",
+            "k": "k",
+            "backend": "Verarbeitungs-Backend"
+        },
+        "outputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "description": "Führt eine 3DGS-PLY paarweise auf die Zielanzahl der Gauß-Punkte zusammen."
+    },
+    "PreviewGaussians": {
+        "title": "Vorschau der Gauß-Verteilung",
+        "inputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "widgets": {
+            "camera_mode": "Kameramodus",
+            "fov_degrees": "Sichtfeldwinkel",
+            "renderer": "Darstellungsmodul",
+            "transport_format": "Übertragungsformat"
+        },
+        "description": "Interaktiver Betrachter für Gauß-Punkte (gspalt.js).\n\nUnterstützt zwei Kameramodi: Orbit (Rotationskugel) und Betrachter (WASD-Flugkamera)."
+    },
+    "PreviewGaussianCamera": {
+        "title": "Gauß-Kamera-Vorschau",
+        "inputs": {
+            "ply_path": "PLY-Pfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "widgets": {
+            "image_width": "Bildbreite",
+            "image_height": "Bildhöhe",
+            "near_plane": "Nahe Schnittebene",
+            "background": "Hintergrund",
+            "force_backend": "Backend erzwingen"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Rendert eine 3DGS-PLY anhand der übergebenen Kameraposition zu einem IMAGE-Batch."
+    },
+    "PreviewGaussianDual": {
+        "title": "Gauß-Doppelvorschau",
+        "inputs": {
+            "ply_path_1": "PLY-Pfad 1",
+            "ply_path_2": "PLY-Pfad 2"
+        },
+        "widgets": {
+            "camera_mode": "Kameramodus",
+            "fov_degrees": "Sichtfeldwinkel",
+            "renderer": "Darstellungsmodul",
+            "transport_format": "Übertragungsformat",
+            "layout": "Anordnung der Ansichten"
+        },
+        "description": "Vergleicht zwei Gauß-Punkte nebeneinander oder zeigt sie mit einem Regler an."
+    },
+    "PreviewGaussianSharp": {
+        "title": "SHARP-Gauß-Vorschau",
+        "widgets": {
+            "ply_path": "PLY-Pfad",
+            "extrinsics": "Extrinsische Parameter",
+            "intrinsics": "Intrinsische Parameter"
+        },
+        "description": "Zeigt SHARP-Gauß-Punkt-Ply-Dateien in der Vorschau an (gspalt.js-Betrachter).\n\nKopiert die Gauß-Vorschau von GeometryPack: akzeptiert EXTRINSICS/INTRINSICS und erzeugt den aufgenommenen Kamerablickwinkel neu (die Kamera blickt von der aus den extrinsischen Parametern abgeleiteten Position nach unten auf +Z, das FOV stammt aus den intrinsischen Parametern). Am besten für SHARP-/monokulare Tiefen-Fächer-Gauß-Punkte, die nur am Aufnahmepunkt korrekt sind."
+    },
+    "TransformGaussian": {
+        "title": "Gauß-Punkte umwandeln",
+        "inputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "widgets": {
+            "rotate_x": "Um die X-Achse drehen",
+            "rotate_y": "Um die Y-Achse drehen",
+            "rotate_z": "Um die Z-Achse drehen"
+        },
+        "outputs": {
+            "ply_path": "PLY-Pfad"
+        },
+        "description": "Dreht eine Gauß-Punkt-Ply-Datei um die X-, Y- und Z-Achse (in Grad).\n\nPosition und die Quaternionen jedes Punktes werden mitgedreht; falls vorhanden, werden auch die Normalen gedreht. Die SH AC-Koeffizienten bleiben unverändert (die korrekte Wigner-D-Drehung ist ein späterer Schritt)."
+    }
+}

@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "מדגם K של Flux2Klein (גרסת ניסוי)",
+        "inputs": {
+            "model": "מודל",
+            "positive": "תנאי חיובי",
+            "latent_image": "תמונת Latent",
+            "negative": "תנאי שלילי"
+        },
+        "widgets": {
+            "steps": "מספר צעדים",
+            "seed": "זרע אקראי",
+            "denoise": "עוצמת הורדת רעש",
+            "base_shift": "היסט בסיסי",
+            "max_shift": "היסט מרבי",
+            "cfg_scale": "מקדם קנה מידה של CFG",
+            "guidance_embed": "הטמעת הנחיה"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "עוגן צבע של Flux2Klein",
+        "inputs": {
+            "model": "מודל",
+            "conditioning": "שליטה מותנית"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "ramp_curve": "עקומת עלייה מדורגת",
+            "ref_index": "אינדקס ייחוס",
+            "channel_weights": "משקלי ערוצים",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "מגביר Flux2Klein",
+        "inputs": {
+            "conditioning": "שליטה מותנית",
+            "device": "התקן הרצה"
+        },
+        "widgets": {
+            "active_scale": "קנה מידה של אזור פעיל",
+            "per_token_whiten": "הלבנה פר־טוקן",
+            "norm_equalize": "איזון נורמה",
+            "early_layer_scale": "מקדם קנה מידה של שכבות שטחיות",
+            "mid_layer_scale": "מקדם קנה מידה של שכבות אמצעיות",
+            "late_layer_scale": "מקדם קנה מידה של שכבות עמוקות",
+            "preserve_original": "שמירת הנתונים המקוריים",
+            "active_end_override": "דריסת סיום האזור הפעיל",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": "מבצע פעולות סקלר טהור והלבנה על האזורים הפעילים של השליטה המותנית של Klein, ומספק גם קנה מידה שכבתי של Qwen3 הייחודי ל־Klein."
+    },
+    "Flux2KleinDetailController": {
+        "title": "בקר פרטים של Flux2Klein",
+        "inputs": {
+            "conditioning": "שליטה מותנית",
+            "device": "התקן הרצה"
+        },
+        "widgets": {
+            "front_mult": "מקדם ריבוי של החלק הקדמי",
+            "mid_mult": "מקדם ריבוי של החלק האמצעי",
+            "end_mult": "מקדם ריבוי של החלק האחורי",
+            "emphasis_start": "מיקום התחלה של הדגשה",
+            "emphasis_end": "מיקום סיום של הדגשה",
+            "emphasis_mult": "מקדם ריבוי של הדגשה",
+            "preserve_original": "שמירת הנתונים המקוריים",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": "וסת מקדם הריבוי של ההטמעות המקוטעות.\n\nמצב אמיתי (מומלץ): לשימוש יחד עם מקודד מקטעים. המקודד מייצר טווחי טוקנים של מקטעים כמטא־נתוני שליטה מותנית (`meta[\"klein_sections\"]`); צומת זה מתאים את מקדם הריבוי של ההטמעות הפעילות בטווחים המתאימים לפי המקדמים שהמשתמש הגדיר.\n\nמצב תאימות (גרסה ישנה/לא מומלץ): אם אין מטא־נתוני מקטעים, הצומת מחלק אוטומטית את האזור הפעיל ביחס קבוע של 25%/50%/25%. גבולות החלוקה שרירותיים — לטוקנים של Qwen3 אין סמנטיקה מיקומית קבועה — וגרסה v1 של צומת זה כמעט ואינה מועילה במצב זה. המצב נשמר לצורך תאימות עם workflow ישנים; מומלץ לעבור למקודד מקטעים כדי לקבל קנה מידה מודע־מקטעים בעל משמעות."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "בקר ייחוס מסיכה של Flux2Klein",
+        "inputs": {
+            "conditioning": "שליטה מותנית",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "invert_mask": "היפוך המסכה",
+            "feather": "טשטוש מסיכה",
+            "reference_index": "אינדקס ייחוס",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": "מבצע דעיכה מרחבית של ה־Latent של הייחוס באמצעות המסיכה שצוירה.\n\nכופל את ה־Latent של הייחוס בסקלרים פר־פיקסל שנוצרים מהמסיכה. ה־Latent של השליטה המותנית משתנה במקומו ממש (החלפה של meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "בקר Latent של ייחוס עבור Flux2Klein",
+        "inputs": {
+            "model": "מודל",
+            "conditioning": "שליטה מותנית"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "reference_index": "אינדקס ייחוס",
+            "spatial_fade": "דהייה מרחבית",
+            "spatial_fade_strength": "עוצמת דהייה מרחבית",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "מאזן טקסט וייחוס של Flux2Klein",
+        "inputs": {
+            "model": "מודל",
+            "conditioning": "שליטה מותנית"
+        },
+        "widgets": {
+            "balance": "מקדם איזון",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "וסת משקל של Latent ייחוס עבור Flux2Klein",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "reference_index": "אינדקס ייחוס",
+            "weight": "משקל"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "מגביר טקסט של Flux2Klein",
+        "inputs": {
+            "conditioning": "שליטה מותנית"
+        },
+        "widgets": {
+            "magnitude": "משרעת גלובלית",
+            "contrast": "ניגודיות",
+            "normalize_strength": "עוצמת נרמול",
+            "skip_bos": "דילוג על טוקן ההתחלה",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": "משנה את טוקני השליטה המותנית של הטקסט.\n\nסדר הפעולות:\n1. נרמול: איזון משרעת הטוקנים\n2. ניגודיות: הגדלה והקטנה של ההבדלים בין הטוקנים\n3. משרעת: קנה מידה גלובלי"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "מקודד מקטעים של Flux2Klein",
+        "inputs": {
+            "clip": "עריכה",
+            "separator": "מפריד"
+        },
+        "widgets": {
+            "front_text": "טקסט קדמי",
+            "mid_text": "טקסט אמצעי",
+            "end_text": "טקסט אחורי",
+            "combined_prompt": "מחרוזת פרומפט מאוחדת",
+            "show_preview": "הצגת תצוגה מקדימה",
+            "debug": "מצב ניפוי באגים"
+        },
+        "outputs": {
+            "conditioning": "שליטה מותנית",
+            "front_section": "מקטע קדמי",
+            "mid_section": "מקטע אמצעי",
+            "end_section": "מקטע אחורי",
+            "full_prompt": "מחרוזת הפרומפט המלאה"
+        },
+        "description": "מחלקת לטוקנים את מחרוזות הפרומפט בשלושה חלקים ומייצרת טווחי טוקנים של מקטעים כמטא־נתוני שליטה מותנית, שעליהם בקר הפרטים מצביע."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "העברת מאפייני זהות",
+        "inputs": {
+            "model": "מודל"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "start_block": "בלוק התחלתי",
+            "end_block": "בלוק סיום",
+            "mode": "מצב",
+            "top_k_percent": "אחוז Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "העברת מאפייני זהות (גרסה מתקדמת)",
+        "inputs": {
+            "model": "מודל",
+            "subject_mask": "מסיכת נושא"
+        },
+        "widgets": {
+            "reference_index": "אינדקס ייחוס",
+            "mode": "מצב",
+            "top_k_percent": "אחוז Top K",
+            "double_enable": "הפעלת העברה כפולה",
+            "double_strength": "עוצמת העברה כפולה",
+            "double_start": "נקודת התחלה של העברה כפולה",
+            "double_end": "נקודת סיום של העברה כפולה",
+            "single_enable": "הפעלת העברה יחידנית",
+            "single_strength": "עוצמת העברה יחידנית",
+            "single_start": "נקודת התחלה של העברה יחידנית",
+            "single_end": "נקודת סיום של העברה יחידנית",
+            "block_schedule": "תזמון בלוקים",
+            "sim_floor": "סף תחתון של דמיון",
+            "mask_threshold": "סף מסכה"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "העברת מאפייני זהות V3",
+        "inputs": {
+            "model": "מודל",
+            "subject_mask": "מסיכת נושא"
+        },
+        "widgets": {
+            "preset": "הגדרה מראש",
+            "reference_index": "אינדקס ייחוס",
+            "double_schedule": "תזמון העברה כפולה",
+            "single_schedule": "תזמון העברה יחידנית",
+            "double_sim": "דמיון של העברה כפולה",
+            "single_sim": "דמיון של העברה יחידנית",
+            "commit_margin": "מרווח הגשה",
+            "commit_confirm": "אישור הגשה",
+            "commit_anchor": "עוגן הגשה",
+            "mask_threshold": "סף מסכה",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "העברת מאפייני זהות סופית",
+        "inputs": {
+            "model": "מודל",
+            "subject_mask_1": "מסיכת נושא 1",
+            "subject_mask_2": "מסיכת נושא 2",
+            "subject_mask_3": "מסיכת נושא 3",
+            "subject_mask_4": "מסיכת נושא 4",
+            "subject_mask_5": "מסיכת נושא 5",
+            "subject_mask_6": "מסיכת נושא 6",
+            "subject_mask_7": "מסיכת נושא 7",
+            "subject_mask_8": "מסיכת נושא 8"
+        },
+        "widgets": {
+            "preset": "הגדרה מראש",
+            "enabled": "הפעל",
+            "reference_index": "אינדקס ייחוס",
+            "reference_indices": "רשימת אינדקסי ייחוס",
+            "similarity_floor": "סף תחתון של דמיון",
+            "softmax_temperature": "מקדם טמפרטורה של Softmax",
+            "mask_threshold": "סף מסכה",
+            "double_blocks": "טווח מודולים כפולים",
+            "single_blocks": "טווח מודולים יחידניים",
+            "total_sampling_steps": "סך כל צעדי הדגימה",
+            "debug": "מצב ניפוי באגים"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "הנחיית מאפייני זהות",
+        "inputs": {
+            "model": "מודל",
+            "identity_latent": "Latent של מאפייני זהות"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "start_percent": "אחוז תחילת התוקף",
+            "end_percent": "אחוז סיום התוקף",
+            "mode": "מצב"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "עיבוד Latent של מספר ייחוסי Flux2 Klein",
+        "inputs": {
+            "conditioning": "שליטה מותנית",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "שליטה מותנית"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "מדגם K של FLUX.2 Klein",
+        "inputs": {
+            "model": "מודל",
+            "positive": "פרומפט חיובי",
+            "negative": "פרומפט שלילי",
+            "latent_image": "Latent של תמונה"
+        },
+        "widgets": {
+            "steps": "מספר צעדים",
+            "guidance_scale": "יחס הנחיה",
+            "seed": "זרע",
+            "denoise": "הסרת רעש",
+            "base_shift": "אופסט בסיסי",
+            "max_shift": "היסט מרבי"
+        },
+        "description": "צומת ה־FLUX.2 Klein KSampler משמש ליצירת תמונות במרחב ה־Latent."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "מגביר Flux2 Klein",
+        "inputs": {
+            "conditioning": "תנאי"
+        },
+        "widgets": {
+            "magnitude": "משרעת",
+            "contrast": "ניגודיות",
+            "normalize_strength": "עוצמת נרמול",
+            "preserve_original": "שמירת המקור",
+            "preserve_mode": "מצב שמירה",
+            "edit_text_weight": "משקל טקסט עריכה",
+            "active_end_override": "דריסת סיום האזור הפעיל",
+            "low_vram": "VRAM נמוך",
+            "device": "התקן",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "CONDITIONING": "תנאי"
+        },
+        "description": "מגביר השליטה המותנית של FLUX. .Klein.\n\nהפעולות כוללות:\n- משרעת: קנה מידה ישיר של ההטמעות באזור הפעיל\n- ניגודיות: הגדלת ההבדלים בין הטוקנים\n- נרמול: השוואת גדלי הטוקנים\n- שמירת המקור: ערבוב חזרה להטמעות המקוריות במצבים שונים\n\nכל הפעולות משנות רק את אזור הטקסט הפעיל (אזור המילואים אינו מושפע).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "בקר פרטים של Flux2 Klein",
+        "inputs": {
+            "conditioning": "תנאי"
+        },
+        "widgets": {
+            "front_mult": "מכפיל קדמי",
+            "mid_mult": "מכפיל אמצעי",
+            "end_mult": "מכפיל סיום",
+            "emphasis_start": "תחילת הדגשה",
+            "emphasis_end": "סיום הדגשה",
+            "emphasis_mult": "מכפיל הדגשה",
+            "preserve_original": "שמירת המקור",
+            "preserve_mode": "מצב שמירה",
+            "low_vram": "VRAM נמוך",
+            "device": "התקן",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "CONDITIONING": "תנאי"
+        },
+        "description": "שליטה אזורית בתנאי של FLUX. .Klein.\n\nמחלקת את הטוקנים הפעילים לאזורים:\n- קדמי: נושא/מושג עיקרי\n- אמצעי: פרטים/מתגים\n- סיום: סגנון/מונחי איכות",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "בקר Latent של ייחוס עבור Flux2 Klein",
+        "inputs": {
+            "model": "מודל",
+            "conditioning": "תנאי"
+        },
+        "widgets": {
+            "strength": "עוצמה",
+            "reference_index": "אינדקס ייחוס",
+            "spatial_fade": "עמעום מרחבי",
+            "spatial_fade_strength": "עוצמת עמעום מרחבי",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "MODEL": "מודל",
+            "CONDITIONING": "תנאי"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "איזון טקסט וייחוס של Flux2 Klein",
+        "inputs": {
+            "model": "מודל",
+            "conditioning": "תנאי"
+        },
+        "widgets": {
+            "balance": "איזון",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "MODEL": "מודל",
+            "CONDITIONING": "תנאי"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "מגביר טקסט של Flux2 Klein",
+        "inputs": {
+            "conditioning": "תנאי"
+        },
+        "widgets": {
+            "magnitude": "משרעת",
+            "contrast": "ניגודיות",
+            "normalize_strength": "עוצמת נרמול",
+            "skip_bos": "דילוג על תו ההתחלה",
+            "debug": "ניפוי"
+        },
+        "outputs": {
+            "CONDITIONING": "תנאי"
+        },
+        "description": "משנה את טוקני התנאי של הטקסט.\n\nסדר הפעולות:\n1. נרמול: השוואת גדלי הטוקנים\n2. ניגודיות: הגדלה והקטנה של ההבדלים בין הטוקנים\n3. משרעת: קנה מידה גלובלי",
+        "api_version": "V1"
+    }
+}

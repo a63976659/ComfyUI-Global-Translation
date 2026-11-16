@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "Tensor-Schleifenstart",
+        "inputs": {
+            "initial_value": "Startwert"
+        },
+        "widgets": {
+            "mode": "Modus",
+            "iterations": "Anzahl Iterationen"
+        },
+        "outputs": {
+            "flow_control": "Flusssteuerung",
+            "accumulated_count": "Akkumulierte Anzahl",
+            "previous_value": "Vorheriger Wert",
+            "current_iteration": "Aktuelle Iteration"
+        },
+        "description": "Öffnet eine Schleife zum Sammeln von Ausgaben. Unterstützt zwei Modi:\n- Anzahl Iterationen: führt eine feste Anzahl von Iterationen aus\n- Gesamte Frameanzahl: läuft, bis die angesammelte Ziel-Frameanzahl erreicht ist\nVerbinde flow_control mit TensorLoopClose, verwende `previous_value` als Eingang für die Erzeugung und verbinde die erzeugte Ausgabe mit TensorLoopClose.processed.\nUnterstützt Bild-, Masken- und Latent-Typen."
+    },
+    "TensorLoopClose": {
+        "title": "Tensor-Schleifenende",
+        "widgets": {
+            "flow_control": "Flusssteuerung",
+            "processed": "Verarbeitet",
+            "accumulate": "Akkumulieren",
+            "overlap": "Überlappung",
+            "stop": "Stopp"
+        },
+        "outputs": {
+            "output": "Ausgabe"
+        },
+        "description": "Schließt die von TensorLoopOpen geöffnete Schleife.\nVerbindungen:\n  - flow_control von TensorLoopOpen\n  - processed: die in dieser Iteration erzeugte Ausgabe\nUnterstützt Bild-, Masken- und Latent-Typen."
+    },
+    "_AccumulateNode": {
+        "title": "Akkumulationsknoten",
+        "widgets": {
+            "to_add": "Hinzuzufügen",
+            "accumulation": "Akkumulierter Wert"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "Bedingter Schleifenstart",
+        "widgets": {
+            "condition": "Bedingung"
+        },
+        "outputs": {
+            "flow_control": "Flusssteuerung"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "Bedingtes Schleifenende",
+        "widgets": {
+            "flow_control": "Flusssteuerung",
+            "condition": "Bedingung"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "Ganzzahl-Operation",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "Berechnung"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "Akkumulation zu Bild-Stapel",
+        "widgets": {
+            "accumulation": "Akkumulierter Wert",
+            "overlap_frames": "Überlappende Frames",
+            "overlap_mode": "Überlappungsmodus"
+        },
+        "outputs": {
+            "result": "Ergebnis"
+        },
+        "description": "Fügt die akkumulierten Werte von Bild-/Masken-Tensoren oder Latent-Dictionarys zu einem einzelnen Stapel zusammen."
+    },
+    "_ConditionalSelect": {
+        "title": "Bedingte Auswahl",
+        "widgets": {
+            "condition": "Bedingung",
+            "value_if_true": "Wert, wenn die Bedingung wahr ist",
+            "value_if_false": "Wert, wenn die Bedingung falsch ist"
+        },
+        "outputs": {
+            "result": "Ergebnis"
+        },
+        "description": "Gibt value_if_true zurück, wenn die Bedingung True ist, andernfalls value_if_false.\nVerwendet Lazy Evaluation und wertet nur den gewählten Zweig aus."
+    },
+    "_ImageAccumStatePack": {
+        "title": "Bild-Akkumulationsstatus packen",
+        "widgets": {
+            "remaining": "Verbleibende Anzahl",
+            "accum": "Akkumulierter Wert",
+            "previous_value": "Vorheriger Wert",
+            "count": "Anzahl",
+            "open_node_id": "Startknoten-ID",
+            "total_frames": "Gesamte Frameanzahl",
+            "prev_accumulated_count": "Zuvor akkumulierte Anzahl",
+            "blend_overlap": "Misch-Überlappung"
+        },
+        "outputs": {
+            "loop_state": "Schleifenstatus",
+            "should_continue": "Fortfahren?"
+        },
+        "description": "Packt den Schleifenstatus in ein einzelnes Dictionary, zur Verwendung für initial_value0 von TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "Bild-Akkumulationsstatus entpacken",
+        "widgets": {
+            "loop_state": "Schleifenstatus"
+        },
+        "outputs": {
+            "remaining": "Verbleibende Anzahl",
+            "accumulation": "Akkumulierter Wert",
+            "previous_value": "Vorheriger Wert",
+            "accumulated_count": "Akkumulierte Anzahl",
+            "count": "Anzahl",
+            "open_node_id": "Startknoten-ID",
+            "total_frames": "Gesamte Frameanzahl"
+        },
+        "description": "Entpackt den Schleifenstatus aus TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "Stapel-Operationen",
+        "widgets": {
+            "batch": "Stapel",
+            "operation": "Berechnung",
+            "amount": "Anzahl",
+            "batch_b": "Stapel B"
+        },
+        "outputs": {
+            "output": "Ausgabe"
+        },
+        "description": "Stapel-Operationen zum Slicen, Trimmen und Zusammenfügen."
+    }
+}

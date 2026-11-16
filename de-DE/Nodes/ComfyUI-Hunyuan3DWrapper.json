@@ -1,0 +1,516 @@
+{
+    "Hy3DTorchCompileSettings": {
+        "title": "Hunyuan3D Torch-Kompilierungseinstellungen",
+        "widgets": {
+            "backend": "Verarbeitungs-Backend",
+            "fullgraph": "Vollständiges Bild",
+            "mode": "Modus",
+            "dynamic": "Bewegung",
+            "dynamo_cache_size_limit": "Dynamo-Cache-Begrenzung",
+            "compile_transformer": "Transformer kompilieren",
+            "compile_vae": "VAE kompilieren"
+        },
+        "outputs": {
+            "torch_compile_args": "Torch-Kompilierungsparameter"
+        }
+    },
+    "Hy3DPostprocessMesh": {
+        "title": "Hunyuan3D Netz-Nachbearbeitung",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "remove_floaters": "Schwebeteile entfernen",
+            "remove_degenerate_faces": "Degenerierte Flächen entfernen",
+            "reduce_faces": "Anzahl der Flächen verringern",
+            "max_facenum": "Obergrenze der Flächenanzahl",
+            "smooth_normals": "Glättung der Normalen"
+        },
+        "outputs": {
+            "trimesh": "Optimiertes Netz"
+        }
+    },
+    "Hy3DModelLoader": {
+        "title": "Hunyuan3D Modell-Lader",
+        "inputs": {
+            "compile_args": "Kompilierungsparameter"
+        },
+        "widgets": {
+            "model": "Modell",
+            "attention_mode": "Attention-Modus",
+            "cublas_ops": "CUBLAS-Berechnungen"
+        },
+        "outputs": {
+            "pipeline": "Rohr",
+            "vae": "VAE"
+        }
+    },
+    "Hy3DVAELoader": {
+        "title": "Hunyuan3D VAE-Lader",
+        "widgets": {
+            "model_name": "Modellname"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadHy3DDelightModel": {
+        "title": "(Download) Hunyuan3D-Delight-Modell laden",
+        "inputs": {
+            "compile_args": "Kompilierungsparameter"
+        },
+        "widgets": {
+            "model": "Modell"
+        },
+        "outputs": {
+            "delight_pipe": "Delight-Pipeline"
+        }
+    },
+    "Hy3DDelightImage": {
+        "title": "Hunyuan3D Delight-Bild",
+        "inputs": {
+            "delight_pipe": "Delight-Pipeline",
+            "image": "Bild",
+            "scheduler": "Scheduler (Ablaufplanung)"
+        },
+        "widgets": {
+            "steps": "Schritte",
+            "width": "Breite",
+            "height": "Höhe",
+            "cfg_image": "CFG-Bild",
+            "seed": "Seed (Zufall)"
+        },
+        "outputs": {
+            "image": "Bild"
+        }
+    },
+    "DownloadAndLoadHy3DPaintModel": {
+        "title": "(Download) Hunyuan3D-Paint-Modell laden",
+        "inputs": {
+            "model": "Modell",
+            "compile_args": "Kompilierungsparameter"
+        },
+        "outputs": {
+            "delight_pipe": "Delight-Pipeline"
+        }
+    },
+    "Hy3DCameraConfig": {
+        "title": "Hunyuan3D Kamerakonfiguration",
+        "widgets": {
+            "camera_azimuths": "Azimutwinkel der Kamera",
+            "camera_elevations": "Elevationwinkel der Kamera",
+            "view_weights": "Ansichts-Gewichte",
+            "camera_distance": "Kamerabstand",
+            "ortho_scale": "Orthogonale Skalierung"
+        },
+        "outputs": {
+            "camera_config": "Kamera-Konfiguration"
+        }
+    },
+    "Hy3DMeshVerticeInpaintTexture": {
+        "title": "Hunyuan3D Reparatur der Netz-Eckpunkttexturen",
+        "inputs": {
+            "texture": "Ursprüngliche Textur",
+            "mask": "Inpainting-Maske",
+            "renderer": "Darstellungsmodul"
+        },
+        "outputs": {
+            "texture": "Texturiert",
+            "mask": "Maske",
+            "renderer": "Darstellungsmodul"
+        }
+    },
+    "Hy3DMeshUVWrap": {
+        "title": "Hunyuan3D UV-Hüllung des Netzes",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "outputs": {
+            "trimesh": "Dreiecksnetz"
+        }
+    },
+    "Hy3DRenderMultiView": {
+        "title": "Hunyuan3D Rendern mehrerer Ansichten",
+        "inputs": {
+            "trimesh": "Dreiecksnetz",
+            "camera_config": "Kamera-Konfiguration"
+        },
+        "widgets": {
+            "render_size": "Rendergröße",
+            "texture_size": "Texturgröße",
+            "normal_space": "Normalenraum",
+            "camera_elevs": "Elevationwinkel der Kamera",
+            "camera_azims": "Azimutwinkel der Kamera",
+            "use_abs_coor": "Absolute Koordinaten",
+            "bg_color": "Hintergrundfarbe"
+        },
+        "outputs": {
+            "normal_maps": "Normalmap",
+            "position_maps": "Positions-Karte",
+            "renderer": "Darstellungsmodul",
+            "masks": "Maske"
+        }
+    },
+    "Hy3DRenderSingleView": {
+        "title": "Hunyuan3D Rendern einer Ansicht",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "render_type": "Art des Renderings",
+            "render_size": "Rendergröße",
+            "camera_type": "Kameratyp",
+            "camera_distance": "Kamerabstand",
+            "pan_x": "Entlang der X-Achse verschieben",
+            "pan_y": "Entlang der Y-Achse verschieben",
+            "ortho_scale": "Orthogonale Skalierung",
+            "azimuth": "Azimut",
+            "elevation": "Höhenwinkel",
+            "bg_color": "Hintergrundfarbe"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    },
+    "Hy3DRenderMultiViewDepth": {
+        "title": "Hunyuan3D Tiefenrendern mehrerer Ansichten",
+        "inputs": {
+            "trimesh": "Dreiecksnetz",
+            "camera_config": "Kamera-Konfiguration"
+        },
+        "widgets": {
+            "render_size": "Rendergröße",
+            "texture_size": "Texturgröße",
+            "camera_elevs": "Elevationwinkel der Kamera",
+            "camera_azims": "Azimutwinkel der Kamera"
+        },
+        "outputs": {
+            "depth_maps": "Tiefen-Karte",
+            "masks": "Maske"
+        }
+    },
+    "Hy3DGetMeshPBRTextures": {
+        "title": "Hunyuan3D PBR-Texturen des Netzes holen",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "texture": "Basis-Textur"
+        },
+        "outputs": {
+            "image": "Bild"
+        }
+    },
+    "Hy3DSetMeshPBRTextures": {
+        "title": "Hunyuan3D PBR-Texturen des Netzes setzen",
+        "inputs": {
+            "trimesh": "Dreiecksnetz",
+            "image": "PBR-Texturbild"
+        },
+        "widgets": {
+            "texture": "Basis-Textur"
+        },
+        "outputs": {
+            "trimesh": "Texturiertes Netz"
+        }
+    },
+    "Hy3DSetMeshPBRAttributes": {
+        "title": "Hunyuan3D PBR-Eigenschaften des Netzes setzen",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "baseColorFactor": "Faktor der Basisfarbe",
+            "emissiveFactor": "Faktor der Selbstemission",
+            "metallicFactor": "Faktor der Metallizität",
+            "roughnessFactor": "Faktor der Rauheit",
+            "doubleSided": "Beidseitiges Rendern"
+        },
+        "outputs": {
+            "trimesh": "Netz mit PBR-Eigenschaften"
+        }
+    },
+    "Hy3DDiffusersSchedulerConfig": {
+        "title": "Hunyuan3D Konfiguration des Diffusers-Schedulers",
+        "inputs": {
+            "pipeline": "Rohr"
+        },
+        "widgets": {
+            "scheduler": "Scheduler (Ablaufplanung)",
+            "sigmas": "Sigma-Werte"
+        },
+        "outputs": {
+            "diffusers_scheduler": "Diffusers-Scheduler"
+        }
+    },
+    "Hy3DIMRemesh": {
+        "title": "Hunyuan3D Instant-Meshes Retopologie",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "merge_vertices": "Eckpunkte zusammenführen",
+            "vertex_count": "Anzahl der Eckpunkte",
+            "smooth_iter": "Glättungsiterationen",
+            "align_to_boundaries": "An den Rand ausrichten",
+            "triangulate_result": "Ergebnis der Triangulierung",
+            "max_facenum": "Maximale Flächenanzahl"
+        },
+        "outputs": {
+            "trimesh": "Retopologisiertes Netz"
+        }
+    },
+    "Hy3DBPT": {
+        "title": "Hunyuan3D Bayes-Poisson-Rekonstruktion",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "enable_bpt": "BPT-Algorithmus aktivieren",
+            "seed": "Zufalls-Seed",
+            "control_after_generate": "Nach Generierung steuern",
+            "temperature": "Temperatur",
+            "pc_num": "Anzahl der Punktwolkenpunkte",
+            "samples": "Sampling-Anzahl"
+        },
+        "outputs": {
+            "trimesh": "Optimiertes Netz"
+        }
+    },
+    "Hy3DSampleMultiView": {
+        "title": "Hunyuan3D Sampling mehrerer Ansichten",
+        "inputs": {
+            "pipeline": "Rohr",
+            "ref_image": "Referenzbild",
+            "normal_maps": "Normalmap",
+            "position_maps": "Positions-Texturkarte",
+            "camera_config": "Kamera-Konfiguration",
+            "scheduler": "Scheduler (Ablaufplanung)",
+            "samples": "Anzahl der Stichproben"
+        },
+        "widgets": {
+            "view_size": "Ansichtsgröße",
+            "steps": "Schritte",
+            "seed": "Seed (Zufall)",
+            "control after generate": "Nach Generierung steuern",
+            "denoise_strength": "Rauschunterdrückungsstärke"
+        },
+        "outputs": {
+            "image": "Bild"
+        }
+    },
+    "CV2InpaintTexture": {
+        "title": "CV2 Texturreparatur",
+        "inputs": {
+            "texture": "Texturiert",
+            "mask": "Inpainting-Maske"
+        },
+        "widgets": {
+            "inpaint_radius": "Reparaturradius",
+            "inpaint_method": "Reparaturalgorithmus"
+        },
+        "outputs": {
+            "texture": "Texturiert"
+        }
+    },
+    "Hy3DMeshInfo": {
+        "title": "Hunyuan3D Infos zum Netz",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "outputs": {
+            "trimesh": "Ursprüngliches Netz",
+            "vertices": "Eckpunkt",
+            "faces": "Flächen"
+        }
+    },
+    "Hy3DFastSimplifyMesh": {
+        "title": "Hunyuan3D schnelle Netzvereinfachung",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "target_count": "Ziel-Flächenanzahl",
+            "aggressiveness": "Intensität der Vereinfachung",
+            "max_iterations": "maximale Iterationsanzahl",
+            "update_rate": "Aktualisierungshäufigkeit",
+            "preserve_border": "Rand beibehalten",
+            "lossless": "Verlustfreier Modus",
+            "threshold_lossless": "Verlustfrei-Schwelle"
+        },
+        "outputs": {
+            "trimesh": "Vereinfachtes Netz"
+        }
+    },
+    "Hy3DBakeFromMultiview": {
+        "title": "Hunyuan3D Backen aus mehreren Ansichten",
+        "inputs": {
+            "images": "Bild",
+            "renderer": "Darstellungsmodul",
+            "camera_config": "Kamera-Konfiguration"
+        },
+        "widgets": {
+            "camera_config": "Kamera-Konfiguration",
+            "views": "Anzahl der Ansichten",
+            "camera_elevs": "Elevationwinkel der Kamera",
+            "camera_azims": "Azimutwinkel der Kamera",
+            "view_weights": "Ansichts-Gewichte",
+            "method": "Methode des Backens"
+        },
+        "outputs": {
+            "texture": "Texturiert",
+            "mask": "Maske",
+            "renderer": "Darstellungsmodul"
+        }
+    },
+    "Hy3DApplyTexture": {
+        "title": "Hunyuan3D Textur anwenden",
+        "inputs": {
+            "texture": "Texturiert",
+            "renderer": "Darstellungsmodul"
+        },
+        "outputs": {
+            "trimesh": "Dreiecksnetz"
+        }
+    },
+    "Hy3DLoadMesh": {
+        "title": "Hunyuan3D Netz laden",
+        "widgets": {
+            "glb_path": "GLB-Pfad"
+        },
+        "outputs": {
+            "trimesh": "Dreiecksnetz"
+        }
+    },
+    "Hy3DUploadMesh": {
+        "title": "Hunyuan3D Netz hochladen",
+        "widgets": {
+            "mesh": "Mesh-Daten",
+            "choose glb file to upload": "GLB-Datei zum Hochladen auswählen"
+        },
+        "outputs": {
+            "trimesh": "Dreiecksnetz"
+        }
+    },
+    "Hy3DGenerateMesh": {
+        "title": "Hunyuan3D Netz erzeugen",
+        "inputs": {
+            "pipeline": "Rohr",
+            "image": "Bild",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "guidance_scale": "Guidance-Stärke",
+            "steps": "Schritte",
+            "seed": "Seed (Zufall)",
+            "scheduler": "Scheduler (Ablaufplanung)",
+            "force_offload": "Auslagerung erzwingen",
+            "front": "Ansicht vorne",
+            "back": "Ansicht hinten",
+            "left": "Ansicht links",
+            "right": "Ansicht rechts"
+        },
+        "outputs": {
+            "latents": "Latentraum"
+        }
+    },
+    "Hy3DGenerateMeshMultiView": {
+        "title": "Hunyuan3D Netz aus mehreren Ansichten erzeugen",
+        "inputs": {
+            "pipeline": "Verarbeitungspipeline",
+            "front": "Ansicht vorne",
+            "left": "Ansicht links",
+            "right": "Ansicht rechts",
+            "back": "Ansicht hinten"
+        },
+        "widgets": {
+            "guidance_scale": "Guidance-Stärke",
+            "steps": "Iterationsschritte",
+            "seed": "Zufalls-Seed",
+            "control after generate": "Nach Generierung steuern",
+            "scheduler": "Scheduler (Ablaufplanung)"
+        },
+        "outputs": {
+            "latent": "Latentraum",
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    },
+    "Hy3DVAEDecode": {
+        "title": "Hunyuan3D VAE dekodieren",
+        "inputs": {
+            "vae": "VAE",
+            "latents": "Latentraum"
+        },
+        "widgets": {
+            "box_v": "Begrenzungsrechteck",
+            "octree_resolution": "Octree-Auflösung",
+            "num_chunks": "Anzahl der Chunks",
+            "mc_level": "MC-Stufe",
+            "mc_algo": "MC-Algorithmus",
+            "enable_flash_vdm": "Flash VDM aktivieren",
+            "force_offload": "Auslagerung erzwingen"
+        },
+        "outputs": {
+            "trimesh": "Dreiecksnetz"
+        }
+    },
+    "Hy3DExportMesh": {
+        "title": "Hunyuan3D Netz exportieren",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "filename_prefix": "Dateipräfix",
+            "file_format": "Dateiformat",
+            "save_file": "Datei speichern"
+        },
+        "outputs": {
+            "glb_path": "Pfad der glb-Datei"
+        }
+    },
+    "TrimeshToMESH": {
+        "title": "Dreiecksnetz in MESH-Format umwandeln",
+        "inputs": {
+            "trimesh": "Dreiecksnetz-Daten"
+        },
+        "outputs": {
+            "mesh": "MESH-Format-Daten"
+        }
+    },
+    "MESHToTrimesh": {
+        "title": "MESH-Format in Dreiecksnetz umwandeln",
+        "inputs": {
+            "mesh": "MESH-Format-Daten"
+        },
+        "outputs": {
+            "TRIMESH": "Dreiecksnetz-Daten"
+        }
+    },
+    "Hy3DNvdiffrastRenderer": {
+        "title": "Hunyuan3D Nvdiffrast-Darstellungsmodul",
+        "inputs": {
+            "trimesh": "Dreiecksnetz"
+        },
+        "widgets": {
+            "render_type": "Art des Renderings",
+            "width": "Ausgabebreite",
+            "height": "Ausgabehöhe",
+            "ssaa": "Supersampling-Kantenglättung",
+            "num_frames": "Anzahl der Frames",
+            "camera_distance": "Kamerabstand",
+            "yaw": "Gierwinkel",
+            "pitch": "Neigungswinkel",
+            "fov": "Sichtbereich",
+            "near": "Nahe Schnittfläche",
+            "far": "Ferne Schnittfläche",
+            "pan_x": "Entlang der X-Achse verschieben",
+            "pan_y": "Entlang der Y-Achse verschieben"
+        },
+        "outputs": {
+            "image": "Bild",
+            "mask": "Maske"
+        }
+    }
+}

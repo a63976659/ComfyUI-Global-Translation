@@ -1,0 +1,391 @@
+{
+    "LTXFaceAttentionAnchor": {
+        "title": "🩪Punto di ancoraggio dell'attenzione facciale LTX",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "face_bbox_norm": "Riquadro facciale normalizzato",
+            "strength": "Intensità",
+            "inject_mode": "Modalità di iniezione",
+            "anchor_frame": "Fotogramma di ancoraggio",
+            "anchor_upsample": "Ingrandimento dell'ancoraggio",
+            "track_threshold": "Soglia di tracciamento",
+            "face_threshold": "Soglia del volto",
+            "identity_threshold": "Soglia di identità",
+            "depth_curve": "Curva di profondità",
+            "spatial_prior": "Prior spaziale",
+            "block_index_filter": "Filtro degli indici dei blocchi",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modello",
+            "MODEL": "MODEL"
+        },
+        "description": "v4.0: punto di ancoraggio dell'identità per l'area del volto. Le caratteristiche in cache sono spostate nel nodo LTXLatentAnchor (stabilità a livello di scena). Questo nodo resta mirato al volto.",
+        "api_version": "V1"
+    },
+    "LTXLatentAnchor": {
+        "title": "Punto di ancoraggio LTXLatent",
+        "inputs": {
+            "model": "Modello",
+            "sigmas": "sigmas"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "cache_at_step": "Cache al passo",
+            "similarity_threshold": "Soglia di somiglianza",
+            "decay_with_distance": "Attenuazione con la distanza",
+            "bypass": "Bypass (salta elaborazione)",
+            "advanced_mode": "Modalità avanzata",
+            "cache_mode": "Modalità cache",
+            "forwards_per_step": "Numero di passate forward per passo",
+            "cache_warmup": "Preriscaldamento della cache",
+            "anchor_frame": "Fotogramma di ancoraggio",
+            "depth_curve": "Curva di profondità",
+            "block_index_filter": "Filtro degli indici dei blocchi",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modello"
+        },
+        "description": "Punto di ancoraggio latent per l'intera scena, per LTX2.x. Stabilizza prompt, condizioni e forze di consapevolezza fisica mantenendole coerenti durante campionamenti lunghi. Collega SIGMAS per tempi di cache prevedibili. Passa alla modalità avanzata per accedere ai parametri di ricerca."
+    },
+    "LTXLatentAnchorAware": {
+        "title": "Punto di ancoraggio LTXLatent consapevole",
+        "inputs": {
+            "model": "Modello",
+            "reference_image": "Immagine di riferimento",
+            "vae": "VAE",
+            "energy_latent": "Latent di energia",
+            "sigmas": "sigma"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "cache_at_step": "Cache al passo",
+            "similarity_threshold": "Soglia di somiglianza",
+            "decay_with_distance": "Attenuazione con la distanza",
+            "energy_threshold": "Soglia di energia",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging",
+            "advanced_mode": "Modalità avanzata",
+            "cache_mode": "Modalità cache",
+            "forwards_per_step": "Numero di passate forward per passo",
+            "cache_warmup": "Preriscaldamento della cache",
+            "anchor_frame": "Fotogramma di ancoraggio",
+            "depth_curve": "Curva di profondità",
+            "block_index_filter": "Filtro degli indici dei blocchi"
+        },
+        "outputs": {
+            "model": "Modello"
+        },
+        "description": "Punto di ancoraggio latent con modulazione spaziale dell'energia opzionale, basata su un riferimento esterno. L'immagine di riferimento (o l'input latent) fornisce i pesi spaziali; la corrispondenza usa il latent in esecuzione (spazio delle caratteristiche corretto)."
+    },
+    "LTXTextAttentionAmplifier": {
+        "title": "Amplificatore di attenzione sul testo LTX",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "text_amplification": "Amplificazione dell'attenzione sul testo",
+            "spatial_focus": "Fuoco spaziale",
+            "block_index_filter": "Filtro degli indici dei blocchi",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "model": "Modello"
+        },
+        "description": "Amplifica l'attenzione cross testo LTX2 (attn2) blocco per blocco per compensare il dilavamento delle condizioni ad alto numero di token. Usato nella fase di upsampling, recupera l'aderenza al prompt e la stabilità dei colori."
+    },
+    "LTXTiledSampler": {
+        "title": "Campionatore a tile LTX",
+        "inputs": {
+            "noise": "Rumore",
+            "guider": "Guidatore",
+            "sampler": "Campionatore",
+            "sigmas": "sigma",
+            "latent_image": "Immagine latent"
+        },
+        "widgets": {
+            "bypass_tiling": "Salta tile",
+            "tile_axis": "Asse dei tile",
+            "n_tiles": "Numero di tile",
+            "tile_overlap": "Sovrapposizione dei tile",
+            "max_size_for_no_tile": "Dimensione massima senza tile",
+            "audio_pass": "Passaggio audio",
+            "audio_carrier_tile": "Tile vettore audio",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "output": "Uscita",
+            "denoised_output": "Output senza rumore"
+        },
+        "description": "Sostituzione drop-in a tile di SamplerCustomAdvanced per rifiniture leggere nella fase di upsampling LTX2. Ogni tile esegue il campionamento completo con il conteggio token della distribuzione di addestramento, poi fusione coseno. Solo per denoise leggero. Di default l'audio passa; audio_carrier_tile esegue il campionamento audio in parallelo a un tile selezionato (senza passi extra). Imposta bypass_tiling=true per un passaggio trasparente con campionamento singolo standard, utile per debug o quando i tile non servono."
+    },
+    "LTXVLatentUpsamplerTiled": {
+        "title": "Upsampler latent LTXV (versione a tile)",
+        "inputs": {
+            "samples": "Campioni",
+            "upscale_model": "Modello di super-risoluzione",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "tile_size": "Dimensione del tile",
+            "overlap": "Sovrapposizione",
+            "max_size_for_no_tile": "Dimensione massima senza tile",
+            "rotate_for_landscape": "Ruota per orientamento orizzontale",
+            "debug": "Debugging"
+        },
+        "description": "Alternativa drop-in a tile di LTXVLatentUpsampler. Esegue l'upsampling su tile spaziali e fonde le sovrapposizioni con finestra coseno, risolvendo deriva cromatica e distorsione con aspect ratio estremi. Con aspect ratio sicuri l'output è quasi identico alla versione senza tile; nei casi estremi evita l'instabilità del modello di super-risoluzione."
+    },
+    "LTXModelInspector": {
+        "title": "Ispezionatore di modelli LTX",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "name_filter": "Filtro dei nomi",
+            "focus_path": "Percorso di messa a fuoco",
+            "max_modules_listed": "Numero massimo di moduli elencati",
+            "trace_path_contains": "Percorso di traccia contiene",
+            "max_modules_traced": "Numero massimo di moduli tracciati",
+            "trace_calls_per_module": "Chiamate di traccia per modulo",
+            "print_top_level": "Stampa le informazioni di primo livello"
+        },
+        "outputs": {
+            "model": "Modello"
+        },
+        "description": "Ispeziona i modelli di diffusione: struttura di primo livello, filtro dei nomi, percorso di messa a fuoco e hook di tracciamento."
+    },
+    "LatentCrossFadeAutoConcat": {
+        "title": "Auto-concatenamento con cross-fade latent",
+        "inputs": {
+            "frames_0": "Frame_0",
+            "frames_1": "Frame_1"
+        },
+        "widgets": {
+            "match_spatial": "Corrispondenza spaziale",
+            "interpolate_mode": "Modalità di interpolazione",
+            "cross_fade_frames": "Fotogrammi di cross-fade",
+            "fade_curve": "Curva di dissolvenza"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Corrispondenza spaziale automatica + concatenamento temporale, con cross-fade opzionale."
+    },
+    "AudioLatentStretch": {
+        "title": "Allungamento audio latent",
+        "inputs": {
+            "audio_latent": "Latent audio"
+        },
+        "widgets": {
+            "source_fps": "FPS sorgente",
+            "target_fps": "FPS di destinazione",
+            "interp_mode": "Modalità di interpolazione"
+        },
+        "outputs": {
+            "audio_latent": "Latent audio"
+        },
+        "description": "Ricampiona l'audio latent al FPS di destinazione. Consigliata la modalità Hermite."
+    },
+    "LatentTemporalUpsampler": {
+        "title": "Upsampler temporale latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS sorgente",
+            "target_fps": "FPS di destinazione",
+            "interp_mode": "Modalità di interpolazione",
+            "auto_retime": "Ritiming automatico",
+            "motion_scale": "Rapporto di movimento",
+            "spatial_sharpen": "Nitidezza spaziale",
+            "ltx_safe": "Sicurezza LTX",
+            "override_frames": "Sovrascrivi numero di fotogrammi"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "Upsampling temporale basato su Hermite con correzione automatica del ritmo."
+    },
+    "LatentMotionSharpener": {
+        "title": "Nitidizzatore di movimento latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "base_sharpen": "Nitidezza di base",
+            "motion_sharpen": "Nitidezza di movimento",
+            "motion_thresh": "Soglia di movimento",
+            "temporal_smooth_mask": "Maschera di levigatura temporale"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Nitidizzazione adattiva in base all'ampiezza del movimento tra fotogrammi."
+    },
+    "LatentMotionRetime": {
+        "title": "Ritiming del movimento latent",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "source_fps": "FPS sorgente",
+            "target_fps": "FPS di destinazione",
+            "strength": "Intensità",
+            "manual_scale": "Ridimensionamento manuale"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Attenua l'ampiezza di movimento per correggere il ritmo 24->30 fps nei latent sottoposti a upsampling."
+    },
+    "LatentTemporalInpainter": {
+        "title": "Inpainter temporale latent",
+        "inputs": {
+            "latent": "latent"
+        },
+        "widgets": {
+            "anchor_sigma": "Sigma di ancoraggio",
+            "ghost_sigma": "Sigma di ghosting",
+            "score_gamma": "Gamma dei punteggi",
+            "anchor_blend": "Miscela di ancoraggio",
+            "seed": "Seme",
+            "debug_scores": "Punteggi di debug"
+        },
+        "outputs": {
+            "latent": "latent"
+        },
+        "description": "Rilevamento del ghosting fotogramma per fotogramma + rumore mirato. Blocca i fotogrammi di ancoraggio reali. Poi usa il KSampler per il denoise 0.3-0.45."
+    },
+    "LTXActionAmplifier": {
+        "title": "Amplificatore di azioni LTX",
+        "inputs": {
+            "model": "Modello",
+            "clip": "clip",
+            "positive": "Prompt positivo"
+        },
+        "widgets": {
+            "amplification_strength": "Intensità di amplificazione",
+            "action_vocabulary_text": "Testo del vocabolario delle azioni",
+            "scale_ceiling": "Limite massimo di scala",
+            "auto_threshold": "Soglia automatica",
+            "similarity_threshold": "Soglia di somiglianza",
+            "similarity_sharpness": "Nitidezza della somiglianza",
+            "amplification_floor": "Limite minimo di amplificazione",
+            "top_k": "Top-K",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging"
+        },
+        "description": "Amplifica selettivamente i token di azione/movimento nel prompt positivo, rinforzando l'ampiezza K/V dei verbi corrispondenti e lasciando intatti i token descrittivi. Simmetrico opposto di LikenessSemanticClamp, sostituisce il ridimensionamento uniforme del TextAmplifier."
+    },
+    "LTXFaceDetector": {
+        "title": "Rilevatore di volti LTX",
+        "inputs": {
+            "image": "Immagine"
+        },
+        "widgets": {
+            "padding": "Riempimento",
+            "fallback_bbox": "Riquadro di riserva",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "face_bbox": "Riquadro del volto"
+        },
+        "description": "Rileva volti nell'immagine ed emette stringhe di riquadri normalizzate. Collega l'output a face_bbox_within_reference di LikenessGuide, a override_face_bbox/frame_0_bbox di LikenessAnchor o a face_bbox_norm di face_anchor. Separare il rilevamento dalla logica dei nodi permette a più nodi di condividere lo stesso riquadro."
+    },
+    "LTXLikenessAnchor": {
+        "title": "Punto di ancoraggio di somiglianza LTX",
+        "inputs": {
+            "model": "Modello",
+            "reference_info": "Informazioni di riferimento"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "reference_source": "Origine del riferimento",
+            "frame_0_bbox": "Riquadro del frame 0",
+            "similarity_threshold": "Soglia di somiglianza",
+            "decay_with_distance": "Attenuazione con la distanza",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging",
+            "advanced_mode": "Modalità avanzata",
+            "depth_curve": "Curva di profondità",
+            "block_index_filter": "Filtro degli indici dei blocchi",
+            "similarity_sharpness": "Nitidezza della somiglianza",
+            "override_face_bbox": "Sovrascrivi riquadro del volto",
+            "skip_when_sigma_above": "Salta quando sigma supera la soglia",
+            "pull_mode": "Modalità di trazione",
+            "late_block_falloff": "Decadimento dei blocchi tardivo"
+        },
+        "description": "Avvicina l'attenzione di ogni blocco alle caratteristiche di riferimento per mantenere l'identità. Due modalità: (1) ottiene le informazioni di riferimento da LikenessGuide e usa i suoi fotogrammi di riferimento allegati; (2) senza collegare le informazioni di riferimento, il nodo usa il frame 0 del latent come riferimento — ideale per flussi i2v in cui il frame 0 è l'immagine iniziale della condizione. v1.2 introduce la modalità di trazione direzionale (preserva i colori)."
+    },
+    "LTXLikenessGuide": {
+        "title": "Guida di somiglianza LTX",
+        "inputs": {
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "vae": "vae",
+            "latent": "latent",
+            "image": "Immagine di riferimento"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "placement_mode": "Modalità di posizionamento",
+            "face_detect": "Rilevamento dei volti",
+            "reference_mask_mode": "Modalità maschera di riferimento",
+            "face_padding": "Riempimento del volto",
+            "crf": "CRF",
+            "blur_radius": "Raggio di sfocatura",
+            "interpolation": "Interpolazione",
+            "crop": "Ritaglio",
+            "attention_strength": "Intensità dell'attenzione",
+            "face_bbox_within_reference": "Riquadro del volto nel riferimento",
+            "emit_latent": "Emetti latent",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "latent": "latent",
+            "reference_info": "Informazioni di riferimento"
+        },
+        "description": "Aggiunge immagini di riferimento di somiglianza alle condizioni per preservare l'identità. Emette condizioni positive/negative modificate (per il Guider) e metadati di riferimento (per LikenessAnchor). Di default l'output latent è un passaggio dell'input — né espansione né ritaglio. Il valore della guida sta nell'interazione delle condizioni con il modello e i suoi metadati bbox, non nella modifica del latent."
+    },
+    "LTXLikenessCrop": {
+        "title": "Ritaglio di somiglianza LTX",
+        "inputs": {
+            "latent": "latent",
+            "reference_info": "Informazioni di riferimento"
+        },
+        "widgets": {
+            "debug": "Debugging"
+        },
+        "description": "Ritaglia i fotogrammi di riferimento di somiglianza dal latent prima della decodifica VAE. Inverte la modalità emit_latent=espansione di LTXLikenessGuide. Da usare solo quando la guida emette latent espansi. Se la guida è in modalità passaggio (default), questo nodo non serve: collega pure il latent direttamente alla decodifica VAE."
+    },
+    "LTXLikenessSemanticClamp": {
+        "title": "Limitatore semantico di somiglianza LTX",
+        "inputs": {
+            "model": "Modello",
+            "clip": "clip",
+            "positive": "Prompt positivo",
+            "reference_info": "Informazioni di riferimento"
+        },
+        "widgets": {
+            "suppression_strength": "Intensità di soppressione",
+            "face_modifier_text": "Testo dei modificatori facciali",
+            "similarity_threshold": "Soglia di somiglianza",
+            "auto_threshold": "Soglia automatica",
+            "similarity_sharpness": "Nitidezza della somiglianza",
+            "suppression_floor": "Limite inferiore di soppressione",
+            "top_k": "top_k",
+            "soft_edge_frac": "Proporzione dei bordi morbidi",
+            "override_face_bbox": "Sovrascrivi riquadro del volto",
+            "bypass": "Bypass (salta elaborazione)",
+            "debug": "Debugging"
+        },
+        "description": "Soppressione semantica dei token nell'area del riquadro facciale dentro attn2. Mettendo in relazione lo spazio degli embedding con un vocabolario di modificatori, riconosce i token di modifica facciale nel prompt e ne sopprime selettivamente l'attenzione su quell'area. Sostituisce il ridimensionamento uniforme dell'ormai deprecato LikenessClamp."
+    }
+}

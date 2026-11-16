@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "مولّد توجيه BFS AMV",
+        "inputs": {
+            "video": "فيديو",
+            "images": "صورة",
+            "audio": "صوت"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "length": "الطول",
+            "hold": "إبقاء",
+            "fill": "حشو",
+            "placement": "الموضعة",
+            "fps": "معدل الإطارات",
+            "indices": "الفهرس",
+            "scene_threshold": "عتبة المشهد"
+        },
+        "outputs": {
+            "guide": "التوجيه",
+            "debug": "التنقيح"
+        },
+        "description": "يُنشئ توجيه AMV (إطارات رئيسية + إطارات فارغة). يتيح external_images وضع الصور تلقائيًا على إيقاعات الموسيقى (اضبط placement على audio_beats). وصِل إدخال `التوجيه` بوحدة VAE أو بوحدة مرجعية."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "توليد شروط تحويل الأنمي إلى الواقعية BFS Bernini",
+        "inputs": {
+            "positive": "موجب",
+            "negative": "سالب",
+            "vae": "VAE",
+            "guide_video": "فيديو التوجيه"
+        },
+        "widgets": {
+            "length": "الطول"
+        },
+        "outputs": {
+            "positive": "موجب",
+            "negative": "سالب",
+            "latent": "Latent",
+            "debug": "التنقيح"
+        },
+        "description": "توليد شروط من أنمي إلى واقعية بتحويل فيديو إلى فيديو (v2v) خالص لـ LoRA Bernini-R. يقابل guide_video المصدر source_id 1 (لوحة الأنمي) | ويقابل المخرج source_id 0 (صورة واقعية). بلا وحدة مرجعية. يُطبَّق التوجيه على الشرط الموجب والسالب معًا، لذا يضخّم CFG موجّه النص فقط (أسلوب الصور الواقعية) وليس المرجع. استخدم CFG معتدلاً؛ يحافظ التوجيه على الحركة والتخطيط. لا تستخدم هذا LoRA مع عقد تبديل الوجوه: فهو يحقن رموز source_id 2 التي لم يرها LoRA تحويل الأنمي إلى واقعية أثناء التدريب."
+    },
+    "LTXColorMask": {
+        "title": "قناع ألوان LTX",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "color": "لون",
+            "style": "النمط",
+            "marker_radius_frac": "نسبة نصف قطر الوسم",
+            "custom_r": "R مخصّص",
+            "custom_g": "G مخصّص",
+            "custom_b": "B مخصّص",
+            "background_black": "خلفية سوداء"
+        },
+        "outputs": {
+            "colored_mask": "قناع ملوّن"
+        },
+        "description": "يعيد تلوين الأقنعة بأسلوب SAM2 (أبيض نقي/ثنائي القيمة) لتتوافق مع اصطلاحات تدريب scail2v2. يُستخدم 'silhouette' لخانة قناع التوجيه، و'flat_marker' (نقطة لون صغيرة بلا شكل) لخانة قناع الهوية — راجع تلميح كل مدخل لمعرفة سبب الاختلاف بينهما."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "توليد شروط تبديل الوجوه BFS Bernini",
+        "inputs": {
+            "positive": "موجب",
+            "negative": "سالب",
+            "vae": "VAE",
+            "guide_video": "فيديو التوجيه",
+            "head_image": "صورة الرأس"
+        },
+        "widgets": {
+            "length": "الطول",
+            "amplify_reference": "تكبير المرجع"
+        },
+        "outputs": {
+            "positive": "موجب",
+            "negative": "سالب",
+            "latent": "Latent",
+            "debug": "التنقيح"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "تنقيح LoRA تبديل الوجوه BFS",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "debug": "التنقيح"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "تقسيم LoRA لتحرير أي محتوى LTXV",
+        "inputs": {
+            "lora_name": "اسم LoRA"
+        },
+        "widgets": {
+            "overwrite": "الكتابة فوق"
+        },
+        "outputs": {
+            "standard_lora_name": "اسم LoRA القياسي",
+            "editanything_module_name": "اسم وحدة تحرير أي محتوى"
+        },
+        "description": "يقسّم نقطة تفتيش تحرير أي محتوى إلى LoRA قياسي ووحدات مساعدة."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "محمّل وحدات تحرير أي محتوى LTXV",
+        "widgets": {
+            "module_name": "اسم الوحدة"
+        },
+        "outputs": {
+            "editanything_module": "وحدة تحرير أي محتوى"
+        },
+        "description": "تحميل الوحدات المساعدة المُولَّدة من تقسيم LoRA لتحرير أي محتوى LTXV."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "محمّل LoRA لتحرير أي محتوى LTXV",
+        "inputs": {
+            "model": "النموذج",
+            "lora_name": "اسم LoRA"
+        },
+        "widgets": {
+            "strength_model": "قوة النموذج"
+        },
+        "outputs": {
+            "model": "النموذج"
+        },
+        "description": "محمّل LoRA لنقاط تفتيش تحرير أي محتوى."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "تطبيق تحرير أي محتوى LTXV",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "موجب",
+            "negative": "سالب",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "صورة مرجعية",
+            "lora_name": "اسم LoRA",
+            "guide_frames": "إطارات التوجيه",
+            "ref_temporal_offset_latents": "إزاحة Latent الزمنية للمرجع"
+        },
+        "widgets": {
+            "resize_mode": "وضع التحجيم",
+            "guide_strength": "قوة التوجيه",
+            "ref_strength": "قوة المرجع",
+            "role_strength": "قوة الشخصية",
+            "adaln_scale": "تحجيم AdaLN",
+            "enable_adaln": "تفعيل AdaLN",
+            "enable_role_embedding": "تفعيل تضمين الشخصية",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "موجب",
+            "negative": "سالب",
+            "latent": "Latent",
+            "ref_image_preview": "معاينة الصورة المرجعية"
+        },
+        "description": "توليد شروط موحّد لتحرير أي محتوى لـ LoRA المراجع من فيديو إلى فيديو مع AdaLN. يطبّق في عقدة واحدة إشارات الشروط 3 كاملة القادمة من نقطة تفتيش LoRA واحدة: ① تسلسل IC-LoRA يُرمّز الصور المرجعية وفيديو التوجيه الاختياري ويلحقها كإطارات شرط نظيفة داخل Latent. التخطيط داخل Transformer: [رموز الهدف | رموز المرجع @ t=-1 | رموز التوجيه @ t=0..T] ② تضمين الشخصيات (role_embedding.embedding.الوزن[0]) يضيف بصمة تعلّمها النموذج بقيم 128 إلى رموز الصور المرجعية قبل patchify_proj، ليتمكن النموذج عبر الانتباه الذاتي من التمييز بين صور @المرجع وإطارات التوجيه. ③ توليد شروط AdaLN (ref_adaln_proj: fc1 → SiLU → proj) يجمع Latent الصورة المرجعية بشكل المُسقِط المحفوظ في LoRA، ثم يُسقطه عبر MLP (2 طبقة) إلى فضاء خطوة زمن AdaLN ويضيفه إلى انحياز خطوة الزمن في كل كتلة Transformer — وهو مرساة مظهر عالمية دائمة. يُوصَل بعد محمّل LoRA القياسي وقبل KSampler."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "تطبيق القناع المحايد LTXV",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "background": "الخلفية",
+            "hard_edges": "حاد"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "يستبدل مناطق الصورة/الفيديو المقنّعة بخلفية نظيفة أحادية اللون، وهو مفيد قبل إدخال الصور المرجعية أو إطارات التوجيه في توليد شروط LTXV."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "ضبط حجم المرجع حسب القناع LTXV",
+        "inputs": {
+            "ref_image": "صورة مرجعية",
+            "size_mask": "قناع الأبعاد",
+            "ref_mask": "قناع مرجعي"
+        },
+        "widgets": {
+            "fit": "الملاءمة",
+            "background": "الخلفية",
+            "padding": "حشو",
+            "hard_edges": "حاد"
+        },
+        "outputs": {
+            "image": "صورة",
+            "object_mask": "قناع الكائن"
+        },
+        "description": "يستخدم الإطار الحدودي للقناع كأبعاد للكائن المستهدف لتحجيم الكائن المرجعي على لوحة نظيفة. يُتجاهل موضع القناع؛ العرض والارتفاع فقط يحدّدان نسبة التحجيم المستهدفة."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "عيّان LTXV المتكرر لتحرير أي محتوى",
+        "inputs": {
+            "model": "النموذج",
+            "vae": "VAE",
+            "noise": "ضوضاء",
+            "sampler": "العيّان",
+            "sigmas": "سيغما",
+            "guider": "الموجِّه",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "latents": "Latent",
+            "editanything_module": "وحدة تحرير أي محتوى",
+            "ref_image": "صورة مرجعية",
+            "guide_frames": "إطارات التوجيه"
+        },
+        "widgets": {
+            "temporal_tile_size": "حجم القطعة الزمنية",
+            "temporal_overlap": "تداخل زمني",
+            "blend_overlap": "تراكب المزج",
+            "lora_name": "اسم LoRA",
+            "ref_resize_mode": "وضع تحجيم المرجع",
+            "ref_strength": "قوة المرجع",
+            "guide_strength": "قوة التوجيه",
+            "role_strength": "قوة الشخصية",
+            "adaln_scale": "تحجيم AdaLN",
+            "enable_ic_lora": "تفعيل IC-LoRA",
+            "enable_role_embedding": "تفعيل تضمين الشخصية",
+            "enable_adaln": "تفعيل AdaLN",
+            "reapply_per_chunk": "إعادة التطبيق لكل قطعة",
+            "enable_visual_crossattn": "تفعيل الانتباه المتقاطع البصري",
+            "ref_context_scale": "تحجيم سياق المرجع",
+            "ref_token_scale": "تحجيم رموز المرجع",
+            "ref_start_block": "كتلة بداية المرجع",
+            "ref_end_block": "كتلة نهاية المرجع",
+            "ref_init_from": "مصدر تهيئة المرجع",
+            "ref_init_seed": "البذرة العشوائية لتهيئة المرجع",
+            "ref_attn_lora_strength": "قوة LoRA انتباه المرجع",
+            "debug_ea": "تنقيح EA",
+            "ref_temporal_offset_latents": "إزاحة Latent الزمنية للمرجع"
+        },
+        "outputs": {
+            "denoised_output": "مخرج إزالة الضوضاء",
+            "ref_image_preview": "معاينة الصورة المرجعية",
+            "diff_vs_previous_run": "الفرق عن التشغيل السابق"
+        },
+        "description": "عيّان متكرر زمنياً، وتأتي كل قطعة بشروط تحرير أي محتوى كاملة.\n\nيشابه LTXVEditAnythingApply لكنه يقسم الفيديو زمنياً ويعيد تطبيق رموز IC-LoRA للمرجع + التوجيه (عبر LTXVAddGuide.append_keyframe) وتضمينات الشخصيات وAdaLN في كل قطعة. كل قطعة تقابل شريحة من فيديو التوجيه.\n\nالمدخلات شروط موجبة/سالبة صريحة؛ مدخل GUIDER يوفّر آلية العيّنة فقط (معاملات CFG/STG)، وتُستبدل شروطه عبر guider.set_conds في كل قطعة."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "مقاييس فروق Latent LTXV",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "تسمية",
+            "print_console": "طباعة في الطرفية",
+            "compare_noise_mask": "مقارنة قناع الضوضاء"
+        },
+        "outputs": {
+            "metrics": "المقاييس",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "تشابه جيب التمام"
+        },
+        "description": "يقارن Latent اثنين ويعيد MSE/RMSE/L1/PSNR/تشابه جيب التمام.\n\nمفيد لاختبارات A/B للخيارات: شغّل العيّان بالإعداد A ثم احفظ Latent، وشغّل بالإعداد B، ثم وصِل SaveLatent.A والمخرج الجديد بهذه العقدة. تشمل المخرجات سلاسل منسّقة للواجهة/الطرفية وأيضًا قيماً عشرية منفصلة لتتمكن من وصلها براسم أو حفظها كعقدة نص.\n\nإذا اختلفت أبعاد الـ Latent (مثلاً عدم تطابق مكاني بسبب فروق VAE)، يتم الرجوع إلى مقارنة المنطقة المتداخلة."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "مقاييس فروق صور LTXV",
+        "inputs": {
+            "image_a": "صورة A",
+            "image_b": "صورة B"
+        },
+        "widgets": {
+            "label": "تسمية",
+            "print_console": "طباعة في الطرفية"
+        },
+        "outputs": {
+            "metrics": "المقاييس",
+            "image_a": "صورة A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "يشابه LTXVLatentDiffMetrics لكنه ينطبق على الصور بعد فك الترميز (بعد VAE) — يستخدم PSNR نطاق البكسلات [0,1]. مفيد لمقارنة أخطاء البكسل المرتبطة بالرؤية بعد فك الترميز في تشغيلين."
+    },
+    "LTXIdentityCAN": {
+        "title": "CAN هوية LTX",
+        "inputs": {
+            "model": "النموذج",
+            "reference_image": "صورة مرجعية",
+            "can_weights": "أوزان CAN"
+        },
+        "widgets": {
+            "strength": "قوة"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "رؤية Gemma لهوية LTX",
+        "inputs": {
+            "clip": "مقطع",
+            "reference_image": "صورة مرجعية"
+        },
+        "widgets": {
+            "prompt": "الموجّه"
+        },
+        "outputs": {
+            "conditioning": "شرط"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "الهوية متعددة الزوايا LTX",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "الوجه الأمامي المرجعي",
+            "reference_back_head": "مرجع مؤخرة الرأس",
+            "reference_body_front": "مرجع الجسم الأمامي",
+            "reference_side_profile": "مرجع المنظر الجانبي"
+        },
+        "widgets": {
+            "identity_projector": "وحدة إسقاط الهوية",
+            "phase_scale": "تحجيم الطور",
+            "id_strength": "قوة الهوية",
+            "arcface_mode": "وضع ArcFace",
+            "debug_log": "سجل التنقيح",
+            "reference_temporal_offset_latents": "إزاحة Latent الزمنية للمرجع"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "latent": "Latent",
+            "debug": "التنقيح"
+        },
+        "description": "نقل الهوية متعدد الزوايا: وجه أمامي (مطلوب) + مراجع اختيارية للمؤخرة/الجسم/الجانب، ويُحقن كل منظور كقطعة تراكب مستقلة + طور مصدر مستقل (source_id 2/3/4/5) بما يطابق التدريب متعدد المناظر. يرجى تحميل LoRA متعدد المناظر على MODEL أولًا."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "شرط هوية التراكب LTX",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "صورة مرجعية"
+        },
+        "widgets": {
+            "source_id": "معرّف المصدر",
+            "phase_scale": "تحجيم الطور",
+            "ref_resize_mode": "وضع تحجيم المرجع",
+            "debug_log": "سجل التنقيح",
+            "crop_anchor": "مرتكز القصّ",
+            "layout": "التخطيط",
+            "reference_guidance_scale": "قوة توجيه المرجع",
+            "reference_temporal_offset_latents": "إزاحة Latent الزمنية للمرجع"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "latent": "Latent",
+            "debug": "التنقيح",
+            "ref_preview": "معاينة المرجع",
+            "crop_overlay": "تراكب القصّ"
+        },
+        "description": "شروط مرجعية للتراكب/أطوار المصدر عبر ترقيعات النموذج (st_drc/strata)، مع إزاحة زمنية للمرجع فقط بشكل تجريبي لتقليل تسرّب التركيب في الإطار 0. المراجع رموز مستقلة (وليست I2V) وتناسب أي موضوع — وليس الوجوه فقط. تقبل دفعات الصور في نقاط التفتيش المدرَّبة على مراجع مكدّسة (التخطيط='strata'). يرجى تحميل LoRA على MODEL أولًا. يعرض مخرجا ref_preview/crop_overlay المُرمَّز بدقة، وكذلك — بالنسبة إلى match_target — أي أجزاء من المرجع تبقى بعد القصّ (الإطار الأخضر) وأي أجزاء تُسحب."
+    },
+    "LTXIdentityTransfer": {
+        "title": "نقل الهوية LTX",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "صورة مرجعية"
+        },
+        "widgets": {
+            "source_id": "معرّف المصدر",
+            "phase_scale": "تحجيم الطور",
+            "ref_resize_mode": "وضع تحجيم المرجع",
+            "debug_log": "سجل التنقيح",
+            "crop_anchor": "مرتكز القصّ",
+            "layout": "التخطيط",
+            "reference_guidance_scale": "قوة توجيه المرجع",
+            "reference_temporal_offset_latents": "إزاحة Latent الزمنية للمرجع"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "latent": "Latent",
+            "debug": "التنقيح",
+            "ref_preview": "معاينة المرجع",
+            "crop_overlay": "تراكب القصّ"
+        },
+        "description": "شروط مرجعية للتراكب/أطوار المصدر عبر ترقيعات النموذج (st_drc/strata)، مع إزاحة زمنية للمرجع فقط بشكل تجريبي لتقليل تسرّب التركيب في الإطار 0. المراجع رموز مستقلة (وليست صورة إلى فيديو) وتناسب أي موضوع — وليس الوجوه فقط. تقبل دفعات الصور في نقاط التفتيش المدرَّبة على مراجع مكدّسة (التخطيط='strata'). يرجى تحميل LoRA على MODEL أولًا. يعرض مخرجا ref_preview/crop_overlay المُرمَّز بدقة، وكذلك — بالنسبة إلى match_target — أي أجزاء من المرجع تبقى بعد القصّ (الإطار الأخضر) وأي أجزاء تُسحب."
+    },
+    "LTXMultipleControls": {
+        "title": "تحكمات LTX المتعددة",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "فيديو التوجيه",
+            "mask_video": "فيديو القناع",
+            "identity_image": "صورة الهوية",
+            "identity_mask_image": "صورة قناع الهوية"
+        },
+        "widgets": {
+            "guide_source_id": "معرّف مصدر التوجيه",
+            "guide_phase_scale": "تحجيم طور التوجيه",
+            "guide_layout": "تخطيط التوجيه",
+            "guide_ref_resize_mode": "وضع تحجيم الصورة المرجعية للتوجيه",
+            "guide_downscale_factor": "عامل تقليل دقة التوجيه",
+            "mask_source_id": "معرّف مصدر القناع",
+            "mask_phase_scale": "تحجيم طور القناع",
+            "mask_layout": "تخطيط القناع",
+            "mask_ref_resize_mode": "وضع تحجيم الصورة المرجعية للقناع",
+            "mask_downscale_factor": "عامل تقليل دقة القناع",
+            "auto_mask_guide": "التوجيه التلقائي للقناع",
+            "mask_white_thresh": "عتبة الأبيض في القناع",
+            "identity_source_id": "معرّف مصدر الهوية",
+            "identity_phase_scale": "تحجيم طور الهوية",
+            "identity_layout": "تخطيط الهوية",
+            "identity_ref_resize_mode": "وضع تحجيم الصورة المرجعية للهوية",
+            "identity_downscale_factor": "عامل تقليل دقة الهوية",
+            "identity_mask_source_id": "معرّف مصدر قناع الهوية",
+            "identity_mask_phase_scale": "تحجيم طور قناع الهوية",
+            "identity_mask_layout": "تخطيط قناع الهوية",
+            "identity_mask_ref_resize_mode": "وضع تحجيم الصورة المرجعية لقناع الهوية",
+            "identity_mask_downscale_factor": "عامل تقليل دقة قناع الهوية",
+            "crop_anchor": "مرتكز القصّ",
+            "reference_guidance_scale": "تحجيم توجيه المرجع",
+            "debug_log": "سجل التنقيح",
+            "identity_temporal_offset_latents": "إزاحة Latent الزمنية للهوية"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "negative": "شرط سالب",
+            "latent": "Latent",
+            "debug": "معلومات التنقيح"
+        },
+        "description": "يجمع شروط مراجع التوجيه والقناع والهوية وقناع الهوية في استدعاء واحد لعقدة واحدة، فتندمج فعلاً مواصفات مراجع RoPE لكل الخانات النشطة (أما ربط عقد LTXIdentityOverlapConditioning بسلاسل فلا يفعل ذلك — فكل استدعاء يستبدل مواصفات السابق). كل خانة اختيارية ولها معرّف المصدر/تحجيم الطور/التخطيط/وضع تحجيم المرجع الخاص بها — بلا ترميز ثابت، والافتراضي يطابق scail2v2_r128_v13 (التوجيه=0، القناع=0، بلا طور؛ الهوية=2، مع طور). يغلّف فيديو التوجيه منطقة الاستبدال بقناع أسود تلقائيًا (auto_mask_guide) لمطابقة طريقة التدريب في v13 — وهذا هو الإصلاح الذي يجعل نقل الهوية يعمل فعلاً. لا يستخدم v13 الـ identity_mask (اتركها فارغة بلا توصيل)؛ والإبقاء عليها للتوافق مع نقاط التفتيش القديمة."
+    },
+    "LTXMultishotPrompt": {
+        "title": "موجّهات اللقطات المتعددة LTX",
+        "inputs": {
+            "image_1": "الصورة المرجعية 1",
+            "image_2": "الصورة المرجعية 2",
+            "image_3": "الصورة المرجعية 3",
+            "image_4": "الصورة المرجعية 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "تعديل اللقطة 1",
+            "shot_size_1": "حجم اللقطة 1",
+            "camera_move_1": "حركة الكاميرا 1",
+            "shot_modifier_2": "تعديل اللقطة 2",
+            "shot_size_2": "حجم اللقطة 2",
+            "camera_move_2": "حركة الكاميرا 2",
+            "shot_modifier_3": "تعديل اللقطة 3",
+            "shot_size_3": "حجم اللقطة 3",
+            "camera_move_3": "حركة الكاميرا 3",
+            "shot_modifier_4": "تعديل اللقطة 4",
+            "shot_size_4": "حجم اللقطة 4",
+            "camera_move_4": "حركة الكاميرا 4"
+        },
+        "outputs": {
+            "prompt": "الموجّه",
+            "references": "الصورة المرجعية",
+            "num_shots": "عدد اللقطات"
+        },
+        "description": "يولّد موجّهات لقطات متعددة بصيغة ShotPlan، إضافة إلى دفعة مراجع مرتبة ومعُبّأة بالرمادي كما يتطلب LoRA اللقطات المتعددة الطبقي. وصِل `references` بعقدة نقل هوية LTX (التخطيط='strata'، معرّف المصدر=2، تحجيم الطور=1.0)، وصِل `الموجّه` بعقدة ترميز نص LTX."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "تقليم الإطارات الأولى LTX",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "trim": "عدد الإطارات المقصوصة"
+        },
+        "outputs": {
+            "images": "صورة"
+        },
+        "description": "حذف الإطارات N الأولى من الفيديو (دفعة الصور) — يزيل مشكلة تسرّب الإطار المرجعي 0."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "ملصق المراجع المتعددة BFS",
+        "inputs": {
+            "ref_image_1": "الصورة المرجعية 1",
+            "ref_image_2": "الصورة المرجعية 2",
+            "ref_image_3": "الصورة المرجعية 3",
+            "ref_image_4": "الصورة المرجعية 4",
+            "ref_image_5": "الصورة المرجعية 5"
+        },
+        "widgets": {
+            "fit_mode": "وضع الملاءمة"
+        },
+        "outputs": {
+            "sheet": "الصورة الملصوقة",
+            "n_refs": "عدد الصور المرجعية",
+            "debug": "معلومات التنقيح"
+        },
+        "description": "يدمج من 1 إلى 5 مراجع موصولة في صورة ملصوقة ثابتة المقاس 1536x1024 لتدريب LoRA متعدد المراجع. ترك الخانة فارغًا يقلّل عدد المراجع؛ والخانات الفارغة تُتخطّى مباشرة دون تعبئتها بمحتوى فارغ."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "صورة كيانات ملصوقة 2x2",
+        "inputs": {
+            "person": "الشخص",
+            "clothing": "الملابس",
+            "object_or_person2": "كائن/شخص 2",
+            "scene": "المشهد"
+        },
+        "outputs": {
+            "sheet": "الصورة الملصوقة",
+            "n_refs": "عدد الصور المرجعية",
+            "debug": "معلومات التنقيح"
+        },
+        "description": "ينشئ صورة كيانات ملصوقة 2x2 بمقاس ثابت 1536x1024 لتدريب LoRA متعدد المراجع في humoset_sheets_v7. معاني الأرباع ثابتة (أعلى اليسار: الشخص، أعلى اليمين: الملابس، أسفل اليسار: الكائن/الشخص 2، أسفل اليمين: المشهد)؛ المدخل الفارغ يجعل ربعه أبيض. يُستخدم مع LTXIdentityOverlapConditioning: التخطيط=التراكب، معرّف المصدر=2، تحجيم الطور=1.0، وضع تحجيم المرجع=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "محمّل الوجوه بنطاق الإطارات",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "frame_start": "الإطار البدئي",
+            "frame_end": "الإطار الختامي"
+        },
+        "outputs": {
+            "face_sequence": "تسلسل الوجوه"
+        },
+        "description": "يغلّف صورة وجه واحدة في نطاق إطارات [الإطار البدئي، الإطار الختامي]. يعيد تسلسل الوجوه — قائمة قواميس يستخدمها ReservedRegionFrameComposer. الإطار الختامي=-1 يعني «حتى آخر إطار» (بلا حد أعلى)."
+    },
+    "FaceSequenceBatch": {
+        "title": "معالجة دفعة تسلسل الوجوه",
+        "inputs": {
+            "face_sequence_a": "تسلسل الوجوه A",
+            "face_sequence_b": "تسلسل الوجوه B"
+        },
+        "outputs": {
+            "face_sequence": "تسلسل الوجوه"
+        },
+        "description": "يدمج قائمتي تسلسلات الوجوه في قائمة واحدة. ربط عدة عقد على شكل سلسلة يبني دفعة تحتوي عدة نطاقات."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "مُركِّب إطارات المناطق المحجوزة",
+        "inputs": {
+            "frames": "إطار",
+            "face_sequence": "تسلسل الوجوه",
+            "face_images": "صور الوجوه"
+        },
+        "widgets": {
+            "region_position": "موضع المنطقة",
+            "region_size_px": "أبعاد المنطقة بالبكسلات",
+            "face_distribution": "توزيع الوجوه",
+            "interval_frames": "عدد الإطارات الفاصلة",
+            "overflow_mode": "وضع الفيضان",
+            "stack_direction": "اتّجاه التكديس",
+            "face_scale_pct": "نسبة تحجيم الوجه",
+            "face_padding_px": "هامش بكسلات الوجوه",
+            "face_gap_px": "تباعد بكسلات الوجوه",
+            "face_align_main": "المحاذاة الرئيسة للوجوه",
+            "face_align_cross": "محاذاة الوجوه المتقاطعة",
+            "chroma_r": "مكوّن الكروما R",
+            "chroma_g": "مكوّن الكروما G",
+            "chroma_b": "مكوّن الكروما B"
+        },
+        "outputs": {
+            "frames_out": "إطارات الإخراج"
+        },
+        "description": "عقدة ComfyUI تركّب المناطق المحجوزة (يسار/يمين/أعلى/أسفل) داخل كل إطار مع الحفاظ على أبعاد إطار الخرج الأصلية. أبرز المزايا: - إبقاء دقة الخرج النهائية مطابقة لدقة الإطارات الأصلية - ملاءمة محتوى الفيديو مع المنطقة المتبقية دون قصّ - تعبئة المناطق المحجوزة بلون كروما - وضع صورة وجه واحدة أو عدة صور في تلك المنطقة - دعم نمط التوزيع الزمني لدفعة الوجوه (مدخل الصور) - دعم ضبط نطاقات لكل إطار عبر مدخل تسلسل الوجوه"
+    }
+}

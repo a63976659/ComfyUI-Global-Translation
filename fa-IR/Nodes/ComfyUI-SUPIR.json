@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "بارگذار مدل SUPIR",
+        "widgets": {
+            "supir_model": "مدل SUPIR",
+            "sdxl_model": "مدل SDXL",
+            "fp8_unet": "دقت UNet FP8",
+            "diffusion_dtype": "نوع هرس"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "مدل SUPIR",
+            "SUPIR_model": "مدل SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "بارگذار نسخه قدیمی، توصیه نمی‌شود.\n\nمدل SUPIR و مدل SDXL را بارگذاری کرده و سپس آن‌ها را تلفیق می‌کند."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "بارگذار مدل SUPIR_V2",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "مدل SUPIR",
+            "fp8_unet": "دقت UNet FP8",
+            "diffusion_dtype": "نوع هرس",
+            "high_vram": "VRAM بالا"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "مدل SUPIR",
+            "SUPIR_model": "مدل SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "مدل SUPIR و مدل SDXL را بارگذاری و سپس ادغام می‌کند.\n\nنوع هرس باید روی گزینه «خودکار» بماند، مگر اینکه هنگام بارگذاری مدل خطایی رخ دهد.\n\nfp8_unet: UNet را با torch.float8_e4m3fn صدا می‌زند؛ نیاز به VRAM را کم می‌کند اما کمی بر کیفیت تأثیر می‌گذارد.\n\nVRAM بالا: مدل را با Accelerate روی GPU بارگذاری می‌کند و سرعت بارگذاری را کمی افزایش می‌دهد."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "بارگذار مدل SUPIR_V2（CLIP）",
+        "inputs": {
+            "model": "مدل",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "مدل SUPIR",
+            "fp8_unet": "دقت UNet FP8",
+            "diffusion_dtype": "نوع هرس",
+            "high_vram": "VRAM بالا"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "مدل SUPIR",
+            "SUPIR_model": "مدل SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "مدل SUPIR و مدل SDXL را بارگذاری و سپس ادغام می‌کند.\n\nنوع هرس باید روی گزینه «خودکار» بماند، مگر اینکه هنگام بارگذاری مدل خطایی رخ دهد.\n\nfp8_unet: UNet را با torch.float8_e4m3fn صدا می‌زند؛ نیاز به VRAM را کم می‌کند اما کمی بر کیفیت تأثیر می‌گذارد.\n\nVRAM بالا: مدل را با Accelerate روی GPU بارگذاری می‌کند و سرعت بارگذاری را کمی افزایش می‌دهد."
+    },
+    "SUPIR_encode": {
+        "title": "کدگذاری SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "تصویر"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE بلوک‌بندی‌شده",
+            "encoder_tile_size": "اندازه تکه رمزگذاری",
+            "encoder_dtype": "هرس رمزگذاری"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "کدگشایی SUPIR",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE بلوک‌بندی‌شده",
+            "decoder_tile_size": "اندازه تکه رمزگشایی"
+        },
+        "outputs": {
+            "image": "تصویر"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR فاز یک",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "تصویر"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE بلوک‌بندی‌شده",
+            "encoder_tile_size": "اندازه تکه رمزگذاری",
+            "decoder_tile_size": "اندازه تکه رمزگشایی",
+            "encoder_dtype": "هرس رمزگذاری"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "تصویر",
+            "denoised_latents": "Latent"
+        },
+        "description": "«فاز اول» SUPIR. تصویر را با denoise_encoder SUPIR کدگذاری و کدگشایی می‌کند؛ برای رفع اغتشاش‌های فشرده‌سازی به‌کار می‌رود اما باعث تاری تصویر می‌شود.\n\nمی‌توان آن را با نمونه‌بردار/تاری دیگری جایگزین کرد یا اصلاً از این گره استفاده نکرد."
+    },
+    "SUPIR_conditioner": {
+        "title": "شرطی‌سازی SUPIR",
+        "inputs": {
+            "SUPIR_MODEL": "مدل SUPIR",
+            "SUPIR_model": "مدل SUPIR",
+            "latents": "Latent",
+            "captions": "عنوان/زیرنویس"
+        },
+        "widgets": {
+            "positive_prompt": "پرامپت مثبت",
+            "negative_prompt": "پرامپت منفی"
+        },
+        "outputs": {
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی"
+        },
+        "description": "شرطی‌سازی را برای نمونه‌بردار می‌سازد.\n ورودی عنوان اختیاری است؛ وقتی عنوانی دریافت کند آن را به پرامپت مثبت می‌افزاید\n اگر برای یک تصویر ورودی تک، فهرست عنوان ارائه شود این عنوان‌ها باید با تعداد تایل‌ها هم‌خوان باشند\n لطفاً به «تایل‌های تصویر SUPIR» مراجعه کنید\n اگر فهرست عنوان ارائه شود و آن فهرست با دسته تصاویر ورودی هم‌خوان باشد، هر تصویر عنوان متناظر خود را به‌کار می‌برد"
+    },
+    "SUPIR_sample": {
+        "title": "نمونه‌برداری SUPIR",
+        "inputs": {
+            "SUPIR_model": "مدل SUPIR",
+            "latents": "Latent",
+            "positive": "شرط مثبت",
+            "negative": "شرط منفی"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "control_before_generate": "عمل پیش از اجرا",
+            "steps": "تعداد گام",
+            "cfg_scale_start": "مقیاس CFG شروع",
+            "cfg_scale_end": "مقیاس CFG پایان",
+            "EDM_s_churn": "اختلال تصادفی EDM",
+            "s_noise": "مقدار نویز",
+            "DPMPP_eta": "پارامتر اندازه گام DPMPP",
+            "control_scale_start": "مقیاس کنترل شروع",
+            "control_scale_end": "مقیاس کنترل پایان",
+            "restore_cfg": "بازیابی CFG",
+            "keep_model_loaded": "نگه‌داشتن مدل بارگذاری‌شده",
+            "sampler": "نمونه‌گیر",
+            "sampler_tile_size": "اندازه تکه نمونه‌بردار",
+            "sampler_tile_stride": "اندازه گام تکه نمونه‌بردار"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nLatent مورد استفاده برای نمونه‌برداری؛ هنگام استفاده از Latent SUPIR این مورد فقط شکل نویز را تغییر می‌دهد.\n\nدر سایر موارد مانند پیش‌فرض ComfyUI رفتار می‌کند. \n\nاگر ورودی Latent وجود داشته باشد، همان ورودی ملاک است.\n\n- **CFG：**\n\nکنترل CFG با درون‌یابی خطی؛ از «مقیاس CFG شروع» به‌عنوان مقدار اولیه شروع و به‌صورت خطی تا مقدار «مقیاس CFG پایان» می‌رسد.\n\nیکسان گذاشتن این دو مقدار، مقیاس‌دهی درون‌یابی را غیرفعال می‌کند.\n\n- **EDM_s_churn：**\n\nسرعت سازگاری فرایند نمونه‌برداری با تغییرات نویز Latent را کنترل می‌کند.\n\nبرای نمونه‌بردار DPMPP بی‌اثر است.\n\n- **مقدار نویز s_noise：**\n\nمقدار نویزی را کنترل می‌کند که در هر گامِ نمونه‌برداری به Latent افزوده می‌شود. \n\n- **DPMPP_eta：**\n\nضریب مقیاسی که با تنظیم چگونگی سازگاری نویززدایی با تغییر سطح نویز در طول زمان، بر فرایند انتشار تأثیر می‌گذارد.\n\nبرای نمونه‌بردار EDM بی‌اثر است. \n\n- **مقیاس کنترل control_scale：**\n\nشدت مدل کنترل SUPIR؛ شدت را از ابتدا تا انتها با درون‌یابی خطی کنترل می‌کند.\n\nهرچه مقدار کوچک‌تر، شدت کنترل کمتر.\n\n- **CFG بازیابی restore_cfg：**\n\nمیزان بازگرداندن تصویر اصلی را در نمونه‌برداری کنترل می‌کند.\n\nبرای تنظیم ظریف فرایند نمونه‌برداری به‌کار می‌رود.\n\n- **نمونه‌بردار：**\n\nEDM به تعداد گام زیادی نیاز دارد اما معمولاً کیفیت بهتری می‌دهد.\n\nDPMPP با تعداد گام کمتر کار می‌کند و برای مدل‌های Lighting مناسب است.\n\n«نمونه‌بردار تایل‌به‌تایل» از نمونه‌برداری تایل‌به‌تایل استفاده می‌کند؛ بسیار کند است اما می‌تواند با VRAM کمتر تفکیک‌پذیری بالاتر بگیرد.\n\nپیش از تایل‌بندی تصویر باید اندازه تایل مشخص شود؛ گام تایل اندازه هم‌پوشانی هر تایل را تعیین می‌کند. برای عملکرد تایل‌بندی می‌توانید به گره «تایل‌های تصویر SUPIR» مراجعه کنید."
+    },
+    "SUPIR_tiles": {
+        "title": "تایل‌های تصویر SUPIR",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "tile_size": "اندازه تکه",
+            "tile_stride": "گام تکه"
+        },
+        "outputs": {
+            "image_tiles": "تکه‌های تصویر",
+            "tile_size": "اندازه تکه",
+            "tile_stride": "گام تکه"
+        },
+        "description": "تصویر را به روش «نمونه‌بردار تایل‌به‌تایل» تایل‌بندی می‌کند.\n\nبرای پیش‌نمایش تایل‌ها و بازسازی معکوس هر تایل (این قابلیت هنوز در حال توسعه است)."
+    },
+    "SUPIR_Upscale": {
+        "title": "بزرگ‌نمایی SUPIR",
+        "inputs": {
+            "image": "تصویر",
+            "captions": "عنوان/زیرنویس"
+        },
+        "widgets": {
+            "supir_model": "مدل SUPIR",
+            "sdxl_model": "مدل SDXL",
+            "seed": "بذر",
+            "control_before_generate": "عمل پیش از اجرا",
+            "resize_method": "روش مقیاس",
+            "scale_by": "ضریب مقیاس",
+            "steps": "تعداد گام",
+            "restoration_scale": "مقیاس بازسازی",
+            "cfg_scale": "مقیاس CFG",
+            "a_prompt": "پرامپت مثبت",
+            "n_prompt": "پرامپت منفی",
+            "s_churn": "ضریب میرایی نویز",
+            "s_noise": "مقدار نویز",
+            "control_scale": "مقیاس کنترل",
+            "cfg_scale_start": "شدت ابتدای هدایت CFG",
+            "control_scale_start": "وزن ابتدای ControlNet",
+            "color_fix_type": "نوع ترمیم رنگ",
+            "keep_model_loaded": "نگه‌داشتن مدل بارگذاری‌شده",
+            "use_tiled_vae": "VAE بلوک‌بندی‌شده",
+            "encoder_tile_size": "اندازه تکه رمزگذاری",
+            "encoder_tile_size_pixels": "اندازه تکه رمزگشایی پیکسل",
+            "decoder_tile_size": "اندازه تکه رمزگشایی",
+            "decoder_tile_size_latent": "اندازه تکه رمزگشایی Latent",
+            "diffusion_dtype": "نوع هرس",
+            "encoder_dtype": "هرس رمزگذاری",
+            "batch_size": "اندازه دسته",
+            "use_tiled_sampling": "استفاده از نمونه‌برداری تایل‌به‌تایل",
+            "used_tiled_sampling": "استفاده از نمونه‌برداری تایل‌به‌تایل",
+            "sampler_tile_size": "اندازه تکه نمونه‌بردار",
+            "sampler_tile_stride": "اندازه گام تکه نمونه‌بردار",
+            "fp8_unet": "دقت UNet FP8",
+            "fp8_vae": "fp8_vae",
+            "sampler": "نمونه‌گیر"
+        },
+        "outputs": {
+            "upscaled_image": "تصویر"
+        }
+    }
+}

@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "Início do loop de tensor",
+        "inputs": {
+            "initial_value": "Valor Inicial"
+        },
+        "widgets": {
+            "mode": "Modo",
+            "iterations": "Iterações"
+        },
+        "outputs": {
+            "flow_control": "Controle de fluxo",
+            "accumulated_count": "Quantidade acumulada",
+            "previous_value": "Valor anterior",
+            "current_iteration": "Iteração Atual"
+        },
+        "description": "Abre um loop para coletar saídas. Suporta dois modos:\n- Iterações: executa um número fixo de iterações\n- Total de quadros: executa até acumular o número alvo de quadros\nConecte flow_control a TensorLoopClose, use `previous_value` como a entrada gerada, e conecte a saída gerada a TensorLoopClose.processed.\nSuporta tipos de imagem, máscara e Latent."
+    },
+    "TensorLoopClose": {
+        "title": "Fim de loop de tensor",
+        "widgets": {
+            "flow_control": "Controle de fluxo",
+            "processed": "Processado",
+            "accumulate": "Acumular",
+            "overlap": "Sobreposição",
+            "stop": "Parar"
+        },
+        "outputs": {
+            "output": "Saída"
+        },
+        "description": "Fecha o loop aberto pelo TensorLoopOpen.\nConexões:\n  - flow_control do TensorLoopOpen\n  - processed: a saída gerada nesta iteração\nSuporta tipos de imagem, máscara e Latent."
+    },
+    "_AccumulateNode": {
+        "title": "Nó de acumulação",
+        "widgets": {
+            "to_add": "A Adicionar",
+            "accumulation": "Valor Acumulado"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "Início do loop de condicionamento",
+        "widgets": {
+            "condition": "Condicionamento"
+        },
+        "outputs": {
+            "flow_control": "Controle de fluxo"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "Fim de loop de condição",
+        "widgets": {
+            "flow_control": "Controle de fluxo",
+            "condition": "Condicionamento"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "Operação inteira",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "Operação"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "Acumulado para Lote de Imagens",
+        "widgets": {
+            "accumulation": "Valor Acumulado",
+            "overlap_frames": "Número de quadros sobrepostos",
+            "overlap_mode": "Modo de sobreposição"
+        },
+        "outputs": {
+            "result": "Resultado"
+        },
+        "description": "Concatena os valores acumulados de tensores de imagem/máscara ou dicionários Latent em um único lote."
+    },
+    "_ConditionalSelect": {
+        "title": "Seleção de Condição",
+        "widgets": {
+            "condition": "Condicionamento",
+            "value_if_true": "Valor quando a Condição é Verdadeira",
+            "value_if_false": "Valor se a condição for falsa"
+        },
+        "outputs": {
+            "result": "Resultado"
+        },
+        "description": "Retorna value_if_true quando a condição é True, caso contrário retorna value_if_false.\nUsa avaliação preguiosa, resolvendo apenas o ramo selecionado."
+    },
+    "_ImageAccumStatePack": {
+        "title": "Empacotar estado de acumulação de imagens",
+        "widgets": {
+            "remaining": "Quantidade Restante",
+            "accum": "Valor Acumulado",
+            "previous_value": "Valor anterior",
+            "count": "Contagem",
+            "open_node_id": "ID do Nó Inicial",
+            "total_frames": "Total de quadros",
+            "prev_accumulated_count": "Quantidade Acumulada Anterior",
+            "blend_overlap": "Sobreposição da mistura"
+        },
+        "outputs": {
+            "loop_state": "Estado do Loop",
+            "should_continue": "Deve continuar"
+        },
+        "description": "Empacota o estado do loop em um único dicionário, para uso pelo initial_value0 do TensorLoopOpen."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "Desempacotar Estado de Acumulação de Imagens",
+        "widgets": {
+            "loop_state": "Estado do Loop"
+        },
+        "outputs": {
+            "remaining": "Quantidade Restante",
+            "accumulation": "Valor Acumulado",
+            "previous_value": "Valor anterior",
+            "accumulated_count": "Quantidade acumulada",
+            "count": "Contagem",
+            "open_node_id": "ID do Nó Inicial",
+            "total_frames": "Total de quadros"
+        },
+        "description": "Desempacota o estado do loop de TensorLoopOpen."
+    },
+    "_BatchOps": {
+        "title": "Operação de Lote",
+        "widgets": {
+            "batch": "Lote",
+            "operation": "Operação",
+            "amount": "Quantidade",
+            "batch_b": "Lote B"
+        },
+        "outputs": {
+            "output": "Saída"
+        },
+        "description": "Operações de fatiamento, corte e concatenação de lotes."
+    }
+}

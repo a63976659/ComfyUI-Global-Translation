@@ -1,0 +1,742 @@
+{
+    "Pixaroma3D": {
+        "title": "Pixaroma 3D",
+        "widgets": {
+            "Open 3D Builder": "Ouvrir la création 3D"
+        },
+        "outputs": {
+            "image": "Scène 3D rendue",
+            "width": "Largeur de l'image (pixels)",
+            "height": "Hauteur de l'image (pixels)"
+        },
+        "description": "Constructeur 3D Pixaroma — un éditeur de scène 3D complet qui s'exécute dans ComfyUI. Ouvrez l'éditeur plein écran sur le nœud pour ajouter des primitives (cube, sphère, cylindre, tore, blob, terrain, rocher, théière, récipient creux), des assets composites (arbres, maisons, meubles, fleurs) ou importer vos propres modèles .glb/.obj.\n\nContrôles de caméra intégrés (orbite, panoramique, zoom), éclairage réaliste, annuler/rétablir et aperçu en temps réel. Les raccourcis clavier suivent la disposition Blender (G saisir, S mise à l'échelle, R rotation, Shift+D dupliquer, pavé numérique 1/3/7 pour les vues prédéfinies).\n\nLe rendu final est fourni en sortie sous forme d'IMAGE, avec sa largeur et sa hauteur, afin de pouvoir le connecter directement à ControlNet (idéal pour les cartes de profondeur, le dessin au trait et les cartes de normales) ou à n'importe quel workflow img2img.\n\nLes entrées sont des emplacements dynamiques réservés : l'éditeur les crée lorsque vous ajoutez des calques d'image d'arrière-plan ; leurs infobulles se trouvent côté JS."
+    },
+    "PixaromaAudioStudio": {
+        "title": "Pixaroma Studio audio",
+        "inputs": {
+            "image": "Image (entrée)",
+            "audio": "Piste audio"
+        },
+        "widgets": {
+            "Open AudioReact": "Ouvrir la piste audio"
+        },
+        "outputs": {
+            "video_frames": "Séquence de trames vidéo",
+            "audio": "Piste audio",
+            "fps": "Fréquence d'images"
+        },
+        "description": "Pixaroma Réaction audio — transformez une seule image en vidéo réagissant à l'audio. Ouvrez l'éditeur plein écran sur le nœud pour parcourir la chronologie audio, choisir un mode de mouvement (15 options : zoom pulsé, tremblement de caméra, glitch, contraction, onde, inclinaison, pixelisation, séparation RGB, etc.) et superposer jusqu'à 8 effets (décalage chromatique, lueur, vignettage, décalage de teinte, étalonnage cinéma sarcelle et orange, effet letterbox, lignes de balayage, grain de pellicule). L'aperçu WebGL en temps réel réagit au rythme pendant que vous faites glisser.\n\nAucun modèle supplémentaire n'est nécessaire. S'utilise avec le nœud Pixaroma Enregistrer un MP4 pour encoder directement le résultat en MP4 et réutiliser l'audio. Nécessite la prise en charge de WebGL2.\n\nLes deux entrées sont facultatives — vous pouvez connecter une source IMAGE/AUDIO en amont depuis n'importe où, ou charger en ligne dans l'éditeur (glisser-déposer ou sélection de fichier). La sélection en ligne remplace la connexion amont jusqu'à ce que vous désactiviez le commutateur de broche en ligne."
+    },
+    "PixaromaCombine": {
+        "title": "Pixaroma Fusionner",
+        "inputs": {
+            "any1": "Quelconque 1",
+            "any2": "Quelconque 2"
+        },
+        "outputs": {
+            "batch": "Lot"
+        },
+        "description": "Fusionne deux entrées en un seul lot. Connectez n'importe quels contenus à Quelconque 1 et Quelconque 2, et le nœud de combinaison les fusionne : les images et les trames vidéo sont empilées en un lot, les Latent sont traités par lot, les nombres et les textes sont rassemblés en listes. Si un côté est vide, l'autre côté est transmis tel quel, ce qui permet de l'utiliser sans risque comme accumulateur dans une boucle (au 1er tour, il n'y a encore rien à ajouter). Fonctionne avec n'importe quel type de connexion."
+    },
+    "PixaromaCompare": {
+        "title": "Pixaroma Comparaison",
+        "inputs": {
+            "image1": "Image 1",
+            "image2": "Image 2"
+        },
+        "description": "Pixaroma Comparaison d'images — la façon la plus simple de voir les différences entre deux images. Connectez n'importe quelles deux sorties IMAGE à Image 1 et Image 2 (par exemple : avant/après agrandissement, originale/retouchée, deux variantes de checkpoint), puis exécutez le workflow.\n\nLa visionneuse sur le nœud propose trois modes : côte à côte avec un curseur déplaçable, superposition avec une opacité réglable, ou le mode « Différence », qui met en évidence les changements exacts entre les deux images. Le mode de démarrage des nouveaux nœuds de comparaison se règle dans les paramètres du nœud, accessibles via le bouton d'engrenage de la barre d'outils du nœud ou par un clic droit sur le nœud.\n\nLes deux entrées sont facultatives. Si une seule image est connectée (par exemple lorsque la branche reliée à l'une des entrées est mise en sourdine ou contournée), le nœud n'affiche que cette image ; si aucune n'est connectée, il affiche un court message — il ne déclenche jamais d'erreur système, vous pouvez donc le laisser en place sans risque dans un workflow qui alterne entre texte vers image et image vers image."
+    },
+    "PixaromaImageComposition": {
+        "title": "Pixaroma Composition d'images",
+        "widgets": {
+            "Open Image Composer": "Ouvrir le compositeur d'images"
+        },
+        "outputs": {
+            "image": "Image après composition",
+            "width": "Largeur de l'image (pixels)",
+            "height": "Hauteur de l'image (pixels)"
+        },
+        "description": "Pixaroma Composition d'images — combinez et disposez plusieurs images sur un canevas en calques. Faites glisser une image sur le corps du nœud fermé pour l'ajouter comme nouveau calque (l'éditeur s'ouvre et l'image déposée est empilée au-dessus des calques existants, sans jamais les remplacer). Dans l'éditeur plein écran, vous pouvez aussi ajouter des calques par glisser-déposer, par collage depuis le presse-papiers, ou en connectant une entrée IMAGE en amont à un emplacement réservé ; déplacez-les, mettez-les à l'échelle et faites-les pivoter ensuite à l'aide des poignées, et appliquez des effets par calque : opacité, mode de fusion (normal, produit, superposition, incrustation, obscurcir, éclaircir, densité couleur -, densité couleur +, lumière forte, lumière douce, différence, exclusion, teinte, saturation, couleur, luminosité), flou gaussien, et suppression d'arrière-plan par IA (propulsée par rembg, qui choisit automatiquement le meilleur modèle installé : birefnet -> isnet -> u2net).\n\nL'outil gomme permet de masquer n'importe quel calque de manière non destructive. Le flou de chaque calque suit une courbe quadratique (curseur 0-100 → 0-50 pixels), ce qui offre un contrôle fin sur les faibles valeurs. Sur le calque sélectionné, Shift+molette le met à l'échelle sur place.\n\nLe résultat final de la composition est fourni en sortie comme IMAGE, ainsi que sa largeur et sa hauteur.\n\nLes entrées sont des emplacements réservés dynamiques, créés par l'éditeur lorsque vous ajoutez un calque réservé — connectez n'importe quelle source IMAGE en amont à l'emplacement correspondant. Leurs info-bulles sont côté JS."
+    },
+    "PixaromaCrop": {
+        "title": "Pixaroma Recadrage",
+        "widgets": {
+            "Open Crop": "Ouvrir le recadrage"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "crop_info": "Informations de recadrage",
+            "width": "Largeur (pixels)",
+            "height": "Hauteur (pixels)"
+        },
+        "description": "Pixaroma Recadrage d'image — recadrez visuellement n'importe quelle image, sans saisir de coordonnées en pixels. Trois façons de fournir l'image source : câblez n'importe quelle image en amont vers l'emplacement d'entrée (Charger une image, décodage VAE, sortie ControlNet, etc.), glissez-déposez un fichier image sur le corps du nœud, ou collez depuis le presse-papiers avec Ctrl+V. Le glisser-déposer et le collage déconnectent automatiquement la liaison amont et utilisent l'image chargée manuellement.\n\nChamps largeur/hauteur/X/Y/ratio/alignement sur le panneau du nœud — les champs numériques acceptent les expressions mathématiques, comme '1024+512' ou '512*2'. Choisir un alignement autre que libre recentre automatiquement le cadre de recadrage par rapport à l'image source : ainsi, avec un recadrage centré, passer la largeur ou la hauteur à 512 aligne automatiquement X/Y sur le décalage de centrage. L'éditeur plein écran affiche un rectangle de recadrage déplaçable avec ses poignées, ainsi que des ratios prédéfinis standard (1:1, 16:9, 9:16, etc.) adaptés aux réseaux sociaux, et un bouton Charger une image permet de changer l'image source dans l'éditeur (là aussi, la liaison amont est automatiquement déconnectée).\n\nFournit en sortie l'image recadrée, le masque de recadrage correspondant (connectez l'entrée masque, par exemple la sortie masque de Charger une image, pour transmettre la transparence du recadrage avec le même cadre), les nouvelles largeur et hauteur, ainsi que la liaison 'crop_info'. Connectez crop_info à Pixaroma Dé-recadrage d'image pour recoller précisément le recadrage modifié à son emplacement correspondant dans l'image d'origine (recadrer, retoucher/agrandir, puis remettre en place).\n\nL'entrée 'Image' est facultative — vous pouvez câbler une image en amont, ou charger directement une image par glisser-déposer, collage Ctrl+V ou le bouton Charger une image de l'éditeur (ces méthodes remplacent la liaison)"
+    },
+    "PixaromaFindReplace": {
+        "title": "Pixaroma Rechercher et remplacer",
+        "inputs": {
+            "text": "Texte"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Rechercher et remplacer — placez ce nœud sur la liaison entre une source de texte (nœud LLM, Afficher le texte, Pixaroma Texte, n'importe quelle sortie de chaîne) et le nœud qui utilise ce texte. Il intercepte le texte, applique les règles de recherche/remplacement et transmet le résultat modifié. Il affiche aussi sur le nœud un aperçu avant/après.\n\nChaque modification ajoute une règle : saisissez le texte à rechercher et le texte de remplacement. Laisser le côté remplacement vide supprime le texte trouvé. Désactiver une règle la ignore sans la supprimer ; glisser la poignée permet de la réordonner. Les règles s'appliquent de haut en bas.\n\nBascules globales : casse (respect exact de la casse), mot entier (ne correspond qu'aux mots complets, ainsi 'art' ne touche pas 'artist'), expression régulière (traite le texte recherché comme une expression régulière), nettoyage (après modification, fusionne les espaces doubles et corrige les virgules superflues ou doublées)"
+    },
+    "PixaromaGroupSwitch": {
+        "title": "Pixaroma Commutateur de groupe",
+        "description": "Pixaroma Commutateur de groupe — un panneau de commutateurs compact pour les groupes Pixaroma. Chaque commutateur peut muter ou contourner tous les nœuds du groupe, ce qui permet d'activer/désactiver des sections entières du workflow sans aucun câblage.\n\nOuvrez le panneau (icône engrenage ou clic droit sur le nœud) pour choisir si ce commutateur mute ou contourne, quels groupes il contrôle (tous, ou un ensemble de groupes sélectionné manuellement avec recherche et tri), et la règle de bascule (n'importe quel nombre activé, un seul activé, ou toujours un activé).\n\nAjoutez plusieurs nœuds de ce type pour différents usages — un pour muter, un pour contourner. Ils se synchronisent entre eux, ainsi qu'avec les boutons de titre des groupes eux-mêmes, car ils lisent et définissent tous l'état en temps réel du groupe"
+    },
+    "PixaromaImageInfo": {
+        "title": "Pixaroma Informations sur l'image",
+        "inputs": {
+            "image_info": "Informations sur l'image"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "width": "Largeur (pixels)",
+            "height": "Hauteur (pixels)",
+            "filename": "Nom de fichier"
+        },
+        "description": "Pixaroma Informations sur l'image — dépaquette le paquet de données d'informations sur l'image du mini-chargeur Pixaroma en sorties image, masque, largeur, hauteur et nom de fichier. Ne le connectez que lorsque vous avez besoin de ces informations supplémentaires, afin de garder le chargeur compact. La largeur, la hauteur et le nom de fichier s'affichent aussi à la surface du nœud"
+    },
+    "PixaromaImageResize": {
+        "title": "Pixaroma Redimensionner l'image",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "longest_side": "Côté le plus long"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "width": "Largeur (pixels)",
+            "height": "Hauteur (pixels)",
+            "longest_side": "Côté le plus long"
+        },
+        "description": "Redimensionne l'image (et son masque) dans le workflow. Choisissez un mode — désactivé, mégapixels maximum, côté le plus long, mise à l'échelle proportionnelle, ajuster à l'intérieur, recadrer pour remplir, faire correspondre le rapport largeur/hauteur, ou remplir (ajoute une bordure pour l'outpainting). Vous pouvez éventuellement câbler largeur/hauteur (par exemple depuis Pixaroma Résolution) pour piloter la taille, ou câbler un seul côté le plus long pour mettre le côté le plus grand à cette valeur (portrait ou paysage, sans avoir à choisir l'orientation). Fournit en sortie image, masque, largeur, hauteur"
+    },
+    "PixaromaInpaintCrop": {
+        "title": "Pixaroma Recadrage d'inpainting",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "size_mode": "Mode de taille",
+            "blend_mode": "Mode de fusion",
+            "target": "Cible",
+            "multiple": "Multiplicateur",
+            "context_px": "Pixels de contexte",
+            "mask_grow": "Extension du masque",
+            "mask_blur": "Flou du masque",
+            "softness": "Douceur",
+            "invert_mask": "Inverser le masque",
+            "Open mask editor": "Ouvrir l'éditeur de masque"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "crop_info": "Informations de recadrage",
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Pixaroma Recadrage d'inpainting : une façon simple de mettre en place l'inpainting. Ouvrez l'éditeur plein écran et peignez un masque sur la zone à retoucher (pinceau, gomme, tout effacer, inversion et taille du pinceau sont pris en charge). Le nœud identifie automatiquement la zone autour du masque, ajoute une marge de contexte et recadre un extrait adapté au modèle (dimensions multiples de 8, mises à l'échelle selon la cible, pour garantir une résolution suffisante même aux petites zones masquées).\n\nActivez invert_mask pour inverser le masque et faire de l'inpainting sur la zone opposée (par exemple l'arrière-plan de l'image détourée plutôt que le sujet), sans nœud d'inversion de masque supplémentaire.\n\nConnectez l'image recadrée et le masque à votre modèle d'inpainting (KSampler, Flux, modèle d'édition), puis connectez crop_info au nœud Pixaroma Assemblage d'inpainting pour recoller le résultat précisément à son emplacement d'origine.\n\nFournit en sortie l'image recadrée, le masque correspondant, la liaison d'informations de recadrage, ainsi que la largeur et la hauteur du recadrage (pratique pour un Latent vide). La liaison d'informations de recadrage est du même type que celle utilisée par le nœud de recadrage d'image ; les deux sont interchangeables."
+    },
+    "PixaromaInpaintStitch": {
+        "title": "Pixaroma Assemblage d'inpainting",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque",
+            "crop_info": "Informations de recadrage"
+        },
+        "widgets": {
+            "softness": "Douceur",
+            "blend_mode": "Mode de fusion",
+            "color_match": "Correspondance des couleurs"
+        },
+        "outputs": {
+            "image": "Image.",
+            "original": "Image originale"
+        },
+        "description": "Pixaroma Assemblage d'inpainting : recollez précisément le résultat recadré de l'inpainting à son emplacement d'origine dans l'image source, puis fusionnez-le pour éliminer les raccords.\n\nConnectez la sortie crop_info du nœud de recadrage d'inpainting Pixaroma à l'entrée crop_info de ce nœud, puis connectez le résultat recadré de l'inpainting (après traitement par le modèle) à l'image. Par défaut, ce nœud replace la zone recadrée à sa position d'origine et ne fusionne que la zone peinte ; le contenu hors masque reste précis au pixel près.\n\nL'adoucissement des raccords et le mode de fusion proviennent du nœud de recadrage d'inpainting via crop_info, mais peuvent être écrasés ici (softness=-1 utilise les réglages du nœud de recadrage). Comme ce nœud se trouve après l'échantillonneur, modifier l'adoucissement, le mode de fusion ou la correspondance des couleurs ne réexécute que ce nœud — l'échantillonneur met en cache une graine aléatoire fixe, vous pouvez donc ajuster la fusion instantanément, sans régénérer. La correspondance des couleurs sert à corriger les dérives de couleur/teinte introduites par le modèle.\n\nFournit en sortie l'image finale complète et l'image originale non recadrée ; toutes deux peuvent être connectées ensemble au nœud de comparaison d'images Pixaroma pour un avant/après instantané."
+    },
+    "KreaLoraConvertPixaroma": {
+        "title": "Conversion LoRA Krea vers Pixaroma",
+        "widgets": {
+            "lora_name": "Nom du LoRA",
+            "output_name": "Nom de sortie",
+            "overwrite": "Écraser"
+        },
+        "description": "Convertit un LoRA Krea 2 entraîné sur fal.ai en un fichier compatible avec ComfyUI. Les LoRA Krea 2 de fal.ai utilisent des noms de couches que ComfyUI ne reconnaît pas et ne peuvent donc pas être chargés ; ce nœud renomme ces couches et enregistre une nouvelle copie dans votre dossier loras, utilisable par n'importe quel chargeur de LoRA. Les poids sont copiés à l'identique : le résultat est exactement le même, il devient simplement chargeable. Choisissez un LoRA, consultez les informations affichées, puis cliquez sur Convertir. Le nœud ne fait que lire vos fichiers et écrire un nouveau fichier : il ne modifie jamais l'original et ne télécharge rien. Outil indépendant, sans affiliation avec Krea ou fal.ai et non approuvé par eux."
+    },
+    "PixaromaLabel": {
+        "title": "Pixaroma Étiquette",
+        "widgets": {
+            "label_json": "JSON d'étiquette"
+        },
+        "description": "Pixaroma Étiquette : une simple étiquette de texte pour documenter le workflow. Cliquez sur le nœud pour ouvrir l'éditeur plein écran, où vous pouvez définir le contenu du texte, la police, la taille de police (256 pixels maximum), la couleur du texte et la couleur d'arrière-plan.\n\nFonction purement annotative : aucun traitement d'image, aucune entrée à connecter, aucune chaîne de sortie. L'étiquette stylisée est rendue directement sur le corps du nœud, puis enregistrée et restaurée avec le workflow."
+    },
+    "PixaromaLoadImage": {
+        "title": "Pixaroma Charger une image",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "width": "Largeur (pixels)",
+            "height": "Hauteur (pixels)",
+            "filename": "Nom de fichier",
+            "original_width": "Largeur de l'image originale",
+            "original_height": "Hauteur de l'image originale"
+        },
+        "description": "Pixaroma Charger une image : les fonctionnalités natives de chargement d'image (téléversement, glisser-déposer, collage, multi-trames, alpha converti en masque) plus des ajustements en ligne : mégapixels maximum, côté le plus long, mise à l'échelle proportionnelle, ajuster à l'intérieur, recadrer pour remplir, faire correspondre le rapport largeur/hauteur. Prend en charge les puces d'alignement, le sélecteur de rééchantillonnage et la protection de résolution à l'agrandissement. Sorties : image, masque, largeur, hauteur, nom de fichier, largeur d'origine, hauteur d'origine. Dans la plupart des workflows, plus besoin de la combinaison Obtenir la taille de l'image + Mise à l'échelle de l'image + Recadrage d'image en aval."
+    },
+    "PixaromaLoadImagesFolder": {
+        "title": "Pixaroma Charger les images d'un dossier",
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "filename": "Nom de fichier",
+            "index": "Indice",
+            "total": "Nombre total"
+        },
+        "description": "Charge plusieurs images depuis n'importe quel dossier du disque et les envoie une par une dans le workflow — chaque image produit un résultat. Vous pouvez choisir toutes les images, les N premières, ou sélectionner manuellement des images précises dans la galerie de vignettes. Les options d'ajustement sont les mêmes que celles du nœud Pixaroma Charger une image (mégapixels maximum, côté le plus long, mise à l'échelle proportionnelle, ajuster à l'intérieur, recadrer pour remplir, faire correspondre le rapport largeur/hauteur). Les sorties sont des listes : image, masque, largeur, hauteur, nom de fichier, index, nombre total. Connectez le nom de fichier à un nœud d'enregistrement pour conserver le nom d'origine de chaque résultat, et largeur/hauteur à un Latent vide pour correspondre aux dimensions de chaque image. Cliquez une fois sur Exécuter : la taille du lot reste à 1."
+    },
+    "PixaromaLoadImageMini": {
+        "title": "Pixaroma Charger une image (mini)",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "image_info": "Informations sur l'image"
+        },
+        "description": "Pixaroma Charger une image (mini) — un nœud de chargement d'image compact. Il prend en charge le téléversement, le glisser-déposer, le collage ou la sélection de fichier ; les mêmes options de redimensionnement en ligne que Charger une image (mégapixels maximum, côté le plus long, mise à l'échelle proportionnelle, ajuster à l'intérieur, recadrer pour remplir, faire correspondre le ratio) se trouvent dans le panneau de réglages, si bien que l'interface du nœud reste minimaliste. L'éditeur de masque et le copier/coller (Clipspace) fonctionnent normalement.\n\nFournit en sortie uniquement l'image et un petit paquet de données image_info. Lorsque vous avez besoin du masque, de la largeur, de la hauteur ou du nom de fichier, connectez image_info au nœud Informations sur l'image Pixaroma — le chargeur reste ainsi compact."
+    },
+    "PixaromaLoadVideo": {
+        "title": "Pixaroma Charger une vidéo",
+        "widgets": {
+            "video": "Vidéo",
+            "max_frames": "Nombre max. de trames",
+            "force_fps": "Forcer la fréquence d'images",
+            "skip_first_frames": "Ignorer les premières trames",
+            "custom_width": "Largeur personnalisée",
+            "custom_height": "Hauteur personnalisée"
+        },
+        "outputs": {
+            "video_frames": "Trames de séquence vidéo",
+            "audio": "Piste audio",
+            "frame_count": "Nombre de trames",
+            "fps": "Fréquence d'images",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "duration": "Durée (s)"
+        },
+        "description": "Pixaroma Charger une vidéo — téléversez ou choisissez une vidéo et décodez-la en un lot de trames ; le nœud intègre un aperçu vidéo, ce qui permet de voir la vidéo source sans quitter ComfyUI.\n\nSorties : video_frames (la vidéo comme lot d'images), audio, nombre de trames, fréquence d'images, largeur, hauteur et durée — un nœud d'informations vidéo séparé n'est donc généralement pas nécessaire. S'utilise avec le nœud Pixaroma Enregistrer un MP4 : connectez directement video_frames et audio.\n\nContrôles de chargement : le nombre max. de trames définit combien de trames sont chargées depuis le début (mécanisme de sécurité pour les longues vidéos), sauter les premières trames coupe le début, forcer la fréquence d'images rééchantillonne à une fréquence stable, et largeur/hauteur personnalisées ajustent chaque trame (définir les deux à la fois recadre pour remplir ces dimensions sans étirement).\n\nLa lecture utilise PyAV en priorité, sinon 图像io ; l'audio est extrait via ffmpeg. La plupart des installations de ComfyUI ne nécessitent aucune configuration supplémentaire."
+    },
+    "PixaromaLoadVideoFrame": {
+        "title": "Pixaroma Charger une trame vidéo",
+        "widgets": {
+            "video": "Vidéo",
+            "choose video to upload": "Choisir la vidéo à téléverser",
+            "frame": "Trame"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "frame_count": "Nombre total de trames",
+            "fps": "Fréquence d'images",
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Pixaroma Charger une trame vidéo — charge une vidéo et sélectionne une trame comme image à envoyer dans le workflow. Semblable au nœud Charger une image, mais pour la vidéo.\n\nLe nœud affiche un aperçu avec un curseur : glissez le curseur où vous voulez, utilisez les boutons fléchés pour reculer ou avancer d'une trame, ou saisissez un numéro de trame exact. Le nombre total de trames est lu automatiquement, le curseur sait donc combien de trames contient la vidéo.\n\nSorties : image (la trame sélectionnée), masque, nombre de trames, fréquence d'images, largeur et hauteur. Les numéros de trame commencent à 0, donc 0 est la première trame.\n\nLa lecture utilise PyAV en priorité, sinon 图像io. Extraire une trame très loin dans une longue vidéo reste rapide, car le nœud se positionne directement sur cette trame au lieu de lire toute la vidéo."
+    },
+    "PixaromaLoopStart": {
+        "title": "Pixaroma Début de boucle",
+        "widgets": {
+            "total": "Nombre total"
+        },
+        "description": "Marqueur de début de boucle. Placez les nœuds entre le début et la fin de boucle : toute cette section est exécutée en boucle. Réglez 'Nombre total' sur le nombre de boucles. 'Index' compte les tours de boucle à partir de 0. Les emplacements de valeur servent à transporter ce qui doit passer d'un tour au suivant (par exemple les trames déjà générées ou un compteur d'exécutions) — reconnectez les emplacements de valeur correspondants de la fin de boucle pour que chaque tour reprenne là où le précédent s'est arrêté. Si la boucle n'a rien à transporter, laissez les emplacements de valeur vides."
+    },
+    "PixaromaLoopEnd": {
+        "title": "Pixaroma Fin de boucle",
+        "description": "Marqueur de fin de boucle. Connectez la sortie 'loop' du début de boucle. Placez dans les emplacements de valeur ce qui doit passer au tour suivant (par exemple un nœud de combinaison, pour accumuler les trames de chaque tour). Une fois toutes les boucles exécutées, les emplacements de valeur fournissent en sortie les valeurs finales transportées. Tout ce qui se trouve entre le début et la fin de boucle est exécuté en boucle."
+    },
+    "PixaromaLoopEngine": {
+        "title": "Pixaroma Moteur de boucle",
+        "inputs": {
+            "loop": "Nombre de boucles",
+            "index_in": "Index actuel",
+            "total": "Nombre total"
+        },
+        "description": "Moteur de récursion interne de Loop Start / Loop End. L'utilisateur n'a pas besoin de placer ce nœud manuellement — Loop End le génère automatiquement. À chaque tour, il vérifie si un tour de boucle supplémentaire est nécessaire (index + 1 < nombre total) ; si oui, il clone le corps de la boucle et lui-même, puis les réexécute avec l'index suivant et les valeurs transportées mises à jour ; sinon, il fournit en sortie les valeurs transportées finales."
+    },
+    "PixaromaLoraLoader": {
+        "title": "Chargeur LoRA Pixaroma",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "Encodeur CLIP"
+        },
+        "outputs": {
+            "MODEL": "Modèle",
+            "triggers": "Mots de déclenchement"
+        },
+        "description": "Empilez autant de LoRA que vous voulez dans un seul nœud. Chaque LoRA possède son propre interrupteur et sa propre intensité, et vous pouvez chaîner le modèle et l'encodeur CLIP à travers plusieurs nœuds de ce type. Cliquez sur « i » sur une ligne pour consulter les informations du LoRA et sélectionner ses mots de déclenchement ; les mots de déclenchement activés sont fournis en sortie texte brut via triggers, à raccorder à votre prompt. Les mots de déclenchement sont lus directement depuis le fichier et fonctionnent sans réseau ; la recherche Civitai facultative, par LoRA, peut récupérer les mots de déclenchement officiels et un aperçu à votre demande. Une fois les LoRA ajoutés, tous les interrupteurs et réglages se trouvent au milieu du nœud ; un clic droit sur une ligne permet de la déplacer, la dupliquer ou la supprimer."
+    },
+    "PixaromaMuteSwitch": {
+        "title": "Pixaroma Interrupteur de sourdine",
+        "outputs": {
+            "out": "Données de silence"
+        },
+        "description": "Pixaroma Interrupteur de sourdine — activez/désactivez des branches entières du workflow avec un seul nœud. Connectez le dernier nœud de chaque scène (généralement KSampler) à une ligne, puis cliquez sur la pastille de la ligne pour ignorer ou activer cette scène à la prochaine exécution. La pastille en haut à gauche bascule entre le mode solo (une seule scène s'exécute à la fois, comme des boutons radio) et le mode multiple (n'importe quelle combinaison de scènes peut s'exécuter). La pastille en haut à droite bascule entre sourdine (la scène ne s'exécute pas du tout) et contournement (chaque nœud de la scène transmet ses entrées telles quelles). Lorsque plusieurs scènes partagent des nœuds en amont, un nœud n'est mis en sourdine que si toutes les scènes qui en dépendent sont désactivées — vous n'interrompez donc jamais accidentellement une scène encore active."
+    },
+    "PixaromaNote": {
+        "title": "Pixaroma Note",
+        "widgets": {
+            "note_json": "JSON de note"
+        },
+        "description": "Pixaroma Note — éditeur d'annotations en texte enrichi sur le canevas. Ouvrez l'éditeur plein écran pour rédiger des notes en plusieurs paragraphes, avec prise en charge du gras/italique/souligné/barré, des titres (H1/H2/H3), des listes à puces et numérotées, des blocs de code (avec bouton de copie), des icônes en ligne (CLIP, LoRA, GGUF, versions de modèles et plus de 30 autres), des tableaux, des séparateurs, des boutons de couleur personnalisée (télécharger/voir la page/en savoir plus/normal), des info-bulles de dossier, ainsi que des pastilles YouTube et Discord préstylisées. Chaque bloc a sa propre couleur, choisie dans une fenêtre modale centrée qui apparaît au-dessus du canevas. La vue code permet de modifier manuellement le HTML sous-jacent ; le prompt LLM intégré dans assets/note-pixaroma-llm-prompt.txt permet à ChatGPT ou Gemini de générer pour vous du HTML compatible avec la vue code. Purement annotatif — aucun traitement d'image, aucun câblage d'entrée, aucune chaîne de sortie. Vos styles sont intégralement préservés à l'enregistrement et à la restauration."
+    },
+    "NotifyPixaroma": {
+        "title": "Pixaroma Notificateur",
+        "inputs": {
+            "any": "Signal quelconque"
+        },
+        "widgets": {
+            "enabled": "Activer",
+            "volume": "Volume sonore",
+            "label": "Étiquette",
+            "sound": "Effet sonore",
+            "Preview": "Aperçu"
+        },
+        "description": "Joue un effet sonore de notification lorsque le workflow atteint ce nœud. Placez-le à la fin du workflow pour entendre un signal quand le rendu est terminé, ou ajoutez-le à n'importe quelle branche de nœuds du graphe pour recevoir un rappel à un point de contrôle. Très utile lorsque vous êtes dans un autre onglet du navigateur ou une autre application pendant que ComfyUI s'exécute. Les fichiers d'effets sonores sont automatiquement énumérés depuis assets/sounds/ — déposez-y des fichiers .mp3, .wav ou .ogg pour en ajouter d'autres (redémarrez ComfyUI pour charger les nouveaux fichiers). Chaque nœud est aussi un minuteur de point de contrôle : à chaque exécution, il mesure le temps mis par le workflow pour atteindre ce nœud, affiche ce temps sur le nœud et conserve un historique par nœud ouvrable d'un clic droit (historique des temps de notification). Le chronométrage et l'effet sonore sont indépendants (le temps est enregistré même lorsque l'effet sonore est coupé) et peuvent être désactivés pour chaque nœud depuis le menu contextuel. La petite flèche sur la ligne d'horloge replie le nœud pour n'afficher que l'horloge (mode compact), ou le déplie (replier/déplier dans le menu contextuel). Chaque nœud a son propre interrupteur d'effet sonore, et il existe un interrupteur d'effet sonore principal qui couvre tous les nœuds de notification à la fois — il se trouve dans les réglages de ce nœud, accessibles via le bouton engrenage de la barre d'outils du nœud ou par un clic droit sur le nœud ; dans le menu contextuel, il s'appelle « Mute all notification sounds ». Le bouton Aperçu contourne les deux interrupteurs, car cliquer dessus est une demande manuelle d'entendre l'effet sonore immédiatement."
+    },
+    "PixaromaNumber": {
+        "title": "Pixaroma Nombre",
+        "widgets": {
+            "value": "Valeur"
+        },
+        "outputs": {
+            "int": "Entier",
+            "float": "Flottant"
+        },
+        "description": "Pixaroma Nombre — un petit nœud avec un champ numérique. Il fournit la même valeur deux fois en sortie : une fois en INT (arrondi à l'entier le plus proche), une fois en FLOAT (décimales conservées). Utile lorsqu'un nœud en aval a besoin d'un INT et un autre d'un FLOAT, ou lorsque vous voulez convertir proprement une décimale en entier au milieu du workflow. Le champ numérique accepte les entiers (42), les décimales (3.14) et les expressions mathématiques (1024+64, 1024/3, 512*2). La conversion flottant vers entier arrondit à l'entier le plus proche : 3.5 devient 4, 3.4 devient 3, -2.5 devient -2."
+    },
+    "PixaromaOutpaint": {
+        "title": "Pixaroma Extension d'image (outpainting)",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "outpaint_info": "Informations d'extension d'image"
+        },
+        "description": "Remplit les bords de l'image avec une couleur unie afin que le modèle d'extension d'image (outpainting) remplisse les zones ajoutées, puis permet éventuellement de mettre le résultat à l'échelle dans une limite en mégapixels et de renvoyer les dimensions finales.\n\nLe gris moyen est la couleur de remplissage par défaut ; n'importe quelle couleur convient, mais un remplissage trop foncé donne une dominante de couleur à l'image générée, car le modèle entraîné à remplacer ce remplissage apprend à la fois la couleur et la forme. Le gris est neutre et ne provoque pas de débordement de teinte.\n\nL'image est étendue proportionnellement jusqu'à la forme cible ; le point d'ancrage détermine de quel côté apparaît l'espace ajouté. Le mode par bord permet de définir le nombre exact de pixels pour chaque bord. La limite en mégapixels est facultative : désactivée, l'image conserve les dimensions obtenues après remplissage.\n\nLes sorties largeur et hauteur renvoient les dimensions finales, ce qui permet de les connecter directement à un Latent vide."
+    },
+    "PixaromaOutpaintStitch": {
+        "title": "Pixaroma Assemblage d'extension d'image",
+        "inputs": {
+            "image": "Image (entrée)",
+            "outpaint_info": "Informations d'extension d'image"
+        },
+        "widgets": {
+            "feather": "Adoucissement",
+            "color_match": "Correspondance des couleurs"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque"
+        },
+        "description": "Replace l'image originale dans le résultat d'extension d'image (outpainting), en ne conservant que les parties nouvellement générées par le modèle. Utilisez-le après Pixaroma Extension d'image lorsque vous avez dû réduire une grande image pour le modèle : la partie originale revient en pleine qualité, au lieu de la version adoucie et réduite issue du traitement par le modèle.\n\nConnectez la sortie 'outpaint_info' de Pixaroma Extension d'image à l'entrée 'outpaint_info' de ce nœud, et connectez l'image terminée (après décodage VAE) à « Image ». Le nœud remet le résultat à l'échelle jusqu'aux dimensions complètes après remplissage, replace l'image originale exactement à sa position d'origine et fusionne les raccords.\n\n« Adoucissement » sert à estomper les raccords entre l'image originale et les zones ajoutées. Les raccords ne peuvent pas être totalement invisibles, car les zones ajoutées sont fusionnées avec une copie réencodée de l'image originale, et non avec l'image originale elle-même ; un léger adoucissement donne donc généralement le meilleur résultat. Seuls les bords adjacents aux zones ajoutées sont estompés ; les bords réels de l'image restent nets.\n\n'颜色 match' sert à corriger les sauts de teinte qui apparaissent parfois à la jonction entre les zones ajoutées et l'image originale, en prolongeant les couleurs de l'image originale dans les zones ajoutées le long du raccord. Il suit l'arrière-plan région par région : il peut donc équilibrer une scène avec un mur clair/sol sombre, et pas seulement une couleur unie. 0 désactive l'effet, 100 applique une correspondance complète (généralement la meilleure valeur), et au-delà de 100 la correspondance devient excessive, à réserver aux rares sauts récalcitrants. Il n'équilibre que la teinte, sans toucher à la texture ni aux détails, et ne produit donc aucun artéfact.\n\nFournit en sortie l'image recomposée en pleine résolution, ainsi qu'un masque marquant les zones nouvellement générées (blanc) et les zones originales non modifiées (noir) — utile si vous souhaitez ensuite ne retoucher légèrement que les parties ajoutées."
+    },
+    "PixaromaPaint": {
+        "title": "Pixaroma Peinture",
+        "widgets": {
+            "Open Paint": "Ouvrir le canevas de peinture"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "width": "Largeur de l'image (pixels)",
+            "height": "Hauteur de l'image (pixels)"
+        },
+        "description": "Pixaroma Peinture — un éditeur de peinture rapide et simple, avec calques. Faites glisser une image sur le corps du nœud fermé : elle est ajoutée comme nouveau calque supérieur (l'éditeur s'ouvre et l'image déposée est empilée au-dessus de l'arrière-plan créé automatiquement, sans jamais remplacer les calques existants). Ouvrez l'éditeur plein écran pour peindre sur les calques empilés avec les outils crayon/pinceau/gomme/estompe/remplissage/formes/pipette, avec des contrôles de style Photoshop (réordonnancement par glisser, opacité, modes de fusion, fusionner, aplatir). Le moteur de pinceau prend en charge la dureté/opacité personnalisées, et l'outil estompe permet un mélange de couleurs en douceur.\n\nLe bouton de suppression d'arrière-plan par IA (basé sur rembg) sur les calques de source d'image extrait le sujet en un clic. Une case à cocher de la barre d'outils permet d'enregistrer directement l'image sur le disque avec un arrière-plan transparent.\n\nFournit en sortie l'image finale composée, avec sa largeur et sa hauteur. Dans l'éditeur, vous pouvez aussi glisser-déposer d'autres images pour les ajouter comme calques supplémentaires, ou connecter n'importe quelle source d'image en amont aux emplacements d'entrée facultatifs créés par l'éditeur.\n\nLes entrées sont des emplacements réservés dynamiques créés par l'éditeur ; leurs info-bulles sont côté JS."
+    },
+    "PixaromaPauseImage": {
+        "title": "Pixaroma Pause sur image",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "outputs": {
+            "image": "Image (sortie)"
+        },
+        "description": "Pixaroma Pause sur image — une porte interne qui met le workflow en pause à cet endroit, afin d'examiner l'image avant d'exécuter les étapes coûteuses qui suivent (agrandissement, second passage, post-traitement). Connectez n'importe quelle source d'image à l'entrée, et le nœud suivant à la sortie.\n\nLorsque le commutateur est sur 'Pause', cliquer sur 'Exécuter' s'arrête ici et affiche l'image ; le reste du workflow ne s'exécute pas. Cliquer sur 'Continuer' n'exécute que le flux en aval, en utilisant exactement l'image que vous voyez — le modèle, l'échantillonneur et le décodage sont ignorés, c'est donc très rapide. Cliquer sur 'Régénérer' produit une nouvelle image à cet endroit (si la graine aléatoire de l'échantillonneur est réglée sur aléatoire, l'image sera différente). Basculer le commutateur sur 'Passthrough' exécute tout le workflow d'un seul coup.\n\nLes instantanés sont stockés dans le dossier temporaire de ComfyUI et sont effacés au redémarrage de ComfyUI ; après un redémarrage, vous devez donc faire une pause une première fois avant d'utiliser 'Continuer'."
+    },
+    "PixaromaPauseText": {
+        "title": "Pixaroma Pause de texte",
+        "inputs": {
+            "text": "Texte"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Pause de texte — une porte interne qui met le workflow en pause à cet endroit, afin que vous puissiez lire et modifier le texte avant l'exécution de la suite. Pratique pour le texte provenant d'un modèle de langage, dont le contenu exact n'est pas maîtrisable. Connectez votre source de texte à l'entrée et le nœud suivant à la sortie.\n\nLorsque le commutateur est sur 'Pause', cliquer sur Exécuter s'arrête ici et affiche le texte généré par le modèle ; le reste du workflow ne s'exécute pas. Après avoir modifié le texte, cliquer sur Continuer n'exécute que le flux en aval, avec le texte que vous avez validé — le modèle est ignoré, c'est donc très rapide. Cliquer sur Régénérer produit un nouveau texte : le nœud remonte les connexions, trouve la source qui a généré le texte et fait passer sa graine aléatoire à une nouvelle valeur aléatoire, ce qui donne un résultat différent. Basculer le commutateur sur 'Passthrough' exécute tout le workflow d'un seul coup. Basculer sur 'Keep' réutilise le texte actuel à chaque exécution — le modèle est ignoré et chaque exécution produit une nouvelle image à partir du même prompt, ce qui vous permet de générer rapidement des variantes en lot tout en conservant vos modifications."
+    },
+    "PixaromaPortraitLandscape": {
+        "title": "Pixaroma Bascule portrait/paysage",
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "outputs": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Fournit en sortie la largeur et la hauteur dans l'orientation de votre choix. Saisissez deux dimensions (ou connectez-les depuis d'autres nœuds), puis cliquez sur Portrait ou Paysage. Le mode portrait dispose verticalement (la plus petite valeur devient la largeur), le mode paysage dispose horizontalement (la plus grande valeur devient la largeur). Un seul clic change l'orientation, sans avoir à conserver deux nœuds WH et un commutateur. L'ordre de saisie des deux valeurs n'affecte pas le résultat. Fournit en sortie largeur et hauteur."
+    },
+    "PixaromaPreview": {
+        "title": "Pixaroma Aperçu",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "save_mode": "Mode d'enregistrement"
+        },
+        "outputs": {
+            "image": "Image (sortie)"
+        },
+        "description": "Pixaroma Aperçu d'image — aperçu d'image en ligne avec boutons Enregistrer sur le disque, Enregistrer dans la sortie, Copier et Ouvrir, prenant en charge le traitement par lots. Connectez n'importe quelle source IMAGE à l'entrée. Toutes les trames du lot sont rendues dans le corps du nœud ; cliquez sur une vignette pour l'agrandir en ligne. Les touches fléchées passent d'une image du lot à l'autre, cliquer n'importe où sur l'image ouverte fait avancer, et Échap ou X la referme. La petite icône en haut à droite de la zone d'aperçu bascule entre disposition en grille et en bande.\n\nEnregistrer sur le disque vous laisse choisir n'importe quel dossier de votre ordinateur ; le nom de fichier proposé s'incrémente automatiquement à chaque clic. Enregistrer dans la sortie écrit dans le dossier output/ de ComfyUI. Copier place la trame sélectionnée dans le presse-papiers système au format PNG, prête à être collée dans d'autres nœuds, applications de dessin, messages, etc. Ouvrir ouvre la trame sélectionnée dans un nouvel onglet du navigateur, pour un affichage plein écran ou une comparaison côte à côte de plusieurs images. Les quatre boutons agissent sur la trame actuellement sélectionnée ; Enregistrer sur le disque et Enregistrer dans la sortie intègrent le workflow dans le PNG, si bien que vous pouvez ensuite le faire glisser à nouveau dans ComfyUI.\n\nPassez save_mode sur 'save' et le nœud peut remplacer directement SaveImage : à chaque exécution, toutes les trames du lot sont automatiquement écrites dans output/, avec les métadonnées du workflow intégrées. L'aperçu est également conservé lorsque vous changez d'onglet de workflow, vous pouvez donc vous arrêter sur une trame précise puis y revenir.\n\nLe champ de préfixe du nom de fichier prend en charge la syntaxe de sous-dossiers avec '/' (par exemple 'SDXL/portrait'), les marqueurs de date de style VHS/VideoHelperSuite (par exemple '%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png'), ainsi que les marqueurs natifs de ComfyUI (%year%, %month%, %day%, %hour%, %minute%, %second%, %width%, %height%). Les codes de format de date sont yyyy, yy, MM, dd, HH, mm, ss. Les marqueurs de référence de nœud sont également pris en charge, comme %Seed Pixaroma.seed% (ou %KSampler.seed%), qui insèrent la valeur d'un champ d'un autre nœud dans le nom de fichier, à la manière du nœud SaveImage natif. Consultez le README du projet pour la référence complète des marqueurs.\n\nUn clic droit sur le nœud ouvre les réglages d'aperçu d'image. Ajouter les informations de génération Civitai écrit en plus les réglages dans un format lisible par Civitai, si bien que les images publiées ici affichent le checkpoint, les LoRAs et leur intensité, ainsi que les pas, la graine aléatoire, l'échantillonneur et les dimensions. Les valeurs proviennent automatiquement de votre workflow, sans connexion supplémentaire. Désactivé par défaut."
+    },
+    "PixaromaPrompt": {
+        "title": "Pixaroma Prompt",
+        "inputs": {
+            "text_in": "Texte d'entrée"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Prompt — une zone de prompt avec une seule sortie texte, plus une bibliothèque personnelle de @tag réutilisables et une entrée texte facultative pouvant être fusionnée.\n\nSaisissez votre prompt et insérez des @tag pour les parties réutilisées. Enregistrez un tag nommé oilpainting dont le texte complet est la longue chaîne 'oil painting, thick brush strokes, Rembrandt lighting, ...', puis contentez-vous de taper @oilpainting. Tapez @ dans la zone pour afficher une liste consultable groupée par catégorie ; les tags connus sont surlignés et les tags inconnus signalent une faute de frappe. Chaque @tag est remplacé par son texte complet à l'exécution, la zone reste donc courte. Activez « Afficher l'expansion » pour prévisualiser ce qui sera envoyé.\n\nConnecter un prompt à l'entrée texte le fusionne avec le vôtre — choisissez « Mon prompt en premier » ou « Prompt connecté en premier », ainsi que le séparateur. Sans connexion, la sortie contient uniquement votre prompt.\n\nGérez vos tags via le bouton Tags : une bibliothèque plein écran avec catégories. Votre bibliothèque est enregistrée dans les réglages de ComfyUI, elle vous est donc privée et survit aux mises à jour du plugin ; vous pouvez la partager par export/import."
+    },
+    "PixaromaPromptFromList": {
+        "title": "Pixaroma Sélecteur de liste de prompts",
+        "inputs": {
+            "prompts": "Liste de prompts"
+        },
+        "widgets": {
+            "index": "Indice"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Sélecteur de liste de prompts — un petit outil de sélection. Il reçoit la sortie `提示词s` de Pixaroma Multi-nœuds de prompts (réglé en mode liste) et en extrait un prompt selon son numéro d'index.\n\nPlacez plusieurs nœuds de ce type dans le workflow (tous connectés au même Multi-nœuds de prompts) pour que la scène 1 récupère le prompt 1, la scène 2 le prompt 2, etc. — sans empiler trop de points de sortie sur le nœud de bibliothèque.\n\nL'index commence à 1 : 1 sélectionne le premier prompt de la bibliothèque. Si l'index est hors plage, la sortie est une chaîne vide."
+    },
+    "PixaromaPromptMulti": {
+        "title": "Pixaroma Multi-nœuds de prompts",
+        "outputs": {
+            "text": "Texte",
+            "prompts": "Prompt"
+        },
+        "description": "Pixaroma Multi-nœuds de prompts — un seul nœud, avec deux modes de fonctionnement commutables via les boutons en haut.\n\nMode file d'attente : après un clic sur Exécuter, le workflow s'exécute une fois pour chaque prompt activé. Les lignes vides sont automatiquement ignorées. Chaque prompt devient un élément distinct dans le panneau de file d'attente, ce qui permet de les annuler individuellement. Connectez la sortie `Texte` à CLIP Text Encode. Utilisez ce mode pour comparer différentes variantes de prompt (une image par prompt).\n\nMode liste : en un seul clic sur Exécuter, le nœud envoie tous les prompts activés sous forme de liste (sans boucle de file d'attente). Connectez la sortie `提示词s` à un ou plusieurs nœuds Pixaroma Sélecteur de liste de prompts en aval ; chaque nœud sélectionne un prompt différent selon son numéro. Utilisez ce mode lorsque différentes parties du même workflow (scène 1, scène 2…) doivent récupérer chacune un prompt différent de la même bibliothèque, sans ajouter de nœuds supplémentaires partout.\n\nLes deux sorties sont toujours visibles — les boutons de mode ne contrôlent que la boucle de la file d'attente. Cliquez sur «+ Add 提示词» pour ajouter une ligne. L'interrupteur inclut/exclut la ligne. Glissez la poignée à gauche pour réordonner. Vider les prompts efface le texte mais conserve les lignes. Réinitialiser revient à l'état de deux lignes vides."
+    },
+    "PixaromaPromptPack": {
+        "title": "Pixaroma Pack de prompts",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Pack de prompts — collez un bloc de texte de prompts, chaque prompt correspondant à une exécution mise en file d'attente du workflow.\n\nChoisissez le mode de découpage avec les boutons du haut : paragraphes (par défaut, découpage sur les lignes vides, adapté aux prompts longs) ou lignes (découpage à chaque retour à la ligne, adapté aux listes de prompts courts).\n\nLe compteur en bas à droite de la zone de texte affiche le nombre total de prompts. Pendant l'exécution, il passe à « actuel/total », ce qui permet de suivre la progression.\n\nLes prompts vides (ne contenant que des espaces) sont automatiquement ignorés. Si la zone de texte est vide au moment où vous cliquez sur Exécuter, rien n'est mis en file d'attente et un message s'affiche."
+    },
+    "PixaromaPromptReader": {
+        "title": "Pixaroma Lecteur de prompt",
+        "inputs": {
+            "image": "Image (entrée)",
+            "filename": "Nom de fichier"
+        },
+        "outputs": {
+            "text": "Informations de prompt de l'image"
+        },
+        "description": "Pixaroma Lecteur de prompt — charge une image générée par ComfyUI (ou Automatic1111/Forge) et lit le prompt positif enregistré dans ses métadonnées PNG. Pas d'aperçu d'image, uniquement du texte. Le prompt est fourni en sortie sous forme de chaîne, à connecter à CLIPTextEncode ou à tout autre nœud d'entrée de texte pour le réutiliser. Glissez-déposez un PNG sur le nœud, cliquez pour téléverser une image, ou choisissez un fichier dans la liste déroulante. Dès qu'un fichier est sélectionné, l'affichage se met à jour immédiatement, ce qui permet de lire le prompt avant d'exécuter le workflow. Si l'image ne contient pas de prompt intégré (JPG, capture d'écran ou PNG aux métadonnées perdues), l'affichage montre une courte explication et la sortie texte porte la même explication, afin que les connexions en aval ne soient pas interrompues. Prend en charge les workflows ComfyUI avec des nœuds de texte chaînés (ConditioningCombine, StringConcatenate, double encodeur de texte SDXL), ainsi que le format 'parameters' d'Automatic1111/Forge. Vous pouvez aussi connecter un nom de fichier à l'entrée facultative 'filename' (par exemple la sortie 'filename' du nœud Pixaroma Charger une image) — une fois connectée, le nœud ignore son propre sélecteur et lit le prompt de cette image à la place. Sélectionner, téléverser ou glisser-déposer un fichier reprend la main et la connexion est automatiquement coupée."
+    },
+    "PixaromaPromptStack": {
+        "title": "Pixaroma Pile de prompts",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Pile de prompts — conserve une liste ordonnée de blocs de prompts, que vous pouvez activer/désactiver, étiqueter et réordonner. Tous les blocs activés sont concaténés en une seule chaîne fournie en sortie, avec le séparateur choisi (virgule plus espace par défaut, modifiable dans les réglages du nœud, accessibles via le bouton engrenage de la barre d'outils du nœud ou par un clic droit sur le nœud).\n\nCliquez sur « + Add row » pour ajouter un bloc. Cliquez sur le bouton de bascule pour muter/réactiver un bloc. Faites glisser la poignée de gauche pour réordonner."
+    },
+    "PixaromaReferenceNode": {
+        "title": "Nœud de référence Pixaroma",
+        "outputs": {
+            "output": "Sortie"
+        },
+        "description": "Nœud d'exemple servant à créer des objets DOM HTML de test dans un nœud"
+    },
+    "Pixaroma_VueReferenceNode": {
+        "title": "Nœud de référence Vue Pixaroma",
+        "widgets": {
+            "image": "Image (entrée)",
+            "count": "Quantité",
+            "prompt": "Indice",
+            "mode": "Mode (sélection)",
+            "mask": "Masque",
+            "pixaroma_data": "Données pixaroma"
+        },
+        "description": "Nouveau nœud de référence Vue Pixaroma, compatible Nodes 2.0"
+    },
+    "PixaromaRemoveBackground": {
+        "title": "Pixaroma Suppression d'arrière-plan",
+        "inputs": {
+            "image": "Image (entrée)",
+            "model": "Modèle"
+        },
+        "outputs": {
+            "image": "Image avec canal alpha",
+            "mask": "Masque",
+            "inverted_mask": "Inverser le masque"
+        },
+        "description": "Utilise le modèle BiRefNet pour supprimer l'arrière-plan d'une image et renvoie, dans un seul nœud, l'image détourée (RGBA), le masque de premier plan et le masque inversé.\n\nLe modèle est chargé depuis ComfyUI/models/background_removal/. Le nom de fichier contrôle la résolution de prétraitement : si le nom contient 'matt' ou 'hr' (insensible à la casse), le prétraitement se fait en 2048, sinon tout est traité en 1024. Noms de fichier recommandés : birefnet.safetensors (standard), birefnet-hr.safetensors (haute résolution), birefnet-matting.safetensors (détourage haute résolution pour les cheveux/poils).\n\nAdresses de téléchargement :\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/background_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
+    },
+    "PixaromaResizeCrop": {
+        "title": "Pixaroma Redimensionner et recadrer",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Recadre l'image à la largeur et à la hauteur exactes spécifiées. L'image est mise à l'échelle pour remplir entièrement les dimensions cibles, puis le débordement est recadré depuis le centre : le résultat a donc toujours la largeur et la hauteur exactes que vous avez définies, sans étirement ni effet letterbox. Les images plus petites sont agrandies pour remplir. Vous pouvez saisir les dimensions dans les champs largeur et hauteur, ou les connecter depuis d'autres nœuds (comme le nœud Pixaroma Résolution ou un nœud numérique). Le masque facultatif est recadré de la même manière. Fournit en sortie image, masque, largeur et hauteur — idéal pour forcer des images ou des trames vidéo à une taille fixe, comme 512×896 ou 704×1280."
+    },
+    "PixaromaResolution": {
+        "title": "Pixaroma Résolution",
+        "outputs": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Pixaroma Résolution — sélecteur de résolution en un clic. L'interface du nœud affiche une grille de 3×3 puces de ratios (1:1, 16:9, 9:16, 2:1, 3:2, 2:3, 4:3, 3:4, 4:5), chaque ratio proposant les 8 tailles les plus utilisées. Couvre les tailles adaptées à SDXL, à la vidéo IA et aux réseaux sociaux. Cliquez sur une puce, choisissez la taille, c'est fait.\n\nLe mode ratio personnalisé permet de saisir n'importe quel rapport largeur/hauteur (21:9, 16:10, etc.) et calcule automatiquement une taille compatible avec l'IA. Le mode résolution personnalisée permet de saisir des dimensions exactes ; les champs largeur/hauteur acceptent les expressions mathématiques, comme '1024+128' ou '512*2'. Les puces d'alignement (16/32/64/aucun alignement) arrondissent la sortie au multiple préféré par l'encodeur VAE.\n\nLa largeur et la hauteur sont fournies en sortie sous forme d'entiers. L'état est enregistré et restauré avec le workflow.\n\nToute l'interface est côté JS ; la seule entrée Python est une chaîne d'état sérialisée cachée, injectée au moment de l'exécution."
+    },
+    "PixaromaRunLog": {
+        "title": "Pixaroma Journal d'exécution",
+        "description": "Pixaroma Journal d'exécution — un outil compagnon du minuteur d'exécution, qui affiche sur le nœud les durées des 10 dernières exécutions du workflow actuel. À chaque clic sur Exécuter, il chronomètre l'ensemble du workflow et ajoute le temps final en haut de la liste (la plus récente en premier), ce qui vous permet de voir si le workflow s'accélère ou de repérer un ralentissement soudain.\n\nL'exécution la plus récente est surlignée et la plus rapide est marquée. Double-cliquez sur une ligne pour ajouter une courte note à cette exécution, comme l'utilisation d'un LoRA de style ou la graine aléatoire 12345, afin de distinguer les différentes durées ; la note est enregistrée avec l'exécution correspondante, et les nouvelles exécutions la repoussent vers le bas de la liste. La liste ne concerne que le workflow actuel. Un clic droit sur le nœud permet de copier les durées ou de vider la liste.\n\nIl n'a besoin d'être connecté à aucun nœud. La liste est enregistrée avec le workflow : elle survit donc aux changements d'onglet, aux rechargements de page et aux redémarrages de ComfyUI. Seules les exécutions terminées sont consignées ; les exécutions arrêtées ou en erreur sont ignorées."
+    },
+    "PixaromaRunTimer": {
+        "title": "Pixaroma Minuteur d'exécution",
+        "description": "Pixaroma Minuteur d'exécution — une horloge qui chronomètre la durée du workflow. Elle est remise à zéro au clic sur Exécuter, compte pendant l'exécution du workflow, fige le temps total à la fin, puis émet un son de notification : vous savez que c'est terminé même si vous êtes sur un autre onglet.\n\nLe nœud n'affiche que l'horloge. Un clic droit sur le nœud ouvre les réglages : activer ou désactiver le son de notification, choisir le son et le volume (avec bouton d'aperçu), définir le nombre de décimales affichées et la couleur de l'horloge.\n\nLa bibliothèque de sons de notification est la même que celle de Pixaroma Notification — placez des fichiers .mp3, .wav ou .ogg aux noms simples (lettres, chiffres, tirets) dans assets/sounds/ pour ajouter d'autres sons (effectif après un redémarrage de ComfyUI). Le réglage de sourdine globale de tous les sons du minuteur d'exécution se trouve en haut des réglages du nœud, accessibles via le bouton engrenage de la barre d'outils du nœud ou par un clic droit sur le nœud."
+    },
+    "PixaromaSaveImage": {
+        "title": "Pixaroma Enregistrer une image",
+        "inputs": {
+            "images": "Image",
+            "name": "Nom"
+        },
+        "description": "Pixaroma Enregistrer une image — enregistre l'image dans n'importe quel dossier de votre ordinateur, sans se limiter au dossier de sortie de ComfyUI. Saisissez ou collez un chemin, ou cliquez sur Parcourir pour choisir un dossier via la boîte de dialogue Windows standard ; laissez vide pour utiliser le dossier de sortie. Le champ de nom de fichier prend en charge les marqueurs et affiche en temps réel un aperçu du fichier qui sera enregistré. Les marqueurs disponibles sont : %input% (l'entrée de nom connectée, par exemple le nom de fichier provenant de Pixaroma Charger une image), %date:yyyy-MM-dd% (et tout autre format de date/heure), %counter% (incrémentation automatique, jamais d'écrasement), %width%, %height%, %batch_num%, ainsi que des références de nœud comme %Seed Pixaroma.seed%. Utiliser / dans le nom crée des sous-dossiers. Le format est PNG (sans perte, avec le workflow intégré, si bien que le fichier peut être reglissé dans ComfyUI) ou JPG (plus léger, qualité réglable dans le menu contextuel ; ComfyUI ne peut pas recharger un workflow depuis un JPG). Un clic droit sur le nœud permet de régler le style de date, le nombre de chiffres du compteur, la qualité JPG, l'intégration du workflow et les informations de génération Civitai. Lors d'un enregistrement par lot, le compteur s'incrémente à chaque trame.\n\nAjouter les informations de génération Civitai (clic droit) écrit en plus les réglages dans un format lisible par Civitai, si bien que les images téléversées sur cette plateforme affichent le checkpoint, les LoRA et leurs poids, les pas, la graine aléatoire, l'échantillonneur et les dimensions. Les valeurs sont lues automatiquement depuis le workflow, sans avoir à les connecter à ce nœud. Le premier enregistrement après l'ajout d'un nouveau modèle marque une courte pause pour en calculer l'empreinte ; le modèle est ensuite mémorisé.\n\nLes images enregistrées s'affichent en grand aperçu sur le nœud : une image seule remplit la zone, un lot s'affiche en grille. Cliquez sur une image de la grille pour l'agrandir ; les flèches au clic ou au survol permettent de feuilleter, et la touche X revient à la grille. Copier place l'image affichée dans le presse-papiers, Ouvrir l'affiche dans un nouvel onglet du navigateur. Redimensionner le nœud agrandit l'aperçu. Le sélecteur de mode bascule entre « Enregistrer » (écrit le fichier à chaque exécution) et « Aperçu » (l'image s'affiche sur le nœud sans être écrite dans le dossier) ; le nœud peut donc aussi servir de nœud d'aperçu. Ouvrir le dossier affiche l'emplacement d'enregistrement dans l'explorateur de fichiers ; la fenêtre peut apparaître dans la barre des tâches."
+    },
+    "PixaromaSaveMp4": {
+        "title": "Pixaroma Enregistrer un MP4",
+        "inputs": {
+            "video_frames": "Trames vidéo",
+            "audio": "Piste audio"
+        },
+        "widgets": {
+            "fps": "Fréquence d'images",
+            "filename_prefix": "Préfixe du nom de fichier",
+            "save_mode": "Mode d'enregistrement",
+            "trim_to_audio": "Recadrer sur l'audio"
+        },
+        "description": "Pixaroma Enregistrer un MP4 — encode un lot d'images (et un audio facultatif) en un seul fichier MP4 au format H.264, avec un aperçu <视频> intégré dans le corps du nœud : vous pouvez voir le résultat sans quitter ComfyUI.\n\nLes trames sont transmises en flux direct vers l'entrée standard de ffmpeg (aucun fichier PNG temporaire) ; l'audio est multiplexé au format AAC 192k. S'utilise avec le nœud Pixaroma Réaction audio, mais convient aussi à n'importe quelle source produisant des trames + de l'audio.\n\nLe workflow est intégré dans le MP4 enregistré (comme métadonnées de commentaire), vous pouvez donc faire glisser la vidéo à nouveau dans ComfyUI pour restaurer le graphe — la lecture nécessite l'installation d'un pack vidéo comme VideoHelperSuite.\n\nLe binaire ffmpeg est localisé automatiquement : l'exe fourni avec imageio-ffmpeg est utilisé en priorité (aucune installation système nécessaire — exécutez 'pip install imageio-ffmpeg'), sinon le ffmpeg présent dans PATH. yuv420p exige une largeur et une hauteur paires ; si les dimensions sont impaires, le nœud affiche une erreur claire au lieu du plantage obscur de ffmpeg.\n\nL'encodeur est codé en dur sur libx264 / préréglage medium / CRF 19. Si le workflow a besoin d'un contrôle par segment, ces paramètres peuvent être déplacés vers INPUT_TYPES."
+    },
+    "PixaromaSeed": {
+        "title": "Pixaroma Graine aléatoire",
+        "outputs": {
+            "seed": "Graine aléatoire"
+        },
+        "description": "Pixaroma Graine aléatoire — une source de graine aléatoire à connecter à KSampler (ou à tout nœud doté d'une entrée de graine aléatoire). Un seul nœud de graine peut alimenter plusieurs échantillonneurs à la fois, leur faisant partager la même graine aléatoire.\n\nDeux modes : le mode aléatoire génère une nouvelle graine aléatoire à chaque exécution ; le mode fixe conserve la même graine aléatoire pour des résultats reproductibles. Boutons : « Nouvelle graine fixe » génère une nouvelle graine aléatoire et la verrouille ; « Utiliser la dernière graine » restaure la graine aléatoire de l'exécution précédente ; « Copier » place la graine aléatoire actuelle dans le presse-papiers. En mode aléatoire, la ligne « Dernière exécution » affiche la graine aléatoire qui a réellement produit la dernière image.\n\nLa graine aléatoire est fournie en sortie sous forme d'entier. L'état est enregistré et restauré avec le workflow.\n\nPour inscrire la graine aléatoire dans le nom de fichier enregistré, saisissez %Seed Pixaroma.seed% dans le champ de nom de fichier des nœuds Pixaroma Enregistrer une image, Pixaroma Enregistrer un MP4 ou Pixaroma Aperçu d'image (utilisez le nom de ce nœud, pas celui de l'échantillonneur ; renommer le nœud change le marqueur)."
+    },
+    "PixaromaSetNode": {
+        "title": "Pixaroma Nœud de réglages",
+        "inputs": {
+            "value": "Valeur"
+        },
+        "widgets": {
+            "name": "Nom"
+        },
+        "outputs": {
+            "*": "N'importe lequel"
+        },
+        "description": "Enregistre n'importe quelle connexion sous un nom, qui peut ensuite être lu n'importe où via le nœud de récupération Pixaroma. C'est une liaison sans fil, qui garde le canevas bien rangé. Elle possède aussi une sortie passthrough : les nœuds proches peuvent s'y connecter directement, tandis que les nœuds éloignés lisent la valeur via le nœud de récupération. Elle n'existe que dans l'éditeur : à l'exécution, la valeur provient directement de la source d'origine, ce qui ne modifie ni le résultat ni la vitesse. Connectez n'importe quoi, saisissez un nom et gardez le nœud replié pour que tout reste bien rangé."
+    },
+    "PixaromaGetNode": {
+        "title": "Pixaroma Récupérer le nœud",
+        "outputs": {
+            "*": "Correspondance quelconque"
+        },
+        "description": "Lit sans aucun câblage la valeur enregistrée sous un nom par le nœud de réglage Pixaroma. Choisissez le nom dans le menu déroulant : la sortie porte la valeur de ce nœud de réglage, avec le type correspondant. Comme le nœud de réglage Pixaroma, il n'existe que dans l'éditeur ; à l'exécution, il est résolu directement vers la source d'origine, sans surcoût. Vous pouvez ajouter autant de nœuds de récupération que vous voulez sur le même nom, pour distribuer une seule valeur."
+    },
+    "PixaromaShowText": {
+        "title": "Pixaroma Afficher le texte",
+        "inputs": {
+            "source": "Source (entrée)"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Afficher le texte — inspectez ce qui traverse le nœud dans une zone de texte en lecture seule, sélectionnable et copiable. Connectez n'importe quoi à l'entrée source — chaîne, entier, flottant, Latent, tenseur IMAGE, même un type inconnu — et le nœud affiche un format compact et lisible :\n\n- Tenseur : forme, type de données, minimum, maximum\n- Latent : forme des échantillons\n- Tout le reste : str(valeur)\n\nRedimensionnez le nœud librement ; les textes longs défilent avec une barre de défilement au lieu de forcer le nœud à s'agrandir. La même chaîne est également transmise à la sortie chaîne « Texte », vous pouvez donc la chaîner vers d'autres nœuds (utile pour inspecter un prompt avant de le transmettre)."
+    },
+    "PixaromaSizes": {
+        "title": "Pixaroma Tailles",
+        "outputs": {
+            "width": "Largeur sélectionnée (pixels)",
+            "height": "Hauteur sélectionnée (pixels)"
+        },
+        "description": "Pixaroma Tailles — votre propre liste de résolutions habituelles. Ajoutez les dimensions exactes largeur × hauteur que vous utilisez, choisissez-en une dans la liste, et elle fournit la largeur et la hauteur en sortie sous forme d'entiers.\n\nLes boutons Portrait/Paysage inversent les dimensions sélectionnées : il suffit donc d'ajouter une fois une taille comme 1024×1536 pour la réutiliser dans n'importe quelle orientation (les tailles carrées ne sont pas affectées). Un nouveau nœud démarre par défaut à 1024×1024 ; ouvrez les réglages (icône engrenage) pour ajouter, supprimer et réordonner les tailles, charger un ensemble de tailles courantes, ou aligner la largeur et la hauteur sur des multiples de 8, 16, 32 ou 64, pour des dimensions compatibles avec le VAE.\n\nL'état est enregistré et restauré avec le workflow."
+    },
+    "PixaromaSliders": {
+        "title": "Pixaroma Curseurs",
+        "description": "Pixaroma Curseurs — un panneau de contrôle qui rassemble dans un seul nœud les boutons, interrupteurs et réglages qui vous importent, et connecte chacun directement à l'endroit où il appartient. Ajoutez un contrôle, nommez-le, puis connectez sa sortie à n'importe quelle entrée. Chaque contrôle prend le type correspondant à ce que vous y insérez : un curseur pour les nombres (nombre de pas, CFG, débruitage, intensité LoRA), un interrupteur pour les réglages booléens, un menu déroulant pour les sélecteurs (échantillonneur, planificateur, checkpoint), que vous pouvez réduire aux seules options utilisées, une graine aléatoire avec randomisation, ou un champ de texte pour les prompts. Lorsque vous reconnectez un contrôle, il s'ajuste automatiquement pour correspondre. Un clic droit sur le nœud ouvre les réglages. Vous pouvez le trouver en recherchant panneau de contrôle, curseurs, interrupteur, bascule, menu déroulant, liste déroulante, graine aléatoire ou texte."
+    },
+    "PixaromaSwitch": {
+        "title": "Pixaroma Switch",
+        "outputs": {
+            "output": "Transmettre tel quel"
+        },
+        "description": "Pixaroma Switch — commutateur de type passthrough : il vous permet de choisir, parmi plusieurs entrées connectées, celle qui traverse vers la sortie. Connectez autant de nœuds en amont que vous voulez (jusqu'à 32) sur les différentes lignes, puis cliquez sur le bouton de bascule d'une ligne pour l'activer. La liaison de la ligne active ressort telle quelle — cela fonctionne pour n'importe quel type de liaison (MODEL, CLIP, IMAGE, STRING, AUDIO, etc.).\n\nLe nœud s'agrandit automatiquement au fil des connexions : une ligne vide reste toujours en bas, prête pour la connexion suivante. Déconnecter une liaison supprime la ligne correspondante. Chaque ligne possède une étiquette cliquable que vous pouvez renommer, afin de vous rappeler à quoi correspond chaque entrée."
+    },
+    "PixaromaSwitchSource": {
+        "title": "Pixaroma Changer de source",
+        "description": "Pixaroma Changer de source — un seul bouton de bascule fait passer tout un groupe de liaisons entre deux sources (A et B). Chaque ligne possède une entrée A et une entrée B et envoie l'une des deux vers la sortie de la ligne ; le bouton de bascule A/B choisit le côté pour toutes les lignes d'un coup. Connectez vos nœuds « Local » aux entrées A et vos nœuds « API » aux entrées B (ou n'importe quelles deux configurations), puis basculez de l'un à l'autre en un seul clic, sans avoir à actionner plusieurs commutateurs séparés.\n\nUtilisez le champ de nombre de lignes pour définir le nombre de lignes dont vous avez besoin. Fonctionne avec n'importe quel type de liaison (MODEL, CLIP, VAE, IMAGE, Latent, STRING, etc.). Le côté actif est le seul qui s'exécute — les nœuds en amont de l'autre côté sont ignorés. Le bouton sous la bascule A/B détermine ce qui se passe lorsqu'une ligne du côté actif n'a pas de liaison : « Autoriser le vide » laisse silencieusement cette sortie vide (pratique quand les liaisons sont asymétriques, par exemple 3 connexions côté B et 1 seule côté A) ; « Afficher l'erreur » déclenche une erreur explicite lorsque l'autre côté est connecté (ce qui détecte les liaisons que vous avez accidentellement glissées du mauvais côté)."
+    },
+    "PixaromaSwitchWH": {
+        "title": "Pixaroma Permuter largeur/hauteur",
+        "inputs": {
+            "width_a": "Largeur a",
+            "height_a": "Hauteur a",
+            "width_b": "Largeur b",
+            "height_b": "Hauteur b"
+        },
+        "outputs": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Pixaroma Permuter largeur/hauteur — choisissez la largeur/hauteur provenant de deux sources d'entrée en un seul clic. Connectez deux paires largeur/hauteur (par exemple la largeur/hauteur de Load Image Pixaroma et la largeur/hauteur de Resolution Pixaroma) aux entrées A et B, puis cliquez sur A ou B sur le nœud pour choisir quelle paire traverse vers la sortie. Cela vous permet de basculer entre les dimensions d'origine de l'image source et une résolution choisie manuellement, sans recâbler.\n\nSi une seule paire est connectée, elle est utilisée quel que soit l'état du bouton de bascule — vous pouvez donc déconnecter l'entrée inutilisée dès la configuration initiale du workflow."
+    },
+    "PixaromaText": {
+        "title": "Pixaroma Texte",
+        "widgets": {
+            "text": "Texte"
+        },
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Pixaroma Texte — une zone de texte multiligne avec une sortie STRING. Idéale pour les prompts et tout autre texte long à rédiger en un seul endroit puis à envoyer à plusieurs nœuds en aval (prompt positif, prompt négatif, sous-titres, instructions, etc.).\n\nLa zone de texte grandit avec le nœud : lorsque vous travaillez sur de longs prompts, glissez le coin inférieur droit pour augmenter la hauteur ou la largeur de la zone.\n\nInterrupteur de prompt dynamique (désactivé par défaut) : désactivé, le texte est envoyé tel que saisi et toutes les accolades sont conservées, ce qu'exigent les prompts JSON. Activé, il autorise les jokers {a|b} (une option est tirée au hasard à chaque mise en file d'attente, avec imbrication libre comme {a|{b|c}}) ; \\{ et \\} produisent des accolades littérales, et les commentaires sont supprimés (// jusqu'à la fin de la ligne et les blocs /* ... */)."
+    },
+    "_TextJoinBase": {
+        "title": "_Classe de base de jonction de texte",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Logique partagée des nœuds Two/Three/Four. Les sous-classes définissent N (le nombre de champs) ainsi que leurs propres DESCRIPTION/OUTPUT_TOOLTIPS. Les entrées et sorties sont construites à partir de N, si bien que text_1 à text_N sont transmis comme arguments nommés à join()/IS_CHANGED()."
+    },
+    "PixaromaTextOverlay": {
+        "title": "Pixaroma Superposition de texte",
+        "inputs": {
+            "image": "Image (entrée)",
+            "text": "Texte"
+        },
+        "outputs": {
+            "image": "Image (sortie)"
+        },
+        "description": "Ajoute une seule superposition de texte stylisée par-dessus l'image d'entrée. Réglez directement sur le nœud la police, la taille, la graisse, l'italique, l'alignement, la hauteur de ligne, l'espacement des caractères, l'opacité, l'angle de rotation, la position, la couleur du texte et la barre d'arrière-plan facultative. Cliquez sur « Ouvrir l'éditeur de texte » pour accéder au canevas plein écran, qui prend en charge le déplacement par glisser, la mise à l'échelle par glisser des coins, la rotation par glisser des poignées, les repères d'alignement, les boutons d'alignement sur le canevas, ajuster à la largeur/ajuster à la hauteur, annuler/rétablir et enregistrer sur le disque. Connecter l'entrée facultative « Texte » remplace le texte du panneau, en utilisant n'importe quelle source de chaîne en amont. À sa première exécution, un nouveau nœud centre automatiquement le texte sur les dimensions réelles de l'image."
+    },
+    "PixaromaTextWatermark": {
+        "title": "Pixaroma Filigrane de texte",
+        "inputs": {
+            "image": "Image (entrée)",
+            "text": "Texte"
+        },
+        "outputs": {
+            "image": "Image (sortie)"
+        },
+        "description": "Ajoute un filigrane de texte stylisé à une image seule ou à un lot entier. Choisissez un point d'ancrage parmi 9 (coins, bords ou centre) et une marge interne : quelle que soit la taille de l'image, le filigrane se place au même endroit sur chaque image. La taille peut être une valeur fixe en pixels ou un pourcentage de la largeur de chaque image, ce qui garde un rendu cohérent dans les lots de tailles mixtes. Réglez sur le nœud la police, la graisse, l'italique, la couleur, l'opacité, l'angle de rotation et la barre d'arrière-plan facultative. Connecter l'entrée facultative « Texte » permet de piloter le texte du filigrane depuis n'importe quelle source de chaîne en amont. Pas d'éditeur plein écran — c'est un nœud que l'on configure puis que l'on exécute."
+    },
+    "PixaromaUncrop": {
+        "title": "Pixaroma Dé-recadrage",
+        "inputs": {
+            "image": "Image (entrée)",
+            "mask": "Masque",
+            "crop_info": "Informations de recadrage"
+        },
+        "widgets": {
+            "feather": "Adoucissement"
+        },
+        "outputs": {
+            "image": "Image (sortie)",
+            "mask": "Masque",
+            "crop_info": "Informations de recadrage"
+        },
+        "description": "Pixaroma Dé-recadrage — recollez la zone recadrée modifiée à son emplacement d'origine dans l'image source : c'est le workflow classique recadrer, retoucher ou agrandir, puis remettre en place.\n\nConnectez la sortie « Informations de recadrage » de « Recadrage d'image Pixaroma » à l'entrée « Informations de recadrage » de ce nœud, puis connectez la zone recadrée modifiée (n'importe quel contenu après agrandissement, retouche, traitement des couleurs, etc.) à « Image ». Le nœud redimensionne si nécessaire la zone recadrée modifiée à la taille de la zone recadrée d'origine et la compose sur l'image originale complète ; tout ce qui se trouve hors de la zone recadrée reste inchangé.\n\nLa transparence est transmise sur toute l'image : la sortie « Masque » est le masque d'origine avec la zone recadrée mise à jour, si bien que connecter directement le masque du recadrage d'image préserve la transparence de l'image entière (ou connectez le masque de la zone modifiée pour ne changer que cette zone). « Adoucissement » estompe les raccords pour une fusion sans couture.\n\nFournit en sortie l'image complète recomposée ainsi que le masque sur toute l'image."
+    },
+    "PixaromaVersionCheck": {
+        "title": "Pixaroma Vérification de version",
+        "description": "Pixaroma Vérification de version — un petit panneau sur le canevas qui affiche les versions essentielles pour signaler un bug : la version de ComfyUI (backend), la version du frontend ComfyUI, l'interface de nœuds actuellement active (Nodes 2.0 / Legacy) et la version de Pixaroma installée. Le bouton Copier copie les quatre lignes de texte, prêtes à être collées directement dans un rapport de bug.\n\nFonction purement diagnostique — aucune entrée à connecter, aucune sortie à chaîner, aucune opération Python à l'exécution. Lorsque vous changez les réglages, les lignes de l'interface du nœud se mettent à jour en temps réel."
+    },
+    "PixaromaWH": {
+        "title": "Pixaroma Largeur/Hauteur",
+        "widgets": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "outputs": {
+            "width": "Largeur",
+            "height": "Hauteur"
+        },
+        "description": "Pixaroma Largeur/Hauteur — un petit nœud contenant uniquement deux champs numériques, largeur et hauteur, ainsi que les sorties largeur/hauteur correspondantes. Aucune entrée. Saisissez les dimensions souhaitées directement sur le nœud.\n\nÀ utiliser lorsque vous devez saisir manuellement une résolution cible et l'envoyer vers un nœud comme « Pixaroma Permuter largeur/hauteur », afin de basculer entre les valeurs manuelles et les dimensions fournies par d'autres nœuds (par exemple les sorties largeur/hauteur de Charger une image)."
+    },
+    "PixaromaTextJoinTwo": {
+        "title": "Pixaroma Joindre deux textes",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Fusionne deux textes en un seul. Saisissez du contenu dans chaque champ, ou connectez le texte d'un autre nœud à son point (le point l'emporte lorsqu'il est connecté). Un séparateur doit être inséré entre les segments (virgule, espace, nouvelle ligne, aucun séparateur ou séparateur personnalisé)\n\nLes segments vides sont ignorés, ce qui évite les séparateurs superflus. Un clic droit sur le nœud, qui contient les réglages de séparateur, permet d'activer l'ignorance des segments vides."
+    },
+    "PixaromaTextJoinThree": {
+        "title": "Pixaroma Joindre trois textes",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Fusionne trois textes en un seul. Saisissez du contenu dans chaque champ, ou connectez le texte d'un autre nœud à son point (le point l'emporte lorsqu'il est connecté). Les segments peuvent être espacés par un séparateur (virgule, espace, nouvelle ligne, aucun séparateur ou séparateur personnalisé), et les segments vides sont ignorés, ce qui évite les séparateurs superflus.\n\n Un clic droit sur le nœud utilisé pour la séparation permet de configurer l'ignorance des segments vides."
+    },
+    "PixaromaTextJoinFour": {
+        "title": "Pixaroma Joindre quatre textes",
+        "outputs": {
+            "text": "Texte"
+        },
+        "description": "Fusionne quatre textes en un seul. Saisissez du contenu dans chaque colonne, ou connectez le texte d'un autre nœud à son point (le point l'emporte lorsqu'il est connecté). Un séparateur doit être inséré entre les segments (virgule, espace, nouvelle ligne, aucun séparateur ou séparateur personnalisé), et les segments vides sont ignorés, ce qui évite les séparateurs superflus.\n\n Un clic droit sur le nœud, qui contient les réglages de séparateur, permet d'activer l'ignorance des segments vides."
+    },
+    "PixaromaXYPlot": {
+        "title": "Pixaroma Tracé XY",
+        "inputs": {
+            "image": "Image (entrée)"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier"
+        },
+        "outputs": {
+            "grid": "Maillage"
+        },
+        "description": "Pixaroma XY Plot — comparez vos réglages en un coup d'œil. Placez ce nœud à la fin du workflow et connectez-y l'image finale, comme un nœud d'aperçu. Dans le corps du nœud, choisissez ce qui varie le long de l'axe X (horizontal) et de l'axe Y (vertical) via les menus déroulants des nœuds déjà présents dans le graphe — aucun câblage supplémentaire n'est nécessaire. Les champs de valeur s'adaptent à la sélection : les nombres donnent une plage « début/fin/pas », les menus déroulants (échantillonneur, modèle) donnent une liste à cocher, et les prompts donnent un rechercher-remplacer. Cliquez une fois sur Exécuter : le workflow s'exécute pour chaque combinaison et les résultats remplissent une grille étiquetée à l'intérieur du nœud, avec les boutons « Enregistrer sur le disque »/« Enregistrer dans la sortie »/« Copier »/« Ouvrir ». La graine aléatoire est verrouillée d'une cellule à l'autre (sauf si vous êtes en train de tracer la graine aléatoire), de sorte que la seule différence visible est exactement ce que vous testez."
+    }
+}

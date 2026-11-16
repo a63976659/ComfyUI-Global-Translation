@@ -1,0 +1,622 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_ادغام ویدیوی تقویت‌شده",
+        "inputs": {
+            "images": "تصویر",
+            "audio": "صدا"
+        },
+        "widgets": {
+            "frame_rate": "نرخ فریم",
+            "codec": "قالب رمزگذاری",
+            "container": "قالب کانتینر",
+            "bit_depth": "عمق بیت",
+            "quality": "کیفیت",
+            "log_level": "سطح گزارش",
+            "pingpong": "حالت پینگ‌پنگ",
+            "save_metadata": "ذخیره فراداده",
+            "filename_prefix": "پیشوند نام فایل",
+            "save_output": "ذخیره خروجی",
+            "pass_frames": "انتقال فریم",
+            "crop_to_audio": "برش تا مدت صدا",
+            "audio_codec": "رمزگذاری صدا",
+            "audio_bitrate": "نرخ بیت صدا",
+            "save_first_frame": "ذخیره فریم نخست",
+            "save_last_frame": "ذخیره فریم پایانی"
+        },
+        "outputs": {
+            "frames": "فریم",
+            "filename": "نام فایل"
+        },
+        "description": "دسته تصویر را به ویدیوی باکیفیت تبدیل می‌کند، NVENC/GPU را خودکار انتخاب می‌کند و از پخش پینگ‌پنگی اختیاری، فراداده گردش کار ComfyUI و راه‌جایگزین MP4 پشتیبانی می‌کند."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_آماده‌سازی برش ترمیم",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "target_width": "عرض هدف",
+            "target_height": "ارتفاع هدف",
+            "mask_blur": "محو ماسک",
+            "mask_min": "کمینه ماسک",
+            "mask_max": "بیشینه ماسک",
+            "grow_px": "گسترش پیکسل",
+            "can_shrink": "قابل کوچک‌کردن"
+        },
+        "outputs": {
+            "cropped_image": "تصویر پس از برش",
+            "cropped_mask": "ماسک پس از برش",
+            "bbox_x": "مختصات X کادر مرزی",
+            "bbox_y": "مختصات Y کادر مرزی",
+            "bbox_w": "عرض کادر مرزی",
+            "bbox_h": "ارتفاع کادر مرزی"
+        },
+        "description": "تصویر و ماسک را برای ترمیم آماده می‌کند: استخراج مرزها، برش، مقیاس."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_ترکیب ترمیم",
+        "inputs": {
+            "destination": "هدف",
+            "source": "منبع",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "x": "مختصات X",
+            "y": "مختصات Y",
+            "w": "عرض",
+            "h": "ارتفاع",
+            "correction_method": "روش تصحیح"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "وصله ترمیم‌شده را با پشتیبانی از تصحیح رنگ به تصویر اصلی بازمی‌گرداند."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_انتخاب‌کننده مدل LLM",
+        "widgets": {
+            "model": "مدل",
+            "custom_path": "مسیر سفارشی",
+            "hf_repo_id": "شناسه مخزن HF",
+            "hf_revision": "بازنگری HF",
+            "download_if_missing": "دانلود در صورت نبود",
+            "backend": "بک‌اند",
+            "task": "وظیفه",
+            "device": "دستگاه",
+            "dtype": "نوع داده",
+            "quantization": "کمی‌سازی",
+            "cache_mode": "حالت حافظه نهان",
+            "trust_remote_code": "اعتماد به کد از راه دور",
+            "attention_implementation": "پیاده‌سازی توجه",
+            "kv_cache_implementation": "پیاده‌سازی حافظه نهان KV",
+            "kv_cache_quant_backend": "بک‌اند کمی‌سازی حافظه نهان KV",
+            "kv_cache_nbits": "تعداد بیت حافظه نهان KV",
+            "kv_cache_residual_length": "طول باقیمانده حافظه نهان KV",
+            "llama_n_ctx": "پنجره زمینه Llama",
+            "llama_n_gpu_layers": "تعداد لایه GPU Llama",
+            "llama_n_threads": "تعداد نخ Llama",
+            "llama_chat_format": "قالب چت Llama",
+            "ollama_model": "مدل Ollama",
+            "ollama_url": "نشانی Ollama",
+            "ollama_timeout": "مهلت زمانی Ollama"
+        },
+        "outputs": {
+            "llm_config": "پیکربندی LLM"
+        },
+        "description": "انتخاب‌کننده مدل LLM DaSiWa: پوشه محلی LLM/VLM ترنسفورمرز را از ComfyUI/models/llm انتخاب می‌کند و حافظه نهان، نوع داده، دستگاه و رفتار تخلیه را پیکربندی می‌کند."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_تحلیل LLM",
+        "inputs": {
+            "llm_config": "پیکربندی LLM",
+            "images": "تصویر",
+            "text_input": "ورودی متن"
+        },
+        "widgets": {
+            "system_prompt_preset": "پیش‌تنظیم پرامپت سیستمی",
+            "system_prompt": "پرامپت سیستمی",
+            "prompt": "پرامپت",
+            "max_new_tokens": "بیشینه توکن جدید",
+            "max_input_tokens": "بیشینه توکن ورودی",
+            "temperature": "دما",
+            "top_p": "Top_p",
+            "repetition_penalty": "جریمه تکرار",
+            "use_kv_cache": "استفاده از حافظه نهان KV",
+            "seed": "بذر تصادفی",
+            "max_frames": "حداکثر تعداد فریم",
+            "frame_stride": "گام فریم",
+            "frame_strategy": "راهبرد فریم",
+            "resize_max_px": "بیشینه پیکسل تنظیم",
+            "resize_algorithm": "الگوریتم تنظیم",
+            "memory_cleanup": "پاک‌سازی حافظه"
+        },
+        "outputs": {
+            "response": "پاسخ",
+            "info": "اطلاعات"
+        },
+        "description": "تحلیل LLM DaSiWa: مدل متن یا زبان دیداری محلی را روی دسته‌ای از متن، تصویر یا فریم‌های VHS/ویدیوی وصل‌شده اجرا می‌کند و پاسخ رشته‌ای برمی‌گرداند."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_بارگذار LoRA LTX2",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "داده پشته",
+            "model_type": "نوع مدل",
+            "use_cache": "فعال‌سازی حافظه نهان فایل LoRA",
+            "available_loras": "فهرست LoRAهای موجود"
+        },
+        "outputs": {
+            "MODEL": "مدل",
+            "CLIP": "CLIP"
+        },
+        "description": "بارگذار پیش‌رفته LoRA DaSiWa: LoRAهای معمولی تصویر/ویدیو یا LoRA ویدیو/صدای LTX-2.3 را روی هم می‌چیند. جداسازی صدا فقط برای LTX-2.3 کار می‌کند."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_پیکربندی فراداده",
+        "inputs": {
+            "node_positive": "گره مثبت",
+            "node_negative": "گره منفی",
+            "node_model": "گره مدل",
+            "node_latent": "گره Latent",
+            "node_noise": "گره نویز",
+            "node_sigmas": "گره Sigma",
+            "node_sampler": "گره نمونه‌گیر",
+            "extra_metadata": "فراداده اضافی",
+            "text_positive": "متن مثبت",
+            "text_negative": "متن منفی",
+            "text_steps": "متن تعداد گام",
+            "text_cfg": "متن CFG",
+            "text_sampler": "متن نمونه‌گیر",
+            "text_scheduler": "متن زمان‌بند",
+            "text_seed": "متن بذر تصادفی",
+            "text_model": "متن مدل",
+            "save_output": "ذخیره خروجی"
+        },
+        "widgets": {
+            "save_workflow": "ذخیره گردش کار",
+            "model_hash": "هش مدل"
+        },
+        "outputs": {
+            "config": "پیکربندی"
+        },
+        "description": "پیکربندی فراداده DaSiWa: تنظیمات فراداده گردش کار و پیوندهای تشخیص خودکار را در یک خروجی پیکربندی فشرده برای استفاده ذخیره‌کننده تصویر جمع می‌کند."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_ذخیره‌کننده تصویر فراداده",
+        "inputs": {
+            "images": "تصویر",
+            "metadata_config": "پیکربندی فراداده",
+            "extra_metadata": "فراداده اضافی"
+        },
+        "widgets": {
+            "filename_prefix": "پیشوند نام فایل",
+            "file_format": "قالب فایل",
+            "compression": "فشرده‌سازی",
+            "save_output": "ذخیره خروجی"
+        },
+        "outputs": {
+            "filename": "نام فایل",
+            "metadata": "فراداده"
+        },
+        "description": "ذخیره‌کننده تصویر فراداده DaSiWa: تصویر PNG یا WebP را با داده گردش کار ComfyUI و فراداده تولید سازگار با A1111/Civitai ذخیره می‌کند."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_ذخیره‌کننده تصویر فراداده (کامل)",
+        "inputs": {
+            "images": "دسته تصاویر",
+            "metadata_config": "پیکربندی فراداده",
+            "extra_metadata": "فراداده اضافی",
+            "node_positive": "گره مثبت",
+            "node_negative": "گره منفی",
+            "node_model": "گره مدل",
+            "node_latent": "گره Latent",
+            "node_noise": "گره نویز",
+            "node_sigmas": "گره Sigma",
+            "node_sampler": "گره نمونه‌گیر",
+            "text_positive": "پرامپت مثبت",
+            "text_negative": "پرامپت منفی",
+            "text_steps": "تعداد گام",
+            "text_cfg": "مقدار CFG",
+            "text_sampler": "نمونه‌گیر",
+            "text_scheduler": "زمان‌بند",
+            "text_seed": "بذر تصادفی",
+            "text_model": "مدل متن"
+        },
+        "widgets": {
+            "filename_prefix": "پیشوند نام فایل",
+            "file_format": "قالب فایل",
+            "compression": "سطح فشرده‌سازی",
+            "save_output": "ذخیره خروجی",
+            "save_workflow": "ذخیره گردش کار",
+            "model_hash": "هش مدل"
+        },
+        "outputs": {
+            "filename": "نام فایل",
+            "metadata": "فراداده"
+        },
+        "description": "نسخه کامل ذخیره‌کننده تصویر فراداده DaSiWa: گونه پیش‌رفته ذخیره‌گر که همه تشخیص‌های فراداده و پورت‌های بازنویسی دستی را مستقیماً روی گره نمایان می‌کند."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_ایجاد فراداده اضافی",
+        "inputs": {
+            "extra_metadata": "فراداده اضافی"
+        },
+        "widgets": {
+            "key": "کلید",
+            "value": "مقدار"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "فراداده اضافی"
+        },
+        "description": "ایجاد فراداده اضافی DaSiWa: جفت‌های کلید-مقدار فراداده سفارشی را برای ذخیره‌کننده تصویر می‌سازد یا گسترش می‌دهد."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_انتخاب‌کننده رشته تصادفی",
+        "inputs": {
+            "text": "متن"
+        },
+        "outputs": {
+            "text": "متن"
+        },
+        "description": "انتخاب‌کننده رشته تصادفی DaSiWa: متن را منتقل می‌کند و هر گروه {A|B|C} را با گزینه تصادفی انتخاب‌شده جایگزین می‌کند"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_RTX_بزرگ‌نمایی و پرداخت",
+        "inputs": {
+            "images": "تصویر"
+        },
+        "widgets": {
+            "denoise": "حذف نویز",
+            "deblur": "حذف تاری",
+            "scale": "مقیاس",
+            "megapixels": "مگاپیکسل",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "device_id": "شناسهٔ دستگاه",
+            "empty_cache": "پاک‌سازی حافظه نهان",
+            "denoise_quality": "کیفیت حذف نویز",
+            "deblur_quality": "کیفیت حذف تاری",
+            "upscale": "بزرگ‌نمایی",
+            "upscale_quality": "کیفیت بزرگ‌نمایی",
+            "resize_type": "نوع تنظیم اندازه",
+            "divisible_by": "مقدار بخش‌پذیر",
+            "ratio_preset": "پیش‌تنظیم نسبت",
+            "resize_method": "روش تنظیم اندازه",
+            "use_mmap": "استفاده از نگاشت دیسک",
+            "auto_unload_models": "تخلیه خودکار مدل"
+        },
+        "outputs": {
+            "images": "تصویر"
+        },
+        "description": "بزرگ‌نما و بهینه‌ساز DaSiWa RTX: گره پردازش 3 مرحله‌ای با کارایی بالا. 1. مرحله بهینه‌سازی: با وضوح منبع اجرا می‌شود و با جلوه‌های بصری NVIDIA RTX نویز یا تاری را پاک می‌کند. 2. مرحله بزرگ‌نمایی: تصویر را 4 برابر با VSR یا حالت بیت‌ریت بالا بزرگ‌نمایی می‌کند. پردازش فریم‌به‌فریم برای نگه‌داشتن مصرف VRAM پایین در دسته ویدیو"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_محاسبه‌گر مقیاس وضوح",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "resolution_preset": "پیش‌تنظیم وضوح",
+            "aspect_preset_when_not_image": "پیش‌تنظیم نسبت در حالت غیرتصویری",
+            "no_scale": "بدون مقیاس",
+            "scale_from_image": "مقیاس از تصویر",
+            "swap_aspect_when_not_image": "جابجایی نسبت در حالت غیرتصویری",
+            "custom_aspect_width": "عرض نسبت سفارشی",
+            "custom_aspect_height": "ارتفاع نسبت سفارشی",
+            "mode": "حالت",
+            "custom_divisor": "مقسوم‌علیه سفارشی"
+        },
+        "outputs": {
+            "width_int": "عرض عدد صحیح",
+            "height_int": "ارتفاع عدد صحیح",
+            "width_float": "عرض اعشاری",
+            "height_float": "ارتفاع اعشاری"
+        },
+        "description": "محاسبه‌گر مقیاس وضوح DaSiWa: وضوح دقیقِ ریاضی را بر اساس مساحت مگاپیکسل هدف محاسبه می‌کند. - حالت استاندارد: مقیاس خالص ریاضی. - حالت WAN/LTX: هم‌ترازی با مرز 32 پیکسل (برای WAN/LTX VAE ضروری). - بدون مقیاس: همه محاسبات را بازنویسی کرده و اندازه تصویر منبع را مستقیم خروجی می‌دهد"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_تنظیم اندازه Torch",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "size_mode": "حالت اندازه",
+            "aspect_mode": "حالت نسبت",
+            "target_width": "عرض هدف",
+            "target_height": "ارتفاع هدف",
+            "scale_multiplier": "مضرب مقیاس",
+            "interpolation": "درون‌یابی",
+            "gamma_correct": "تصحیح گاما",
+            "divisible_by": "مقدار بخش‌پذیر",
+            "pad_color": "رنگ پدینگ",
+            "crop_position": "موقعیت برش",
+            "batch_size": "اندازه دسته",
+            "max_batch_megapixels": "بیشینه مگاپیکسل دسته",
+            "cache_size": "اندازه حافظه نهان"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "ابزار تنظیم اندازه دسته‌ای PyTorch بدون وابستگی برای تصاویر ComfyUI. از نمونه‌برداری مجدد دقیقِ پیکسلی نزدیک‌ترین همسایه، دخطی، دوکراهی، ناحیه‌ای و Lanczos جداشدنی با حافظه نهان پشتیبانی می‌کند"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_تغییر وضعیت گره",
+        "widgets": {
+            "enabled": "فعال",
+            "trigger_on": "شرط فعال‌سازی",
+            "action": "عملیات"
+        },
+        "outputs": {
+            "enabled_out": "خروجی فعال"
+        },
+        "description": "کلید وضعیت گره DaSiWa: گره هدف وصل‌شده را بر پایه وضعیت بولی بی‌صدا یا دور می‌زند، با خروجی فعال برای اتصال زنجیره‌ای کلیدها"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_واترمارک",
+        "inputs": {
+            "images": "تصویر"
+        },
+        "widgets": {
+            "watermark_path": "مسیر واترمارک",
+            "position": "موقعیت",
+            "scale": "مقیاس",
+            "resampling": "نمونه‌برداری مجدد",
+            "transparency": "شفافیت",
+            "rotation": "چرخش",
+            "padding_x": "پرکردن محور X",
+            "padding_y": "پرکردن محور Y",
+            "optical_padding": "پرکردن نوری",
+            "optical_strength": "شدت نوری",
+            "random_switches": "کلیدهای تصادفی",
+            "fade": "محو و ظاهر شدن",
+            "fade_margin": "حاشیه محو و ظاهر شدن",
+            "randomize_position": "موقعیت تصادفی",
+            "random_seed": "بذر تصادفی"
+        },
+        "description": "واترمارک DaSiWa: گره هم‌پوشانی واترمارک در سطح حرفه‌ای با ترکیب پایدار CPU. دسته خروجی را در RAM ذخیره می‌کند، آمیزش را از فریم منبع مقداردهی‌شده شروع می‌کند تا از سوسو زدن بپرهیزد، از مقیاس دوکراهی/Lanczos، چرخش و «پرکردن نوری» برای تراز کامل بصری پشتیبانی می‌کند"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_سازنده پیش‌تنظیم پرامپت",
+        "inputs": {
+            "positive_input": "ورودی مثبت",
+            "negative_input": "ورودی منفی"
+        },
+        "widgets": {
+            "style": "سبک",
+            "seed": "بذر تصادفی",
+            "token_budget": "بودجه توکن",
+            "selection_state": "وضعیت انتخاب",
+            "reroll": "تصادفی دوباره",
+            "auto_reroll": "تصادفی دوباره خودکار"
+        },
+        "outputs": {
+            "positive_prompt": "پرامپت مثبت",
+            "negative_prompt": "پرامپت منفی"
+        },
+        "description": "از کتابخانه پرامپت دوسبکی داخلی، پرامپت مثبت و پرامپت منفی را می‌سازد. گزینه‌های انتخابی و وزن‌ها در گردش کار ذخیره می‌شوند"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_کنترل‌کننده بذر مستقل",
+        "description": "گره مستقل کنترل بذر که تجربه تعامل بذر MiniMax H3 Director را بازمی‌استفاده کند: حالت تصادفی/ثابت، بذر بدون علامت 64 بیتی، تصادفی دوباره/بازیابی بذر قبلی، 10 مورد اخیر و خروجی شیء NOISE برای استفاده مستقیم نمونه‌گیر بالادست.",
+        "inputs": {
+            "seed": "ورودی بذر خارجی"
+        },
+        "widgets": {
+            "seed_value": "مقدار بذر محلی",
+            "seed_control_state": "وضعیت کنترل بذر",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "مقدار بذر محلی؛ پنل فرانت‌اند آن را ویرایش می‌کند؛ کافی است کنترل بومی پنهان بماند.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "وضعیت ماندگار کنترل بذر (JSON): حالت، بذر آخرین اجرا و فهرست بذرهای اخیر.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "ورودی بذر خارجی اختیاری: پس از اتصال، کنترل‌های محلی غیرفعال شده و مقدار متصل مستقیم عبور داده می‌شود."
+        },
+        "outputs": {
+            "seed": "بذر",
+            "noise": "نویز"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 DaSiWa_Comfy Kitchen INT8 وصله توجه",
+        "description": "مدل را وصله می‌کند تا در زمان اجرا از پیاده‌سازی توجه INT8 Comfy Kitchen برای صرفه‌جویی VRAM استفاده کند. اگر Comfy Kitchen در دسترس نباشد به توجه پیش‌فرض ComfyUI بازمی‌گردد.",
+        "inputs": {
+            "model": "مدل"
+        },
+        "outputs": {
+            "MODEL": "مدل"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_MiniMax H3 کارگردان",
+        "description": "گره کارگردان تولید ویدیو/صدای MiniMax H3: خط زمان، رسانه‌های مرجع و ساخت پرامپت را یکپارچه می‌کند و پیکربندی کارگردان با اطلاعات کامل هدایت را برای گره MiniMax H3 Director Guide خروجی می‌دهد.",
+        "inputs": {
+            "fl2va_model": "مدل FL2VA",
+            "ref2va_model": "مدل REF2VA",
+            "external_width_overwrite": "بازنویسی عرض خارجی",
+            "external_height_overwrite": "بازنویسی ارتفاع خارجی",
+            "external_prompt_overwrite": "بازنویسی پرامپت خارجی"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "prompt": "پرامپت",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "duration": "مدت زمان",
+            "ref_image_size": "اندازه تصویر مرجع",
+            "frame_rate": "نرخ فریم"
+        },
+        "outputs": {
+            "guide": "راهنمای کارگردانی",
+            "duration": "مدت زمان",
+            "positive_prompt": "پرامپت مثبت",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "model": "مدل",
+            "fl2va_requested": "درخواست FL2VA",
+            "inpaint_requested": "درخواست ترمیم",
+            "frame_rate": "نرخ فریم"
+        },
+        "ui": {
+            "Model Mode:": "حالت مدل:",
+            "Image Inpaint": "ترمیم تصویر",
+            "Prompt Mode:": "حالت پرامپت:",
+            "Simple": "ساده",
+            "Structured": "ساخت‌یافته",
+            "Use the simple prompt editor": "استفاده از ویرایشگر پرامپت ساده",
+            "Use the structured prompt editor": "استفاده از ویرایشگر ساخت‌یافته پرامپت",
+            "One image reference; output exactly one frame through Get Image from Batch.": "یک مرجع تصویر؛ دقیقاً یک فریم از طریق «دریافت تصویر از دسته» خروجی می‌دهد.",
+            "Remove": "برداشتن",
+            "Clear": "پاک کردن",
+            "Remove all media and prompts": "برداشتن همه رسانه‌ها و پرامپت‌ها",
+            "Nothing to clear yet": "هنوز محتوایی برای پاک کردن نیست",
+            "Nothing to clear.": "محتوایی برای پاک کردن وجود ندارد.",
+            "Open MiniMax H3 Director documentation on GitHub": "باز کردن مستندات کارگردان MiniMax H3 در GitHub",
+            "T2VA · no input frame": "T2VA · بدون فریم ورودی",
+            "I2VA · one opening-frame slot": "I2VA · یک شیار فریم نخست",
+            "FL2VA · opening and closing-frame slots": "FL2VA · شیارهای فریم نخست و پایانی",
+            "L2VA · one closing-frame slot": "L2VA · یک شیار فریم پایانی",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "ترمیم تصویر · دقیقاً یک تصویر · خروجی یک فریم از طریق «دریافت تصویر از دسته» · بدون ویدیو/صدا",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · حداکثر 9 شیار تصویر، 3 ویدیو و 3 صدا · در مجموع حداکثر 12 فایل",
+            "ASPECT": "قاب",
+            "RESOLUTION": "وضوح",
+            "INPUT SCALING": "مقیاس ورودی",
+            "Auto": "خودکار",
+            "CUSTOM": "سفارشی",
+            "Native (ShortEdge 768px)": "بومی (ضلع کوتاه 768px)",
+            "Off": "خاموش",
+            "Native (ShortEdge 2048px)": "بومی (ضلع کوتاه 2048px)",
+            "Target · Selected Aspect & Resolution": "هدف · قاب و وضوح انتخاب‌شده",
+            "Fit": "انطباق",
+            "Fill and crop": "پرکردن و برش",
+            "Fit and pad": "انطباق و پرکردن",
+            "Long side with divisible crop": "هم‌ترازی ضلع بلند با برش بخش‌پذیر",
+            "0.26 MP - Preview": "0.26 MP - پیش‌نمایش",
+            "0.36 MP - Small": "0.36 MP - کوچک",
+            "0.52 MP - SD": "0.52 MP - وضوح استاندارد",
+            "0.65 MP - Balanced": "0.65 MP - متعادل",
+            "0.83 MP - HD": "0.83 MP - وضوح بالا",
+            "1.05 MP - HD+": "1.05 MP - وضوح بالا+",
+            "1.20 MP - HD++": "1.20 MP - وضوح بالا++",
+            "1.35 MP - 2K lite": "1.35 MP - 2K سبک",
+            "1.75 MP - QHD": "1.75 MP - وضوح خیلی بالا",
+            "2.10 MP - FHD": "2.10 MP - تمام‌وضوح",
+            "3.30 MP - QHD+": "3.30 MP - وضوح خیلی بالا+",
+            "4.75 MP - 2K Pro": "4.75 MP - 2K حرفه‌ای",
+            "6.50 MP - Production": "6.50 MP - تولید",
+            "8.30 MP - UHD": "8.30 MP - وضوح فرابالا",
+            "General": "عمومی",
+            "Horizontal": "افقی",
+            "Square": "مربع",
+            "Vertical": "عمودی",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "مقیاس ورودی را رد می‌کند — مراجع با اندازه اصلی به MiniMax فرستاده می‌شوند.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "فقط وقتی ضلع کوتاه مرجع از 2048 پیکسل بیشتر است مقیاس را کم می‌کند؛ ورودی‌های کوچک‌تر بدون پردازش عبور می‌کنند.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "مراجع را به کادر قاب و وضوح انتخاب‌شده تنظیم می‌کند (کشش، بدون حفظ نسبت ابعاد).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "مراجع را چنان مقیاس می‌کند که با حفظ نسبت ابعاد در کادر هدف جا شوند.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "مراجع را با حفظ نسبت ابعاد مقیاس می‌کند تا کادر هدف را بپوشاند، سپس قسمت اضافه را برش می‌دهد.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "مراجع را با حفظ نسبت ابعاد مقیاس می‌کند تا با کادر هدف تطبیق کند، سپس پرکردن لبه‌های خالی.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "مقیاس می‌کند تا ضلع بلند با هدف برابر شود، سپس به اندازه هدفِ دقیق و بخش‌پذیر برش می‌دهد.",
+            "RATIO W": "نسبت عرض",
+            "RATIO H": "نسبت ارتفاع",
+            "Megapixels": "مگاپیکسل",
+            "Fixed pixels": "پیکسل ثابت",
+            "WIDTH": "عرض",
+            "HEIGHT": "ارتفاع",
+            "External width/height overwrite · Director sizing and input scaling disabled": "بازنویسی عرض/ارتفاع خارجی · تنظیم اندازه کارگردان و مقیاس ورودی غیرفعال شد",
+            "Image/Video": "تصویر/ویدیو",
+            "Image/Video · selected": "تصویر/ویدیو · انتخاب‌شده",
+            "audio": "صدا",
+            "audio · selected": "صدا · انتخاب‌شده",
+            "Video only": "فقط ویدیو",
+            "Audio only": "فقط صدا",
+            "Video + embedded audio": "ویدیو + صدای تعبیه‌شده",
+            "Full source-duration scale": "مقیاس کامل مدت زمان منبع",
+            "Full audio waveform; crop markers show the selected reference window": "موج کامل صدا؛ علامت‌های برش بازه مرجع انتخاب‌شده را نشان می‌دهند",
+            "Decoding audio waveform…": "در حال رمزگشایی موج صدا…",
+            "Open preview and details": "باز کردن پیش‌نمایش و جزئیات",
+            "T2VA prompt builder": "سازنده پرامپت T2VA",
+            "I2VA prompt builder": "سازنده پرامپت I2VA",
+            "FL2VA prompt builder": "سازنده پرامپت FL2VA",
+            "L2VA prompt builder": "سازنده پرامپت L2VA",
+            "REF2VA prompt builder": "سازنده پرامپت REF2VA",
+            "Image Inpaint prompt builder": "سازنده پرامپت ترمیم تصویر",
+            "T2VA simple prompt": "پرامپت ساده T2VA",
+            "I2VA simple prompt": "پرامپت ساده I2VA",
+            "FL2VA simple prompt": "پرامپت ساده FL2VA",
+            "L2VA simple prompt": "پرامپت ساده L2VA",
+            "REF2VA simple prompt": "پرامپت ساده REF2VA",
+            "Image Inpaint simple prompt": "پرامپت ساده ترمیم تصویر",
+            "REF2VA prompt builder — write freely; headers are added automatically": "سازنده پرامپت REF2VA — آزاد بنویسید؛ عنوان فیلدها خودکار افزوده می‌شود",
+            "Prompt": "پرامپت",
+            "Insert [Shot N]": "درج [Shot N]",
+            "Prefill Labels & Summary": "پیش‌پرکردن برچسب‌ها و خلاصه",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "بر پایه رسانه‌های درج‌شده برچسب‌های سوژه/تصویر/ویدیو/صدا را تولید می‌کند و الگوی خلاصه را پر می‌کند",
+            "Preview Prompt": "پیش‌نمایش پرامپت",
+            "Show the full prompt that will be sent upstream": "نمایش پرامپت کاملی که به بالادست فرستاده می‌شود",
+            "External prompt detected — builder fields are disabled.": "پرامپت خارجی تشخیص داده شد — فیلدهای سازنده غیرفعال شدند.",
+            "Write the complete MiniMax H3 prompt...": "پرامپت کامل MiniMax H3 را اینجا بنویسید…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] توضیح صحنه خود را اینجا آغاز کنید…",
+            "Describe ambient sounds, dialogue, effects...": "صدای محیط، گفتگو و جلوه‌های صوتی را توصیف کنید…",
+            "N/A or describe background score...": "مقدار N/A را وارد کنید، یا موسیقی پس‌زمینه را توصیف کنید…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> زن موجود در <Picture 1> است، با موهای کوتاه مشکی و کت قرمز.\n<Picture 1> لنگر فریم نخست [Shot 1] است.\n<Subject 2> عمل راه رفتن گرفته‌شده از <Video 1> است.\n<Video 1> مسیر حرکت دوربین و ساختار ریتم را فراهم می‌کند.\n<Audio 1> مرجع رنگ صدا برای <Subject 1> است.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] از <Subject 1> در <Picture 1>، حرکت و ریتم <Video 1> و ویژگی صدای <Audio 1> استفاده کنید.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> (ظاهر در [Shot 1]، [Shot 2]): fully_preserved - هویت و لباس یکسان می‌مانند.\n<Picture 1> (فریم نخست [Shot 1]): fully_preserved - لنگر ترکیب‌بندی شروع.\n<Subject 2> (انتقال عمل به <Subject 1>): attribute_transfer - ریتم گام‌ها به <Subject 1> اعمال می‌شود.\n<Video 1> (ساختار ریتم): weak_reference - زمان‌بندی کلی و ریتم دوربین حفظ می‌شود.\n<Audio 1>: reference - رنگ صدا و شیوه بیان دنبال می‌شود، سیگنال اصلی کپی نمی‌شود.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] در 00:04.500، ……",
+            "Audio environment description...": "توصیف صدای محیط…",
+            "N/A or background score...": "مقدار N/A را وارد کنید، یا موسیقی پس‌زمینه را توصیف کنید…",
+            "Close and save (Escape or click outside)": "بستن و ذخیره (Esc یا کلیک بیرون)",
+            "Start:": "آغاز:",
+            "End:": "پایان:",
+            "▶ Play crop": "▶ پخش ناحیه برش",
+            "Playing crop…": "در حال پخش ناحیه برش…",
+            "Play only the current crop range": "پخش فقط بازه برش فعلی",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "ناحیه برش روشن‌شده را بکشید تا جابه‌جا شود؛ علامت‌های دو انتها را بکشید تا اندازه تغییر کند.",
+            "Save": "ذخیره",
+            "Cancel": "لغو",
+            "Full media preview": "پیش‌نمایش کامل رسانه",
+            "Done": "انجام شد",
+            "Copy": "کپی",
+            "All media and prompts cleared.": "همه رسانه‌ها و پرامپت‌ها پاک شدند.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA فقط از مرجع تصویر پشتیبانی می‌کند؛ ویدیو و صدا در دسترس نیستند.",
+            "This media type is not available in the selected MiniMax mode.": "این نوع رسانه در حالت MiniMax انتخاب‌شده پشتیبانی نمی‌شود.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA فقط از مرجع تصویر پشتیبانی می‌کند؛ لطفاً مسیر تصویر/ویدیو را انتخاب کنید.",
+            "Upload failed": "بارگذاری ناموفق",
+            "T2VA has no input lanes.": "T2VA هیچ مسیر ورودی ندارد.",
+            "This mode does not support audio references.": "این حالت از مرجع صدا پشتیبانی نمی‌کند.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "مسیر صدا انتخاب شد. می‌توانید فایل‌ها را با Ctrl+V اینجا بچسبانید.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "مسیر تصویر/ویدیو انتخاب شد. می‌توانید فایل‌ها را با Ctrl+V اینجا بچسبانید."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_MiniMax H3 اجراکننده کارگردان",
+        "description": "راهنمای کارگردان را به فراخوانی بومی گره MiniMax H3 تبدیل می‌کند: بسته به حالت راهنما، MiniMaxH3ImageToVideo یا MiniMaxH3ReferenceToVideo را صدا می‌زند و conditioning و latent تولید می‌کند.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "راهنمای کارگردانی",
+            "audio_vae": "VAE صدا"
+        },
+        "outputs": {
+            "positive": "conditioning مثبت",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_MiniMax H3 حافظه نهان باقیمانده",
+        "description": "برای مدل MiniMax H3 حافظه نهان باقیماندهٔ تقریبیِ کل بلوک اضافه می‌کند: در محدوده تعداد گام برگزیده خروجی block-stack آخرین اجرا را دوباره استفاده می‌کند و از محاسبه پرهزینه می‌کاهد. آستانه بالاتر گام‌های بیشتری را رد می‌کند و ممکن است وفاداری را کم کند.",
+        "inputs": {
+            "model": "مدل"
+        },
+        "widgets": {
+            "reuse_threshold": "آستانه بازاستفاده",
+            "start_percent": "درصد شروع",
+            "end_percent": "درصد پایان",
+            "max_steps": "بیشینه گام‌های پرش‌شده",
+            "device": "دستگاه",
+            "verbose": "گزارش دقیق"
+        },
+        "outputs": {
+            "MODEL": "مدل"
+        }
+    }
+}

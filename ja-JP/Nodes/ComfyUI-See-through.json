@@ -1,0 +1,100 @@
+{
+    "SeeThrough_LoadLayerDiffModel": {
+        "title": "レイヤー差分モデル読み込み",
+        "widgets": {
+            "model": "モデル",
+            "vae_ckpt": "VAE モデルパス",
+            "unet_ckpt": "UNet モデルパス",
+            "quant_mode": "量子化モード",
+            "cache_tag_embeds": "タグ埋め込みをキャッシュ",
+            "group_offload": "グループアンロード"
+        },
+        "outputs": {
+            "layerdiff_model": "レイヤー差分モデル",
+            "SEETHROUGH_LAYERDIFF_MODEL": "SEETHROUGH レイヤー差分モデル"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "SeeThrough_LoadDepthModel": {
+        "title": "深度モデル読み込み",
+        "widgets": {
+            "model": "モデル",
+            "quant_mode": "量子化モード",
+            "cache_tag_embeds": "タグ埋め込みをキャッシュ",
+            "group_offload": "グループアンロード"
+        },
+        "outputs": {
+            "depth_model": "深度モデル",
+            "SEETHROUGH_DEPTH_MODEL": "SEETHROUGH 深度モデル"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "SeeThrough_GenerateLayers": {
+        "title": "レイヤー生成",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "layerdiff_model": "レイヤー差分モデル",
+            "seed": "ランダムシード",
+            "resolution": "解像度",
+            "num_inference_steps": "推論ステップ数"
+        },
+        "outputs": {
+            "layers": "レイヤー",
+            "preview": "プレビュー",
+            "SEETHROUGH_LAYERS": "SEETHROUGH レイヤー",
+            "IMAGE": "画像"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "SeeThrough_GenerateDepth": {
+        "title": "深度生成",
+        "widgets": {
+            "layers": "レイヤー",
+            "depth_model": "深度モデル",
+            "seed": "ランダムシード",
+            "resolution_depth": "深度解像度"
+        },
+        "outputs": {
+            "layers_depth": "深度レイヤー",
+            "preview": "プレビュー",
+            "SEETHROUGH_LAYERS_DEPTH": "SEETHROUGH 深度レイヤー",
+            "IMAGE": "画像"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "SeeThrough_PostProcess": {
+        "title": "後処理",
+        "widgets": {
+            "layers_depth": "深度レイヤー",
+            "tblr_split": "上下左右分割",
+            "use_lama": "LAMA を使用"
+        },
+        "outputs": {
+            "parts": "部分",
+            "preview": "プレビュー",
+            "SEETHROUGH_PARTPart": "SEETHROUGH パーツ",
+            "IMAGE": "画像"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "SeeThrough_SavePSD": {
+        "title": "PSD保存",
+        "widgets": {
+            "parts": "部分",
+            "filename_prefix": "ファイルプレフィックス"
+        },
+        "outputs": {
+            "info_file": "情報ファイル",
+            "STRING": "文字列"
+        },
+        "description": "",
+        "api_version": "V1"
+    }
+}

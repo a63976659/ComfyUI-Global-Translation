@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "Cargar el modelo ICLight",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "model_path": "Modelo"
+        },
+        "outputs": {
+            "MODEL": "Modelo"
+        },
+        "description": "Un método algo incómodo pero eficaz para cargar modelos IC-Light.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nSe usa junto con el nodo de condición ICLight."
+    },
+    "ICLightConditioning": {
+        "title": "Aplicar condición ICLight",
+        "inputs": {
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "vae": "VAE",
+            "foreground": "Latent de primer plano",
+            "opt_background": "Latent de fondo (opcional)"
+        },
+        "widgets": {
+            "multiplier": "Multiplicador"
+        },
+        "outputs": {
+            "positive": "Condición positiva",
+            "negative": "Condición negativa",
+            "empty_latent": "Latent vacío"
+        },
+        "description": "Nodo de condición para modelos IC-Light. Si quiere usar el “Latent de fondo”, debe cambiar el modelo IC-Light a la versión “fbc”."
+    },
+    "LightSource": {
+        "title": "Fuente de luz sencilla",
+        "inputs": {
+            "prev_image": "Imagen previa"
+        },
+        "widgets": {
+            "light_position": "Posición de la fuente de luz",
+            "multiplier": "Luminosidad",
+            "start_color": "Color inicial",
+            "end_color": "Color final",
+            "width": "Anchura",
+            "height": "Altura",
+            "batch_size": "Tamaño del lote"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Genera una imagen en escala de grises con degradado que puede usarse como fuente de luz sencilla. Los colores pueden indicarse en RGB o HEX."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Calcular normales",
+        "inputs": {
+            "images": "Imagen",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Centro del rango de entrada"
+        },
+        "outputs": {
+            "divided": "Separar",
+            "normal": "Imagen de normales"
+        },
+        "description": "Calcula las normales a partir de imágenes tomadas desde distintos ángulos.\nRequiere un lote de imágenes que contenga 4 imágenes: izquierda, derecha, abajo y arriba"
+    },
+    "LoadHDRImage": {
+        "title": "Cargar imagen HDR",
+        "widgets": {
+            "image": "Imagen",
+            "exposure": "Exposición",
+            "exposures": "Exposición"
+        },
+        "outputs": {
+            "IMAGE": "Imagen",
+            "MASK": "Máscara"
+        },
+        "description": "Carga imágenes .hdr desde la carpeta input.\nDevuelve un lote de imágenes LDR."
+    },
+    "BackgroundScaler": {
+        "title": "Escala de grises del fondo",
+        "inputs": {
+            "image": "Imagen",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "scale": "Escala",
+            "invert": "Invertir"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        },
+        "description": "Convierte la región de la máscara en una imagen en escala de grises"
+    },
+    "DetailTransfer": {
+        "title": "Transferencia de detalles",
+        "inputs": {
+            "target": "Imagen de destino",
+            "source": "Imagen de referencia",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "mode": "Modo",
+            "blur_sigma": "Sigma de desenfoque",
+            "blend_factor": "Coeficiente de mezcla"
+        },
+        "outputs": {
+            "IMAGE": "Imagen"
+        }
+    }
+}

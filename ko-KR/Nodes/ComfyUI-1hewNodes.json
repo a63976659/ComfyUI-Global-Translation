@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "이미지 색상 매칭",
+        "inputs": {
+            "source_image": "소스 이미지",
+            "reference_image": "참고 이미지"
+        },
+        "widgets": {
+            "method": "방법"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "참조 이미지의 색상을 소스 이미지에 옮깁니다. 배치 처리를 지원하며; 참조 이미지 수가 소스 배치와 다르면 참조 이미지를 순환 사용(i % ref_count). wavelet/adain은 네이티브로 실행; mkl/hm/reinhard/mvgd 및 이들의 혼합 버전은 'color-matcher' 패키지를 사용합니다."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "이미지 색상 복원",
+        "inputs": {
+            "edit_image": "편집 이미지",
+            "org_image": "원본 이미지"
+        },
+        "widgets": {
+            "background_threshold": "배경 임계값",
+            "unchanged_threshold": "불변 임계값",
+            "seam_max_distance": "이음새 최대 거리",
+            "seam_decay": "이음새 감쇠",
+            "seam_residual_blur": "이음새 잔차 블러",
+            "seam_color_sigma": "이음새 색상 표준편차",
+            "occlusion_residual_blur": "가림 잔차 블러",
+            "occlusion_bridge_width": "가림 브리지 너비"
+        },
+        "outputs": {
+            "image": "이미지",
+            "unchanged_mask": "불변 마스크"
+        },
+        "description": "물체 제거로 생긴 가림 영역의 이음새를 국소적으로 매끄럽게 유지하는 동안, 정렬된 AI 편집 색상을 원본 참조로 복원합니다. 신뢰할 수 있는 어파인 색상 피팅과 연속 이음새 필드를 사용하며(구조 불변 마스크 정리는 비활성화됨), 편집 이미지에 Alpha 채널이 있으면 보존합니다."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "이미지 정렬 변경 마스크",
+        "inputs": {
+            "edit_image": "편집 이미지",
+            "org_image": "원본 이미지"
+        },
+        "widgets": {
+            "mode": "모드",
+            "max_offset": "최대 오프셋",
+            "max_rotation": "최대 회전",
+            "max_scale": "최대 배율",
+            "min_align_score": "최소 정렬 점수",
+            "color_compensation": "색상 보정",
+            "sensitivity": "민감도",
+            "min_component_area": "최소 컴포넌트 면적",
+            "expand": "확장",
+            "feather": "페더링"
+        },
+        "outputs": {
+            "align_image": "이미지 정렬",
+            "clean_mask": "클린 마스크",
+            "raw_mask": "원시 마스크",
+            "change_score": "변경 점수",
+            "overlay_image": "오버레이 이미지"
+        },
+        "description": "AI로 편집한 이미지를 원본 이미지와 정렬하고, 안정적인 배경 픽셀을 활용해 국소적인 전역 색상 드리프트를 걸러낸 뒤, 원시/클린 변경 마스크를 출력합니다."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "이미지 Alpha 가장자리 처리",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "edge": "가장자리",
+            "feather": "페더링"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "Alpha 채널이 있는 이미지의 불투명 영역 가장자리를 조정합니다: 안쪽 수축 / 바깥 확장 + 페더링.\n\n일반적인 시나리오: 크롭(배경 제거) 후에도 요소 가장자리에 배경 색에 오염된 반투명한 '보푸라기 가장자리 / 유색 테두리'가 남아 있는 경우가 있습니다. 이 노드는 먼저 형태학적 안쪽 수축으로 오염된 가장자리 픽셀을 직접 잘라낸 뒤 가우시안 페더링을 적용해 깨끗한 전환을 만듭니다. 페더링 전에 항상 불투명 영역의 색을 전환 밴드로 확산(bleed)시켜, 페더링 후 어두운 가장자리 / 유색 테두리가 발생하는 것을 방지합니다.\n\n처리 순서: 수축 / 확장 → 색상 외곽 확산 → 페더링.\nAlpha가 포함된 4채널 이미지를 출력하고, 동시에 처리된 Alpha 마스크를 제공합니다.\n\n수축 / 확장은 그레이스케일 형태 연소(최솟값 / 최댓값 필터)로 Alpha에 직접 작용합니다: 국소적으로 선명한 부드러운 가장자리에서 반지름 r인 필터는 그 기울기를 정확히 r픽셀 이동시키는 것과 같으므로, Alpha의 모든 등고선이 전체적으로 r만큼 이동하여 매트(matte)에 내장된 앤티앨리어싱이 1px 단계로 퇴화하지 않고 완전히 보존됩니다. 구멍 채우기는 마스크 수리에 해당하므로 다른 노드에서 처리합니다."
+    },
+    "1hew_ImageBlur": {
+        "title": "이미지 블러",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "blur": "블러"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "이미지 전체에 가우시안 블러를 적용하며, 동작은 LayerStyle의 LayerFilter: Gaussian Blur V2와 일치합니다.\n\n- 블러 파라미터는 소수점(FLOAT)을 지원하며, 의미상 V2 버전에 더 가깝습니다;\n- 블러 값이 0이면 원본 이미지를 그대로 통과시킵니다;\n- 배치별로 프레임 단위 처리를 하며 채널 수와 데이터 타입을 변경하지 않습니다."
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "이미지 스케일링 Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "native_image": "네이티브 이미지",
+            "native_mask": "네이티브 마스크"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "이미지 스케일링 Qwen 이미지 3.0",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "native_image": "네이티브 이미지",
+            "native_mask": "네이티브 마스크"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "이미지 스케일링 Qwen 이미지 3.0 Pro",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "native_image": "네이티브 이미지",
+            "native_mask": "네이티브 마스크"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "이미지 최소 면적",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "length_to_sq_area": "기준 변 길이",
+            "method": "방법",
+            "divisible_by": "나누어 떨어짐",
+            "fit": "맞춤",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "resize_bool": "확대 여부"
+        },
+        "description": "이미지의 면적이 최소 제곱 기준 면적에 도달할 때까지 이미지를 확대합니다.\n\n- ``length_to_sq_area``가 기준 정사각형의 한 변 길이를 정의합니다(목표 면적 = N^2).\n- ``맞춤``은 '범용 이미지 크기 조정'과 유사하게 동작합니다: 크롭/패딩/늘리기.\n- ``나누어 떨어짐``은 최종 크기를 특정 수의 배수로 올림 처리합니다.\n- ``resize_bool``은 실제 확대 작업이 발생했는지를 보고합니다."
+    },
+    "1hew_StringRandom": {
+        "title": "랜덤 문자열",
+        "widgets": {
+            "custom_text": "사용자 지정 텍스트",
+            "seed": "랜덤 시드"
+        },
+        "outputs": {
+            "string": "문자열"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "텍스트 비교",
+        "widgets": {
+            "a": "a",
+            "operator": "연산자",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "불리언 값"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "다중 마스크 수학 연산",
+        "inputs": {
+            "mask_1": "마스크1",
+            "mask_2": "마스크2"
+        },
+        "widgets": {
+            "operation": "연산"
+        },
+        "outputs": {
+            "mask": "마스크"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "Jimeng 텍스트 비율",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "selection": "선택 항목"
+        },
+        "outputs": {
+            "string": "문자열"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "마스크 레벨",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "black_point": "블랙 포인트",
+            "white_point": "화이트 포인트"
+        },
+        "outputs": {
+            "mask": "마스크"
+        },
+        "description": "마스크 이미지의 블랙 포인트와 화이트 포인트 임계값을 설정하여 마스크의 대비와 범위를 조정합니다."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "정수 비교",
+        "inputs": {
+            "a": "수치 a",
+            "operator": "연산자",
+            "b": "수치 b"
+        },
+        "widgets": {
+            "bool": "불리언 값"
+        },
+        "description": "두 정수의 크기를 비교합니다"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "부동소수점 비교",
+        "widgets": {
+            "a": "수치 a",
+            "operator": "연산자",
+            "b": "수치 b"
+        },
+        "outputs": {
+            "bool": "불리언 값"
+        },
+        "description": "두 부동소수점 값의 크기 관계를 비교합니다"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "이미지 흑백 가장자리 처리",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "gamma": "감마",
+            "shrink_radius": "수축 반경",
+            "blur_radius": "블러 반경"
+        },
+        "outputs": {
+            "mask": "마스크"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "마스크 외곽선 그리기",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "fill_hole": "구멍 채우기",
+            "stroke_width": "스트로크 너비",
+            "include_mask": "마스크 포함"
+        },
+        "outputs": {
+            "mask": "마스크"
+        },
+        "description": "마스크에 외곽선 처리를 합니다"
+    },
+    "1hew_VideoToURL": {
+        "title": "비디오를 URL로 변환",
+        "inputs": {
+            "video": "비디오 파일 경로"
+        },
+        "widgets": {
+            "timeout": "시간 초과 시간(초)"
+        },
+        "outputs": {
+            "url": "생성된 URL"
+        },
+        "description": "비디오 파일을 접근 가능한 URL 링크로 변환합니다"
+    },
+    "1hew_VideoToImage": {
+        "title": "비디오를 이미지로",
+        "inputs": {
+            "video": "비디오"
+        },
+        "outputs": {
+            "image": "이미지",
+            "audio": "오디오",
+            "fps": "프레임 레이트",
+            "frame_count": "프레임 수"
+        },
+        "description": "비디오를 이미지, 오디오, 프레임 레이트, 프레임 수로 변환합니다"
+    },
+    "1hew_IntVideoCount": {
+        "title": "비디오 카운터",
+        "inputs": {
+            "video_1": "비디오1"
+        },
+        "outputs": {
+            "int": "정수"
+        },
+        "description": "비디오 개수를 세기 위한 노드입니다"
+    },
+    "1hew_ImageToMask": {
+        "title": "이미지를 마스크로 변환",
+        "inputs": {
+            "image": "이미지"
+        },
+        "outputs": {
+            "mask": "마스크"
+        },
+        "description": "이미지를 마스크로 변환합니다."
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "이미지 배치 인덱스",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "index": "인덱스"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "이미지 배치 균일화",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "num_frame": "프레임 수"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "이미지 리스트 인터리브",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "segment_count": "세그먼트 수"
+        },
+        "outputs": {
+            "image_list": "이미지 목록"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "경계 상자 채우기",
+        "inputs": {
+            "paste_image": "붙여넣을 이미지",
+            "bbox_mask": "바운딩 박스 마스크"
+        },
+        "widgets": {
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "이미지 경계 상자 채우기 노드 - bbox_마스크의 외접 사각형에 맞춰 이미지를 배치하고 나머지 영역을 지정된 색상으로 채웁니다."
+    },
+    "1hew_IntImageCount": {
+        "title": "정수 이미지 수량",
+        "inputs": {
+            "image_1": "이미지1"
+        },
+        "outputs": {
+            "int": "정수"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "PS 로드",
+        "widgets": {
+            "file": "파일",
+            "index": "인덱스",
+            "include_hidden": "숨김 항목 포함",
+            "group_mode": "그룹 모드",
+            "output_mode": "출력 모드",
+            "preview": "미리보기",
+            "choose psd to upload": "업로드할 PSD 파일 선택"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "filename": "파일명",
+            "layer_name": "레이어 이름"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "마스크를 바운딩 박스 마스크로 변환",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "output_mode": "출력 모드",
+            "divisible_by": "나누어 떨어짐"
+        },
+        "outputs": {
+            "bbox_mask": "바운딩 박스 마스크"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "다중 이미지 목록",
+        "inputs": {
+            "image_1": "이미지1"
+        },
+        "widgets": {
+            "image_1": "이미지1"
+        },
+        "outputs": {
+            "image_list": "이미지 목록"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "메모리 정리",
+        "widgets": {
+            "anything": "임의의 콘텐츠",
+            "unload_model": "모델 언로드"
+        },
+        "description": "ComfyUI에 현재 작업이 끝난 후 실행 캐시와 모델 점유를 해제하도록 요청합니다. 여러 번 대기열 실행 사이에 RAM/VRAM을 정리하는 데 적합합니다."
+    },
+    "1hew_AudioDuration": {
+        "title": "오디오 길이",
+        "inputs": {
+            "audio": "오디오"
+        },
+        "description": "오디오의 길이를 가져옵니다."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "이미지 배치 추출",
+        "inputs": {
+            "image": "이미지",
+            "mode": "모드",
+            "index": "인덱스",
+            "step": "단계",
+            "uniform": "균일",
+            "max_keep": "최대 유지 수량"
+        },
+        "description": "이미지 배치에서 지정된 패턴의 이미지를 추출합니다."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "이미지 배치 그룹화",
+        "inputs": {
+            "image": "이미지",
+            "batch_size": "배치 크기",
+            "overlap": "중복",
+            "last_batch_mode": "마지막 배치 모드",
+            "color": "색상"
+        },
+        "description": "이미지 배치를 그룹으로 나눠 처리합니다."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "이미지 배치 범위",
+        "inputs": {
+            "image": "이미지",
+            "start_index": "시작 인덱스",
+            "num_frame": "프레임 수"
+        },
+        "description": "이미지 배치에서 지정된 범위의 이미지를 추출합니다."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "이미지 배치 분할",
+        "inputs": {
+            "image": "이미지",
+            "take_count": "가져올 프레임 수",
+            "from_start": "시작부터"
+        },
+        "description": "이미지 배치에서 지정된 수량만큼 이미지를 분할합니다."
+    },
+    "1hew_ImageListAppend": {
+        "title": "이미지 리스트 추가",
+        "inputs": {
+            "image_1": "이미지1",
+            "image_2": "이미지2"
+        },
+        "description": "두 이미지를 리스트에 추가합니다."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "마스크 배치 수학 연산",
+        "inputs": {
+            "mask": "마스크",
+            "operation": "연산"
+        },
+        "description": "마스크 배치에 수학적 연산을 실행합니다."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "마스크 배치 범위",
+        "inputs": {
+            "mask": "마스크",
+            "start_index": "시작 인덱스",
+            "num_frame": "프레임 수"
+        },
+        "description": "마스크 배치에서 지정된 범위의 마스크를 추출합니다."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "마스크 배치 분할",
+        "inputs": {
+            "mask": "마스크",
+            "take_count": "가져올 프레임 수",
+            "from_start": "시작부터"
+        },
+        "description": "마스크 배치에서 지정된 개수만큼 마스크를 분할합니다."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "비디오 클립 그룹화",
+        "inputs": {
+            "image": "이미지",
+            "threshold_base": "임계값 기준",
+            "threshold_range": "임계값 범위",
+            "threshold_count": "임계값 횟수",
+            "kernel": "커널",
+            "min_frame_count": "최소 프레임 수",
+            "max_frame_count": "최대 프레임 수",
+            "fast": "빠름",
+            "add_frame": "프레임 추가",
+            "delete_frame": "프레임 삭제"
+        },
+        "description": "이미지를 기반으로 비디오 클립을 그룹화합니다."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "밝기 대비 매칭",
+        "inputs": {
+            "source_image": "소스 이미지",
+            "reference_image": "참고 이미지",
+            "edge_amount": "가장자리 양",
+            "consistency": "일관성",
+            "method": "방법"
+        },
+        "description": "소스 이미지와 레퍼런스 이미지 간의 밝기와 대비를 맞춥니다."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "텍스트 인코딩 Qwen 이미지 편집",
+        "description": "Qwen 모델을 사용해 이미지 편집용 텍스트를 인코딩합니다."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "이미지 배치 리스트로 변환",
+        "inputs": {
+            "image_batch": "이미지 배치"
+        },
+        "description": "이미지 배치를 이미지 리스트로 변환합니다."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "이미지 리스트를 배치로 변환",
+        "inputs": {
+            "image_list": "이미지 목록"
+        },
+        "description": "이미지 리스트를 이미지 배치로 변환합니다."
+    },
+    "1hew_ImageToURL": {
+        "title": "이미지를 URL 웹주소 링크로 변환",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "mode": "모드",
+            "timeout": "시간 초과"
+        },
+        "outputs": {
+            "url": "웹주소 링크 URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "마스크 배치를 목록으로 변환",
+        "inputs": {
+            "mask_batch": "마스크 배치"
+        },
+        "description": "마스크 배치를 마스크 목록으로 변환합니다."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "마스크 목록을 배치로 변환",
+        "description": "여러 마스크를 하나의 배치로 변환합니다.",
+        "inputs": {
+            "mask_list": "마스크 목록"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "마스크를 Sam3Box로 변환",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "condition": "상태",
+            "output_mode": "출력 모드"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "문자열 좌표를 바운딩 박스로 변환",
+        "description": "좌표 문자열에서 바운딩 박스를 생성합니다.",
+        "inputs": {
+            "coordinates_string": "좌표 문자열"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "문자열 좌표를 바운딩 박스 마스크로 변환",
+        "description": "좌표 문자열에서 바운딩 박스 마스크를 생성합니다.",
+        "inputs": {
+            "image": "이미지",
+            "coordinates_string": "좌표 문자열",
+            "output_mode": "출력 모드"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "텍스트 목록을 문자열로 변환",
+        "description": "텍스트 목록을 하나의 문자열로 병합합니다.",
+        "inputs": {
+            "text_list": "텍스트 목록",
+            "prefix": "접두사",
+            "suffix": "접미사",
+            "separator": "구분자"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "텍스트를 임의 형식으로 변환",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "outputs": {
+            "any": "임의"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "URL을 비디오로 변환",
+        "description": "URL에서 비디오를 가져옵니다.",
+        "inputs": {
+            "video_url": "비디오 URL",
+            "timeout": "시간 초과 시간"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "가이드 라인 감지",
+        "description": "이미지에서 가이드 라인을 감지합니다.",
+        "inputs": {
+            "image": "이미지",
+            "canny_low": "Canny 저임계값",
+            "canny_high": "Canny 고임계값",
+            "seg_min_len": "최소 분할 길이",
+            "seg_max_gap": "최대 분할 간격",
+            "guide_filter": "가이드 필터",
+            "guide_width": "가이드 라인 너비",
+            "cluster_eps": "클러스터링 ε 값"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "배경 제거",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "model": "모델",
+            "add_background": "배경 추가"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "배경 제거 최적화",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "type": "유형",
+            "subject_protect": "피사체 보호",
+            "feather": "페더링",
+            "decolor_edge": "가장자리 탈색"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "Yolo 감지",
+        "description": "YOLO 모델을 사용하여 이미지의 객체를 감지합니다.",
+        "inputs": {
+            "image": "이미지",
+            "yolo_model": "YOLO 모델",
+            "threshold": "임계값",
+            "mask_index": "마스크 인덱스",
+            "label": "라벨",
+            "label_size": "라벨 크기"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "이미지에 라벨 추가",
+        "description": "이미지에 텍스트 라벨을 추가합니다.",
+        "inputs": {
+            "image": "이미지",
+            "height_pad": "높이 패딩",
+            "font_size": "글꼴 크기",
+            "invert_color": "색 반전",
+            "font": "글꼴",
+            "text": "텍스트",
+            "direction": "방향",
+            "input1": "입력 1",
+            "input2": "입력 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "Alpha 채널 정리",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "clean_strength": "클리닝 강도",
+            "detect_only": "감지만"
+        },
+        "outputs": {
+            "mask": "마스크",
+            "noise_mask": "노이즈 마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "Alpha 채널 분리",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "background_color": "배경색"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "마스크를 사용해 이미지에 경계 상자 그리기",
+        "description": "마스크를 사용하여 이미지에 경계 상자를 그립니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "bbox_color": "경계 상자 색상",
+            "stroke_width": "스트로크 너비",
+            "fill": "채우기",
+            "padding": "내부 여백",
+            "output_mode": "출력 모드"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "이미지 편집 이어붙이기",
+        "description": "이미지를 편집하고 이어붙입니다.",
+        "inputs": {
+            "reference_image": "참고 이미지",
+            "edit_image": "편집 이미지",
+            "edit_mask": "편집 마스크",
+            "edit_image_position": "편집 이미지 위치",
+            "match_edit_size": "편집 크기 맞춤",
+            "spacing": "간격",
+            "spacing_color": "간격 색상",
+            "pad_color": "패딩 색상"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "이미지 이어붙이기",
+        "description": "핵심 이미지 이어붙이기.",
+        "inputs": {
+            "image_1": "이미지1",
+            "image_2": "이미지2",
+            "image_3": "이미지3",
+            "direction": "방향",
+            "match_image_size": "이미지 크기 맞춤",
+            "spacing_width": "간격 너비",
+            "spacing_color": "간격 색상",
+            "pad_color": "패딩 색상"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "이미지 루프",
+        "description": "이미지를 왕복 처리합니다.",
+        "inputs": {
+            "image": "이미지",
+            "pre_reverse": "사전 반전",
+            "ops_count": "연산 횟수",
+            "frame_count": "프레임 수",
+            "remove_link_frame": "연결 프레임 제거"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "이미지 그리기",
+        "description": "이미지의 그리드 레이아웃을 그립니다.",
+        "inputs": {
+            "image": "이미지",
+            "layout": "레이아웃",
+            "spacing": "간격",
+            "grid_columns": "그리드 열 수",
+            "background_color": "배경색"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "마스크와 함께 이미지 회전",
+        "description": "이미지를 회전하고 마스크를 적용합니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "angle": "각도",
+            "pad_color": "패딩 색상",
+            "expand": "확장",
+            "mask_center": "마스크 중심"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "단색 이미지 생성",
+        "description": "단색 이미지를 생성합니다.",
+        "inputs": {
+            "get_image_size": "이미지 크기 가져오기",
+            "preset_size": "프리셋 크기",
+            "width": "너비",
+            "height": "높이",
+            "color": "색상",
+            "alpha": "투명도",
+            "invert": "반전",
+            "mask_opacity": "마스크 불투명도",
+            "divisible_by": "나누어 떨어짐"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "마스크로 외곽선 그리기",
+        "description": "마스크를 사용해 이미지에 외곽선을 그립니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "stroke_width": "외곽선 너비",
+            "stroke_color": "외곽선 색상"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "Alpha 혼합 모드 블렌딩",
+        "description": "Alpha 값으로 오버레이 이미지와 기본 이미지 사이를 블렌딩합니다.",
+        "inputs": {
+            "overlay_image": "오버레이 이미지",
+            "base_image": "기본 이미지",
+            "overlay_mask": "오버레이 마스크",
+            "blend_mode": "블렌드 모드",
+            "opacity": "불투명도",
+            "invert_mask": "마스크 반전"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "CSS 혼합 모드 블렌딩",
+        "description": "CSS 혼합 모드로 오버레이 이미지와 기본 이미지 사이를 블렌딩합니다.",
+        "inputs": {
+            "overlay_image": "오버레이 이미지",
+            "base_image": "기본 이미지",
+            "blend_mode": "블렌드 모드",
+            "blend_percentage": "혼합 백분율",
+            "overlay_mask": "오버레이 마스크",
+            "invert_mask": "마스크 반전"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "마스크로 이미지 블렌딩",
+        "description": "마스크를 사용하여 이미지 사이를 블렌딩합니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "fill_hole": "구멍 채우기",
+            "invert": "반전",
+            "feather": "페더링",
+            "opacity": "불투명도",
+            "expansion": "확장",
+            "background_color": "배경색",
+            "background_opacity": "배경 투명도",
+            "output_mask_invert": "출력 마스크 반전"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "정사각형 이미지로 크롭",
+        "description": "이미지를 정사각형으로 자릅니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "scale_factor": "스케일 계수",
+            "extra_padding": "추가 패딩",
+            "fill_color": "채우기 색상",
+            "apply_mask": "마스크 적용",
+            "divisible_by": "나누어 떨어짐"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "경계 상자 크롭",
+        "widgets": {
+            "image": "이미지",
+            "mask": "마스크",
+            "preset_ratio": "프리셋 비율",
+            "get_crop_ratio": "크롭 비율 가져오기",
+            "scale_strength": "스케일 강도",
+            "crop_to_side": "한 변 길이로 크롭",
+            "crop_to_length": "길이로 크롭",
+            "divisible_by": "나누어 떨어지는 배수"
+        },
+        "description": "이미지 크로퍼 - 마스크에 따라 이미지를 자르고, 나중에 원래 위치로 다시 붙여넣을 수 있도록 경계 상자 마스크 정보를 반환합니다",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "가장자리 자르고 채우기",
+        "description": "이미지 가장자리를 잘라내고 채웁니다.",
+        "inputs": {
+            "image": "이미지",
+            "uniform_amount": "균일 패딩 양",
+            "top_amount": "위쪽 패딩 양",
+            "bottom_amount": "아래쪽 패딩 양",
+            "left_amount": "왼쪽 패딩 양",
+            "right_amount": "오른쪽 패딩 양",
+            "pad_color": "패딩 색상",
+            "divisible_by": "나누어 떨어짐"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "이미지 그리드 분할",
+        "description": "이미지를 그리드로 분할합니다.",
+        "inputs": {
+            "image": "이미지",
+            "rows": "행 수",
+            "columns": "열 수",
+            "index": "인덱스",
+            "all": "전체"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "마스크로 이미지 크롭",
+        "description": "마스크를 사용하여 이미지를 자릅니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "output_crop": "출력 크롭",
+            "output_alpha": "출력 투명도"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "경계 상자 마스크로 이미지 붙여넣기",
+        "description": "경계 상자 마스크를 사용하여 이미지에 붙여넣습니다.",
+        "inputs": {
+            "paste_image": "붙여넣을 이미지",
+            "base_image": "기본 이미지",
+            "bbox_mask": "바운딩 박스 마스크",
+            "paste_mask": "붙여넣을 마스크",
+            "position_x": "X 위치",
+            "position_y": "Y 위치",
+            "scale": "축소·확대",
+            "rotation": "회전",
+            "opacity": "불투명도",
+            "apply_paste_mask": "붙여넣기 마스크 적용"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "고주파 저주파 이미지 결합",
+        "description": "고주파 이미지와 저주파 이미지를 결합합니다.",
+        "inputs": {
+            "high_freq": "고주파 이미지",
+            "low_freq": "저주파 이미지",
+            "method": "방법",
+            "high_strength": "고주파 강도",
+            "low_strength": "저주파 강도"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "이미지 고주파 저주파 분리",
+        "inputs": {
+            "image": "이미지",
+            "method": "방법",
+            "blur_radius": "블러 반경"
+        },
+        "description": "이미지의 고주파와 저주파 성분을 분리하여 처리합니다."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "이미지 고주파 저주파 변환",
+        "inputs": {
+            "generate_image": "생성 이미지",
+            "detail_image": "디테일 이미지",
+            "detail_mask": "디테일 마스크",
+            "method": "방법",
+            "blur_radius": "블러 반경"
+        },
+        "description": "이미지의 고주파 및 저주파 성분에 변환 작업을 수행합니다."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "이미지 스케일링 Flux Kontext",
+        "description": "Flux Kontext를 사용해 이미지 크기를 조정합니다.",
+        "inputs": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상",
+            "image": "이미지",
+            "mask": "마스크"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "이미지 스케일링 Gemini 3.0 Pro",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "이미지 스케일링 Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상",
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "이미지 스케일링 Jimeng",
+        "description": "Jimeng을 사용해 이미지 크기를 조정합니다.",
+        "inputs": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상",
+            "image": "이미지",
+            "mask": "마스크"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "이미지 스케일링 Qwen 이미지",
+        "description": "이미지를 스케일링합니다.",
+        "inputs": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상",
+            "image": "이미지",
+            "mask": "마스크"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "이미지 스케일링 정사각형",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "범용 이미지 스케일링",
+        "description": "이미지를 범용 방식으로 스케일링합니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "get_image_size": "이미지 크기 가져오기",
+            "preset_ratio": "프리셋 비율",
+            "proportional_width": "너비 비율로 스케일링",
+            "proportional_height": "높이 비율로 스케일링",
+            "method": "방법",
+            "scale_to_side": "변 길이로 스케일링",
+            "scale_to_length": "길이로 스케일링",
+            "fit": "맞춤 방식",
+            "pad_color": "패딩 색상",
+            "divisible_by": "나누어 떨어짐"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "이미지 타일 병합",
+        "inputs": {
+            "tile": "타일",
+            "tile_meta": "타일 메타데이터",
+            "blend_strength": "블렌드 강도"
+        },
+        "description": "여러 타일 이미지를 하나의 완전한 이미지로 병합합니다."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "이미지 타일 분할",
+        "inputs": {
+            "image": "이미지",
+            "get_tile_size": "타일 크기 가져오기",
+            "mode": "모드",
+            "overlap_amount": "중복량",
+            "grid_row": "행 수",
+            "grid_col": "열 수",
+            "divisible_by": "나누어떨어지는 수"
+        },
+        "description": "이미지를 여러 타일로 분할합니다."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "정수 이미지 변 길이",
+        "inputs": {
+            "image": "이미지",
+            "mode": "모드"
+        },
+        "description": "이미지의 변 길이를 정수 값으로 계산하거나 설정합니다."
+    },
+    "1hew_IntImageSize": {
+        "title": "정수 이미지 크기",
+        "inputs": {
+            "image": "이미지"
+        },
+        "description": "이미지의 정수 크기를 가져옵니다."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "정수 마스크 변 길이",
+        "inputs": {
+            "mask": "마스크",
+            "mode": "모드"
+        },
+        "description": "마스크의 변 길이를 정수 값으로 계산하거나 설정합니다."
+    },
+    "1hew_IntSplit": {
+        "title": "정수 분할",
+        "inputs": {
+            "total": "총계",
+            "split_point": "분할 지점"
+        },
+        "description": "정수를 지정된 위치에서 두 부분으로 분할합니다."
+    },
+    "1hew_IntWan": {
+        "title": "정수 만의 자리",
+        "inputs": {
+            "value": "값"
+        },
+        "description": "정수의 만의 자리를 가져오거나 설정합니다."
+    },
+    "1hew_GetFileCount": {
+        "title": "파일 수 가져오기",
+        "inputs": {
+            "folder": "폴더",
+            "type": "유형",
+            "include_subdir": "하위 디렉터리 포함"
+        },
+        "description": "지정한 폴더와 그 하위 디렉터리의 파일 수량을 계산합니다."
+    },
+    "1hew_LoadImage": {
+        "title": "이미지 로드",
+        "inputs": {
+            "get_image_size": "이미지 크기 가져오기",
+            "file": "파일",
+            "index": "인덱스",
+            "include_subdir": "하위 디렉터리 포함",
+            "all": "전체"
+        },
+        "description": "지정된 경로에서 이미지 파일을 로드합니다."
+    },
+    "1hew_LoadTxt": {
+        "title": "텍스트 로드",
+        "widgets": {
+            "file": "파일",
+            "encode": "인코딩",
+            "index": "인덱스",
+            "include_subdir": "하위 디렉터리 포함"
+        },
+        "outputs": {
+            "text": "텍스트",
+            "filename": "파일명"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "비디오 로드",
+        "inputs": {
+            "file": "파일",
+            "frame_limit": "프레임 제한",
+            "fps": "프레임 레이트",
+            "start_skip": "시작 건너뛰기",
+            "end_skip": "종료 건너뛰기",
+            "format": "형식",
+            "video_index": "비디오 인덱스",
+            "include_subdir": "하위 디렉터리 포함"
+        },
+        "description": "지정된 경로에서 비디오 파일을 로드합니다."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "비디오를 이미지로",
+        "inputs": {
+            "file": "파일",
+            "frame_limit": "프레임 제한",
+            "fps": "프레임 레이트",
+            "start_skip": "시작 건너뛰기",
+            "end_skip": "종료 건너뛰기",
+            "format": "형식",
+            "video_index": "비디오 인덱스",
+            "include_subdir": "하위 디렉터리 포함"
+        },
+        "description": "비디오 파일을 일련의 이미지 프레임으로 변환합니다."
+    },
+    "1hew_SaveImage": {
+        "title": "이미지 저장",
+        "inputs": {
+            "image": "이미지",
+            "filename_prefix": "파일명 접두사",
+            "save_output": "출력 저장",
+            "save_metadata": "메타데이터 저장"
+        },
+        "description": "이미지를 지정된 경로에 저장합니다."
+    },
+    "1hew_SaveTxt": {
+        "title": "텍스트 저장",
+        "inputs": {
+            "any": "임의"
+        },
+        "widgets": {
+            "filename": "파일명",
+            "auto_increment": "자동 증가",
+            "save_output": "출력 저장",
+            "encode": "인코딩"
+        },
+        "outputs": {
+            "file_path": "파일 경로"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "비디오 저장",
+        "inputs": {
+            "video": "비디오",
+            "filename_prefix": "파일명 접두사",
+            "save_output": "출력 저장",
+            "save_metadata": "메타데이터 저장"
+        },
+        "description": "비디오를 지정된 경로에 저장합니다."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "이미지를 비디오로 저장",
+        "description": "이미지와 오디오를 기반으로 비디오를 저장합니다.",
+        "inputs": {
+            "image": "이미지",
+            "audio": "오디오",
+            "fps": "프레임 레이트",
+            "filename_prefix": "파일명 접두사",
+            "save_output": "출력 저장",
+            "save_metadata": "메타데이터 저장"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "임의 빈 불리언",
+        "description": "불리언 값이 비어 있는지 감지합니다.",
+        "inputs": {
+            "any": "임의 값"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "임의 빈 정수",
+        "description": "정수 값이 비어 있는지 감지합니다.",
+        "inputs": {
+            "any": "임의 값",
+            "empty": "빈 값",
+            "not_empty": "비어 있지 않은 값"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "임의 스위치 불리언",
+        "description": "불리언 값에 따라 두 가지 옵션을 전환합니다.",
+        "inputs": {
+            "boolean": "불리언 값",
+            "on_true": "참일 때",
+            "on_false": "거짓일 때"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "셀렉터 스위치",
+        "inputs": {
+            "input_1": "입력 1"
+        },
+        "widgets": {
+            "select": "선택"
+        },
+        "outputs": {
+            "output": "출력",
+            "select": "선택"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "다중 셀렉터 전환",
+        "inputs": {
+            "input_1": "입력 1"
+        },
+        "widgets": {
+            "select": "선택"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "select": "선택"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "텍스트 일치 줄 번호",
+        "widgets": {
+            "text_multiline": "여러 줄 텍스트",
+            "text_single": "한 줄 텍스트"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "텍스트 일치 값",
+        "widgets": {
+            "text_multiline": "여러 줄 텍스트",
+            "text_single": "한 줄 텍스트"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "마스크 불투명도 정리",
+        "widgets": {
+            "mask": "마스크",
+            "clean_strength": "클리닝 강도",
+            "detect_only": "감지만"
+        },
+        "outputs": {
+            "mask": "마스크",
+            "noise_mask": "노이즈 마스크"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "바운딩 박스 마스크로 마스크 크롭",
+        "description": "바운딩 박스 마스크를 통해 마스크를 크롭합니다.",
+        "inputs": {
+            "mask": "마스크",
+            "bbox_mask": "바운딩 박스 마스크"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "마스크 구멍 채우기",
+        "description": "마스크의 구멍을 채웁니다.",
+        "inputs": {
+            "mask": "마스크",
+            "invert_mask": "마스크 반전"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "바운딩 박스 마스크로 마스크 붙여넣기",
+        "description": "바운딩 박스 마스크를 통해 마스크를 붙여넣습니다.",
+        "inputs": {
+            "paste_mask": "붙여넣을 마스크",
+            "bbox_mask": "바운딩 박스 마스크",
+            "base_mask": "기본 마스크"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "마스크 복제",
+        "description": "마스크를 반복합니다.",
+        "inputs": {
+            "mask": "마스크",
+            "invert": "반전",
+            "count": "횟수"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "마스크 분리",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "threshold": "임계값",
+            "min_area": "최소 면적",
+            "sort_mode": "정렬 모드",
+            "connectivity": "연결성"
+        },
+        "outputs": {
+            "mask": "마스크",
+            "count": "정수"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "마스크를 이미지로 변환",
+        "inputs": {
+            "mask": "마스크"
+        },
+        "widgets": {
+            "fill_hole": "구멍 채우기",
+            "white_area_color": "흰색 영역 색상",
+            "black_area_color": "검정 영역 색상",
+            "output_alpha": "알파 채널 출력"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "다중 이미지 일괄 처리",
+        "description": "여러 이미지를 일괄 처리합니다.",
+        "inputs": {
+            "fit": "맞추기",
+            "pad_color": "패딩 색상",
+            "image_1": "이미지1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "다중 이미지 합성",
+        "inputs": {
+            "image_1": "이미지 1"
+        },
+        "widgets": {
+            "fit_mode": "맞춤 모드",
+            "color": "색상"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": "다중 레이어 합성:\n- image_1이 최상위 레이어이며, 숫자가 클수록 아래 레이어입니다\n- RGBA 입력은 alpha를 사용해 일반적인 레이어 합성을 수행합니다\n- RGB 입력은 불투명한 레이어로 간주합니다",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "다중 이미지 이어 붙이기",
+        "description": "여러 이미지를 이어 붙입니다.",
+        "inputs": {
+            "direction": "방향",
+            "match_image_size": "이미지 크기 맞춤",
+            "spacing_width": "간격 너비",
+            "spacing_color": "간격 색상",
+            "pad_color": "패딩 색상",
+            "image_1": "이미지1",
+            "image_2": "이미지2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "다중 마스크 이어 붙이기",
+        "description": "여러 마스크를 일괄 처리합니다.",
+        "inputs": {
+            "fit": "맞추기",
+            "pad_color": "패딩 색상",
+            "mask_1": "마스크1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "다중 마스크 수학 연산",
+        "description": "여러 마스크의 수학 연산을 실행합니다.",
+        "inputs": {
+            "mask_1": "마스크1",
+            "mask_2": "마스크2",
+            "operation": "연산"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "다중 문자열 연결",
+        "description": "여러 문자열을 연결합니다.",
+        "inputs": {
+            "filter_empty_line": "빈 줄 필터링",
+            "filter_comment": "주석 필터링",
+            "separator": "구분자",
+            "input": "입력"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "사용자 지정 부동소수점 목록",
+        "description": "사용자 지정 부동소수점 목록입니다.",
+        "inputs": {
+            "custom_text": "사용자 지정 텍스트"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "사용자 지정 정수 목록",
+        "inputs": {
+            "custom_text": "사용자 지정 텍스트"
+        },
+        "description": "사용자 지정 정수를 포함한 목록을 생성합니다."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "사용자 지정 시드 목록",
+        "inputs": {
+            "seed": "시드",
+            "count": "수량"
+        },
+        "description": "지정된 개수의 랜덤 시드를 포함한 목록을 생성합니다."
+    },
+    "1hew_ListCustomString": {
+        "title": "사용자 지정 문자열 목록",
+        "inputs": {
+            "custom_text": "사용자 지정 텍스트"
+        },
+        "description": "사용자 지정 문자열을 포함한 목록을 생성합니다."
+    },
+    "1hew_StringFilter": {
+        "title": "문자열 필터링",
+        "inputs": {
+            "text": "텍스트",
+            "filter_empty_line": "빈 줄 필터링",
+            "filter_comment": "주석 필터링",
+            "input": "입력"
+        },
+        "description": "텍스트에서 빈 줄과 주석을 제거합니다."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "다중 문자열 연결",
+        "inputs": {
+            "text1": "텍스트1",
+            "text2": "텍스트2",
+            "text3": "텍스트3",
+            "text4": "텍스트4",
+            "text5": "텍스트5",
+            "filter_empty_line": "빈 줄 필터링",
+            "filter_comment": "주석 필터링",
+            "separator": "구분자",
+            "input": "입력"
+        },
+        "description": "여러 텍스트를 하나의 문자열로 연결하며, 빈 줄과 주석을 필터링할지 선택할 수 있습니다."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "텍스트 사용자 지정 추출",
+        "inputs": {
+            "json_data": "JSON 데이터",
+            "key": "키",
+            "precision_match": "정확 매칭",
+            "label_filter": "레이블 필터"
+        },
+        "description": "JSON 데이터에서 특정 키의 값을 추출하고 정확 매칭 및 레이블 필터링을 수행합니다."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "텍스트 접두사 접미사",
+        "inputs": {
+            "text": "텍스트",
+            "prefix": "접두사",
+            "suffix": "접미사"
+        },
+        "description": "텍스트 앞에 지정된 접두사를, 뒤에 지정된 접미사를 추가합니다."
+    },
+    "1hew_RangeMapping": {
+        "title": "범위 매핑",
+        "inputs": {
+            "value": "값",
+            "min": "최솟값",
+            "max": "최댓값",
+            "rounding": "반올림"
+        },
+        "description": "0-1 범위의 값을 [min,max]로 매핑하며, 소수점 정밀도 조절을 지원합니다."
+    },
+    "1hew_WorkflowName": {
+        "title": "워크플로 이름",
+        "inputs": {
+            "prefix": "접두사",
+            "suffix": "접미사",
+            "date_format": "날짜 형식",
+            "full_path": "전체 경로",
+            "strip_extension": "확장자 제거"
+        },
+        "description": "접두사, 접미사, 날짜 형식이 포함된 워크플로 이름을 생성합니다."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "경계 상자 마스크로 이미지 크롭",
+        "description": "경계 상자 마스크를 사용하여 이미지를 자릅니다.",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "preset_ratio": "프리셋 비율",
+            "get_crop_ratio": "크롭 비율 가져오기",
+            "scale_strength": "스케일 강도",
+            "crop_to_side": "한 변 길이로 크롭",
+            "crop_to_length": "길이로 크롭",
+            "divisible_by": "나누어 떨어짐"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "이미지 Alpha 연결",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "invert_mask": "마스크 반전"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "이미지 배치 인터리브",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "segment_count": "세그먼트 수"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "문자열 비율 Gemini 3.1 Flash 이미지",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "selection": "선택"
+        },
+        "outputs": {
+            "string": "문자열"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "문자열 비율 GPT 2.0 이미지",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "selection": "선택"
+        },
+        "outputs": {
+            "string": "문자열"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "이미지 스케일링 GPT 이미지 2.0",
+        "inputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "preset_size": "프리셋 크기",
+            "fit": "방법",
+            "pad_color": "배경색"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "문자열 파싱",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "selection": "선택"
+        },
+        "outputs": {
+            "string": "문자열"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "임의 스위치 정수",
+        "description": "정수 값에 따라 옵션을 전환합니다."
+    }
+}

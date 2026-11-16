@@ -1,0 +1,563 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "BFS AMV Güdüleme Üretici",
+        "inputs": {
+            "images": "Görsel",
+            "audio": "Ses"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "length": "Uzunluk",
+            "hold": "Sabit tut",
+            "fill": "Dolgu",
+            "placement": "Yerleştirme",
+            "fps": "Kare hızı",
+            "indices": "Dizin",
+            "scene_threshold": "Sahne eşiği"
+        },
+        "outputs": {
+            "guide": "Güdüleme",
+            "debug": "Hata ayıklama"
+        },
+        "description": "AMV güdülemesi üretir (anahtar kareler + boş kareler). external_images görselleri otomatik olarak müzik vuruşlarına yerleştirebilir (placement değerini audio_beats yapın). `Güdüleme` çıkışını VAE'ye veya referans modülüne bağlayın."
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "BFS Bernini Animeden Gerçekçiye Koşullandırma Üretimi",
+        "inputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "vae": "VAE",
+            "guide_video": "Güdüleme videosu"
+        },
+        "widgets": {
+            "length": "Uzunluk"
+        },
+        "outputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "latent": "Latent",
+            "debug": "Hata ayıklama"
+        },
+        "description": "Bernini-R animeden gerçekçiye LoRA için saf video-video (v2v) anime→gerçekçilik koşullandırması. guide_video source_id 1'e (anime tuvali) | çıkış source_id 0'a (gerçek fotoğraf) karşılık gelir. Referans modülü yoktur. Güdüleme hem olumlu hem olumsuz koşullandırmaya uygulandığı için CFG yalnızca metin istemini (gerçek fotoğraf stili) büyütür, referansı değil. Ölçülü bir CFG kullanın; güdüleme hareketi ve düzeni korur. Bu LoRA'yı yüz değiştirme düğümleriyle birlikte kullanmayın: source_id 2 tokenlarını enjekte eder ve animeden gerçekçiye LoRA bu tokenları eğitimde hiç görmedi."
+    },
+    "LTXColorMask": {
+        "title": "LTX Renk Maskesi",
+        "inputs": {
+            "mask": "Maske"
+        },
+        "widgets": {
+            "color": "Renk",
+            "style": "Stil",
+            "marker_radius_frac": "İşaret yarıçapı oranı",
+            "custom_r": "Özel R",
+            "custom_g": "Özel G",
+            "custom_b": "Özel B",
+            "background_black": "Siyah arka plan"
+        },
+        "outputs": {
+            "colored_mask": "Renkli maske"
+        },
+        "description": "Salt beyaz/ikili SAM2 tarzı maskeleri scail2v2 eğitim kuralına göre yeniden renklendirir. 'silhouette' güdüleme maskesi yuvası için, 'flat_marker' (küçük renk noktası, şekilsiz) kimlik maskesi yuvası için kullanılır — ikisinin neden farklı olduğunu her girişin ipucunda görebilirsiniz."
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "BFS Bernini Yüz Değiştirme Koşullandırma Üretimi",
+        "inputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "vae": "VAE",
+            "guide_video": "Güdüleme videosu",
+            "head_image": "Baş görseli"
+        },
+        "widgets": {
+            "length": "Uzunluk",
+            "amplify_reference": "Büyütme referansı"
+        },
+        "outputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "latent": "Latent",
+            "debug": "Hata ayıklama"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "BFS Yüz Değiştirme LoRA Hata Ayıklama",
+        "outputs": {
+            "debug": "Hata ayıklama"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV Edit Anything LoRA Bölme",
+        "inputs": {
+            "lora_name": "LoRA adı"
+        },
+        "widgets": {
+            "overwrite": "Üzerine yaz"
+        },
+        "outputs": {
+            "standard_lora_name": "Standart LoRA adı",
+            "editanything_module_name": "Edit Anything modül adı"
+        },
+        "description": "Edit Anything checkpoint'ini standart LoRA ve yardımcı modül olarak ayırır."
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV Edit Anything modül yükleyici",
+        "widgets": {
+            "module_name": "Modül adı"
+        },
+        "outputs": {
+            "editanything_module": "Edit Anything modülü"
+        },
+        "description": "LTXV Edit Anything LoRA bölünmesinden oluşturulan yardımcı modülü yükler."
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV Edit Anything LoRA yükleyici",
+        "inputs": {
+            "lora_name": "LoRA adı"
+        },
+        "widgets": {
+            "strength_model": "Model şiddeti"
+        },
+        "description": "Edit Anything checkpoint'leri için LoRA yükleyici."
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV Edit Anything Uygula",
+        "inputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "Referans görsel",
+            "lora_name": "LoRA adı",
+            "guide_frames": "Güdüleme kareleri",
+            "ref_temporal_offset_latents": "Referans zamansal kaydırmalı Latent"
+        },
+        "widgets": {
+            "resize_mode": "Ölçekleme modu",
+            "guide_strength": "Güdüleme şiddeti",
+            "ref_strength": "Referans şiddeti",
+            "role_strength": "Rol şiddeti",
+            "adaln_scale": "AdaLN ölçeği",
+            "enable_adaln": "AdaLN'i etkinleştir",
+            "enable_role_embedding": "Rol gömmelerini etkinleştir",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "positive": "Olumlu",
+            "negative": "Olumsuz",
+            "latent": "Latent",
+            "ref_image_preview": "Referans görsel önizlemesi"
+        },
+        "description": "Video-video referans AdaLN LoRA için tek noktada Edit Anything koşullandırması. Tek bir LoRA checkpoint'inden gelen 3 koşullandırma sinyalini tek düğümde uygular: ① IC-LoRA dizisi referans görseli ve isteğe bağlı güdüleme videosunu kodlar ve temiz koşullandırma kareleri olarak Latent'e ekler. Transformer düzeni: [hedef token | referans token @ t=-1 | güdüleme token @ t=0..T] ② Rol gömmeleri (role_embedding.embedding.ağırlık[0]) patchify_proj öncesinde referans görsel tokenlarına öğrenilen 128 boyutlu parmak izini ekler; böylece model öz-dikkat yoluyla @referans görselleri güdüleme karelerinden ayırt eder. ③ AdaLN koşullandırması (ref_adaln_proj: fc1 → SiLU → proj) LoRA'da kayıtlı projeksiyon ağırlarıyla referans görsel Latent'ini havuzlar, 2 katmanlı MLP ile AdaLN zaman adımı uzayına yansıtır ve bunu her Transformer bloğunun zaman adımı eğimine ekler — kalıcı bir genel görünür çapasıdır. Standart LoRA yükleyicisinden sonra, KSampler'dan önce bağlayın."
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "LTXV Nötr Maske Uygula",
+        "inputs": {
+            "image": "Görsel",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "background": "Arka plan",
+            "hard_edges": "Sert kenar"
+        },
+        "outputs": {
+            "image": "Görsel"
+        },
+        "description": "Maskeyle ayrılan görsel/video bölgelerini temiz, düz renkli arka planla değiştirir; referans görselleri veya güdüleme karelerini LTXV koşullandırmasına vermeden önce kullanışlıdır."
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXV Referans Boyutunu Maskeye Göre Ayarla",
+        "inputs": {
+            "ref_image": "Referans görsel",
+            "size_mask": "Boyut maskesi",
+            "ref_mask": "Referans maskesi"
+        },
+        "widgets": {
+            "fit": "Uydurma",
+            "background": "Arka plan",
+            "padding": "Dolgu",
+            "hard_edges": "Sert kenar"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "object_mask": "Nesne maskesi"
+        },
+        "description": "Referans nesneyi temiz bir tuvalde yeniden ölçeklemek için hedef nesne boyutu olarak maske sınır kutusunu kullanır. Maske konumu yok sayılır; hedef ölçeği yalnızca genişlik ve yükseklik belirler."
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV Edit Anything Döngüsel Örneklemeleyici",
+        "inputs": {
+            "vae": "VAE",
+            "noise": "Gürültü",
+            "sampler": "Örneklemeleyici",
+            "sigmas": "Sigma değerleri",
+            "guider": "Güdüleyici",
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "latents": "Latent",
+            "editanything_module": "Edit Anything modülü",
+            "ref_image": "Referans görsel",
+            "guide_frames": "Güdüleme kareleri"
+        },
+        "widgets": {
+            "temporal_tile_size": "Zaman bloğu boyutu",
+            "temporal_overlap": "Zamansal örtüşme",
+            "blend_overlap": "Karma örtüşmesi",
+            "lora_name": "LoRA adı",
+            "ref_resize_mode": "Referans ölçekleme modu",
+            "ref_strength": "Referans şiddeti",
+            "guide_strength": "Güdüleme şiddeti",
+            "role_strength": "Rol şiddeti",
+            "adaln_scale": "AdaLN ölçeği",
+            "enable_ic_lora": "IC-LoRA'yı etkinleştir",
+            "enable_role_embedding": "Rol gömmelerini etkinleştir",
+            "enable_adaln": "AdaLN'i etkinleştir",
+            "reapply_per_chunk": "Her blokta yeniden uygula",
+            "enable_visual_crossattn": "Görsel çapraz dikkati etkinleştir",
+            "ref_context_scale": "Referans bağlam ölçeği",
+            "ref_token_scale": "Referans token ölçeği",
+            "ref_start_block": "Referans başlangıç bloğu",
+            "ref_end_block": "Referans bitiş bloğu",
+            "ref_init_from": "Referans başlatma kaynağı",
+            "ref_init_seed": "Referans başlatma rastgele tohumu",
+            "ref_attn_lora_strength": "Referans dikkat LoRA şiddeti",
+            "debug_ea": "EA hata ayıklama",
+            "ref_temporal_offset_latents": "Referans zamansal kaydırmalı Latent"
+        },
+        "outputs": {
+            "denoised_output": "Denoise edilmiş çıkış",
+            "ref_image_preview": "Referans görsel önizlemesi",
+            "diff_vs_previous_run": "Önceki çalıştırmayla fark"
+        },
+        "description": "Her blokta tam Edit Anything koşullandırması bulunan zamansal döngülü örneklemeleyici.\n\nLTXVEditAnythingApply'e benzer, ancak videoyu zamansal olarak dilimler ve her blokta referans + güdüleme IC-LoRA tokenlarını (LTXVAddGuide.append_keyframe üzerinden), rol gömmelerini ve AdaLN'i yeniden uygular. Her blok, güdüleme videosundaki bir dilime karşılık gelir.\n\nGirdiler açık olumlu/olumsuz koşullandırmalardır; GUIDER girişi yalnızca örnekleme mekanizmasını (CFG/STG parametreleri) sağlar, koşullandırma her blokta guider.set_conds ile geçersiz kılınır."
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "LTXV Latent fark metrikleri",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "Etiket",
+            "print_console": "Konsola yazdır",
+            "compare_noise_mask": "Gürültü maskesini karşılaştır"
+        },
+        "outputs": {
+            "metrics": "Metrikler",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "Kosinüs benzerliği"
+        },
+        "description": "İki Latent'i karşılaştırır ve MSE/RMSE/L1/PSNR/kosinüs benzerliğini bildirir.\n\nDeğiştirilebilir öğelerin A/B testinde kullanın: örneklemeleyiciyi A yapılandırmasıyla çalıştırın, Latent'i kaydedin → B yapılandırmasıyla çalıştırın → SaveLatent.A ile yeni çıkışı bu düğüme bağlayın. Çıkış, arayüz/konsol için biçimlendirilmiş dizenin yanı sıra, çiziciye bağlayabilmeniz veya metin düğümüyle kaydedebilmeniz için ayrı ondalık değerler de içerir.\n\nİki Latent'in şekilleri farklıysa (örneğin VAE farklarından kaynaklanan uzamsal uyuşmazlık), örtüşen alt bölgelerin karşılaştırmasına geri döner."
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "LTXV görsel fark metrikleri",
+        "inputs": {
+            "image_a": "Görsel A",
+            "image_b": "Görsel B"
+        },
+        "widgets": {
+            "label": "Etiket",
+            "print_console": "Konsola yazdır"
+        },
+        "outputs": {
+            "metrics": "Metrikler",
+            "image_a": "Görsel A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "LTXV Latent fark metriklerine benzer, ancak çözülmüş görsellerde (VAE sonrası) çalışır — PSNR [0,1] piksel aralığını kullanır. İki çalıştırmanın çözümü sonrasında görsel açıdan ilgili piksel hatalarını karşılaştırmak için çok uygundur."
+    },
+    "LTXIdentityCAN": {
+        "title": "LTX Kimlik CAN",
+        "inputs": {
+            "reference_image": "Referans görsel",
+            "can_weights": "CAN ağırlıkları"
+        },
+        "widgets": {
+            "strength": "Şiddet"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "LTX Kimlik Gemma Vision",
+        "inputs": {
+            "clip": "Klip",
+            "reference_image": "Referans görsel"
+        },
+        "widgets": {
+            "prompt": "İstem"
+        },
+        "outputs": {
+            "conditioning": "Koşullandırma"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "LTX Çoklu Görünüm Kimliği",
+        "inputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "Referans ön yüz",
+            "reference_back_head": "Referans kafa arkası",
+            "reference_body_front": "Referans ön gövde",
+            "reference_side_profile": "Referans yan profil"
+        },
+        "widgets": {
+            "identity_projector": "Kimlik projeksiyonu",
+            "phase_scale": "Faz ölçeği",
+            "id_strength": "Kimlik şiddeti",
+            "arcface_mode": "ArcFace modu",
+            "debug_log": "Hata ayıklama günlüğü",
+            "reference_temporal_offset_latents": "Referans zamansal kaydırmalı Latent"
+        },
+        "outputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "latent": "Latent",
+            "debug": "Hata ayıklama"
+        },
+        "description": "Çok açılı kimlik aktarımı: ön yüz (zorunlu) + isteğe bağlı kafa arkası/gövde/profil referans görünümleri; her görünüm, çok görünümlü eğitime uygun biçimde ayrı bir örtüşme + kaynak faz segmenti olarak (source_id 2/3/4/5) eklenir. Lütfen önce MODEL üzerine çok görünümlü LoRA yükleyin."
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "LTX örtüşen kimlik koşullandırması",
+        "inputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Referans görsel"
+        },
+        "widgets": {
+            "source_id": "Kaynak ID",
+            "phase_scale": "Faz ölçeği",
+            "ref_resize_mode": "Referans ölçekleme modu",
+            "debug_log": "Hata ayıklama günlüğü",
+            "crop_anchor": "Kırpma çıpası",
+            "layout": "Yerleşim",
+            "reference_guidance_scale": "Referans güdüleme şiddeti",
+            "reference_temporal_offset_latents": "Referans zamansal kaydırmalı Latent"
+        },
+        "outputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "latent": "Latent",
+            "debug": "Hata ayıklama",
+            "ref_preview": "Referans önizleme",
+            "crop_overlay": "Kırpma bindirmesi"
+        },
+        "description": "Model yamalarıyla uygulanan örtüşme/st_drc/strata + kaynak faz referans koşullandırması; kare 0'daki sentetik sızıntıyı azaltmak için deneysel olan yalnız-referans zamansal kaydırma içerir. Referanslar bağımsız tokenlardır (I2V değil) ve herhangi bir özneyle çalışır — yalnızca yüzlerle değil. Yığılmış referanslar üzerinde eğitilmiş checkpoint'ler için (düzen='strata') görsel yığını kabul edilebilir. Lütfen önce MODEL üzerine LoRA yükleyin. ref_preview/crop_overlay çıkışları kodlanan içeriği ve match_target için referansın kırpma sonrasında hangi bölümlerinin korunduğunu (yeşil kutu) hangilerinin atıldığını tam olarak gösterir."
+    },
+    "LTXIdentityTransfer": {
+        "title": "LTX Kimlik Aktarımı",
+        "inputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "Referans görsel"
+        },
+        "widgets": {
+            "source_id": "Kaynak ID",
+            "phase_scale": "Faz ölçeği",
+            "ref_resize_mode": "Referans ölçekleme modu",
+            "debug_log": "Hata ayıklama günlüğü",
+            "crop_anchor": "Kırpma çıpası",
+            "layout": "Yerleşim",
+            "reference_guidance_scale": "Referans güdüleme şiddeti",
+            "reference_temporal_offset_latents": "Referans zamansal kaydırmalı Latent"
+        },
+        "outputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "latent": "Latent",
+            "debug": "Hata ayıklama",
+            "ref_preview": "Referans önizleme",
+            "crop_overlay": "Kırpma bindirmesi"
+        },
+        "description": "Model yamalarıyla uygulanan örtüşme/st_drc/strata + kaynak faz referans koşullandırması; kare 0'daki sentetik sızıntıyı azaltmak için deneysel olan yalnız-referans zamansal kaydırma içerir. Referanslar bağımsız tokenlardır (görselden videoya değil) ve herhangi bir özneyle çalışır — yalnızca yüzlerle değil. Yığılmış referanslar üzerinde eğitilmiş checkpoint'ler için (düzen='strata') görsel yığını kabul edilebilir. Lütfen önce MODEL üzerine LoRA yükleyin. ref_preview/crop_overlay çıkışları kodlanan içeriği ve match_target için referansın kırpma sonrasında hangi bölümlerinin korunduğunu (yeşil kutu) hangilerinin atıldığını tam olarak gösterir."
+    },
+    "LTXMultipleControls": {
+        "title": "LTX Çoklu Kontrol",
+        "inputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "Güdüleme videosu",
+            "mask_video": "Maske videosu",
+            "identity_image": "Kimlik görseli",
+            "identity_mask_image": "Kimlik maske görseli"
+        },
+        "widgets": {
+            "guide_source_id": "Güdüleme kaynak ID'si",
+            "guide_phase_scale": "Güdüleme faz ölçeği",
+            "guide_layout": "Güdüleme düzeni",
+            "guide_ref_resize_mode": "Güdüleme referans görsel ölçekleme modu",
+            "guide_downscale_factor": "Güdüleme alt örnekleme çarpanı",
+            "mask_source_id": "Maske kaynak ID",
+            "mask_phase_scale": "Maske faz ölçeği",
+            "mask_layout": "Maske düzeni",
+            "mask_ref_resize_mode": "Maske referans görsel ölçekleme modu",
+            "mask_downscale_factor": "Maske alt örnekleme çarpanı",
+            "auto_mask_guide": "Otomatik maske güdülemesi",
+            "mask_white_thresh": "Maske beyaz eşiği",
+            "identity_source_id": "Kimlik kaynak ID",
+            "identity_phase_scale": "Kimlik faz ölçeği",
+            "identity_layout": "Kimlik düzeni",
+            "identity_ref_resize_mode": "Kimlik referans görsel ölçekleme modu",
+            "identity_downscale_factor": "Kimlik alt örnekleme çarpanı",
+            "identity_mask_source_id": "Kimlik maske kaynak ID",
+            "identity_mask_phase_scale": "Kimlik maskesi faz ölçeği",
+            "identity_mask_layout": "Kimlik maskesi düzeni",
+            "identity_mask_ref_resize_mode": "Kimlik maskesi referans görsel ölçekleme modu",
+            "identity_mask_downscale_factor": "Kimlik maskesi alt örnekleme çarpanı",
+            "crop_anchor": "Kırpma çıpası",
+            "reference_guidance_scale": "Referans güdüleme ölçeği",
+            "debug_log": "Hata ayıklama günlüğü",
+            "identity_temporal_offset_latents": "Kimlik zamansal kaydırmalı Latent"
+        },
+        "outputs": {
+            "positive": "Olumlu koşullandırma",
+            "negative": "Olumsuz koşullandırma",
+            "latent": "Latent",
+            "debug": "Hata ayıklama bilgisi"
+        },
+        "description": "Güdüleme, maske, kimlik ve kimlik maskesi referans koşullandırmalarını tek bir düğüm çağrısında birleştirir; böylece tüm dolu yuvaların RoPE referans spec'leri gerçekten birleşir (LTXIdentityOverlapConditioning düğümünü zincirleme kullanmak bunu yapmaz — her çağrı öncekini geçersiz kılar). Her yuva isteğe bağlıdır ve kendi kaynak ID / faz ölçeği / düzen / referans ölçekleme moduna sahiptir — sabit kodlama yok, yalnızca varsayılanlar scail2v2_r128_v13 ile eşleşir (güdüleme=0, maske=0, ikisi de fazsız; kimlik=2, fazlı). Güdüleme videosu, değiştirilen bölgede otomatik olarak siyah maske uygular (auto_mask_guide); bu, v13'ün eğitim şekliyle eşleşir ve kimlik aktarımının gerçekten çalışmasını sağlayan düzeltmedir. identity_mask v13 tarafından kullanılmaz (boş bırakın ve bağlamayın); eski checkpoint'lerle uyumluluk için tutulmaktadır."
+    },
+    "LTXMultishotPrompt": {
+        "title": "LTX çoklu çekim istemi",
+        "inputs": {
+            "image_1": "Referans görsel 1",
+            "image_2": "Referans görsel 2",
+            "image_3": "Referans görsel 3",
+            "image_4": "Referans görsel 4"
+        },
+        "widgets": {
+            "shot_modifier_1": "Çekim düzeltmesi 1",
+            "shot_size_1": "Çekim boyutu 1",
+            "camera_move_1": "Kamera hareketi 1",
+            "shot_modifier_2": "Çekim düzeltmesi 2",
+            "shot_size_2": "Çekim boyutu 2",
+            "camera_move_2": "Kamera hareketi 2",
+            "shot_modifier_3": "Çekim düzeltmesi 3",
+            "shot_size_3": "Çekim boyutu 3",
+            "camera_move_3": "Kamera hareketi 3",
+            "shot_modifier_4": "Çekim düzeltmesi 4",
+            "shot_size_4": "Çekim boyutu 4",
+            "camera_move_4": "Kamera hareketi 4"
+        },
+        "outputs": {
+            "prompt": "İstem",
+            "references": "Referans görsel",
+            "num_shots": "Çekim sayısı"
+        },
+        "description": "ShotPlan biçiminde çoklu çekim istemlerinin yanı sıra çoklu çekim katmanlı LoRA için gereken sıralı, gri dolgulu referans yığınını oluşturur. `references` girişini LTX kimlik aktarımına (düzen='strata', kaynak ID=2, faz ölçeği=1.0), `İstem` girişini LTX metin kodlama düğümüne bağlayın."
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX İlk Kareyi Kırp",
+        "inputs": {
+            "images": "Görsel"
+        },
+        "widgets": {
+            "trim": "Kırpılacak kare sayısı"
+        },
+        "outputs": {
+            "images": "Görsel"
+        },
+        "description": "Videonun (görsel yığınının) ilk N karesini siler — referans kare 0 sızıntısı sorununu ortadan kaldırır."
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "BFS Çoklu Referans Görsel Birleştirici",
+        "inputs": {
+            "ref_image_1": "Referans görsel 1",
+            "ref_image_2": "Referans görsel 2",
+            "ref_image_3": "Referans görsel 3",
+            "ref_image_4": "Referans görsel 4",
+            "ref_image_5": "Referans görsel 5"
+        },
+        "widgets": {
+            "fit_mode": "Uydurma modu"
+        },
+        "outputs": {
+            "sheet": "Birleştirilmiş görsel",
+            "n_refs": "Referans görsel sayısı",
+            "debug": "Hata ayıklama bilgisi"
+        },
+        "description": "Bağlı 1-5 referans görseli, çok referanslı LoRA eğitiminde kullanılan sabit 1536x1024 boyutunda birleştirilmiş görselde toplar. Boş bırakılan yuvalar referans sayısını azaltır; boş yuvalar doğrudan atlanır ve boş içerikle doldurulmaz."
+    },
+    "BFSEntitySheet2x2": {
+        "title": "Varlık 2x2 Birleştirme Görseli",
+        "inputs": {
+            "person": "Kişi",
+            "clothing": "Kıyafet",
+            "object_or_person2": "Nesne/Kişi 2",
+            "scene": "Sahne"
+        },
+        "outputs": {
+            "sheet": "Birleştirilmiş görsel",
+            "n_refs": "Referans görsel sayısı",
+            "debug": "Hata ayıklama bilgisi"
+        },
+        "description": "humoset_sheets_v7 çok referanslı LoRA eğitiminde kullanılan sabit 1536x1024 boyutunda 2x2 varlık birleştirme görseli üretir. Dörtlülerin anlamları sabittir (sol üst: kişi, sağ üst: kıyafet, sol alt: nesne/kişi 2, sağ alt: sahne); giriş boş bırakılırsa ilgili dörtlü beyaz olur. LTXIdentityOverlapConditioning ile birlikte kullanın: düzen=örtüşme, kaynak ID=2, faz ölçeği=1.0, referans ölçekleme modu=native_resolution."
+    },
+    "FrameRangedFaceLoader": {
+        "title": "Kare Aralığı Yüz Yükleyici",
+        "inputs": {
+            "image": "Görsel"
+        },
+        "widgets": {
+            "frame_start": "Başlangıç karesi",
+            "frame_end": "Bitiş karesi"
+        },
+        "outputs": {
+            "face_sequence": "Yüz dizisi"
+        },
+        "description": "Tek bir yüz görselini [başlangıç karesi, bitiş karesi] kare aralığıyla paketler. Yüz dizisi döndürür — ReservedRegionFrameComposer'ın kullandığı sözlük listesi. bitiş karesi=-1 \"son kareye kadar\" demektir (üst sınır yok)."
+    },
+    "FaceSequenceBatch": {
+        "title": "Yüz Dizisi Yığın İşleme",
+        "inputs": {
+            "face_sequence_a": "Yüz dizisi A",
+            "face_sequence_b": "Yüz dizisi B"
+        },
+        "outputs": {
+            "face_sequence": "Yüz dizisi"
+        },
+        "description": "İki yüz dizisi listesini tek bir listede birleştirir. Birden çok düğümü zincirleyerek birçok aralığı içeren yığınlar oluşturabilirsiniz."
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "Rezerve Bölge Kare Birleştirici",
+        "inputs": {
+            "frames": "Kare",
+            "face_sequence": "Yüz dizisi",
+            "face_images": "Yüz görseli"
+        },
+        "widgets": {
+            "region_position": "Bölge konumu",
+            "region_size_px": "Bölge piksel boyutu",
+            "face_distribution": "Yüz dağılımı",
+            "interval_frames": "Aralık kare sayısı",
+            "overflow_mode": "Taşma modu",
+            "stack_direction": "Yığın yönü",
+            "face_scale_pct": "Yüz ölçek yüzdesi",
+            "face_padding_px": "Yüz piksel kenar boşluğu",
+            "face_gap_px": "Yüz piksel aralığı",
+            "face_align_main": "Yüz ana hizalaması",
+            "face_align_cross": "Yüz çapraz hizalaması",
+            "chroma_r": "Kroma R",
+            "chroma_g": "Kroma G",
+            "chroma_b": "Kroma B"
+        },
+        "outputs": {
+            "frames_out": "Çıkış kareleri"
+        },
+        "description": "Her karede rezerve bölgeleri (sol/sağ/üst/alt) orijinal çıkış kare boyutunu koruyarak sentezlemek için ComfyUI düğümü. Ana özellikler: - Nihai çıkış çözünürlüğü orijinal kare çözünürlüğüyle aynı tutulur - Video içeriği kırpma olmadan kalan alana uydurulur - Rezerve alan kroma rengiyle doldurulur - Bu alana bir veya daha fazla yüz görseli yerleştirilir - Yüz yığınının (görsel girişi) zamansal dağılım modu desteklenir - Yüz dizisi girişiyle kare bazında aralık tanımlama desteklenir"
+    }
+}

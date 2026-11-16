@@ -1,0 +1,130 @@
+{
+    "PromptRelayEncode": {
+        "title": "プロンプトリレーエンコード",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "空のLatent動画 — サイズはその形状から読み取られます。",
+            "global_prompt": "グローバルプロンプト",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "動画全体に条件を設定します。持続するキャラクター、物体、シーン背景を固定します。",
+            "local_prompts": "セグメントプロンプト",
+            "Ordered prompts for each temporal segment, separated by |": "各時間セグメントの順序付きプロンプト。| で区切ります",
+            "segment_lengths": "セグメント長",
+            "Comma-separated pixel space frame counts per segment. Leave empty to auto-distribute evenly.": "各セグメントのピクセル空間フレーム数をカンマ区切りで指定します。空欄の場合は自動的に均等割り当てされます。",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "ペナルティ減衰パラメータ。約0.1未満の値はすべて鋭い境界を生成します（論文のデフォルト値0.001）。より柔らかい遷移が必要なら、0.5以上を試してください。",
+            "relay_options": "リレーオプション",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "オプションのフローレベル詳細調整です。プロンプトリレー詳細オプションノードに接続します。"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件"
+        },
+        "description": "グローバルプロンプトと時系列セグメントのプロンプトを組み合わせてエンコードし、モデルにプロンプトリレーの時系列制御パッチを適用します。セグメントプロンプトは | で区切ります。ネガティブプロンプトには標準のCLIPテキストエンコードノードを使用してください。"
+    },
+    "PromptRelayEncodeTimeline": {
+        "title": "プロンプトリレーエンコード（タイムライン）",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "Empty latent video — dimensions are read from its shape.": "空のLatent動画 — サイズはその形状から読み取られます。",
+            "global_prompt": "グローバルプロンプト",
+            "Conditions the entire video. Anchors persistent characters, objects, and scene context.": "動画全体に条件を設定します。持続するキャラクター、物体、シーン背景を固定します。",
+            "max_frames": "最大フレーム数",
+            "Total timeline length in pixel-space frames. Used by the editor for visual scale only.": "タイムラインの全長（ピクセル空間のフレーム数）。エディターの視覚的な比率のみに使用されます。",
+            "timeline_data": "タイムラインデータ",
+            "JSON state of the timeline editor (auto-managed; do not edit by hand).": "タイムラインエディターのJSON状態（自動管理。手動で編集しないでください）。",
+            "local_prompts": "セグメントプロンプト",
+            "Auto-populated from the timeline editor.": "タイムラインエディターから自動入力されます。",
+            "segment_lengths": "セグメント長",
+            "Auto-populated from the timeline editor (pixel-space frame counts).": "タイムラインエディターから自動入力されます（ピクセル空間のフレーム数）。",
+            "epsilon": "epsilon",
+            "Penalty decay parameter. Values below ~0.1 all produce sharp boundaries (paper default 0.001). For softer transitions, try 0.5 or higher.": "ペナルティ減衰パラメータ。約0.1未満の値はすべて鋭い境界を生成します（論文のデフォルト値0.001）。より柔らかい遷移が必要なら、0.5以上を試してください。",
+            "fps": "フレームレート",
+            "Frames per second — only affects how time is displayed in the timeline editor when time_units is set to 'seconds'.": "フレームレート — time_unitsが'秒'に設定されている場合のみ、タイムラインエディターの時間表示に影響します。",
+            "time_units": "時間単位",
+            "Display the ruler, segment ranges, length input, and total in frames or seconds. Internal storage is always pixel-space frames.": "ルーラー、セグメント範囲、長さ入力、合計をフレームまたは秒で表示します。内部保存は常にピクセル空間のフレーム数です。",
+            "relay_options": "リレーオプション",
+            "Optional advanced per-stream tuning. Connect a Prompt Relay Advanced Options node.": "オプションのフローレベル詳細調整です。プロンプトリレー詳細オプションノードに接続します。"
+        },
+        "widgets": {
+            "max_frames": "最大フレーム数",
+            "fps": "フレームレート",
+            "time_units": "時間単位",
+            "frames": "フレーム",
+            "seconds": "秒数"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件"
+        },
+        "description": "プロンプトリレーエンコードと同じですが、セグメントプロンプトとセグメント長を、タイムライン上のドラッグ可能なブロックとして視覚的に編集できます。max_frames入力はタイムラインの比率（ピクセル空間）を設定するだけです — 実際のフレーム数は引き続きlatentから読み取られます。"
+    },
+    "PromptRelaySmartEncode": {
+        "title": "プロンプトリレーエンコード（スマート）",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "latent": "Latent",
+            "global_prompt": "グローバルプロンプト",
+            "Conditions entire video. Leave empty to auto-use the first parsed segment from smart_prompt as the global anchor.": "動画全体に条件を設定します。空欄の場合、smart_promptで解析された最初のセグメントがグローバルアンカーとして自動的に使用されます。",
+            "smart_prompt": "スマートプロンプト",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "スマート構文でプロンプトを入力します：\n1. インライン式：'1段目のテキスト [0-50] | 2段目のテキスト [50-100]'\n2. ブロック式：'1段目：\n1段目のテキスト\n2段目：\n2段目のテキスト'\n構文は自動的に除去され、均等または比例配分で正規化されます。",
+            "normalize_by_tokens": "Token単位で正規化",
+            "If true, scales the calculated length of each segment by its token count.": "真の場合、各セグメントのtoken数に応じて長さをスケール計算します。",
+            "epsilon": "epsilon"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token単位で正規化"
+        },
+        "outputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件"
+        },
+        "description": "[0-50] やブロック見出し（例: '第一段：'）などの構文を解析し、セグメント長を自動計算します。"
+    },
+    "PromptRelaySmartEncodeTest": {
+        "title": "プロンプトリレースマートエンコードテスト",
+        "inputs": {
+            "smart_prompt": "スマートプロンプト",
+            "Enter prompt using Smart Syntax:\n1. Inline: 'text one [0-50] | text two [50-100]'\n2. Block: 'Second 1:\ntext one\nSecond 2:\ntext two'\nSyntax is auto-stripped and normalized evenly or proportionally.": "スマート構文でプロンプトを入力します：\n1. インライン式：'1段目のテキスト [0-50] | 2段目のテキスト [50-100]'\n2. ブロック式：'1段目：\n1段目のテキスト\n2段目：\n2段目のテキスト'\n構文は自動的に除去され、均等または比例配分で正規化されます。",
+            "normalize_by_tokens": "Token単位で正規化",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "normalize_by_tokens": "Token単位で正規化"
+        },
+        "outputs": {
+            "parsed_output": "解析出力"
+        },
+        "description": "テスト用に、解析後の構文を出力します。"
+    },
+    "PromptRelayAdvancedOptions": {
+        "title": "プロンプトリレー詳細オプション",
+        "inputs": {
+            "video_strength": "動画強度",
+            "Multiplier on the video temporal penalty. 0 disables video segmentation. Most useful in the 0–1 range to soften boundaries; values >1 saturate quickly at the default epsilon (1e-3) because the bias is already large enough to zero out distant tokens. To make >1 visibly meaningful, raise epsilon to ~0.1 or higher.": "動画の時間ペナルティの乗数です。0で動画セグメント化を無効にします。0-1の範囲が最も有用で、境界を柔らかくできます。値>1はデフォルトのepsilon（1e-3）ではすぐに飽和します。バイアスがすでに、遠くのtokenをゼロにできるほど大きいためです。>1で目に見える効果を得るには、epsilonを約0.1以上に上げる必要があります。",
+            "video_window_scale": "動画ウィンドウスケール",
+            "Scales the flat anchor zone (default L/2 - 2 frames). <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "平坦なアンカー領域をスケールします（デフォルト L/2 - 2フレーム）。<1でソフト減衰がより早く始まり、>1で剛性領域が広がります。0はアンカーを1点に収縮させます — 減衰はセグメントの中点から即座に始まります（デフォルトより鋭くなり、柔らかくはなりません）。",
+            "audio_epsilon": "音声epsilon",
+            "Epsilon for the audio stream. 0 = inherit from the encoder's main epsilon.": "音声ストリームのepsilon。0 = エンコーダーのメインepsilonを継承。",
+            "audio_strength": "音声強度",
+            "Multiplier on the audio temporal penalty. 0 lets audio bleed across visual cuts. Most useful in the 0–1 range; values >1 saturate quickly at the default epsilon (1e-3) — raise audio_epsilon to ~0.1 or higher to make >1 visibly meaningful.": "音声時間ペナルティの乗数。0にすると音声が視覚の切り替えをまたいでリークするのを許容します。0-1の範囲で最も有用です。値>1はデフォルトのepsilon（1e-3）では急速に飽和します — >1の効果をはっきりさせるにはaudio_epsilonを約0.1以上に上げる必要があります。",
+            "audio_window_scale": "音声ウィンドウスケール",
+            "Scales the flat anchor zone width for the audio stream. <1 starts the soft falloff sooner; >1 widens the rigid zone. 0 collapses the anchor to a point — falloff begins immediately at the segment midpoint (sharper than default, not softer).": "音声ストリームの平坦なアンカー領域の幅をスケールします。<1でソフト減衰がより早く始まり、>1で剛性領域が広がります。0はアンカーを1点に収縮させます — 減衰はセグメントの中点から即座に始まります（デフォルトより鋭くなり、柔らかくはなりません）。"
+        },
+        "widgets": {
+            "video_strength": "動画強度",
+            "video_window_scale": "動画ウィンドウスケール",
+            "audio_epsilon": "音声epsilon",
+            "audio_strength": "音声強度",
+            "audio_window_scale": "音声ウィンドウスケール"
+        },
+        "outputs": {
+            "relay_options": "リレーオプション"
+        },
+        "description": "オプションのフローレベル時間ペナルティ調整です。プロンプトリレーエンコーダーのリレーオプション入力に接続します。音声フィールドはLTX2にのみ影響します。"
+    }
+}

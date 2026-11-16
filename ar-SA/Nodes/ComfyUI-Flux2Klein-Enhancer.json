@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "مُعيِّن K لـ Flux2Klein (نسخة تجريبية)",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "شرط موجب",
+            "latent_image": "صورة Latent",
+            "negative": "شرط معاكس"
+        },
+        "widgets": {
+            "steps": "عدد الخطوات",
+            "seed": "بذرة عشوائية",
+            "denoise": "قوة إزالة الضجيج",
+            "base_shift": "الإزاحة الأساسية",
+            "max_shift": "أقصى إزاحة",
+            "cfg_scale": "معامل تحجيم CFG",
+            "guidance_embed": "تضمين التوجيه"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "مرساة ألوان Flux2Klein",
+        "inputs": {
+            "model": "النموذج",
+            "conditioning": "التحكم بالشرط"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "ramp_curve": "منحنى التدرج",
+            "ref_index": "فهرس المرجع",
+            "channel_weights": "أوزان القنوات",
+            "debug": "وضع التنقيح"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "محسّن Flux2Klein",
+        "inputs": {
+            "conditioning": "التحكم بالشرط",
+            "device": "جهاز التشغيل"
+        },
+        "widgets": {
+            "active_scale": "تحجيم المنطقة النشطة",
+            "per_token_whiten": "تبييض لكل رمز",
+            "norm_equalize": "موازنة المعيار",
+            "early_layer_scale": "معامل تحجيم الطبقات السطحية",
+            "mid_layer_scale": "معامل تحجيم الطبقات الوسطى",
+            "late_layer_scale": "معامل تحجيم الطبقات العميقة",
+            "preserve_original": "الحفاظ على البيانات الأصلية",
+            "active_end_override": "تجاوز نهاية التنشيط",
+            "debug": "وضع التنقيح"
+        },
+        "description": "ينفذ عمليات قياسية بحتة/تبييض على المناطق النشطة من التحكم الشرطي لـ Klein، ويوفر في الوقت نفسه تحجيمًا طبقيًا خاصًا بـ Qwen3 لنسخة Klein."
+    },
+    "Flux2KleinDetailController": {
+        "title": "متحكم تفاصيل Flux2Klein",
+        "inputs": {
+            "conditioning": "التحكم بالشرط",
+            "device": "جهاز التشغيل"
+        },
+        "widgets": {
+            "front_mult": "معامل الضرب للجزء الأمامي",
+            "mid_mult": "معامل الضرب للجزء الأوسط",
+            "end_mult": "معامل الضرب للجزء الخلفي",
+            "emphasis_start": "موضع بداية التشديد",
+            "emphasis_end": "موضع نهاية التشديد",
+            "emphasis_mult": "معامل ضرب التشديد",
+            "preserve_original": "الحفاظ على البيانات الأصلية",
+            "debug": "وضع التنقيح"
+        },
+        "description": "مُعدِّل معامل ضرب التضمينات المجزّأة.\n\nالوضع الحقيقي (موصى به): يُستخدم مع المرمِّز المجزّئ. يولّد المرمِّز نطاقات رموز لكل قسم كبيانات وصفية للتحكم الشرطي (`meta[\"klein_sections\"]`)؛ ويقوم هذا العقد بضبط معامل ضرب التضمينات النشطة ضمن النطاقات المقابلة وفق المعاملات التي يحددها المستخدم.\n\nوضع التوافق (إصدار قديم/غير موصى به): إذا لم تكن هناك بيانات وصفية للتقسيم، يقسم العقد المنطقة النشطة تلقائيًا بنسب ثابتة 25%/50%/25%. هذه الحدود تعسفية — فليس لرموز Qwen3 دلالات مكانية ثابتة — وإصدار هذا العقد v1 لا يحقق تأثيرًا فعليًا يُذكر في هذا الوضع. يُحتفظ بوضع التوافق هذا لتوافق سير العمل القديمة؛ يُنصح بالانتقال إلى المرمِّز المجزّئ للحصول على تحجيم فعلي يدرك التقسيم."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "متحكم مرجع الكوانع Flux2Klein",
+        "inputs": {
+            "conditioning": "التحكم بالشرط",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "invert_mask": "عكس القناع",
+            "feather": "تنعيم القناع",
+            "reference_index": "فهرس المرجع",
+            "debug": "وضع التنقيح"
+        },
+        "description": "يُطبَّق تخميد مكاني على كامِن المرجع باستخدام القناع المرسوم.\n\nيضرب كامِن المرجع في قيم قياسية لكل بكسل مولّدة من القناع. يُعدَّل كامِن التحكم الشرطي في مكانه مباشرة (استبدال meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "متحكم كامِن المرجع Flux2Klein",
+        "inputs": {
+            "model": "النموذج",
+            "conditioning": "التحكم بالشرط"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "reference_index": "فهرس المرجع",
+            "spatial_fade": "تلاشٍ مكاني",
+            "spatial_fade_strength": "شدة التلاشي المكاني",
+            "debug": "وضع التنقيح"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "موازن النص والمرجع Flux2Klein",
+        "inputs": {
+            "model": "النموذج",
+            "conditioning": "التحكم بالشرط"
+        },
+        "widgets": {
+            "balance": "معامل التوازن",
+            "debug": "وضع التنقيح"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "مُعدِّل أوزان كامِن المرجع Flux2Klein",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "reference_index": "فهرس المرجع",
+            "weight": "الوزن"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "محسّن النص Flux2Klein",
+        "inputs": {
+            "conditioning": "التحكم بالشرط"
+        },
+        "widgets": {
+            "magnitude": "المدى العام",
+            "contrast": "تباين",
+            "normalize_strength": "شدة التطبيع",
+            "skip_bos": "تخطي الرمز البادئ",
+            "debug": "وضع التنقيح"
+        },
+        "description": "يعدّل رموز التحكم الشرطي النصي.\n\nترتيب العمليات:\n1. التطبيع: موازنة مدى الرموز\n2. التباين: تضخيم/تصغير الفروق بين الرموز\n3. المدى: تحجيم عام"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "المرمِّز المجزّئ Flux2Klein",
+        "inputs": {
+            "clip": "مقطع",
+            "separator": "الفاصل"
+        },
+        "widgets": {
+            "front_text": "نص الجزء الأمامي",
+            "mid_text": "نص الجزء الأوسط",
+            "end_text": "نص الجزء الخلفي",
+            "combined_prompt": "موجّه النص المدمج",
+            "show_preview": "عرض المعاينة",
+            "debug": "وضع التنقيح"
+        },
+        "outputs": {
+            "conditioning": "التحكم بالشرط",
+            "front_section": "قسم الجزء الأمامي",
+            "mid_section": "قسم الجزء الأوسط",
+            "end_section": "قسم الجزء الخلفي",
+            "full_prompt": "موجّه النص الكامل"
+        },
+        "description": "يقطّع موجّه النص الثلاثي الأقسام إلى رموز، ويولّد نطاقات رموز لكل قسم كبيانات وصفية للتحكم الشرطي يقرأها متحكم التفاصيل."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "نقل ملامح الهوية",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "start_block": "بلوك البداية",
+            "end_block": "بلوك النهاية",
+            "mode": "الوضع",
+            "top_k_percent": "نسبة Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "نقل ملامح الهوية (نسخة متقدمة)",
+        "inputs": {
+            "model": "النموذج",
+            "subject_mask": "قناع الموضوع الرئيسي"
+        },
+        "widgets": {
+            "reference_index": "فهرس المرجع",
+            "mode": "الوضع",
+            "top_k_percent": "نسبة Top K",
+            "double_enable": "تفعيل النقل المزدوج",
+            "double_strength": "شدة النقل المزدوج",
+            "double_start": "نقطة بداية النقل المزدوج",
+            "double_end": "نقطة نهاية النقل المزدوج",
+            "single_enable": "تفعيل النقل الفردي",
+            "single_strength": "شدة النقل الفردي",
+            "single_start": "نقطة بداية النقل الفردي",
+            "single_end": "نقطة نهاية النقل الفردي",
+            "block_schedule": "جدولة البلوكات",
+            "sim_floor": "الحد الأدنى للتشابه",
+            "mask_threshold": "عتبة القناع"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "نقل ملامح الهوية V3",
+        "inputs": {
+            "model": "النموذج",
+            "subject_mask": "قناع الموضوع الرئيسي"
+        },
+        "widgets": {
+            "preset": "إعداد مسبق",
+            "reference_index": "فهرس المرجع",
+            "double_schedule": "جدولة النقل المزدوج",
+            "single_schedule": "جدولة النقل الفردي",
+            "double_sim": "تشابه النقل المزدوج",
+            "single_sim": "تشابه النقل الفردي",
+            "commit_margin": "هامش الالتزام",
+            "commit_confirm": "تأكيد الالتزام",
+            "commit_anchor": "مرساة الالتزام",
+            "mask_threshold": "عتبة القناع",
+            "debug": "وضع التنقيح"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "نقل ملامح الهوية النهائي",
+        "inputs": {
+            "model": "النموذج",
+            "subject_mask_1": "قناع الموضوع الرئيسي 1",
+            "subject_mask_2": "قناع الموضوع الرئيسي 2",
+            "subject_mask_3": "قناع الموضوع الرئيسي 3",
+            "subject_mask_4": "قناع الموضوع الرئيسي 4",
+            "subject_mask_5": "قناع الموضوع الرئيسي 5",
+            "subject_mask_6": "قناع الموضوع الرئيسي 6",
+            "subject_mask_7": "قناع الموضوع الرئيسي 7",
+            "subject_mask_8": "قناع الموضوع الرئيسي 8"
+        },
+        "widgets": {
+            "preset": "إعداد مسبق",
+            "enabled": "تفعيل",
+            "reference_index": "فهرس المرجع",
+            "reference_indices": "قائمة فهارس المراجع",
+            "similarity_floor": "الحد الأدنى للتشابه",
+            "softmax_temperature": "معامل درجة حرارة Softmax",
+            "mask_threshold": "عتبة القناع",
+            "double_blocks": "مجال الوحدات المزدوجة",
+            "single_blocks": "مجال الوحدات الفردية",
+            "total_sampling_steps": "إجمالي خطوات العيّنة",
+            "debug": "وضع التنقيح"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "توجيه ملامح الهوية",
+        "inputs": {
+            "model": "النموذج",
+            "identity_latent": "كامن ملامح الهوية"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "start_percent": "نسبة بداية السريان",
+            "end_percent": "نسبة نهاية السريان",
+            "mode": "الوضع"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "معالجة كامِن متعددة المراجع لـ Flux2 Klein",
+        "inputs": {
+            "conditioning": "التحكم بالشرط",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "التحكم بالشرط"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "مُعيِّن K لـ FLUX.2 Klein",
+        "inputs": {
+            "model": "النموذج",
+            "positive": "موجّه موجب",
+            "negative": "الموجّه السلبي",
+            "latent_image": "كامن الصورة"
+        },
+        "widgets": {
+            "steps": "عدد الخطوات",
+            "guidance_scale": "نسبة التوجيه",
+            "seed": "البذرة",
+            "denoise": "إزالة الضوضاء",
+            "base_shift": "إزاحة أساسية",
+            "max_shift": "أقصى إزاحة"
+        },
+        "description": "يُستخدم عقدة KSampler لـ FLUX.2 Klein لتوليد الصور في فضاء الكامن."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "محسّن Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "magnitude": "المدى",
+            "contrast": "تباين",
+            "normalize_strength": "شدة التطبيع",
+            "preserve_original": "إبقاء الأصل",
+            "preserve_mode": "وضع الإبقاء",
+            "edit_text_weight": "وزن نص التحرير",
+            "active_end_override": "تجاوز نهاية التنشيط",
+            "low_vram": "ذاكرة فيديو منخفضة",
+            "device": "الجهاز",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "محسّن شرط FLUX. .Klein.\n\nتشمل العمليات:\n- المدى: تحجيم مباشر لتضمينات المنطقة النشطة\n- التباين: تضخيم الفروق بين الرموز\n- التطبيع: تسوية أحجام الرموز\n- إبقاء الأصل: خلط التضمينات الأصلية إلى النتيجة بأوضاع متعددة\n\nلا تعدّل جميع العمليات سوى منطقة النص النشطة (لم تتأثر حشو التعبئة).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "متحكم تفاصيل Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "front_mult": "مضاعَف الجزء الأمامي",
+            "mid_mult": "مضاعَف الجزء الأوسط",
+            "end_mult": "مضاعَف النهاية",
+            "emphasis_start": "بداية التشديد",
+            "emphasis_end": "نهاية التشديد",
+            "emphasis_mult": "مضاعَف التشديد",
+            "preserve_original": "إبقاء الأصل",
+            "preserve_mode": "وضع الإبقاء",
+            "low_vram": "ذاكرة فيديو منخفضة",
+            "device": "الجهاز",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "تحكم منطقي بشرط FLUX. .Klein.\n\nيقسّم الرموز النشطة إلى مناطق:\n- أمامية: الموضوع/المفاهيم الرئيسية\n- وسطى: التفاصيل/المعدِّلات\n- نهائية: المصطلحات الأسلوبية/الجودة",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "متحكم كامِن المرجع Flux2 Klein",
+        "inputs": {
+            "model": "النموذج",
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "strength": "قوة",
+            "reference_index": "فهرس المرجع",
+            "spatial_fade": "إبهات مكاني",
+            "spatial_fade_strength": "شدة الإبهات المكاني",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "MODEL": "النموذج",
+            "CONDITIONING": "شرط"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "توازن النص والمرجع Flux2 Klein",
+        "inputs": {
+            "model": "النموذج",
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "balance": "توازن",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "MODEL": "النموذج",
+            "CONDITIONING": "شرط"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "محسّن نص Flux2 Klein",
+        "inputs": {
+            "conditioning": "شرط"
+        },
+        "widgets": {
+            "magnitude": "المدى",
+            "contrast": "تباين",
+            "normalize_strength": "شدة التطبيع",
+            "skip_bos": "تخطي الرمز البادئ للجملة",
+            "debug": "التنقيح"
+        },
+        "outputs": {
+            "CONDITIONING": "شرط"
+        },
+        "description": "يعدّل رموز شرط النص.\n\nترتيب العمليات:\n1. التطبيع: تسوية أحجام الرموز\n2. التباين: تضخيم/تقليل الفروق بين الرموز\n3. المدى: تحجيم عام",
+        "api_version": "V1"
+    }
+}

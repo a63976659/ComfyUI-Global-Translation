@@ -1,0 +1,550 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "Hornear textura a la malla",
+        "inputs": {
+            "reference_images": "Imagen de referencia",
+            "reference_masks": "Máscara de referencia",
+            "reference_orbit_camera_poses": "Poses de cámara orbital de referencia",
+            "mesh": "Malla"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Objetivo de cámara orbital de referencia",
+            "mesh_albedo_width": "Anchura de albedo de la malla",
+            "mesh_albedo_height": "Altura de albedo de la malla",
+            "training_iterations": "Iteraciones de entrenamiento",
+            "batch_size": "Tamaño del lote",
+            "texture_learning_rate": "Tasa de aprendizaje de la textura",
+            "train_mesh_geometry": "Entrenar la geometría de la malla",
+            "geometry_learning_rate": "Tasa de aprendizaje de la geometría",
+            "ms_ssim_loss_weight": "Peso de pérdida MS-SSIM",
+            "force_cuda_rasterize": "Forzar rasterización CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "Malla",
+            "baked_texture": "Textura"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "Modelo CRM CCMs MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "Muestreador CRM_MVDiffusion",
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia",
+            "multiview_images": "Vistas múltiples"
+        },
+        "widgets": {
+            "prompt": "Prompt positivo",
+            "prompt_neg": "Prompt negativo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "mv_guidance_scale": "Coeficiente de guía MV",
+            "num_inference_steps": "Pasos de inferencia"
+        },
+        "outputs": {
+            "multiview_CCMs": "CCM de varias vistas"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "Imagen CRM modelo MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "Muestreador CRM_MVDiffusion",
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia"
+        },
+        "widgets": {
+            "prompt": "Prompt positivo",
+            "prompt_neg": "Prompt negativo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "mv_guidance_scale": "Coeficiente de guía MV",
+            "num_inference_steps": "Pasos de inferencia"
+        },
+        "outputs": {
+            "multiview_images": "Vistas múltiples"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "Convertir 3DGS a malla con NeRF y Marching Cubes",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "Configuración Gaussian",
+            "force_cuda_rast": "Forzar rasterización CUDA"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "Modelo de reconstrucción convolucional",
+        "inputs": {
+            "crm_model": "Modelo CRM",
+            "multiview_images": "Vistas múltiples",
+            "multiview_CCMs": "CCM de varias vistas"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "Malla DMT (tetraedros de avance por profundidad)",
+        "inputs": {
+            "reference_points_cloud": "Nube de puntos de referencia",
+            "reference_images": "Imagen de referencia",
+            "reference_masks": "Máscara de referencia"
+        },
+        "widgets": {
+            "training_iterations": "Iteraciones de entrenamiento",
+            "points_cloud_fitting_weight": "Peso de ajuste de nube de puntos",
+            "mesh_smoothing_weight": "Peso de suavizado de la malla",
+            "chamfer_faces_sample_scale": "Escala de muestreo de caras de chaflán",
+            "mesh_scale": "Escala de malla",
+            "grid_resolution": "Resolución de rejilla",
+            "geometry_learning_rate": "Tasa de aprendizaje de la geometría",
+            "positional_encoding_multires": "Codificación de posición multirresolución",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "Ajustar malla multivista",
+        "inputs": {
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia",
+            "reference_orbit_camera_poses": "Poses de cámara orbital de referencia",
+            "mesh": "Malla"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Objetivo de cámara orbital de referencia",
+            "mesh_albedo_height": "Altura de albedo de la malla",
+            "mesh_albedo_width": "Anchura de albedo de la malla",
+            "training_iterations": "Iteraciones de entrenamiento",
+            "batch_size": "Tamaño del lote",
+            "texture_learning_rate": "Tasa de aprendizaje de la textura",
+            "train_mesh_geometry": "Entrenar la geometría de la malla",
+            "geometry_learning_rate": "Tasa de aprendizaje de la geometría",
+            "ms_ssim_loss_weight": "Peso de pérdida MS-SSIM",
+            "remesh_after_n_iteration": "Volver a mallar cada N iteraciones",
+            "force_cuda_rasterize": "Forzar rasterización CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "Malla",
+            "baked_texture": "Textura"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "Mapas de profundidad de referencia",
+            "reference_normal_maps": "Imagen de normales de referencia",
+            "reference_masks": "Máscara de referencia",
+            "reference_orbit_camera_poses": "Poses de cámara orbital de referencia"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Objetivo de cámara orbital de referencia",
+            "training_iterations": "Iteraciones de entrenamiento",
+            "batch_size": "Tamaño del lote",
+            "learning_rate": "Tasa de aprendizaje",
+            "voxel_grids_resolution": "Resolución de rejilla de vóxeles",
+            "depth_min_distance": "Distancia mínima de profundidad",
+            "depth_max_distance": "Distancia máxima de profundidad",
+            "mask_loss_weight": "Peso de pérdida de máscara",
+            "depth_loss_weight": "Peso de pérdida de profundidad",
+            "normal_loss_weight": "Peso de pérdida de normales",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "Forzar rasterización CUDA"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "Modelo Gaussian Splatting",
+        "inputs": {
+            "reference_images": "Imagen de referencia",
+            "reference_masks": "Máscara de referencia",
+            "reference_orbit_camera_poses": "Poses de cámara orbital de referencia",
+            "points_cloud_to_initialize_gaussian": "Nube de puntos para inicializar Gaussian",
+            "ply_to_initialize_gaussian": "Inicializar gs_ply",
+            "mesh_to_initialize_gaussian": "Malla para inicializar Gaussian"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Objetivo de cámara orbital de referencia",
+            "training_iterations": "Iteraciones de entrenamiento",
+            "batch_size": "Tamaño del lote",
+            "ms_ssim_loss_weight": "Peso de pérdida MS-SSIM",
+            "alpha_loss_weight": "Peso de pérdida de alfa",
+            "offset_loss_weight": "Peso de pérdida de desplazamiento",
+            "offset_opacity_loss_weight": "Peso de pérdida de opacidad de desplazamiento",
+            "invert_background_probability": "Probabilidad de invertir el fondo",
+            "feature_learning_rate": "Tasa de aprendizaje de características",
+            "opacity_learning_rate": "Tasa de aprendizaje de opacidad",
+            "scaling_learning_rate": "Tasa de aprendizaje de escala",
+            "rotation_learning_rate": "Tasa de aprendizaje de rotación",
+            "position_learning_rate_init": "Tasa de aprendizaje de posición inicial",
+            "position_learning_rate_final": "Tasa de aprendizaje de posición final",
+            "position_learning_rate_delay_mult": "Retardo de la tasa de aprendizaje de posición",
+            "position_learning_rate_max_steps": "Pasos máximos de la tasa de aprendizaje de posición",
+            "initial_gaussians_num": "Nº inicial de Gaussian",
+            "K_nearest_neighbors": "Nº de vecinos K más cercanos",
+            "percent_dense": "Porcentaje de densidad",
+            "density_start_iterations": "Iteraciones iniciales de densidad",
+            "density_end_iterations": "Iteraciones finales de densidad",
+            "densification_interval": "Intervalo de densificación",
+            "opacity_reset_interval": "Intervalo de restablecimiento de opacidad",
+            "densify_grad_threshold": "Umbral de gradiente de densificación",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia",
+            "reference_orbit_camera_poses": "Poses de cámara orbital de referencia"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Objetivo de cámara orbital de referencia",
+            "training_iterations": "Iteraciones de entrenamiento",
+            "training_resolution": "Resolución de entrenamiento",
+            "marching_cude_threshold": "Umbral de marching cubes",
+            "marching_cude_grids_resolution": "Resolución de rejillas de marching cubes",
+            "marching_cude_grids_batch_size": "Tamaño de lote de rejillas de marching cubes",
+            "texture_resolution": "Resolución de textura",
+            "force_cuda_rast": "Forzar rasterización CUDA"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "Modelo Large Multi-View Gaussian (LGM)",
+        "inputs": {
+            "multiview_images": "Vistas múltiples",
+            "lgm_model": "Modelo LGM"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "Modelo MVDream",
+        "inputs": {
+            "mvdream_pipe": "Pipeline MVDream",
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia"
+        },
+        "widgets": {
+            "prompt": "Prompt (texto de entrada)",
+            "prompt_neg": "Prompt negativo",
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "mv_guidance_scale": "Coeficiente de guía MV",
+            "num_inference_steps": "Pasos de inferencia",
+            "elevation": "Ángulo de elevación"
+        },
+        "outputs": {
+            "multiview_images": "Vistas múltiples"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia",
+            "reference_normals": "Imagen de normales de referencia"
+        },
+        "widgets": {
+            "training_iterations": "Iteraciones de entrenamiento",
+            "batch_size": "Tamaño del lote",
+            "learning_rate": "Tasa de aprendizaje",
+            "learning_rate_alpha": "Tasa de aprendizaje alfa",
+            "color_loss_weight": "Peso de pérdida de color",
+            "mesh_smoothing_weight": "Peso de suavizado de la malla",
+            "mask_loss_weight": "Peso de pérdida de máscara",
+            "normal_loss_weight": "Peso de pérdida de normales",
+            "sparse_loss_weight": "Peso de pérdida de dispersión",
+            "warm_up_end": "Fin del calentamiento",
+            "anneal_end": "Fin del recocido",
+            "use_white_background": "Usar fondo blanco",
+            "geometry_extract_resolution": "Resolución de extracción de geometría",
+            "marching_cude_threshold": "Umbral de marching cubes"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia",
+            "tgs_model": "Modelo TGS"
+        },
+        "widgets": {
+            "cam_dist": "Distancia de cámara"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "Modelo TSR",
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "Resolución de extracción de geometría",
+            "marching_cude_threshold": "Umbral de marching cubes"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "Modelo Wonder3D MVDiffusion",
+        "inputs": {
+            "mvdiffusion_pipe": "Pipeline MVDiffusion",
+            "reference_image": "Imagen de referencia",
+            "reference_mask": "Máscara de referencia"
+        },
+        "widgets": {
+            "seed": "Semilla",
+            "control_after_generate": "Acción tras ejecutar",
+            "mv_guidance_scale": "Coeficiente de guía MV",
+            "num_inference_steps": "Pasos de inferencia"
+        },
+        "outputs": {
+            "multiview_images": "Vistas múltiples",
+            "multiview_normals": "Normales multivista"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "3DGS a nube de puntos",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "Nube de puntos"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "Malla a nube de puntos",
+        "inputs": {
+            "mesh": "Malla"
+        },
+        "outputs": {
+            "points_cloud": "Nube de puntos"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "Renderizador de órbita Gaussian Splatting",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "Poses de cámara orbital"
+        },
+        "widgets": {
+            "render_image_width": "Anchura",
+            "render_iamge_height": "Altura",
+            "render_orbit_camera_fovy": "Lente de cámara orbital",
+            "render_background_r": "Fondo R",
+            "render_background_g": "Fondo G",
+            "render_background_b": "Fondo B"
+        },
+        "outputs": {
+            "rendered_gs_images": "Imagen",
+            "rendered_gs_masks": "Máscara"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "Generar poses de cámara orbital",
+        "inputs": {
+            "reference_images": "Imagen de referencia"
+        },
+        "widgets": {
+            "generate_pose_commnad": "Comando de generación de poses"
+        },
+        "outputs": {
+            "orbit_camposes": "Poses de cámara orbital"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "Acumular poses de cámara orbital",
+        "widgets": {
+            "orbit_radius_start": "Radio de órbita inicial",
+            "orbit_radius_stop": "Radio de órbita final",
+            "orbit_radius_step": "Paso del radio de órbita",
+            "elevation_start": "Elevación inicial",
+            "elevation_stop": "Elevación final",
+            "elevation_step": "Paso de elevación",
+            "azimuth_start": "Acimut inicial",
+            "azimuth_stop": "Acimut final",
+            "azimuth_step": "Paso de acimut",
+            "orbit_center_X_start": "Centro X de órbita inicial",
+            "orbit_center_X_stop": "Centro X de órbita final",
+            "orbit_center_X_step": "Paso del centro X de órbita",
+            "orbit_center_Y_start": "Centro Y de órbita inicial",
+            "orbit_center_Y_stop": "Centro Y de órbita final",
+            "orbit_center_Y_step": "Paso del centro Y de órbita",
+            "orbit_center_Z_start": "Centro Z de órbita inicial",
+            "orbit_center_Z_stop": "Centro Z de órbita final",
+            "orbit_center_Z_step": "Paso del centro Z de órbita"
+        },
+        "outputs": {
+            "orbit_camposes": "Poses de cámara orbital",
+            "orbit_radius_list": "Lista de radio de órbita",
+            "elevation_list": "Lista de elevaciones",
+            "azimuth_list": "Lista de acimuts",
+            "orbit_center_X_list": "Lista de centro X de órbita",
+            "orbit_center_Y_list": "Lista de centro Y de órbita",
+            "orbit_center_Z_list": "Lista de centro Z de órbita"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "Intercambiar ejes 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "Eje X hacia",
+            "axis_y_to": "Eje Y hacia",
+            "axis_z_to": "Eje Z hacia"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "Intercambiar ejes de malla",
+        "inputs": {
+            "mesh": "Malla"
+        },
+        "widgets": {
+            "axis_x_to": "Eje X hacia",
+            "axis_y_to": "Eje Y hacia",
+            "axis_z_to": "Eje Z hacia"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "Cargar 3DGS",
+        "widgets": {
+            "gs_file_path": "Ruta del archivo GS"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "Cargar malla 3D",
+        "widgets": {
+            "mesh_file_path": "Ruta del archivo de malla",
+            "resize": "Reescalar",
+            "renormal": "Renormalizar",
+            "retex": "Re-texturizar"
+        },
+        "outputs": {
+            "mesh": "Malla"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "Cargar modelo CRM MVDiffusion",
+        "widgets": {
+            "model_name": "Nombre del modelo",
+            "crm_config_path": "Ruta de configuración CRM"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "Muestreador CRM_MVDiffusion"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "Cargar modelo de reconstrucción convolucional",
+        "widgets": {
+            "model_name": "Nombre del modelo"
+        },
+        "outputs": {
+            "crm_model": "Modelo CRM"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "Cargar pipeline de Diffusers",
+        "widgets": {
+            "diffusers_pipeline_name": "Nombre del pipeline"
+        },
+        "outputs": {
+            "pipe": "Conducto"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "Cargar modelo Large Multi-View Gaussian (LGM)",
+        "widgets": {
+            "model_name": "Nombre del modelo",
+            "lgb_config": "Configuración LGM"
+        },
+        "outputs": {
+            "lgm_model": "Modelo LGM"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "Cargar modelo Triplane Gaussian Transformers (TGS)",
+        "widgets": {
+            "model_name": "Nombre del modelo"
+        },
+        "outputs": {
+            "tgs_model": "Modelo TGS"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "Cargar modelo TripoSR (TSR)",
+        "widgets": {
+            "model_name": "Nombre del modelo",
+            "chunk_size": "Tamaño de bloque"
+        },
+        "outputs": {
+            "tsr_model": "Modelo TSR"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "Guardar 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "Ruta de guardado"
+        },
+        "outputs": {
+            "save_path": "Ruta de guardado"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "Guardar malla 3D",
+        "inputs": {
+            "mesh": "Malla"
+        },
+        "widgets": {
+            "save_path": "Ruta de guardado"
+        },
+        "outputs": {
+            "save_path": "Ruta de guardado"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "Vista previa 3DGS",
+        "widgets": {
+            "gs_file_path": "Ruta del archivo GS"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "Vista previa malla 3D",
+        "widgets": {
+            "mesh_file_path": "Ruta del archivo de malla"
+        }
+    }
+}

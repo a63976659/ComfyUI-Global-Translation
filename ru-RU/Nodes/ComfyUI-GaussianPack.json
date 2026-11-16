@@ -1,0 +1,152 @@
+{
+    "GaussianAnalysis": {
+        "title": "Анализ гауссиан",
+        "inputs": {
+            "ply_path": "Путь"
+        },
+        "outputs": {
+            "report": "Отчёт"
+        },
+        "description": "Проверяет файл PLY 3DGS и сообщает формат/порядок SH/точность/размер."
+    },
+    "GaussianExport": {
+        "title": "Экспорт гауссиан",
+        "inputs": {
+            "ply_path": "Путь"
+        },
+        "widgets": {
+            "output_filename": "Имя выходного файла",
+            "format": "Формат"
+        },
+        "outputs": {
+            "out_path": "Путь вывода"
+        },
+        "description": "Преобразует PLY 3DGS в другой вариант (PLY-проход, PLY без SH или SPZ)."
+    },
+    "GaussiansFromPointCloud": {
+        "title": "Гауссово распределение в облаке точек",
+        "inputs": {
+            "ply_path": "Путь"
+        },
+        "widgets": {
+            "output_filename": "Имя выходного файла",
+            "output_dir": "Каталог вывода",
+            "init_scale": "Начальный масштаб",
+            "init_opacity": "Начальная прозрачность",
+            "knn_k": "Knn K",
+            "subsample_max": "Максимум подвыборки"
+        },
+        "outputs": {
+            "ply_path": "Путь"
+        },
+        "description": "Преобразует PLY облака точек в PLY 3DGS с масштабом, производным от KNN."
+    },
+    "LoadPLY": {
+        "title": "Загрузка файлов `.ply`",
+        "widgets": {
+            "ply_file": "Папка"
+        },
+        "outputs": {
+            "ply_path": "Путь"
+        },
+        "description": "Просмотр файлов `.ply` в директории input/ ComfyUI."
+    },
+    "LoadPLYOutput": {
+        "title": "Загрузка вывода `.ply`",
+        "widgets": {
+            "ply_file": "Файл PLY"
+        },
+        "outputs": {
+            "ply_path": "Путь PLY"
+        },
+        "description": "Рекурсивный просмотр файлов `.ply` в директории output/ ComfyUI."
+    },
+    "GaussianMerge": {
+        "title": "Слияние гауссиан",
+        "inputs": {
+            "ply_path": "Путь PLY"
+        },
+        "widgets": {
+            "target_count": "Целевое количество",
+            "output_filename": "Имя выходного файла",
+            "opacity_threshold": "Порог прозрачности",
+            "k": "k",
+            "backend": "Бэкенд"
+        },
+        "outputs": {
+            "ply_path": "Путь PLY"
+        },
+        "description": "Объединяет PLY 3DGS попарно до целевого числа гауссиан."
+    },
+    "PreviewGaussians": {
+        "title": "Предпросмотр гауссова распределения",
+        "inputs": {
+            "ply_path": "Путь PLY"
+        },
+        "widgets": {
+            "camera_mode": "Режим камеры",
+            "fov_degrees": "Угол обзора",
+            "renderer": "Рендерер",
+            "transport_format": "Формат передачи"
+        },
+        "description": "Интерактивный просмотрщик гауссовых сплатов (gspalt.js).\n\nПоддерживает два режима камеры: орбита (вращение сферы) и наблюдатель (WASD-полёт)."
+    },
+    "PreviewGaussianCamera": {
+        "title": "Предпросмотр камеры гауссиан",
+        "inputs": {
+            "ply_path": "Путь PLY",
+            "extrinsics": "Внешние параметры камеры",
+            "intrinsics": "Внутренние параметры камеры"
+        },
+        "widgets": {
+            "image_width": "Ширина изображения",
+            "image_height": "Высота изображения",
+            "near_plane": "Ближняя плоскость отсечения",
+            "background": "Фон",
+            "force_backend": "Принудительный бэкенд"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "Рендеринг файла 3DGS PLY в пакет IMAGE согласно заданной позе камеры."
+    },
+    "PreviewGaussianDual": {
+        "title": "Двойной предпросмотр гауссов",
+        "inputs": {
+            "ply_path_1": "Путь к PLY 1",
+            "ply_path_2": "Путь к PLY 2"
+        },
+        "widgets": {
+            "camera_mode": "Режим камеры",
+            "fov_degrees": "Угол обзора",
+            "renderer": "Рендерер",
+            "transport_format": "Формат передачи",
+            "layout": "Компоновка"
+        },
+        "description": "Параллельное сравнение двух гауссовых спотов или их отображение в виде ползунка."
+    },
+    "PreviewGaussianSharp": {
+        "title": "Предпросмотр SHARP-гауссов",
+        "widgets": {
+            "ply_path": "Путь PLY",
+            "extrinsics": "Внешние параметры камеры",
+            "intrinsics": "Внутренние параметры камеры"
+        },
+        "description": "Просмотр файлов Ply гауссовых спотов SHARP (просмотрщик gspalt.js).\n\nКопия предпросмотра гауссов GeometryPack: принимает EXTRINSICS/INTRINSICS и воссоздаёт захваченный ракурс камеры (камера направлена вниз по +Z из позиции, выведенной из внешних параметров; FOV — из внутренних). Лучше всего подходит для SHARP/монокулярных глубинных веерных гауссов, корректных только в точке захвата."
+    },
+    "TransformGaussian": {
+        "title": "Преобразование гауссов",
+        "inputs": {
+            "ply_path": "Путь PLY"
+        },
+        "widgets": {
+            "rotate_x": "Поворот вокруг оси X",
+            "rotate_y": "Поворот вокруг оси Y",
+            "rotate_z": "Поворот вокруг оси Z"
+        },
+        "outputs": {
+            "ply_path": "Путь PLY"
+        },
+        "description": "Поворот файла Ply гауссовых спотов вокруг осей XYZ (в градусах).\n\nПозиции и кватернионы каждого спота вращаются вместе; при наличии вращаются и нормали. Коэффициенты SH AC не изменяются (корректное вращение Вигнера–Д – следующий этап)."
+    }
+}

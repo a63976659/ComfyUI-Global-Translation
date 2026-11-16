@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "텐서 루프 시작",
+        "inputs": {
+            "initial_value": "초기값"
+        },
+        "widgets": {
+            "mode": "모드",
+            "iterations": "반복 횟수"
+        },
+        "outputs": {
+            "flow_control": "플로우 제어",
+            "accumulated_count": "누적 수량",
+            "previous_value": "이전 값",
+            "current_iteration": "현재 반복 횟수"
+        },
+        "description": "출력을 수집하는 루프를 시작합니다. 두 가지 모드를 지원합니다:\n- 반복 횟수: 고정 횟수만큼 반복 실행\n- 총 프레임 수: 누적 프레임 수가 목표에 도달할 때까지 실행\nflow_control을 TensorLoopClose에 연결하고, `previous_value`를 생성의 입력으로 사용하며, 생성의 출력을 TensorLoopClose.processed에 연결하세요.\n이미지, 마스크 및 Latent 유형을 지원합니다."
+    },
+    "TensorLoopClose": {
+        "title": "텐서 루프 종료",
+        "widgets": {
+            "flow_control": "플로우 제어",
+            "processed": "처리됨",
+            "accumulate": "누적",
+            "overlap": "중복",
+            "stop": "정지"
+        },
+        "outputs": {
+            "output": "출력"
+        },
+        "description": "TensorLoopOpen이 시작한 루프를 닫습니다.\n연결:\n  - TensorLoopOpen의 flow_control\n  - processed: 이번 반복에서 생성된 출력\n이미지, 마스크, Latent 유형을 지원합니다."
+    },
+    "_AccumulateNode": {
+        "title": "누적 노드",
+        "widgets": {
+            "to_add": "추가 대기 중",
+            "accumulation": "누적 값"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "조건 루프 시작",
+        "widgets": {
+            "condition": "컨디셔닝"
+        },
+        "outputs": {
+            "flow_control": "플로우 제어"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "조건 루프 종료",
+        "widgets": {
+            "flow_control": "플로우 제어",
+            "condition": "컨디셔닝"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "정수 연산",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "연산"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "누적→이미지 배치",
+        "widgets": {
+            "accumulation": "누적 값",
+            "overlap_frames": "중복 프레임 수",
+            "overlap_mode": "중첩 모드"
+        },
+        "outputs": {
+            "result": "결과"
+        },
+        "description": "이미지/마스크 텐서 또는 Latent 딕셔너리의 누적 값을 단일 배치로 이어 붙입니다."
+    },
+    "_ConditionalSelect": {
+        "title": "조건 선택",
+        "widgets": {
+            "condition": "컨디셔닝",
+            "value_if_true": "조건이 참일 때의 값",
+            "value_if_false": "조건이 거짓일 때의 값"
+        },
+        "outputs": {
+            "result": "결과"
+        },
+        "description": "조건이 True이면 value_if_true를 반환하고, 그렇지 않으면 value_if_false를 반환합니다.\n지연 평가를 사용하여 선택된 분기만 해석합니다."
+    },
+    "_ImageAccumStatePack": {
+        "title": "이미지 누적 상태 패킹",
+        "widgets": {
+            "remaining": "남은 개수",
+            "accum": "누적 값",
+            "previous_value": "이전 값",
+            "count": "개수",
+            "open_node_id": "시작 노드 ID",
+            "total_frames": "총 프레임 수",
+            "prev_accumulated_count": "이전 누적 수량",
+            "blend_overlap": "블렌드 중첩"
+        },
+        "outputs": {
+            "loop_state": "루프 상태",
+            "should_continue": "계속 여부"
+        },
+        "description": "루프 상태를 단일 딕셔너리로 패킹하여 TensorLoopOpen의 initial_value0에 사용합니다."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "이미지 누적 상태 언팩",
+        "widgets": {
+            "loop_state": "루프 상태"
+        },
+        "outputs": {
+            "remaining": "남은 개수",
+            "accumulation": "누적 값",
+            "previous_value": "이전 값",
+            "accumulated_count": "누적 수량",
+            "count": "개수",
+            "open_node_id": "시작 노드 ID",
+            "total_frames": "총 프레임 수"
+        },
+        "description": "TensorLoopOpen에서 루프 상태를 언팩합니다."
+    },
+    "_BatchOps": {
+        "title": "배치 연산",
+        "widgets": {
+            "batch": "배치",
+            "operation": "연산",
+            "amount": "수량",
+            "batch_b": "배치 B"
+        },
+        "outputs": {
+            "output": "출력"
+        },
+        "description": "배치 슬라이싱, 트리밍, 스티칭 연산."
+    }
+}

@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "CogVideoモデルをダウンロードして読み込み",
+        "inputs": {
+            "block_edit": "ブロック編集",
+            "lora": "LoRAモデル",
+            "compile_args": "コンパイルパラメータ"
+        },
+        "widgets": {
+            "model": "モデル",
+            "precision": "精度",
+            "quantization": "量子化",
+            "enable_sequential_cpu_offload": "逐次CPUアンロード有効",
+            "attention_mode": "アテンションモード",
+            "load_device": "読み込みデバイス",
+            "compile": "コンパイル"
+        },
+        "outputs": {
+            "model": "モデル",
+            "cogvideomodel": "CogVideoモデル",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "CogVideo 画像エンコード",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "画像",
+            "vae": "VAE",
+            "start_image": "開始画像",
+            "end_image": "終了画像"
+        },
+        "widgets": {
+            "enable_tiling": "タイル分割有効",
+            "noise_aug_strength": "ノイズ強化強度",
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "CogVideo デコード",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "VAEタイル分割有効",
+            "tile_sample_min_height": "タイルサンプル最小高さ",
+            "tile_sample_min_width": "タイルサンプル最小幅",
+            "tile_overlap_factor_height": "タイルオーバーラップ高さ係数",
+            "tile_overlap_factor_width": "タイルオーバーラップ幅係数",
+            "auto_tile_size": "自動タイルサイズ",
+            "pipeline": "パイプ"
+        },
+        "outputs": {
+            "images": "画像"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "CogVideo テキストエンコード",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "プロンプト",
+            "strength": "強度",
+            "force_offload": "強制アンロード"
+        },
+        "outputs": {
+            "conditioning": "条件",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "CogVideo サンプラー",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件",
+            "samples": "Latent",
+            "model": "モデル",
+            "image_cond_latents": "画像条件Latent",
+            "context_options": "コンテキストオプション",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "Tora軌跡",
+            "fastercache": "高速キャッシュ",
+            "feta_args": "動画強化パラメータ",
+            "teacache_args": "Teaキャッシュパラメータ"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数",
+            "fps": "フレームレート",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "seed": "シード",
+            "control_after_generate": "実行後操作",
+            "scheduler": "スケジューラ",
+            "t_tile_length": "タイル長さ",
+            "t_tile_overlap": "タイルオーバーラップ",
+            "denoise_strength": "ノイズ除去"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "CogVideo LoRAセレクター",
+        "inputs": {
+            "lora": "LoRAモデル",
+            "strength": "強度",
+            "prev_lora": "前のLoRA",
+            "fuse_lora": "LoRA融合"
+        },
+        "widgets": {
+            "lora": "LoRAモデル",
+            "strength": "強度",
+            "prev_lora": "前のLoRA",
+            "fuse_lora": "LoRA融合"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "CogVideo LoRAセレクター(Comfy版)",
+        "inputs": {
+            "lora": "LoRAモデル",
+            "strength": "強度",
+            "prev_lora": "前のLoRA",
+            "fuse_lora": "LoRA融合"
+        },
+        "widgets": {
+            "lora": "LoRAモデル",
+            "strength": "強度",
+            "prev_lora": "前のLoRA",
+            "fuse_lora": "LoRA融合"
+        },
+        "outputs": {
+            "lora": "CogVideo LoRA"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "CogVideo GGUFモデルをダウンロードして読み込み",
+        "inputs": {
+            "block_edit": "ブロック編集"
+        },
+        "widgets": {
+            "model": "モデル",
+            "vae_precision": "VAE精度",
+            "fp8_fastmode": "FP8高速モード",
+            "load_device": "読み込みデバイス",
+            "enable_sequential_cpu_offload": "逐次CPUアンロード有効",
+            "attention_mode": "アテンションモード",
+            "compile_args": "コンパイルパラメータ"
+        },
+        "outputs": {
+            "model": "モデル",
+            "cogvideomodel": "CogVideoモデル",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "CogVideoXモデルローダー",
+        "inputs": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "quantization": "量子化",
+            "load_device": "読み込みデバイス",
+            "enable_sequential_cpu_offload": "逐次CPUアンロード有効",
+            "block_edit": "ブロック編集",
+            "lora": "LoRAモデル",
+            "compile_args": "コンパイルパラメータ",
+            "attention_mode": "アテンションモード"
+        },
+        "outputs": {
+            "cogvideomodel": "CogVideoモデル"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "CogVideoX VAEローダー",
+        "inputs": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "compile_args": "コンパイルパラメータ"
+        },
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "compile_args": "コンパイルパラメータ"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "Toraモデルをダウンロードして読み込み",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "model": "モデル"
+        },
+        "outputs": {
+            "tora_model": "Toraモデル"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "CogVideo ControlNetをダウンロードして読み込み",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "model": "モデル"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNetモデル"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "CogVideo 動画強化",
+        "widgets": {
+            "weight": "重み",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "feta_args": "動画強化パラメータ"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "CogVideo コンテキストオプション",
+        "inputs": {
+            "freenoise": "フリーノイズ"
+        },
+        "widgets": {
+            "context_schedule": "コンテキストスケジュール",
+            "context_frames": "コンテキストフレーム数",
+            "context_stride": "コンテキストストライド",
+            "context_overlap": "コンテキストオーバーラップ",
+            "freenoise": "フリーノイズ"
+        },
+        "outputs": {
+            "context_options": "コンテキストオプション"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "CogVideo Transformer編集",
+        "inputs": {
+            "remove_blocks": "ブロック削除"
+        },
+        "outputs": {
+            "block_list": "ブロックリスト",
+            "transformerblocks": "Transformerブロック"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "CogVideo Torchコンパイル設定",
+        "widgets": {
+            "backend": "バックエンド",
+            "fullgraph": "フルグラフ",
+            "mode": "モード",
+            "dynamic": "ダイナミック",
+            "dynamo_cache_size_limit": "Dynamoキャッシュサイズ上限"
+        },
+        "outputs": {
+            "torch_compile_args": "Torchコンパイルパラメータ",
+            "compileargs": "コンパイルパラメータ"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "CogVideo テキストエンコード結合",
+        "inputs": {
+            "conditioning_1": "条件1",
+            "conditioning_2": "条件2"
+        },
+        "widgets": {
+            "combination_mode": "結合モード",
+            "weighted_average_ratio": "重み付き平均比率"
+        },
+        "outputs": {
+            "conditioning": "条件"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "Tora軌跡エンコード",
+        "inputs": {
+            "tora_model": "Toraモデル",
+            "vae": "VAE",
+            "coordinates": "座標"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数",
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率",
+            "enable_tiling": "タイル分割有効"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora軌跡",
+            "video_flow_images": "動画ストリーム画像"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "Tora光フローエンコード",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "Toraモデル",
+            "optical_flow": "光フロー"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora軌跡"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "CogVideo画像エンコードFunInP",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "開始画像",
+            "end_image": "終了画像"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "enable_tiling": "タイル分割処理有効",
+            "noise_aug_strength": "ノイズ強化強度"
+        },
+        "outputs": {
+            "image_cond_latents": "画像条件Latent"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "CogVideo X高速キャッシュ",
+        "inputs": {
+            "num_blocks_to_cache": "キャッシュブロック数"
+        },
+        "widgets": {
+            "start_step": "開始ステップ",
+            "hf_step": "高周波ステップ",
+            "lf_step": "低周波ステップ",
+            "cache_device": "キャッシュデバイス",
+            "num_blocks_to_cache": "キャッシュブロック数"
+        },
+        "outputs": {
+            "fastercache": "高速キャッシュ"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "CogVideoX Teaキャッシュ",
+        "widgets": {
+            "rel_l1_thresh": "相対L1閾値"
+        },
+        "outputs": {
+            "teacache_args": "Teaキャッシュパラメータ"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "CogVideo ControlNet",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "画像"
+        },
+        "widgets": {
+            "control_strength": "制御強度",
+            "control_start_percent": "制御開始率",
+            "control_end_percent": "制御終了率"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "CogVideoX 最寄りバケットサイズへスマート調整",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "base_resolution": "基本解像度",
+            "upscale_method": "アップスケール手法",
+            "crop": "クロップ"
+        },
+        "outputs": {
+            "image": "画像",
+            "images": "画像",
+            "width": "幅",
+            "height": "高さ",
+            "int": "整数"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "CogVideoLatentプレビュー",
+        "inputs": {
+            "samples": "サンプリング"
+        },
+        "widgets": {
+            "seed": "シード",
+            "min_val": "最小値",
+            "max_val": "最大値",
+            "r_bias": "Rバイアス",
+            "g_bias": "Gバイアス",
+            "b_bias": "Bバイアス"
+        },
+        "outputs": {
+            "image": "画像",
+            "images": "画像",
+            "latent_rgb_factors": "Latent RGB 係数",
+            "string": "文字列"
+        }
+    }
+}

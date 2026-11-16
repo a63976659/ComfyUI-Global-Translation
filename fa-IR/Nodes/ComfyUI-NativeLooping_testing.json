@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "آغاز چرخه تنسور",
+        "inputs": {
+            "initial_value": "مقدار اولیه"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "iterations": "تعداد تکرار"
+        },
+        "outputs": {
+            "flow_control": "کنترل جریان",
+            "accumulated_count": "تعداد تجمعی",
+            "previous_value": "مقدار پیشین",
+            "current_iteration": "تعداد تکرار فعلی"
+        },
+        "description": "چرخه‌ای برای جمع‌آوری خروجی‌ها باز می‌کند. از دو حالت پشتیبانی می‌کند:\n- تعداد تکرار: اجرای تعداد ثابتی تکرار\n- مجموع فریم‌ها: اجرا تا زمانی که تعداد تجمعی به تعداد فریم هدف برسد\nflow_control را به TensorLoopClose وصل کنید، از `previous_value` به‌عنوان ورودی تولیدشده استفاده کنید و خروجی تولیدشده را به TensorLoopClose.processed وصل کنید.\nاز انواع تصویر، ماسک و Latent پشتیبانی می‌کند."
+    },
+    "TensorLoopClose": {
+        "title": "پایان چرخهٔ تانسور",
+        "widgets": {
+            "flow_control": "کنترل جریان",
+            "processed": "پردازش‌شده",
+            "accumulate": "تجمعی",
+            "overlap": "هم‌پوشانی",
+            "stop": "توقف"
+        },
+        "outputs": {
+            "output": "خروجی"
+        },
+        "description": "چرخه‌ای را که TensorLoopOpen باز کرده است می‌بندد.\nاتصالات:\n  - flow_control از TensorLoopOpen\n  - processed: خروجی تولیدشده در این تکرار\nاز انواع تصویر، ماسک و Latent پشتیبانی می‌کند."
+    },
+    "_AccumulateNode": {
+        "title": "گرهٔ تجمعی",
+        "widgets": {
+            "to_add": "در انتظار افزودن",
+            "accumulation": "مقدار تجمعی"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "آغاز چرخه شرط",
+        "widgets": {
+            "condition": "شرط"
+        },
+        "outputs": {
+            "flow_control": "کنترل جریان"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "پایان چرخهٔ شرطی",
+        "widgets": {
+            "flow_control": "کنترل جریان",
+            "condition": "شرط"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "عملیات عدد صحیح",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "عملیات"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "تبدیل تجمعی به دستهٔ تصویر",
+        "widgets": {
+            "accumulation": "مقدار تجمعی",
+            "overlap_frames": "تعداد فریم‌های هم‌پوشانی",
+            "overlap_mode": "حالت هم‌پوشانی"
+        },
+        "outputs": {
+            "result": "نتیجه"
+        },
+        "description": "مقادیر تجمعی تانسورهای تصویر/ماسک یا دیکشنری‌های Latent را به یک دستهٔ واحد به هم می‌چسباند."
+    },
+    "_ConditionalSelect": {
+        "title": "انتخاب شرط",
+        "widgets": {
+            "condition": "شرط",
+            "value_if_true": "مقدار در صورت درست بودن شرط",
+            "value_if_false": "مقدار در صورت نادرست بودن شرط"
+        },
+        "outputs": {
+            "result": "نتیجه"
+        },
+        "description": "وقتی شرط True باشد value_if_true را برمی‌گرداند، در غیر این صورت value_if_false را.\nاز ارزیابی تنبل استفاده می‌کند و فقط شاخهٔ انتخاب‌شده را تجزیه می‌کند."
+    },
+    "_ImageAccumStatePack": {
+        "title": "بسته‌بندی وضعیت تجمعی تصویر",
+        "widgets": {
+            "remaining": "تعداد باقی‌مانده",
+            "accum": "مقدار تجمعی",
+            "previous_value": "مقدار پیشین",
+            "count": "شمارش",
+            "open_node_id": "شناسهٔ گره شروع",
+            "total_frames": "مجموع فریم‌ها",
+            "prev_accumulated_count": "تعداد تجمعی پیشین",
+            "blend_overlap": "هم‌پوشانی آمیزش"
+        },
+        "outputs": {
+            "loop_state": "وضعیت چرخه",
+            "should_continue": "ادامه داده شود؟"
+        },
+        "description": "وضعیت چرخه را در یک دیکشنری واحد بسته‌بندی می‌کند تا برای initial_value0 در TensorLoopOpen استفاده شود."
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "باز کردن وضعیت تجمعی تصویر",
+        "widgets": {
+            "loop_state": "وضعیت چرخه"
+        },
+        "outputs": {
+            "remaining": "تعداد باقی‌مانده",
+            "accumulation": "مقدار تجمعی",
+            "previous_value": "مقدار پیشین",
+            "accumulated_count": "تعداد تجمعی",
+            "count": "شمارش",
+            "open_node_id": "شناسهٔ گره شروع",
+            "total_frames": "مجموع فریم‌ها"
+        },
+        "description": "وضعیت چرخه را از TensorLoopOpen باز می‌کند."
+    },
+    "_BatchOps": {
+        "title": "عملیات دسته",
+        "widgets": {
+            "batch": "دسته",
+            "operation": "عملیات",
+            "amount": "تعداد",
+            "batch_b": "دستهٔ B"
+        },
+        "outputs": {
+            "output": "خروجی"
+        },
+        "description": "عملیات برش، کوتاه کردن و الحاق دسته‌ها."
+    }
+}

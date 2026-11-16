@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Échantillonneur K Flux2Klein (version expérimentale)",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_image": "Image latente",
+            "negative": "Condition inverse"
+        },
+        "widgets": {
+            "steps": "Nombre de pas",
+            "seed": "Graine aléatoire",
+            "denoise": "Intensité de débruitage",
+            "base_shift": "Décalage de base",
+            "max_shift": "Décalage maximal",
+            "cfg_scale": "Coefficient d'échelle CFG",
+            "guidance_embed": "Plongement de guidage"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Ancreur de couleurs Flux2Klein",
+        "inputs": {
+            "model": "Modèle",
+            "conditioning": "Contrôle conditionnel"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "ramp_curve": "Courbe de dégradé",
+            "ref_index": "Index de référence",
+            "channel_weights": "Poids des canaux",
+            "debug": "Mode de débogage"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Améliorateur Flux2Klein",
+        "inputs": {
+            "conditioning": "Contrôle conditionnel",
+            "device": "Appareil d'exécution"
+        },
+        "widgets": {
+            "active_scale": "Mise à l'échelle de la zone active",
+            "per_token_whiten": "Blanchiment par jeton",
+            "norm_equalize": "Équilibrage de norme",
+            "early_layer_scale": "Coefficient de mise à l'échelle des couches superficielles",
+            "mid_layer_scale": "Coefficient de mise à l'échelle des couches intermédiaires",
+            "late_layer_scale": "Coefficient de mise à l'échelle des couches profondes",
+            "preserve_original": "Conserver les données d'origine",
+            "active_end_override": "Écrasement du point final d'activation",
+            "debug": "Mode de débogage"
+        },
+        "description": "Applique des opérations purement scalaires / de blanchiment aux zones actives du contrôle conditionnel de Klein, tout en offrant la mise à l'échelle par couches Qwen3 propre à Klein."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Contrôleur de détails Flux2Klein",
+        "inputs": {
+            "conditioning": "Contrôle conditionnel",
+            "device": "Appareil d'exécution"
+        },
+        "widgets": {
+            "front_mult": "Multiplicateur de la partie avant",
+            "mid_mult": "Multiplicateur de la partie médiane",
+            "end_mult": "Multiplicateur de la partie finale",
+            "emphasis_start": "Position de début de l'accentuation",
+            "emphasis_end": "Position de fin de l'accentuation",
+            "emphasis_mult": "Multiplicateur d'accentuation",
+            "preserve_original": "Conserver les données d'origine",
+            "debug": "Mode de débogage"
+        },
+        "description": "Régulateur de multiplicateur des plongements segmentés.\n\nMode réel (recommandé) : à utiliser avec l'encodeur segmenté. L'encodeur produit des plages de jetons segmentées comme métadonnées de contrôle conditionnel (`meta[\"klein_sections\"]`) ; ce nœud ajuste le multiplicateur des plongements actifs dans les plages correspondantes selon les coefficients définis par l'utilisateur.\n\nMode compatible (ancienne version / déconseillé) : si aucune métadonnée de segmentation n'est présente, le nœud découpe automatiquement la zone active selon une répartition fixe de 25 %/50 %/25 %. Ces limites de découpe sont arbitraires — les jetons de Qwen3 n'ont aucune sémantique positionnelle fixe — la version 1 de ce nœud n'a pratiquement aucun effet réel dans ce mode. Ce mode est conservé pour la compatibilité avec les anciens flux de travail ; il est conseillé de passer à l'encodeur segmenté pour obtenir une mise à l'échelle sensible aux segments réellement significative."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Contrôleur de référence par masque Flux2Klein",
+        "inputs": {
+            "conditioning": "Contrôle conditionnel",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "invert_mask": "Inverser le masque",
+            "feather": "Adoucissement du masque",
+            "reference_index": "Index de référence",
+            "debug": "Mode de débogage"
+        },
+        "description": "Applique un affaiblissement spatial au Latent de référence à l'aide du masque dessiné.\n\nMultiplie le Latent de référence par les scalaires par pixel issus du masque. Le Latent de contrôle conditionnel est modifié directement en place (remplace meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Contrôleur de Latent de référence Flux2Klein",
+        "inputs": {
+            "model": "Modèle",
+            "conditioning": "Contrôle conditionnel"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "reference_index": "Index de référence",
+            "spatial_fade": "Fondu spatial",
+            "spatial_fade_strength": "Intensité du fondu spatial",
+            "debug": "Mode de débogage"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Équilibreur texte-référence Flux2Klein",
+        "inputs": {
+            "model": "Modèle",
+            "conditioning": "Contrôle conditionnel"
+        },
+        "widgets": {
+            "balance": "Coefficient d'équilibrage",
+            "debug": "Mode de débogage"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Régulateur de poids du Latent de référence Flux2Klein",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "widgets": {
+            "reference_index": "Index de référence",
+            "weight": "Poids"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Améliorateur de texte Flux2Klein",
+        "inputs": {
+            "conditioning": "Contrôle conditionnel"
+        },
+        "widgets": {
+            "magnitude": "Amplitude globale",
+            "contrast": "Contraste",
+            "normalize_strength": "Intensité de normalisation",
+            "skip_bos": "Ignorer le jeton de départ",
+            "debug": "Mode de débogage"
+        },
+        "description": "Modifie les jetons du contrôle conditionnel texte.\n\nOrdre des opérations :\n1. Normalisation : équilibrer l'amplitude des jetons\n2. Contraste : agrandir/réduire les différences entre les jetons\n3. Amplitude : mise à l'échelle globale"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Encodeur segmenté Flux2Klein",
+        "inputs": {
+            "clip": "Encodeur CLIP",
+            "separator": "Séparateur"
+        },
+        "widgets": {
+            "front_text": "Texte de la partie avant",
+            "mid_text": "Texte de la partie médiane",
+            "end_text": "Texte de la partie finale",
+            "combined_prompt": "Prompt combiné",
+            "show_preview": "Afficher l'aperçu",
+            "debug": "Mode de débogage"
+        },
+        "outputs": {
+            "conditioning": "Contrôle conditionnel",
+            "front_section": "Segment de la partie avant",
+            "mid_section": "Segment de la partie médiane",
+            "end_section": "Segment de la partie finale",
+            "full_prompt": "Prompt complet"
+        },
+        "description": "Tokenise le prompt en trois sections et génère des plages de jetons segmentées comme métadonnées de contrôle conditionnel, lues ensuite par le contrôleur de détails."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "Transfert de caractéristiques d'identité",
+        "inputs": {
+            "model": "Modèle"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "start_block": "Bloc de départ",
+            "end_block": "Bloc de fin",
+            "mode": "Mode (fonctionnement)",
+            "top_k_percent": "Pourcentage Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "Transfert de caractéristiques d'identité (version avancée)",
+        "inputs": {
+            "model": "Modèle",
+            "subject_mask": "Masque du sujet"
+        },
+        "widgets": {
+            "reference_index": "Index de référence",
+            "mode": "Mode (fonctionnement)",
+            "top_k_percent": "Pourcentage Top K",
+            "double_enable": "Activer le transfert double",
+            "double_strength": "Intensité du transfert double",
+            "double_start": "Point de départ du transfert double",
+            "double_end": "Point de fin du transfert double",
+            "single_enable": "Activer le transfert simple",
+            "single_strength": "Intensité du transfert simple",
+            "single_start": "Point de départ du transfert simple",
+            "single_end": "Point de fin du transfert simple",
+            "block_schedule": "Planification des blocs",
+            "sim_floor": "Seuil minimal de similarité",
+            "mask_threshold": "Seuil du masque"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "Transfert de caractéristiques d'identité V3",
+        "inputs": {
+            "model": "Modèle",
+            "subject_mask": "Masque du sujet"
+        },
+        "widgets": {
+            "preset": "Préréglage",
+            "reference_index": "Index de référence",
+            "double_schedule": "Planification du transfert double",
+            "single_schedule": "Planification du transfert simple",
+            "double_sim": "Similarité du transfert double",
+            "single_sim": "Similarité du transfert simple",
+            "commit_margin": "Marge d'engagement",
+            "commit_confirm": "Confirmation d'engagement",
+            "commit_anchor": "Ancre d'engagement",
+            "mask_threshold": "Seuil du masque",
+            "debug": "Mode de débogage"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "Transfert final de caractéristiques d'identité",
+        "inputs": {
+            "model": "Modèle",
+            "subject_mask_1": "Masque du sujet 1",
+            "subject_mask_2": "Masque du sujet 2",
+            "subject_mask_3": "Masque du sujet 3",
+            "subject_mask_4": "Masque du sujet 4",
+            "subject_mask_5": "Masque du sujet 5",
+            "subject_mask_6": "Masque du sujet 6",
+            "subject_mask_7": "Masque du sujet 7",
+            "subject_mask_8": "Masque du sujet 8"
+        },
+        "widgets": {
+            "preset": "Préréglage",
+            "enabled": "Activer",
+            "reference_index": "Index de référence",
+            "reference_indices": "Liste d'indices de référence",
+            "similarity_floor": "Seuil minimal de similarité",
+            "softmax_temperature": "Coefficient de température Softmax",
+            "mask_threshold": "Seuil du masque",
+            "double_blocks": "Plage de blocs doubles",
+            "single_blocks": "Plage de blocs simples",
+            "total_sampling_steps": "Nombre total de pas d'échantillonnage",
+            "debug": "Mode de débogage"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "Guidage par caractéristiques d'identité",
+        "inputs": {
+            "model": "Modèle",
+            "identity_latent": "Latent de caractéristiques d'identité"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "start_percent": "Pourcentage de départ d'application",
+            "end_percent": "Pourcentage de fin d'application",
+            "mode": "Mode (fonctionnement)"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Traitement de Latents de référence multiples Flux2 Klein",
+        "inputs": {
+            "conditioning": "Contrôle conditionnel",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "Contrôle conditionnel"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "Échantillonneur K FLUX.2 Klein",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Prompt positif",
+            "negative": "Prompt négatif",
+            "latent_image": "Latent d'image"
+        },
+        "widgets": {
+            "steps": "Nombre de pas",
+            "guidance_scale": "Ratio de guidage",
+            "seed": "Graine",
+            "denoise": "Débruitage",
+            "base_shift": "Décalage de base",
+            "max_shift": "Décalage maximal"
+        },
+        "description": "Le nœud Échantillonneur K FLUX.2 Klein sert à la génération d'images dans l'espace latent."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Améliorateur Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condition"
+        },
+        "widgets": {
+            "magnitude": "Amplitude",
+            "contrast": "Contraste",
+            "normalize_strength": "Intensité de normalisation",
+            "preserve_original": "Conserver l'original",
+            "preserve_mode": "Mode de conservation",
+            "edit_text_weight": "Poids du texte d'édition",
+            "active_end_override": "Écrasement de la fin d'activation",
+            "low_vram": "Faible mémoire vidéo",
+            "device": "Appareil",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Améliorateur de condition FLUX. .Klein.\n\nOpérations disponibles :\n- Amplitude : met directement à l'échelle les plongements de la zone active\n- Contraste : agrandit les différences entre les jetons\n- Normalisation : égalise la taille des jetons\n- Conserver l'original : remélange les plongements d'origine selon plusieurs modes\n\nToutes les opérations ne modifient que la zone de texte active (le remplissage reste intact).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Contrôleur de détails Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condition"
+        },
+        "widgets": {
+            "front_mult": "Facteur de la partie avant",
+            "mid_mult": "Facteur de la partie médiane",
+            "end_mult": "Facteur de la fin",
+            "emphasis_start": "Début de l'accentuation",
+            "emphasis_end": "Fin de l'accentuation",
+            "emphasis_mult": "Facteur d'accentuation",
+            "preserve_original": "Conserver l'original",
+            "preserve_mode": "Mode de conservation",
+            "low_vram": "Faible mémoire vidéo",
+            "device": "Appareil",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Contrôle régional de la condition FLUX. .Klein.\n\nRépartit les jetons actifs en régions :\n- Partie avant : sujet / concepts principaux\n- Partie médiane : détails / modifyeurs\n- Fin : termes de style / qualité",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Contrôleur de Latent de référence Flux2 Klein",
+        "inputs": {
+            "model": "Modèle",
+            "conditioning": "Condition"
+        },
+        "widgets": {
+            "strength": "Intensité",
+            "reference_index": "Index de référence",
+            "spatial_fade": "Atténuation spatiale",
+            "spatial_fade_strength": "Intensité de l'atténuation spatiale",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "MODEL": "Modèle",
+            "CONDITIONING": "Condition"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Équilibre texte et référence Flux2 Klein",
+        "inputs": {
+            "model": "Modèle",
+            "conditioning": "Condition"
+        },
+        "widgets": {
+            "balance": "Équilibre",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "MODEL": "Modèle",
+            "CONDITIONING": "Condition"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Améliorateur de texte Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condition"
+        },
+        "widgets": {
+            "magnitude": "Amplitude",
+            "contrast": "Contraste",
+            "normalize_strength": "Intensité de normalisation",
+            "skip_bos": "Ignorer le symbole de départ",
+            "debug": "Débogage"
+        },
+        "outputs": {
+            "CONDITIONING": "Condition"
+        },
+        "description": "Modifie les jetons de la condition texte.\n\nOrdre des opérations :\n1. Normalisation : égaliser la taille des jetons\n2. Contraste : agrandir/réduire les différences entre les jetons\n3. Amplitude : mise à l'échelle globale",
+        "api_version": "V1"
+    }
+}

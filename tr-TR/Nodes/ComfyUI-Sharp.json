@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "Sharp görüntü özelliklerini PLY'ye dönüştür",
+        "inputs": {
+            "gaussian_attrs": "Gauss özellikleri",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "output_prefix": "Çıktı ön eki",
+            "focal_length_px": "Odak uzaklığı (piksel)"
+        },
+        "outputs": {
+            "ply_path": "PLY Dosya Yolu",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Her pikselin 14 kanallı MULTIBAND_IMAGE'ından（örneğin SharpPredictGaussianAttrs'ın birinci katman Gauss özellik çıktısı）+ eşleşen kamera dış/iç parametreleriyle tek bir 3B Gauss nokta bulutu PLY dosyası üretir. Multiband NDC konumlarını saklar; bu düğüm onları SHARP'un unproject_gaussians'ı ile kaydetmeden önce dünya koordinat sistemine dönüştürür."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp Panaroma Küp Bölme",
+        "widgets": {
+            "panorama": "Panoramik görüntü",
+            "image_w": "Görsel genişliği",
+            "image_h": "Görsel yüksekliği",
+            "fov_x_deg": "X Görüş Açısı",
+            "fov_y_deg": "Y Görüş Açısı",
+            "rot_deg": "Dönme açısı",
+            "pitch_up": "Yukarı eğim açısı",
+            "pitch_down": "Aşağı eğim açısı"
+        },
+        "outputs": {
+            "face_images": "Yüz görselleri",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "fov_x_deg": "X Ekseni Görüş Açısı",
+            "num_faces": "Yüzey sayısı"
+        },
+        "description": "2:1 en-boy oranlı küresel panoramadan, sabit pitch ve yaw ızgarasıyla N perspektif kırpma örneği alır（varsayılan 3 pitch x 3 yaw = 27 görünüm）. WorldStereoPanoramaCubeSplit geometrisiyle eşleşir — her yüz derinlik modelinin giriş aşaması olarak kullanılır ve çıktısı SharpDepthMerge ile geri yapıştırılabilir.\n\nSharp'ın SamplePanorama'sından farklı olarak（（ızgarayı FOV + örtüşmeye göre türetir ve çıktı kare olur）, bu düğüm sabit bir pitch ızgarasına ve dikdörtgen en-boy oranına（varsayılan 832x480）sahiptir ve WorldStereo'nun pano_bank kamerası/iç parametre kurallarına uyar."
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp Ön Plan Tahmini",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "mode": "Mod",
+            "focal_length_mm": "Odak uzaklığı mm",
+            "output_prefix": "Çıktı ön eki"
+        },
+        "outputs": {
+            "ply_path": "PLY Dosya Yolu",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Sharp kullanarak görselden 3B Gauss nokta bulutu PLY dosyası üretir; yalnızca görünür yüzeylerin Gauss noktalarını korur, örtülen kısımları atar. SharpPredict'e göre görsel başına yarı sayıda Gauss noktası. Toplu giriş, numaralandırılmış bir PLY dosyası klasörü oluşturur."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "Metrik Derinlikten Gauss Nokta Bulutu Tahmini",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "metric_depth_layer0": "Metrik derinlik katman 0",
+            "metric_depth_layer1": "Metrik derinlik katman 1",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "focal_length_mm": "Odak uzaklığı mm",
+            "output_prefix": "Çıktı ön eki",
+            "save_background_layer": "Arka Plan Katmanını Kaydet",
+            "snap_to_external_depth": "Harici derinliğe oturt",
+            "depth_convention": "Derinlik konvansiyonu",
+            "edge_crop": "Kenar kırpması"
+        },
+        "outputs": {
+            "ply_path": "PLY Dosya Yolu",
+            "ply_folder": "PLY Klasör Yolu",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Sharp'ın Gauss çözümleyicisini, dışarıdan sağlanan metrik derinliği hizalama hedefi olarak kullanarak çalıştırır. Dış derinlik, `init_model` Gauss taban değerleri için tutarlı bir geometrik iskelet olur; böylece Gauss nokta bulutları birden çok görünüm arasında tutarlı yüzeyleri paylaşır — her yüzün dikiş sorununu düzeltir.\n\nPLY dosyalarını kaydeder (tek görsel->bir .ply; toplu->N adet NNN.ply klasörü). MergeGaussians hattıyla tek bir PLY dosyasında birleştirilir."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp Gauss Özellik Tahmini",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "focal_length_mm": "Odak uzaklığı mm"
+        },
+        "outputs": {
+            "metric_depth": "Metrik Derinlik",
+            "extrinsics_mdepth": "Dış parametreler_Metrik derinlik",
+            "intrinsics_mdepth": "İç Parametreler_Metrik Derinlik",
+            "first_layer_depth_refined": "Birinci katman derinlik iyileştirmesi",
+            "first_layer_gaussian_attrs": "Birinci katman Gauss özellikleri",
+            "second_layer_depth_refined": "İkinci katman derinlik iyileştirmesi",
+            "second_layer_gaussian_attrs": "İkinci katman Gauss özellikleri",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Sharp çıkarımını çalıştırır ve her pikselin Gauss çözücü çıktısını, PLY dosyasına düzleştirilmek yerine yapılandırılmış katmanlı tensörler olarak (derinlik + tüm Gauss özelliklerinin MULTIBAND_IMAGE'u) açığa çıkarır.\n\nDerinlik çıktısı, her yüzün ölçeğini geri kazanmak için AlignDepthMaps'i sürmek üzere kullanılır, ardından PLY dosyası yeniden oluşturulmadan önce ölçek, çok bantlı konum kanalına çarpılır."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp Metrik Derinlik Tahmini",
+        "widgets": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "focal_length_mm": "Odak uzaklığı mm",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "Katman 0 metrik derinlik",
+            "layer_1_metric_depth": "Katman 1 metrik derinlik",
+            "extrinsics_mdepth": "Dış parametreler_Metrik derinlik",
+            "intrinsics_mdepth": "İç Parametreler_Metrik Derinlik",
+            "layer_0_points_raw": "Katman 0 ham nokta bulutu",
+            "layer_1_points_raw": "Katman 1 ham nokta bulutu"
+        },
+        "description": "Yalnızca Sharp'ın kodlayıcısını + deplasman başlığını çalıştırır（Gauss çözümleyiciyi atlar）. Her pikselin metrik derinliğini ve ilgili dış/iç parametrelerini çıkarır. Yalnızca derinliğe ihtiyacınız olduğunda SharpPredictGaussianAttrs'ın yaklaşık iki katı hızındadır. Temiz küresel derinlik birleştirmesi için SharpDepthMerge'e bağlayın."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "Gauss Dağılımından Keskinleştirilmiş Rafine Derinlik Al",
+        "inputs": {
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "ply_path": "PLY yolu",
+            "out_size": "Çıkış boyutu"
+        },
+        "outputs": {
+            "depth_maps": "Derinlik haritası",
+            "valid_mask": "Geçerli maske",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Sharp'ın tahmin ettiği PLY Gaussian noktalarını, iyileştirilmiş piksel bazlı derinliği yeniden elde etmek için her yüzün kamera uzayına yeniden yansıtın (aslında çözücünün ürettiği z değerleri geçer, iyileştirme öncesi paralaks başlığının değil). Her pikselin asgari derinliği = katman 0 (görünür yüzey).\n\nDerinlik haritalarını logaritmik ölçekte hizalaması için AlignDepthMaps'e iletin, ardından çıkan yüz başına ölçek faktörlerini önce Gaussian noktalarına uygulayın, sonra Gaussianları birleştirin."
+    },
+    "ScaleImageValues": {
+        "title": "Görsel değerlerini ayarla",
+        "widgets": {
+            "image": "Görsel"
+        },
+        "description": "Bir görüntünün tüm değerlerini doğrusal olarak [0, 1] aralığına yeniden eşler. Bu, derinlik haritalarını önizlerken faydalıdır (derinlik haritaları metre gibi birimler içerebilir, oysa ComfyUI'nin PreviewImage'u [0, 1] aralığında değerler bekler). Her yığın öğesi, kendi (H, W, C) üzerindeki en küçük/en büyük değerlerine göre bağımsızca ölçeklenir. Sabit değerli görüntüler tamamen sıfır olur (sıfıra bölmeden kaynaklanan NaN yerine)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "Sharp ışınını düzlem derinliğine dönüştür",
+        "inputs": {
+            "image": "Görsel",
+            "intrinsics": "İç parametreler",
+            "extrinsics": "Dış parametreler"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "intrinsics": "İç parametreler",
+            "extrinsics": "Dış parametreler"
+        },
+        "description": "Yüz derinliği sözleşmesi dönüştürücüsü. Işın mesafesi derinliğini her yüzün kosinüs haritasıyla (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)) çarparak Sharp Gauss çözücüsünün ve geri izlemenin beklediği düzlemsel Z derinliğini üretir. Panoramayı ayıran derinlik kaynağı (eşdizişimli derinlik panoraması üzerindeki PanoramaSplit) ile Sharp tahmin düğümleri arasına yerleştirilir. İç parametreler normalize biçimde geçirilirse, tüm aşağı akış düğümlerinin tutarlı birimler görmesi için piksel K birimlerine yeniden ölçeklenir."
+    },
+    "AlignDepthMaps": {
+        "title": "Derinlik Haritalarını Hizala",
+        "inputs": {
+            "depth_maps": "Derinlik haritası",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "reference_view": "Referans Görünüm",
+            "method": "Yöntem"
+        },
+        "outputs": {
+            "aligned_depth_maps": "Hizalanmış derinlik haritası",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "alignment_info": "Hizalama bilgisi"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "EXIF Bilgili Görsel Yükle",
+        "widgets": {
+            "image": "Görsel",
+            "default_focal_mm": "Varsayılan odak uzaklığı（milimetre）"
+        },
+        "outputs": {
+            "image": "Görsel",
+            "mask": "Maske",
+            "focal_length_mm": "Odak uzaklığı（milimetre）"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "Sharp Modelini Yükle",
+        "widgets": {
+            "precision": "Hassasiyet",
+            "checkpoint_path": "Checkpoint yolu"
+        },
+        "outputs": {
+            "model": "Model (yapay zekâ)"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "Gaussian Dağılımlarını Birleştir",
+        "widgets": {
+            "ply_folder": "PLY Klasörü",
+            "output_prefix": "Çıktı ön eki",
+            "max_depth": "Maksimum derinlik",
+            "min_opacity": "Minimum şeffaflık"
+        },
+        "outputs": {
+            "ply_path": "PLY yolu",
+            "num_gaussians": "Gauss dağılımı sayısı"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp Tahmin",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "focal_length_mm": "Odak uzaklığı（milimetre）",
+            "output_prefix": "Çıktı ön eki"
+        },
+        "outputs": {
+            "ply_path": "PLY yolu",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp Derinlik Tahmini",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "image": "Görsel",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "reference_depth": "Referans Derinlik"
+        },
+        "outputs": {
+            "depth_maps": "Derinlik haritası",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "alignment_maps": "Hizalama haritası"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "Derinliği panorama düzlemine yansıt",
+        "inputs": {
+            "depth_maps": "Derinlik haritası",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler"
+        },
+        "widgets": {
+            "panorama_width": "Panorama Genişliği",
+            "show_borders": "Sınırları göster",
+            "disagreement_scale": "Uyuşmazlık Ölçeği",
+            "blend_mode": "Karma modu",
+            "border_color": "Kenarlık rengi"
+        },
+        "outputs": {
+            "panoramic_depth": "Panorama Derinliği",
+            "debug_overlay": "Hata ayıklama bindirmesi",
+            "disagreement_heatmap": "Uyuşmazlık Isı Haritası"
+        },
+        "description": "Kategori: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "Panorama örnekleme",
+        "inputs": {
+            "panorama": "Panoramik görüntü"
+        },
+        "widgets": {
+            "fov_degrees": "Görüş açısı（derece）",
+            "overlap_percent": "Örtüşme yüzdesi",
+            "output_size": "Çıkış boyutu",
+            "skip_poles": "Kutupları atla"
+        },
+        "outputs": {
+            "images": "Görsel",
+            "extrinsics": "Dış parametreler",
+            "intrinsics": "İç parametreler",
+            "num_horizontal": "Yatay sayı",
+            "num_vertical": "Dikey sayı"
+        },
+        "description": "Kategori: Sharp"
+    }
+}

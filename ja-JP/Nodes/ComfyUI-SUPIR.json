@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "SUPIRモデルローダー",
+        "widgets": {
+            "supir_model": "SUPIRモデル",
+            "sdxl_model": "SDXLモデル",
+            "fp8_unet": "FP8 UNet精度",
+            "diffusion_dtype": "量子化タイプ"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIRモデル",
+            "SUPIR_model": "SUPIRモデル",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "旧バージョンのローダーで、使用は推奨しません。\n\nSUPIR モデルと SDXL モデルを読み込んで融合します。"
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "SUPIRモデルローダー_V2",
+        "inputs": {
+            "model": "モデル",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIRモデル",
+            "fp8_unet": "FP8 UNet精度",
+            "diffusion_dtype": "量子化タイプ",
+            "high_vram": "高VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIRモデル",
+            "SUPIR_model": "SUPIRモデル",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR モデルと SDXL モデルを読み込み、融合します。\n\nプルーニングタイプは、モデル読み込み時にエラーが発生しない限り「自動」のままにしてください。\n\nfp8_unet：torch.float8_e4m3fn を使用して UNet を呼び出します。VRAM 要件は下がりますが、品質がわずかに低下します。\n\nハイVRAM：Accelerate を使用してモデルを GPU に読み込み、読み込み速度をわずかに向上させます。"
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "SUPIRモデルローダー_V2（CLIP）",
+        "inputs": {
+            "model": "モデル",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIRモデル",
+            "fp8_unet": "FP8 UNet精度",
+            "diffusion_dtype": "量子化タイプ",
+            "high_vram": "高VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIRモデル",
+            "SUPIR_model": "SUPIRモデル",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "SUPIR モデルと SDXL モデルを読み込み、融合します。\n\nプルーニングタイプは、モデル読み込み時にエラーが発生しない限り「自動」のままにしてください。\n\nfp8_unet：torch.float8_e4m3fn を使用して UNet を呼び出します。VRAM 要件は下がりますが、品質がわずかに低下します。\n\nハイVRAM：Accelerate を使用してモデルを GPU に読み込み、読み込み速度をわずかに向上させます。"
+    },
+    "SUPIR_encode": {
+        "title": "SUPIRエンコード",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "画像"
+        },
+        "widgets": {
+            "use_tiled_vae": "タイル分割VAE",
+            "encoder_tile_size": "エンコードタイルサイズ",
+            "encoder_dtype": "エンコードプルーニング"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIRデコード",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "タイル分割VAE",
+            "decoder_tile_size": "デコードタイルサイズ"
+        },
+        "outputs": {
+            "image": "画像"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIRステージ1",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "画像"
+        },
+        "widgets": {
+            "use_tiled_vae": "タイル分割VAE",
+            "encoder_tile_size": "エンコードタイルサイズ",
+            "decoder_tile_size": "デコードタイルサイズ",
+            "encoder_dtype": "エンコードプルーニング"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "画像",
+            "denoised_latents": "Latent"
+        },
+        "description": "SUPIR の「ステージ1」。SUPIR の denoise_encoder で画像をエンコード・デコードし、圧縮アーティファクトを修復しますが、画像がぼやけることがあります。\n\n他のサンプラー/ぼかしで置き換えるか、このノードを使用しなくても構いません。"
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR条件",
+        "inputs": {
+            "SUPIR_MODEL": "SUPIRモデル",
+            "SUPIR_model": "SUPIRモデル",
+            "latents": "Latent",
+            "captions": "キャプション/字幕"
+        },
+        "widgets": {
+            "positive_prompt": "ポジティブプロンプト",
+            "negative_prompt": "ネガティブプロンプト"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "description": "サンプラー用の条件を作成します。\n プロンプト入力はオプションです。プロンプトが入力されると、ポジティブプロンプトに追加されます\n 単一の入力画像にプロンプトのリストを提供した場合、プロンプトの数はタイル数と一致する必要があります\n SUPIRタイル化画像 を参照してください\n プロンプトのリストが提供され、そのリストが入力画像バッチと一致する場合、各画像には対応するプロンプトが使用されます"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIRサンプリング",
+        "inputs": {
+            "SUPIR_model": "SUPIRモデル",
+            "latents": "Latent",
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "widgets": {
+            "seed": "シード",
+            "control_before_generate": "実行前操作",
+            "steps": "ステップ数",
+            "cfg_scale_start": "開始CFGスケール",
+            "cfg_scale_end": "終了CFGスケール",
+            "EDM_s_churn": "EDMランダム摂動",
+            "s_noise": "ノイズ量",
+            "DPMPP_eta": "DPMPPステップサイズパラメータ",
+            "control_scale_start": "開始制御スケール",
+            "control_scale_end": "終了制御スケール",
+            "restore_cfg": "CFG 復元",
+            "keep_model_loaded": "モデル読み込みを保持",
+            "sampler": "サンプラー",
+            "sampler_tile_size": "サンプラータイルサイズ",
+            "sampler_tile_stride": "サンプラータイルストライド"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nサンプリングに使用する Latent。SUPIR Latent を使用する場合、この項目はノイズの形状にのみ影響します。\n\nそれ以外の場合は ComfyUI のデフォルトと同じです。 \n\nLatent 入力が存在する場合は、入力が優先されます。\n\n- **CFG：**\n\n線形補間で CFG を制御します。開始CFGスケール を初期値とし、終了CFGスケール の値まで線形にスケールします。\n\nこの2項目を同じ値に設定すると補間スケールが無効になります。\n\n- **EDM_s_churn：**\n\nサンプリング処理が Latent ノイズの変化に適応する速度を制御します。\n\nDPMPP サンプラーでは無効です。\n\n- **ノイズ量s_noise：**\n\nサンプリングの各ステップで Latent に追加されるノイズ量を制御します。 \n\n- **DPMPP_eta：**\n\nノイズ低減処理が時間とともに変化するノイズレベルにどのように適応するかを調整し、拡散プロセスに影響するスケール係数。\n\nEDM サンプラーでは無効です。 \n\n- **制御スケールcontrol_scale：**\n\nSUPIR 制御モデルの強度。開始から終了まで線形補間で強度を制御します。\n\n値が小さいほど制御強度は小さくなります。\n\n- **復元CFGrestore_cfg：**\n\nサンプリング処理における元画像への復元度を制御します。\n\nサンプリングプロセスの微調整に使用されます。\n\n- **サンプラー：**\n\nEDM は多くのステップ数が必要ですが、通常より高品質です。\n\nDPMPP は少ないステップ数で済み、Lighting モデルに適しています。\n\nタイル化サンプラー はタイル分割サンプリングを採用します。非常に遅いですが、低いVRAMでより高解像度を得られます。\n\nタイル化画像の前にタイルサイズを確定する必要があります。タイルステップは各タイルの重複サイズに影響します。タイル機能は SUPIRタイル化画像 ノードを参照してください。"
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIRタイル化画像",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "tile_size": "タイルサイズ",
+            "tile_stride": "タイルステップ"
+        },
+        "outputs": {
+            "image_tiles": "タイル画像",
+            "tile_size": "タイルサイズ",
+            "tile_stride": "タイルステップ"
+        },
+        "description": "タイル化サンプラー の方式で画像をタイル分割します。\n\nタイルのプレビューと各タイルのプロンプト逆算に使用します（この機能は開発中です）。"
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIRアップスケール",
+        "inputs": {
+            "image": "画像",
+            "captions": "キャプション/字幕"
+        },
+        "widgets": {
+            "supir_model": "SUPIRモデル",
+            "sdxl_model": "SDXLモデル",
+            "seed": "シード",
+            "control_before_generate": "実行前操作",
+            "resize_method": "拡大手法",
+            "scale_by": "スケール係数",
+            "steps": "ステップ数",
+            "restoration_scale": "復元スケール",
+            "cfg_scale": "CFG スケール",
+            "a_prompt": "ポジティブプロンプト",
+            "n_prompt": "ネガティブプロンプト",
+            "s_churn": "ノイズ減衰係数",
+            "s_noise": "ノイズ量",
+            "control_scale": "制御スケール",
+            "cfg_scale_start": "CFGガイダンス開始強度",
+            "control_scale_start": "ControlNet開始重み",
+            "color_fix_type": "色修復タイプ",
+            "keep_model_loaded": "モデル読み込みを保持",
+            "use_tiled_vae": "タイル分割VAE",
+            "encoder_tile_size": "エンコードタイルサイズ",
+            "encoder_tile_size_pixels": "デコードタイルサイズピクセル",
+            "decoder_tile_size": "デコードタイルサイズ",
+            "decoder_tile_size_latent": "デコードタイルサイズLatent",
+            "diffusion_dtype": "量子化タイプ",
+            "encoder_dtype": "エンコードプルーニング",
+            "batch_size": "バッチサイズ",
+            "use_tiled_sampling": "タイル分割サンプリングを使用",
+            "used_tiled_sampling": "タイル分割サンプリングを使用",
+            "sampler_tile_size": "サンプラータイルサイズ",
+            "sampler_tile_stride": "サンプラータイルストライド",
+            "fp8_unet": "FP8 UNet精度",
+            "fp8_vae": "fp8_vae",
+            "sampler": "サンプラー"
+        },
+        "outputs": {
+            "upscaled_image": "画像"
+        }
+    }
+}

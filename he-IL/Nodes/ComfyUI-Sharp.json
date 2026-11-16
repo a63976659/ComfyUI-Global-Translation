@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "המרת מאפייני תמונה חדה ל־PLY",
+        "inputs": {
+            "gaussian_attrs": "מאפיינים גאוסיים",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "output_prefix": "קידומת פלט",
+            "focal_length_px": "מרחק מוקד בפיקסלים"
+        },
+        "outputs": {
+            "ply_path": "נתיב קובץ PLY",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "ניטול 14 ערוצי MULTIBAND_IMAGE לכל פיקסל (למשל פלט מאפייני הגאוסיאנים של שכבה 1 מ־SharpPredictGaussianAttrs) ו הפרמטרים החיצוניים/הפנימיים התואמים של המצלמה, ומייצר קובץ PLY של ענן נקודות גאוסיאני תלת־ממדי. הרב-פסים מאחסים מיקומי NDC; צומת זה ממיר אותם למרחב העולם לפני השמירה באמצעות unproject_gaussians של SHARP."
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "פיצול קובייה פנורמית של Sharp",
+        "widgets": {
+            "panorama": "תמונה פנורמית",
+            "image_w": "רוחב תמונה",
+            "image_h": "גובה תמונה",
+            "fov_x_deg": "זווית שדה ראייה בציר X",
+            "fov_y_deg": "זווית שדה ראייה בציר Y",
+            "rot_deg": "זווית סיבוב",
+            "pitch_up": "זווית הטיה מעלה",
+            "pitch_down": "זווית הטיה מטה"
+        },
+        "outputs": {
+            "face_images": "תמונות פאות",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "fov_x_deg": "זווית שדה ראייה בציר X",
+            "num_faces": "מספר פאות"
+        },
+        "description": "מבצע N חיתוכי פרספקטיבה מדגימת רשת עם זוויות הטיה וסיבוב קבועות מתמונה פנורמית כדורית ביחס 2:1 (ברירת מחדל: 3 הטיות x 3 סיבובים = 27 תצפיות). תואם את הגיאומטריה של WorldStereoPanoramaCubeSplit — משמש כשלב קלט למודל העומד של כל פאה, ותוצאותיו ניתן לחבר חזרה באמצעות SharpDepthMerge.\n\nבניגוד ל־SamplePanorama של Sharp (שגוזר את הרשת לפי FOV וחפיפה ומוציא ריבועים), לצומת זה רשת זוויות הטיה קבועה ויחס רוחב-גובה מלבני (ברירת מחדל 832x480), והוא תואם את מוסכמת המצלמה והפרמטרים הפנימיים של pano_bank של WorldStereo."
+    },
+    "SharpPredictForeground": {
+        "title": "חיזוי קדמה של Sharp",
+        "inputs": {
+            "model": "מודל",
+            "image": "תמונה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "mode": "מצב",
+            "focal_length_mm": "מרחק מוקד במילימטרים",
+            "output_prefix": "קידומת פלט"
+        },
+        "outputs": {
+            "ply_path": "נתיב קובץ PLY",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "מייצר קובצי PLY של ענן נקודות גאוסיאני תלת־ממדי מתמונות באמצעות Sharp, שומר רק על הגאוסיאנים של פנים גלויים ומשליך חלקים מוסתרים. מספר הגאוסיאנים לכל תמונה קטן בחצי לעומת SharpPredict. קלט אצוות יוצר תיקיית קבצי PLY ממוספרים."
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "חיזוי ענן נקודות גאוסיאני מעומד מדי",
+        "inputs": {
+            "model": "מודל",
+            "image": "תמונה",
+            "metric_depth_layer0": "עומק מדדי שכבה 0",
+            "metric_depth_layer1": "עומק מדדי שכבה 1",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "focal_length_mm": "מרחק מוקד במילימטרים",
+            "output_prefix": "קידומת פלט",
+            "save_background_layer": "שמירת שכבת הרקע",
+            "snap_to_external_depth": "הצמדה לעומק חיצוני",
+            "depth_convention": "הסכם העומק",
+            "edge_crop": "חיתוך שוליים"
+        },
+        "outputs": {
+            "ply_path": "נתיב קובץ PLY",
+            "ply_folder": "נתיב תיקיית PLY",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "מריץ את מפענח הגאוסיאנים של Sharp באמצעות עומד מדי מסופ מבחוץ כמטרת יישור. העומד החיצוני הופך לשלד גיאומטרי עקבי עבור ערכי היסוד של הגאוסיאנים ב־`init_מודל`, ולכן ענני הנקודות חולקים פנים עקביים בין תצפיות — זה מתקן את בעיית התפרים בכל פאה.\n\nשומר קובצי PLY (תמונה בודדת->קובץ ‎.ply יחיד; אצוות->תיקיית N קובצי NNN.ply). משולב יחד לקובץ PLY אחד דרך צינור MergeGaussians."
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "חיזוי מאפייני גאוסיאן של Sharp",
+        "inputs": {
+            "model": "מודל",
+            "image": "תמונה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "mask": "מסיכה"
+        },
+        "widgets": {
+            "focal_length_mm": "מרחק מוקד במילימטרים"
+        },
+        "outputs": {
+            "metric_depth": "עומד מדי",
+            "extrinsics_mdepth": "פרמטרים חיצוניים_עומק מדדי",
+            "intrinsics_mdepth": "פרמטרים פנימיים_עומד מדי",
+            "first_layer_depth_refined": "ליטוש עומק בשכבה הראשונה",
+            "first_layer_gaussian_attrs": "מאפיינים גאוסיים בשכבה הראשונה",
+            "second_layer_depth_refined": "ליטוש עומק בשכבה השנייה",
+            "second_layer_gaussian_attrs": "מאפיינים גאוסיים בשכבה השנייה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "הרצת הסקה של Sharp וחשיפת פלט המפענך ההגואסיים של כל פיקסל כטנזורים מובנים בני חלקים (עומק + MULTIBAND_IMAGE של כל מאפייני הגאוס) במקום לשטח אותם לקובץ PLY.\n\nהשימוש בפלט העומק כדי להניע את AlignDepthMaps לשחזור יחס כל פאה, ואז הכפלת היחס בערוץ המיקום רב-הסרטט לפני בניית קובץ PLY מחדש."
+    },
+    "SharpPredictMetricDepth": {
+        "title": "חיזוי עומד מדי (Metric Depth) של Sharp",
+        "widgets": {
+            "model": "מודל",
+            "image": "תמונה",
+            "focal_length_mm": "מרחק מוקד במילימטרים",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "עומק מטרי בשכבה 0",
+            "layer_1_metric_depth": "עומק מטרי בשכבה 1",
+            "extrinsics_mdepth": "פרמטרים חיצוניים_עומק מדדי",
+            "intrinsics_mdepth": "פרמטרים פנימיים_עומד מדי",
+            "layer_0_points_raw": "ענן נקודות גולמי בשכבה 0",
+            "layer_1_points_raw": "ענן נקודות גולמי בשכבה 1"
+        },
+        "description": "מריץ רק את המקודד וראש ההיסט של Sharp (דילוג על מפענח הגאוסיאנים). מחזיר עומד מדי לכל פיקסל לצד הפרמטרים החיצוניים/הפנימיים התואמים. כאשר נדרש רק העומד, המהירות גבוהה בערך פי שניים מזו של SharpPredictGaussianAttrs. יש לחבר ל־SharpDepthMerge למיזום עומד כדורי נקי."
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "שליפת עומד מלוטש ומחודד מהתפלגות גאוסיאנית",
+        "inputs": {
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "ply_path": "נתיב PLY",
+            "out_size": "מידות פלט"
+        },
+        "outputs": {
+            "depth_maps": "מפת עומק",
+            "valid_mask": "מסיכה תקפה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "מבצע היטל חוזר של נקודות הגאוס ב-PLY שחזה Sharp אל מרחב המצלמה של כל פאה, כדי לשחזר את עומק פרט-פיקסל המדויק（למעשה ערכי ה-z שמייצר המפענח, ולא ראש הפרלקס שלפני הדיוק）. העומק המינימלי של כל פיקסל=שכבה 0（המשטח הגלוי）.\n\nמועבירות את מפות העומק ל-AlignDepthMaps לשם יישור בסולם לוגריתמי, ואז מחילים את פקטור הקנה מידה של כל פאה חזרה אל נקודות הגאוס לפני מיזוג נקודות הגאוס."
+    },
+    "ScaleImageValues": {
+        "title": "כונון ערכי תמונה",
+        "widgets": {
+            "image": "תמונה"
+        },
+        "description": "מיפוי מחדש ליניארי של כל ערכי התמונה אל הטווח [0, 1]. שימושי בתצוגה מקדימה של מפות עומק (מפת עומק עשויה להכיל יחידות כמו מטרים, ו־PreviewImage של ComfyUI מצפה לערכים בטווח [0, 1]). כל פריט אצווה נסרק בנפרד לפי המינימום והמקסימום שלו ב־(H, W, C). תמונה בערך קבוע הופכת כולה לאפסים (ולא ל־NaN שנובע מחילוק באפס)."
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "המרת קרן Sharp לעומק מישורי",
+        "inputs": {
+            "image": "תמונה",
+            "intrinsics": "פרמטרים פנימיים",
+            "extrinsics": "פרמטרים חיצוניים"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "intrinsics": "פרמטרים פנימיים",
+            "extrinsics": "פרמטרים חיצוניים"
+        },
+        "description": "ממיר מוסכמת עומק פאה. מייצר את עומק Z המישורי הצפוי למפענך ההגואסיים של Sharp ולהטלת־נגד, על ידי הכפלת עומק מרחק הקרן במיפוי הקוסינוס של כל פאה (1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)). ממוקם בין מקורות העומק של פיצול הפנורמה (PanoramaSplit על פנורמת עומק איזומטרית) לבין צמת החיזוי של Sharp. אם הפרמטרים הפנימיים מועברים בצורה מנורמלת, הם יוסדרו מחדש ליחידות K של פיקסלים כדי שכל צמת ההמשך יראו יחידות עקביות."
+    },
+    "AlignDepthMaps": {
+        "title": "ישור מפות עומק",
+        "inputs": {
+            "depth_maps": "מפת עומק",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "reference_view": "תצפית ייחוס",
+            "method": "שיטה"
+        },
+        "outputs": {
+            "aligned_depth_maps": "מפות עומק מיושרות",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "alignment_info": "פרטי יישור"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "טעינת תמונה עם מידע EXIF",
+        "widgets": {
+            "image": "תמונה",
+            "default_focal_mm": "מרחק מוקד כברירת מחדל (מ״מ)"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה",
+            "focal_length_mm": "מרחק מוקד（מילימטר）"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "טעינת מודל Sharp",
+        "widgets": {
+            "precision": "דיוק",
+            "checkpoint_path": "נתיב נקודת ביקורת"
+        },
+        "outputs": {
+            "model": "מודל"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "מיזוג התפלגויות גאוס",
+        "widgets": {
+            "ply_folder": "תיקיית PLY",
+            "output_prefix": "קידומת פלט",
+            "max_depth": "עומק מקסימלי",
+            "min_opacity": "שקיפות מינימלית"
+        },
+        "outputs": {
+            "ply_path": "נתיב PLY",
+            "num_gaussians": "מספר ההתפלגויות ההגואסיות"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "SharpPredict": {
+        "title": "חיזוי של Sharp",
+        "inputs": {
+            "model": "מודל",
+            "image": "תמונה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "focal_length_mm": "מרחק מוקד（מילימטר）",
+            "output_prefix": "קידומת פלט"
+        },
+        "outputs": {
+            "ply_path": "נתיב PLY",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "חיזוי עומק של Sharp",
+        "inputs": {
+            "model": "מודל",
+            "image": "תמונה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "reference_depth": "עומד ייחוס"
+        },
+        "outputs": {
+            "depth_maps": "מפת עומק",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "alignment_maps": "מפות יישור"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "הטלת העומק על תמונת פנורמה",
+        "inputs": {
+            "depth_maps": "מפת עומק",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים"
+        },
+        "widgets": {
+            "panorama_width": "רוחב תמונה פנורמית",
+            "show_borders": "הצגת גבולות",
+            "disagreement_scale": "שיכוך אי־הסכמה",
+            "blend_mode": "מצב ערבוב",
+            "border_color": "צבע המסגרת"
+        },
+        "outputs": {
+            "panoramic_depth": "עומד פנורמי",
+            "debug_overlay": "שכבת ניפוי באגים",
+            "disagreement_heatmap": "מפת חום של אי־הסכמות"
+        },
+        "description": "קטגוריה: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "דגימת פנורמה",
+        "inputs": {
+            "panorama": "תמונה פנורמית"
+        },
+        "widgets": {
+            "fov_degrees": "שדה ראייה (מעלות)",
+            "overlap_percent": "אחוז חפיפה",
+            "output_size": "מידות פלט",
+            "skip_poles": "דילוג על קטבים"
+        },
+        "outputs": {
+            "images": "תמונה",
+            "extrinsics": "פרמטרים חיצוניים",
+            "intrinsics": "פרמטרים פנימיים",
+            "num_horizontal": "מספר אופקי",
+            "num_vertical": "מספר אנכי"
+        },
+        "description": "קטגוריה: Sharp"
+    }
+}

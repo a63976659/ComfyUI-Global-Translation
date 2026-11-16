@@ -1,0 +1,622 @@
+{
+    "DaSiWa_EnhancedVideoCombine": {
+        "title": "DaSiWa_دمج الفيديو المعزّز",
+        "inputs": {
+            "images": "صورة",
+            "audio": "صوت"
+        },
+        "widgets": {
+            "frame_rate": "معدل الإطارات",
+            "codec": "صيغة الترميز",
+            "container": "صيغة الحاوية",
+            "bit_depth": "عمق البت",
+            "quality": "الجودة",
+            "log_level": "مستوى السجلّات",
+            "pingpong": "وضع بينغ بونغ",
+            "save_metadata": "حفظ البيانات الوصفية",
+            "filename_prefix": "بادئة اسم الملف",
+            "save_output": "حفظ الإخراج",
+            "pass_frames": "تمرير الإطارات",
+            "crop_to_audio": "قصّ حتى الصوت",
+            "audio_codec": "ترميز الصوت",
+            "audio_bitrate": "معدل بتات الصوت",
+            "save_first_frame": "حفظ الإطار الأول",
+            "save_last_frame": "حفظ الإطار الأخير"
+        },
+        "outputs": {
+            "frames": "إطار",
+            "filename": "اسم الملف"
+        },
+        "description": "يدمج دفعات الصور في فيديو عالي الجودة مع اختيار تلقائي لـ NVENC/GPU، ويدعم تشغيل بينغ بونغ الاختياري، وبيانات سير عمل ComfyUI الوصفية، وخطة بديلة MP4."
+    },
+    "DaSiWa_InpaintCropPrep": {
+        "title": "DaSiWa_تجهيز قصّ الإصلاح",
+        "inputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "target_width": "العرض المستهدف",
+            "target_height": "الارتفاع المستهدف",
+            "mask_blur": "تمويه القناع",
+            "mask_min": "الحد الأدنى للقناع",
+            "mask_max": "الحد الأقصى للقناع",
+            "grow_px": "بكسلات التوسيع",
+            "can_shrink": "قابل للتصغير"
+        },
+        "outputs": {
+            "cropped_image": "الصورة بعد القصّ",
+            "cropped_mask": "القناع بعد القصّ",
+            "bbox_x": "إحداثي X للإطار الحدودي",
+            "bbox_y": "إحداثي Y للإطار الحدودي",
+            "bbox_w": "عرض الإطار الحدودي",
+            "bbox_h": "ارتفاع الإطار الحدودي"
+        },
+        "description": "إعداد الصور والأقنعة للإصلاح: استخراج الحدود، القصّ، التحجيم."
+    },
+    "DaSiWa_InpaintComposite": {
+        "title": "DaSiWa_دمج الإصلاح",
+        "inputs": {
+            "destination": "الهدف",
+            "source": "المصدر",
+            "mask": "قناع"
+        },
+        "widgets": {
+            "x": "إحداثي X",
+            "y": "إحداثي Y",
+            "w": "العرض",
+            "h": "الارتفاع",
+            "correction_method": "طريقة التصحيح"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "يدمج رقعة الإصلاح عائدةً إلى الصورة الأصلية مع دعم تصحيح الألوان."
+    },
+    "DaSiWa_LLMModelSelector": {
+        "title": "DaSiWa_منتقي نموذج LLM",
+        "widgets": {
+            "model": "النموذج",
+            "custom_path": "مسار مخصص",
+            "hf_repo_id": "معرّف مستودع HF",
+            "hf_revision": "إصدار HF",
+            "download_if_missing": "التنزيل عند الفقد",
+            "backend": "الواجهة الخلفية",
+            "task": "المهمّة",
+            "device": "الجهاز",
+            "dtype": "نوع البيانات",
+            "quantization": "تكميم",
+            "cache_mode": "وضع التخزين المؤقت",
+            "trust_remote_code": "الثقة بالأكواد البعيدة",
+            "attention_implementation": "تنفيذ الانتباه",
+            "kv_cache_implementation": "تنفيذ التخزين المؤقت KV",
+            "kv_cache_quant_backend": "الواجهة الخلفية لتكميم التخزين المؤقت KV",
+            "kv_cache_nbits": "بتات التخزين المؤقت KV",
+            "kv_cache_residual_length": "طول المتبقي في التخزين المؤقت KV",
+            "llama_n_ctx": "نافذة سياق Llama",
+            "llama_n_gpu_layers": "عدد طبقات GPU في Llama",
+            "llama_n_threads": "عدد خيوط Llama",
+            "llama_chat_format": "صيغة محادثة Llama",
+            "ollama_model": "نموذج Ollama",
+            "ollama_url": "عنوان Ollama",
+            "ollama_timeout": "مهلة Ollama"
+        },
+        "outputs": {
+            "llm_config": "إعداد LLM"
+        },
+        "description": "منتقي نموذج DaSiWa LLM: يختار مجلدات LLM/VLM المحلية عبر transformers من ComfyUI/models/llm، ويضبط التخزين المؤقت ونوع البيانات والجهاز وسلوك التفريغ."
+    },
+    "DaSiWa_LLMAnalyze": {
+        "title": "DaSiWa_تحليل LLM",
+        "inputs": {
+            "llm_config": "إعداد LLM",
+            "images": "صورة",
+            "text_input": "إدخال نص"
+        },
+        "widgets": {
+            "system_prompt_preset": "الإعدادات المسبقة لموجّه النظام",
+            "system_prompt": "موجّه النظام",
+            "prompt": "الموجّه",
+            "max_new_tokens": "الحد الأقصى للرموز الجديدة",
+            "max_input_tokens": "الحد الأقصى لرموز الإدخال",
+            "temperature": "الحرارة",
+            "top_p": "Top_p",
+            "repetition_penalty": "عقوبة التكرار",
+            "use_kv_cache": "استخدام التخزين المؤقت KV",
+            "seed": "البذرة العشوائية",
+            "max_frames": "أقصى عدد إطارات",
+            "frame_stride": "خطوة الإطارات",
+            "frame_strategy": "استراتيجية الإطارات",
+            "resize_max_px": "الحد الأقصى لبكسلات الضبط",
+            "resize_algorithm": "خوارزمية الضبط",
+            "memory_cleanup": "تنظيف الذاكرة"
+        },
+        "outputs": {
+            "response": "الاستجابة",
+            "info": "معلومات"
+        },
+        "description": "تحليل DaSiWa LLM: يشغّل نموذج لغة أو نموذج لغة-رؤية محليًا على النص أو الصور أو دفعات إطارات VHS/الفيديو المتصلة، ويعيد استجابة نصية."
+    },
+    "DaSiWa_LTX2LoraLoader": {
+        "title": "DaSiWa_محمّل LoRA LTX2",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "stack_data": "بيانات التكديس",
+            "model_type": "نوع النموذج",
+            "use_cache": "تفعيل تخزين ملفات LoRA المؤقت",
+            "available_loras": "قائمة LoRA المتاحة"
+        },
+        "outputs": {
+            "MODEL": "النموذج",
+            "CLIP": "CLIP"
+        },
+        "description": "محمّل LoRA المتقدم من DaSiWa: يكدّس LoRA الصور/الفيديو العادية أو LoRA الفيديو/الصوت LTX-2.3. فصل الصوت متاح فقط مع LTX-2.3."
+    },
+    "DaSiWa_MetadataConfig": {
+        "title": "DaSiWa_إعداد البيانات الوصفية",
+        "inputs": {
+            "node_positive": "عقدة الموجب",
+            "node_negative": "عقدة السالب",
+            "node_model": "عقدة النموذج",
+            "node_latent": "عقدة Latent",
+            "node_noise": "عقدة الضوضاء",
+            "node_sigmas": "عقدة سيغما",
+            "node_sampler": "عقدة العيّان",
+            "extra_metadata": "بيانات وصفية إضافية",
+            "text_positive": "النص الموجب",
+            "text_negative": "النص السالب",
+            "text_steps": "نص عدد الخطوات",
+            "text_cfg": "نص CFG",
+            "text_sampler": "نص العيّان",
+            "text_scheduler": "نص الجدّول",
+            "text_seed": "نص البذرة العشوائية",
+            "text_model": "نص النموذج",
+            "save_output": "حفظ الإخراج"
+        },
+        "widgets": {
+            "save_workflow": "حفظ سير العمل",
+            "model_hash": "تجزئة النموذج"
+        },
+        "outputs": {
+            "config": "الإعدادات"
+        },
+        "description": "إعداد البيانات الوصفية من DaSiWa: يجمع إعدادات البيانات الوصفية لسير العمل وروابط الكشف التلقائي الاختيارية في مخرج إعدادات مضغوط يستخدمه حافظ الصور."
+    },
+    "DaSiWa_MetadataImageSaver": {
+        "title": "DaSiWa_حافظ الصور بالبيانات الوصفية",
+        "inputs": {
+            "images": "صورة",
+            "metadata_config": "إعداد البيانات الوصفية",
+            "extra_metadata": "بيانات وصفية إضافية"
+        },
+        "widgets": {
+            "filename_prefix": "بادئة اسم الملف",
+            "file_format": "صيغة الملف",
+            "compression": "ضغط",
+            "save_output": "حفظ الإخراج"
+        },
+        "outputs": {
+            "filename": "اسم الملف",
+            "metadata": "البيانات الوصفية"
+        },
+        "description": "حافظ صور DaSiWa بالبيانات الوصفية: يحفظ صور PNG أو WebP مع بيانات سير عمل ComfyUI والبيانات الوصفية للتوليد المتوافقة مع A1111/Civitai."
+    },
+    "DaSiWa_MetadataImageSaverFull": {
+        "title": "DaSiWa_حافظ الصور بالبيانات الوصفية الكامل",
+        "inputs": {
+            "images": "مجموعة صور",
+            "metadata_config": "إعداد البيانات الوصفية",
+            "extra_metadata": "بيانات وصفية إضافية",
+            "node_positive": "عقدة الموجب",
+            "node_negative": "عقدة السالب",
+            "node_model": "عقدة النموذج",
+            "node_latent": "عقدة Latent",
+            "node_noise": "عقدة الضوضاء",
+            "node_sigmas": "عقدة سيغما",
+            "node_sampler": "عقدة العيّان",
+            "text_positive": "موجّه موجب",
+            "text_negative": "موجّه سالب",
+            "text_steps": "عدد الخطوات",
+            "text_cfg": "قيمة CFG",
+            "text_sampler": "العيّان",
+            "text_scheduler": "الجدّول",
+            "text_seed": "البذرة العشوائية",
+            "text_model": "نموذج نصي"
+        },
+        "widgets": {
+            "filename_prefix": "بادئة اسم الملف",
+            "file_format": "صيغة الملف",
+            "compression": "مستوى الضغط",
+            "save_output": "حفظ الإخراج",
+            "save_workflow": "حفظ سير العمل",
+            "model_hash": "تجزئة النموذج"
+        },
+        "outputs": {
+            "filename": "اسم الملف",
+            "metadata": "البيانات الوصفية"
+        },
+        "description": "حافظ صور DaSiWa بالبيانات الوصفية (النسخة الكاملة): نسخة متقدمة من الحافظ تكشف جميع منافذ رصد البيانات الوصفية والتجاوزات اليدوية على العقدة مباشرة."
+    },
+    "DaSiWa_CreateExtraMetadata": {
+        "title": "DaSiWa_إنشاء بيانات وصفية إضافية",
+        "inputs": {
+            "extra_metadata": "بيانات وصفية إضافية"
+        },
+        "widgets": {
+            "key": "المفتاح",
+            "value": "القيم"
+        },
+        "outputs": {
+            "EXTRA_METADATA": "بيانات وصفية إضافية"
+        },
+        "description": "إنشاء بيانات وصفية إضافية من DaSiWa: ينشئ أو يوسّع أزواج مفاتيح وقيم البيانات الوصفية المخصصة لحافظ الصور."
+    },
+    "DaSiWa_RandomStringPicker": {
+        "title": "DaSiWa_منتقي النص العشوائي",
+        "inputs": {
+            "text": "نص"
+        },
+        "outputs": {
+            "text": "نص"
+        },
+        "description": "منتقي النص العشوائي من DaSiWa: يمرر النص مع استبدال كل مجموعة {A|B|C} بخيار مختار عشوائيًا"
+    },
+    "DaSiWa_RTX_UpscalerRefiner": {
+        "title": "DaSiWa_تكبير وصقل RTX",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "denoise": "إزالة الضوضاء",
+            "deblur": "إزالة التمويه",
+            "scale": "تحجيم",
+            "megapixels": "ميجابكسل",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "device_id": "معرّف الجهاز",
+            "empty_cache": "مسح الذاكرة المؤقتة",
+            "denoise_quality": "جودة إزالة الضوضاء",
+            "deblur_quality": "جودة إزالة التمويه",
+            "upscale": "تكبير",
+            "upscale_quality": "جودة التكبير",
+            "resize_type": "نوع ضبط الحجم",
+            "divisible_by": "قيمة قابلة للقسمة",
+            "ratio_preset": "إعدادات النسبة المسبقة",
+            "resize_method": "طريقة ضبط الحجم",
+            "use_mmap": "استخدام الربط بالقرص",
+            "auto_unload_models": "التفريغ التلقائي للنموذج"
+        },
+        "outputs": {
+            "images": "صورة"
+        },
+        "description": "مكبّر DaSiWa RTX والمحسّن: عقدة معالجة ثلاثية عالية الأداء. 1. مرحلة التحسين: تعمل بدقة المصدر لتنظيف التشويش أو التمويه باستخدام مؤثرات NVIDIA RTX البصرية. 2. مرحلة التكبير: تكبير الصور 4 مرات عبر VSR أو نمط البتّ المرتفع. تُعالَج الإطارات واحدًا تلو الآخر للحفاظ على انخفاض استهلاك VRAM في دفعات الفيديو"
+    },
+    "DaSiWa_ResolutionScaleCalculator": {
+        "title": "DaSiWa_حاسبة تحجيم الدقة",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "resolution_preset": "إعدادات الدقة المسبقة",
+            "aspect_preset_when_not_image": "إعدادات النسبة المسبقة عند عدم كونها صورة",
+            "no_scale": "بلا تحجيم",
+            "scale_from_image": "تحجيم من الصورة",
+            "swap_aspect_when_not_image": "تبديل النسبة عند عدم كونها صورة",
+            "custom_aspect_width": "عرض النسبة المخصص",
+            "custom_aspect_height": "ارتفاع النسبة المخصص",
+            "mode": "الوضع",
+            "custom_divisor": "مقام مخصص"
+        },
+        "outputs": {
+            "width_int": "عرض عدد صحيح",
+            "height_int": "ارتفاع عدد صحيح",
+            "width_float": "عرض عشري",
+            "height_float": "ارتفاع عشري"
+        },
+        "description": "حاسبة تحجيم الدقة من DaSiWa: تحسب دقة مضبوطة رياضيًا بناءً على مساحة الميجابكسل المستهدفة. - النمط القياسي: تحجيم رياضي صرف. - نمط WAN/LTX: محاذاة إلى حدود 32 بكسل (ضروري لـ VAE في WAN/LTX). - بدون تحجيم: تتجاوز كل الحسابات وتخرج أبعاد صورة المصدر كما هي"
+    },
+    "DaSiWa_TorchResize": {
+        "title": "DaSiWa_ضبط حجم Torch",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "size_mode": "وضع الأبعاد",
+            "aspect_mode": "وضع النسبة",
+            "target_width": "العرض المستهدف",
+            "target_height": "الارتفاع المستهدف",
+            "scale_multiplier": "مضاعف التحجيم",
+            "interpolation": "استيفاء",
+            "gamma_correct": "تصحيح غاما",
+            "divisible_by": "قيمة قابلة للقسمة",
+            "pad_color": "لون التعبئة",
+            "crop_position": "موضع القصّ",
+            "batch_size": "حجم الدفعة",
+            "max_batch_megapixels": "الحد الأقصى لميجابكسل الدفعة",
+            "cache_size": "حجم التخزين المؤقت"
+        },
+        "outputs": {
+            "image": "صورة"
+        },
+        "description": "أداة ضبط حجم دفعات PyTorch بلا اعتماديات لصور ComfyUI. تدعم إعادة عينات Nearest وBilinear وBicubic والمنطقة وLanczos المنفصلة مع التخزين المؤقت بدقة بكسلية تامة"
+    },
+    "DaSiWa_NodeStatusSwitch": {
+        "title": "DaSiWa_تبديل حالة العقدة",
+        "widgets": {
+            "enabled": "تفعيل",
+            "trigger_on": "شرط التشغيل",
+            "action": "عملية"
+        },
+        "outputs": {
+            "enabled_out": "مخرج التفعيل"
+        },
+        "description": "مفتاح حالة العقدة من DaSiWa: يكتم أو يتجاوز العقد الهدف المتصلة بحسب الحالة المنطقية، مع مخرج تفعيل لربط المفاتيح تسلسليًا"
+    },
+    "DaSiWa_Watermark": {
+        "title": "DaSiWa_علامة مائية",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "watermark_path": "مسار العلامة المائية",
+            "position": "الموضع",
+            "scale": "تحجيم",
+            "resampling": "إعادة عيّنات",
+            "transparency": "الشفافية",
+            "rotation": "تدوير",
+            "padding_x": "حشو محور X",
+            "padding_y": "حشو محور Y",
+            "optical_padding": "التعبئة البصرية",
+            "optical_strength": "قوة التعبئة البصرية",
+            "random_switches": "مفتاح عشوائي",
+            "fade": "تلاشٍ تدريجي",
+            "fade_margin": "هامش التلاشي التدريجي",
+            "randomize_position": "موضع عشوائي",
+            "random_seed": "البذرة العشوائية"
+        },
+        "description": "علامة DaSiWa المائية: عقدة تركيب علامات مائية بمستوى احترافي مع تركيب مستقر على CPU. تخزن دفعة الإخراج في RAM وتبدأ المزج من إطارات المصدر المهيأة لتجنب الوميض، وتدعم تحجيم bicubic/Lanczos، والتدوير، و«التعبئة البصرية» لمحاذاة بصرية مثالية"
+    },
+    "DaSiWa_WildcardPresetPromptBuilder": {
+        "title": "DaSiWa_بانِي الموجّهات من الإعدادات المسبقة",
+        "inputs": {
+            "positive_input": "إدخال موجب",
+            "negative_input": "إدخال سالب"
+        },
+        "widgets": {
+            "style": "النمط",
+            "seed": "البذرة العشوائية",
+            "token_budget": "ميزانية الرموز",
+            "selection_state": "حالة الاختيار",
+            "reroll": "إعادة العشوائية",
+            "auto_reroll": "إعادة عشوائية تلقائية"
+        },
+        "outputs": {
+            "positive_prompt": "موجّه موجب",
+            "negative_prompt": "موجّه سالب"
+        },
+        "description": "يبني الموجّهات الموجبة والسالبة من مكتبة موجّهات مزدوجة النمط مدمجة؛ تُحفظ الاختيارات والأوزان في سير العمل"
+    },
+    "DaSiWa_SeedControl": {
+        "title": "DaSiWa_متحكم البذرة المستقل",
+        "description": "عقدة مستقلة لتحكم البذرة تعيد استخدام تجربة بذرة MiniMax H3 Director: نمط عشوائي/ثابت، بذرة غير موقعة 64 بت، إعادة عشوائية/استعادة آخر بذرة، سجل آخر 10 بذور، ومخرج كائن NOISE تستخدمه عقد العيّنات لاحقًا مباشرة.",
+        "inputs": {
+            "seed": "إدخال البذرة الخارجي"
+        },
+        "widgets": {
+            "seed_value": "قيمة البذرة المحلية",
+            "seed_control_state": "حالة تحكم البذرة",
+            "Local seed value. The panel edits this; leave the native widget hidden.": "قيمة بذرة محلية تعدّلها لوحة الواجهة الأمامية؛ أبقِ العنصر الأصلي مخفيًا.",
+            "Persisted seed-control state (JSON): mode, last_seed and recent seeds.": "حالة تحكم البذرة المحفوظة (JSON): النمط، وآخر بذرة، وقائمة سجل البذور.",
+            "Optional external seed. When linked, the local controls are disabled and this value is passed through.": "مدخل بذرة خارجي اختياري: عند التوصيل تُعطَّل الضوابط المحلية ويمرَّر المتصل كما هو."
+        },
+        "outputs": {
+            "seed": "البذرة",
+            "noise": "ضوضاء"
+        }
+    },
+    "PathchComfyKitchenAttentionDaSiWa": {
+        "title": "🪛 رقعة انتباه Comfy Kitchen INT8 من DaSiWa",
+        "description": "ترقيع النموذج لاستخدام تنفيذ الانتباه INT8 في Comfy Kitchen وقت التشغيل توفيرًا لذاكرة العرض؛ وفي حال عدم توفر Comfy Kitchen يتم الرجوع إلى الانتباه الافتراضي في ComfyUI.",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "outputs": {
+            "MODEL": "النموذج"
+        }
+    },
+    "MiniMaxH3Director": {
+        "title": "🎬 DaSiWa_مخرج MiniMax H3",
+        "description": "عقدة مخرج توليد الفيديو/الصوت MiniMax H3: تدمج الخط الزمني ووسائط المرجع وبناء الموجّهات، وتخرج إعدادات مخرج بمعلومات توجيه كاملة لاستخدامها في عقدة MiniMax H3 Director Guide.",
+        "inputs": {
+            "fl2va_model": "نموذج FL2VA",
+            "ref2va_model": "نموذج REF2VA",
+            "external_width_overwrite": "تجاوز العرض الخارجي",
+            "external_height_overwrite": "تجاوز الارتفاع الخارجي",
+            "external_prompt_overwrite": "تجاوز الموجّه الخارجي"
+        },
+        "widgets": {
+            "mode": "الوضع",
+            "prompt": "الموجّه",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "duration": "المدة",
+            "ref_image_size": "أبعاد الصورة المرجعية",
+            "frame_rate": "معدل الإطارات"
+        },
+        "outputs": {
+            "guide": "دليل المخرج",
+            "duration": "المدة",
+            "positive_prompt": "موجّه موجب",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "model": "النموذج",
+            "fl2va_requested": "طلب FL2VA",
+            "inpaint_requested": "طلب الإصلاح",
+            "frame_rate": "معدل الإطارات"
+        },
+        "ui": {
+            "Model Mode:": "نمط النموذج:",
+            "Image Inpaint": "إصلاح الصور",
+            "Prompt Mode:": "وضع الموجّه:",
+            "Simple": "مبسّط",
+            "Structured": "مهيكل",
+            "Use the simple prompt editor": "استخدام محرر الموجّهات المبسّط",
+            "Use the structured prompt editor": "استخدام محرر الموجّهات المهيكل",
+            "One image reference; output exactly one frame through Get Image from Batch.": "مرجع صورة واحدة؛ يُخرج إطارًا واحدًا بالضبط عبر «جلب صورة من الدفعة».",
+            "Remove": "إزالة",
+            "Clear": "مسح",
+            "Remove all media and prompts": "إزالة جميع الوسائط والموجّهات",
+            "Nothing to clear yet": "لا يوجد محتوى للمسح",
+            "Nothing to clear.": "لا يوجد محتوى للمسح.",
+            "Open MiniMax H3 Director documentation on GitHub": "فتح وثائق مخرج MiniMax H3 على GitHub",
+            "T2VA · no input frame": "T2VA · بلا إطارات إدخال",
+            "I2VA · one opening-frame slot": "I2VA · خانة إطار أول واحدة",
+            "FL2VA · opening and closing-frame slots": "FL2VA · خانتا الإطار الأول والإطار الأخير",
+            "L2VA · one closing-frame slot": "L2VA · خانة إطار أخير واحدة",
+            "Image Inpaint · exactly one image · outputs one frame through Get Image from Batch · no video/audio": "إصلاح الصور · صورة واحدة بالضبط · إخراج إطار عبر «جلب صورة من الدفعة» · بدون فيديو/صوت",
+            "REF2VA · up to 9 image, 3 video, and 3 audio slots · 12 combined files maximum": "REF2VA · حتى 9 خانات صور و3 خانات فيديو و3 خانات صوت · 12 ملفًا كحد أقصى إجمالًا",
+            "ASPECT": "النسبة",
+            "RESOLUTION": "الدقة",
+            "INPUT SCALING": "تحجيم الإدخال",
+            "Auto": "تلقائي",
+            "CUSTOM": "مخصّص",
+            "Native (ShortEdge 768px)": "أصلي (الضلع الأقصر 768px)",
+            "Off": "إغلاق",
+            "Native (ShortEdge 2048px)": "أصلي (الضلع الأقصر 2048px)",
+            "Target · Selected Aspect & Resolution": "الهدف · النسبة والدقة المحددتان",
+            "Fit": "ملاءمة",
+            "Fill and crop": "حشو وقصّ",
+            "Fit and pad": "ملاءمة مع حشو الحواف",
+            "Long side with divisible crop": "قصّ بمحاذاة الضلع الأطول بقسمة تامة",
+            "0.26 MP - Preview": "0.26 MP - معاينة",
+            "0.36 MP - Small": "0.36 MP - صغير",
+            "0.52 MP - SD": "0.52 MP - قياسي",
+            "0.65 MP - Balanced": "0.65 MP - متوازن",
+            "0.83 MP - HD": "0.83 MP - عالي الدقة",
+            "1.05 MP - HD+": "1.05 MP - عالي الدقة+",
+            "1.20 MP - HD++": "1.20 MP - عالي الدقة++",
+            "1.35 MP - 2K lite": "1.35 MP - 2K خفيف",
+            "1.75 MP - QHD": "1.75 MP - فائق الدقة",
+            "2.10 MP - FHD": "2.10 MP - كامل HD",
+            "3.30 MP - QHD+": "3.30 MP - فائق الدقة+",
+            "4.75 MP - 2K Pro": "4.75 MP - 2K احترافي",
+            "6.50 MP - Production": "6.50 MP - إنتاج",
+            "8.30 MP - UHD": "8.30 MP - فائق الوضوح",
+            "General": "عام",
+            "Horizontal": "أفقي",
+            "Square": "مربّع",
+            "Vertical": "عمودي",
+            "Skip input scaling — references are sent to MiniMax at their original size.": "تخطي تحجيم الإدخال — تُرسل المواد المرجعية بأبعادها الأصلية إلى MiniMax.",
+            "Scale references down only when their short edge exceeds 2048 px; smaller inputs pass through untouched.": "يُصغَّر فقط عندما يتجاوز الضلع الأقصر في المادة المرجعية 2048 بكسل؛ والمدخلات الأصغر تمر كما هي دون معالجة.",
+            "Resize references to the selected Aspect & Resolution box (stretch, aspect not preserved).": "ضبط المادة المرجعية على إطار النسبة والدقة المحددين (تمديد، دون الحفاظ على نسبة العرض إلى الارتفاع).",
+            "Scale references to fit inside the target box while preserving their aspect ratio.": "تحجيم المادة المرجعية لتناسب الإطار الهدف مع الحفاظ على نسبة العرض إلى الارتفاع.",
+            "Scale references to cover the target box, preserving aspect, then crop the overflow.": "تحجيم المادة المرجعية لملء الإطار الهدف مع الحفاظ على نسبة العرض إلى الارتفاع، ثم قصّ الزائد.",
+            "Scale references to fit inside the target box, preserving aspect, then pad the empty edges.": "تحجيم المادة المرجعية لتناسب الإطار الهدف مع الحفاظ على نسبة العرض إلى الارتفاع، ثم حشو الحواف الفارغة.",
+            "Scale so the long side matches the target, then crop to an exact, divisible target size.": "يحاذي التحجيم الضلع الأطول مع الهدف ثم يقصّه إلى أبعاد هدف مضبوطة وقابلة للقسمة.",
+            "RATIO W": "نسبة العرض",
+            "RATIO H": "نسبة الارتفاع",
+            "Megapixels": "ميجابكسل",
+            "Fixed pixels": "بكسلات ثابتة",
+            "WIDTH": "العرض",
+            "HEIGHT": "الارتفاع",
+            "External width/height overwrite · Director sizing and input scaling disabled": "تجاوز العرض والارتفاع الخارجيين · تحديدا مقاس المخرج وتحجيم الإدخال معطّلان",
+            "Image/Video": "صورة/فيديو",
+            "Image/Video · selected": "صورة/فيديو · محدد",
+            "audio": "صوت",
+            "audio · selected": "الصوت · محدد",
+            "Video only": "الفيديو فقط",
+            "Audio only": "الصوت فقط",
+            "Video + embedded audio": "فيديو + صوت مضمّن",
+            "Full source-duration scale": "تحجيم كامل لمدة المصدر",
+            "Full audio waveform; crop markers show the selected reference window": "الموجة الصوتية الكاملة؛ تحدد علامات القصّ نطاق المرجع المختار",
+            "Decoding audio waveform…": "جارٍ فك ترميز الموجة الصوتية…",
+            "Open preview and details": "فتح المعاينة والتفاصيل",
+            "T2VA prompt builder": "بانِي الموجّهات T2VA",
+            "I2VA prompt builder": "بانِي الموجّهات I2VA",
+            "FL2VA prompt builder": "بانِي الموجّهات FL2VA",
+            "L2VA prompt builder": "بانِي الموجّهات L2VA",
+            "REF2VA prompt builder": "بانِي الموجّهات REF2VA",
+            "Image Inpaint prompt builder": "بانِي موجّهات إصلاح الصور",
+            "T2VA simple prompt": "الموجّه المبسّط T2VA",
+            "I2VA simple prompt": "الموجّه المبسّط I2VA",
+            "FL2VA simple prompt": "الموجّه المبسّط FL2VA",
+            "L2VA simple prompt": "الموجّه المبسّط L2VA",
+            "REF2VA simple prompt": "الموجّه المبسّط REF2VA",
+            "Image Inpaint simple prompt": "الموجّه المبسّط لإصلاح الصور",
+            "REF2VA prompt builder — write freely; headers are added automatically": "بانِي الموجّهات REF2VA — اكتب بحرّية وستُضاف عناوين الحقول تلقائيًا",
+            "Prompt": "الموجّه",
+            "Insert [Shot N]": "إدراج [Shot N]",
+            "Prefill Labels & Summary": "ملء الوسوم والملخص مسبقًا",
+            "Generate Subject/Picture/Video/Audio labels from inserted media and fill summary template": "يولّد وسوم الكائن/الصورة/الفيديو/الصوت استنادًا إلى الوسائط المدرجة ويملأ قالب الملخص",
+            "Preview Prompt": "معاينة الموجّه",
+            "Show the full prompt that will be sent upstream": "عرض الموجّه الكامل الذي سيُرسل إلى العقد العلوية",
+            "External prompt detected — builder fields are disabled.": "تم رصد موجّه خارجي — حقول الباني معطّلة.",
+            "Write the complete MiniMax H3 prompt...": "اكتب هنا موجّه MiniMax H3 الكامل…",
+            "[Shot 1] Start your scene description here...": "[Shot 1] ابدأ وصف مشهدك هنا…",
+            "Describe ambient sounds, dialogue, effects...": "صِف الأصوات المحيطة والحوار والمؤثرات الصوتية…",
+            "N/A or describe background score...": "أدخل N/A، أو صِف الموسيقى الخلفية…",
+            "<Subject 1> is the woman in <Picture 1>, with short dark hair and a red coat.\n<Picture 1> is the opening-frame anchor for [Shot 1].\n<Subject 2> is the walking motion taken from <Video 1>.\n<Video 1> provides the camera path and pacing structure.\n<Audio 1> is the voice-timbre reference for <Subject 1>.": "<Subject 1> هي المرأة في <Picture 1> بشعر أسود قصير ومعطف أحمر.\n<Picture 1> هي مرتكز الإطار الأول في [Shot 1].\n<Subject 2> هي حركة المشي المأخوذة من <Video 1>.\nيوفر <Video 1> مسار حركة الكاميرا وهيكل الإيقاع.\n<Audio 1> هو مرجع نبرة صوت <Subject 1>.",
+            "[reference generation + audio reference] Use <Subject 1> from <Picture 1>, the motion and pacing of <Video 1>, and the voice character of <Audio 1>.": "[reference generation + audio reference] استخدم <Subject 1> من <Picture 1>، وحركة <Video 1> وإيقاعها، وصفات صوت <Audio 1>.",
+            "<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - identity and clothing remain consistent.\n<Picture 1> ([Shot 1] first frame): fully_preserved - opening composition anchor.\n<Subject 2> (motion transferred to <Subject 1>): attribute_transfer - walk rhythm is applied to <Subject 1>.\n<Video 1> (pacing structure): weak_reference - general timing and camera rhythm are retained.\n<Audio 1>: reference - timbre and delivery are followed without copying the signal.": "<Subject 1> (تظهر في [Shot 1] و[Shot 2]): fully_preserved - الحفاظ على الهوية والملابس كما هما.\n<Picture 1> (الإطار الأول في [Shot 1]): fully_preserved - مرتكز تكوين البداية.\n<Subject 2> (نقل الحركة إلى <Subject 1>): attribute_transfer - تطبيق إيقاع المشية على <Subject 1>.\n<Video 1> (هيكل الإيقاع): weak_reference - الاحتفاظ بالتوقيت العام وإيقاع اللقطات.\n<Audio 1>: reference - اتباع النبرة وأسلوب التعبير دون نسخ الإشارة الأصلية.",
+            "[Shot 1] ... [Shot 2] At 00:04.500, ...": "[Shot 1] …… [Shot 2] عند 00:04.500،……",
+            "Audio environment description...": "وصف البيئة الصوتية…",
+            "N/A or background score...": "أدخل N/A، أو صِف الموسيقى الخلفية…",
+            "Close and save (Escape or click outside)": "إغلاق وحفظ (Esc أو النقر خارجها)",
+            "Start:": "البداية:",
+            "End:": "النهاية:",
+            "▶ Play crop": "▶ تشغيل المقطع المقصوص",
+            "Playing crop…": "جارٍ تشغيل المقطع المقصوص…",
+            "Play only the current crop range": "تشغيل نطاق القصّ الحالي فقط",
+            "Drag the highlighted crop to move it; drag either end marker to resize it.": "اسحب منطقة القصّ المظللة لتحريكها؛ واسحب علامتي الطرفين لتغيير الحجم.",
+            "Save": "حفظ",
+            "Cancel": "إلغاء",
+            "Full media preview": "معاينة الوسائط الكاملة",
+            "Done": "تمّ",
+            "Copy": "نسخ",
+            "All media and prompts cleared.": "تم مسح جميع الوسائط والموجّهات.",
+            "FL2VA supports image references only; video and audio are unavailable.": "FL2VA يدعم مراجع الصور فقط؛ الفيديو والصوت غير متاحين.",
+            "This media type is not available in the selected MiniMax mode.": "نمط MiniMax المحدد لا يدعم هذا النوع من الوسائط.",
+            "FL2VA supports image references only; select the Image/Video lane.": "FL2VA يدعم مراجع الصور فقط؛ يرجى اختيار مسار الصور/الفيديو.",
+            "Upload failed": "فشل الرفع",
+            "T2VA has no input lanes.": "لا مسارات إدخال لـ T2VA.",
+            "This mode does not support audio references.": "هذا النمط لا يدعم مراجع الصوت.",
+            "Audio lane selected. Paste files here with Ctrl+V.": "تم اختيار مسار الصوت. يمكن استخدام Ctrl+V للصق الملفات هنا.",
+            "Image/Video lane selected. Paste files here with Ctrl+V.": "تم اختيار مسار الصور/الفيديو. يمكن استخدام Ctrl+V للصق الملفات هنا."
+        }
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "🎬 DaSiWa_منفذ المخرج MiniMax H3",
+        "description": "يحوّل دليل المخرج إلى استدعاءات MiniMax H3 الأصلية: يستدعي MiniMaxH3ImageToVideo أو MiniMaxH3ReferenceToVideo بحسب نمط الدليل، وينشئ conditioning وlatent.",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "guide": "دليل المخرج",
+            "audio_vae": "VAE الصوت"
+        },
+        "outputs": {
+            "positive": "conditioning موجب",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3Cache": {
+        "title": "⚡ DaSiWa_تخزين المتبقي المؤقت لـ MiniMax H3",
+        "description": "أضف تخزينًا مؤقتًا تقريبيًا للمتبقّي على مستوى الكتلة الكاملة لنماذج MiniMax H3: يعيد استخدام مخرج block-stack السابق ضمن نطاق خطوات محدد، متخطيًا إعادة الحساب المكلفة لزيادة السرعة. العتبة الأعلى تتخطى أكثر لكنها قد تخفض الدقة.",
+        "inputs": {
+            "model": "النموذج"
+        },
+        "widgets": {
+            "reuse_threshold": "عتبة إعادة الاستخدام",
+            "start_percent": "نسبة البداية",
+            "end_percent": "نسبة النهاية",
+            "max_steps": "الحد الأقصى للخطوات المتخطاة",
+            "device": "الجهاز",
+            "verbose": "سجلات مفصّلة"
+        },
+        "outputs": {
+            "MODEL": "النموذج"
+        }
+    }
+}

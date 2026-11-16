@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "Carregador de Modelo SUPIR",
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "sdxl_model": "Modelo SDXL",
+            "fp8_unet": "Precisão FP8 do UNet",
+            "diffusion_dtype": "Tipo de poda"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Carregador da versão antiga, não recomendado.\n\nCarrega o modelo SUPIR e o modelo SDXL e depois os funde."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "Carregador de Modelo SUPIR_V2",
+        "inputs": {
+            "model": "Modelo",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "fp8_unet": "Precisão FP8 do UNet",
+            "diffusion_dtype": "Tipo de poda",
+            "high_vram": "VRAM alta"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Carrega os modelos SUPIR e SDXL e os funde.\n\nO tipo de poda deve permanecer na opção Automática, salvo erro ao carregar os modelos.\n\nfp8_unet： chama o UNet com torch.float8_e4m3fn, reduz o requisito de VRAM mas afeta levemente a qualidade.\n\nAlta VRAM: usa o Accelerate para carregar o modelo na GPU, acelera levemente o carregamento."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "Carregador de Modelo SUPIR_V2（CLIP）",
+        "inputs": {
+            "model": "Modelo",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "fp8_unet": "Precisão FP8 do UNet",
+            "diffusion_dtype": "Tipo de poda",
+            "high_vram": "VRAM alta"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Carrega os modelos SUPIR e SDXL e os funde.\n\nO tipo de poda deve permanecer na opção Automática, salvo erro ao carregar os modelos.\n\nfp8_unet： chama o UNet com torch.float8_e4m3fn, reduz o requisito de VRAM mas afeta levemente a qualidade.\n\nAlta VRAM: usa o Accelerate para carregar o modelo na GPU, acelera levemente o carregamento."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR Codificação",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE em blocos",
+            "encoder_tile_size": "Tamanho do bloco de codificação",
+            "encoder_dtype": "Precisão de codificação"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR Decodificação",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE em blocos",
+            "decoder_tile_size": "Tamanho do bloco de decodificação"
+        },
+        "outputs": {
+            "image": "Imagem"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR Primeira Fase",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE em blocos",
+            "encoder_tile_size": "Tamanho do bloco de codificação",
+            "decoder_tile_size": "Tamanho do bloco de decodificação",
+            "encoder_dtype": "Precisão de codificação"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "Imagem",
+            "denoised_latents": "Latent"
+        },
+        "description": "A「primeira etapa」do SUPIR. Usa o denoise_encoder do SUPIR para codificar e decodificar a imagem, corrigindo artefatos de compressão, mas isso desfoca a imagem.\n\nPode ser substituído por outro amostrador/desfoque, ou este nó pode ser dispensado."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR Condicionamento",
+        "inputs": {
+            "SUPIR_MODEL": "Modelo SUPIR",
+            "SUPIR_model": "Modelo SUPIR",
+            "latents": "Latent",
+            "captions": "Título/legenda"
+        },
+        "widgets": {
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo"
+        },
+        "outputs": {
+            "positive": "Condição positiva",
+            "negative": "Condição negativa"
+        },
+        "description": "Cria as condições para o amostrador.\n A entrada de legenda é opcional; ao receber uma legenda, ela é adicionada ao prompt positivo\n Se uma lista de legendas for fornecida para uma única imagem de entrada, as legendas devem corresponder ao número de blocos\n Consulte SUPIR Imagem em Blocos\n Se uma lista de legendas for fornecida e corresponder ao lote de imagens de entrada, cada imagem usará sua legenda correspondente"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR Amostragem",
+        "inputs": {
+            "SUPIR_model": "Modelo SUPIR",
+            "latents": "Latent",
+            "positive": "Condição positiva",
+            "negative": "Condição negativa"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "control_before_generate": "Ação antes da execução",
+            "steps": "Etapas",
+            "cfg_scale_start": "Escala CFG inicial",
+            "cfg_scale_end": "Escala CFG final",
+            "EDM_s_churn": "Perturbação Aleatória EDM",
+            "s_noise": "Quantidade de ruído",
+            "DPMPP_eta": "Parâmetro de Tamanho do Passo DPMPP",
+            "control_scale_start": "Escala de controle inicial",
+            "control_scale_end": "Escala de controle final",
+            "restore_cfg": "Restaurar CFG",
+            "keep_model_loaded": "Manter o modelo carregado",
+            "sampler": "Amostrador",
+            "sampler_tile_size": "Tamanho do bloco do amostrador",
+            "sampler_tile_stride": "Passo do bloco do amostrador"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nO Latent usado para a amostragem; ao usar o Latent SUPIR, este item afeta apenas a forma do ruído.\n\nNos demais casos, igual ao padrão do ComfyUI. \n\nSe houver uma entrada Latent, ela prevalece.\n\n- **CFG：**\n\nControla o CFG por interpolação linear, usando Escala CFG inicial como valor inicial e escalando linearmente até o valor de Escala CFG final.\n\nDefinir os dois com o mesmo valor desativa o escalonamento por interpolação.\n\n- **EDM_s_churn：**\n\nControla a velocidade com que o processo de amostragem se adapta às variações de ruído do Latent.\n\nSem efeito no amostrador DPMPP.\n\n- **Ruído s_noise：**\n\nControla a quantidade de ruído adicionada ao Latent em cada etapa do processo de amostragem. \n\n- **DPMPP_eta：**\n\nFator de escala que afeta o processo de difusão ao ajustar como a redução de ruído se adapta à variação do nível de ruído ao longo do tempo.\n\nSem efeito no amostrador EDM. \n\n- **Escala de controle control_scale：**\n\nForça do modelo de controle SUPIR, controlada por interpolação linear do início ao fim.\n\nQuanto menor o valor, menor a força de controle.\n\n- **CFG de restauração restore_cfg：**\n\nControla o grau de retorno à imagem original durante a amostragem.\n\nUsado para ajustar finamente o processo de amostragem.\n\n- **Amostrador：**\n\nEDM exige muitos passos, mas normalmente com melhor qualidade.\n\nDPMPP exige menos passos, ideal para modelos Lighting.\n\nO amostrador em blocos usa amostragem em blocos: muito lento, mas permite resoluções maiores com menos VRAM.\n\nAntes de dividir a imagem em blocos é preciso definir o tamanho do bloco; o passo dos blocos afeta a sobreposição entre eles. Para a função de blocos, consulte o nó SUPIR Imagem em Blocos."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR Imagem em Blocos",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "tile_size": "Tamanho do bloco",
+            "tile_stride": "Passo dos blocos"
+        },
+        "outputs": {
+            "image_tiles": "Imagens em tiles",
+            "tile_size": "Tamanho do bloco",
+            "tile_stride": "Passo dos blocos"
+        },
+        "description": "Divide a imagem em blocos usando o método do Amostrador em Blocos.\n\nUsado para pré-visualizar os blocos e inferir cada bloco de volta (recurso em desenvolvimento)."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR Ampliação",
+        "inputs": {
+            "image": "Imagem",
+            "captions": "Título/legenda"
+        },
+        "widgets": {
+            "supir_model": "Modelo SUPIR",
+            "sdxl_model": "Modelo SDXL",
+            "seed": "Semente aleatória",
+            "control_before_generate": "Ação antes da execução",
+            "resize_method": "Método de escala",
+            "scale_by": "Fator de escala",
+            "steps": "Etapas",
+            "restoration_scale": "Escala de restauração",
+            "cfg_scale": "Escala CFG",
+            "a_prompt": "Prompt positivo",
+            "n_prompt": "Prompt negativo",
+            "s_churn": "Fator de decaimento do ruído",
+            "s_noise": "Quantidade de ruído",
+            "control_scale": "Escala de controle",
+            "cfg_scale_start": "Força Inicial da Orientação CFG",
+            "control_scale_start": "Peso Inicial do ControlNet",
+            "color_fix_type": "Tipo de correção de cor",
+            "keep_model_loaded": "Manter o modelo carregado",
+            "use_tiled_vae": "VAE em blocos",
+            "encoder_tile_size": "Tamanho do bloco de codificação",
+            "encoder_tile_size_pixels": "Tamanho do bloco de decodificação em pixels",
+            "decoder_tile_size": "Tamanho do bloco de decodificação",
+            "decoder_tile_size_latent": "Tamanho do bloco de decodificação Latent",
+            "diffusion_dtype": "Tipo de poda",
+            "encoder_dtype": "Precisão de codificação",
+            "batch_size": "Tamanho do lote",
+            "use_tiled_sampling": "Usar Amostragem em Blocos",
+            "used_tiled_sampling": "Usar Amostragem em Blocos",
+            "sampler_tile_size": "Tamanho do bloco do amostrador",
+            "sampler_tile_stride": "Passo do bloco do amostrador",
+            "fp8_unet": "Precisão FP8 do UNet",
+            "fp8_vae": "fp8_vae",
+            "sampler": "Amostrador"
+        },
+        "outputs": {
+            "upscaled_image": "Imagem"
+        }
+    }
+}

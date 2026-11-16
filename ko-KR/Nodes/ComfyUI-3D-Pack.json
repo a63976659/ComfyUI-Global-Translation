@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "메시에 텍스처 베이크",
+        "inputs": {
+            "reference_images": "참고 이미지",
+            "reference_masks": "참고 마스크",
+            "reference_orbit_camera_poses": "참고 궤도 카메라 포즈",
+            "mesh": "메시"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "참고 궤도 카메라 화각",
+            "mesh_albedo_width": "메시 알베도 너비",
+            "mesh_albedo_height": "메시 알베도 높이",
+            "training_iterations": "훈련 반복 횟수",
+            "batch_size": "배치 크기",
+            "texture_learning_rate": "텍스처 학습률",
+            "train_mesh_geometry": "기하 메시 훈련",
+            "geometry_learning_rate": "기하 학습률",
+            "ms_ssim_loss_weight": "MS-SSIM 손실 가중치",
+            "force_cuda_rasterize": "CUDA 래스터화 강제"
+        },
+        "outputs": {
+            "trained_mesh": "메시",
+            "baked_texture": "텍스처"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "CRM CCMs MVDiffusion 모델",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion 샘플러",
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크",
+            "multiview_images": "멀티뷰"
+        },
+        "widgets": {
+            "prompt": "긍정 프롬프트",
+            "prompt_neg": "부정 프롬프트",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "mv_guidance_scale": "MV 가이던스 배율",
+            "num_inference_steps": "추론 스텝 수"
+        },
+        "outputs": {
+            "multiview_CCMs": "CCMs 멀티뷰"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "CRM 이미지 MVDiffusion 모델",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion 샘플러",
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크"
+        },
+        "widgets": {
+            "prompt": "긍정 프롬프트",
+            "prompt_neg": "부정 프롬프트",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "mv_guidance_scale": "MV 가이던스 배율",
+            "num_inference_steps": "추론 스텝 수"
+        },
+        "outputs": {
+            "multiview_images": "멀티뷰"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "NeRF와 Marching Cubes를 사용해 3DGS를 메시로 변환",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "가우시안 설정",
+            "force_cuda_rast": "CUDA 래스터화 강제"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "컨볼루션 재구성 모델",
+        "inputs": {
+            "crm_model": "CRM 모델",
+            "multiview_images": "멀티뷰",
+            "multiview_CCMs": "CCMs 멀티뷰"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "깊이 행진 사면체",
+        "inputs": {
+            "reference_points_cloud": "레퍼런스 포인트 클라우드",
+            "reference_images": "참고 이미지",
+            "reference_masks": "참고 마스크"
+        },
+        "widgets": {
+            "training_iterations": "훈련 반복 횟수",
+            "points_cloud_fitting_weight": "포인트 클라우드 필터링 가중치",
+            "mesh_smoothing_weight": "메시 스무딩 가중치",
+            "chamfer_faces_sample_scale": "모서리 면 샘플링 스케일",
+            "mesh_scale": "메시 스케일",
+            "grid_resolution": "그리드 해상도",
+            "geometry_learning_rate": "기하 학습률",
+            "positional_encoding_multires": "멀티 위치 인코딩",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "메시"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "멀티뷰 어댑티브 메시",
+        "inputs": {
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크",
+            "reference_orbit_camera_poses": "참고 궤도 카메라 포즈",
+            "mesh": "메시"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "참고 궤도 카메라 화각",
+            "mesh_albedo_height": "메시 알베도 높이",
+            "mesh_albedo_width": "메시 알베도 너비",
+            "training_iterations": "훈련 반복 횟수",
+            "batch_size": "배치 크기",
+            "texture_learning_rate": "텍스처 학습률",
+            "train_mesh_geometry": "기하 메시 훈련",
+            "geometry_learning_rate": "기하 학습률",
+            "ms_ssim_loss_weight": "MS-SSIM 손실 가중치",
+            "remesh_after_n_iteration": "N번 반복마다 리메시",
+            "force_cuda_rasterize": "CUDA 래스터화 강제"
+        },
+        "outputs": {
+            "trained_mesh": "메시",
+            "baked_texture": "텍스처"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "레퍼런스 깊이 이미지",
+            "reference_normal_maps": "참고 노멀 이미지",
+            "reference_masks": "참고 마스크",
+            "reference_orbit_camera_poses": "참고 궤도 카메라 포즈"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "참고 궤도 카메라 화각",
+            "training_iterations": "훈련 반복 횟수",
+            "batch_size": "배치 크기",
+            "learning_rate": "학습률",
+            "voxel_grids_resolution": "복셀 그리드 해상도",
+            "depth_min_distance": "깊이 최소 거리",
+            "depth_max_distance": "깊이 최대 거리",
+            "mask_loss_weight": "마스크 손실 가중치",
+            "depth_loss_weight": "깊이 손실 가중치",
+            "normal_loss_weight": "노멀 손실 가중치",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "CUDA 래스터화 강제"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "가우시안 스플래팅",
+        "inputs": {
+            "reference_images": "참고 이미지",
+            "reference_masks": "참고 마스크",
+            "reference_orbit_camera_poses": "참고 궤도 카메라 포즈",
+            "points_cloud_to_initialize_gaussian": "가우시안 포인트 클라우드 초기화",
+            "ply_to_initialize_gaussian": "gs_ply 초기화",
+            "mesh_to_initialize_gaussian": "가우시안 메시 초기화"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "참고 궤도 카메라 화각",
+            "training_iterations": "훈련 반복 횟수",
+            "batch_size": "배치 크기",
+            "ms_ssim_loss_weight": "MS-SSIM 손실 가중치",
+            "alpha_loss_weight": "알파 손실 가중치",
+            "offset_loss_weight": "오프셋 손실 가중치",
+            "offset_opacity_loss_weight": "오프셋 불투명도 손실 가중치",
+            "invert_background_probability": "배경 반전 확률",
+            "feature_learning_rate": "특성 학습률",
+            "opacity_learning_rate": "불투명도 학습률",
+            "scaling_learning_rate": "스케일 학습률",
+            "rotation_learning_rate": "회전 학습률",
+            "position_learning_rate_init": "위치 학습률 초기",
+            "position_learning_rate_final": "위치 학습률 최종",
+            "position_learning_rate_delay_mult": "위치 학습률 지연",
+            "position_learning_rate_max_steps": "위치 학습률 최대 스텝 수",
+            "initial_gaussians_num": "초기 가우시안 수",
+            "K_nearest_neighbors": "K 최근접 개수",
+            "percent_dense": "밀도 백분율",
+            "density_start_iterations": "밀도 초기 반복 횟수",
+            "density_end_iterations": "밀도 최종 반복 횟수",
+            "densification_interval": "조밀화 간격",
+            "opacity_reset_interval": "불투명도 재설정 간격",
+            "densify_grad_threshold": "밀도 기울기 임계값",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크",
+            "reference_orbit_camera_poses": "참고 궤도 카메라 포즈"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "참고 궤도 카메라 화각",
+            "training_iterations": "훈련 반복 횟수",
+            "training_resolution": "학습 해상도",
+            "marching_cude_threshold": "머칭 큐브 임계값",
+            "marching_cude_grids_resolution": "행진 곡선 그리드 해상도",
+            "marching_cude_grids_batch_size": "행진 곡선 그리드 배치 크기",
+            "texture_resolution": "텍스처 해상도",
+            "force_cuda_rast": "CUDA 래스터화 강제"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "대형 멀티뷰 가우시안(LGM) 모델",
+        "inputs": {
+            "multiview_images": "멀티뷰",
+            "lgm_model": "LGM 모델"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "MVDream 모델",
+        "inputs": {
+            "mvdream_pipe": "MVDream 파이프라인",
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크"
+        },
+        "widgets": {
+            "prompt": "프롬프트",
+            "prompt_neg": "부정 프롬프트",
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "mv_guidance_scale": "MV 가이던스 배율",
+            "num_inference_steps": "추론 스텝 수",
+            "elevation": "고도각"
+        },
+        "outputs": {
+            "multiview_images": "멀티뷰"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크",
+            "reference_normals": "참고 노멀 이미지"
+        },
+        "widgets": {
+            "training_iterations": "훈련 반복 횟수",
+            "batch_size": "배치 크기",
+            "learning_rate": "학습률",
+            "learning_rate_alpha": "알파 학습률",
+            "color_loss_weight": "색상 손실 가중치",
+            "mesh_smoothing_weight": "메시 스무딩 가중치",
+            "mask_loss_weight": "마스크 손실 가중치",
+            "normal_loss_weight": "노멀 손실 가중치",
+            "sparse_loss_weight": "희소 손실 가중치",
+            "warm_up_end": "워밍업 종료",
+            "anneal_end": "어닐링 종료",
+            "use_white_background": "흰색 배경 사용",
+            "geometry_extract_resolution": "기하 추출 해상도",
+            "marching_cude_threshold": "머칭 큐브 임계값"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크",
+            "tgs_model": "TGS 모델"
+        },
+        "widgets": {
+            "cam_dist": "카메라 거리"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "TSR 모델",
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "기하 추출 해상도",
+            "marching_cude_threshold": "머칭 큐브 임계값"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "Wonder3D MVDiffusion 모델",
+        "inputs": {
+            "mvdiffusion_pipe": "MVDiffusion 파이프라인",
+            "reference_image": "참고 이미지",
+            "reference_mask": "참고 마스크"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "control_after_generate": "생성 후 제어",
+            "mv_guidance_scale": "MV 가이던스 배율",
+            "num_inference_steps": "추론 스텝 수"
+        },
+        "outputs": {
+            "multiview_images": "멀티뷰",
+            "multiview_normals": "멀티뷰 법선"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "3DGS를 포인트 클라우드로 변환",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "포인트 클라우드"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "메시를 포인트 클라우드로 변환",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "outputs": {
+            "points_cloud": "포인트 클라우드"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "가우시안 스플래팅 궤도 렌더러",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "궤도 카메라 포즈"
+        },
+        "widgets": {
+            "render_image_width": "너비",
+            "render_iamge_height": "높이",
+            "render_orbit_camera_fovy": "궤도 카메라 화각",
+            "render_background_r": "배경 R",
+            "render_background_g": "배경 G",
+            "render_background_b": "배경 B"
+        },
+        "outputs": {
+            "rendered_gs_images": "이미지",
+            "rendered_gs_masks": "마스크"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "궤도 카메라 포즈 생성",
+        "inputs": {
+            "reference_images": "참고 이미지"
+        },
+        "widgets": {
+            "generate_pose_commnad": "명령 생성"
+        },
+        "outputs": {
+            "orbit_camposes": "궤도 카메라 포즈"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "궤도 카메라 포즈 스택",
+        "widgets": {
+            "orbit_radius_start": "궤도 반경 시작",
+            "orbit_radius_stop": "궤도 반경 종료",
+            "orbit_radius_step": "궤도 반경 스텝",
+            "elevation_start": "고도각 시작",
+            "elevation_stop": "고도각 종료",
+            "elevation_step": "고도각 스텝",
+            "azimuth_start": "방위각 시작",
+            "azimuth_stop": "방위각 종료",
+            "azimuth_step": "방위각 스텝",
+            "orbit_center_X_start": "궤도 중심 X 시작",
+            "orbit_center_X_stop": "궤도 중심 X 종료",
+            "orbit_center_X_step": "궤도 중심 X 스텝",
+            "orbit_center_Y_start": "궤도 중심 Y 시작",
+            "orbit_center_Y_stop": "궤도 중심 Y 종료",
+            "orbit_center_Y_step": "궤도 중심 Y 스텝",
+            "orbit_center_Z_start": "궤도 중심 Z 시작",
+            "orbit_center_Z_stop": "궤도 중심 Z 종료",
+            "orbit_center_Z_step": "궤도 중심 Z 스텝"
+        },
+        "outputs": {
+            "orbit_camposes": "궤도 카메라 포즈",
+            "orbit_radius_list": "궤도 반경 목록",
+            "elevation_list": "고도각 목록",
+            "azimuth_list": "방위각 목록",
+            "orbit_center_X_list": "궤도 중심 X 목록",
+            "orbit_center_Y_list": "궤도 중심 Y 목록",
+            "orbit_center_Z_list": "궤도 중심 Z 목록"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "3DGS 축 전환",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "X축 변환 대상",
+            "axis_y_to": "Y축 변환 대상",
+            "axis_z_to": "Z축 변환 대상"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "메시 축 전환",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "axis_x_to": "X축 변환 대상",
+            "axis_y_to": "Y축 변환 대상",
+            "axis_z_to": "Z축 변환 대상"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "3DGS 로드",
+        "widgets": {
+            "gs_file_path": "GS 파일 경로"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "3D 메시 로드",
+        "widgets": {
+            "mesh_file_path": "메시 파일 경로",
+            "resize": "재스케일",
+            "renormal": "법선 재매핑",
+            "retex": "텍스처 재조정",
+            "optimizable": "최적화 가능"
+        },
+        "outputs": {
+            "mesh": "메시"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "CRM MVDiffusion 모델 로드",
+        "widgets": {
+            "model_name": "모델명",
+            "crm_config_path": "CRM 설정 경로"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "CRM_MVDiffusion 샘플러"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "컨볼루션 재구성 모델 로드",
+        "widgets": {
+            "model_name": "모델명"
+        },
+        "outputs": {
+            "crm_model": "CRM 모델"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "Diffusers 파이프라인 로드",
+        "widgets": {
+            "diffusers_pipeline_name": "파이프라인 이름"
+        },
+        "outputs": {
+            "pipe": "노드 묶음"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "대형 멀티뷰 가우시안(LGM) 모델 로드",
+        "widgets": {
+            "model_name": "모델명",
+            "lgb_config": "lgb 설정"
+        },
+        "outputs": {
+            "lgm_model": "LGM 모델"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers(TGS) 모델 로드",
+        "widgets": {
+            "model_name": "모델명"
+        },
+        "outputs": {
+            "tgs_model": "TGS 모델"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "TripoSR(TSR) 모델 로드",
+        "widgets": {
+            "model_name": "모델명",
+            "chunk_size": "청크 크기"
+        },
+        "outputs": {
+            "tsr_model": "TSR 모델"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "3DGS 저장",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "저장 경로"
+        },
+        "outputs": {
+            "save_path": "저장 경로"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "3D 메시 저장",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "save_path": "저장 경로"
+        },
+        "outputs": {
+            "save_path": "저장 경로"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "3DGS 미리보기",
+        "widgets": {
+            "gs_file_path": "GS 파일 경로"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "3D 메시 미리보기",
+        "widgets": {
+            "mesh_file_path": "메시 파일 경로"
+        }
+    }
+}

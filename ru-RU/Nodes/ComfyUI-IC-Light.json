@@ -1,0 +1,113 @@
+{
+    "LoadAndApplyICLightUnet": {
+        "title": "Загрузить модель ICLight",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "model_path": "Модель"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        },
+        "description": "Немного неудобный, но рабочий способ загрузки моделей IC-Light.\nhttps://huggingface.co/lllyasviel/ic-light/tree/main  \n \nИспользуется вместе с узлом условия ICLight."
+    },
+    "ICLightConditioning": {
+        "title": "Применить условие ICLight",
+        "inputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "vae": "VAE",
+            "foreground": "Latent переднего плана",
+            "opt_background": "Фоновый Latent (необязательно)"
+        },
+        "widgets": {
+            "multiplier": "Множитель"
+        },
+        "outputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие",
+            "empty_latent": "Пустой Latent"
+        },
+        "description": "Узел условия для моделей IC-Light. Чтобы использовать «Фоновый Latent», нужно переключить модель IC-Light на версию «fbc»."
+    },
+    "LightSource": {
+        "title": "Простой источник света",
+        "inputs": {
+            "prev_image": "Предыдущее изображение"
+        },
+        "widgets": {
+            "light_position": "Положение источника света",
+            "multiplier": "Светлота",
+            "start_color": "Начальный цвет",
+            "end_color": "Конечный цвет",
+            "width": "Ширина",
+            "height": "Высота",
+            "batch_size": "Размер пакета"
+        },
+        "outputs": {
+            "IMAGE": "Изображение"
+        },
+        "description": "Генерирует градиентное изображение в оттенках серого, которое можно использовать для простого источника света. Цвет можно задать в RGB или HEX."
+    },
+    "CalculateNormalsFromImages": {
+        "title": "Расчёт нормалей",
+        "inputs": {
+            "images": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "sigma": "Sigma",
+            "center_input_range": "Центр входного диапазона"
+        },
+        "outputs": {
+            "divided": "Разделение",
+            "normal": "Изображение нормалей"
+        },
+        "description": "Вычисляет нормали по изображениям с разных ракурсов.\nТребуется пакет из 4 изображений: слева, справа, снизу, сверху"
+    },
+    "LoadHDRImage": {
+        "title": "Загрузить изображение HDR",
+        "widgets": {
+            "image": "Изображение",
+            "exposure": "Экспозиция",
+            "exposures": "Экспозиция"
+        },
+        "outputs": {
+            "IMAGE": "Изображение",
+            "MASK": "Маска"
+        },
+        "description": "Загружает изображения .hdr из папки input.\nВыводит пакет изображений LDR."
+    },
+    "BackgroundScaler": {
+        "title": "Оттенки серого фона",
+        "inputs": {
+            "image": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "scale": "Масштаб",
+            "invert": "Инвертировать"
+        },
+        "outputs": {
+            "IMAGE": "Изображение"
+        },
+        "description": "Преобразует область маски в изображение в оттенках серого"
+    },
+    "DetailTransfer": {
+        "title": "Перенос деталей",
+        "inputs": {
+            "target": "Целевое изображение",
+            "source": "Опорное изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "mode": "Режим",
+            "blur_sigma": "Sigma размытия",
+            "blend_factor": "Коэффициент смешения"
+        },
+        "outputs": {
+            "IMAGE": "Изображение"
+        }
+    }
+}

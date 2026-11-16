@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "خبز الملمس داخل الشبكة ثلاثية الأبعاد",
+        "inputs": {
+            "reference_images": "صورة مرجعية",
+            "reference_masks": "قناع مرجعي",
+            "reference_orbit_camera_poses": "وضعيات كاميرا المدار المرجعية",
+            "mesh": "شبكة ثلاثية الأبعاد"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "عدسة كاميرا المدار المرجعية",
+            "mesh_albedo_width": "عرض الألبيدو للشبكة",
+            "mesh_albedo_height": "ارتفاع الألبيدو للشبكة",
+            "training_iterations": "عدد تكرارات التدريب",
+            "batch_size": "حجم الدفعة",
+            "texture_learning_rate": "معدل تعلم الملمس",
+            "train_mesh_geometry": "تدريب هندسة الشبكة",
+            "geometry_learning_rate": "معدل تعلم الهندسة",
+            "ms_ssim_loss_weight": "وزن فقد MS-SSIM",
+            "force_cuda_rasterize": "فرض التحويل النقطي عبر CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "شبكة ثلاثية الأبعاد",
+            "baked_texture": "ملمس"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "نموذج CRM CCMs MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "أداة العينة CRM_MVDiffusion",
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي",
+            "multiview_images": "صور متعددة الزوايا"
+        },
+        "widgets": {
+            "prompt": "الموجّه الإيجابي",
+            "prompt_neg": "الموجّه السلبي",
+            "seed": "البذرة",
+            "control_after_generate": "عمل بعد التشغيل",
+            "mv_guidance_scale": "معامل التوجيه MV",
+            "num_inference_steps": "خطوات الاستدلال"
+        },
+        "outputs": {
+            "multiview_CCMs": "صور CCMs متعددة الزوايا"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "نموذج صورة CRM MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "أداة العينة CRM_MVDiffusion",
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي"
+        },
+        "widgets": {
+            "prompt": "الموجّه الإيجابي",
+            "prompt_neg": "الموجّه السلبي",
+            "seed": "البذرة",
+            "control_after_generate": "عمل بعد التشغيل",
+            "mv_guidance_scale": "معامل التوجيه MV",
+            "num_inference_steps": "خطوات الاستدلال"
+        },
+        "outputs": {
+            "multiview_images": "صور متعددة الزوايا"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "تحويل 3DGS إلى شبكة ثلاثية الأبعاد باستخدام NeRF وMarching Cubes",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "إعدادات Gaussian",
+            "force_cuda_rast": "فرض التحويل النقطي عبر CUDA"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "نموذج إعادة البناء بالالتواء",
+        "inputs": {
+            "crm_model": "نموذج CRM",
+            "multiview_images": "صور متعددة الزوايا",
+            "multiview_CCMs": "صور CCMs متعددة الزوايا"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "رباعيات الأوجه المسيرة بالعمق",
+        "inputs": {
+            "reference_points_cloud": "سحابة النقاط المرجعية",
+            "reference_images": "صورة مرجعية",
+            "reference_masks": "قناع مرجعي"
+        },
+        "widgets": {
+            "training_iterations": "عدد تكرارات التدريب",
+            "points_cloud_fitting_weight": "وزن ترشيح سحابة النقاط",
+            "mesh_smoothing_weight": "وزن تنعيم الشبكة",
+            "chamfer_faces_sample_scale": "تحجيم عينة الأوجه المشطوفة",
+            "mesh_scale": "تحجيم الشبكة ثلاثية الأبعاد",
+            "grid_resolution": "دقة الشبكة",
+            "geometry_learning_rate": "معدل تعلم الهندسة",
+            "positional_encoding_multires": "الترميز المواقعي المتعدد",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "تكييف الشبكة ثلاثية الأبعاد متعدد المشاهدات",
+        "inputs": {
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي",
+            "reference_orbit_camera_poses": "وضعيات كاميرا المدار المرجعية",
+            "mesh": "شبكة ثلاثية الأبعاد"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "عدسة كاميرا المدار المرجعية",
+            "mesh_albedo_height": "ارتفاع الألبيدو للشبكة",
+            "mesh_albedo_width": "عرض الألبيدو للشبكة",
+            "training_iterations": "عدد تكرارات التدريب",
+            "batch_size": "حجم الدفعة",
+            "texture_learning_rate": "معدل تعلم الملمس",
+            "train_mesh_geometry": "تدريب هندسة الشبكة",
+            "geometry_learning_rate": "معدل تعلم الهندسة",
+            "ms_ssim_loss_weight": "وزن فقد MS-SSIM",
+            "remesh_after_n_iteration": "إعادة تشكيل الشبكة ثلاثية الأبعاد كل N تكرار",
+            "force_cuda_rasterize": "فرض التحويل النقطي عبر CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "شبكة ثلاثية الأبعاد",
+            "baked_texture": "ملمس"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "صور العمق المرجعية",
+            "reference_normal_maps": "صور المتجهات العمودية المرجعية",
+            "reference_masks": "قناع مرجعي",
+            "reference_orbit_camera_poses": "وضعيات كاميرا المدار المرجعية"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "عدسة كاميرا المدار المرجعية",
+            "training_iterations": "عدد تكرارات التدريب",
+            "batch_size": "حجم الدفعة",
+            "learning_rate": "معدل التعلّم",
+            "voxel_grids_resolution": "دقة شبكة الفوكسل",
+            "depth_min_distance": "أدنى مسافة للعمق",
+            "depth_max_distance": "أقصى مسافة للعمق",
+            "mask_loss_weight": "وزن فقد القناع",
+            "depth_loss_weight": "وزن خسارة العمق",
+            "normal_loss_weight": "وزن فقد المتجهات العمودية",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "فرض التحويل النقطي عبر CUDA"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "رش Gaussian",
+        "inputs": {
+            "reference_images": "صورة مرجعية",
+            "reference_masks": "قناع مرجعي",
+            "reference_orbit_camera_poses": "وضعيات كاميرا المدار المرجعية",
+            "points_cloud_to_initialize_gaussian": "تهيئة سحابة نقاط Gaussian",
+            "ply_to_initialize_gaussian": "تهيئة gs_ply",
+            "mesh_to_initialize_gaussian": "تهيئة شبكة Gaussian ثلاثية الأبعاد"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "عدسة كاميرا المدار المرجعية",
+            "training_iterations": "عدد تكرارات التدريب",
+            "batch_size": "حجم الدفعة",
+            "ms_ssim_loss_weight": "وزن فقد MS-SSIM",
+            "alpha_loss_weight": "وزن خسارة alpha",
+            "offset_loss_weight": "وزن خسارة الإزاحة",
+            "offset_opacity_loss_weight": "وزن خسارة إزاحة العتامة",
+            "invert_background_probability": "احتمال عكس الخلفية",
+            "feature_learning_rate": "معدل التعلم للميزات",
+            "opacity_learning_rate": "معدل تعلم العتامة",
+            "scaling_learning_rate": "معدل تعلم التحجيم",
+            "rotation_learning_rate": "معدل تعلم الدوران",
+            "position_learning_rate_init": "المعدل الابتدائي لتعلم المواقع",
+            "position_learning_rate_final": "المعدل النهائي لتعلم المواقع",
+            "position_learning_rate_delay_mult": "تأخير معدل تعلم المواقع",
+            "position_learning_rate_max_steps": "أقصى خطوات معدل تعلم المواقع",
+            "initial_gaussians_num": "عدد Gaussian الابتدائي",
+            "K_nearest_neighbors": "عدد الجيران الأقرب K",
+            "percent_dense": "النسبة المئوية للكثافة",
+            "density_start_iterations": "عدد التكرارات الأولي للكثافة",
+            "density_end_iterations": "عدد التكرارات النهائي للكثافة",
+            "densification_interval": "الفاصل الزمني للتكثيف",
+            "opacity_reset_interval": "الفاصل الزمني لإعادة تعيين العتامة",
+            "densify_grad_threshold": "عتبة تدرج الكثافة",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي",
+            "reference_orbit_camera_poses": "وضعيات كاميرا المدار المرجعية"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "عدسة كاميرا المدار المرجعية",
+            "training_iterations": "عدد تكرارات التدريب",
+            "training_resolution": "دقة التدريب",
+            "marching_cude_threshold": "عتبة خوارزمية المكعبات المسيرة",
+            "marching_cude_grids_resolution": "دقة شبكة المنحنيات المسيرة",
+            "marching_cude_grids_batch_size": "حجم دفعة شبكة المنحنيات المسيرة",
+            "texture_resolution": "دقة الملمس",
+            "force_cuda_rast": "فرض التحويل النقطي عبر CUDA"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "نموذج Gaussian الضخم متعدد المشاهدات (LGM)",
+        "inputs": {
+            "multiview_images": "صور متعددة الزوايا",
+            "lgm_model": "نموذج LGM"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "نموذج MVDream",
+        "inputs": {
+            "mvdream_pipe": "حزمة عقد MVDream",
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي"
+        },
+        "widgets": {
+            "prompt": "الموجّه",
+            "prompt_neg": "الموجّه السلبي",
+            "seed": "البذرة",
+            "control_after_generate": "عمل بعد التشغيل",
+            "mv_guidance_scale": "معامل التوجيه MV",
+            "num_inference_steps": "خطوات الاستدلال",
+            "elevation": "زاوية الميل"
+        },
+        "outputs": {
+            "multiview_images": "صور متعددة الزوايا"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي",
+            "reference_normals": "صور المتجهات العمودية المرجعية"
+        },
+        "widgets": {
+            "training_iterations": "عدد تكرارات التدريب",
+            "batch_size": "حجم الدفعة",
+            "learning_rate": "معدل التعلّم",
+            "learning_rate_alpha": "معدل تعلم alpha",
+            "color_loss_weight": "وزن خسارة اللون",
+            "mesh_smoothing_weight": "وزن تنعيم الشبكة",
+            "mask_loss_weight": "وزن فقد القناع",
+            "normal_loss_weight": "وزن فقد المتجهات العمودية",
+            "sparse_loss_weight": "وزن خسارة التفرد",
+            "warm_up_end": "نهاية الإحماء",
+            "anneal_end": "نهاية التلدين",
+            "use_white_background": "استخدام خلفية بيضاء",
+            "geometry_extract_resolution": "دقة استخراج الهندسة",
+            "marching_cude_threshold": "عتبة خوارزمية المكعبات المسيرة"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي",
+            "tgs_model": "نموذج TGS"
+        },
+        "widgets": {
+            "cam_dist": "مسافة الكاميرا"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "نموذج TSR",
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "دقة استخراج الهندسة",
+            "marching_cude_threshold": "عتبة خوارزمية المكعبات المسيرة"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "نموذج Wonder3D MVDiffusion",
+        "inputs": {
+            "mvdiffusion_pipe": "حزمة عقد MVDiffusion",
+            "reference_image": "صورة مرجعية",
+            "reference_mask": "قناع مرجعي"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "control_after_generate": "عمل بعد التشغيل",
+            "mv_guidance_scale": "معامل التوجيه MV",
+            "num_inference_steps": "خطوات الاستدلال"
+        },
+        "outputs": {
+            "multiview_images": "صور متعددة الزوايا",
+            "multiview_normals": "المتجهات العمودية متعددة المشاهدات"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "تحويل 3DGS إلى سحابة نقاط",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "سحابة النقاط"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "تحويل الشبكة ثلاثية الأبعاد إلى سحابة نقاط",
+        "inputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        },
+        "outputs": {
+            "points_cloud": "سحابة النقاط"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "عارض مدارات بتقنية Gaussian Splatting",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "وضعيات كاميرا المدار"
+        },
+        "widgets": {
+            "render_image_width": "العرض",
+            "render_iamge_height": "الارتفاع",
+            "render_orbit_camera_fovy": "عدسة الكاميرا المدارية",
+            "render_background_r": "الخلفية R",
+            "render_background_g": "الخلفية G",
+            "render_background_b": "الخلفية B"
+        },
+        "outputs": {
+            "rendered_gs_images": "صورة",
+            "rendered_gs_masks": "قناع"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "توليد أوضاع الكاميرا المدارية",
+        "inputs": {
+            "reference_images": "صورة مرجعية"
+        },
+        "widgets": {
+            "generate_pose_commnad": "أمر التوليد"
+        },
+        "outputs": {
+            "orbit_camposes": "وضعيات كاميرا المدار"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "تكديس أوضاع الكاميرا المدارية",
+        "widgets": {
+            "orbit_radius_start": "بداية نصف قطر المدار",
+            "orbit_radius_stop": "نهاية نصف قطر المدار",
+            "orbit_radius_step": "خطوة نصف قطر المدار",
+            "elevation_start": "بداية زاوية الارتفاع",
+            "elevation_stop": "نهاية زاوية الارتفاع",
+            "elevation_step": "خطوة زاوية الارتفاع",
+            "azimuth_start": "بداية السمت",
+            "azimuth_stop": "نهاية السمت",
+            "azimuth_step": "خطوة السمت",
+            "orbit_center_X_start": "بداية X لمركز المدار",
+            "orbit_center_X_stop": "نهاية X لمركز المدار",
+            "orbit_center_X_step": "خطوة X لمركز المدار",
+            "orbit_center_Y_start": "بداية Y لمركز المدار",
+            "orbit_center_Y_stop": "نهاية Y لمركز المدار",
+            "orbit_center_Y_step": "خطوة Y لمركز المدار",
+            "orbit_center_Z_start": "بداية Z لمركز المدار",
+            "orbit_center_Z_stop": "نهاية Z لمركز المدار",
+            "orbit_center_Z_step": "خطوة Z لمركز المدار"
+        },
+        "outputs": {
+            "orbit_camposes": "وضعيات كاميرا المدار",
+            "orbit_radius_list": "قائمة نصف قطر المدار",
+            "elevation_list": "قائمة زوايا الارتفاع",
+            "azimuth_list": "قائمة السمت",
+            "orbit_center_X_list": "قائمة إحداثيات X لمركز المدار",
+            "orbit_center_Y_list": "قائمة إحداثيات Y لمركز المدار",
+            "orbit_center_Z_list": "قائمة إحداثيات Z لمركز المدار"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "تبديل محاور 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "المحور X إلى",
+            "axis_y_to": "المحور Y إلى",
+            "axis_z_to": "المحور Z إلى"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "تبديل محاور الشبكة ثلاثية الأبعاد",
+        "inputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        },
+        "widgets": {
+            "axis_x_to": "المحور X إلى",
+            "axis_y_to": "المحور Y إلى",
+            "axis_z_to": "المحور Z إلى"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "تحميل 3DGS",
+        "widgets": {
+            "gs_file_path": "مسار ملف gs"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "تحميل الشبكة ثلاثية الأبعاد",
+        "widgets": {
+            "mesh_file_path": "مسار ملف الشبكة",
+            "resize": "إعادة التحجيم",
+            "renormal": "إعادة تعيين المتجهات العمودية",
+            "retex": "إعادة ضبط الملمس",
+            "optimizable": "قابل للتحسين"
+        },
+        "outputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "تحميل نموذج CRM MVDiffusion",
+        "widgets": {
+            "model_name": "اسم النموذج",
+            "crm_config_path": "مسار إعداد CRM"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "أداة العينة CRM_MVDiffusion"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "تحميل نموذج إعادة البناء بالالتواء",
+        "widgets": {
+            "model_name": "اسم النموذج"
+        },
+        "outputs": {
+            "crm_model": "نموذج CRM"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "تحميل خط أنابيب Diffusers",
+        "widgets": {
+            "diffusers_pipeline_name": "اسم خط الأنابيب"
+        },
+        "outputs": {
+            "pipe": "حزمة العقد"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "تحميل نموذج Gaussian الضخم متعدد المشاهدات (LGM)",
+        "widgets": {
+            "model_name": "اسم النموذج",
+            "lgb_config": "إعدادات lgb"
+        },
+        "outputs": {
+            "lgm_model": "نموذج LGM"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "تحميل نموذج Triplane Gaussian Transformers (TGS)",
+        "widgets": {
+            "model_name": "اسم النموذج"
+        },
+        "outputs": {
+            "tgs_model": "نموذج TGS"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "تحميل نموذج TripoSR (TSR)",
+        "widgets": {
+            "model_name": "اسم النموذج",
+            "chunk_size": "حجم الكتلة"
+        },
+        "outputs": {
+            "tsr_model": "نموذج TSR"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "حفظ 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "مسار الحفظ"
+        },
+        "outputs": {
+            "save_path": "مسار الحفظ"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "حفظ الشبكة ثلاثية الأبعاد",
+        "inputs": {
+            "mesh": "شبكة ثلاثية الأبعاد"
+        },
+        "widgets": {
+            "save_path": "مسار الحفظ"
+        },
+        "outputs": {
+            "save_path": "مسار الحفظ"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "معاينة 3DGS",
+        "widgets": {
+            "gs_file_path": "مسار ملف gs"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "معاينة الشبكة ثلاثية الأبعاد",
+        "widgets": {
+            "mesh_file_path": "مسار ملف الشبكة"
+        }
+    }
+}

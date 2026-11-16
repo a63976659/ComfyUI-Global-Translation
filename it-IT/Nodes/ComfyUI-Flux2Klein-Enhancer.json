@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Campionatore K Flux2Klein (versione sperimentale)",
+        "inputs": {
+            "model": "Modello",
+            "positive": "Condizione positiva",
+            "latent_image": "Latent immagine",
+            "negative": "Condizione negativa"
+        },
+        "widgets": {
+            "steps": "Numero di passi",
+            "seed": "Seme casuale",
+            "denoise": "Intensità di rimozione del rumore",
+            "base_shift": "Offset base",
+            "max_shift": "Offset massimo",
+            "cfg_scale": "Coefficiente di scala CFG",
+            "guidance_embed": "Embedding di guida"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Ancoraggio colore Flux2Klein",
+        "inputs": {
+            "model": "Modello",
+            "conditioning": "Condizionato"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "ramp_curve": "Curva di gradiente",
+            "ref_index": "Indice di riferimento",
+            "channel_weights": "Pesi dei canali",
+            "debug": "Modalità debug"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Miglioratore Flux2Klein",
+        "inputs": {
+            "conditioning": "Condizionato",
+            "device": "Dispositivo di esecuzione"
+        },
+        "widgets": {
+            "active_scale": "Scala dell'area attiva",
+            "per_token_whiten": "Imbianchimento per token",
+            "norm_equalize": "Bilanciamento della norma",
+            "early_layer_scale": "Fattore di scala dei livelli superficiali",
+            "mid_layer_scale": "Fattore di scala dei livelli intermedi",
+            "late_layer_scale": "Fattore di scala dei livelli profondi",
+            "preserve_original": "Conserva i dati originali",
+            "active_end_override": "Override del punto finale attivo",
+            "debug": "Modalità debug"
+        },
+        "description": "Esegue operazioni di imbianchimento/scalari pure sulle aree attive del condizionamento Klein e offre il ridimensionamento per livelli Qwen3 esclusivo di Klein."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Controller dei dettagli Flux2Klein",
+        "inputs": {
+            "conditioning": "Condizionato",
+            "device": "Dispositivo di esecuzione"
+        },
+        "widgets": {
+            "front_mult": "Moltiplicatore della parte iniziale",
+            "mid_mult": "Moltiplicatore della parte centrale",
+            "end_mult": "Moltiplicatore della parte finale",
+            "emphasis_start": "Posizione di inizio enfasi",
+            "emphasis_end": "Posizione di fine enfasi",
+            "emphasis_mult": "Moltiplicatore di enfasi",
+            "preserve_original": "Conserva i dati originali",
+            "debug": "Modalità debug"
+        },
+        "description": "Regolatore del moltiplicatore degli embedding per sezioni.\n\nModalità reale (consigliata): da usare insieme all'encoder sezionato. L'encoder genera intervalli di token per sezione come metadati di condizionamento (`meta[\"klein_sections\"]`); questo nodo applica un moltiplicatore agli embedding attivi dell'intervallo corrispondente, secondo i coefficienti impostati dall'utente.\n\nModalità compatibile (versione precedente/sconsigliata): se i metadati di sezione sono assenti, il nodo suddivide automaticamente l'area attiva secondo una ripartizione fissa del 25%/50%/25%. Questi confini di suddivisione sono arbitrari — i token di Qwen3 non hanno una semantica di posizione fissa — e la versione 1 di questo nodo in questa modalità non ha praticamente alcun effetto reale. La modalità è mantenuta per la compatibilità con i vecchi workflow; si consiglia di passare all'encoder sezionato per ottenere un ridimensionamento consapevole delle sezioni realmente significativo."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Controller del riferimento con maschera Flux2Klein",
+        "inputs": {
+            "conditioning": "Condizionato",
+            "mask": "Maschera"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "invert_mask": "Inverti maschera",
+            "feather": "Sfumatura maschera",
+            "reference_index": "Indice di riferimento",
+            "debug": "Modalità debug"
+        },
+        "description": "Applica un'attenuazione spaziale al Latent di riferimento usando la maschera disegnata.\n\nMoltiplica il Latent di riferimento per lo scalare per pixel generato dalla maschera. Il Latent di condizionamento viene modificato direttamente in loco (sostituisce meta['reference_Latents'])."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Controller del Latent di riferimento Flux2Klein",
+        "inputs": {
+            "model": "Modello",
+            "conditioning": "Condizionato"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "reference_index": "Indice di riferimento",
+            "spatial_fade": "Dissolvenza spaziale",
+            "spatial_fade_strength": "Intensità della dissolvenza spaziale",
+            "debug": "Modalità debug"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Bilanciatore testo-riferimento Flux2Klein",
+        "inputs": {
+            "model": "Modello",
+            "conditioning": "Condizionato"
+        },
+        "widgets": {
+            "balance": "Coefficiente di bilanciamento",
+            "debug": "Modalità debug"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Regolatore dei pesi del Latent di riferimento Flux2Klein",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "reference_index": "Indice di riferimento",
+            "weight": "Pesi"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Miglioratore del testo Flux2Klein",
+        "inputs": {
+            "conditioning": "Condizionato"
+        },
+        "widgets": {
+            "magnitude": "Ampiezza globale",
+            "contrast": "Contrasto",
+            "normalize_strength": "Intensità di normalizzazione",
+            "skip_bos": "Salta il token iniziale",
+            "debug": "Modalità debug"
+        },
+        "description": "Modifica i token del condizionamento testuale.\n\nOrdine delle operazioni:\n1. Normalizzazione: bilancia l'ampiezza dei token\n2. Contrasto: amplia/riduce le differenze tra i token\n3. Ampiezza: ridimensionamento globale"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Encoder sezionato Flux2Klein",
+        "inputs": {
+            "clip": "Encoder CLIP",
+            "separator": "Separatore"
+        },
+        "widgets": {
+            "front_text": "Testo iniziale",
+            "mid_text": "Testo centrale",
+            "end_text": "Testo finale",
+            "combined_prompt": "Prompt combinato",
+            "show_preview": "Mostra anteprima",
+            "debug": "Modalità debug"
+        },
+        "outputs": {
+            "conditioning": "Condizionato",
+            "front_section": "Sezione iniziale",
+            "mid_section": "Sezione centrale",
+            "end_section": "Sezione finale",
+            "full_prompt": "Prompt completo"
+        },
+        "description": "Tokenizza il prompt in tre sezioni e genera intervalli di token per sezione come metadati di condizionamento, destinati alla lettura da parte del controller dei dettagli."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "Trasferimento delle caratteristiche di identità",
+        "inputs": {
+            "model": "Modello"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "start_block": "Blocco iniziale",
+            "end_block": "Blocco finale",
+            "mode": "Modalità",
+            "top_k_percent": "Percentuale Top K"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "Trasferimento delle caratteristiche di identità (versione avanzata)",
+        "inputs": {
+            "model": "Modello",
+            "subject_mask": "Maschera del soggetto"
+        },
+        "widgets": {
+            "reference_index": "Indice di riferimento",
+            "mode": "Modalità",
+            "top_k_percent": "Percentuale Top K",
+            "double_enable": "Abilita il doppio trasferimento",
+            "double_strength": "Intensità del doppio trasferimento",
+            "double_start": "Punto di inizio del doppio trasferimento",
+            "double_end": "Punto di fine del doppio trasferimento",
+            "single_enable": "Abilita il trasferimento singolo",
+            "single_strength": "Intensità del trasferimento singolo",
+            "single_start": "Punto di inizio del trasferimento singolo",
+            "single_end": "Punto di fine del trasferimento singolo",
+            "block_schedule": "Pianificazione dei blocchi",
+            "sim_floor": "Limite minimo di somiglianza",
+            "mask_threshold": "Soglia della maschera"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "Trasferimento delle caratteristiche di identità V3",
+        "inputs": {
+            "model": "Modello",
+            "subject_mask": "Maschera del soggetto"
+        },
+        "widgets": {
+            "preset": "Preset (impostazione)",
+            "reference_index": "Indice di riferimento",
+            "double_schedule": "Pianificazione del doppio trasferimento",
+            "single_schedule": "Pianificazione del trasferimento singolo",
+            "double_sim": "Somiglianza del doppio trasferimento",
+            "single_sim": "Somiglianza del trasferimento singolo",
+            "commit_margin": "Margine di commit",
+            "commit_confirm": "Conferma di commit",
+            "commit_anchor": "Ancoraggio di commit",
+            "mask_threshold": "Soglia della maschera",
+            "debug": "Modalità debug"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "Trasferimento finale delle caratteristiche di identità",
+        "inputs": {
+            "model": "Modello",
+            "subject_mask_1": "Maschera del soggetto 1",
+            "subject_mask_2": "Maschera del soggetto 2",
+            "subject_mask_3": "Maschera del soggetto 3",
+            "subject_mask_4": "Maschera del soggetto 4",
+            "subject_mask_5": "Maschera del soggetto 5",
+            "subject_mask_6": "Maschera del soggetto 6",
+            "subject_mask_7": "Maschera del soggetto 7",
+            "subject_mask_8": "Maschera del soggetto 8"
+        },
+        "widgets": {
+            "preset": "Preset (impostazione)",
+            "enabled": "Abilita",
+            "reference_index": "Indice di riferimento",
+            "reference_indices": "Elenco degli indici di riferimento",
+            "similarity_floor": "Limite minimo di somiglianza",
+            "softmax_temperature": "Coefficiente di temperatura Softmax",
+            "mask_threshold": "Soglia della maschera",
+            "double_blocks": "Ambito dei blocchi doppi",
+            "single_blocks": "Ambito dei blocchi singoli",
+            "total_sampling_steps": "Numero totale di passi di campionamento",
+            "debug": "Modalità debug"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "Guida delle caratteristiche di identità",
+        "inputs": {
+            "model": "Modello",
+            "identity_latent": "Latent delle caratteristiche di identità"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "start_percent": "Percentuale di inizio effetto",
+            "end_percent": "Percentuale di fine effetto",
+            "mode": "Modalità"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Elaborazione dei Latent di riferimento multipli Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condizionato",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "Condizionato"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "Campionatore K FLUX.2 Klein",
+        "inputs": {
+            "model": "Modello",
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "latent_image": "Latent dell'immagine"
+        },
+        "widgets": {
+            "steps": "Numero di passi",
+            "guidance_scale": "Scala di guida",
+            "seed": "Seme",
+            "denoise": "denoised",
+            "base_shift": "Offset di base",
+            "max_shift": "Offset massimo"
+        },
+        "description": "Il nodo KSampler FLUX.2 Klein genera immagini nello spazio dei Latent."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Miglioratore Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condizione"
+        },
+        "widgets": {
+            "magnitude": "Ampiezza",
+            "contrast": "Contrasto",
+            "normalize_strength": "Intensità di normalizzazione",
+            "preserve_original": "Conserva l'originale",
+            "preserve_mode": "Modalità di conservazione",
+            "edit_text_weight": "Peso del testo di modifica",
+            "active_end_override": "Override della fine dell'area attiva",
+            "low_vram": "VRAM bassa",
+            "device": "Dispositivo",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Condizione"
+        },
+        "description": "Miglioratore del condizionamento FLUX. .Klein.\n\nOperazioni disponibili:\n- Ampiezza: ridimensiona direttamente gli embedding dell'area attiva\n- Contrasto: amplia le differenze tra i token\n- Normalizzazione: uniforma la dimensione dei token\n- Conserva l'originale: ricombina gli embedding originali in diverse modalità\n\nTutte le operazioni modificano solo l'area di testo attiva (il riempimento non viene intaccato).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Controller dei dettagli Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condizione"
+        },
+        "widgets": {
+            "front_mult": "Moltiplicatore iniziale",
+            "mid_mult": "Moltiplicatore centrale",
+            "end_mult": "Moltiplicatore di chiusura",
+            "emphasis_start": "Inizio enfasi",
+            "emphasis_end": "Fine enfasi",
+            "emphasis_mult": "Moltiplicatore di enfasi",
+            "preserve_original": "Conserva l'originale",
+            "preserve_mode": "Modalità di conservazione",
+            "low_vram": "VRAM bassa",
+            "device": "Dispositivo",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Condizione"
+        },
+        "description": "Controllo per aree del condizionamento FLUX. .Klein.\n\nSuddivide i token attivi in aree:\n- Iniziale: soggetto/concetto principale\n- Centrale: dettagli/modificatori\n- Di chiusura: termini di stile/qualità",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Controller del Latent di riferimento Flux2 Klein",
+        "inputs": {
+            "model": "Modello",
+            "conditioning": "Condizione"
+        },
+        "widgets": {
+            "strength": "Intensità",
+            "reference_index": "Indice di riferimento",
+            "spatial_fade": "Attenuazione spaziale",
+            "spatial_fade_strength": "Intensità dell'attenuazione spaziale",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "MODEL": "Modello",
+            "CONDITIONING": "Condizione"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Bilanciamento tra testo e riferimento Flux2 Klein",
+        "inputs": {
+            "model": "Modello",
+            "conditioning": "Condizione"
+        },
+        "widgets": {
+            "balance": "Equilibrato",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "MODEL": "Modello",
+            "CONDITIONING": "Condizione"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Miglioratore del testo Flux2 Klein",
+        "inputs": {
+            "conditioning": "Condizione"
+        },
+        "widgets": {
+            "magnitude": "Ampiezza",
+            "contrast": "Contrasto",
+            "normalize_strength": "Intensità di normalizzazione",
+            "skip_bos": "Salta il simbolo iniziale",
+            "debug": "Debugging"
+        },
+        "outputs": {
+            "CONDITIONING": "Condizione"
+        },
+        "description": "Modifica i token del condizionamento testuale.\n\nOrdine delle operazioni:\n1. Normalizzazione: uniforma la dimensione dei token\n2. Contrasto: amplia/riduce le differenze tra i token\n3. Ampiezza: ridimensionamento globale",
+        "api_version": "V1"
+    }
+}

@@ -155,7 +155,7 @@
             "width": "宽度",
             "height": "高度"
         },
-        "description": "Pixaroma图生图裁剪：设置图生图的简便方式。打开全屏编辑器，在需要修复的区域绘制遮罩（支持画笔、擦除、清空、反转、调整画笔大小）。该节点会自动识别遮罩周围的区域，添加上下文边距，裁剪出适配模型的片段（尺寸为8的倍数，按目标缩放，确保小遮罩区域也有足够分辨率）。\n\n开启反转_遮罩可反转遮罩，对相反区域进行图生图（例如抠图的背景而非主体），无需额外的反转遮罩节点。\n\n将裁剪后的图像和遮罩连接到你的图生图模型（KSampler、Flux、编辑模型），再将crop_info连接到Pixaroma图生图拼接节点，即可将结果精准粘贴回原始位置。\n\n输出裁剪后的图像、对应遮罩、裁剪信息线，以及裁剪的宽高（对空Latent很实用）。裁剪信息线与图像裁剪节点使用的类型相同，两者可互换。"
+        "description": "Pixaroma图生图裁剪：设置图生图的简便方式。打开全屏编辑器，在需要修复的区域绘制遮罩（支持画笔、擦除、清空、反转、调整画笔大小）。该节点会自动识别遮罩周围的区域，添加上下文边距，裁剪出适配模型的片段（尺寸为8的倍数，按目标缩放，确保小遮罩区域也有足够分辨率）。\n\n开启invert_mask可反转遮罩，对相反区域进行图生图（例如抠图的背景而非主体），无需额外的反转遮罩节点。\n\n将裁剪后的图像和遮罩连接到你的图生图模型（KSampler、Flux、编辑模型），再将crop_info连接到Pixaroma图生图拼接节点，即可将结果精准粘贴回原始位置。\n\n输出裁剪后的图像、对应遮罩、裁剪信息线，以及裁剪的宽高（对空Latent很实用）。裁剪信息线与图像裁剪节点使用的类型相同，两者可互换。"
     },
     "PixaromaInpaintStitch": {
         "title": "Pixaroma图生图拼接",
@@ -237,7 +237,7 @@
             "image": "图像",
             "image_info": "图像信息"
         },
-        "description": "Pixaroma迷你加载图像——一款紧凑的加载图像节点。支持上传、拖放、粘贴或选择文件；与加载图像相同的内联调整大小选项（最大兆像素、最长边、按比例缩放、适配内部、裁剪填充、匹配比例）位于设置面板中，因此节点界面保持极简。遮罩编辑器和复制/粘贴（Clipspace）功能正常使用。\n\n仅输出图像和小型图像_info数据包。当需要遮罩、宽度、高度或文件名时，将图像_info连接到Pixaroma图像信息节点——这样可保持加载器小巧。"
+        "description": "Pixaroma迷你加载图像——一款紧凑的加载图像节点。支持上传、拖放、粘贴或选择文件；与加载图像相同的内联调整大小选项（最大兆像素、最长边、按比例缩放、适配内部、裁剪填充、匹配比例）位于设置面板中，因此节点界面保持极简。遮罩编辑器和复制/粘贴（Clipspace）功能正常使用。\n\n仅输出图像和小型image_info数据包。当需要遮罩、宽度、高度或文件名时，将image_info连接到Pixaroma图像信息节点——这样可保持加载器小巧。"
     },
     "PixaromaLoadVideo": {
         "title": "Pixaroma加载视频",
@@ -259,7 +259,7 @@
             "height": "高度",
             "duration": "时长（秒）"
         },
-        "description": "Pixaroma加载视频——上传或选择视频并解码为帧批次，节点内置视频预览，无需离开ComfyUI即可查看源视频。\n\n输出：视频_frames（视频作为图像批次）、音频、帧数、帧率、宽度、高度和时长——因此通常不需要单独的视频信息节点。与Pixaroma保存MP4节点配合使用：直接连接视频_frames和音频。\n\n加载控制：最大帧数设置从开头加载的帧数（长视频的安全机制），跳过前几帧裁剪开头，强制帧率重采样为稳定帧率，自定义宽度/高度调整每一帧（同时设置两者可裁剪填充该尺寸而不拉伸）。\n\n优先使用PyAV读取，否则使用图像io；音频通过ffmpeg提取。大多数ComfyUI安装无需额外设置。"
+        "description": "Pixaroma加载视频——上传或选择视频并解码为帧批次，节点内置视频预览，无需离开ComfyUI即可查看源视频。\n\n输出：video_frames（视频作为图像批次）、音频、帧数、帧率、宽度、高度和时长——因此通常不需要单独的视频信息节点。与Pixaroma保存MP4节点配合使用：直接连接video_frames和音频。\n\n加载控制：最大帧数设置从开头加载的帧数（长视频的安全机制），跳过前几帧裁剪开头，强制帧率重采样为稳定帧率，自定义宽度/高度调整每一帧（同时设置两者可裁剪填充该尺寸而不拉伸）。\n\n优先使用PyAV读取，否则使用图像io；音频通过ffmpeg提取。大多数ComfyUI安装无需额外设置。"
     },
     "PixaromaLoadVideoFrame": {
         "title": "Pixaroma加载视频帧",
@@ -335,7 +335,7 @@
             "note_json": "笔记JSON"
         },
         "outputs": {},
-        "description": "Pixaroma笔记——画布上的富文本注释编辑器。打开全屏编辑器可撰写多段落笔记，支持粗体/斜体/下划线/删除线、标题（H1/H2/H3）、项目符号和编号列表、代码块（带复制按钮）、内联图标（CLIP、LoRA、GGUF、模型版本及30+种更多）、表格、分隔符、自定义颜色按钮（下载/查看页面/阅读更多/普通）、文件夹提示，以及预样式化的YouTube和Discord药丸。每个块有自己的颜色，从画布上方弹出的居中模态框中选择。代码视图允许手动编辑底层HTML；assets/note-pixaroma-llm-提示词.txt中的嵌入式LLM提示可让ChatGPT或Ge最小值i为你生成代码视图兼容的HTML。纯注释——无图像处理、无输入接线、无输出链式。保存和恢复时完全保留你的样式。"
+        "description": "Pixaroma笔记——画布上的富文本注释编辑器。打开全屏编辑器可撰写多段落笔记，支持粗体/斜体/下划线/删除线、标题（H1/H2/H3）、项目符号和编号列表、代码块（带复制按钮）、内联图标（CLIP、LoRA、GGUF、模型版本及30+种更多）、表格、分隔符、自定义颜色按钮（下载/查看页面/阅读更多/普通）、文件夹提示，以及预样式化的YouTube和Discord药丸。每个块有自己的颜色，从画布上方弹出的居中模态框中选择。代码视图允许手动编辑底层HTML；assets/note-pixaroma-llm-prompt.txt中的嵌入式LLM提示可让ChatGPT或Gemini为你生成代码视图兼容的HTML。纯注释——无图像处理、无输入接线、无输出链式。保存和恢复时完全保留你的样式。"
     },
     "NotifyPixaroma": {
         "title": "Pixaroma通知器",
@@ -454,7 +454,7 @@
         "outputs": {
             "image": "图像"
         },
-        "description": "Pixaroma图像预览 - 带保存磁盘、保存输出、复制和打开按钮的内联图像预览，支持批次处理。将任意IMAGE源连接到输入。所有批次帧都会在节点主体中渲染；点击任意缩略图可在内联展开。箭头键可在批次间切换，点击打开的图像任意位置可前进，Esc或X键可收起。通过预览区域右上角的小图标切换网格/条带布局。\n\n保存磁盘可选择您电脑上的任意文件夹；建议的文件名每次点击自动递增。保存输出写入ComfyUI的output/文件夹。复制将选中帧作为PNG放入您的系统剪贴板，可直接粘贴到其他节点、绘图应用、消息等中。打开在新浏览器标签中打开选中帧，用于全屏查看或并排对比多个图像。四个按钮均作用于当前选中帧；保存磁盘和保存输出会将工作流嵌入PNG，因此您之后可将其拖回ComfyUI。\n\n将save_模式切换为'save'，节点可直接替换SaveImage：每次运行时所有批次帧自动写入output/，并嵌入工作流元数据。预览也会在工作流标签切换后保留，因此您可停在特定帧后返回。\n\n文件名前缀字段支持带'/'的子文件夹语法（例如'SDXL/portrait'）、VHS/VideoHelperSuite风格的日期标记（例如'%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png'），以及原生ComfyUI标记（%year%、%month%、%day%、%hour%、%最小值ute%、%se条件%、%宽度%、%高度%）。日期格式代码为yyyy、yy、MM、dd、HH、mm、ss。还支持节点引用标记，如%Seed Pixaroma.随机随机种子%（或%KSampler.随机随机种子%），可将其他节点的字段值插入文件名，与原生SaveImage节点类似。查看项目README获取完整标记参考。\n\n右键点击节点可打开预览图像设置。添加Civitai生成信息还会以Civitai可读格式写入设置，因此在此发布的图像会显示checkpoint、LoRAs及其强度，加上步骤、随机随机种子、采样器和尺寸。值自动来自您的工作流，无需额外连接。默认关闭。"
+        "description": "Pixaroma图像预览 - 带保存磁盘、保存输出、复制和打开按钮的内联图像预览，支持批次处理。将任意IMAGE源连接到输入。所有批次帧都会在节点主体中渲染；点击任意缩略图可在内联展开。箭头键可在批次间切换，点击打开的图像任意位置可前进，Esc或X键可收起。通过预览区域右上角的小图标切换网格/条带布局。\n\n保存磁盘可选择您电脑上的任意文件夹；建议的文件名每次点击自动递增。保存输出写入ComfyUI的output/文件夹。复制将选中帧作为PNG放入您的系统剪贴板，可直接粘贴到其他节点、绘图应用、消息等中。打开在新浏览器标签中打开选中帧，用于全屏查看或并排对比多个图像。四个按钮均作用于当前选中帧；保存磁盘和保存输出会将工作流嵌入PNG，因此您之后可将其拖回ComfyUI。\n\n将save_mode切换为'save'，节点可直接替换SaveImage：每次运行时所有批次帧自动写入output/，并嵌入工作流元数据。预览也会在工作流标签切换后保留，因此您可停在特定帧后返回。\n\n文件名前缀字段支持带'/'的子文件夹语法（例如'SDXL/portrait'）、VHS/VideoHelperSuite风格的日期标记（例如'%date:yyyy-MM-dd%/img' → 'output/2026-05-10/img_00001_.png'），以及原生ComfyUI标记（%year%、%month%、%day%、%hour%、%minute%、%second%、%width%、%height%）。日期格式代码为yyyy、yy、MM、dd、HH、mm、ss。还支持节点引用标记，如%Seed Pixaroma.seed%（或%KSampler.seed%），可将其他节点的字段值插入文件名，与原生SaveImage节点类似。查看项目README获取完整标记参考。\n\n右键点击节点可打开预览图像设置。添加Civitai生成信息还会以Civitai可读格式写入设置，因此在此发布的图像会显示checkpoint、LoRAs及其强度，加上步骤、随机随机种子、采样器和尺寸。值自动来自您的工作流，无需额外连接。默认关闭。"
     },
     "PixaromaPrompt": {
         "title": "Pixaroma提示词",
@@ -509,7 +509,7 @@
         "outputs": {
             "text": "图像提示词信息"
         },
-        "description": "Pixaroma提示读取器——加载由ComfyUI（或Automatic1111/Forge）生成的图像，并读取其PNG元数据中保存的正向提示。无图像预览，仅显示文本。将提示以字符串形式输出，可连接到CLIPTextEncode或其他文本输入节点重复使用。将PNG拖放到节点上、点击上传图像，或从文件组合框中选择。选中文件后，显示内容会立即更新，因此可在运行工作流前查看提示。若图像无嵌入提示（JPG、截图或元数据丢失的PNG），显示内容会显示简短说明，字符串输出也会携带相同说明，确保下游连接不会中断。支持处理带有链式文本节点（ConditioningCombine、StringConcatenate、SDXL双文本编码器）的ComfyUI工作流，以及Automatic1111/Forge的'parameters'格式。也可将文件名连接到可选的'文件name'输入（例如来自Pixaroma加载图像节点的'文件name'输出）——连接后，节点会忽略自身选择器，改为从该图像读取提示。选择、上传或拖放文件即可接管，连接会自动断开。"
+        "description": "Pixaroma提示读取器——加载由ComfyUI（或Automatic1111/Forge）生成的图像，并读取其PNG元数据中保存的正向提示。无图像预览，仅显示文本。将提示以字符串形式输出，可连接到CLIPTextEncode或其他文本输入节点重复使用。将PNG拖放到节点上、点击上传图像，或从文件组合框中选择。选中文件后，显示内容会立即更新，因此可在运行工作流前查看提示。若图像无嵌入提示（JPG、截图或元数据丢失的PNG），显示内容会显示简短说明，字符串输出也会携带相同说明，确保下游连接不会中断。支持处理带有链式文本节点（ConditioningCombine、StringConcatenate、SDXL双文本编码器）的ComfyUI工作流，以及Automatic1111/Forge的'parameters'格式。也可将文件名连接到可选的'filename'输入（例如来自Pixaroma加载图像节点的'filename'输出）——连接后，节点会忽略自身选择器，改为从该图像读取提示。选择、上传或拖放文件即可接管，连接会自动断开。"
     },
     "PixaromaPromptStack": {
         "title": "Pixaroma提示堆栈",
@@ -555,7 +555,7 @@
             "mask": "遮罩",
             "inverted_mask": "反转遮罩"
         },
-        "description": "使用BiRefNet模型移除图像背景，在一个节点中返回抠出图像（RGBA）、前景遮罩和反转遮罩。\n\n模型从ComfyUI/模型s/背景_removal/加载。文件名控制预处理分辨率：名称中包含'matt'或'hr'（不区分大小写）则以2048分辨率预处理，其余均以1024分辨率处理。推荐文件名：birefnet.safetensors（标准）、birefnet-hr.safetensors（高分辨率）、birefnet-matting.safetensors（用于头发/毛发的高分辨率抠图）。\n\n下载地址：\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/背景_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
+        "description": "使用BiRefNet模型移除图像背景，在一个节点中返回抠出图像（RGBA）、前景遮罩和反转遮罩。\n\n模型从ComfyUI/models/background_removal/加载。文件名控制预处理分辨率：名称中包含'matt'或'hr'（不区分大小写）则以2048分辨率预处理，其余均以1024分辨率处理。推荐文件名：birefnet.safetensors（标准）、birefnet-hr.safetensors（高分辨率）、birefnet-matting.safetensors（用于头发/毛发的高分辨率抠图）。\n\n下载地址：\n  https://huggingface.co/Comfy-Org/BiRefNet/tree/main/background_removal\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR\n  https://huggingface.co/ZhengPeng7/BiRefNet_HR-matting"
     },
     "PixaromaResizeCrop": {
         "title": "Pixaroma调整尺寸并裁剪",
@@ -597,7 +597,7 @@
         "inputs": {},
         "widgets": {},
         "outputs": {},
-        "description": "Pixaroma运行计时器——用于计时工作流耗时的时钟。点击运行时重置为零，工作流运行时计时，完成时冻结总时间，然后播放提示音，即使你在其他标签页也能知道完成了。\n\n节点仅显示时钟。右键点击节点可进入设置：开启或关闭提示音，选择声音和音量（带预览按钮），设置显示的小数位数，以及设置时钟颜色。\n\n提示音库与Pixaroma通知相同——将简单名称（字母、数字、短横线）的.mp3、.wav或.ogg文件放入assets/音效s/可添加更多提示音（重启ComfyUI后生效）。所有运行计时器提示音的全局静音设置位于节点设置顶部，可通过节点工具栏的齿轮按钮或右键点击节点打开。"
+        "description": "Pixaroma运行计时器——用于计时工作流耗时的时钟。点击运行时重置为零，工作流运行时计时，完成时冻结总时间，然后播放提示音，即使你在其他标签页也能知道完成了。\n\n节点仅显示时钟。右键点击节点可进入设置：开启或关闭提示音，选择声音和音量（带预览按钮），设置显示的小数位数，以及设置时钟颜色。\n\n提示音库与Pixaroma通知相同——将简单名称（字母、数字、短横线）的.mp3、.wav或.ogg文件放入assets/sounds/可添加更多提示音（重启ComfyUI后生效）。所有运行计时器提示音的全局静音设置位于节点设置顶部，可通过节点工具栏的齿轮按钮或右键点击节点打开。"
     },
     "PixaromaSaveImage": {
         "title": "Pixaroma保存图像",
@@ -607,7 +607,7 @@
         },
         "widgets": {},
         "outputs": {},
-        "description": "Pixaroma保存图像 - 将图像保存到电脑的任意文件夹，不限于ComfyUI的输出文件夹。可输入或粘贴路径，或点击浏览用普通Windows对话框选择文件夹；留空则使用输出文件夹。文件名字段支持标记，会实时显示即将保存的文件的预览。标记包括：%输入%（连线的名称输入，例如来自Pixaroma加载图像的文件名）、%date:yyyy-MM-dd%（及任意日期/时间格式）、%数量er%（自动递增，永不覆盖）、%宽度%、%高度%、%batch_num%，以及节点引用如%Seed Pixaroma.随机随机种子%。名称中使用/可创建子文件夹。格式为PNG（无损，嵌入工作流，因此文件可拖回ComfyUI）或JPG（体积更小，质量设置在右键菜单；ComfyUI无法从JPG重新加载工作流）。右键点击节点可设置日期样式、计数器位数、JPG质量、工作流嵌入及Civitai生成信息。批次保存时计数器随每帧递增。\n\n添加Civitai生成信息（右键点击）还会以Civitai可读格式写入设置，因此上传到该平台的图像会显示检查点、LoRA及其权重、步数、随机随机种子、采样器和尺寸。值会自动从工作流读取，无需将其接入此节点。添加新模型后的首次保存会短暂暂停以对其进行指纹识别，之后会记住该模型。\n\n保存的图像在节点上显示大预览：单张图像填满区域，批次显示为网格。点击网格中的图像可放大查看，点击或悬停时箭头可翻页，X键返回网格。复制将显示的图像放入剪贴板，打开在新浏览器标签中显示。调整节点大小可放大预览。模式切换可在“保存”（每次运行时写入文件）和“预览”（图像显示在节点上，不写入文件夹）之间切换，因此可兼作预览节点。打开文件夹在文件资源管理器中显示保存位置；窗口可出现在任务栏。"
+        "description": "Pixaroma保存图像 - 将图像保存到电脑的任意文件夹，不限于ComfyUI的输出文件夹。可输入或粘贴路径，或点击浏览用普通Windows对话框选择文件夹；留空则使用输出文件夹。文件名字段支持标记，会实时显示即将保存的文件的预览。标记包括：%input%（连线的名称输入，例如来自Pixaroma加载图像的文件名）、%date:yyyy-MM-dd%（及任意日期/时间格式）、%counter%（自动递增，永不覆盖）、%width%、%height%、%batch_num%，以及节点引用如%Seed Pixaroma.seed%。名称中使用/可创建子文件夹。格式为PNG（无损，嵌入工作流，因此文件可拖回ComfyUI）或JPG（体积更小，质量设置在右键菜单；ComfyUI无法从JPG重新加载工作流）。右键点击节点可设置日期样式、计数器位数、JPG质量、工作流嵌入及Civitai生成信息。批次保存时计数器随每帧递增。\n\n添加Civitai生成信息（右键点击）还会以Civitai可读格式写入设置，因此上传到该平台的图像会显示检查点、LoRA及其权重、步数、随机随机种子、采样器和尺寸。值会自动从工作流读取，无需将其接入此节点。添加新模型后的首次保存会短暂暂停以对其进行指纹识别，之后会记住该模型。\n\n保存的图像在节点上显示大预览：单张图像填满区域，批次显示为网格。点击网格中的图像可放大查看，点击或悬停时箭头可翻页，X键返回网格。复制将显示的图像放入剪贴板，打开在新浏览器标签中显示。调整节点大小可放大预览。模式切换可在“保存”（每次运行时写入文件）和“预览”（图像显示在节点上，不写入文件夹）之间切换，因此可兼作预览节点。打开文件夹在文件资源管理器中显示保存位置；窗口可出现在任务栏。"
     },
     "PixaromaSaveMp4": {
         "title": "Pixaroma保存MP4",
@@ -622,7 +622,7 @@
             "trim_to_audio": "裁剪至音频"
         },
         "outputs": {},
-        "description": "Pixaroma保存MP4 - 将图像批次（及可选音频）编码为单个H.264格式的MP4文件，节点主体内置<视频>预览，无需离开ComfyUI即可查看结果。\n\n帧直接流式传输到ffmpeg的标准输入（无临时PNG文件）；音频以AAC 192k格式复用。与Pixaroma音频响应节点配合使用，但也适用于任何生成帧+音频的源。\n\n工作流嵌入在保存的MP4中（作为注释元数据），因此可将视频拖回ComfyUI以恢复图表 - 读取时需安装类似VideoHelperSuite的视频包。\n\nffmpeg二进制文件自动定位：优先使用图像io-ffmpeg附带的exe（无需系统安装 - 执行'pip inst全部 图像io-ffmpeg'），其次使用PATH中的ffmpeg。yuv420p要求宽高为偶数；若尺寸为奇数，节点会显示清晰错误，而非ffmpeg的模糊崩溃。\n\n编码器硬编码为libx264 / medium预设 / CRF 19。若工作流需要按片段控制，可将这些参数移至INPUT_TYPES。"
+        "description": "Pixaroma保存MP4 - 将图像批次（及可选音频）编码为单个H.264格式的MP4文件，节点主体内置<视频>预览，无需离开ComfyUI即可查看结果。\n\n帧直接流式传输到ffmpeg的标准输入（无临时PNG文件）；音频以AAC 192k格式复用。与Pixaroma音频响应节点配合使用，但也适用于任何生成帧+音频的源。\n\n工作流嵌入在保存的MP4中（作为注释元数据），因此可将视频拖回ComfyUI以恢复图表 - 读取时需安装类似VideoHelperSuite的视频包。\n\nffmpeg二进制文件自动定位：优先使用imageio-ffmpeg附带的exe（无需系统安装 - 执行'pip install imageio-ffmpeg'），其次使用PATH中的ffmpeg。yuv420p要求宽高为偶数；若尺寸为奇数，节点会显示清晰错误，而非ffmpeg的模糊崩溃。\n\n编码器硬编码为libx264 / medium预设 / CRF 19。若工作流需要按片段控制，可将这些参数移至INPUT_TYPES。"
     },
     "PixaromaSeed": {
         "title": "Pixaroma随机种子",
@@ -631,7 +631,7 @@
         "outputs": {
             "seed": "随机种子"
         },
-        "description": "Pixaroma随机种子 - 可接入KSampler（或任何带随机随机种子输入的节点）的随机随机种子源。一个随机种子节点可同时为多个采样器供电，使它们共享相同随机随机种子。\n\n两种模式：随机模式每次运行生成新随机随机种子；固定模式保持相同随机随机种子以获得可复现结果。按钮：新固定随机生成新随机随机种子并锁定；使用上次随机随机种子恢复上一次运行的随机随机种子；复制将当前随机随机种子复制到剪贴板。随机模式下，“上次运行”行显示实际生成最后一张图像的随机随机种子。\n\n以整数形式输出随机随机种子。状态随工作流保存和恢复。\n\n要将随机随机种子打印到保存的文件名中，在Pixaroma保存图像、Pixaroma保存MP4或Pixaroma预览图像节点的文件名字段中输入%Seed Pixaroma.随机随机种子%（使用此节点的名称，而非采样器的；重命名节点可更改标记）。"
+        "description": "Pixaroma随机种子 - 可接入KSampler（或任何带随机随机种子输入的节点）的随机随机种子源。一个随机种子节点可同时为多个采样器供电，使它们共享相同随机随机种子。\n\n两种模式：随机模式每次运行生成新随机随机种子；固定模式保持相同随机随机种子以获得可复现结果。按钮：新固定随机生成新随机随机种子并锁定；使用上次随机随机种子恢复上一次运行的随机随机种子；复制将当前随机随机种子复制到剪贴板。随机模式下，“上次运行”行显示实际生成最后一张图像的随机随机种子。\n\n以整数形式输出随机随机种子。状态随工作流保存和恢复。\n\n要将随机随机种子打印到保存的文件名中，在Pixaroma保存图像、Pixaroma保存MP4或Pixaroma预览图像节点的文件名字段中输入%Seed Pixaroma.seed%（使用此节点的名称，而非采样器的；重命名节点可更改标记）。"
     },
     "PixaromaSetNode": {
         "title": "Pixaroma设置节点",
@@ -732,7 +732,7 @@
         "outputs": {
             "text": "文本"
         },
-        "description": "Two/Three/Four节点的共享逻辑。子类设置N（字段数量）以及它们自身的DESCRIPTION/OUTPUT_TOOLTIPS。输入和输出由N构建，因此文本_1至文本_N作为关键字参数传递给join()/IS_CHANGED()。"
+        "description": "Two/Three/Four节点的共享逻辑。子类设置N（字段数量）以及它们自身的DESCRIPTION/OUTPUT_TOOLTIPS。输入和输出由N构建，因此text_1至text_N作为关键字参数传递给join()/IS_CHANGED()。"
     },
     "PixaromaTextOverlay": {
         "title": "Pixaroma文本叠加",

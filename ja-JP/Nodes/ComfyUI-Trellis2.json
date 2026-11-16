@@ -1,0 +1,2075 @@
+{
+    "Trellis2LoadModel": {
+        "title": "Trellis2 モデルローダー",
+        "widgets": {
+            "modelname": "モデル名",
+            "backend": "演算バックエンド",
+            "device": "実行デバイス",
+            "low_vram": "低VRAMモード",
+            "keep_models_loaded": "モデルをメモリに常駐",
+            "conv_backend": "卷积演算バックエンド",
+            "sparse_backend": "稀疏演算バックエンド",
+            "use_reconviagen": "ReconViagen生成器を有効化"
+        },
+        "outputs": {
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelGenerator": {
+        "title": "Trellis2 体素メッシュ生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image": "画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "pipeline_type": "パイプラインタイプ",
+            "sparse_structure_steps": "稀疏構造生成ステップ数",
+            "shape_steps": "形状生成ステップ数",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "max_num_tokens": "最大Token数",
+            "max_views": "最大視点数量",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "generate_texture_slat": "テクスチャスライス生成",
+            "use_tiled_decoder": "分割デコーダーを使用",
+            "sampler": "サンプラー",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "keep_only_shell": "外殻メッシュのみ保持"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH包围盒構造"
+        },
+        "description": ""
+    },
+    "Trellis2LoadImageWithTransparency": {
+        "title": "Trellis2 透明チャンネル付き画像ローダー",
+        "inputs": {
+            "image": "画像"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "image_with_alpha": "透明チャンネル付き画像"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMesh": {
+        "title": "Trellis2 メッシュ簡略化ツール",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "method": "簡略化アルゴリズム"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimesh": {
+        "title": "Trellis2 三角メッシュ簡略化ツール",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "method": "簡略化アルゴリズム"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2ProgressiveSimplify": {
+        "title": "Trellis2 段階的メッシュ簡略化ツール",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ",
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "max_edge_length": "最大辺長しきい値",
+            "max_triangle_aspect_ratio": "最大三角形アスペクト比しきい値",
+            "strategy": "簡略化戦略",
+            "stabilizer": "スタビライザパラメータ",
+            "touch_near_boundary_edges": "境界付近のエッジを処理",
+            "optimize_vertex_positions": "頂点位置を最適化",
+            "angle_based_weights": "角度ベースの重みを使用"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToTrimesh": {
+        "title": "Trellis2 体素メッシュから三角メッシュ変換ツール",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "reorient_vertices": "頂点方向を再定向"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2ExportMesh": {
+        "title": "Trellis2 メッシュ書き出しツール",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_format": "書き出しファイル形式"
+        },
+        "outputs": {
+            "glb_path": "GLBファイルパス",
+            "relative_path": "相対パス"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessMesh": {
+        "title": "Trellis2 メッシュポスト処理ツール",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "remove_duplicate_faces": "重複面を除去",
+            "repair_non_manifold_edges": "非多様体エッジを修復",
+            "remove_non_manifold_faces": "非多様体面を除去",
+            "remove_small_connected_components": "小型接続成分を除去",
+            "remove_small_connected_components_size": "小型接続成分サイズしきい値",
+            "unify_faces_orientation": "面の向きを統一",
+            "remove_floaters": "浮遊ポリゴンを除去",
+            "remove_infinite_vertices": "無限座標の頂点を除去",
+            "merge_vertices": "頂点をマージ",
+            "merge_distance": "頂点統合距離しきい値",
+            "remove_nan_vertices": "無効な数値の頂点を除去"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapAndRasterizer": {
+        "title": "Trellis2 メッシュUV展開・ラスタライズツール",
+        "inputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH包围盒構造"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタ円錐半角しきい値（ラジアン）",
+            "mesh_cluster_refine_iterations": "メッシュ聚类詳細化イテレーション回数",
+            "mesh_cluster_global_iterations": "メッシュクラスタグローバルイテレーション回数",
+            "mesh_cluster_smooth_strength": "メッシュクラスタ平滑化強度",
+            "texture_size": "テクスチャサイズ",
+            "texture_alpha_mode": "テクスチャ透明チャンネルモード",
+            "double_side_material": "両面マテリアルを有効化",
+            "bake_on_vertices": "頂点カラーへベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "inpainting": "インペインティングを有効化",
+            "reorient_vertices": "頂点方向を再定向"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック・ラフネステクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelAdvancedGenerator": {
+        "title": "Trellis2 体素メッシュ高度生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image": "画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "pipeline_type": "パイプラインタイプ",
+            "sparse_structure_steps": "稀疏構造生成ステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール",
+            "sparse_structure_rescale_t": "稀疏構造リスケールT値",
+            "shape_steps": "形状生成ステップ数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール",
+            "shape_rescale_t": "形状リスケールT値",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケールT値",
+            "max_num_tokens": "最大Token数",
+            "max_views": "最大視点数量",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "generate_texture_slat": "テクスチャスライス生成",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始値",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了値",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始値",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了値",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始値",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了値",
+            "use_tiled_decoder": "分割デコーダーを使用",
+            "sampler": "サンプラー",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブステップ数",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "dino_foundation_cap": "DINO基礎上限値",
+            "keep_only_shell": "外殻メッシュのみ保持"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH包围盒構造"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelMultiViewGenerator": {
+        "title": "Trellis2 体素マルチビューメッシュ生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "front_image": "ポジティブ画像",
+            "back_image": "背面画像",
+            "left_image": "左画像",
+            "right_image": "右画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "pipeline_type": "パイプラインタイプ",
+            "sparse_structure_steps": "稀疏構造生成ステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール",
+            "sparse_structure_rescale_t": "稀疏構造リスケールT値",
+            "shape_steps": "形状生成ステップ数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール",
+            "shape_rescale_t": "形状リスケールT値",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケールT値",
+            "max_num_tokens": "最大トークン数",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "generate_texture_slat": "テクスチャスレート生成",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始点",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了点",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始点",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了点",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始点",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了点",
+            "use_tiled_decoder": "分割デコーダーを有効化",
+            "front_axis": "前方軸",
+            "blend_temperature": "ブレンド温度値",
+            "sampler": "サンプラー",
+            "fill_holes": "穴埋め",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINOモデルロック",
+            "dino_substeps": "DINOサブステップ数",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "dino_foundation_cap": "DINO基礎上限",
+            "keep_only_shell": "メッシュ外殻のみ保持"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH階層バウンディングボックス"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessAndUnWrapAndRasterizer": {
+        "title": "Trellis2 ポスト処理・UV展開・ラスタライザ",
+        "inputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH階層バウンディングボックス"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュ聚类しきい円錐半角（ラジアン）",
+            "mesh_cluster_refine_iterations": "メッシュ聚类最適化イテレーション回数",
+            "mesh_cluster_global_iterations": "メッシュクラスタグローバルイテレーション回数",
+            "mesh_cluster_smooth_strength": "メッシュクラスタ平滑化強度",
+            "texture_size": "テクスチャサイズ",
+            "remesh": "リメッシュ",
+            "remesh_band": "リメッシュ帯域幅",
+            "remesh_project": "リメッシュ投影",
+            "target_face_num": "目標面数",
+            "simplify_method": "簡略化方法",
+            "fill_holes": "穴埋め",
+            "texture_alpha_mode": "テクスチャAlphaチャンネルモード",
+            "dual_contouring_resolution": "双輪郭アルゴリズム解像度",
+            "double_side_material": "両面マテリアル",
+            "remove_floaters": "フローターポリゴンを除去",
+            "bake_on_vertices": "頂点へベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "remove_inner_faces": "内部面を除去",
+            "inpainting": "画像インペイント",
+            "reorient_vertices": "頂点の向きを再定向"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック・ラフネステクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2Remesh": {
+        "title": "Trellis2 リメッシュ",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "remesh_band": "リメッシュ帯域幅",
+            "remesh_project": "リメッシュ投影",
+            "dual_contouring_resolution": "双輪郭アルゴリズム解像度",
+            "remove_floaters": "フローターポリゴンを除去",
+            "remove_inner_faces": "内部面を除去"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMesh": {
+        "title": "Trellis2 メッシュ再構築",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "remesh_band": "リメッシュ帯域幅",
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMeshWithQuad": {
+        "title": "Trellis2 クアッドメッシュ再構築",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "remesh_band": "リメッシュ帯域幅",
+            "resolution": "解像度",
+            "remove_floaters": "フローターポリゴンを除去",
+            "remove_inner_faces": "内部面を除去"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturing": {
+        "title": "Trellis2 メッシュテクスチャ生成",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image": "画像",
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "seed": "シード",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケールT値",
+            "resolution": "解像度",
+            "texture_size": "テクスチャサイズ",
+            "texture_alpha_mode": "テクスチャAlphaチャンネルモード",
+            "double_side_material": "両面マテリアル",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始点",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了点",
+            "max_views": "最大ビュー数",
+            "bake_on_vertices": "頂点へベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュ聚类しきい円錐半角（ラジアン）",
+            "sampler": "サンプラー",
+            "inpainting": "画像インペイント",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINOモデルロック",
+            "dino_substeps": "DINOサブステップ数",
+            "dino_foundation_cap": "DINO基礎上限"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック・ラフネステクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturingMultiView": {
+        "title": "Trellis2 マルチビューメッシュテクスチャマッピング",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "front_image": "ポジティブ画像",
+            "trimesh": "トライアングルメッシュ",
+            "back_image": "背面画像",
+            "left_image": "左画像",
+            "right_image": "右画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケールしきい値T",
+            "resolution": "解像度",
+            "texture_size": "テクスチャサイズ",
+            "texture_alpha_mode": "テクスチャAlphaチャンネルモード",
+            "double_side_material": "両面マテリアル",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始値",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了値",
+            "bake_on_vertices": "頂点へベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値錐体半角(ラジアン)",
+            "front_axis": "前方軸",
+            "blend_temperature": "ブレンド温度",
+            "sampler": "サンプラー",
+            "inpainting": "画像インペイント",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINOモデルロック",
+            "dino_substeps": "DINOサブステップ数",
+            "dino_foundation_cap": "DINO基礎モデル上限"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック・ラフネステクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2LoadMesh": {
+        "title": "Trellis2 メッシュモデルを読み込む",
+        "widgets": {
+            "glb_path": "GLBファイルパス"
+        },
+        "outputs": {
+            "trimesh": "テクスチャ生成対象のGLBメッシュモデル"
+        },
+        "description": "指定パスからGLB形式モデルを読み込む。"
+    },
+    "Trellis2PreProcessImage": {
+        "title": "Trellis2 画像前処理",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "padding": "パディング",
+            "remove_background": "背景除去",
+            "max_size": "最大サイズ"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "Trellis2MeshRefiner": {
+        "title": "Trellis2 メッシュオプティマイザ",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "trimesh": "トライアングルメッシュ",
+            "image": "画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "resolution": "解像度",
+            "shape_steps": "形状最適化ステップ数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール",
+            "shape_rescale_t": "形状リスケールしきい値T",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケールしきい値T",
+            "max_num_tokens": "最大トークン数",
+            "generate_texture_slat": "テクスチャスレート生成",
+            "downsampling": "ダウサンプリング倍率",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始値",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了値",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始値",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了値",
+            "use_tiled_decoder": "スライスデコーダーを使用",
+            "max_views": "最大ビュー数",
+            "sampler": "サンプラー",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINOモデルロック",
+            "dino_substeps": "DINOサブステップ数",
+            "dino_foundation_cap": "DINO基礎モデル上限"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "境界体積階層(BVH)構造"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess2": {
+        "title": "Trellis2 メッシュポスト処理V2",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "fill_holes": "穴埋め",
+            "fix_normals": "法線を修正",
+            "fix_face_orientation": "面の向きを修正",
+            "remove_duplicate_faces": "重複面を除去",
+            "weld_vertices": "頂点溶接",
+            "weld_vertices_digits": "頂点溶接精度桁数",
+            "smooth": "平滑化処理",
+            "smooth_iterations": "平滑反復数",
+            "subdivide": "テクスチャリメッシュ",
+            "subdivide_iterations": "サブディビジョン反復回数"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2OvoxelExportToGLB": {
+        "title": "Trellis2 体素メッシュをGLBに書き出し",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "texture_size": "テクスチャサイズ",
+            "target_face_num": "目標面数"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2TrimeshToMeshWithVoxel": {
+        "title": "Trellis2 三角メッシュから体素付きメッシュ",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "resolution": "解像度"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2Continue": {
+        "title": "Trellis2 2系統リレーノード",
+        "inputs": {
+            "input_1": "入力1",
+            "input_2": "入力2"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "output_2": "出力2"
+        },
+        "description": ""
+    },
+    "Trellis2Continue3": {
+        "title": "Trellis2 3系統リレーノード",
+        "inputs": {
+            "input_1": "入力1",
+            "input_2": "入力2",
+            "input_3": "入力3"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "output_2": "出力2",
+            "output_3": "出力3"
+        },
+        "description": ""
+    },
+    "Trellis2Continue4": {
+        "title": "Trellis2 4系統リレーノード",
+        "inputs": {
+            "input_1": "入力1",
+            "input_2": "入力2",
+            "input_3": "入力3",
+            "input_4": "入力4"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "output_2": "出力2",
+            "output_3": "出力3",
+            "output_4": "出力4"
+        },
+        "description": ""
+    },
+    "Trellis2Continue5": {
+        "title": "Trellis2 5系統リレーノード",
+        "inputs": {
+            "input_1": "入力1",
+            "input_2": "入力2",
+            "input_3": "入力3",
+            "input_4": "入力4",
+            "input_5": "入力5"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "output_2": "出力2",
+            "output_3": "出力3",
+            "output_4": "出力4",
+            "output_5": "出力5"
+        },
+        "description": ""
+    },
+    "Trellis2Continue6": {
+        "title": "Trellis2 6系統リレーノード",
+        "inputs": {
+            "input_1": "入力1",
+            "input_2": "入力2",
+            "input_3": "入力3",
+            "input_4": "入力4",
+            "input_5": "入力5",
+            "input_6": "入力6"
+        },
+        "outputs": {
+            "output_1": "出力1",
+            "output_2": "出力2",
+            "output_3": "出力3",
+            "output_4": "出力4",
+            "output_5": "出力5",
+            "output_6": "出力6"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToMeshlibMesh": {
+        "title": "Trellis2 体素付きメッシュからMeshlibメッシュ",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "outputs": {
+            "meshlib_mesh": "Meshlib形式メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithMeshlib": {
+        "title": "Trellis2 Meshlibメッシュ穴埋め",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "holes_filled": "穴埋め済みホール数"
+        },
+        "description": "最適三角化アルゴリズムでメッシュ内の全穴を埋める。"
+    },
+    "Trellis2FillHolesNicelyWithMeshlib": {
+        "title": "Trellis2 Meshlib高品質メッシュ穴埋め",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "holes_filled": "穴埋め済みホール数"
+        },
+        "description": "最適三角化アルゴリズムでメッシュ内の全穴を高品質に埋める。"
+    },
+    "Trellis2SmoothNormals": {
+        "title": "Trellis2 法線平滑化処理",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2RemeshWithQuad": {
+        "title": "Trellis2 クアッド面リメッシュ",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "remesh_band": "リメッシュ帯域幅",
+            "remesh_project": "リメッシュ投影整列",
+            "dual_contouring_resolution": "デュアルポーリング抽出解像度",
+            "remove_floaters": "孤立ポリゴンを除去",
+            "remove_inner_faces": "内部面を除去"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2BatchSimplifyMeshAndExport": {
+        "title": "Trellis2 メッシュ一括簡略化書き出し",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "method": "簡略化方法",
+            "fill_holes": "穴を充填",
+            "reorient_vertices": "頂点再定向",
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_format": "ファイル形式",
+            "weld_vertices": "重複頂点を溶接",
+            "weld_vertices_digits": "頂点溶接精度桁数"
+        },
+        "outputs": {
+            "lst_glb_path": "GLBファイルパスリスト"
+        },
+        "description": ""
+    },
+    "Trellis2WeldVertices": {
+        "title": "Trellis2 頂点溶接",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "merge_texture": "テクスチャマージ",
+            "merge_normals": "法線を結合",
+            "digits": "精度桁数"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2StringSelector": {
+        "title": "Trellis2 文字列セレクタ",
+        "widgets": {
+            "strings": "文字列リスト",
+            "index": "選択インデックス"
+        },
+        "outputs": {
+            "string": "選択された文字列"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithCuMesh": {
+        "title": "Trellis2 CuMesh穴埋め",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "max_permieters": "最大穴周囲長しきい値"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": "メッシュ内の全穴を埋める"
+    },
+    "Trellis2LaplacianSmoothingWithOpen3d": {
+        "title": "Trellis2 Open3Dラプラシアン平滑化",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "iterations": "反復回数",
+            "method": "平滑化方法"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimesh": {
+        "title": "Trellis2 三角メッシュUV展開",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタ円錐半角しきい値（ラジアン）",
+            "mesh_cluster_refine_iterations": "メッシュ聚类最適化イテレーション回数",
+            "mesh_cluster_global_iterations": "メッシュクラスタグローバルイテレーション回数",
+            "mesh_cluster_smooth_strength": "メッシュクラスタ平滑化強度"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelCascadeGenerator": {
+        "title": "Trellis2 体素カスケードメッシュ生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image": "画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "pipeline_type": "パイプラインタイプ",
+            "sparse_structure_steps": "稀疏構造サンプリングステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール",
+            "sparse_structure_rescale_t": "稀疏構造リスケール時間ステップ",
+            "sparse_structure_sampler": "稀疏構造サンプラー",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始ステップ",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了ステップ",
+            "low_res_shape_steps": "低解像度形状サンプリングステップ数",
+            "low_res_shape_guidance_strength": "低解像度形状ガイダンス強度",
+            "low_res_shape_guidance_rescale": "低解像度形状ガイダンスリスケール",
+            "low_res_shape_rescale_t": "低解像度形状リスケール時間ステップ",
+            "low_res_shape_sampler": "低解像度形状サンプラー",
+            "low_res_shape_guidance_interval_start": "低解像度形状ガイダンス区間開始ステップ",
+            "low_res_shape_guidance_interval_end": "低解像度形状ガイダンス区間終了ステップ",
+            "high_res_shape_steps": "高解像度形状サンプリングステップ数",
+            "high_res_shape_guidance_strength": "高解像度形状ガイダンス強度",
+            "high_res_shape_guidance_rescale": "高解像度形状ガイダンスリスケール",
+            "high_res_shape_rescale_t": "高解像度形状リスケール時間ステップ",
+            "high_res_shape_sampler": "高解像度形状サンプラー",
+            "high_res_shape_guidance_interval_start": "高解像度形状ガイダンス区間開始ステップ",
+            "high_res_shape_guidance_interval_end": "高解像度形状ガイダンス区間終了ステップ",
+            "generate_texture_slat": "テクスチャスレート生成",
+            "texture_steps": "テクスチャサンプリングステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール",
+            "texture_rescale_t": "テクスチャリスケール時間ステップ",
+            "texture_sampler": "テクスチャサンプラー",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始ステップ",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了ステップ",
+            "max_num_tokens": "最大トークン数",
+            "use_tiled_decoder": "分割デコーダーを使用",
+            "max_views": "最大視点数",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "Dinoロック",
+            "dino_substeps": "Dinoサブステップ長",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "dino_foundation_cap": "Dino基礎上限",
+            "keep_only_shell": "外殻のみ保持"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "BVH加速構造"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondGenerator": {
+        "title": "Trellis2 画像条件生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image": "画像"
+        },
+        "widgets": {
+            "max_views": "最大視点数"
+        },
+        "outputs": {
+            "cond_512": "512解像度条件",
+            "cond_1024": "1024解像度条件",
+            "pipeline": "パイプライン",
+            "moge_camera_config": "Mogeカメラ設定"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGenerator": {
+        "title": "Trellis2 稀疏構造生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_cond": "画像条件",
+            "image": "画像",
+            "moge_camera_config": "Mogeカメラ設定"
+        },
+        "widgets": {
+            "seed": "シード",
+            "sparse_structure_steps": "稀疏構造サンプリングステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール",
+            "sparse_structure_rescale_t": "稀疏構造リスケール時間ステップ",
+            "sparse_structure_sampler": "稀疏構造サンプラー",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始ステップ",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了ステップ",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "Dinoロック",
+            "dino_substeps": "Dinoサブステップ長",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "dino_foundation_cap": "Dino基礎上限",
+            "keep_only_shell": "外殻のみ保持"
+        },
+        "outputs": {
+            "coords": "座標セット",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeGenerator": {
+        "title": "Trellis2 形状生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_cond": "条件画像",
+            "coords": "座標",
+            "image": "画像",
+            "moge_camera_config": "Mogeカメラ設定"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "shape_steps": "形状生成ステップ数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール係数",
+            "shape_rescale_t": "形状リスケールしきい値T",
+            "shape_sampler": "形状サンプラー",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始ステップ",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "Dino特徴ロック",
+            "dino_substeps": "Dinoサブステップ数",
+            "dino_foundation_cap": "Dino基礎特徴上限"
+        },
+        "outputs": {
+            "shape_slat": "形状グリッド特徴",
+            "resolution": "解像度",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeGenerator": {
+        "title": "Trellis2 カスケード形状生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_cond": "条件画像",
+            "shape_slat": "形状グリッド特徴",
+            "image": "画像",
+            "moge_camera_config": "Mogeカメラ設定"
+        },
+        "widgets": {
+            "from_resolution": "元解像度",
+            "to_resolution": "目標解像度",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "max_num_tokens": "最大トークン数",
+            "shape_steps": "形状生成ステップ数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール係数",
+            "shape_rescale_t": "形状リスケールしきい値T",
+            "shape_sampler": "形状サンプラー",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始ステップ",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "Dino特徴ロック",
+            "dino_substeps": "Dinoサブステップ数",
+            "dino_foundation_cap": "Dino基礎特徴上限"
+        },
+        "outputs": {
+            "shape_slat": "形状グリッド特徴",
+            "resolution": "解像度",
+            "pipeline": "パイプライン",
+            "num_tokens": "トークン数量"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatGenerator": {
+        "title": "Trellis2 テクスチャグリッド特徴生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_cond": "条件画像",
+            "shape_slat": "形状グリッド特徴",
+            "image": "画像",
+            "moge_camera_config": "Mogeカメラ設定"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "texture_steps": "テクスチャ生成ステップ数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール係数",
+            "texture_rescale_t": "テクスチャリスケールしきい値T",
+            "texture_sampler": "テクスチャサンプラー",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始ステップ",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "Dino特徴ロック",
+            "dino_substeps": "Dinoサブステップ数",
+            "dino_foundation_cap": "Dino基礎特徴上限",
+            "from_resolution": "元解像度"
+        },
+        "outputs": {
+            "texture_slat": "テクスチャグリッド特徴",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatents": {
+        "title": "Trellis2 Latentデコード",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "shape_slat": "形状グリッド特徴",
+            "texture_slat": "テクスチャグリッド特徴"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "use_tiled_decoder": "スライスデコーダーを使用"
+        },
+        "outputs": {
+            "mesh": "メッシュモデル",
+            "bvh": "BVH加速構造",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMeshAdvanced": {
+        "title": "Trellis2 高度なメッシュ簡略化",
+        "inputs": {
+            "mesh": "メッシュモデル"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "thresh": "簡略化しきい値",
+            "lambda_edge_length": "辺長重み係数",
+            "lambda_skinny": "細長三角形抑制重み",
+            "lambda_curvature": "曲率保持重み",
+            "lambda_boundary": "境界保持重み",
+            "lambda_area": "面積重み",
+            "qem_regularization": "QEM正則化強度"
+        },
+        "outputs": {
+            "mesh": "メッシュモデル"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimeshAdvanced": {
+        "title": "Trellis2 高度な三角メッシュ簡略化",
+        "inputs": {
+            "trimesh": "三角メッシュモデル"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "thresh": "簡略化しきい値",
+            "lambda_edge_length": "辺長重み係数",
+            "lambda_skinny": "細長三角形抑制重み",
+            "lambda_curvature": "曲率保持重み",
+            "lambda_boundary": "境界保持重み",
+            "lambda_area": "面積重み",
+            "qem_regularization": "QEM正則化強度"
+        },
+        "outputs": {
+            "trimesh": "三角メッシュモデル"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturing": {
+        "title": "Trellis2 マルチビューテクスチャベイク",
+        "inputs": {
+            "trimesh": "三角メッシュモデル",
+            "front_image": "ポジティブ画像",
+            "back_image": "背面画像",
+            "left_image": "左画像",
+            "right_image": "右画像",
+            "top_image": "頂面画像",
+            "bottom_image": "底面画像",
+            "custom_images": "カスタム視点画像",
+            "camera_config": "カメラ設定"
+        },
+        "widgets": {
+            "texture_size": "テクスチャサイズ",
+            "blend_texture": "テクスチャブレンドを有効化",
+            "blend_exponent": "ブレンド指数",
+            "ortho_scale": "直交投影スケール係数",
+            "norm_size": "正規化サイズ",
+            "fill_holes": "テクスチャの穴を埋める",
+            "max_hole_size": "埋め可能な最大穴サイズ",
+            "use_metallic": "メタリック/ラフネスチャンネルを生成",
+            "depth_eps": "深度シフトしきい値",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュ聚类円錐半角しきい値（ラジアン）",
+            "add_alpha_channel": "透明チャンネルを追加",
+            "front_weight": "正面重み",
+            "back_weight": "背面重み",
+            "left_weight": "左側重み",
+            "right_weight": "右側重み",
+            "top_weight": "頂面重み",
+            "bottom_weight": "底面重み",
+            "custom_azimuths": "カスタム視点方位角",
+            "custom_elevations": "カスタム視点俯角",
+            "custom_weights": "カスタム視点重み"
+        },
+        "outputs": {
+            "trimesh": "三角メッシュモデル",
+            "base_color": "ベースカラーマップ",
+            "metallic_roughness": "メタリックラフネスマップ"
+        },
+        "description": "多視点画像の投影でメッシュモデルにテクスチャを追加する。\n\n角度重みブレンドアルゴリズムを採用：各表面は全ての可視視点からテクスチャ情報を受け取り、重みは表面の向きとカメラ視点の正対度で決まる。\n\nカメラ角度の定義（Y軸上方向座標系）：\n- 方角：Y軸周りの回転角度\n  - 0° = 正面（-Z方向を見る）\n  - 90° = 左側（-X方向を見る）\n  - 180° = 背面（+Z方向を見る）\n  - 270° = 右側（+X方向を見る）\n- 俯仰角：X軸周りの回転角度\n  - 0° = 水平視点\n  - 90° = 頂面（-Y方向を見る、上から見る）\n  - -90° = 底面（+Y方向を見る、下から見る）"
+    },
+    "Trellis2ProjectHighPolyToLowPoly": {
+        "title": "Trellis2 高ポリ投影から低ポリ",
+        "inputs": {
+            "high_poly_trimesh": "ハイポリ三角メッシュ",
+            "low_poly_trimesh": "ローポリ三角メッシュ",
+            "front_image": "ポジティブ画像",
+            "back_image": "背面画像",
+            "left_image": "左画像",
+            "right_image": "右画像",
+            "top_image": "上部画像",
+            "bottom_image": "下部画像",
+            "custom_images": "カスタム画像",
+            "camera_config": "カメラ設定"
+        },
+        "widgets": {
+            "texture_size": "テクスチャサイズ",
+            "blend_texture": "テクスチャブレンド",
+            "blend_exponent": "ブレンド指数",
+            "ortho_scale": "直交投影スケール比",
+            "norm_size": "正規化サイズ",
+            "fill_holes": "穴を充填",
+            "max_hole_size": "最大ホールサイズ",
+            "use_metallic": "メタリックチャンネルを有効化",
+            "depth_eps": "深度誤差しきい値",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値円錐半角ラジアン値",
+            "add_alpha_channel": "Alphaチャンネル追加",
+            "front_weight": "正面重み",
+            "back_weight": "背面重み",
+            "left_weight": "左側重み",
+            "right_weight": "右側重み",
+            "top_weight": "頂部重み",
+            "bottom_weight": "底部重み",
+            "custom_azimuths": "カスタム方位角リスト",
+            "custom_elevations": "カスタム俯角リスト",
+            "custom_weights": "カスタム重みリスト"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color": "ベースカラーテクスチャ",
+            "metallic_roughness": "メタリックラフネステクスチャ"
+        },
+        "description": "多視点画像の投影でメッシュにテクスチャを付与する。\n\n角度重みブレンドアルゴリズムを採用：各表面は観測できる全視点からのテクスチャを受け取り、重みは表面と対応カメラの正対度で決まる。\n\nカメラ角度（Y軸上方向座標系）：\n- 方位角：Y軸周りの回転\n  - 0° = 正面（-Z方向を見る）\n  - 90° = 左側（-X方向を見る）  \n  - 180° = 背面（+Z方向を見る）\n  - 270° = 右側（+X方向を見る）\n- 俯仰角：X軸周りの回転\n  - 0° = 水平方向\n  - 90° = 頂部（上から-Y方向を見る）\n  - -90° = 底部（下から+Y方向を見る）"
+    },
+    "Trellis2RenderMultiView": {
+        "title": "Trellis2 マルチビューレンダリング",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "render_size": "レンダリングサイズ",
+            "ortho_scale": "直交投影スケール比",
+            "blender_exec_path": "Blender実行ファイルパス",
+            "azimuths": "方位角リスト",
+            "elevations": "仰角リスト"
+        },
+        "outputs": {
+            "images": "画像",
+            "ortho_scale": "直交投影スケール比",
+            "azimuths": "方位角リスト",
+            "elevations": "仰角リスト"
+        },
+        "description": ""
+    },
+    "Trellis2CudaReset": {
+        "title": "Trellis2 CUDAリセット",
+        "inputs": {
+            "input_1": "入力1"
+        },
+        "outputs": {
+            "output_1": "出力1"
+        },
+        "description": ""
+    },
+    "Trellis2SaveImage": {
+        "title": "Trellis2 画像保存",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "compress_level": "圧縮レベル"
+        },
+        "outputs": {
+            "images_path": "画像パス"
+        },
+        "description": "入力画像をComfyUI出力ディレクトリへ保存。"
+    },
+    "Trellis2VoxelToMesh": {
+        "title": "Trellis2 体素からメッシュ",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "target_height_mm": "目標高さ（ミリ）",
+            "sigma": "平滑化係数sigma",
+            "coarse_downsample": "粗ダウサンプリング率",
+            "taubin_iterations": "Taubin平滑化イテレーション回数"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2UnloadAllModels": {
+        "title": "Trellis2 全モデルアンロード",
+        "inputs": {
+            "input_1": "入力1"
+        },
+        "outputs": {
+            "output_1": "出力1"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGeneratorWithReconViaGen": {
+        "title": "Trellis2 生成型再構築付き稀疏構造生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "images": "画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "sparse_structure_steps": "稀疏構造イテレーションステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール係数",
+            "sparse_structure_rescale_t": "稀疏構造リスケールT値",
+            "sparse_structure_sampler": "稀疏構造サンプラー",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始点",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了点",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブステップ数",
+            "dino_foundation_cap": "DINO基礎しきい値",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "keep_only_shell": "外殻のみ保持"
+        },
+        "outputs": {
+            "coords": "座標リスト",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2ExtractImagesFromVideo": {
+        "title": "Trellis2 動画フレーム抽出",
+        "widgets": {
+            "video_file": "動画ファイル",
+            "frames_per_second": "毎秒抽出フレーム数"
+        },
+        "outputs": {
+            "images": "画像"
+        },
+        "description": ""
+    },
+    "Trellis2MaxTokensCalculator": {
+        "title": "Trellis2 最大トークン数計算器",
+        "widgets": {
+            "default_max_tokens": "デフォルト最大トークン数"
+        },
+        "outputs": {
+            "max_tokens": "最大トークン数"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondMultiViewGenerator": {
+        "title": "Trellis2 画像条件マルチビュー生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "front_image": "ポジティブ画像",
+            "back_image": "背面画像",
+            "left_image": "左画像",
+            "right_image": "右画像"
+        },
+        "outputs": {
+            "conds_512": "512解像度cond",
+            "conds_1024": "1024解像度cond",
+            "views_list": "視点リスト",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2SparseMultiViewGenerator": {
+        "title": "Trellis2 稀疏マルチビュー生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_conds": "画像条件",
+            "views_list": "視点リスト"
+        },
+        "widgets": {
+            "seed": "シード",
+            "sparse_structure_steps": "稀疏構造イテレーションステップ数",
+            "sparse_structure_guidance_strength": "稀疏構造ガイダンス強度",
+            "sparse_structure_guidance_rescale": "稀疏構造ガイダンスリスケール係数",
+            "sparse_structure_rescale_t": "稀疏構造リスケールT値",
+            "sparse_structure_sampler": "稀疏構造サンプラー",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "sparse_structure_guidance_interval_start": "稀疏構造ガイダンス区間開始点",
+            "sparse_structure_guidance_interval_end": "稀疏構造ガイダンス区間終了点",
+            "fill_holes": "穴を充填",
+            "hole_iterations": "穴埋めイテレーション回数",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブステップ数",
+            "hole_fill_algorithm": "穴埋めアルゴリズム",
+            "dino_foundation_cap": "DINO基礎しきい値",
+            "keep_only_shell": "外殻のみ保持",
+            "front_axis": "前方軸",
+            "blend_temperature": "ブレンド温度係数"
+        },
+        "outputs": {
+            "coords": "座標リスト",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "views_list": "視点リスト",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeMultiViewGenerator": {
+        "title": "Trellis 形状マルチビュー生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_conds": "画像条件",
+            "views_list": "ビューリスト",
+            "coords": "座標"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "shape_steps": "形状生成step数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール係数",
+            "shape_rescale_t": "形状リスケール時間ステップt",
+            "shape_sampler": "形状サンプラー",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始ステップ",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブstep数",
+            "dino_foundation_cap": "DINO基礎しきい値",
+            "front_axis": "前方軸",
+            "blend_temperature": "融合温度係数"
+        },
+        "outputs": {
+            "shape_slat": "形状slat稀疏Latent",
+            "resolution": "解像度",
+            "views_list": "ビューリスト",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeMultiViewGenerator": {
+        "title": "Trellis カスケード形状マルチビュー生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_conds": "画像条件",
+            "views_list": "ビューリスト",
+            "shape_slat": "形状slat稀疏Latent"
+        },
+        "widgets": {
+            "from_resolution": "元解像度",
+            "to_resolution": "目標解像度",
+            "sparse_structure_resolution": "稀疏構造解像度",
+            "max_num_tokens": "最大トークン数",
+            "shape_steps": "形状生成step数",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_guidance_rescale": "形状ガイダンスリスケール係数",
+            "shape_rescale_t": "形状リスケール時間ステップt",
+            "shape_sampler": "形状サンプラー",
+            "shape_guidance_interval_start": "形状ガイダンス区間開始ステップ",
+            "shape_guidance_interval_end": "形状ガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブstep数",
+            "dino_foundation_cap": "DINO基礎しきい値",
+            "front_axis": "前方軸",
+            "blend_temperature": "融合温度係数"
+        },
+        "outputs": {
+            "shape_slat": "形状slat稀疏Latent",
+            "resolution": "解像度",
+            "views_list": "ビューリスト",
+            "pipeline": "パイプライン",
+            "num_tokens": "トークン数量"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatMultiViewGenerator": {
+        "title": "Trellis テクスチャslatマルチビュー生成器",
+        "inputs": {
+            "pipeline": "パイプライン",
+            "image_conds": "画像条件",
+            "views_list": "ビューリスト",
+            "shape_slat": "形状slat稀疏Latent"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "texture_steps": "テクスチャ生成step数",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンスリスケール係数",
+            "texture_rescale_t": "テクスチャリスケール時間ステップt",
+            "texture_sampler": "テクスチャサンプラー",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始ステップ",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了ステップ",
+            "verbose": "詳細ログを出力",
+            "dino_lock": "DINO特徴ロック",
+            "dino_substeps": "DINOサブstep数",
+            "dino_foundation_cap": "DINO基礎しきい値",
+            "front_axis": "前方軸",
+            "blend_temperature": "融合温度係数"
+        },
+        "outputs": {
+            "texture_slat": "テクスチャslat稀疏Latent",
+            "views_list": "ビューリスト",
+            "pipeline": "パイプライン"
+        },
+        "description": ""
+    },
+    "Trellis2MoGeCameraConfig": {
+        "title": "Trellis MoGeカメラ設定",
+        "widgets": {
+            "camera_angle_x": "カメラX軸角度",
+            "distance": "撮影距離",
+            "mesh_scale": "メッシュスケール比率"
+        },
+        "outputs": {
+            "moge_camera_config": "MoGeカメラ設定"
+        },
+        "description": ""
+    },
+    "Trellis2FovMoGeCameraConfig": {
+        "title": "Trellis 視野角MoGeカメラ設定",
+        "widgets": {
+            "fov": "視野角(FOV)",
+            "unit": "単位",
+            "extend_pixel": "拡張ピクセル数",
+            "mesh_scale": "メッシュスケール比率"
+        },
+        "outputs": {
+            "moge_camera_config": "MoGeカメラ設定"
+        },
+        "description": ""
+    },
+    "Trellis2RenderPreview": {
+        "title": "プレビュー画像を生成",
+        "inputs": {
+            "trimesh": "trimesh形式"
+        },
+        "widgets": {
+            "num_views": "視点数量",
+            "resolution": "解像度",
+            "render_mode": "レンダリングモード"
+        },
+        "outputs": {
+            "preview_images": "プレビュー画像",
+            "IMAGE": "画像"
+        },
+        "description": "\n3Dメッシュジオメトリからプレビュー画像を生成する。\n\nパラメータ:\n- trimesh: 3Dメッシュジオメトリ\n- ビュー数: レンダリングビューの数（中心の周り回転\n- 解像度: レンダリング解像度\n- レンダリングモード: レンダリングスタイル（normal, clay, basecolor)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RenderVideo": {
+        "title": "回転動画を生成",
+        "inputs": {
+            "trimesh": "trimesh形式"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "fps": "毎秒フレーム数",
+            "resolution": "解像度",
+            "filename_prefix": "ファイルプレフィックス"
+        },
+        "outputs": {
+            "video_path": "動画パス",
+            "STRING": "文字列"
+        },
+        "description": "\n3Dメッシュジオメトリから回転動画を生成する。\n\nパラメータ:\n- trimesh: 3Dメッシュジオメトリ\n- num_frames: 動画のフレーム数\n- fps: フレームレート\n- resolution: レンダリング解像度\n- filename_prefix: 出力ファイル名のプレフィックス\n",
+        "api_version": "V1"
+    },
+    "Trellis2GetConditioning": {
+        "title": "条件取得",
+        "inputs": {
+            "model_config": "モデル設定",
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "background_color": "背景色"
+        },
+        "outputs": {
+            "conditioning": "条件",
+            "preprocessed_image": "前処理画像",
+            "TRELLIS2_CONDITIONING": "TRELLIS2 条件",
+            "IMAGE": "画像"
+        },
+        "description": "\nDinoV3で画像を前処理し視覚特徴を抽出する。\n\nこのノードは次の処理を行う:\n1. マスクをalphaチャンネルとして適用\n2. オブジェクトのバウンディングボックスへトリミング\n3. alphaのプレマルチプライ処理\n4. DinoV3で特徴を抽出\n\nパラメータ:\n- model_config: 読み込んだTRELLIS.設定\n- image: 入力画像（RGB形式\n- mask: 前景マスク（白=物体、黒=背景\nマスク生成には任意の背景除去ノード（BiRefNet、rembgなど）を使用。",
+        "api_version": "V1"
+    },
+    "Trellis2ImageToShape": {
+        "title": "画像から形状を生成",
+        "inputs": {
+            "model_config": "モデル設定",
+            "conditioning": "条件"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "ss_guidance_strength": "稀疏構造ガイダンス強度",
+            "ss_sampling_steps": "稀疏構造サンプリングステップ",
+            "shape_guidance_strength": "形状ガイダンス強度",
+            "shape_sampling_steps": "形状サンプリングステップ",
+            "max_tokens": "最大トークン数"
+        },
+        "outputs": {
+            "shape_result": "形状結果",
+            "mesh": "メッシュ",
+            "TRELLIS2_SHAPE_RESULT": "TRELLIS2 形状結果",
+            "TRIMESH": "trimesh形式"
+        },
+        "description": "\n画像条件から3D形状を生成する。\n\nこのノードは形状ジオメトリを生成する（テクスチャ/PBRマテリアルなし）。\nPBRマテリアルを得るにはshape_resultを「形状からテクスチャ付きメッシュへ」に接続。\n\nパラメータ:\n- model_config: 読み込んだモデル設定（解像度はモデル読み込みノードで設定）\n- conditioning: 「条件取得」ノードのDinoV3条件\n- seed: 再現性用のランダムシード\n- ss_*: 稀疏構造サンプリングパラメータ\n- shape_*: 形状Latentサンプリングパラメータ\n\n戻り値:\n- shape_result: テクスチャ生成用の形状データ\n- mesh: プレビュー/書き出し用の無陰影メッシュ\n",
+        "api_version": "V1"
+    },
+    "Trellis2ShapeToTexturedMesh": {
+        "title": "形状からテクスチャメッシュを生成",
+        "inputs": {
+            "model_config": "モデル設定",
+            "conditioning": "条件",
+            "shape_result": "形状結果"
+        },
+        "widgets": {
+            "seed": "ランダムシード",
+            "tex_guidance_strength": "テクスチャガイダンス強度",
+            "tex_sampling_steps": "テクスチャサンプリングステップ"
+        },
+        "outputs": {
+            "mesh_glb_path": "メッシュパス(.glbファイル)",
+            "voxelgrid_npz_path": "体素メッシュパス(.npzファイル)",
+            "STRING": "文字列"
+        },
+        "description": "\n形状からPBRマテリアル付きのテクスチャメッシュを生成する。\n\n「画像から形状へ」ノードのshape_resultを取得し、PBRマテリアルを生成:\n- base_color (RGB) - metallic - roughness - alpha\n\nパラメータ:\n- model_config: 読み込んだモデル設定\n- conditioning: DinoV3条件（形状に使用したものと同じ\n- shape_result: 「画像から形状へ」ノードの形状データ\n- seed: テクスチャのバリエーション用ランダムシード\n- tex_*: テクスチャサンプリングパラメータ\n\n戻り値:\n- mesh_glb_path: メッシュジオメトリのパス(.glbファイル)\n- voxelgrid_npz_path: 体素メッシュデータのパス(.npzファイル、座標・属性・頂点・面などを含む)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RemoveBackground": {
+        "title": "背景除去",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "low_vram": "低VRAM"
+        },
+        "outputs": {
+            "image": "画像",
+            "mask": "マスク",
+            "IMAGE": "画像",
+            "MASK": "マスク"
+        },
+        "description": "\nBiRefNetで画像の背景を除去する（TRELLIS rembgと同じ）。\n\nこのノードはBiRefNetセグメンテーションモデルで前景マスクを抽出する。\nマスクは「条件取得」ノードに使用できる。\n\nパラメータ:\n- image: 入力RGB画像\n- low_vram: 使用しないときモデルをCPUへ移動（遅いがVRAMを節約）\n\n戻り値:\n- image: 元画像（変更なし）\n- mask: 前景マスク（白=物体、黒=背景）\n",
+        "api_version": "V1"
+    },
+    "LoadTrellis2Models": {
+        "title": "Trellis2モデルを読み込む",
+        "widgets": {
+            "resolution": "解像度",
+            "precision": "精度",
+            "attn_backend": "アテンションバックエンド"
+        },
+        "outputs": {
+            "model_config": "モデル設定",
+            "TRELLIS2_MODEL_CONFIG": "TRELLIS2 モデル設定"
+        },
+        "description": "\n画像から3D生成用のTrellis2モデル設定を読み込む。\n\nこのノードは設定オブジェクトを作成し、推論ノードがモデルをオンデマンドで読み込む際に使用する。\n\n解像度モード:\n- 512: 高速、品質は低め\n- 1024_cascade: 最高品質、512->1024カスケード使用\n- 1536_cascade: 最高解像度出力\n\nアテンションバックエンド:\n- auto: 最良のもの（sageattn > flash_attn > xformers > sdpa）\n- flash_attn: FlashAttention（flash_attnパッケージが必要）\n- xformers: メモリ効率アテンション（xformersパッケージが必要）\n- sdpa: PyTorch内蔵のscaled_dot_product_attention（PyTorch >= 2.0）\n- sageattn: SageAttention（最速、sageattentionパッケージが必要）\n",
+        "api_version": "V1"
+    },
+    "Trellis2LoadSSFlowModel": {
+        "title": "稀疏構造flowモデルを読み込む",
+        "inputs": {
+            "model_config": "モデル設定"
+        },
+        "outputs": {
+            "model": "モデル",
+            "MODEL": "モデル"
+        },
+        "description": "\n稀疏構造flowモデルを標準ComfyUI MODELとしてラップする。\n\nこのノードはflowモデルをComfyUIのBaseModel/ModelPatcherシステムに\nカプセル化し、任意のサンプラー/スケジューラでKSamplerが駆動できるようにする。\n\n出力MODELをKSamplerの'model'入力に接続。\n正負の条件にはTrellis2SSConditioningを使用。\n初期LatentにはTrellis2Empty3DLatentを使用。\n",
+        "api_version": "V1"
+    },
+    "Trellis2SSConditioning": {
+        "title": "Trellis2 DinoV3条件を変換",
+        "inputs": {
+            "conditioning": "条件"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "description": "\nTrellis2 DinoV3条件を標準ComfyUI条件に変換する。\n\n「Trellis2 条件取得」の出力を受け取り、KSampler互換のポジティブ/ネガティブ条件を\n出力する。\n\n'positive'をKSamplerのポジティブ入力に接続。\n'negative'をKSamplerのネガティブ入力に接続。\n",
+        "api_version": "V1"
+    },
+    "Trellis2Empty3DLatent": {
+        "title": "空の3D Latentを作成",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "\n稀疏構造サンプリング用の空の3D Latentテンソルを作成する。\n\nモデルの解像度とチャンネル数を読み取り、正しい形状を作成: [バッチ, チャンネル, 解像度, 解像度, 解像度]。\n\nデフォルトのTrellis2モデルの場合: [1, 8, 16, 16, 16]。\n",
+        "api_version": "V1"
+    },
+    "Trellis2ApplyGuidanceInterval": {
+        "title": "ガイダンス区間を適用",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "guidance_interval_start": "開始間隔",
+            "guidance_interval_end": "終了間隔"
+        },
+        "outputs": {
+            "MODEL": "モデル"
+        },
+        "description": "\nサンプリング中にCFGをいつ有効化するかを制御する。\n\nTRELLIS2 flow matchingではsigmaが1.0（純ノイズ）から0.0（クリーンデータ）へ変化する。\n- （0.0, 1.0）= 常にCFGを適用（デフォルト設定、標準KSamplerと同じ）\n- （0.2, 0.8）= sigmaが0.2と 0.8の間にあるときだけCFGを適用\n\nこの区間外では条件付き予測のみを使用（CFGなし）。",
+        "api_version": "V1"
+    },
+    "Trellis2DecodeSSLatent": {
+        "title": "稀疏構造Latentをデコード",
+        "inputs": {
+            "model_config": "モデル設定",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "ss_resolution": "SS解像度"
+        },
+        "outputs": {
+            "coords": "座標",
+            "TRELLIS2_SS_COORDCOORD": "Trellis2座標"
+        },
+        "description": "\n稀疏構造Latentを体素座標へデコードする。\n\nKSamplerでサンプリングされた潜在特徴を受け取り、次の手順を実行：\n1. SparseStructureDecoderを実行（（logits -> 二値占有率）\n2. 任意で最大プーリングにより目標解像度までダウサンプリング\n3. 活性体素座標を抽出\n\n出力座標は後続の形状生成ノードに渡せる。",
+        "api_version": "V1"
+    },
+    "Trellis2Simplify": {
+        "title": "Trellis2 メッシュ簡略化",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "target_face_count": "目標面数",
+            "fill_holes": "穴を充填",
+            "fill_holes_perimeter": "穴周囲長しきい値",
+            "remesh": "リメッシュ",
+            "remesh_band": "リメッシュ帯域幅"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": "\nメッシュを目標ポリゴン数まで簡略化する。\n\nCuMeshによるGPU加速の簡略化。\n\nパラメータ：\n- target_face_count: 目標ポリゴン数\n- fill_holes: 簡略化前に小さな穴を埋める\n- fill_holes_perimeter: 埋める最大穴周囲長\n- remesh: よりクリーンなトポロジーを得るため双輪郭リメッシュを適用\n- remesh_band: リメッシュ帯域幅",
+        "api_version": "V1"
+    },
+    "Trellis2UVUnwrap": {
+        "title": "Trellis2 UV展開メッシュ",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "chart_cone_angle": "チャートコーン角",
+            "chart_refine_iterations": "詳細化イテレーション回数",
+            "chart_global_iterations": "グローバル最適化イテレーション回数",
+            "chart_smooth_strength": "平滑化強度"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": "\nxatlasでメッシュをUV展開する。\n\nUVマップのみを作成し、テクスチャはベイクしない。テクスチャベイクはRasterize PBRノードのあとで実施。\n\nパラメータ：\n- chart_cone_angle: チャートクラスタのしきい値（度）\n- chart_refine_iterations: UVチャートの最適化\n- chart_global_iterations: グローバルUV最適化イテレーション回数\n- chart_smooth_strength: UV平滑化強度\n\nヒント：先にメッシュを簡略化すること！1000万ポリゴンのUV展開は非常に時間がかかる。",
+        "api_version": "V1"
+    },
+    "Trellis2RasterizePBR": {
+        "title": "体素データからPBRテクスチャをベイク",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ",
+            "voxelgrid": "ボクセルメッシュ"
+        },
+        "widgets": {
+            "texture_size": "テクスチャ解像度"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "description": "\nPBRテクスチャを体素データからUV展開済みメッシュへベイクする。\n\nUV付きメッシュが必要で、VOXELGRIDから色/メタリック/ラフネスをベイクする。\n\n入力メッシュはUVを持つ必要がある（まずUV Unwrapノードを使用）。\n\nパラメータ:\n- texture_size: ベイクテクスチャの解像度（512-16384ピクセル）",
+        "api_version": "V1"
+    },
+    "Trellis2ExportGLB": {
+        "title": "Trellis2 GLB ファイル書き出し",
+        "widgets": {
+            "voxelgrid_path": "体素メッシュパス",
+            "decimation_target": "目標面数",
+            "texture_size": "テクスチャ解像度",
+            "remesh": "リメッシュ",
+            "filename_prefix": "ファイル名プレフィックス"
+        },
+        "outputs": {
+            "glb_path": "GLBパス"
+        },
+        "description": "\n体素データからテクスチャ付きGLTFを一括で書き出す。\n\n「形状からテクスチャ付きメッシュへ」からvoxelgrid_npz_pathを取得し、次を実行：\n1. メッシュを目標ポリゴン数まで簡略化\n2. UV展開を行う\n3. 体素データからPBRテクスチャをベイク（ベースカラー、メタリック、ラフネス）\n4. テクスチャ付きGLTFをComfyUI出力フォルダに書き出す\n\nパラメータ：\n- voxelgrid_path: 「形状からテクスチャ付きメッシュへ」由来の.npzファイルパス\n- decimation_target: 簡略化後の目標ポリゴン数\n- texture_size: ベイクするPBRテクスチャの解像度\n- remesh: 簡略化の前にリメッシュを適用し、よりクリーンなトポロジーを得る\n- filename_prefix: 出力ファイル名プレフィックス",
+        "api_version": "V1"
+    },
+    "Trellis2ExportTrimesh": {
+        "title": "Trellis2 三角メッシュ書き出し",
+        "inputs": {
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "file_format": "ファイル形式"
+        },
+        "outputs": {
+            "file_path": "ファイルパス"
+        },
+        "description": "\n三角メッシュを複数の3Dファイル形式に書き出す。\n\n対応: GLB, OBJ, PLY, STL, 3MF, DAE",
+        "api_version": "V1"
+    },
+    "Trellis2MeshWithVoxeltoTrimesmesh": {
+        "title": "Trellis2 体素ベースメッシュを三角メッシュに変換",
+        "widgets": {
+            "mesh": "メッシュ",
+            "reorient_vertices": "頂点を再定向"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "TRIMESH": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexture": {
+        "title": "Trellis2MeshTexture",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "pipeline": "パイプライン",
+            "trimesh": "トライアングルメッシュ",
+            "seed": "シード",
+            "texture_steps": "テクスチャステップ",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャリスケール調整",
+            "texture_rescale_t": "テクスチャリスケールt",
+            "resolution": "解像度",
+            "texture_size": "テクスチャサイズ",
+            "texture_alpha_mode": "テクスチャ透明モード",
+            "double_side_material": "両面マテリアル",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了",
+            "max_views": "最大視点",
+            "bake_on_vertices": "頂点上にベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい角半径ラジアン",
+            "sampler": "サンプラー",
+            "inpainting": "修復",
+            "verbose": "詳細情報",
+            "dino_lock": "DINOロック",
+            "dino_substeps": "DINOサブステップ",
+            "dino_foundation_cap": "DINO基礎キャップ"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック光沢テクスチャ",
+            "TRIMESH": "トライアングルメッシュ",
+            "IMAGE": "画像"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturerMultiView": {
+        "title": "Trellis2MeshTexturerMultiView",
+        "inputs": {
+            "pipeline": "pipeline",
+            "front_image": "フロントビュー画像",
+            "trimesh": "トライアングルメッシュ",
+            "back_image": "後面ビュー画像",
+            "left_image": "左ビュー画像",
+            "right_image": "右ビュー画像"
+        },
+        "widgets": {
+            "seed": "シード",
+            "纹理步骤": "テクスチャステップ",
+            "纹理引导强度": "テクスチャガイダンス強度",
+            "纹理引导缩放": "テクスチャガイダンススケール",
+            "纹理缩放t": "テクスチャスケールt",
+            "分辨率": "解像度",
+            "纹理大小": "テクスチャサイズ",
+            "纹理alpha模式": "テクスチャalphaモード",
+            "双面材质": "両面マテリアル",
+            "纹理引导区间开始": "テクスチャガイダンス区間開始",
+            "纹理引导区间结束": "テクスチャガイダンス区間終了",
+            "烘焙在顶点上": "頂点上にベイク",
+            "使用自定义法线": "カスタム法線を使用",
+            "网格聚类阈值圆锥半角弧度": "メッシュクラスタしきい値円錐半角ラジアン",
+            "前方轴": "前方軸",
+            "混合温度": "ブレンド温度",
+            "采样器": "サンプラー",
+            "修复": "修復",
+            "详细信息": "詳細情報",
+            "DINO锁定": "DINOロック",
+            "DINO子步数": "DINOサブステップ数",
+            "DINO基础帽": "DINO基礎キャップ"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "基色纹理": "ベース色テクスチャ",
+            "金属光泽粗糙度纹理": "メタリック光沢ラフネステクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess": {
+        "title": "Trellis2PostProcess",
+        "inputs": {
+            "mesh": "メッシュ"
+        },
+        "widgets": {
+            "填充孔洞": "穴を充填",
+            "修复法线": "法線を修復",
+            "修复面朝向": "面の向きを修復",
+            "删除重复面": "重複面を削除",
+            "焊接顶点": "頂点溶接",
+            "焊接顶点位数": "頂点溶接の精度桁数",
+            "平滑": "滑らか",
+            "平滑迭代次数": "平滑反復数",
+            "细分": "細分",
+            "细分迭代次数": "サブディビジョン反復回数"
+        },
+        "outputs": {
+            "mesh": "メッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimessh": {
+        "title": "三角メッシュを展開",
+        "widgets": {
+            "trimessh": "トライアングルメッシュ",
+            "网格簇阈值圆锥半角弧度": "メッシュクラスタしきい円錐半角ラジアン",
+            "网格簇细化迭代次数": "メッシュクラスタ詳細化イテレーション回数",
+            "网格簇全局迭代次数": "メッシュクラスタグローバルイテレーション回数",
+            "网格簇光滑强度": "メッシュクラスタ平滑化強度"
+        },
+        "outputs": {
+            "trresm": "トライアングルメッシュ",
+            "TRIMESH": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexture": {
+        "title": "Trellis2マルチビューテクスチャ",
+        "widgets": {
+            "trimesh": "トライアングルメッシュ",
+            "texture_size": "テクスチャサイズ",
+            "blend_texture": "テクスチャブレンド",
+            "blend_exponent": "ブレンド指数",
+            "ortho_scale": "直交比率",
+            "norm_size": "正規化サイズ",
+            "fill_holes": "穴を充填",
+            "max_hole_size": "最大穴サイズ",
+            "use_metallic": "メタリック光沢を使用",
+            "depth_eps": "深度誤差",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値円錐半角ラジアン",
+            "add_alpha_channel": "透明チャンネルを追加",
+            "front_image": "前面",
+            "back_image": "後面ビュー",
+            "left_image": "左ビュー",
+            "right_image": "右ビュー",
+            "top_image": "トップビュー",
+            "bottom_image": "ボトムビュー",
+            "front_weight": "フロントビュー重み",
+            "back_weight": "バックビュー重み",
+            "left_weight": "左ビュー重み",
+            "right_weight": "右ビュー重み",
+            "top_weight": "トップビュー重み",
+            "bottom_weight": "ボトムビュー重み",
+            "custom_images": "カスタム画像",
+            "custom_azimuths": "カスタム方角",
+            "custom_elevations": "カスタム仰角",
+            "custom_weights": "カスタム重み",
+            "camera_config": "カメラ設定"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color": "ベースカラー",
+            "metallic_roughness": "メタリック光沢",
+            "TRIMESH": "TRIMESH",
+            "IMAGE": "画像"
+        },
+        "description": "複数視点画像の投影でメッシュにテクスチャを適用する。\n\n角度重みブレンドを使用：各表面は見える全視点からのテクスチャを受け取り、各カメラに対する正面度合いで重み付けされる。\n\nカメラ角度（Y上方向座標系：\n- 方角：Y軸周り回転\n  - 0° = 前方（-Z方向）\n  - 90° = 左側（-X方向）\n  - 180° = 後方（+Z方向）\n  - 270° = 右側（+X方向）\n- 俯仰角：X軸周り回転\n  - 0° = 水平\n  - 90° = 顶部（上から-Y方向）\n  - -90° = 底部（下から+Y方向）"
+    },
+    "Trellis2TexxlatMultiViewGenerator": {
+        "title": "Trellis2TexxlatMultiViewGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_conds": "条件画像",
+            "views_list": "ビューリスト",
+            "shape_slat": "形状スロット"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "texture_steps": "テクスチャステップ",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャリスケール調整",
+            "texture_rescale_t": "テクスチャリスケールT",
+            "texture_sampler": "テクスチャサンプラー",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了",
+            "verbose": "詳細情報",
+            "dino_lock": "DINOロック",
+            "dino_substeps": "DINOサブステップ数",
+            "dino_foundation_cap": "DINO基礎キャップ",
+            "front_axis": "前軸",
+            "blend_temperature": "ブレンド温度"
+        },
+        "outputs": {
+            "texture_slat": "テクスチャスロット",
+            "views_list": "ビューリスト",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTextture": {
+        "title": "Trellis2MeshTextture",
+        "inputs": {
+            "pipeline": "チューブ",
+            "image": "画像",
+            "trimesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "seed": "シード",
+            "texture_steps": "テクスチャステップ",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンススケール",
+            "texture_rescale_t": "テクスチャスケールt",
+            "resolution": "解像度",
+            "texture_size": "テクスチャサイズ",
+            "texture_alpha_mode": "テクスチャ透明モード",
+            "double_side_material": "両面マテリアル",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了",
+            "max_views": "最大ビュー",
+            "bake_on_vertices": "頂点上にベイク",
+            "use_custom_normals": "カスタム法線を使用",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値円錐半角ラジアン",
+            "sampler": "サンプラー",
+            "inpainting": "修復",
+            "verbose": "詳細情報",
+            "dino_lock": "dino_lock",
+            "dino_substeps": "dinoサブステップ",
+            "dino_foundation_cap": "dino基礎キャップ"
+        },
+        "outputs": {
+            "trimesh": "トライアングルメッシュ",
+            "base_color_texture": "ベースカラーテクスチャ",
+            "metallic_roughness_texture": "メタリック光沢テクスチャ"
+        },
+        "description": ""
+    },
+    "Trellis2UnwrapTrimesmes": {
+        "title": "Trellis2UnwrapTrimesmes",
+        "inputs": {
+            "trresm": "trresm"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値円錐半角ラジアン",
+            "mesh_cluster_refinement_iterations": "メッシュ细化イテレーション回数",
+            "mesh_cluster_global_iterations": "グローバルメッシュ最適化イテレーション回数",
+            "mesh_cluster_smooth_strength": "メッシュ平滑化強度"
+        },
+        "outputs": {
+            "trresm": "trresm"
+        },
+        "description": ""
+    },
+    "Trellis2TexxlatGenerator": {
+        "title": "Trellis2TexxlatGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_cond": "条件画像",
+            "shape_slat": "形状slat",
+            "image": "画像",
+            "moge_camera_config": "mogeカメラ設定"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "texture_steps": "テクスチャステップ",
+            "texture_guidance_strength": "テクスチャガイダンス強度",
+            "texture_guidance_rescale": "テクスチャガイダンススケール",
+            "texture_rescale_t": "テクスチャスケールt",
+            "texture_sampler": "テクスチャサンプラー",
+            "texture_guidance_interval_start": "テクスチャガイダンス区間開始",
+            "texture_guidance_interval_end": "テクスチャガイダンス区間終了",
+            "verbose": "詳細情報",
+            "dino_lock": "dinoロック",
+            "dino_substeps": "dinoサブステップ数",
+            "dino_foundation_cap": "dino基礎キャップ",
+            "from_resolution": "開始解像度"
+        },
+        "outputs": {
+            "texture_slat": "テクスチャslat",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatent": {
+        "title": "Trellis2DecodeLatent",
+        "inputs": {
+            "pipeline": "pipeline",
+            "shape_slat": "形状slat",
+            "texture_slat": "テクスチャslat"
+        },
+        "widgets": {
+            "resolution": "解像度",
+            "use_tiled_decoder": "タイル分割デコーダーを使用"
+        },
+        "outputs": {
+            "mesh": "メッシュ",
+            "bvh": "バウンディングボックス",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2simplifyTrimeseshAdvanced": {
+        "title": "Trellis2simplifyTrimeseshAdvanced",
+        "inputs": {
+            "trimesmesh": "トライアングルメッシュ"
+        },
+        "widgets": {
+            "target_face_num": "目標面数",
+            "thresh": "閾値",
+            "lambda_edge_length": "辺長重み",
+            "lambda_skinny": "スリム面重み",
+            "lambda_curvature": "曲率重み",
+            "lambda_boundary": "境界重み",
+            "lambda_area": "面積重み",
+            "qem_regularization": "QEM正則化"
+        },
+        "outputs": {
+            "trimesmesh": "トライアングルメッシュ"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturer": {
+        "title": "Trellis2MultiViewTexturer",
+        "inputs": {
+            "trimesh": "trimesh",
+            "front_image": "フロントビュー画像",
+            "back_image": "後面ビュー画像",
+            "left_image": "左ビュー画像",
+            "right_image": "右ビュー画像",
+            "top_image": "トップビュー画像",
+            "bottom_image": "ボトムビュー画像",
+            "custom_images": "カスタム画像",
+            "camera_config": "カメラ設定"
+        },
+        "widgets": {
+            "texture_size": "テクスチャサイズ",
+            "blend_texture": "テクスチャブレンド",
+            "blend_exponent": "ブレンド指数",
+            "ortho_scale": "直交比率",
+            "norm_size": "法線サイズ",
+            "fill_holes": "穴を充填",
+            "max_hole_size": "最大穴サイズ",
+            "use_metallic": "メタリック光沢を使用",
+            "depth_eps": "深度しきい値",
+            "mesh_cluster_threshold_cone_half_angle_rad": "メッシュクラスタしきい値円錐半角ラジアン",
+            "add_alpha_channel": "alphaチャンネル追加",
+            "front_weight": "フロントビュー重み",
+            "back_weight": "バックビュー重み",
+            "left_weight": "左ビュー重み",
+            "right_weight": "右ビュー重み",
+            "top_weight": "トップビュー重み",
+            "bottom_weight": "ボトムビュー重み",
+            "custom_azimuths": "カスタム方角",
+            "custom_elevations": "カスタム仰角",
+            "custom_weights": "カスタム重み"
+        },
+        "outputs": {
+            "trimesh": "trimesh",
+            "base_color": "ベースカラー",
+            "metallic_roughness": "メタリック光沢ラフネス"
+        },
+        "description": "複数視点画像の投影でテクスチャを適用する。\n\n角度重みブレンドを使用：各表面は「見れる」全視点からのテクスチャを受け取り、重みは各カメラに対して正面を向く角度で決まる。\n\nカメラ角度（Y上方向座標系）:\n- 方位角：Y軸周りの回転\n  - 1° = 前方（-Z方向）   - 91° = 左側（-X方向）   - 181° = 後方（+Z方向）   - 271° = 右側（+X方向） - 俯仰角：X軸周りの回転\n  - 1° = 水平\n  - 91° = 頂部（-Y方向、上から見る）   - -91° = 底部（+Y方向、下から見る）"
+    }
+}

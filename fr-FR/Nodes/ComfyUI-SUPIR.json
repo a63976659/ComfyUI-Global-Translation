@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "Chargeur de modèle SUPIR",
+        "widgets": {
+            "supir_model": "Modèle SUPIR",
+            "sdxl_model": "Modèle SDXL",
+            "fp8_unet": "Précision UNet FP8",
+            "diffusion_dtype": "Type d'élagage"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modèle SUPIR",
+            "SUPIR_model": "Modèle SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Ancien chargeur, déconseillé.\n\nCharge les modèles SUPIR et SDXL puis les fusionne."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "Chargeur de modèle SUPIR_V2",
+        "inputs": {
+            "model": "Modèle",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modèle SUPIR",
+            "fp8_unet": "Précision UNet FP8",
+            "diffusion_dtype": "Type d'élagage",
+            "high_vram": "VRAM élevée"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modèle SUPIR",
+            "SUPIR_model": "Modèle SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Charge le modèle SUPIR et le modèle SDXL, puis les fusionne.\n\nLe type d'élagage doit rester sur l'option Automatique, sauf si des erreurs surviennent lors du chargement du modèle.\n\nfp8_unet : appelle l'UNet avec torch.float8_e4m3fn ; réduit les besoins en VRAM mais affecte légèrement la qualité.\n\nHigh VRAM : utilise Accelerate pour charger le modèle sur le GPU, accélère légèrement le chargement."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "Chargeur de modèle SUPIR_V2（CLIP）",
+        "inputs": {
+            "model": "Modèle",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "Modèle SUPIR",
+            "fp8_unet": "Précision UNet FP8",
+            "diffusion_dtype": "Type d'élagage",
+            "high_vram": "VRAM élevée"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "Modèle SUPIR",
+            "SUPIR_model": "Modèle SUPIR",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Charge le modèle SUPIR et le modèle SDXL, puis les fusionne.\n\nLe type d'élagage doit rester sur l'option Automatique, sauf si des erreurs surviennent lors du chargement du modèle.\n\nfp8_unet : appelle l'UNet avec torch.float8_e4m3fn ; réduit les besoins en VRAM mais affecte légèrement la qualité.\n\nHigh VRAM : utilise Accelerate pour charger le modèle sur le GPU, accélère légèrement le chargement."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR Encodage",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Image (graphique)"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE par tuiles",
+            "encoder_tile_size": "Taille des tuiles d'encodage",
+            "encoder_dtype": "Élagage d'encodage"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR Décodage",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE par tuiles",
+            "decoder_tile_size": "Taille des tuiles de décodage"
+        },
+        "outputs": {
+            "image": "Image (graphique)"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR Première phase",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Image (graphique)"
+        },
+        "widgets": {
+            "use_tiled_vae": "VAE par tuiles",
+            "encoder_tile_size": "Taille des tuiles d'encodage",
+            "decoder_tile_size": "Taille des tuiles de décodage",
+            "encoder_dtype": "Élagage d'encodage"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "Image (graphique)",
+            "denoised_latents": "Latent"
+        },
+        "description": "La 「 première phase 」 de SUPIR. Utilise le denoise_encoder de SUPIR pour encoder et décoder l'image afin de réparer les artefacts de compression, mais cela rend l'image floue.\n\nPeut être remplacé par un autre échantillonneur/flou, ou le nœud peut être omis."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR Condition",
+        "inputs": {
+            "SUPIR_MODEL": "Modèle SUPIR",
+            "SUPIR_model": "Modèle SUPIR",
+            "latents": "Latent",
+            "captions": "Titre/sous-titre"
+        },
+        "widgets": {
+            "positive_prompt": "Prompt positif",
+            "negative_prompt": "Prompt négatif"
+        },
+        "outputs": {
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "description": "Crée les conditions pour l'échantillonneur.\n L'entrée de titres est facultative ; lorsqu'un titre est reçu, il est ajouté au prompt positif\n Si une liste de titres est fournie pour une seule image d'entrée, ces titres doivent correspondre au nombre de tuiles\n Veuillez vous référer à SUPIR Image par tuiles\n Si une liste de titres est fournie et correspond au lot d'images entrant, chaque image utilise le titre correspondant"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR Échantillonnage",
+        "inputs": {
+            "SUPIR_model": "Modèle SUPIR",
+            "latents": "Latent",
+            "positive": "Condition positive",
+            "negative": "Condition négative"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "control_before_generate": "Action avant exécution",
+            "steps": "Nombre de pas",
+            "cfg_scale_start": "Échelle CFG de début",
+            "cfg_scale_end": "Échelle CFG de fin",
+            "EDM_s_churn": "Perturbation aléatoire EDM",
+            "s_noise": "Quantité de bruit",
+            "DPMPP_eta": "Paramètre de pas DPMPP",
+            "control_scale_start": "Échelle de contrôle de début",
+            "control_scale_end": "Échelle de contrôle de fin",
+            "restore_cfg": "CFG de restauration",
+            "keep_model_loaded": "Garder le modèle chargé",
+            "sampler": "Échantillonneur",
+            "sampler_tile_size": "Taille des tuiles de l'échantillonneur",
+            "sampler_tile_stride": "Pas des tuiles de l'échantillonneur"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent：**\n\nLe Latent utilisé pour l'échantillonnage ; lorsque le Latent SUPIR est utilisé, cet élément n'affecte que la forme du bruit.\n\nDans les autres cas, identique au comportement par défaut de ComfyUI. \n\nSi une entrée Latent est présente, elle prévaut.\n\n- **CFG：**\n\nContrôle du CFG par interpolation linéaire, de la valeur initiale Échelle CFG début vers la valeur Échelle CFG fin.\n\nRégler ces deux éléments sur la même valeur désactive la mise à l'échelle par interpolation.\n\n- **EDM_s_churn：**\n\nContrôle la vitesse d'adaptation du processus d'échantillonnage aux variations de bruit du Latent.\n\nSans effet sur l'échantillonneur DPMPP.\n\n- **quantité de bruit s_noise：**\n\nContrôle la quantité de bruit ajoutée au Latent à chaque étape de l'échantillonnage. \n\n- **DPMPP_eta：**\n\nFacteur d'échelle qui influence le processus de diffusion en ajustant la façon dont le débruitage s'adapte à l'évolution du niveau de bruit dans le temps.\n\nSans effet sur l'échantillonneur EDM. \n\n- **échelle de contrôle control_scale：**\n\nIntensité du modèle de contrôle SUPIR, contrôlée par interpolation linéaire du début à la fin.\n\nPlus la valeur est petite, plus l'intensité de contrôle est faible.\n\n- **CFG de restauration restore_cfg：**\n\nContrôle le degré de restauration de l'image d'origine pendant l'échantillonnage.\n\nSert au réglage fin du processus d'échantillonnage.\n\n- **échantillonneur：**\n\nEDM nécessite beaucoup d'étapes mais offre généralement une meilleure qualité.\n\nDPMPP nécessite moins d'étapes, adapté aux modèles Lighting.\n\nL'échantillonneur par tuiles utilise l'échantillonnage en tuiles : très lent, mais permet d'obtenir une résolution plus élevée avec moins de VRAM.\n\nLa taille des tuiles doit être définie avant le découpage de l'image ; le pas des tuiles influence la taille du recouvrement entre tuiles. Voir le nœud SUPIR Image par tuiles pour la fonction de découpage."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR Image par tuiles",
+        "inputs": {
+            "image": "Image (graphique)"
+        },
+        "widgets": {
+            "tile_size": "Taille des blocs",
+            "tile_stride": "Pas des tuiles"
+        },
+        "outputs": {
+            "image_tiles": "Tuiles d'image",
+            "tile_size": "Taille des blocs",
+            "tile_stride": "Pas des tuiles"
+        },
+        "description": "Découpe l'image en tuiles selon la méthode de l'échantillonneur par tuiles.\n\nSert à prévisualiser les tuiles et à inverser chaque tuile (fonctionnalité en cours de développement)."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR Mise à l'échelle",
+        "inputs": {
+            "image": "Image (graphique)",
+            "captions": "Titre/sous-titre"
+        },
+        "widgets": {
+            "supir_model": "Modèle SUPIR",
+            "sdxl_model": "Modèle SDXL",
+            "seed": "Graine",
+            "control_before_generate": "Action avant exécution",
+            "resize_method": "Méthode de mise à l'échelle",
+            "scale_by": "Coefficient d'échelle",
+            "steps": "Nombre de pas",
+            "restoration_scale": "Échelle de restauration",
+            "cfg_scale": "Échelle CFG",
+            "a_prompt": "Prompt positif",
+            "n_prompt": "Prompt négatif",
+            "s_churn": "Facteur d'atténuation du bruit",
+            "s_noise": "Quantité de bruit",
+            "control_scale": "Échelle de contrôle",
+            "cfg_scale_start": "Intensité initiale de guidage CFG",
+            "control_scale_start": "Poids initial ControlNet",
+            "color_fix_type": "Type de correction des couleurs",
+            "keep_model_loaded": "Garder le modèle chargé",
+            "use_tiled_vae": "VAE par tuiles",
+            "encoder_tile_size": "Taille des tuiles d'encodage",
+            "encoder_tile_size_pixels": "Taille des tuiles de décodage pixel",
+            "decoder_tile_size": "Taille des tuiles de décodage",
+            "decoder_tile_size_latent": "Taille des tuiles de décodage latent",
+            "diffusion_dtype": "Type d'élagage",
+            "encoder_dtype": "Élagage d'encodage",
+            "batch_size": "Taille du lot",
+            "use_tiled_sampling": "Utiliser l'échantillonnage par tuiles",
+            "used_tiled_sampling": "Utiliser l'échantillonnage par tuiles",
+            "sampler_tile_size": "Taille des tuiles de l'échantillonneur",
+            "sampler_tile_stride": "Pas des tuiles de l'échantillonneur",
+            "fp8_unet": "Précision UNet FP8",
+            "fp8_vae": "fp8_vae",
+            "sampler": "Échantillonneur"
+        },
+        "outputs": {
+            "upscaled_image": "Image (graphique)"
+        }
+    }
+}

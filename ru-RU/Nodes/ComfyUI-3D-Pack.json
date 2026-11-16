@@ -1,0 +1,551 @@
+{
+    "[Comfy3D] Bake Texture To Mesh": {
+        "title": "Запекание текстур в сетку (3D mesh)",
+        "inputs": {
+            "reference_images": "Опорное изображение",
+            "reference_masks": "Опорная маска",
+            "reference_orbit_camera_poses": "Опорная орбитальная камера: позы",
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Опорная орбитальная камера: угол обзора",
+            "mesh_albedo_width": "Ширина альбедо сетки",
+            "mesh_albedo_height": "Высота альбедо сетки",
+            "training_iterations": "Число итераций обучения",
+            "batch_size": "Размер пакета",
+            "texture_learning_rate": "Скорость обучения текстур",
+            "train_mesh_geometry": "Обучение геометрии сетки",
+            "geometry_learning_rate": "Скорость обучения геометрии",
+            "ms_ssim_loss_weight": "Вес потерь MS-SSIM",
+            "force_cuda_rasterize": "Принудительная растеризация CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "Сетка (3D mesh)",
+            "baked_texture": "Текстура"
+        }
+    },
+    "[Comfy3D] CRM CCMs MVDiffusion Model": {
+        "title": "Модель CRM CCMs MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "Сэмплер CRM_MVDiffusion",
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска",
+            "multiview_images": "Изображения: несколько ракурсов"
+        },
+        "widgets": {
+            "prompt": "Позитивный промпт",
+            "prompt_neg": "Негативный промпт",
+            "seed": "Зерно",
+            "control_after_generate": "Действие после выполнения",
+            "mv_guidance_scale": "Коэффициент управления MV",
+            "num_inference_steps": "Шаги инференса"
+        },
+        "outputs": {
+            "multiview_CCMs": "CCMs: несколько ракурсов"
+        }
+    },
+    "[Comfy3D] CRM Images MVDiffusion Model": {
+        "title": "Модель CRM Image MVDiffusion",
+        "inputs": {
+            "crm_mvdiffusion_sampler": "Сэмплер CRM_MVDiffusion",
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска"
+        },
+        "widgets": {
+            "prompt": "Позитивный промпт",
+            "prompt_neg": "Негативный промпт",
+            "seed": "Зерно",
+            "control_after_generate": "Действие после выполнения",
+            "mv_guidance_scale": "Коэффициент управления MV",
+            "num_inference_steps": "Шаги инференса"
+        },
+        "outputs": {
+            "multiview_images": "Изображения: несколько ракурсов"
+        }
+    },
+    "[Comfy3D] Convert 3DGS to Mesh with NeRF and Marching Cubes": {
+        "title": "Преобразование 3DGS в сетку (3D mesh) через NeRF и Marching Cubes",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "gs_config": "Конфигурация Gaussian",
+            "force_cuda_rast": "Принудительная растеризация CUDA"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Convolutional Reconstruction Model": {
+        "title": "Модель свёрточной реконструкции",
+        "inputs": {
+            "crm_model": "Модель CRM",
+            "multiview_images": "Изображения: несколько ракурсов",
+            "multiview_CCMs": "CCMs: несколько ракурсов"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Deep Marching Tetrahedrons": {
+        "title": "Обход тетраэдров по глубине",
+        "inputs": {
+            "reference_points_cloud": "Опорное облако точек",
+            "reference_images": "Опорное изображение",
+            "reference_masks": "Опорная маска"
+        },
+        "widgets": {
+            "training_iterations": "Число итераций обучения",
+            "points_cloud_fitting_weight": "Вес подгонки облаком точек",
+            "mesh_smoothing_weight": "Вес сглаживания сетки",
+            "chamfer_faces_sample_scale": "Масштаб выборки граней (chamfer)",
+            "mesh_scale": "Масштаб сетки (3D mesh)",
+            "grid_resolution": "Разрешение решётки",
+            "geometry_learning_rate": "Скорость обучения геометрии",
+            "positional_encoding_multires": "Многоуровневое позиционное кодирование",
+            "mlp_internal_dims": "mlp_internal_dims",
+            "mlp_hidden_layer_num": "mlp_hidden_layer_num"
+        },
+        "outputs": {
+            "trained_mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Fitting Mesh With Multiview Images": {
+        "title": "Многовидовая подгонка сетки (3D mesh)",
+        "inputs": {
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска",
+            "reference_orbit_camera_poses": "Опорная орбитальная камера: позы",
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Опорная орбитальная камера: угол обзора",
+            "mesh_albedo_height": "Высота альбедо сетки",
+            "mesh_albedo_width": "Ширина альбедо сетки",
+            "training_iterations": "Число итераций обучения",
+            "batch_size": "Размер пакета",
+            "texture_learning_rate": "Скорость обучения текстур",
+            "train_mesh_geometry": "Обучение геометрии сетки",
+            "geometry_learning_rate": "Скорость обучения геометрии",
+            "ms_ssim_loss_weight": "Вес потерь MS-SSIM",
+            "remesh_after_n_iteration": "Перестроение сетки каждые N итераций",
+            "force_cuda_rasterize": "Принудительная растеризация CUDA"
+        },
+        "outputs": {
+            "trained_mesh": "Сетка (3D mesh)",
+            "baked_texture": "Текстура"
+        }
+    },
+    "[Comfy3D] FlexiCubes MVS": {
+        "title": "FlexiCube MVS",
+        "inputs": {
+            "reference_depth_maps": "Опорные карты глубины",
+            "reference_normal_maps": "Опорные карты нормалей",
+            "reference_masks": "Опорная маска",
+            "reference_orbit_camera_poses": "Опорная орбитальная камера: позы"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Опорная орбитальная камера: угол обзора",
+            "training_iterations": "Число итераций обучения",
+            "batch_size": "Размер пакета",
+            "learning_rate": "Скорость обучения",
+            "voxel_grids_resolution": "Разрешение воксельной решётки",
+            "depth_min_distance": "Минимальная дистанция глубины",
+            "depth_max_distance": "Максимальная дистанция глубины",
+            "mask_loss_weight": "Вес потерь маски",
+            "depth_loss_weight": "Вес потерь по глубине",
+            "normal_loss_weight": "Вес потерь нормалей",
+            "sdf_regularizer_weight": "sdf_regularizer_weight",
+            "remove_floaters_weight": "remove_floaters_weight",
+            "cube_stabilizer_weight": "cube_stabilizer_weight",
+            "force_cuda_rast": "Принудительная растеризация CUDA"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting": {
+        "title": "Gaussian Splatting",
+        "inputs": {
+            "reference_images": "Опорное изображение",
+            "reference_masks": "Опорная маска",
+            "reference_orbit_camera_poses": "Опорная орбитальная камера: позы",
+            "points_cloud_to_initialize_gaussian": "Облако точек для инициализации Gaussian",
+            "ply_to_initialize_gaussian": "Файл gs_ply для инициализации",
+            "mesh_to_initialize_gaussian": "Сетка (3D mesh) для инициализации Gaussian"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Опорная орбитальная камера: угол обзора",
+            "training_iterations": "Число итераций обучения",
+            "batch_size": "Размер пакета",
+            "ms_ssim_loss_weight": "Вес потерь MS-SSIM",
+            "alpha_loss_weight": "Вес потерь alpha",
+            "offset_loss_weight": "Вес потерь смещения",
+            "offset_opacity_loss_weight": "Вес потерь непрозрачности смещения",
+            "invert_background_probability": "Вероятность инверсии фона",
+            "feature_learning_rate": "Скорость обучения признаков",
+            "opacity_learning_rate": "Скорость обучения непрозрачности",
+            "scaling_learning_rate": "Скорость обучения масштабирования",
+            "rotation_learning_rate": "Скорость обучения вращения",
+            "position_learning_rate_init": "Начальная скорость обучения позиции",
+            "position_learning_rate_final": "Конечная скорость обучения позиции",
+            "position_learning_rate_delay_mult": "Задержка скорости обучения позиции",
+            "position_learning_rate_max_steps": "Максимум шагов скорости обучения позиции",
+            "initial_gaussians_num": "Начальное число Gaussian",
+            "K_nearest_neighbors": "Число ближайших соседей K",
+            "percent_dense": "Процент плотности",
+            "density_start_iterations": "Начальное число итераций плотности",
+            "density_end_iterations": "Конечное число итераций плотности",
+            "densification_interval": "Интервал уплотнения",
+            "opacity_reset_interval": "Интервал сброса непрозрачности",
+            "densify_grad_threshold": "Порог градиента плотности",
+            "gaussian_sh_degree": "gaussian_sh_degree"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Instant NGP": {
+        "title": "Instant NGP",
+        "inputs": {
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска",
+            "reference_orbit_camera_poses": "Опорная орбитальная камера: позы"
+        },
+        "widgets": {
+            "reference_orbit_camera_fovy": "Опорная орбитальная камера: угол обзора",
+            "training_iterations": "Число итераций обучения",
+            "training_resolution": "Разрешение обучения",
+            "marching_cude_threshold": "Порог Marching Cubes",
+            "marching_cude_grids_resolution": "Разрешение решёток Marching Cubes",
+            "marching_cude_grids_batch_size": "Размер батча решёток Marching Cubes",
+            "texture_resolution": "Разрешение текстуры",
+            "force_cuda_rast": "Принудительная растеризация CUDA"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Large Multiview Gaussian Model": {
+        "title": "Большая многовидовая модель Gaussian (LGM)",
+        "inputs": {
+            "multiview_images": "Изображения: несколько ракурсов",
+            "lgm_model": "Модель LGM"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] MVDream Model": {
+        "title": "Модель MVDream",
+        "inputs": {
+            "mvdream_pipe": "Пайплайн MVDream",
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска"
+        },
+        "widgets": {
+            "prompt": "Промпт",
+            "prompt_neg": "Негативный промпт",
+            "seed": "Зерно",
+            "control_after_generate": "Действие после выполнения",
+            "mv_guidance_scale": "Коэффициент управления MV",
+            "num_inference_steps": "Шаги инференса",
+            "elevation": "Угол тангажа"
+        },
+        "outputs": {
+            "multiview_images": "Изображения: несколько ракурсов"
+        }
+    },
+    "[Comfy3D] NeuS": {
+        "title": "NeuS",
+        "inputs": {
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска",
+            "reference_normals": "Опорные карты нормалей"
+        },
+        "widgets": {
+            "training_iterations": "Число итераций обучения",
+            "batch_size": "Размер пакета",
+            "learning_rate": "Скорость обучения",
+            "learning_rate_alpha": "Скорость обучения alpha",
+            "color_loss_weight": "Вес потерь по цвету",
+            "mesh_smoothing_weight": "Вес сглаживания сетки",
+            "mask_loss_weight": "Вес потерь маски",
+            "normal_loss_weight": "Вес потерь нормалей",
+            "sparse_loss_weight": "Вес разреженных потерь",
+            "warm_up_end": "Окончание прогрева",
+            "anneal_end": "Окончание отжига",
+            "use_white_background": "Использовать белый фон",
+            "geometry_extract_resolution": "Разрешение извлечения геометрии",
+            "marching_cude_threshold": "Порог Marching Cubes"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Triplane Gaussian Transformers": {
+        "title": "Triplane Gaussian Transformers (TGS)",
+        "inputs": {
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска",
+            "tgs_model": "Модель TGS"
+        },
+        "widgets": {
+            "cam_dist": "Дистанция камеры"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] TripoSR": {
+        "title": "TripoSR (TSR)",
+        "inputs": {
+            "tsr_model": "Модель TSR",
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска"
+        },
+        "widgets": {
+            "geometry_extract_resolution": "Разрешение извлечения геометрии",
+            "marching_cude_threshold": "Порог Marching Cubes"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Wonder3D MVDiffusion Model": {
+        "title": "Модель Wonder3D MVDiffusion",
+        "inputs": {
+            "mvdiffusion_pipe": "Пайплайн MVDiffusion",
+            "reference_image": "Опорное изображение",
+            "reference_mask": "Опорная маска"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "control_after_generate": "Действие после выполнения",
+            "mv_guidance_scale": "Коэффициент управления MV",
+            "num_inference_steps": "Шаги инференса"
+        },
+        "outputs": {
+            "multiview_images": "Изображения: несколько ракурсов",
+            "multiview_normals": "Многовидовые нормали"
+        }
+    },
+    "[Comfy3D] Convert 3DGS To Pointcloud": {
+        "title": "3DGS в облако точек",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "outputs": {
+            "points_cloud": "Облако точек"
+        }
+    },
+    "[Comfy3D] Convert Mesh To Pointcloud": {
+        "title": "Сетка (3D mesh) в облако точек",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "outputs": {
+            "points_cloud": "Облако точек"
+        }
+    },
+    "[Comfy3D] Gaussian Splatting Orbit Renderer": {
+        "title": "Орбитальный рендерер Gaussian Splatting",
+        "inputs": {
+            "gs_ply": "gs_ply",
+            "render_orbit_camera_poses": "Позы орбитальной камеры"
+        },
+        "widgets": {
+            "render_image_width": "Ширина",
+            "render_iamge_height": "Высота",
+            "render_orbit_camera_fovy": "Угол обзора орбитальной камеры (fovy)",
+            "render_background_r": "Фон R (красный)",
+            "render_background_g": "Фон G (зелёный)",
+            "render_background_b": "Фон B (синий)"
+        },
+        "outputs": {
+            "rendered_gs_images": "Изображение",
+            "rendered_gs_masks": "Маска"
+        }
+    },
+    "[Comfy3D] Generate Orbit Camera Poses": {
+        "title": "Генерация поз орбитальной камеры",
+        "inputs": {
+            "reference_images": "Опорное изображение"
+        },
+        "widgets": {
+            "generate_pose_commnad": "Команда генерации позы"
+        },
+        "outputs": {
+            "orbit_camposes": "Позы орбитальной камеры"
+        }
+    },
+    "[Comfy3D] Stack Orbit Camera Poses": {
+        "title": "Стопка поз орбитальной камеры",
+        "widgets": {
+            "orbit_radius_start": "Радиус орбиты: начало",
+            "orbit_radius_stop": "Радиус орбиты: конец",
+            "orbit_radius_step": "Радиус орбиты: шаг",
+            "elevation_start": "Наклон: начало",
+            "elevation_stop": "Наклон: конец",
+            "elevation_step": "Наклон: шаг",
+            "azimuth_start": "Азимут: начало",
+            "azimuth_stop": "Азимут: конец",
+            "azimuth_step": "Азимут: шаг",
+            "orbit_center_X_start": "Центр орбиты X: начало",
+            "orbit_center_X_stop": "Центр орбиты X: конец",
+            "orbit_center_X_step": "Центр орбиты X: шаг",
+            "orbit_center_Y_start": "Центр орбиты Y: начало",
+            "orbit_center_Y_stop": "Центр орбиты Y: конец",
+            "orbit_center_Y_step": "Центр орбиты Y: шаг",
+            "orbit_center_Z_start": "Центр орбиты Z: начало",
+            "orbit_center_Z_stop": "Центр орбиты Z: конец",
+            "orbit_center_Z_step": "Центр орбиты Z: шаг"
+        },
+        "outputs": {
+            "orbit_camposes": "Позы орбитальной камеры",
+            "orbit_radius_list": "Список радиуса орбиты",
+            "elevation_list": "Список углов наклона",
+            "azimuth_list": "Список азимутов",
+            "orbit_center_X_list": "Список центра орбиты X",
+            "orbit_center_Y_list": "Список центра орбиты Y",
+            "orbit_center_Z_list": "Список центра орбиты Z"
+        }
+    },
+    "[Comfy3D] Switch 3DGS Axis": {
+        "title": "Смена осей 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "axis_x_to": "Целевое направление оси X",
+            "axis_y_to": "Целевое направление оси Y",
+            "axis_z_to": "Целевое направление оси Z"
+        }
+    },
+    "[Comfy3D] Switch Mesh Axis": {
+        "title": "Смена осей сетки (3D mesh)",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "axis_x_to": "Целевое направление оси X",
+            "axis_y_to": "Целевое направление оси Y",
+            "axis_z_to": "Целевое направление оси Z"
+        }
+    },
+    "[Comfy3D] Load 3DGS": {
+        "title": "Загрузка 3DGS",
+        "widgets": {
+            "gs_file_path": "Путь к gs-файлу"
+        },
+        "outputs": {
+            "gs_ply": "gs_ply"
+        }
+    },
+    "[Comfy3D] Load 3D Mesh": {
+        "title": "Загрузка 3D-сетки (mesh)",
+        "widgets": {
+            "mesh_file_path": "Путь к файлу сетки",
+            "resize": "Изменение размера",
+            "renormal": "Перенормализация нормалей",
+            "retex": "Повторная настройка текстур",
+            "optimizable": "Поддаётся оптимизации"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        }
+    },
+    "[Comfy3D] Load CRM MVDiffusion Model": {
+        "title": "Загрузка модели CRM MVDiffusion",
+        "widgets": {
+            "model_name": "Название модели",
+            "crm_config_path": "Путь к конфигурации CRM"
+        },
+        "outputs": {
+            "crm_mvdiffusion_sampler": "Сэмплер CRM_MVDiffusion"
+        }
+    },
+    "[Comfy3D] Load Convolutional Reconstruction Model": {
+        "title": "Загрузка модели свёрточной реконструкции",
+        "widgets": {
+            "model_name": "Название модели"
+        },
+        "outputs": {
+            "crm_model": "Модель CRM"
+        }
+    },
+    "[Comfy3D] Load Diffusers Pipeline": {
+        "title": "Загрузка пайплайна Diffusers",
+        "widgets": {
+            "diffusers_pipeline_name": "Название пайплайна"
+        },
+        "outputs": {
+            "pipe": "Пайп узлов"
+        }
+    },
+    "[Comfy3D] Load Large Multiview Gaussian Model": {
+        "title": "Загрузка большой многовидовой модели Gaussian (LGM)",
+        "widgets": {
+            "model_name": "Название модели",
+            "lgb_config": "Конфигурация lgb"
+        },
+        "outputs": {
+            "lgm_model": "Модель LGM"
+        }
+    },
+    "[Comfy3D] Load Triplane Gaussian Transformers": {
+        "title": "Загрузка модели Triplane Gaussian Transformers (TGS)",
+        "widgets": {
+            "model_name": "Название модели"
+        },
+        "outputs": {
+            "tgs_model": "Модель TGS"
+        }
+    },
+    "[Comfy3D] Load TripoSR Model": {
+        "title": "Загрузка модели TripoSR (TSR)",
+        "widgets": {
+            "model_name": "Название модели",
+            "chunk_size": "Размер блока"
+        },
+        "outputs": {
+            "tsr_model": "Модель TSR"
+        }
+    },
+    "[Comfy3D] Save 3DGS": {
+        "title": "Сохранение 3DGS",
+        "inputs": {
+            "gs_ply": "gs_ply"
+        },
+        "widgets": {
+            "save_path": "путь сохранения"
+        },
+        "outputs": {
+            "save_path": "путь сохранения"
+        }
+    },
+    "[Comfy3D] Save 3D Mesh": {
+        "title": "Сохранение 3D-сетки (mesh)",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "save_path": "путь сохранения"
+        },
+        "outputs": {
+            "save_path": "путь сохранения"
+        }
+    },
+    "[Comfy3D] Preview 3DGS": {
+        "title": "Предпросмотр 3DGS",
+        "widgets": {
+            "gs_file_path": "Путь к gs-файлу"
+        }
+    },
+    "[Comfy3D] Preview 3DMesh": {
+        "title": "Предпросмотр 3D-сетки (mesh)",
+        "widgets": {
+            "mesh_file_path": "Путь к файлу сетки"
+        }
+    }
+}

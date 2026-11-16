@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Flux2Klein K örneklemeleyici (deneysel)",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "positive": "Olumlu koşullandırma",
+            "latent_image": "Latent görseli",
+            "negative": "Olumsuz koşullandırma"
+        },
+        "widgets": {
+            "steps": "Adım sayısı",
+            "seed": "Rastgele tohum",
+            "denoise": "Gürültü azaltma şiddeti",
+            "base_shift": "Temel Kaydırma",
+            "max_shift": "Maksimum Kaydırma",
+            "cfg_scale": "CFG Ölçekleme Katsayısı",
+            "guidance_embed": "Güdüleme gömmesi"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Flux2Klein renk çıpası",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "conditioning": "Koşullu"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "ramp_curve": "Gradyan eğrisi",
+            "ref_index": "Referans dizini",
+            "channel_weights": "Kanal ağırlıkları",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Flux2Klein iyileştirici",
+        "inputs": {
+            "conditioning": "Koşullu",
+            "device": "Çalıştırma aygıtı"
+        },
+        "widgets": {
+            "active_scale": "Etkin bölge ölçeği",
+            "per_token_whiten": "Token başına aklatma",
+            "norm_equalize": "Norm dengelenmesi",
+            "early_layer_scale": "Sığ katman ölçek katsayısı",
+            "mid_layer_scale": "Orta katman ölçek katsayısı",
+            "late_layer_scale": "Derin katman ölçek katsayısı",
+            "preserve_original": "Orijinal veriyi koru",
+            "active_end_override": "Etkin uç nokta örtüsü",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": "Klein koşullandırma denetimlerinin etkin bölgesi üzerinde salt skaler/aklatma işlemleri uygular ve Klein'a özel Qwen3 katmanlı ölçekleme özelliği sunar."
+    },
+    "Flux2KleinDetailController": {
+        "title": "Flux2Klein detay denetleyicisi",
+        "inputs": {
+            "conditioning": "Koşullu",
+            "device": "Çalıştırma aygıtı"
+        },
+        "widgets": {
+            "front_mult": "Ön bölüm çarpanı",
+            "mid_mult": "Orta bölüm çarpanı",
+            "end_mult": "Arka bölüm çarpanı",
+            "emphasis_start": "Vurgu başlangıç konumu",
+            "emphasis_end": "Vurgu bitiş konumu",
+            "emphasis_mult": "Vurgu çarpanı",
+            "preserve_original": "Orijinal veriyi koru",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": "Bölümlere ayrılmış gömme çarpanı ayarlayıcısı.\n\nGerçek mod (önerilen): bölüm kodlayıcısıyla birlikte kullanılır. Kodlayıcı, koşul denetimi üstverisi olarak bölüm token aralıkları üretir (`meta[\"klein_sections\"]`); bu düğüm, ilgili aralıktaki etkin gömmeleri kullanıcının belirlediği katsayılara göre çarpanla ölçekler.\n\nUyumluluk modu (eski/önerilmez): bölüm üstverisi yoksa düğüm etkin bölgeyi otomatik olarak %25/%50/%25 sabit oranıyla böler. Bu bölüm sınırları rastgeledir — Qwen3 token'larının sabit bir konum anlamsal değeri yoktur — bu modda düğümün v1 sürümü fiilen hiçbir etki üretmez. Bu mod yalnızca eski iş akışlarıyla uyumluluk için korunmaktadır; anlamlı bölüm farkındalıklı ölçekleme için bölüm kodlayıcısına geçmeniz önerilir."
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Flux2Klein maskeli referans denetleyicisi",
+        "inputs": {
+            "conditioning": "Koşullu",
+            "mask": "Maske"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "invert_mask": "Maskeyi ters çevir",
+            "feather": "Maske tüyleme",
+            "reference_index": "Referans dizini",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": "Çizilen maskeyi kullanarak referans Latent üzerinde mekânsal sönümleme uygular.\n\nReferans Latent'i maskedenden üretilen piksel bazlı skalerle çarpar. Koşul Latent'i doğrudan yerinde değiştirilir (meta['reference_Latents'] değerinin yerine geçer)."
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Flux2Klein referans Latent denetleyicisi",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "conditioning": "Koşullu"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "reference_index": "Referans dizini",
+            "spatial_fade": "Mekânsal solma",
+            "spatial_fade_strength": "Mekânsal solma şiddeti",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Flux2Klein metin-referans dengeleyicisi",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "conditioning": "Koşullu"
+        },
+        "widgets": {
+            "balance": "Denge katsayısı",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Flux2Klein referans Latent ağırlık ayarlayıcısı",
+        "inputs": {
+            "model": "Model (yapay zekâ)"
+        },
+        "widgets": {
+            "reference_index": "Referans dizini",
+            "weight": "Ağırlık"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Flux2Klein metin iyileştirici",
+        "inputs": {
+            "conditioning": "Koşullu"
+        },
+        "widgets": {
+            "magnitude": "Genel genlik",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalizasyon şiddeti",
+            "skip_bos": "Başlangıç token'ını atla",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": "Metin koşul denetimi token'larını değiştirir.\n\nİşlem sırası:\n1. Normalizasyon: token genliklerini dengeler\n2. Kontrast: token'lar arasındaki farkı büyütür/küçültür\n3. Genlik: genel ölçekleme"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Flux2Klein bölüm kodlayıcısı",
+        "inputs": {
+            "clip": "Klip",
+            "separator": "Ayırıcı"
+        },
+        "widgets": {
+            "front_text": "Ön metin",
+            "mid_text": "Orta metin",
+            "end_text": "Arka metin",
+            "combined_prompt": "Birleşik istem dizisi",
+            "show_preview": "Önizlemeyi Göster",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "outputs": {
+            "conditioning": "Koşullu",
+            "front_section": "Ön bölüm",
+            "mid_section": "Orta bölüm",
+            "end_section": "Arka bölüm",
+            "full_prompt": "Tam istem dizisi"
+        },
+        "description": "Üç bölümlü istem dizisini token'lara ayırır ve bölüm token aralıklarını detay denetleyicisinin okuyup kullanması için koşul denetimi üstverisi olarak üretir."
+    },
+    "IdentityFeatureTransfer": {
+        "title": "Kimlik özelliği aktarımı",
+        "inputs": {
+            "model": "Model (yapay zekâ)"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "start_block": "Başlangıç bloğu",
+            "end_block": "Bitiş bloğu",
+            "mode": "Mod",
+            "top_k_percent": "Top K yüzdesi"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "Kimlik özelliği aktarımı (gelişmiş sürüm)",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "subject_mask": "Özne maskesi"
+        },
+        "widgets": {
+            "reference_index": "Referans dizini",
+            "mode": "Mod",
+            "top_k_percent": "Top K yüzdesi",
+            "double_enable": "Çift aktarımı etkinleştir",
+            "double_strength": "Çift aktarım şiddeti",
+            "double_start": "Çift aktarım başlangıç noktası",
+            "double_end": "Çift aktarım bitiş noktası",
+            "single_enable": "Tekli aktarımı etkinleştir",
+            "single_strength": "Tekli aktarım şiddeti",
+            "single_start": "Tekli aktarım başlangıç noktası",
+            "single_end": "Tekli aktarım bitiş noktası",
+            "block_schedule": "Blok zamanlaması",
+            "sim_floor": "Benzerlik alt sınırı",
+            "mask_threshold": "Maske eşiği"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "Kimlik özelliği aktarımı V3",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "subject_mask": "Özne maskesi"
+        },
+        "widgets": {
+            "preset": "Ön ayar",
+            "reference_index": "Referans dizini",
+            "double_schedule": "Çift aktarım zamanlaması",
+            "single_schedule": "Tekli aktarım zamanlaması",
+            "double_sim": "Çift aktarım benzerliği",
+            "single_sim": "Tekli aktarım benzerliği",
+            "commit_margin": "Taahhüt payı",
+            "commit_confirm": "Taahhüt onayı",
+            "commit_anchor": "Taahhüt çıpası",
+            "mask_threshold": "Maske eşiği",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "Nihai kimlik özelliği aktarımı",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "subject_mask_1": "Özne maskesi 1",
+            "subject_mask_2": "Özne maskesi 2",
+            "subject_mask_3": "Özne maskesi 3",
+            "subject_mask_4": "Özne maskesi 4",
+            "subject_mask_5": "Özne maskesi 5",
+            "subject_mask_6": "Özne maskesi 6",
+            "subject_mask_7": "Özne maskesi 7",
+            "subject_mask_8": "Özne maskesi 8"
+        },
+        "widgets": {
+            "preset": "Ön ayar",
+            "enabled": "Etkinleştir",
+            "reference_index": "Referans dizini",
+            "reference_indices": "Referans dizini listesi",
+            "similarity_floor": "Benzerlik alt sınırı",
+            "softmax_temperature": "Softmax sıcaklık katsayısı",
+            "mask_threshold": "Maske eşiği",
+            "double_blocks": "Çift blok aralığı",
+            "single_blocks": "Tek blok aralığı",
+            "total_sampling_steps": "Toplam örnekleme adımı sayısı",
+            "debug": "Hata Ayıklama Modu"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "Kimlik özelliği güdülemesi",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "identity_latent": "Kimlik özelliği Latent'i"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "start_percent": "Etkin olma başlangıç yüzdesi",
+            "end_percent": "Etkin olma bitiş yüzdesi",
+            "mode": "Mod"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Flux2Klein çoklu referans Latent işlemesi",
+        "inputs": {
+            "conditioning": "Koşullu",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "Koşullu"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "FLUX.2 Klein K örneklemeleyici",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "positive": "Olumlu istem",
+            "negative": "Negatif istem",
+            "latent_image": "Görsel Latent'i"
+        },
+        "widgets": {
+            "steps": "Adım sayısı",
+            "guidance_scale": "Güdüleme oranı",
+            "seed": "Tohum",
+            "denoise": "Gürültü azaltma",
+            "base_shift": "Temel ofset",
+            "max_shift": "Maks ofset"
+        },
+        "description": "FLUX.2 Klein KSampler düğümü, Latent uzayında görsel üretmek için kullanılır."
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Flux2 Klein iyileştirici",
+        "inputs": {
+            "conditioning": "Koşullandırma"
+        },
+        "widgets": {
+            "magnitude": "Genlik",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalizasyon şiddeti",
+            "preserve_original": "Orijinali koru",
+            "preserve_mode": "Koruma modu",
+            "edit_text_weight": "Düzenleme metni ağırlığı",
+            "active_end_override": "Etkin bitiş örtüsü",
+            "low_vram": "Düşük VRAM",
+            "device": "Aygıt",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "CONDITIONING": "Koşullandırma"
+        },
+        "description": "FLUX. .Klein koşul iyileştirici.\n\nİşlemler şunlardır:\n- Genlik: etkin bölge gömmelerini doğrudan ölçekler\n- Kontrast: işaretler arasındaki farkı büyütür\n- Normalizasyon: işaret boyutlarını eşitler\n- Orijinali koru: orijinal gömmeleri birden çok modda geri harmanlar\n\nTüm işlemler yalnızca etkin metin bölgesini değiştirir (dolgu kısmı etkilenmez).",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Flux2 Klein detay denetleyicisi",
+        "inputs": {
+            "conditioning": "Koşullandırma"
+        },
+        "widgets": {
+            "front_mult": "Ön kat sayısı",
+            "mid_mult": "Orta kat sayısı",
+            "end_mult": "Bitiş kat sayısı",
+            "emphasis_start": "Vurgu başlangıcı",
+            "emphasis_end": "Vurgu bitişi",
+            "emphasis_mult": "Vurgu kat sayısı",
+            "preserve_original": "Orijinali koru",
+            "preserve_mode": "Koruma modu",
+            "low_vram": "Düşük VRAM",
+            "device": "Aygıt",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "CONDITIONING": "Koşullandırma"
+        },
+        "description": "FLUX. .Klein koşullarının bölge denetimi.\n\nEtkin işaretleri bölgelere ayırır:\n- Ön: konu/ana kavram\n- Orta: ayrıntı/nitelikler\n- Bitiş: stil/kalite terimleri",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Flux2 Klein referans Latent denetleyicisi",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "conditioning": "Koşullandırma"
+        },
+        "widgets": {
+            "strength": "Şiddet",
+            "reference_index": "Referans dizini",
+            "spatial_fade": "Mekânsal soldurma",
+            "spatial_fade_strength": "Mekânsal soldurma şiddeti",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "MODEL": "Model (yapay zekâ)",
+            "CONDITIONING": "Koşullandırma"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Flux2 Klein metin ve referans dengesi",
+        "inputs": {
+            "model": "Model (yapay zekâ)",
+            "conditioning": "Koşullandırma"
+        },
+        "widgets": {
+            "balance": "Denge",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "MODEL": "Model (yapay zekâ)",
+            "CONDITIONING": "Koşullandırma"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Flux2 Klein metin iyileştirici",
+        "inputs": {
+            "conditioning": "Koşullandırma"
+        },
+        "widgets": {
+            "magnitude": "Genlik",
+            "contrast": "Kontrast",
+            "normalize_strength": "Normalizasyon şiddeti",
+            "skip_bos": "Başlangıç simgesini atla",
+            "debug": "Hata ayıklama"
+        },
+        "outputs": {
+            "CONDITIONING": "Koşullandırma"
+        },
+        "description": "Metin koşul işaretlerini değiştirir.\n\nİşlem sırası:\n1. Normalizasyon: işaret boyutlarını eşitler\n2. Kontrast: işaretler arasındaki farkı büyütür/azaltır\n3. Genlik: genel ölçekleme",
+        "api_version": "V1"
+    }
+}

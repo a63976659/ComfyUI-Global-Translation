@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "تطبیق رنگ تصویر",
+        "inputs": {
+            "source_image": "تصویر مبدأ",
+            "reference_image": "تصویر مرجع"
+        },
+        "widgets": {
+            "method": "روش"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "رنگ تصویر مرجع را به تصویر مبدأ منتقل می‌کند. از پردازش دسته‌ای پشتیبانی می‌کند؛ وقتی تعداد تصاویر مرجع با دستهٔ مبدأ برابر نباشد، تصاویر مرجع به‌صورت چرخشی دوباره استفاده می‌شوند (i % ref_count). روش‌های wavelet/adain به‌صورت بومی اجرا می‌شوند؛ mkl/hm/reinhard/mvgd و نسخه‌های ترکیبی آن‌ها از پکیج color-matcher استفاده می‌کنند."
+    },
+    "1hew_ImageColorRestore": {
+        "title": "بازگردانی رنگ تصویر",
+        "inputs": {
+            "edit_image": "تصویر ویرایش‌شده",
+            "org_image": "تصویر اصلی"
+        },
+        "widgets": {
+            "background_threshold": "آستانهٔ پس‌زمینه",
+            "unchanged_threshold": "آستانهٔ تغییرنیافته",
+            "seam_max_distance": "حداکثر فاصلهٔ درز",
+            "seam_decay": "میرایی درز",
+            "seam_residual_blur": "محو باقیماندهٔ درز",
+            "seam_color_sigma": "انحراف معیار رنگ درز",
+            "occlusion_residual_blur": "محو باقیماندهٔ انسداد",
+            "occlusion_bridge_width": "عرض پل عبور از انسداد"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "unchanged_mask": "ماسک تغییرنیافته"
+        },
+        "description": "رنگ ویرایش AI را پس از تراز شدن به مرجع اصلی بازمی‌گرداند و در همان حال درزهای ایجادشده در ناحیهٔ انسداد (ناشی از حذف اشیاء) را به‌صورت محلی هموار می‌کند. از برازش رنگی افاین با اطمینان و میدان درز پیوسته استفاده می‌کند (پاک‌سازی ماسک تغییرنیافته برای ساختار غیرمتغیر از کار افتاده است). اگر تصویر ویرایش‌شده کانال Alpha داشته باشد، آن کانال حفظ می‌شود."
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "تراز تصویر با ماسک تغییرات",
+        "inputs": {
+            "edit_image": "تصویر ویرایش‌شده",
+            "org_image": "تصویر اصلی"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "max_offset": "حداکثر افست",
+            "max_rotation": "حداکثر چرخش",
+            "max_scale": "حداکثر مقیاس",
+            "min_align_score": "حداقل امتیاز تراز",
+            "color_compensation": "جبران رنگ",
+            "sensitivity": "حساسیت",
+            "min_component_area": "حداقل مساحت مؤلفه",
+            "expand": "گسترش",
+            "feather": "محو لبه"
+        },
+        "outputs": {
+            "align_image": "هم‌ترازی تصویر",
+            "clean_mask": "ماسک تمیز",
+            "raw_mask": "ماسک خام",
+            "change_score": "امتیاز تغییر",
+            "overlay_image": "تصویر همپوش"
+        },
+        "description": "تصویر ویرایش‌شده با AI را با تصویر اصلی تراز می‌کند؛ از پیکسل‌های پایدار پس‌زمینه برای ردّ تغییر سراسری جزئی رنگ بهره می‌گیرد و ماسک تغییرات خام/تمیز را خروجی می‌دهد."
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "پردازش لبهٔ Alpha تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "edge": "لبه",
+            "feather": "محو لبه"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "لبهٔ نواحی کدر در تصاویر دارای کانال Alpha را تنظیم می‌کند: جمع‌کردن لبه به داخل / گسترش آن به بیرون + محو تدریجی (Feather).\n\nموارد معمول: پس از برش سوژه (حذف پس‌زمینه)، هنوز یک نوار نیمه‌شفاف\nآلوده به رنگ پس‌زمینه اطراف لبهٔ عنصر باقی می‌ماند (لبهٔ پرزدار / لبهٔ رنگی). این نود نخست با عملیات ریخت‌شناختی لبه را به داخل جمع می‌کند،\nپیکسل‌های آلودهٔ لبه را مستقیماً می‌بُرد و سپس محو تدریجی گاوسی انجام می‌دهد تا گذار تمیز به دست آید؛ پیش از محو تدریجی،\nرنگ ناحیهٔ کدر به‌طور ثابت به نوار گذار گسترش می‌یابد (bleed) تا از پدید آمدن لبهٔ تیره / لبهٔ رنگی پس از آن جلوگیری شود.\n\nترتیب پردازش: جمع‌کردن لبه / گسترش لبه ← گسترش رنگ ← محو تدریجی.\nخروجی تصویری 4 کاناله با Alpha است و ماسک Alpha پردازش‌شده نیز هم‌زمان ارائه می‌شود.\n\nجمع‌کردن / گسترش لبه، ریخت‌شناسی خاکستری (فیلتر حداقل / حداکثر) است که مستقیماً روی Alpha اعمال می‌شود:\nبرای لبهٔ نرمی که محلی خطی است، فیلتری با شعاع r دقیقاً برابر با جابه‌جایی همان شیب به اندازهٔ r پیکسل است،\nبنابراین هر منحنی هم‌مقدارِ Alpha یکپارچه به اندازهٔ r جابه‌جا می‌شود و آنتی‌الیاسینگ ذاتی matte به‌طور کامل\nحفظ می‌شود و به پلهٔ 1px تنزل نمی‌کند. پر کردن حفره‌ها جزو ترمیم ماسک است و به نود دیگری سپرده می‌شود."
+    },
+    "1hew_ImageBlur": {
+        "title": "تاری تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "blur": "میزان محو"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "کل تصویر را محو گاوسی می‌کند و رفتاری یکسان با LayerFilter: Gaussian Blur V2 در LayerStyle دارد.\n\n- پارامتر محو از مقادیر اعشاری (FLOAT) پشتیبانی می‌کند که از نظر معنایی به نسخهٔ V2 نزدیک‌تر است؛\n- وقتی محو صفر باشد، تصویر اصلی بدون تغییر عبور می‌کند؛\n- هر دسته فریم به‌صورت جداگانه پردازش می‌شود و تعداد کانال‌ها و نوع داده تغییر نمی‌کند."
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "تغییر اندازهٔ تصویر Doubao Seedream 5.0 Pro",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "native_image": "تصویر بومی",
+            "native_mask": "ماسک بومی"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "تغییر اندازهٔ تصویر Qwen Image 3.0",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "native_image": "تصویر بومی",
+            "native_mask": "ماسک بومی"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "تغییر اندازهٔ تصویر Qwen Image 3.0 Pro",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "native_image": "تصویر بومی",
+            "native_mask": "ماسک بومی"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "حداقل مساحت تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "length_to_sq_area": "ضلع مرجع",
+            "method": "روش",
+            "divisible_by": "بخش‌پذیر",
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "resize_bool": "آیا بزرگ‌نمایی شود"
+        },
+        "description": "تصویر را بزرگ‌نمایی می‌کند تا مساحت آن به مساحت مربع مرجع حداقل برسد.\n\n- ``length_to_sq_area`` ضلع مربع مرجع را تعریف می‌کند (مساحت هدف = N²).\n- رفتار ``تطبیق`` شبیه نود «تغییر اندازهٔ تصویر عمومی» است: برش/پرکردن/کشیدن.\n- ``بخش‌پذیر`` اندازهٔ نهایی را رو به بالا به مضربی از آن عدد تبدیل می‌کند.\n- ``resize_bool`` گزارش می‌دهد که آیا بزرگ‌نمایی واقعاً انجام شده است."
+    },
+    "1hew_StringRandom": {
+        "title": "رشتهٔ تصادفی",
+        "widgets": {
+            "custom_text": "متن سفارشی",
+            "seed": "بذر تصادفی"
+        },
+        "outputs": {
+            "string": "رشته"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "مقایسهٔ متن",
+        "widgets": {
+            "a": "a",
+            "operator": "عملگر",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "مقدار بولین"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "عملیات ریاضی روی چند ماسک",
+        "inputs": {
+            "mask_1": "ماسک 1",
+            "mask_2": "ماسک 2"
+        },
+        "widgets": {
+            "operation": "عملیات"
+        },
+        "outputs": {
+            "mask": "ماسک"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "نسبت متن Jimeng",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "selection": "گزینهٔ انتخابی"
+        },
+        "outputs": {
+            "string": "رشته"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "سطح ماسک",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "black_point": "نقطهٔ سیاه",
+            "white_point": "نقطهٔ سفید"
+        },
+        "outputs": {
+            "mask": "ماسک"
+        },
+        "description": "آستانه‌های نقطهٔ سیاه و نقطهٔ سفید تصویر ماسک را برای تنظیم کنتراست و دامنهٔ ماسک مشخص می‌کند."
+    },
+    "1hew_IntNumberCompare": {
+        "title": "مقایسهٔ اعداد صحیح",
+        "inputs": {
+            "a": "مقدار عددی a",
+            "operator": "عملگر",
+            "b": "مقدار عددی b"
+        },
+        "widgets": {
+            "bool": "مقدار بولین"
+        },
+        "description": "دو عدد صحیح را از نظر بزرگی مقایسه می‌کند."
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "مقایسهٔ اعداد اعشاری",
+        "widgets": {
+            "a": "مقدار عددی a",
+            "operator": "عملگر",
+            "b": "مقدار عددی b"
+        },
+        "outputs": {
+            "bool": "مقدار بولین"
+        },
+        "description": "رابطهٔ بزرگی دو عدد اعشاری را مقایسه می‌کند."
+    },
+    "1hew_ImageBWMatte": {
+        "title": "سایه‌روشن لبهٔ سیاه‌وسفید تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "gamma": "گاما",
+            "shrink_radius": "شعاع جمع‌شدن",
+            "blur_radius": "شعاع محو"
+        },
+        "outputs": {
+            "mask": "ماسک"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "ترسیم خط دور ماسک",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "fill_hole": "پر کردن حفره‌ها",
+            "stroke_width": "عرض خط",
+            "include_mask": "شامل ماسک"
+        },
+        "outputs": {
+            "mask": "ماسک"
+        },
+        "description": "روی ماسک خط دور می‌کشد"
+    },
+    "1hew_VideoToURL": {
+        "title": "تبدیل ویدیو به URL",
+        "inputs": {
+            "video": "مسیر فایل ویدیویی"
+        },
+        "widgets": {
+            "timeout": "مهلت زمانی (ثانیه)"
+        },
+        "outputs": {
+            "url": "URL تولیدشده"
+        },
+        "description": "فایل ویدیویی را به پیوند URL قابل دسترس تبدیل می‌کند"
+    },
+    "1hew_VideoToImage": {
+        "title": "تبدیل ویدیو به تصویر",
+        "inputs": {
+            "video": "ویدیو"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "audio": "صدا",
+            "fps": "نرخ فریم",
+            "frame_count": "تعداد فریم"
+        },
+        "description": "ویدیو را به تصویر، صدا، نرخ فریم و تعداد فریم تبدیل می‌کند"
+    },
+    "1hew_IntVideoCount": {
+        "title": "شمارندهٔ ویدیو",
+        "inputs": {
+            "video_1": "ویدیو۱"
+        },
+        "outputs": {
+            "int": "عدد صحیح"
+        },
+        "description": "گره‌ای برای شمردن ویدیوها"
+    },
+    "1hew_ImageToMask": {
+        "title": "تبدیل تصویر به ماسک",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "outputs": {
+            "mask": "ماسک"
+        },
+        "description": "تصویر را به ماسک تبدیل می‌کند."
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "ایندکس دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "index": "نمایه"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "یکسان‌سازی دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "num_frame": "تعداد فریم"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "درهم‌سازی فهرست تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "segment_count": "تعداد بخش"
+        },
+        "outputs": {
+            "image_list": "فهرست تصاویر"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "پر کردن کادر محدوده",
+        "inputs": {
+            "paste_image": "چسباندن تصویر",
+            "bbox_mask": "ماسک کادر محدوده"
+        },
+        "widgets": {
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "پرکنندهٔ کادر محدودهٔ تصویر - تصویر را داخل کادر بیرونیِ bbox_ماسک قرار می‌دهد و بقیهٔ ناحیه را با رنگ مشخص‌شده پر می‌کند."
+    },
+    "1hew_IntImageCount": {
+        "title": "تعداد تصاویر (عدد صحیح)",
+        "inputs": {
+            "image_1": "تصویر۱"
+        },
+        "outputs": {
+            "int": "عدد صحیح"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "بارگذاری PS",
+        "widgets": {
+            "file": "فایل",
+            "index": "نمایه",
+            "include_hidden": "شامل موارد پنهان",
+            "group_mode": "حالت گروه‌بندی",
+            "output_mode": "حالت خروجی",
+            "preview": "پیش‌نمایش",
+            "choose psd to upload": "انتخاب فایل PSD برای آپلود"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "filename": "نام فایل",
+            "layer_name": "نام لایه"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "تبدیل ماسک به ماسک کادر احاطه",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "output_mode": "حالت خروجی",
+            "divisible_by": "بخش‌پذیر"
+        },
+        "outputs": {
+            "bbox_mask": "ماسک کادر محدوده"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "فهرست چند تصویر",
+        "inputs": {
+            "image_1": "تصویر۱"
+        },
+        "widgets": {
+            "image_1": "تصویر۱"
+        },
+        "outputs": {
+            "image_list": "فهرست تصاویر"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "پاک‌سازی حافظه",
+        "widgets": {
+            "anything": "محتوای دلخواه",
+            "unload_model": "آزادسازی مدل"
+        },
+        "description": "از ComfyUI می‌خواهد پس از پایان تسک جاری، کش اجرا و حافظهٔ اشغال‌شده توسط مدل‌ها را آزاد کند؛ برای پاک‌سازی RAM/VRAM بین چند اجرای صف‌شده مناسب است."
+    },
+    "1hew_AudioDuration": {
+        "title": "مدت صدا",
+        "inputs": {
+            "audio": "صدا"
+        },
+        "description": "مدت زمان صدا را دریافت می‌کند."
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "استخراج از دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "mode": "حالت",
+            "index": "نمایه",
+            "step": "گام",
+            "uniform": "یکنواخت",
+            "max_keep": "حداکثر تعداد نگهداری"
+        },
+        "description": "تصاویر با الگوی مشخص را از دستهٔ تصویر استخراج می‌کند."
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "گروه‌بندی دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "batch_size": "اندازه دسته",
+            "overlap": "هم‌پوشانی",
+            "last_batch_mode": "حالت دستهٔ آخر",
+            "color": "رنگ"
+        },
+        "description": "دستهٔ تصاویر را به گروه‌ها تقسیم می‌کند."
+    },
+    "1hew_ImageBatchRange": {
+        "title": "بازهٔ دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "start_index": "نمایهٔ شروع",
+            "num_frame": "تعداد فریم"
+        },
+        "description": "تصاویر بازهٔ مشخص را از دستهٔ تصویر استخراج می‌کند."
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "تقسیم دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "take_count": "تعداد فریم انتخابی",
+            "from_start": "از ابتدا"
+        },
+        "description": "تصاویر را با تعداد مشخص از دستهٔ تصویر جدا می‌کند."
+    },
+    "1hew_ImageListAppend": {
+        "title": "افزودن به فهرست تصویر",
+        "inputs": {
+            "image_1": "تصویر۱",
+            "image_2": "تصویر۲"
+        },
+        "description": "دو تصویر را به فهرست اضافه می‌کند."
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "عملیات ریاضی دستهٔ ماسک‌ها",
+        "inputs": {
+            "mask": "ماسک",
+            "operation": "عملیه"
+        },
+        "description": "عملیات ریاضی را روی دستهٔ ماسک‌ها اعمال می‌کند."
+    },
+    "1hew_MaskBatchRange": {
+        "title": "بازهٔ دستهٔ ماسک‌ها",
+        "inputs": {
+            "mask": "ماسک",
+            "start_index": "نمایهٔ شروع",
+            "num_frame": "تعداد فریم"
+        },
+        "description": "ماسک‌های بازهٔ مشخص‌شده را از دستهٔ ماسک‌ها استخراج می‌کند."
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "تقسیم دستهٔ ماسک‌ها",
+        "inputs": {
+            "mask": "ماسک",
+            "take_count": "تعداد فریم انتخابی",
+            "from_start": "از ابتدا"
+        },
+        "description": "ماسک‌ها را با تعداد مشخص‌شده از دستهٔ ماسک‌ها جدا می‌کند."
+    },
+    "1hew_VideoCutGroup": {
+        "title": "گروه‌بندی کلیپ ویدیو",
+        "inputs": {
+            "image": "تصویر",
+            "threshold_base": "پایهٔ آستانه",
+            "threshold_range": "بازهٔ آستانه",
+            "threshold_count": "شمارش آستانه",
+            "kernel": "هسته",
+            "min_frame_count": "حداقل تعداد فریم",
+            "max_frame_count": "حداکثر تعداد فریم",
+            "fast": "تند",
+            "add_frame": "افزودن فریم",
+            "delete_frame": "حذف فریم"
+        },
+        "description": "کلیپ‌های ویدیویی را بر پایهٔ تصاویر گروه‌بندی می‌کند."
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "تطبیق روشنایی و کنتراست",
+        "inputs": {
+            "source_image": "تصویر مبدأ",
+            "reference_image": "تصویر مرجع",
+            "edge_amount": "مقدار لبه",
+            "consistency": "یک‌دستی",
+            "method": "روش"
+        },
+        "description": "روشنایی و کنتراست را میان تصویر مبدأ و تصویر مرجع تطبیق می‌دهد."
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "کدگذاری متن ویرایش تصویر Qwen",
+        "description": "متن را با مدل Qwen برای ویرایش تصویر کدگذاری می‌کند."
+    },
+    "1hew_ImageBatchToList": {
+        "title": "تبدیل دستهٔ تصویر به فهرست",
+        "inputs": {
+            "image_batch": "دستهٔ تصویر"
+        },
+        "description": "دستهٔ تصویر را به فهرست تصویر تبدیل می‌کند."
+    },
+    "1hew_ImageListToBatch": {
+        "title": "تبدیل فهرست تصویر به دسته",
+        "inputs": {
+            "image_list": "فهرست تصاویر"
+        },
+        "description": "فهرست تصویر را به دستهٔ تصویر تبدیل می‌کند."
+    },
+    "1hew_ImageToURL": {
+        "title": "تبدیل تصویر به پیوند URL",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "mode": "حالت",
+            "timeout": "مهلت زمانی"
+        },
+        "outputs": {
+            "url": "پیوند URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "تبدیل دستهٔ ماسک‌ها به فهرست",
+        "inputs": {
+            "mask_batch": "دستهٔ ماسک‌ها"
+        },
+        "description": "دستهٔ ماسک‌ها را به فهرست ماسک‌ها تبدیل می‌کند."
+    },
+    "1hew_MaskListToBatch": {
+        "title": "تبدیل فهرست ماسک‌ها به دسته",
+        "description": "چند ماسک را به یک دسته تبدیل می‌کند.",
+        "inputs": {
+            "mask_list": "فهرست ماسک‌ها"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "تبدیل ماسک به Sam3Box",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "condition": "وضعیت",
+            "output_mode": "حالت خروجی"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "تبدیل مختصات رشته‌ای به کادر احاطه",
+        "description": "از رشتهٔ مختصات، کادر احاطه تولید می‌کند.",
+        "inputs": {
+            "coordinates_string": "رشتهٔ مختصات"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "تبدیل مختصات رشته‌ای به ماسک کادر احاطه",
+        "description": "از رشتهٔ مختصات، ماسک کادر احاطه تولید می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "coordinates_string": "رشتهٔ مختصات",
+            "output_mode": "حالت خروجی"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "تبدیل فهرست متن‌ها به رشته",
+        "description": "فهرست متن‌ها را در یک رشته ادغام می‌کند.",
+        "inputs": {
+            "text_list": "فهرست متن‌ها",
+            "prefix": "پیشوند",
+            "suffix": "پسوند",
+            "separator": "جداکننده"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "تبدیل متن به هر قالب",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "outputs": {
+            "any": "هرکدام"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "تبدیل URL به ویدیو",
+        "description": "ویدیو را از URL دریافت می‌کند.",
+        "inputs": {
+            "video_url": "URL ویدیو",
+            "timeout": "مهلت زمانی"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "تشخیص خطوط راهنما",
+        "description": "خطوط راهنما را در تصویر تشخیص می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "canny_low": "آستانهٔ پایین Canny",
+            "canny_high": "آستانهٔ بالای Canny",
+            "seg_min_len": "حداقل طول تقسیم",
+            "seg_max_gap": "حداکثر شکاف تقسیم",
+            "guide_filter": "فیلتر راهنما",
+            "guide_width": "عرض خط راهنما",
+            "cluster_eps": "مقدار ε خوشه‌بندی"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "حذف پس‌زمینه",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "model": "مدل",
+            "add_background": "افزودن پس‌زمینه"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "بهینه‌سازی حذف پس‌زمینه",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "type": "نوع",
+            "subject_protect": "محافظت از سوژه",
+            "feather": "محو لبه",
+            "decolor_edge": "حذف رنگ لبه"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "تشخیص Yolo",
+        "description": "اشیا را در تصویر با استفاده از مدل YOLO تشخیص می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "yolo_model": "مدل YOLO",
+            "threshold": "آستانه",
+            "mask_index": "ایندکس ماسک",
+            "label": "برچسب",
+            "label_size": "اندازهٔ برچسب"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "افزودن برچسب به تصویر",
+        "description": "برچسب متنی روی تصویر اضافه می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "height_pad": "حاشیهٔ ارتفاع",
+            "font_size": "اندازهٔ قلم",
+            "invert_color": "وارون‌سازی رنگ",
+            "font": "قلم",
+            "text": "متن",
+            "direction": "جهت",
+            "input1": "ورودی 1",
+            "input2": "ورودی 2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "پاک‌سازی کانال Alpha",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "clean_strength": "شدت پاک‌سازی",
+            "detect_only": "فقط تشخیص"
+        },
+        "outputs": {
+            "mask": "ماسک",
+            "noise_mask": "ماسک نویز"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "جداسازی کانال Alpha",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "background_color": "رنگ پس‌زمینه"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "رسم کادر محدوده روی تصویر با ماسک",
+        "description": "با استفاده از ماسک، کادر محدوده را روی تصویر رسم می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "bbox_color": "رنگ کادر محدوده",
+            "stroke_width": "عرض خط",
+            "fill": "پرکردن",
+            "padding": "حاشیهٔ داخلی",
+            "output_mode": "حالت خروجی"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "ویرایش و الحاق تصویر",
+        "description": "تصویر را ویرایش و به هم می‌چسباند.",
+        "inputs": {
+            "reference_image": "تصویر مرجع",
+            "edit_image": "تصویر ویرایش‌شده",
+            "edit_mask": "ماسک ویرایش",
+            "edit_image_position": "جایگاه تصویر ویرایش‌شده",
+            "match_edit_size": "تطبیق اندازهٔ ویرایش",
+            "spacing": "فاصله‌گذاری",
+            "spacing_color": "رنگ فاصله",
+            "pad_color": "رنگ پدینگ"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "الحاق تصویر",
+        "description": "الحاق اصلی تصویر.",
+        "inputs": {
+            "image_1": "تصویر۱",
+            "image_2": "تصویر۲",
+            "image_3": "تصویر۳",
+            "direction": "جهت",
+            "match_image_size": "تطبیق اندازه تصویر",
+            "spacing_width": "عرض فاصله",
+            "spacing_color": "رنگ فاصله",
+            "pad_color": "رنگ پدینگ"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "حلقهٔ تصویر",
+        "description": "پردازش رفتوبرگشتی تصویر.",
+        "inputs": {
+            "image": "تصویر",
+            "pre_reverse": "معکوس‌سازی پیش از پردازش",
+            "ops_count": "تعداد عملیات",
+            "frame_count": "تعداد فریم",
+            "remove_link_frame": "حذف فریم لینک"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "ترسیم تصویر",
+        "description": "چیدمان شبکهٔ تصویر را رسم می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "layout": "چیدمان",
+            "spacing": "فاصله‌گذاری",
+            "grid_columns": "تعداد ستون‌های شبکه",
+            "background_color": "رنگ پس‌زمینه"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "چرخش تصویر با ماسک",
+        "description": "تصویر را می‌چرخاند و ماسک را اعمال می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "angle": "زاویه",
+            "pad_color": "رنگ پدینگ",
+            "expand": "گسترش",
+            "mask_center": "مرکز ماسک"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "تولید تصویر تک‌رنگ",
+        "description": "یک تصویر تک‌رنگ تولید می‌کند.",
+        "inputs": {
+            "get_image_size": "دریافت ابعاد تصویر",
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "color": "رنگ",
+            "alpha": "شفافیت",
+            "invert": "معکوس",
+            "mask_opacity": "شفافیت ماسک",
+            "divisible_by": "بخش‌پذیر بر"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "رسم خط دور با ماسک",
+        "description": "با استفاده از ماسک، روی تصویر خط دور رسم می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "stroke_width": "ضخامت خط دور",
+            "stroke_color": "رنگ خط دور"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "آمیختگی با Alpha",
+        "description": "بین تصویر همپوش و تصویر پایه بر اساس مقدار Alpha آمیختگی انجام می‌دهد.",
+        "inputs": {
+            "overlay_image": "تصویر همپوش",
+            "base_image": "تصویر پایه",
+            "overlay_mask": "ماسک همپوش",
+            "blend_mode": "حالت آمیزش",
+            "opacity": "کدورت",
+            "invert_mask": "معکوس‌کردن ماسک"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "آمیختگی با حالت CSS",
+        "description": "بین تصویر همپوش و تصویر پایه با حالت آمیختگی CSS آمیختگی انجام می‌دهد.",
+        "inputs": {
+            "overlay_image": "تصویر همپوش",
+            "base_image": "تصویر پایه",
+            "blend_mode": "حالت آمیزش",
+            "blend_percentage": "درصد آمیختگی",
+            "overlay_mask": "ماسک همپوش",
+            "invert_mask": "معکوس‌کردن ماسک"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "آمیختن تصویرها با ماسک",
+        "description": "با استفاده از ماسک بین تصویرها آمیختگی انجام می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "fill_hole": "پر کردن حفره‌ها",
+            "invert": "معکوس",
+            "feather": "محو لبه",
+            "opacity": "کدورت",
+            "expansion": "گسترش",
+            "background_color": "رنگ پس‌زمینه",
+            "background_opacity": "شفافیت پس‌زمینه",
+            "output_mask_invert": "معکوس‌سازی ماسک خروجی"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "برش تصویر به مربع",
+        "description": "تصویر را به مربع برش می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "scale_factor": "ضریب اندازه",
+            "extra_padding": "پدینگ اضافی",
+            "fill_color": "رنگ پرکردن",
+            "apply_mask": "اعمال ماسک",
+            "divisible_by": "بخش‌پذیر بر"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "برش کادر محدوده",
+        "widgets": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "preset_ratio": "نسبت پیش‌فرض",
+            "get_crop_ratio": "دریافت نسبت برش",
+            "scale_strength": "شدت مقیاس",
+            "crop_to_side": "برش تا ضلع",
+            "crop_to_length": "برش تا طول",
+            "divisible_by": "مضرب بخش‌پذیری"
+        },
+        "description": "برش‌دهٔ تصویر با کادر محدوده - تصویر را بر اساس ماسک برش می‌دهد و اطلاعات کادر محدوده را برای چسباندن مجدد به جایگاه اصلی برمی‌گرداند",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "برش لبه‌ها و پر کردن",
+        "description": "لبه‌های تصویر را برش می‌دهد و ناحیهٔ برش‌خورده را پر می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "uniform_amount": "مقدار پرکردن یکنواخت",
+            "top_amount": "مقدار پرکردن بالا",
+            "bottom_amount": "مقدار پرکردن پایین",
+            "left_amount": "مقدار پرکردن چپ",
+            "right_amount": "مقدار پرکردن راست",
+            "pad_color": "رنگ پدینگ",
+            "divisible_by": "بخش‌پذیر بر"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "تقسیم شبکه‌ای تصویر",
+        "description": "تصویر را به شبکهٔ منظم تقسیم می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "rows": "تعداد ردیف",
+            "columns": "تعداد ستون",
+            "index": "نمایه",
+            "all": "همه"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "برش تصویر با ماسک",
+        "description": "تصویر را با ماسک برش می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "output_crop": "برش خروجی",
+            "output_alpha": "شفافیت خروجی"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "چسباندن تصویر با ماسک کادر محدوده",
+        "description": "تصویر را با ماسک کادر محدوده می‌چسباند.",
+        "inputs": {
+            "paste_image": "چسباندن تصویر",
+            "base_image": "تصویر پایه",
+            "bbox_mask": "ماسک کادر محدوده",
+            "paste_mask": "ماسک چسباندن",
+            "position_x": "جایگاه X",
+            "position_y": "موقعیت Y",
+            "scale": "مقیاس",
+            "rotation": "چرخش",
+            "opacity": "کدورت",
+            "apply_paste_mask": "اعمال ماسک چسباندن"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "ترکیب تصاویر فرکانس بالا و پایین",
+        "description": "تصویر فرکانس بالا و فرکانس پایین را با هم ترکیب می‌کند.",
+        "inputs": {
+            "high_freq": "تصویر فرکانس بالا",
+            "low_freq": "تصویر فرکانس پایین",
+            "method": "روش",
+            "high_strength": "شدت فرکانس بالا",
+            "low_strength": "شدت فرکانس پایین"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "جداسازی فرکانس تصویر (فرکانس بالا و پایین)",
+        "inputs": {
+            "image": "تصویر",
+            "method": "روش",
+            "blur_radius": "شعاع محو"
+        },
+        "description": "اجزای فرکانس بالا و پایین تصویر را از هم جدا می‌کند."
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "تبدیل فرکانس تصویر (فرکانس بالا و پایین)",
+        "inputs": {
+            "generate_image": "تصویر تولیدشده",
+            "detail_image": "تصویر جزئیات",
+            "detail_mask": "ماسک جزئیات",
+            "method": "روش",
+            "blur_radius": "شعاع محو"
+        },
+        "description": "روی اجزای فرکانس بالا و پایین تصویر عملیات تبدیل انجام می‌دهد."
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "تغییر اندازهٔ تصویر Flux Kontext",
+        "description": "اندازهٔ تصویر را با Flux Kontext تنظیم می‌کند.",
+        "inputs": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "image": "تصویر",
+            "mask": "ماسک"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "تغییر اندازهٔ تصویر Gemini 3.0 Pro",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "تغییر اندازهٔ تصویر Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "تغییر اندازهٔ تصویر Jimeng",
+        "description": "اندازهٔ تصویر را با Jimeng تنظیم می‌کند.",
+        "inputs": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "image": "تصویر",
+            "mask": "ماسک"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "تغییر اندازهٔ تصویر Qwen Image",
+        "description": "تصویر را تغییر اندازه می‌دهد.",
+        "inputs": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "image": "تصویر",
+            "mask": "ماسک"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "تغییر اندازهٔ تصویر به مربع",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "تغییر اندازهٔ عمومی تصویر",
+        "description": "تصویر را به‌صورت عمومی تغییر اندازه می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "get_image_size": "دریافت ابعاد تصویر",
+            "preset_ratio": "نسبت پیش‌فرض",
+            "proportional_width": "تغییر اندازهٔ متناسب با عرض",
+            "proportional_height": "تغییر اندازهٔ متناسب با ارتفاع",
+            "method": "روش",
+            "scale_to_side": "تغییر اندازه بر اساس ضلع",
+            "scale_to_length": "تغییر اندازه بر اساس طول",
+            "fit": "روش تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "divisible_by": "بخش‌پذیر بر"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "ادغام کاشی‌های تصویر",
+        "inputs": {
+            "tile": "کاشی",
+            "tile_meta": "متادیتای کاشی",
+            "blend_strength": "شدت آمیختن"
+        },
+        "description": "چند تصویر کاشی‌ای را در یک تصویر کامل ادغام می‌کند."
+    },
+    "1hew_ImageTileSplit": {
+        "title": "بخش‌بندی تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "get_tile_size": "دریافت اندازهٔ بخش",
+            "mode": "حالت",
+            "overlap_amount": "مقدار همپوشانی",
+            "grid_row": "تعداد ردیف",
+            "grid_col": "تعداد ستون",
+            "divisible_by": "عددی که باید بر آن بخش‌پذیر باشد"
+        },
+        "description": "تصویر را به چند بخش تقسیم می‌کند."
+    },
+    "1hew_IntImageSideLength": {
+        "title": "طول ضلع صحیح تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "mode": "حالت"
+        },
+        "description": "طول ضلع تصویر را به‌صورت عدد صحیح محاسبه یا تنظیم می‌کند."
+    },
+    "1hew_IntImageSize": {
+        "title": "اندازهٔ صحیح‌عدد تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "description": "اندازهٔ صحیح‌عدد تصویر را دریافت می‌کند."
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "طول ضلع صحیح ماسک",
+        "inputs": {
+            "mask": "ماسک",
+            "mode": "حالت"
+        },
+        "description": "طول ضلع ماسک را به‌صورت عدد صحیح محاسبه یا تنظیم می‌کند."
+    },
+    "1hew_IntSplit": {
+        "title": "تقسیم عدد صحیح",
+        "inputs": {
+            "total": "مجموع",
+            "split_point": "نقطهٔ تقسیم"
+        },
+        "description": "یک عدد صحیح را در موقعیت مشخص‌شده به دو بخش تقسیم می‌کند."
+    },
+    "1hew_IntWan": {
+        "title": "رقم ده‌هزارگان عدد صحیح",
+        "inputs": {
+            "value": "مقدار"
+        },
+        "description": "رقم ده‌هزارگان یک عدد صحیح را دریافت یا تنظیم می‌کند."
+    },
+    "1hew_GetFileCount": {
+        "title": "دریافت تعداد فایل‌ها",
+        "inputs": {
+            "folder": "پوشه",
+            "type": "نوع",
+            "include_subdir": "شامل زیرپوشه‌ها"
+        },
+        "description": "تعداد فایل‌های پوشهٔ مشخص‌شده و زیرپوشه‌های آن را می‌شمارد."
+    },
+    "1hew_LoadImage": {
+        "title": "بارگذاری تصویر",
+        "inputs": {
+            "get_image_size": "دریافت ابعاد تصویر",
+            "file": "فایل",
+            "index": "نمایه",
+            "include_subdir": "شامل زیرپوشه‌ها",
+            "all": "همه"
+        },
+        "description": "فایل تصویری را از مسیر مشخص‌شده بارگذاری می‌کند."
+    },
+    "1hew_LoadTxt": {
+        "title": "بارگذاری متن",
+        "widgets": {
+            "file": "فایل",
+            "encode": "کدگذاری",
+            "index": "نمایه",
+            "include_subdir": "شامل زیرپوشه‌ها"
+        },
+        "outputs": {
+            "text": "متن",
+            "filename": "نام فایل"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "بارگذاری ویدیو",
+        "inputs": {
+            "file": "فایل",
+            "frame_limit": "محدودیت فریم",
+            "fps": "نرخ فریم",
+            "start_skip": "پرش در شروع",
+            "end_skip": "پرش در پایان",
+            "format": "فرمت",
+            "video_index": "ایندکس ویدیو",
+            "include_subdir": "شامل زیرپوشه‌ها"
+        },
+        "description": "فایل ویدیویی را از مسیر مشخص‌شده بارگذاری می‌کند."
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "تبدیل ویدیو به تصویر",
+        "inputs": {
+            "file": "فایل",
+            "frame_limit": "محدودیت فریم",
+            "fps": "نرخ فریم",
+            "start_skip": "پرش در شروع",
+            "end_skip": "پرش در پایان",
+            "format": "فرمت",
+            "video_index": "ایندکس ویدیو",
+            "include_subdir": "شامل زیرپوشه‌ها"
+        },
+        "description": "فایل ویدیویی را به مجموعه‌ای از فریم‌های تصویری تبدیل می‌کند."
+    },
+    "1hew_SaveImage": {
+        "title": "ذخیره تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "filename_prefix": "پیشوند نام فایل",
+            "save_output": "ذخیرهٔ خروجی",
+            "save_metadata": "ذخیرهٔ متادیتا"
+        },
+        "description": "تصویر را در مسیر مشخص‌شده ذخیره می‌کند."
+    },
+    "1hew_SaveTxt": {
+        "title": "ذخیره متن",
+        "inputs": {
+            "any": "هرکدام"
+        },
+        "widgets": {
+            "filename": "نام فایل",
+            "auto_increment": "افزایش خودکار",
+            "save_output": "ذخیرهٔ خروجی",
+            "encode": "کدگذاری"
+        },
+        "outputs": {
+            "file_path": "مسیر فایل"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "ذخیره ویدیو",
+        "inputs": {
+            "video": "ویدیو",
+            "filename_prefix": "پیشوند نام فایل",
+            "save_output": "ذخیرهٔ خروجی",
+            "save_metadata": "ذخیرهٔ متادیتا"
+        },
+        "description": "ویدیو را در مسیر مشخص‌شده ذخیره می‌کند."
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "ذخیرهٔ تصویر به‌عنوان ویدیو",
+        "description": "ویدیو را بر پایهٔ تصویر و صدا ذخیره می‌کند.",
+        "inputs": {
+            "image": "تصویر",
+            "audio": "صدا",
+            "fps": "نرخ فریم",
+            "filename_prefix": "پیشوند نام فایل",
+            "save_output": "ذخیرهٔ خروجی",
+            "save_metadata": "ذخیرهٔ متادیتا"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "هر بولین خالی",
+        "description": "خالی بودن مقدار بولین را بررسی می‌کند.",
+        "inputs": {
+            "any": "مقدار دلخواه"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "هر عدد صحیح خالی",
+        "description": "خالی بودن مقدار صحیح را بررسی می‌کند.",
+        "inputs": {
+            "any": "مقدار دلخواه",
+            "empty": "مقدار خالی",
+            "not_empty": "مقدار غیرخالی"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "هر سوییچ بولین",
+        "description": "دو گزینه را بر اساس مقدار بولین تغییر می‌دهد.",
+        "inputs": {
+            "boolean": "مقدار بولین",
+            "on_true": "هنگام درست",
+            "on_false": "هنگام نادرست"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "سوییچ انتخابگر",
+        "inputs": {
+            "input_1": "ورودی 1"
+        },
+        "widgets": {
+            "select": "انتخاب"
+        },
+        "outputs": {
+            "output": "خروجی",
+            "select": "انتخاب"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "تغییر انتخابگر چندگانه",
+        "inputs": {
+            "input_1": "ورودی 1"
+        },
+        "widgets": {
+            "select": "انتخاب"
+        },
+        "outputs": {
+            "output_1": "خروجی 1",
+            "select": "انتخاب"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "شمارهٔ خط تطبیق متن",
+        "widgets": {
+            "text_multiline": "متن چندخطی",
+            "text_single": "متن یک‌خطی"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "مقدار تطبیق متن",
+        "widgets": {
+            "text_multiline": "متن چندخطی",
+            "text_single": "متن یک‌خطی"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "پاک‌سازی شفافیت ماسک",
+        "widgets": {
+            "mask": "ماسک",
+            "clean_strength": "شدت پاک‌سازی",
+            "detect_only": "فقط تشخیص"
+        },
+        "outputs": {
+            "mask": "ماسک",
+            "noise_mask": "ماسک نویز"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "برش ماسک با ماسک کادر احاطه",
+        "description": "ماسک را با استفاده از ماسک کادر احاطه برش می‌دهد.",
+        "inputs": {
+            "mask": "ماسک",
+            "bbox_mask": "ماسک کادر محدوده"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "پر کردن سوراخ‌های ماسک",
+        "description": "سوراخ‌های داخل ماسک را پر می‌کند.",
+        "inputs": {
+            "mask": "ماسک",
+            "invert_mask": "معکوس‌کردن ماسک"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "چسباندن ماسک با ماسک کادر احاطه",
+        "description": "ماسک را با استفاده از ماسک کادر احاطه می‌چسباند.",
+        "inputs": {
+            "paste_mask": "ماسک چسباندن",
+            "bbox_mask": "ماسک کادر محدوده",
+            "base_mask": "ماسک پایه"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "تکثیر ماسک",
+        "description": "ماسک را تکرار می‌کند.",
+        "inputs": {
+            "mask": "ماسک",
+            "invert": "معکوس",
+            "count": "تعداد"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "جداسازی ماسک",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "threshold": "آستانه",
+            "min_area": "حداقل مساحت",
+            "sort_mode": "حالت مرتب‌سازی",
+            "connectivity": "هم‌بندی"
+        },
+        "outputs": {
+            "mask": "ماسک",
+            "count": "عدد صحیح"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "تبدیل ماسک به تصویر",
+        "inputs": {
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "fill_hole": "پر کردن حفره‌ها",
+            "white_area_color": "رنگ ناحیهٔ سفید",
+            "black_area_color": "رنگ ناحیهٔ سیاه",
+            "output_alpha": "خروجی کانال آلفا"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "پردازش دسته‌ای چند تصویر",
+        "description": "چند تصویر را به‌صورت دسته‌ای پردازش می‌کند.",
+        "inputs": {
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "image_1": "تصویر۱"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "فوق‌هم‌گذاری چند تصویر",
+        "inputs": {
+            "image_1": "تصویر ۱"
+        },
+        "widgets": {
+            "fit_mode": "حالت برازش",
+            "color": "رنگ"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": "چیدمان چند لایه:\n- image_1 بالاترین لایه است؛ هرچه عدد بزرگ‌تر باشد لایه پایین‌تر قرار می‌گیرد\n- ورودی RGBA برای ترکیب عادی لایه‌ها از آلفا استفاده می‌کند\n- ورودی RGB مانند لایهٔ کدر در نظر گرفته می‌شود",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "به هم چسباندن چند تصویر",
+        "description": "چند تصویر را به هم می‌چسباند.",
+        "inputs": {
+            "direction": "جهت",
+            "match_image_size": "تطبیق اندازهٔ تصویر",
+            "spacing_width": "عرض فاصله",
+            "spacing_color": "رنگ فاصله",
+            "pad_color": "رنگ پدینگ",
+            "image_1": "تصویر۱",
+            "image_2": "تصویر۲"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "به هم چسباندن چند ماسک",
+        "description": "چند ماسک را به‌صورت دسته‌ای پردازش می‌کند.",
+        "inputs": {
+            "fit": "تطبیق",
+            "pad_color": "رنگ پدینگ",
+            "mask_1": "ماسک 1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "عملیات ریاضی روی چند ماسک",
+        "description": "عملیات ریاضی را روی چند ماسک اعمال می‌کند.",
+        "inputs": {
+            "mask_1": "ماسک 1",
+            "mask_2": "ماسک 2",
+            "operation": "عملیه"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "اتصال چند رشته",
+        "description": "چند رشته را به هم متصل می‌کند.",
+        "inputs": {
+            "filter_empty_line": "فیلتر خطوط خالی",
+            "filter_comment": "فیلتر کامنت‌ها",
+            "separator": "جداکننده",
+            "input": "ورودی"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "فهرست سفارشی اعداد اعشاری",
+        "description": "فهرست سفارشی اعداد اعشاری.",
+        "inputs": {
+            "custom_text": "متن سفارشی"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "فهرست سفارشی اعداد صحیح",
+        "inputs": {
+            "custom_text": "متن سفارشی"
+        },
+        "description": "فهرستی از اعداد صحیح سفارشی تولید می‌کند."
+    },
+    "1hew_ListCustomSeed": {
+        "title": "فهرست سفارشی دانه‌ها",
+        "inputs": {
+            "seed": "بذر",
+            "count": "تعداد"
+        },
+        "description": "فهرستی از دانه‌های تصادفی به تعداد مشخص‌شده تولید می‌کند."
+    },
+    "1hew_ListCustomString": {
+        "title": "فهرست سفارشی رشته‌ها",
+        "inputs": {
+            "custom_text": "متن سفارشی"
+        },
+        "description": "فهرستی از رشته‌های سفارشی تولید می‌کند."
+    },
+    "1hew_StringFilter": {
+        "title": "پالایش رشته",
+        "inputs": {
+            "text": "متن",
+            "filter_empty_line": "فیلتر خطوط خالی",
+            "filter_comment": "فیلتر کامنت‌ها",
+            "input": "ورودی"
+        },
+        "description": "خطوط خالی و کامنت‌ها را از متن حذف می‌کند."
+    },
+    "1hew_StringJoinMulti": {
+        "title": "اتصال چند رشته",
+        "inputs": {
+            "text1": "متن 1",
+            "text2": "متن 2",
+            "text3": "متن 3",
+            "text4": "متن 4",
+            "text5": "متن 5",
+            "filter_empty_line": "فیلتر خطوط خالی",
+            "filter_comment": "فیلتر کامنت‌ها",
+            "separator": "جداکننده",
+            "input": "ورودی"
+        },
+        "description": "چند متن را در یک رشته ترکیب می‌کند و امکان پالایش خطوط خالی و کامنت‌ها را هم دارد."
+    },
+    "1hew_TextCustomExtract": {
+        "title": "استخراج سفارشی متن",
+        "inputs": {
+            "json_data": "دادهٔ JSON",
+            "key": "کلید",
+            "precision_match": "تطبیق دقیق",
+            "label_filter": "پالایش برچسب"
+        },
+        "description": "مقدار کلید مشخصی را از دادهٔ JSON استخراج می‌کند و تطبیق دقیق و پالایش برچسب را اعمال می‌کند."
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "پیشوند و پسوند متن",
+        "inputs": {
+            "text": "متن",
+            "prefix": "پیشوند",
+            "suffix": "پسوند"
+        },
+        "description": "پیشوند و پسوندهای مشخص‌شده را به ابتدا و انتهای متن اضافه می‌کند."
+    },
+    "1hew_RangeMapping": {
+        "title": "نگاشت بازه",
+        "inputs": {
+            "value": "مقدار",
+            "min": "کمینه",
+            "max": "بیشینه",
+            "rounding": "گرد کردن"
+        },
+        "description": "مقادیر بازهٔ 0-1 را به [min,max] نگاشت می‌کند و کنترل دقت اعشار را پشتیبانی می‌کند."
+    },
+    "1hew_WorkflowName": {
+        "title": "نام گردش کار",
+        "inputs": {
+            "prefix": "پیشوند",
+            "suffix": "پسوند",
+            "date_format": "قالب تاریخ",
+            "full_path": "مسیر کامل",
+            "strip_extension": "حذف پسوند فایل"
+        },
+        "description": "برای گردش کار، نامی با پیشوند، پسوند و قالب تاریخ تولید می‌کند."
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "برش تصویر با ماسک کادر محدوده",
+        "description": "تصویر را با ماسک کادر محدوده برش می‌دهد.",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "preset_ratio": "نسبت پیش‌فرض",
+            "get_crop_ratio": "دریافت نسبت برش",
+            "scale_strength": "شدت مقیاس",
+            "crop_to_side": "برش تا ضلع",
+            "crop_to_length": "برش تا طول",
+            "divisible_by": "بخش‌پذیر بر"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "اتصال Alpha تصویر",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "invert_mask": "معکوس‌کردن ماسک"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "درهم‌سازی دستهٔ تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "segment_count": "تعداد بخش"
+        },
+        "outputs": {
+            "image": "تصویر"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "رشتهٔ نسبت تصویر Gemini 3.1 Flash",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "selection": "انتخاب"
+        },
+        "outputs": {
+            "string": "رشته"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "رشتهٔ نسبت تصویر GPT 2.0",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "selection": "انتخاب"
+        },
+        "outputs": {
+            "string": "رشته"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "تنظیم اندازهٔ تصویر GPT Image 2.0",
+        "inputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "widgets": {
+            "preset_size": "اندازهٔ پیش‌فرض",
+            "fit": "روش",
+            "pad_color": "رنگ پس‌زمینه"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "تجزیهٔ رشته",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "selection": "انتخاب"
+        },
+        "outputs": {
+            "string": "رشته"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "هر سوییچ عدد صحیح",
+        "description": "گزینه را بر اساس عدد صحیح تغییر می‌دهد."
+    }
+}

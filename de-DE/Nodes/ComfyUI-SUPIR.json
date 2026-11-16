@@ -1,0 +1,215 @@
+{
+    "SUPIR_model_loader": {
+        "title": "SUPIR-Modell-Lader",
+        "widgets": {
+            "supir_model": "SUPIR-Modell",
+            "sdxl_model": "SDXL-Modell",
+            "fp8_unet": "FP8-UNet-Genauigkeit",
+            "diffusion_dtype": "Pruning-Typ"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR-Modell",
+            "SUPIR_model": "SUPIR-Modell",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Veralteter Loader, nicht empfohlen.\n\nLädt das SUPIR-Modell und das SDXL-Modell und fusioniert sie anschließend."
+    },
+    "SUPIR_model_loader_v2": {
+        "title": "SUPIR-Modell-Lader_V2",
+        "inputs": {
+            "model": "Modell",
+            "clip": "CLIP",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR-Modell",
+            "fp8_unet": "FP8-UNet-Genauigkeit",
+            "diffusion_dtype": "Pruning-Typ",
+            "high_vram": "Hoher VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR-Modell",
+            "SUPIR_model": "SUPIR-Modell",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Lädt das SUPIR- und das SDXL-Modell und fusioniert sie anschließend.\n\nDer Pruning-Typ sollte auf \"Auto\" bleiben, außer beim Laden des Modells tritt ein Fehler auf.\n\nfp8_unet: Ruft das UNet mit torch.float8_e4m3fn auf; das senkt den VRAM-Bedarf, beeinflusst die Qualität aber leicht.\n\nHohes VRAM: Lädt das Modell mit Accelerate auf die GPU, was die Ladegeschwindigkeit leicht erhöht."
+    },
+    "SUPIR_model_loader_v2_clip": {
+        "title": "SUPIR-Modell-Lader_V2 (CLIP)",
+        "inputs": {
+            "model": "Modell",
+            "clip_l": "CLIP_L",
+            "clip_g": "CLIP_G",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "supir_model": "SUPIR-Modell",
+            "fp8_unet": "FP8-UNet-Genauigkeit",
+            "diffusion_dtype": "Pruning-Typ",
+            "high_vram": "Hoher VRAM"
+        },
+        "outputs": {
+            "SUPIR_MODEL": "SUPIR-Modell",
+            "SUPIR_model": "SUPIR-Modell",
+            "SUPIR_VAE": "SUPIR_VAE"
+        },
+        "description": "Lädt das SUPIR- und das SDXL-Modell und fusioniert sie anschließend.\n\nDer Pruning-Typ sollte auf \"Auto\" bleiben, außer beim Laden des Modells tritt ein Fehler auf.\n\nfp8_unet: Ruft das UNet mit torch.float8_e4m3fn auf; das senkt den VRAM-Bedarf, beeinflusst die Qualität aber leicht.\n\nHohes VRAM: Lädt das Modell mit Accelerate auf die GPU, was die Ladegeschwindigkeit leicht erhöht."
+    },
+    "SUPIR_encode": {
+        "title": "SUPIR-Kodierung",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Bild"
+        },
+        "widgets": {
+            "use_tiled_vae": "Gekacheltes VAE",
+            "encoder_tile_size": "Encoder-Kachelgröße",
+            "encoder_dtype": "Encoder-Pruning"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SUPIR_decode": {
+        "title": "SUPIR-Dekodierung",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "latents": "Latent"
+        },
+        "widgets": {
+            "use_tiled_vae": "Gekacheltes VAE",
+            "decoder_tile_size": "Decoder-Kachelgröße"
+        },
+        "outputs": {
+            "image": "Bild"
+        }
+    },
+    "SUPIR_first_stage": {
+        "title": "SUPIR-Stufe 1",
+        "inputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "image": "Bild"
+        },
+        "widgets": {
+            "use_tiled_vae": "Gekacheltes VAE",
+            "encoder_tile_size": "Encoder-Kachelgröße",
+            "decoder_tile_size": "Decoder-Kachelgröße",
+            "encoder_dtype": "Encoder-Pruning"
+        },
+        "outputs": {
+            "SUPIR_VAE": "SUPIR_VAE",
+            "denoised_image": "Bild",
+            "denoised_latents": "Latent"
+        },
+        "description": "Die \"erste Stufe\" von SUPIR. Kodiert und dekodiert das Bild mit dem denoise_encoder von SUPIR, um Kompressionsartefakte zu beheben; das führt jedoch zu einem unscharfen Bild.\n\nKann durch einen anderen Sampler oder eine andere Unschärfe ersetzt oder ganz weggelassen werden."
+    },
+    "SUPIR_conditioner": {
+        "title": "SUPIR-Konditionierung",
+        "inputs": {
+            "SUPIR_MODEL": "SUPIR-Modell",
+            "SUPIR_model": "SUPIR-Modell",
+            "latents": "Latent",
+            "captions": "Titel/Untertitel"
+        },
+        "widgets": {
+            "positive_prompt": "Positiv-Prompt",
+            "negative_prompt": "Negativ-Prompt"
+        },
+        "outputs": {
+            "positive": "Positive Bedingung",
+            "negative": "Negative Bedingung"
+        },
+        "description": "Erzeugt die Konditionierung für den Sampler.\n Die Titel-Eingabe ist optional; wenn sie einen Titel erhält, wird dieser dem Positiv-Prompt hinzugefügt\n Wenn für ein einzelnes Eingabebild eine Titelliste angegeben wird, muss deren Anzahl zur Anzahl der Kacheln passen\n Siehe dazu SUPIR-Kachelbild\n Wird eine Titelliste angegeben und passt sie zum eingehenden Bildbatch, verwendet jedes Bild den zugehörigen Titel"
+    },
+    "SUPIR_sample": {
+        "title": "SUPIR-Sampling",
+        "inputs": {
+            "SUPIR_model": "SUPIR-Modell",
+            "latents": "Latent",
+            "positive": "Positive Bedingung",
+            "negative": "Negative Bedingung"
+        },
+        "widgets": {
+            "seed": "Zufalls-Seed",
+            "control_before_generate": "Aktion vor der Ausführung",
+            "steps": "Schritte",
+            "cfg_scale_start": "CFG-Skalierung am Anfang",
+            "cfg_scale_end": "CFG-Skalierung am Ende",
+            "EDM_s_churn": "EDM-Zufallsstörung",
+            "s_noise": "Rauschanteil",
+            "DPMPP_eta": "DPMPP-Schrittweitenparameter",
+            "control_scale_start": "Steuerungsskalierung am Anfang",
+            "control_scale_end": "Steuerungsskalierung am Ende",
+            "restore_cfg": "CFG wiederherstellen",
+            "keep_model_loaded": "Modell geladen halten",
+            "sampler": "Sampler (Verfahren)",
+            "sampler_tile_size": "Sampler-Kachelgröße",
+            "sampler_tile_stride": "Sampler-Kachel-Schritt"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "- **latent:**\n\nDas für die Sample verwendete Latent. Bei Verwendung eines SUPIR-Latents beeinflusst dieser Eintrag nur die Form des Rauschens.\n\nIn allen anderen Fällen wie die ComfyUI-Standardwerte. \n\nWenn eine Latent-Eingabe vorhanden ist, wird diese verwendet.\n\n- **CFG:**\n\nSteuert CFG über lineare Interpolation, mit der Start-CFG-Skalierung als Anfangswert und linearer Skalierung auf die End-CFG-Skalierung.\n\nWerden beide auf denselben Wert gesetzt, ist die Interpolation deaktiviert.\n\n- **EDM_s_churn:**\n\nSteuert, wie schnell sich der Sampling-Prozess an Änderungen des Latent-Rauschens anpasst.\n\nFür den DPMPP-Sampler unwirksam.\n\n- **Rauschmenge s_noise:**\n\nSteuert die Rauschmenge, die in jedem Schritt des Sampling-Prozesses zum Latent hinzugefügt wird. \n\n- **DPMPP_eta:**\n\nEin Skalierungsfaktor, der den Diffusionsprozess beeinflusst, indem er anpasst, wie der Entrauschungsprozess auf zeitliche Änderungen des Rauschpegels reagiert.\n\nFür den EDM-Sampler unwirksam. \n\n- **Steuerungs-Skalierung control_scale:**\n\nDie Stärke des SUPIR-Steuerungsmodells; die Stärke wird von Anfang bis Ende über lineare Interpolation gesteuert.\n\nJe kleiner der Wert, desto geringer die Steuerungsstärke.\n\n- **Wiederherstellungs-CFG restore_cfg:**\n\nSteuert, wie stark das Originalbild während des Sampling-Prozesses wiederhergestellt wird.\n\nDient der sanften Feinabstimmung des Sampling-Prozesses.\n\n- **Sampler:**\n\nEDM benötigt viele Schritte, liefert aber in der Regel eine bessere Qualität.\n\nDPMPP benötigt weniger Schritte und eignet sich für Lighting-Modelle.\n\nDer Kachel-Sampler verwendet Kachel-Sampling; er ist sehr langsam, ermöglicht aber höhere Auflösungen mit weniger VRAM.\n\nVor der Kachelung des Bilds muss die Kachelgröße festgelegt werden; die Kachel-Schrittweite bestimmt die Überlappung der einzelnen Kacheln. Die Kachelfunktion findet sich im Knoten SUPIR-Kachelbild."
+    },
+    "SUPIR_tiles": {
+        "title": "SUPIR-Kachelbild",
+        "inputs": {
+            "image": "Bild"
+        },
+        "widgets": {
+            "tile_size": "Kachelgröße",
+            "tile_stride": "Kachel-Schrittweite"
+        },
+        "outputs": {
+            "image_tiles": "Kachelbilder",
+            "tile_size": "Kachelgröße",
+            "tile_stride": "Kachel-Schrittweite"
+        },
+        "description": "Kachelt das Bild mit derselben Methode wie der Kachel-Sampler.\n\nZur Vorschau der Kacheln und zum Zurückrechnen jeder einzelnen Kachel (diese Funktion ist noch in Entwicklung)."
+    },
+    "SUPIR_Upscale": {
+        "title": "SUPIR-Hochskalierung",
+        "inputs": {
+            "image": "Bild",
+            "captions": "Titel/Untertitel"
+        },
+        "widgets": {
+            "supir_model": "SUPIR-Modell",
+            "sdxl_model": "SDXL-Modell",
+            "seed": "Zufalls-Seed",
+            "control_before_generate": "Aktion vor der Ausführung",
+            "resize_method": "Skalierungsmethode",
+            "scale_by": "Skalierungsfaktor",
+            "steps": "Schritte",
+            "restoration_scale": "Wiederherstellungs-Skalierung",
+            "cfg_scale": "CFG-Guidance-Gewicht",
+            "a_prompt": "Positiv-Prompt",
+            "n_prompt": "Negativ-Prompt",
+            "s_churn": "Rauschabnahme-Faktor",
+            "s_noise": "Rauschanteil",
+            "control_scale": "Steuerungsskalierung",
+            "cfg_scale_start": "CFG-Führungs-Startintensität",
+            "control_scale_start": "ControlNet-Anfangsgewicht",
+            "color_fix_type": "Farbkorrektur-Typ",
+            "keep_model_loaded": "Modell geladen halten",
+            "use_tiled_vae": "Gekacheltes VAE",
+            "encoder_tile_size": "Encoder-Kachelgröße",
+            "encoder_tile_size_pixels": "Decoder-Kachelgröße Pixel",
+            "decoder_tile_size": "Decoder-Kachelgröße",
+            "decoder_tile_size_latent": "Decoder-Kachelgröße Latent",
+            "diffusion_dtype": "Pruning-Typ",
+            "encoder_dtype": "Encoder-Pruning",
+            "batch_size": "Stapelgröße",
+            "use_tiled_sampling": "Kachel-Sampling verwenden",
+            "used_tiled_sampling": "Kachel-Sampling verwenden",
+            "sampler_tile_size": "Sampler-Kachelgröße",
+            "sampler_tile_stride": "Sampler-Kachel-Schritt",
+            "fp8_unet": "FP8-UNet-Genauigkeit",
+            "fp8_vae": "fp8_vae",
+            "sampler": "Sampler (Verfahren)"
+        },
+        "outputs": {
+            "upscaled_image": "Bild"
+        }
+    }
+}

@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "テンソルループ開始",
+        "inputs": {
+            "initial_value": "初期値"
+        },
+        "widgets": {
+            "mode": "モード",
+            "iterations": "反復回数"
+        },
+        "outputs": {
+            "flow_control": "フロー制御",
+            "accumulated_count": "累計数",
+            "previous_value": "前の値",
+            "current_iteration": "現在の反復回数"
+        },
+        "description": "出力を収集するためのループを開始します。2つのモードに対応します:\n- 反復回数: 固定回数のイテレーションを実行\n- 総フレーム数: 累計が目標フレーム数に達するまで実行\nflow_controlをTensorLoopCloseに接続し、`previous_value`を生成用の入力として使用し、生成の出力をTensorLoopClose.processedに接続します。\n画像、マスク、Latentタイプに対応します。"
+    },
+    "TensorLoopClose": {
+        "title": "テンソルループ終了",
+        "widgets": {
+            "flow_control": "フロー制御",
+            "processed": "処理済み",
+            "accumulate": "累計",
+            "overlap": "オーバーラップ",
+            "stop": "停止"
+        },
+        "outputs": {
+            "output": "出力"
+        },
+        "description": "TensorLoopOpenで開始したループを終了します。\n接続:\n  - TensorLoopOpenからのflow_control\n  - processed: 今回の反復で生成された出力\n画像、マスク、Latent型に対応します。"
+    },
+    "_AccumulateNode": {
+        "title": "累計ノード",
+        "widgets": {
+            "to_add": "追加待ち",
+            "accumulation": "累計値"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "条件ループ開始",
+        "widgets": {
+            "condition": "条件"
+        },
+        "outputs": {
+            "flow_control": "フロー制御"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "条件ループ終了",
+        "widgets": {
+            "flow_control": "フロー制御",
+            "condition": "条件"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "整数演算",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "演算"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "累計を画像バッチに変換",
+        "widgets": {
+            "accumulation": "累計値",
+            "overlap_frames": "オーバーラップフレーム数",
+            "overlap_mode": "オーバーラップモード"
+        },
+        "outputs": {
+            "result": "結果"
+        },
+        "description": "画像/マスクテンソルまたはLatent辞書の累計値を、単一のバッチに結合します。"
+    },
+    "_ConditionalSelect": {
+        "title": "条件選択",
+        "widgets": {
+            "condition": "条件",
+            "value_if_true": "条件が真のときの値",
+            "value_if_false": "条件が偽のときの値"
+        },
+        "outputs": {
+            "result": "結果"
+        },
+        "description": "条件がTrueのときはvalue_if_trueを、それ以外の場合はvalue_if_falseを返します。\n遅延評価を使用し、選択された分岐のみを解決します。"
+    },
+    "_ImageAccumStatePack": {
+        "title": "画像累計状態パック",
+        "widgets": {
+            "remaining": "残り数",
+            "accum": "累計値",
+            "previous_value": "前の値",
+            "count": "カウント",
+            "open_node_id": "開始ノードID",
+            "total_frames": "総フレーム数",
+            "prev_accumulated_count": "前回の累計数",
+            "blend_overlap": "混合オーバーラップ"
+        },
+        "outputs": {
+            "loop_state": "ループ状態",
+            "should_continue": "続行するか"
+        },
+        "description": "ループ状態を単一の辞書にパックし、TensorLoopOpenのinitial_value0で使用します。"
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "画像累計状態アンパック",
+        "widgets": {
+            "loop_state": "ループ状態"
+        },
+        "outputs": {
+            "remaining": "残り数",
+            "accumulation": "累計値",
+            "previous_value": "前の値",
+            "accumulated_count": "累計数",
+            "count": "カウント",
+            "open_node_id": "開始ノードID",
+            "total_frames": "総フレーム数"
+        },
+        "description": "TensorLoopOpenからループ状態をアンパックします。"
+    },
+    "_BatchOps": {
+        "title": "バッチ演算",
+        "widgets": {
+            "batch": "バッチ",
+            "operation": "演算",
+            "amount": "数",
+            "batch_b": "バッチB"
+        },
+        "outputs": {
+            "output": "出力"
+        },
+        "description": "バッチのスライス、トリミング、結合演算。"
+    }
+}
