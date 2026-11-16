@@ -322,6 +322,15 @@ Créez un fichier JSON sous `fr-FR/Menus/` pour ajouter des traductions de menus
 
 ## Journal des modifications
 
+### 2026-11-16
+
+- Les traductions des nœuds, des catégories, des menus et des paramètres ont été alignées sur la traduction officielle de ComfyUI en chinois simplifié. Les libellés de ports manquants ont été ajoutés à certains nœuds intégrés.
+- Les libellés `Latent` et `采样` ont été harmonisés en chinois simplifié. Les libellés d’échantillonnage des nœuds intégrés ont aussi été harmonisés dans 13 autres langues, en conservant la numérotation des ports.
+
+### 2026-11-11
+
+- Les traductions en chinois simplifié des nœuds locaux et partenaires ont été complétées, et l’affichage des ports dynamiques, des contrôles et des prompts a été corrigé dans Generate Text V2, Qwen Image 2.1 et MiniMax H3.
+
 ### 2026-09-24
 
 - Correction d'un problème de sécurité : une requête élaborée pouvait pousser le plugin à lire des fichiers hors de son dossier ; il ne lit désormais plus que les fichiers de traduction situés dans son propre dossier

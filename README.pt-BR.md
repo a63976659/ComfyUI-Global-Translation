@@ -322,6 +322,15 @@ Crie um arquivo JSON em `pt-BR/Menus/` para adicionar traduções de menus:
 
 ## Registro de alterações
 
+### 2026-11-16
+
+- As traduções de nós, categorias, menus e configurações foram alinhadas à tradução oficial do ComfyUI em chinês simplificado. Também foram adicionados rótulos de portas que faltavam em alguns nós integrados.
+- Os rótulos `Latent` e `采样` foram padronizados em chinês simplificado. Os rótulos de amostragem dos nós integrados também foram padronizados em outros 13 idiomas, mantendo a numeração das portas.
+
+### 2026-11-11
+
+- Foram completadas as traduções em chinês simplificado dos nós locais e de parceiros e corrigida a exibição de portas dinâmicas, controles e prompts em Generate Text V2, Qwen Image 2.1 e MiniMax H3.
+
 ### 2026-09-24
 
 - Correção de um problema de segurança: uma requisição manipulada podia fazer o plugin ler arquivos fora da sua pasta; agora ele só lê os arquivos de tradução dentro da própria pasta

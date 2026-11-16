@@ -322,6 +322,15 @@ Cree un archivo JSON bajo `es-ES/Menus/` para añadir traducciones de menús:
 
 ## Registro de cambios
 
+### 2026-11-16
+
+- Se ajustaron las traducciones de nodos, categorías, menús y ajustes a la traducción oficial de ComfyUI en chino simplificado y se añadieron las etiquetas de puerto que faltaban en algunos nodos integrados.
+- Se unificaron las etiquetas `Latent` y `采样` en chino simplificado, así como las etiquetas de muestreo de los nodos integrados en otros 13 idiomas, conservando la numeración de los puertos.
+
+### 2026-11-11
+
+- Se completaron las traducciones al chino simplificado de los nodos locales y de socios, y se corrigió la visualización de los puertos dinámicos, los controles y los prompts en Generate Text V2, Qwen Image 2.1 y MiniMax H3.
+
 ### 2026-09-24
 
 - Corregido un problema de seguridad: una petición manipulada podía hacer que el plugin leyera archivos fuera de su carpeta; ahora solo lee los archivos de traducción dentro de su propia carpeta

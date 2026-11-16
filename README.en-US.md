@@ -322,6 +322,15 @@ Create a JSON file under `en-US/Menus/` to add menu translations:
 
 ## Changelog
 
+### 2026-11-16
+
+- Aligned node, category, menu, and settings translations with ComfyUI’s official Simplified Chinese localization and filled in missing port labels for some built-in nodes.
+- Standardized the Simplified Chinese labels `Latent` and `采样`, and unified sampling labels for built-in nodes in 13 other languages while preserving port numbers.
+
+### 2026-11-11
+
+- Filled in missing Simplified Chinese translations for local and partner nodes, and fixed how dynamic ports, controls, and prompts are displayed in Generate Text V2, Qwen Image 2.1, and MiniMax H3.
+
 ### 2026-09-24
 
 - Fixed a security issue where a crafted request could make the plugin read files outside its own folder; it now only reads translation files inside the plugin folder

@@ -322,6 +322,15 @@ Erstellen Sie eine JSON-Datei unter `de-DE/Menus/`, um Menüübersetzungen hinzu
 
 ## Änderungsverlauf
 
+### 2026-11-16
+
+- Die Übersetzungen für Knoten, Kategorien, Menüs und Einstellungen wurden an die offizielle vereinfachte chinesische Übersetzung von ComfyUI angeglichen. Fehlende Anschlussbeschriftungen einiger integrierter Knoten wurden ergänzt.
+- Die Bezeichnungen `Latent` und `采样` wurden im vereinfachten Chinesisch vereinheitlicht. Auch die Sampling-Beschriftungen integrierter Knoten wurden in 13 weiteren Sprachen vereinheitlicht, wobei die Anschlussnummern erhalten blieben.
+
+### 2026-11-11
+
+- Fehlende vereinfachte chinesische Übersetzungen für lokale Knoten und Partnerknoten wurden ergänzt. Die Anzeige dynamischer Anschlüsse, Steuerelemente und Prompts in Generate Text V2, Qwen Image 2.1 und MiniMax H3 wurde korrigiert.
+
 ### 2026-09-24
 
 - Sicherheitsproblem behoben: Über präparierte Anfragen konnten Dateien außerhalb des Plugin-Ordners gelesen werden; das Plugin liest jetzt ausschließlich Übersetzungsdateien im eigenen Ordner

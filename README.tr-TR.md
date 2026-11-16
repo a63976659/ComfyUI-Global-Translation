@@ -322,6 +322,15 @@ tr-TR/
 
 ## Değişiklik Günlüğü
 
+### 2026-11-16
+
+- Düğüm, kategori, menü ve ayar çevirileri ComfyUI’nin resmî Basitleştirilmiş Çince çevirisiyle uyumlu hâle getirildi. Bazı yerleşik düğümlerin eksik bağlantı noktası etiketleri eklendi.
+- Basitleştirilmiş Çincede `Latent` ve `采样` etiketleri standartlaştırıldı. Diğer 13 dilde de yerleşik düğümlerin örnekleme etiketleri, bağlantı noktası numaraları korunarak standartlaştırıldı.
+
+### 2026-11-11
+
+- Yerel düğümlerin ve iş ortağı düğümlerinin eksik Basitleştirilmiş Çince çevirileri tamamlandı. Generate Text V2, Qwen Image 2.1 ve MiniMax H3’te dinamik bağlantı noktalarının, denetimlerin ve istemlerin görüntülenmesi düzeltildi.
+
 ### 2026-09-24
 
 - Bir güvenlik sorunu giderildi: özenle hazırlanmış bir istekle eklentinin kendi klasörü dışındaki dosyalar okunabiliyordu; artık eklenti yalnızca kendi klasöründeki çeviri dosyalarını okuyor
