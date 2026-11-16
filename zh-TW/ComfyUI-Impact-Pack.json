@@ -1,0 +1,3409 @@
+{
+    "ONNXDetectorForEach": {
+        "title": "逐幀ONNX偵測器",
+        "inputs": {
+            "onnx_detector": "ONNX偵測器",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹係數",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸過濾閾值"
+        },
+        "description": ""
+    },
+    "ImpactIntConstSender": {
+        "title": "Impact整數常數傳送器",
+        "inputs": {
+            "signal": "信號"
+        },
+        "widgets": {
+            "value": "數值",
+            "link_id": "連結ID"
+        },
+        "description": ""
+    },
+    "ImagePasteMasked": {
+        "title": "帶遮罩影像貼上",
+        "inputs": {
+            "destination": "目標影像",
+            "source": "來源影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "x": "X座標",
+            "y": "Y座標",
+            "resize_source": "調整來源影像尺寸"
+        },
+        "description": ""
+    },
+    "Unsampler": {
+        "title": "逆取樣器",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向提示詞詞",
+            "negative": "負向提示詞",
+            "latent_image": "latent 影像"
+        },
+        "widgets": {
+            "steps": "step 總數",
+            "end_at_step": "終止step",
+            "cfg": "CFG 值",
+            "sampler_name": "採樣器名稱",
+            "scheduler": "調度器",
+            "normalize": "標準化"
+        },
+        "description": ""
+    },
+    "ImpactKSamplerBasicPipe": {
+        "title": "K取樣器(節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "K取樣器的節點束版本。\n 在將排程器小部件轉換為輸入時，請參考 排程適配器 節點以解決相容性問題。"
+    },
+    "ImpactKSamplerAdvancedBasicPipe": {
+        "title": "K取樣器(進階節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束",
+            "latent_image": "Latent",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "add_noise": "新增雜訊波",
+            "noise_seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "start_at_step": "開始降噪步數",
+            "end_at_step": "結束降噪步數",
+            "return_with_leftover_noise": "返回雜訊"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "LATENT": "Latent",
+            "VAE": "VAE"
+        },
+        "description": "K取樣器的進階節點束版本。\n 在將排程器小部件轉換為輸入時，請參考 排程適配器 節點以解決相容性問題。"
+    },
+    "CLIPSegDetectorProvider": {
+        "title": "CLIPSeg偵測器",
+        "widgets": {
+            "text": "文字",
+            "blur": "模糊",
+            "threshold": "閾值",
+            "dilation_factor": "膨脹"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox偵測"
+        },
+        "description": "CLIPSeg的包裝器，用以提供BBox偵測。"
+    },
+    "SEGSOrderedFilterDetailerHookProvider": {
+        "title": "Seg次序過濾優化約束器",
+        "widgets": {
+            "target": "目標",
+            "order": "順序",
+            "take_start": "開始序號",
+            "take_count": "數量"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "Seg範圍過濾優化約束器, Seg標籤過濾優化約束器 - 存在一個包裝節點，該節點透過建立 優化約束 提供 Seg濾波器 節點，以便在 臉部優化 或 偵測器 中套用。"
+    },
+    "SEGSRangeFilterDetailerHookProvider": {
+        "title": "Seg範圍過濾優化約束器",
+        "widgets": {
+            "target": "目標",
+            "mode": "模式",
+            "min_value": "交集 (最小值)",
+            "max_value": "聯集 (最大值)"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        }
+    },
+    "SEGSLabelFilterDetailerHookProvider": {
+        "title": "Seg標籤過濾優化約束器",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "預設",
+            "labels": "標籤"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        }
+    },
+    "CustomSamplerDetailerHookProvider": {
+        "title": "自訂取樣優化約束器",
+        "inputs": {
+            "sampler": "採樣器"
+        },
+        "widgets": {
+            "preset": "預設",
+            "labels": "標籤"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        }
+    },
+    "LamaRemoverDetailerHookProvider": {
+        "title": "LaMa修復演算法優化約束器",
+        "inputs": {
+            "sampler": "採樣器"
+        },
+        "widgets": {
+            "mask_threshold": "遮罩閾值",
+            "gaussblur_radius": "高斯模糊半徑",
+            "skip_sampling": "跳過取樣"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        }
+    },
+    "EmptySegs": {
+        "title": "空Seg",
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "提供一個空的Seg。"
+    },
+    "SetDefaultImageForSEGS": {
+        "title": "設定Seg預設影像",
+        "inputs": {
+            "segs": "Seg",
+            "image": "影像"
+        },
+        "widgets": {
+            "override": "覆蓋"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "若未經過優化增強器，SEGS將僅包含偵測區域資訊而無影像。此節點為SEGS設定預設影像。"
+    },
+    "RemoveImageFromSEGS": {
+        "title": "Seg移除影像",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactControlNetApplySEGS": {
+        "title": "ControlNet套用Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Seg預處理",
+            "control_image": "ControlNet影像"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "若要在Seg中套用ControlNet，您需要使用Inspire Pack中的Preprocessor Provider節點來利用此節點。\n Seg預處理 和 ControlNet影像 可以選擇性地套用。如果給定了一個 ControlNet影像 ，Seg預處理 將被忽略。\n 如果設定為ControlNet影像，您可透過Seg預覽 (ControlNet影像)預覽裁切的中心影像。由 Seg預處理 產生的影像應透過每個優化處理器的 ControlNet影像 輸出進行驗證。\n 該Seg預處理 在優化處理過程中透過對裁切影像進行即時預處理來運作，而ControlNet影像將被裁切並用作ControlNet套用Seg的輸入。"
+    },
+    "ImpactControlNetApplyAdvancedSEGS": {
+        "title": "ControlNet套用(進階)Seg",
+        "inputs": {
+            "segs": "Seg",
+            "control_net": "ControlNet",
+            "segs_preprocessor": "Seg預處理",
+            "control_image": "影像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始時間",
+            "end_percent": "結束時間"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "若要在Seg中套用ControlNet，您需要使用Inspire Pack中的Preprocessor Provider節點來利用此節點。\n Seg預處理 和 ControlNet影像 可以選擇性地套用。如果給定了一個 ControlNet影像 ，Seg預處理 將被忽略。\n 如果設定為ControlNet影像，您可透過Seg預覽 (ControlNet影像)預覽裁切的中心影像。由 Seg預處理 產生的影像應透過每個優化處理器的 ControlNet影像 輸出進行驗證。\n 該Seg預處理 在優化處理過程中透過對裁切影像進行即時預處理來運作，而ControlNet影像將被裁切並用作ControlNet套用Seg的輸入。"
+    },
+    "ImpactControlNetClearSEGS": {
+        "title": "ControlNet移除Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "清除套用於Seg的ControlNet"
+    },
+    "ImpactDecomposeSEGS": {
+        "title": "Seg分解",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS_HEADER": "Seg標頭資訊",
+            "SEG_ELT": "Seg_元素"
+        }
+    },
+    "ImpactAssembleSEGS": {
+        "title": "Seg組合",
+        "inputs": {
+            "seg_header": "Seg標頭資訊",
+            "seg_elt": "Seg_元素"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactFrom_SEG_ELT": {
+        "title": "從Seg元素",
+        "inputs": {
+            "seg_elt": "Seg_元素"
+        },
+        "outputs": {
+            "seg_elt": "Seg_元素",
+            "cropped_image": "裁切影像",
+            "cropped_mask": "裁切遮罩",
+            "crop_region": "裁切區域",
+            "BBox": "Seg元素_BBox",
+            "Seg_ELT_bbox": "Seg元素BBox",
+            "control_net_wrapper": "ControlNet置換",
+            "confidence": "信心度",
+            "label": "標籤"
+        }
+    },
+    "ImpactEdit_SEG_ELT": {
+        "title": "編輯Seg_元素",
+        "inputs": {
+            "seg_elt": "Seg_元素",
+            "cropped_image_opt": "裁切影像",
+            "cropped_mask_opt": "裁切遮罩",
+            "crop_region_opt": "裁切區域",
+            "bbox_opt": "BBox選擇",
+            "control_net_wrapper_opt": "ControlNet置換",
+            "confidence_opt": "信心度",
+            "label_opt": "標籤"
+        },
+        "outputs": {
+            "Seg_ELT": "Seg_元素",
+            "SEG_ELT": "Seg_元素"
+        }
+    },
+    "ImpactDilate_Mask_SEG_ELT": {
+        "title": "Seg元素膨脹",
+        "inputs": {
+            "seg_elt": "Seg_元素"
+        },
+        "widgets": {
+            "dilation": "膨脹"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_元素"
+        }
+    },
+    "ImpactDilateMask": {
+        "title": "遮罩膨脹",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "dilation": "膨脹"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "ImpactGaussianBlurMask": {
+        "title": "遮罩高斯模糊",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "kernel_size": "大小",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "ImpactDilateMaskInSEGS": {
+        "title": "Seg遮罩膨脹",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "dilation": "膨脹"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactGaussianBlurMaskInSEGS": {
+        "title": "Seg遮罩高斯模糊",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "kernel_size": "大小",
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactScaleBy_BBOX_SEG_ELT": {
+        "title": "Seg元素縮放",
+        "inputs": {
+            "seg": "Seg"
+        },
+        "widgets": {
+            "scale_by": "係數"
+        },
+        "outputs": {
+            "SEG_ELT": "Seg_元素"
+        }
+    },
+    "ImpactSEGSToMaskBatch": {
+        "title": "Seg到遮罩組",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "PreviewBridge": {
+        "title": "橋接預覽影像",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "image": "影像",
+            "block": "區塊",
+            "restore_mask": "復原遮罩"
+        },
+        "outputs": {
+            "IMAGE": "影像",
+            "MASK": "遮罩"
+        },
+        "description": "在使用Clip空間的 遮罩編輯器 功能時，此自訂節點可以與影像橋接器一起使用。"
+    },
+    "PreviewBridgeLatent": {
+        "title": "橋接預覽Latent",
+        "inputs": {
+            "latent": "Latent",
+            "vae_opt": "VAE選擇"
+        },
+        "widgets": {
+            "image": "影像",
+            "block": "區塊",
+            "restore_mask": "復原遮罩",
+            "preview_method": "預覽方法"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "MASK": "遮罩"
+        },
+        "description": "這個自訂節點可以在使用 Clip空間 的 遮罩編輯器 功能時，與橋接器一起用於潛空間。\n 如果輸入提供了一個帶有遮罩的潛空間變數，它會顯示該遮罩。此外，遮罩輸出提供了潛空間變數中設定的遮罩。\n 如果輸入沒有遮罩的潛空間，它會直接輸出原始潛空間，但遮罩輸出會輸出一個整個區域都設為遮罩的結果。\n 當透過 遮罩編輯器 設定遮罩時，會將一個遮罩套用到潛空間，並且輸出包括儲存的遮罩。相同的遮罩也作為遮罩輸出。\n 當連接到VAE選擇時，它具有比 預覽方法 更高的優先順序。"
+    },
+    "ImageSender": {
+        "title": "影像傳送",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "filename_prefix": "檔名前綴",
+            "link_id": "連接ID"
+        },
+        "description": "由 影像傳送 產生的影像會自動透過相同的 連線ID 傳送到 影像接收 。"
+    },
+    "ImageReceiver": {
+        "title": "影像接收",
+        "widgets": {
+            "image": "影像",
+            "save_to_workflow": "儲存到工作流程",
+            "image_data": "影像資料",
+            "trigger_always": "總是觸發",
+            "link_id": "連接ID"
+        },
+        "outputs": {
+            "IMAGE": "影像",
+            "MASK": "遮罩"
+        },
+        "description": "由 影像傳送 產生的影像會自動透過相同的 連線ID 傳送到 影像接收 。"
+    },
+    "LatentSender": {
+        "title": "Latent傳送",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "widgets": {
+            "filename_prefix": "檔名前綴",
+            "preview_method": "預覽方法",
+            "link_id": "連接ID"
+        },
+        "description": "在 Latent傳送 中產生的潛空間會自動透過相同的 連線ID 傳送到 Latent接收。\n 此外，Latent傳送 是透過 預覽Latent 實作的，它會將Latent以負載的形式儲存在影像縮圖中。\n 由於ComfyUI目前的結構，它無法區分SDXL潛空間和SD1.5/SD2.1潛空間。因此它會用SD1.5的方法解碼它們來產生縮圖。"
+    },
+    "LatentReceiver": {
+        "title": "Latent接收",
+        "widgets": {
+            "latent": "Latent",
+            "trigger_always": "總是觸發",
+            "link_id": "連接ID"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "在 Latent傳送 中產生的潛空間會自動透過相同的 連線ID 傳送到 Latent接收。\n 此外，Latent傳送 是透過 預覽Latent 實作的，它會將Latent以負載的形式儲存在影像縮圖中。\n 由於ComfyUI目前的結構，它無法區分SDXL潛空間和SD1.5/SD2.1潛空間。因此它會用SD1.5的方法解碼它們來產生縮圖。"
+    },
+    "ImageMaskSwitch": {
+        "title": "影像遮罩切換",
+        "inputs": {
+            "images1": "影像1",
+            "mask1": "遮罩1",
+            "images2": "影像2",
+            "mask2": "遮罩2",
+            "images3": "影像3",
+            "mask3": "遮罩3",
+            "images4": "影像4",
+            "mask4": "遮罩4",
+            "select": "選擇",
+            "mask1_opt": "遮罩1",
+            "images2_opt": "影像2",
+            "mask2_opt": "遮罩2",
+            "images3_opt": "影像3",
+            "mask3_opt": "遮罩3",
+            "images4_opt": "影像4",
+            "mask4_opt": "遮罩4"
+        },
+        "widgets": {
+            "select": "選擇",
+            "sel_mode": "選擇模式"
+        },
+        "outputs": {
+            "IMAGE": "影像",
+            "MASK": "遮罩"
+        },
+        "description": "在多個輸入中，它會選擇由選擇器指定的輸入並輸出。第一個輸入必須提供，其他輸入則是可選的。然而，如果選擇器指定的輸入未連線，可能會發生錯誤。"
+    },
+    "LatentSwitch": {
+        "title": "Latent切換",
+        "inputs": {
+            "input1": "輸入1",
+            "latent1": "Latent1",
+            "latent2_opt": "Latent2",
+            "latent3_opt": "Latent3",
+            "latent4_opt": "Latent4"
+        },
+        "widgets": {
+            "select": "選擇",
+            "sel_mode": "選擇模式"
+        },
+        "outputs": {
+            "selected_index": "選擇指數",
+            "selected_value": "選擇值",
+            "selected_label": "選擇標籤"
+        },
+        "description": "在多個輸入中，它會選擇由選擇器指定的輸入並輸出。第一個輸入必須提供，其他輸入則是可選的。然而，如果選擇器指定的輸入未連線，可能會發生錯誤。"
+    },
+    "SEGSSwitch": {
+        "title": "Seg切換",
+        "inputs": {
+            "input1": "輸入1",
+            "Seg": "Seg1",
+            "segs2_opt": "Seg2",
+            "segs3_opt": "Seg3",
+            "segs4_opt": "Seg4"
+        },
+        "widgets": {
+            "select": "選擇",
+            "sel_mode": "選擇模式"
+        },
+        "outputs": {
+            "selected_index": "選擇指數",
+            "selected_value": "選擇值",
+            "selected_label": "選擇標籤"
+        },
+        "description": "在多個輸入中，它會選擇由選擇器指定的輸入並輸出。第一個輸入必須提供，其他輸入則是可選的。然而，如果選擇器指定的輸入未連線，可能會發生錯誤。"
+    },
+    "ImpactSwitch": {
+        "title": "切換",
+        "inputs": {
+            "input1": "輸入1",
+            "input2": "輸入2",
+            "input3": "輸入3",
+            "input4": "輸入4"
+        },
+        "widgets": {
+            "select": "選擇",
+            "sel_mode": "選擇模式",
+            "select_on_execution": "執行時選取",
+            "select_on_prompt": "提示詞"
+        },
+        "outputs": {
+            "selected_index": "選擇指數",
+            "selected_value": "選擇值",
+            "selected_label": "選擇標籤"
+        }
+    },
+    "ImpactInversedSwitch": {
+        "title": "反轉切換",
+        "inputs": {
+            "input": "輸入"
+        },
+        "widgets": {
+            "sel_mode": "選擇模式",
+            "select": "選擇"
+        },
+        "outputs": {
+            "*": "輸出"
+        },
+        "description": "與 製作清單(任意) 不同，它接受一個輸入並輸出多個之中的一個"
+    },
+    "ImpactInversedSwtich": {
+        "title": "反轉切換",
+        "inputs": {
+            "input": "輸入"
+        },
+        "widgets": {
+            "select": "選擇"
+        },
+        "outputs": {
+            "output1": "輸出1"
+        }
+    },
+    "SEGSToImageList": {
+        "title": "Seg到影像清單",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "備用影像"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "ImpactSEGSToMaskList": {
+        "title": "Seg到遮罩清單",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "ImpactSEGSConcat": {
+        "title": "Seg合併",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSPicker": {
+        "title": "Seg選擇",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "備用影像"
+        },
+        "widgets": {
+            "picks": "選擇",
+            "pick": "選擇"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "提供從輸入的SEGS中選擇特定SEGS的功能。"
+    },
+    "ReencodeLatent": {
+        "title": "重編碼Latent",
+        "inputs": {
+            "samples": "Latent",
+            "input_vae": "解碼VAE",
+            "output_vae": "編碼VAE"
+        },
+        "widgets": {
+            "overlap": "重疊區域",
+            "tile_mode": "分塊模式",
+            "tile_size": "分塊尺寸"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ReencodeLatentPipe": {
+        "title": "重編碼Latent(節點束)",
+        "inputs": {
+            "samples": "Latent",
+            "input_basic_pipe": "解碼節點束",
+            "output_basic_pipe": "編碼節點束"
+        },
+        "widgets": {
+            "tile_mode": "分塊模式"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "ImpactImageBatchToImageList": {
+        "title": "影像批次到影像清單",
+        "inputs": {
+            "image": "影像"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "將影像批次轉換為影像清單。\n 您可以使用在多批次中產生的影像來處理它們。"
+    },
+    "ImpactMakeImageList": {
+        "title": "製作影像清單",
+        "inputs": {
+            "image1": "影像"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "將多個影像轉換為一個影像清單。"
+    },
+    "ImpactMakeImageBatch": {
+        "title": "製作影像批次",
+        "inputs": {
+            "image1": "影像"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "將多個影像轉換為一個影像批次。\n 影像輸入可以根據需要放大。"
+    },
+    "ImpactCombineConditionings": {
+        "title": "合併條件",
+        "inputs": {
+            "conditioning1": "條件1",
+            "conditioning2": "條件2",
+            "conditioning3": "條件3",
+            "conditioning4": "條件4",
+            "conditioning5": "條件5",
+            "conditioning6": "條件6",
+            "conditioning7": "條件7",
+            "conditioning8": "條件8",
+            "conditioning9": "條件9",
+            "conditioning10": "條件10"
+        },
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "它接受多個條件輸入，並將它們合併為一個條件。"
+    },
+    "ImpactSEGSLabelFilter": {
+        "title": "Seg標籤過濾",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "preset": "預設",
+            "labels": "標籤"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "遮蔽Seg",
+            "remained_SEGS": "剩餘Seg"
+        }
+    },
+    "ImpactSEGSRangeFilter": {
+        "title": "Seg範圍過濾",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "目標",
+            "min_value": "交集 (最小值)",
+            "max_value": "聯集 (最大值)",
+            "mode": "模式"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "遮蔽Seg",
+            "remained_SEGS": "剩餘Seg"
+        }
+    },
+    "ImpactSEGSOrderedFilter": {
+        "title": "Seg次序過濾",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "target": "目標",
+            "order": "順序",
+            "take_start": "開始序號",
+            "take_count": "數量"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "filtered_SEGS": "遮蔽Seg",
+            "remained_SEGS": "剩餘Seg"
+        }
+    },
+    "ImpactStringSelector": {
+        "title": "字串選擇",
+        "widgets": {
+            "strings": "字串",
+            "multiline": "多行文字",
+            "select": "選擇"
+        },
+        "outputs": {
+            "STRING": "字串"
+        },
+        "description": "它會選擇並回傳字串的一部分。當 多行文字 模式停用時，它只會回傳選擇器指向那一行的字串。當 多行文字 模式啟用時，它會依以 # 開頭的行來分割字串並回傳它們。如果 選擇 的值大於項目數量，它會從第一行重新開始計數並相應回傳。"
+    },
+    "BitwiseAndMaskForEach": {
+        "title": "Seg交集",
+        "inputs": {
+            "base_segs": "基礎seg",
+            "mask_segs": "遮罩seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "SubtractMaskForEach": {
+        "title": "Seg相減",
+        "inputs": {
+            "base_segs": "基礎seg",
+            "mask_segs": "遮罩seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BitwiseAndMask": {
+        "title": "遮罩交集",
+        "inputs": {
+            "mask1": "遮罩1",
+            "mask2": "遮罩2"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "SubtractMask": {
+        "title": "遮罩相減",
+        "inputs": {
+            "mask1": "遮罩1",
+            "mask2": "遮罩2"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "AddMask": {
+        "title": "遮罩相加",
+        "inputs": {
+            "mask1": "遮罩1",
+            "mask2": "遮罩2"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "ImpactSegsAndMask": {
+        "title": "Seg遮罩",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSegsAndMaskForEach": {
+        "title": "Seg遮罩(批量)",
+        "inputs": {
+            "segs": "Seg",
+            "masks": "遮罩"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask": {
+        "title": "Seg遮罩",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "Segs & Mask ForEach": {
+        "title": "Seg遮罩(批量)",
+        "inputs": {
+            "segs": "Seg",
+            "mask": "遮罩",
+            "masks": "遮罩組"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "MediaPipeFaceMeshToSEGS": {
+        "title": "MediaPipe臉部網格到Seg",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "crop_factor": "裁剪係數",
+            "bbox_fill": "填補BBox",
+            "crop_min_size": "裁切最小尺寸",
+            "drop_size": "最小尺寸",
+            "dilation": "膨脹",
+            "face": "臉",
+            "mouth": "嘴",
+            "left_eyebrow": "左眉",
+            "left_eye": "左眼",
+            "left_pupil": "左瞳孔",
+            "right_eyebrow": "右眉",
+            "right_eye": "右眼",
+            "right_pupil": "右瞳孔"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "將每個特徵點從 mediapipe 臉部網格影像中分離出來，以建立帶標籤的Seg。\n 通常，透過MediaPipe臉部網格預處理器建立的影像尺寸會被縮小。\n 它會將MediaPipe臉部網格影像調整到指定的 參考影像選擇 原始尺寸，以在處理過程中匹配尺寸。"
+    },
+    "MaskToSEGS_for_AnimateDiff": {
+        "title": "遮罩到Seg(動態擴散)",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "crop_factor": "裁剪係數",
+            "combined": "是否合併",
+            "bbox_fill": "填補BBox",
+            "drop_size": "最小尺寸",
+            "contour_fill": "填補輪廓"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "根據遮罩為動態擴散產生Seg。"
+    },
+    "MaskToSEGS": {
+        "title": "遮罩到Seg",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "crop_factor": "裁剪係數",
+            "combined": "是否合併",
+            "bbox_fill": "填補BBox",
+            "drop_size": "最小尺寸",
+            "contour_fill": "填補輪廓"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "根據遮罩產生Seg。"
+    },
+    "ToBinaryMask": {
+        "title": "遮罩二值化",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "threshold": "閾值"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "將產生的具有0到255之間α值的遮罩分離為0和255。非零部分一律設為255。"
+    },
+    "MasksToMaskList": {
+        "title": "遮罩到遮罩清單",
+        "inputs": {
+            "masks": "遮罩"
+        },
+        "widgets": {
+            "threshold": "閾值"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "此節點會將批次形式的遮罩轉換為單一遮罩的清單。"
+    },
+    "MaskListToMaskBatch": {
+        "title": "遮罩清單到遮罩",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "此節點將遮罩清單轉換為遮罩批次形式。"
+    },
+    "ImageListToImageBatch": {
+        "title": "影像清單到影像批次",
+        "inputs": {
+            "images": "影像"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "將影像清單轉換為影像批次。"
+    },
+    "SegsToCombinedMask": {
+        "title": "Seg到遮罩",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "RemoveNoiseMask": {
+        "title": "移除雜訊遮罩",
+        "inputs": {
+            "samples": "Latent"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        }
+    },
+    "DetailerForEach": {
+        "title": "局部優化",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "scheduler_func_opt": "排程器函數",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "wildcard": "提示詞",
+            "max_retries": "最大重試次數"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "對偵測區域資訊集合(SEGS)內的每個區域，以引導尺寸為基礎放大後進行修復，從而增強優化。\n 提示詞 提供類似'提示詞編碼器 (Impact)'的功能，支援提示詞與LoRA載入功能。此外，也支援為不同偵測區域套用不同提示的功能。\n更多資訊請參考教學頁面。\n注意：提示詞留空此輸入將忽略此輸入。"
+    },
+    "DetailerForEachAutoRetry": {
+        "title": "優化（segs）帶有自動重試功能",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "scheduler_func_opt": "排程器函數",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "wildcard": "提示詞",
+            "max_retries": "最大重試次數"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "DetailerForEachPipe": {
+        "title": "局部優化(節點束)",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "detailer_hook": "優化約束",
+            "scheduler_func_opt": "排程器函數",
+            "refiner_basic_pipe_opt": "優化基礎節點束選擇"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "wildcard": "提示詞",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "refiner_ratio": "優化比率"
+        },
+        "outputs": {
+            "IMAGE": "影像",
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "cnet_images": "控制影像"
+        },
+        "description": "對偵測區域資訊集合(SEGS)內的每個區域，以引導尺寸為基礎放大後進行修復，從而增強優化。"
+    },
+    "DetailerForEachDebug": {
+        "title": "局部優化(進階)",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "scheduler_func_opt": "排程器函數",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "wildcard": "提示詞"
+        },
+        "outputs": {
+            "image": "影像",
+            "cropped": "裁切影像",
+            "cropped_refined": "優化影像",
+            "cropped_refined_alpha": "優化通道",
+            "cnet_images": "控制影像"
+        },
+        "description": "對偵測區域資訊集合(SEGS)內的每個區域，以引導尺寸為基礎放大後進行修復，從而增強優化。"
+    },
+    "DetailerForEachDebugPipe": {
+        "title": "局部優化(進階節點束)",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "detailer_hook": "優化約束",
+            "scheduler_func_opt": "排程器函數",
+            "refiner_basic_pipe_opt": "優化基礎節點束選擇"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "wildcard": "提示詞",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "refiner_ratio": "優化比率"
+        },
+        "outputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "cropped": "裁切影像",
+            "cropped_refined": "優化影像",
+            "cropped_refined_alpha": "優化通道",
+            "cnet_images": "控制影像"
+        },
+        "description": "對偵測區域資訊集合(SEGS)內的每個區域，以引導尺寸為基礎放大後進行修復，從而增強優化。"
+    },
+    "DetailerForEachPipeForAnimateDiff": {
+        "title": "AnimatedDiff局部優化(節點束)",
+        "inputs": {
+            "image_frames": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "detailer_hook": "優化約束",
+            "scheduler_func_opt": "排程器函數",
+            "refiner_basic_pipe_opt": "優化基礎節點束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "refiner_ratio": "優化比率"
+        },
+        "outputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "cnet_images": "控制影像"
+        },
+        "description": "基於偵測區域資訊集合(Seg)中的各個區域，以引導尺寸為基礎進行放大後，透過修復(inpainting)的方式增強優化。\n此節點是專為AnimateDiff等影片優化改善設計的特殊優化增強節點，能夠處理Seg中包含的跨多幀批次遮罩情況。"
+    },
+    "NoiseInjectionDetailerHookProvider": {
+        "title": "插入雜訊優化約束器",
+        "widgets": {
+            "schedule_for_cycle": "週期時間表",
+            "source": "生成裝置",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "start_strength": "開始強度",
+            "end_strength": "結束強度",
+            "strength": "強度"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "優化約束 是 優化 中的一個 約束，在處理每個 Seg 時注入雜訊。"
+    },
+    "CoreMLDetailerHookProvider": {
+        "title": "CoreML優化約束器",
+        "widgets": {
+            "mode": "模式"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "CoreML 僅支援 512x512、512x768、768x512、768x768 尺寸取樣。\n CoreML優化約束器會精確地將裁切區域的放大倍數固定為這個尺寸。\n 使用此掛鉤時，無論 引導尺寸 為何，它都會一律選擇此尺寸。然而，如果 引導尺寸 太小，將會發生跳過。"
+    },
+    "NoiseInjectionHookProvider": {
+        "title": "插入雜訊約束器",
+        "widgets": {
+            "scheduler": "調度器",
+            "schedule_for_iteration": "排程循環",
+            "source": "生成裝置",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "start_strength": "開始強度",
+            "end_strength": "結束強度"
+        },
+        "outputs": {
+            "PK_HOOK": "約束"
+        },
+        "description": "在每次 迭代放大 迭代中，雜訊會注入到潛空間中，並根據時間表調整強度。\n 您需要安裝BlenderNeko/ComfyUI_Noise 節點擴充套件。\n 種子作為產生雜訊所需的初始值，並且在每次迭代中隨過程展開遞增1。\n 來源決定要設定的CPU雜訊和GPU雜訊的類型。\n 目前只有一種簡單的計畫可用，在每次迭代的過程中，雜訊的強度從 開始強度 變化到 結束強度。"
+    },
+    "UnsamplerDetailerHookProvider": {
+        "title": "逆取樣優化約束器",
+        "inputs": {
+            "model": "模型",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "widgets": {
+            "steps": "步數",
+            "start_end_at_step": "開始結束於步數",
+            "end_end_at_step": "結束步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "normalize": "正規化",
+            "schedule_for_cycle": "排程循環"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "在每個週期套用逆取樣器。要使用此節點，必須安裝ComfyUI_Noise。"
+    },
+    "DenoiseSchedulerDetailerHookProvider": {
+        "title": "降噪排程優化約束器",
+        "widgets": {
+            "schedule_for_cycle": "排程循環",
+            "target_denoise": "目標降噪"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "在週期進行過程中，去噪器的優化會改變至 目標降噪。"
+    },
+    "SEGSDetailer": {
+        "title": "Seg優化",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "scheduler_func_opt": "排程器函數",
+            "refiner_basic_pipe_opt": "優化基礎節點束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "batch_size": "批次大小",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "refiner_ratio": "優化比率"
+        },
+        "outputs": {
+            "SEGS": "Seg",
+            "segs": "Seg",
+            "cnet_images": "控制影像"
+        },
+        "description": "基於偵測區域資訊集合(SEGS)中的各個區域，以引導尺寸為基礎進行放大後，透過修復(inpainting)的方式增強優化。\n 此節點直接作用於SEGS而非原圖，若需套用於原圖請使用'SEGS貼上'節點。"
+    },
+    "SEGSDetailerForAnimateDiff": {
+        "title": "Seg優化動態擴散",
+        "inputs": {
+            "image_frames": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基礎節點束",
+            "scheduler_func_opt": "排程器函數",
+            "refiner_basic_pipe_opt": "優化基礎節點束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "refiner_ratio": "優化比率"
+        },
+        "outputs": {
+            "segs": "Seg",
+            "cnet_images": "控制影像"
+        },
+        "description": "基於偵測區域資訊集合(SEGS)中的各個區域，以引導尺寸為基礎進行放大後，透過修復(inpainting)的方式增強優化。\n 此節點直接作用於SEGS而非原圖，若需套用於原圖請使用'SEGS貼上'節點。\n 此節點是專為AnimateDiff等影片優化改善設計的特殊優化增強節點，能夠處理SEGS中包含的跨多幀批次遮罩情況。"
+    },
+    "SEGSPaste": {
+        "title": "Seg貼上",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "ref_image_opt": "參考影像"
+        },
+        "widgets": {
+            "feather": "羽化"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        },
+        "description": "提供將透過SEGS優化增強器優化的SEGS貼回原圖的功能節點。"
+    },
+    "SEGSPreview": {
+        "title": "Seg預覽",
+        "inputs": {
+            "segs": "Seg",
+            "fallback_image_opt": "備用影像"
+        },
+        "widgets": {
+            "alpha_mode": "alpha模式",
+            "min_alpha": "最小值alpha"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "SEGSPreviewCNet": {
+        "title": "Seg預覽(CNet)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "SAMDetectorCombined": {
+        "title": "SAM偵測合併",
+        "inputs": {
+            "sam_model": "SAM 模型",
+            "segs": "Seg",
+            "images": "影像",
+            "image": "影像"
+        },
+        "widgets": {
+            "detection_hint": "偵測提示",
+            "dilation": "膨脹",
+            "threshold": "閾值",
+            "bbox_expansion": "BBox擴展",
+            "mask_hint_threshold": "遮罩偵測閾值",
+            "mask_hint_use_negative": "負向遮罩提示"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "利用SAM技術從輸入影像中擷取由輸入Seg指示的位置的片段，並將其輸出為統一的遮罩。"
+    },
+    "SAMDetectorSegmented": {
+        "title": "SAM偵測分割",
+        "inputs": {
+            "sam_model": "SAM 模型",
+            "segs": "Seg",
+            "images": "影像",
+            "image": "影像"
+        },
+        "widgets": {
+            "detection_hint": "偵測提示",
+            "dilation": "膨脹",
+            "threshold": "閾值",
+            "bbox_expansion": "BBox擴展",
+            "mask_hint_threshold": "遮罩偵測閾值",
+            "mask_hint_use_negative": "負向遮罩提示"
+        },
+        "outputs": {
+            "combined_mask": "合併遮罩",
+            "batch_masks": "遮罩組"
+        },
+        "description": "它類似於 SAM偵測合併，但會將偵測到的段落分離並輸出。對於相同的偵測區域，可能會找到多個段落，目前有一套規則會將它們任意分為三組。這一點預期在未來會有所改進。\n 因此，它輸出 合併遮罩，這是一個統一的遮罩，以及 遮罩組，它們是以批次形式組合在一起的多個遮罩。\n 雖然 遮罩組 可能無法完全分離，但它提供了執行某種等級分割的功能。"
+    },
+    "ImpactSAM2VideoDetectorSEGS": {
+        "title": "SAM2 影片偵測到Seg",
+        "inputs": {
+            "sam2_model": "SAM 模型",
+            "segs": "Seg",
+            "bbox_detector": "BBox偵測",
+            "image_frames": "幀影像"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾值",
+            "sam2_threshold": "sam2閾值",
+            "crop_factor": "焦距係數",
+            "drop_size": "滴落尺寸"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "類似於 簡易Seg偵測，但利用 SAM2 的影片追蹤技術產生一個帶有多個遮罩的 SEGS 物件。\n 要使用此節點，您必須在 SAMLoader 中選擇一個 SAM2 模型。"
+    },
+    "BboxDetectorSEGS": {
+        "title": "BBox偵測到Seg",
+        "inputs": {
+            "bbox_detector": "BBox偵測",
+            "detailer_hook": "優化約束",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "閾值：控制修復幅度，閾值越小修復效果越大\n 。"
+    },
+    "SegmDetectorSEGS": {
+        "title": "Segm偵測到Seg",
+        "inputs": {
+            "segm_detector": "Segm檢測",
+            "detailer_hook": "優化約束",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ONNXDetectorSEGS": {
+        "title": "ONNX偵測到Seg",
+        "inputs": {
+            "bbox_detector": "BBox偵測",
+            "detailer_hook": "優化約束",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS_for_AD": {
+        "title": "簡易Seg偵測動態擴散",
+        "inputs": {
+            "bbox_detector": "BBox偵測",
+            "image_frames": "影像",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾值",
+            "bbox_dilation": "BBox膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸",
+            "sub_threshold": "次要閾值",
+            "sub_dilation": "次要膨脹",
+            "sub_bbox_expansion": "次要BBox擴展",
+            "sam_mask_hint_threshold": "SAM遮罩偵測閾值",
+            "masking_mode": "遮蔽模式",
+            "segs_pivot": "主Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSimpleDetectorSEGS": {
+        "title": "簡易Seg偵測",
+        "inputs": {
+            "bbox_detector": "BBox偵測",
+            "image": "影像",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾值",
+            "bbox_dilation": "BBox膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸",
+            "sub_threshold": "次要閾值",
+            "sub_dilation": "次要膨脹",
+            "sub_bbox_expansion": "次要BBox擴展",
+            "sam_mask_hint_threshold": "SAM遮罩偵測閾值",
+            "post_dilation": "擴張後"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "主要使用 BBox偵測，並提供額外的 SAM模型 或 Segm偵測，此節點透過在 BBox 和 輪廓 上進行遮罩操作，內部產生改進的 Seg。\n它作為一個方便的工具來簡化稍微複雜的流程。"
+    },
+    "ImpactSimpleDetectorSEGSPipe": {
+        "title": "簡易Seg偵測(節點束)",
+        "inputs": {
+            "detailer_pipe": "優化節點束",
+            "image": "影像"
+        },
+        "widgets": {
+            "bbox_threshold": "BBox閾值",
+            "bbox_dilation": "BBox膨脹",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸",
+            "sub_threshold": "次要閾值",
+            "sub_dilation": "次要膨脹",
+            "sub_bbox_expansion": "次要BBox擴展",
+            "sam_mask_hint_threshold": "SAM遮罩偵測閾值",
+            "post_dilation": "擴張後"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "BboxDetectorCombined_v2": {
+        "title": "BBox偵測器v2",
+        "inputs": {
+            "bbox_detector": "BBox偵測",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "偵測邊界框並從輸入影像中回傳遮罩。"
+    },
+    "SegmDetectorCombined_v2": {
+        "title": "Segm偵測器v2",
+        "inputs": {
+            "segm_detector": "Segm檢測",
+            "image": "影像"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "dilation": "膨脹"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "偵測分割並從輸入影像中回傳遮罩。"
+    },
+    "FaceDetailer": {
+        "title": "臉部優化",
+        "inputs": {
+            "image": "影像",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "max_size": "最大尺寸",
+            "guide_size_for": "引導目標",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "bbox_threshold": "BBox閾值",
+            "bbox_dilation": "BBox膨脹",
+            "bbox_crop_factor": "BBox裁切係數",
+            "sam_detection_hint": "SAM偵測提示",
+            "sam_dilation": "SAM膨脹",
+            "sam_threshold": "SAM閾值",
+            "sam_bbox_expansion": "SAMBBox擴展",
+            "sam_mask_hint_threshold": "SAM遮罩偵測閾值",
+            "sam_mask_hint_use_negative": "SAM負面遮罩提示",
+            "drop_size": "最小尺寸",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼"
+        },
+        "outputs": {
+            "image": "影像",
+            "cropped_refined": "優化影像",
+            "cropped_enhanced_alpha": "優化部分",
+            "mask": "遮罩",
+            "detailer_pipe": "優化節點束",
+            "cnet_images": "控制影像"
+        },
+        "description": "使用偵測模型（bbox、segm、sam）自動從輸入影像中偵測特定物件，並以引導尺寸為基礎放大偵測區域進行修復，從而增強優化。\n雖然這是專為簡化使用者常用的臉部優化增強工作流程而設計的節點，但根據偵測模型的不同，也可用於各種自動修復用途。"
+    },
+    "FaceDetailerPipe": {
+        "title": "臉部優化(節點束)",
+        "inputs": {
+            "image": "影像",
+            "detailer_pipe": "優化節點束",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "max_size": "最大尺寸",
+            "guide_size_for": "引導目標",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "noise_mask": "僅生成遮罩",
+            "force_inpaint": "強制重繪",
+            "bbox_threshold": "BBox閾值",
+            "bbox_dilation": "BBox膨脹",
+            "bbox_crop_factor": "BBox裁切係數",
+            "sam_detection_hint": "SAM偵測提示",
+            "sam_dilation": "SAM膨脹",
+            "sam_threshold": "SAM閾值",
+            "sam_bbox_expansion": "SAMBBox擴展",
+            "sam_mask_hint_threshold": "SAM遮罩偵測閾值",
+            "sam_mask_hint_use_negative": "SAM負面遮罩提示",
+            "drop_size": "最小尺寸",
+            "refiner_ratio": "優化比率",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼"
+        },
+        "outputs": {
+            "image": "影像",
+            "cropped_refined": "優化影像",
+            "cropped_enhanced_alpha": "優化部分",
+            "mask": "遮罩",
+            "detailer_pipe": "優化節點束",
+            "cnet_images": "控制影像"
+        },
+        "description": "使用偵測模型（bbox、segm、sam）自動從輸入影像中偵測特定物件，並以引導尺寸為基礎放大偵測區域進行修復，從而增強優化。\n雖然這是專為簡化使用者常用的臉部優化增強工作流程而設計的節點，但根據偵測模型的不同，也可用於各種自動修復用途。"
+    },
+    "MaskDetailerPipe": {
+        "title": "遮罩優化(節點束)",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "basic_pipe": "基礎節點束",
+            "refiner_basic_pipe_opt": "優化基礎節點束",
+            "scheduler_func_opt": "排程器函數",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "guide_size": "引導大小",
+            "guide_size_for": "引導目標",
+            "max_size": "最大尺寸",
+            "mask_mode": "遮罩模式",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "羽化",
+            "crop_factor": "裁剪係數",
+            "drop_size": "最小尺寸",
+            "refiner_ratio": "優化比率",
+            "cycle": "循環次數",
+            "inpaint_model": "修復模型",
+            "noise_mask_feather": "雜訊遮罩羽化",
+            "tiled_encode": "分塊編碼",
+            "tiled_decode": "分塊解碼",
+            "bbox_fill": "bbox填補",
+            "contour_fill": "輪廓填補",
+            "batch_size": "批次大小"
+        },
+        "outputs": {
+            "image": "影像",
+            "cropped_refined": "優化影像",
+            "cropped_enhanced_alpha": "優化部分",
+            "basic_pipe": "基礎節點束",
+            "refiner_basic_pipe_opt": "優化基礎節點束"
+        },
+        "description": "此優化增強節點會透過放大遮罩指定區域，並以引導尺寸為基礎進行放大修復來增強優化。"
+    },
+    "ToDetailerPipe": {
+        "title": "到優化束",
+        "inputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "Select to add LoRA": "新增LoRA",
+            "Select to add Wildcard": "選擇加入提示詞"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "ToDetailerPipeSDXL": {
+        "title": "到優化束(SDXL)",
+        "inputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "refiner_model": "模型(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "正面條件(Refiner)",
+            "refiner_negative": "負向條件(Refiner)",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "Select to add LoRA": "新增LoRA",
+            "Select the LoRA to add to the text": "選擇LoRA",
+            "Select to add Wildcard": "選擇加入提示詞"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "FromDetailerPipe": {
+        "title": "從優化束",
+        "inputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "outputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "FromDetailerPipe_v2": {
+        "title": "從優化束v2",
+        "inputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。\n比上一代多一個額外的輸出，可直接匯出入管線。在 編輯基礎束 和 編輯優化束 時非常有用。"
+    },
+    "FromDetailerPipeSDXL": {
+        "title": "從優化束(SDXL)",
+        "inputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束",
+            "refiner_model": "模型(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "正面條件(Refiner)",
+            "refiner_negative": "負向條件(Refiner)"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "EditDetailerPipe": {
+        "title": "編輯優化束",
+        "inputs": {
+            "detailer_pipe": "優化節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "sam_model": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "segm_detector": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "Select to add Wildcard": "選擇加入提示詞",
+            "Select the LoRA to add to the text": "選擇LoRA",
+            "Select to add LoRA": "新增LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於替換 基礎節點束 或 優化節點束 中的一些元素。"
+    },
+    "DetailerPipeToBasicPipe": {
+        "title": "優化束到基礎束",
+        "inputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "base_basic_pipe": "基礎節點束",
+            "refiner_basic_pipe": "優化基礎節點束"
+        },
+        "description": "這些節點用於將模型、剪輯、VAE、正向條件和負向條件捆綁到一個 基礎節點束 中，或者從 基礎節點束 中提取每個元素。"
+    },
+    "AnyPipeToBasic": {
+        "title": "任何束到基礎束",
+        "inputs": {
+            "any_pipe": "任何束"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束",
+            "refiner_basic_pipe": "優化基礎節點束"
+        },
+        "description": "這些節點用於將模型、剪輯、VAE、正向條件和負向條件捆綁到一個 基礎節點束 中，或者從 基礎節點束 中提取每個元素。"
+    },
+    "ToBasicPipe": {
+        "title": "到基礎束",
+        "inputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束"
+        },
+        "description": "這些節點用於將模型、剪輯、VAE、正向條件和負向條件捆綁到一個 基礎節點束 中，或者從 基礎節點束 中提取每個元素。"
+    },
+    "FromBasicPipe": {
+        "title": "從基礎束",
+        "inputs": {
+            "basic_pipe": "基礎節點束"
+        },
+        "outputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "description": "這些節點用於將模型、剪輯、VAE、正向條件和負向條件捆綁到一個 基礎節點束 中，或者從 基礎節點束 中提取每個元素。"
+    },
+    "FromBasicPipe_v2": {
+        "title": "從基礎束v2",
+        "inputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。\n比上一代多一個額外的輸出，可直接匯出入管線。在 編輯基礎束 和 編輯優化束 時非常有用。"
+    },
+    "EditBasicPipe": {
+        "title": "編輯基礎束",
+        "inputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "outputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束"
+        },
+        "description": "這些節點用於替換 基礎節點束 或 優化節點束 中的一些元素。"
+    },
+    "BasicPipeToDetailerPipe": {
+        "title": "基礎束到優化束",
+        "inputs": {
+            "BASIC_PIPE": "基礎節點束",
+            "basic_pipe": "基礎節點束",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "Select to add Wildcard": "選擇加入提示詞",
+            "Select the LoRA to add to the text": "選擇LoRA",
+            "Select to add LoRA": "新增LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "優化節點束",
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "BasicPipeToDetailerPipeSDXL": {
+        "title": "基礎束到優化束(SDXL)",
+        "inputs": {
+            "base_basic_pipe": "基礎基礎節點束",
+            "refiner_basic_pipe": "優化基礎節點束",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "detailer_hook": "優化約束"
+        },
+        "widgets": {
+            "Select to add Wildcard": "選擇加入提示詞",
+            "Select the LoRA to add to the text": "選擇LoRA",
+            "Select to add LoRA": "新增LoRA"
+        },
+        "outputs": {
+            "DETAILER_PIPE": "優化節點束",
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於將多個輸入（如模型和VAE等）捆綁到一個 優化節點束 中，或從 優化節點束 中提取捆綁的元素。"
+    },
+    "EditDetailerPipeSDXL": {
+        "title": "編輯優化束(SDXL)",
+        "inputs": {
+            "detailer_pipe": "優化節點束",
+            "model": "模型",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "bbox_detector": "BBox偵測",
+            "sam_model_opt": "SAM 模型",
+            "sam_model": "SAM 模型",
+            "segm_detector_opt": "Segm檢測",
+            "segm_detector": "Segm檢測",
+            "detailer_hook": "優化約束",
+            "refiner_model": "模型(Refiner)",
+            "refiner_clip": "CLIP(Refiner)",
+            "refiner_positive": "正面條件(Refiner)",
+            "refiner_negative": "負向條件(Refiner)"
+        },
+        "widgets": {
+            "Select to add Wildcard": "選擇加入提示詞",
+            "Select the LoRA to add to the text": "選擇LoRA",
+            "Select to add LoRA": "新增LoRA"
+        },
+        "outputs": {
+            "detailer_pipe": "優化節點束"
+        },
+        "description": "這些節點用於替換 基礎節點束 或 優化節點束 中的一些元素。"
+    },
+    "LatentPixelScale": {
+        "title": "Latent像素縮放",
+        "inputs": {
+            "samples": "Latent",
+            "vae": "VAE",
+            "upscale_model_opt": "放大模型"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "scale_factor": "縮放係數",
+            "use_tiled_vae": "使用分塊VAE"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "IMAGE": "影像"
+        },
+        "description": "此節點將潛空間轉換為像素空間，放大它，然後將其轉換回潛空間。\n 如果提供了 放大模型，它將使用該模型放大像素，然後使用在 縮放方法 中提供的插值方法將其縮小至目標解析度。"
+    },
+    "PixelKSampleUpscalerProvider": {
+        "title": "K取樣像素縮放器",
+        "inputs": {
+            "model": "模型",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "upscale_model_opt": "放大模型",
+            "scheduler_func_opt": "排程器函數",
+            "pk_hook_opt": "約束"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "use_tiled_vae": "使用分塊VAE",
+            "tile_size": "分塊尺寸"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        },
+        "description": "提供一個k取樣器，該k取樣器使用 VAE解碼 將潛變數轉換為像素並進行放大，然後使用 VAE編碼 將其轉換回潛變數，最後進行k取樣。\n 這個上取樣器可以附加到節點上，例如 Latent迭代縮放 以便使用。\n 類似於Latent像素縮放，如果提供 放大模型，它將使用模型進行像素放大。"
+    },
+    "PixelKSampleUpscalerProviderPipe": {
+        "title": "K取樣像素縮放器(節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束",
+            "upscale_model_opt": "放大模型",
+            "scheduler_func_opt": "排程器函數",
+            "tile_cnet_opt": "平鋪分塊ControlNet選擇",
+            "pk_hook_opt": "約束"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "use_tiled_vae": "使用分塊VAE",
+            "tile_size": "分塊尺寸",
+            "tile_cnet_strength": "平鋪分塊ControlNet強度"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        }
+    },
+    "IterativeLatentUpscale": {
+        "title": "Latent迭代縮放",
+        "inputs": {
+            "samples": "Latent",
+            "upscaler": "縮放"
+        },
+        "widgets": {
+            "upscale_factor": "縮放係數",
+            "steps": "步數",
+            "temp_prefix": "前綴",
+            "step_mode": "步模式"
+        },
+        "outputs": {
+            "latent": "Latent"
+        },
+        "description": "取得輸入縮放並將 縮放係數 拆分為步驟，然後迭代地執行 縮放。這以 潛空間 作為輸入，輸出 潛空間作 為結果。"
+    },
+    "IterativeImageUpscale": {
+        "title": "影像迭代縮放",
+        "inputs": {
+            "pixels": "影像",
+            "upscaler": "縮放",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "upscale_factor": "縮放係數",
+            "steps": "步數",
+            "temp_prefix": "前綴",
+            "step_mode": "步模式"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "取得輸入 縮放 並將 縮放係數 拆分為步驟，，然後迭代地執行 縮放。它以影像作為輸入，輸出影像作為結果。\n 內部而言，此節點使用 迭代縮放（潛空間）"
+    },
+    "PixelTiledKSampleUpscalerProvider": {
+        "title": "K取樣像素縮放器(分塊)",
+        "inputs": {
+            "model": "模型",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "upscale_model_opt": "放大模型",
+            "pk_hook_opt": "約束",
+            "tile_cnet_opt": "平鋪分塊ControlNet選擇"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "tile_width": "分塊寬度",
+            "tile_height": "分塊高度",
+            "tiling_strategy": "分塊策略",
+            "tile_cnet_strength": "平鋪分塊ControlNet強度",
+            "overlap": "重疊區域"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        },
+        "description": "它類似於 K取樣像素縮放器，但使用 平鋪分塊K取樣器 和 平鋪分塊 VAE 解碼器/編碼器 來避免在高解析度下出現 GPU VRAM 問題。\n 您需要安裝BlenderNeko/ComfyUI_TiledKSampler節點擴充套件。"
+    },
+    "SEGSUpscaler": {
+        "title": "進階(Seg)",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "model": "模型",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "upscale_model_opt": "放大模型",
+            "upscaler_hook_opt": "進階約束選擇",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "rescale_factor": "縮放方法",
+            "resampling_method": "重採樣方法",
+            "supersample": "超級取樣",
+            "rounding_modulus": "捨入模數",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "分塊寬度",
+            "inpaint_model": "分塊高度",
+            "noise_mask_feather": "雜訊遮罩羽化"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "SEGSUpscalerPipe": {
+        "title": "進階(Seg束)",
+        "inputs": {
+            "image": "影像",
+            "segs": "Seg",
+            "basic_pipe": "基本束",
+            "model": "模型",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "upscale_model_opt": "放大模型",
+            "upscaler_hook_opt": "進階約束選擇",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "rescale_factor": "縮放方法",
+            "resampling_method": "重採樣方法",
+            "supersample": "超級取樣",
+            "rounding_modulus": "捨入模數",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "feather": "分塊寬度",
+            "inpaint_model": "分塊高度",
+            "noise_mask_feather": "雜訊遮罩羽化"
+        },
+        "outputs": {
+            "IMAGE": "影像"
+        }
+    },
+    "PixelTiledKSampleUpscalerProviderPipe": {
+        "title": "K取樣像素縮放器(分塊節點束)",
+        "inputs": {
+            "model": "模型",
+            "vae": "VAE",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "upscale_model_opt": "放大模型",
+            "pk_hook_opt": "約束",
+            "basic_pipe": "基礎節點束",
+            "tile_cnet_opt": "平鋪分塊ControlNet選擇"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "tile_width": "分塊寬度",
+            "tile_height": "分塊高度",
+            "tiling_strategy": "分塊策略",
+            "tile_cnet_strength": "平鋪分塊ControlNet強度"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProvider": {
+        "title": "雙取樣縮放器",
+        "inputs": {
+            "base_sampler": "基礎採樣器",
+            "mask_sampler": "遮罩採樣器",
+            "mask": "遮罩",
+            "vae": "VAE",
+            "full_sampler_opt": "全域取樣器",
+            "upscale_model_opt": "放大模型",
+            "pk_hook_base_opt": "基礎約束",
+            "pk_hook_mask_opt": "遮罩約束",
+            "pk_hook_full_opt": "全域約束"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "nearest-exact": "鄰近-精確",
+            "bilinear": "雙線性插值",
+            "area": "區域",
+            "full_sample_schedule": "取樣調度器",
+            "interleave1": "交錯1",
+            "interleave2": "交錯2",
+            "interleave3": "交錯3",
+            "last1": "連續1",
+            "last2": "連續2",
+            "interleave1+last1": "交錯1+連續1",
+            "interleave2+last1": "交錯2+連續1",
+            "interleave3+last1": "交錯3+連續1",
+            "use_tiled_vae": "使用分塊VAE",
+            "tile_size": "分塊尺寸"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        }
+    },
+    "TwoSamplersForMaskUpscalerProviderPipe": {
+        "title": "雙取樣縮放器(節點束)",
+        "inputs": {
+            "base_sampler": "基礎採樣器",
+            "mask_sampler": "遮罩採樣器",
+            "mask": "遮罩",
+            "basic_pipe": "基礎節點束",
+            "full_sampler_opt": "全域取樣器",
+            "upscale_model_opt": "放大模型",
+            "pk_hook_base_opt": "基礎約束",
+            "pk_hook_mask_opt": "遮罩約束",
+            "pk_hook_full_opt": "全域約束"
+        },
+        "widgets": {
+            "scale_method": "縮放方法",
+            "full_sample_schedule": "取樣調度器",
+            "use_tiled_vae": "使用分塊VAE",
+            "tile_size": "分塊尺寸"
+        },
+        "outputs": {
+            "UPSCALER": "縮放"
+        },
+        "description": "這是一個取樣器，將 雙取樣器 擴展用於迭代放大。\n 雙取樣縮放器(節點束) - 節點束版本的 雙取樣縮放器。"
+    },
+    "PixelKSampleHookCombine": {
+        "title": "像素K取樣器約束組合",
+        "inputs": {
+            "hook1": "約束1",
+            "hook2": "約束2"
+        },
+        "outputs": {
+            "PK_HOOK": "像素K取樣器約束"
+        },
+        "description": "這用於連接兩個 像素K取樣器約束 。約束1先執行，然後執行約束2。"
+    },
+    "DenoiseScheduleHookProvider": {
+        "title": "降噪約束器",
+        "widgets": {
+            "schedule_for_iteration": "排程循環",
+            "target_denoise": "目標降噪"
+        },
+        "outputs": {
+            "PK_HOOK": "約束"
+        },
+        "description": "迭代放大 提供了一個約束，隨著迭代步的推進，逐漸將 去噪 調整為 目標降噪。\n 如果您想同時更改cfg和去噪，您可以將 CFG約束器 和 像素K取樣器約束組合 的 約束 結合起來。"
+    },
+    "CfgScheduleHookProvider": {
+        "title": "CFG約束器",
+        "widgets": {
+            "schedule_for_iteration": "排程循環",
+            "target_cfg": "目標CFG"
+        },
+        "outputs": {
+            "PK_HOOK": "約束"
+        },
+        "description": "迭代放大 提供了一個約束，隨著迭代步的推進，逐漸將 cfg 調整為 目標cfg。"
+    },
+    "StepsScheduleHookProvider": {
+        "title": "步數排程約束提供器",
+        "widgets": {
+            "schedule_for_iteration": "排程循環",
+            "target_steps": "目標步數"
+        },
+        "outputs": {
+            "PK_HOOK": "約束"
+        },
+        "description": "迭代放大 提供了一個約束，隨著迭代步的推進，逐漸將 取樣步數 調整為 目標步數。"
+    },
+    "DetailerHookCombine": {
+        "title": "優化約束合併",
+        "inputs": {
+            "hook1": "約束1",
+            "hook2": "約束2"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "這用於連接兩個 優化約束。\n 類似於 像素K取樣器約束組合。"
+    },
+    "UnsamplerHookProvider": {
+        "title": "逆取樣約束器",
+        "inputs": {
+            "model": "模型",
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "widgets": {
+            "steps": "步數",
+            "start_end_at_step": "開始步數",
+            "end_end_at_step": "結束步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "normalize": "正規化",
+            "schedule_for_iteration": "排程循環"
+        },
+        "outputs": {
+            "PK_HOOK": "約束"
+        },
+        "description": "在每次迭代中套用反取樣器。要使用此節點，必須安裝ComfyUI_Noise。"
+    },
+    "KSamplerProvider": {
+        "title": "K取樣提供器(節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪"
+        },
+        "outputs": {
+            "KSAMPLER": "K採樣器"
+        },
+        "description": "這是一個取樣器，讓K取樣 能夠在 雙取樣器 和 雙取樣縮放器 中使用。"
+    },
+    "TwoSamplersForMask": {
+        "title": "雙取樣器",
+        "inputs": {
+            "latent_image": "Latent",
+            "base_sampler": "基礎採樣器",
+            "mask_sampler": "遮罩採樣器",
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "此節點可以依遮罩區域套用兩種取樣器。基礎取樣器 套用於遮罩為0的區域，而 遮罩取樣器 套用於遮罩為1的區域。\n 注意：透過 VAE內補編碼器 編碼的潛空間編碼無法使用。"
+    },
+    "TiledKSamplerProvider": {
+        "title": "K取樣提供器(分塊節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束"
+        },
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "denoise": "降噪",
+            "tile_width": "分塊寬度",
+            "tile_height": "分塊高度",
+            "tiling_strategy": "分塊策略"
+        },
+        "outputs": {
+            "KSAMPLER": "K採樣器"
+        },
+        "description": "ComfyUI_TiledKSampler 是提供 K取樣器 的取樣器。\n 您需要安裝BlenderNeko/ComfyUI_TiledKSampler節點擴充套件。"
+    },
+    "KSamplerAdvancedProvider": {
+        "title": "K取樣提供器(進階節點束)",
+        "inputs": {
+            "basic_pipe": "基礎節點束",
+            "sampler_opt": "取樣器選擇",
+            "scheduler_func_opt": "排程器函數"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "sampler_name": "採樣器",
+            "scheduler": "調度器",
+            "sigma_factor": "sigma係數"
+        },
+        "outputs": {
+            "KSAMPLER_ADVANCED": "K採樣器(高階)"
+        },
+        "description": "這是一個取樣器，讓K取樣器能夠在雙取樣器(進階)和區域取樣器中使用。\n 透過將去噪計畫乘以 sigma係數，您可以依設定的去噪量調整去噪的程度"
+    },
+    "TwoAdvancedSamplersForMask": {
+        "title": "雙取樣器(進階)",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "基礎採樣器",
+            "mask_sampler": "遮罩採樣器",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "denoise": "降噪",
+            "overlap_factor": "覆蓋係數"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "雙取樣器 類似於 雙取樣器(進階)，但兩者在操作方式上有所不同。雙取樣器 只會在基底區域的所有取樣完成後，才於遮罩區域進行取樣。\n 另一方面，雙取樣器(進階) 會在每一步中依序於基底區域和遮罩區域進行取樣。"
+    },
+    "ImpactWildcardProcessor": {
+        "title": "提示詞處理器",
+        "widgets": {
+            "wildcard_text": "提示文字",
+            "populated_text": "輸入文字",
+            "mode": "是否輸入",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "Select to add Wildcard": "選擇加入提示詞"
+        },
+        "outputs": {
+            "processed text": "處理文字"
+        },
+        "description": "此節點處理以提示詞語法編寫的文字提示，並輸出處理後的所有文字提示。\n文字是透過處理文字中的提示詞產生。如果模式設定為「填補」，每次執行都會產生一個動態提示，並將輸入填補到第二個文字方塊中。如果模式設定為「固定」，第二個文字框的內容將保持不變。\n 當使用「固定」模式產生影像時，用於該特定產生的提示會儲存在中繼資料中。"
+    },
+    "ImpactWildcardEncode": {
+        "title": "提示詞編碼",
+        "inputs": {
+            "model": "模型",
+            "clip": "CLIP"
+        },
+        "widgets": {
+            "wildcard_text": "提示文字",
+            "populated_text": "輸入文字",
+            "mode": "是否輸入",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "Select to add Wildcard": "選擇加入提示詞",
+            "Select to add LoRA": "新增LoRA"
+        },
+        "outputs": {
+            "model": "模型",
+            "clip": "CLIP",
+            "populated_text": "填補文字",
+            "conditioning": "條件"
+        },
+        "description": "與提示詞處理器類似，這提供了LoRA的載入功能。\n（例如<lora:some_awesome_lora:0.7:1.2>）。填充的提示在完成所有LoRA載入後使用clip進行編碼。\n 安裝'Inspire Pack'後可套用LBW(LoRA區塊權重)語法。\n <lora:chunli:1.0:1.0:LBW=B11:0,0,0,0,0,0,0,0,0,0,A,0,0,0,0,0,0;A=0.;>, \n <lora:chunli:1.0:1.0:LBW=0,0,0,0,0,0,0,0,0,0,A,B,0,0,0,0,0;A=0.5;B=0.2;>,\n <lora:chunli:1.0:1.0:LBW=SD-MIDD;>"
+    },
+    "RegionalPrompt": {
+        "title": "區域提示詞",
+        "inputs": {
+            "mask": "遮罩",
+            "advanced_sampler": "K採樣器(高階)"
+        },
+        "widgets": {
+            "variation_seed": "變化的種子",
+            "variation_strength": "強度變化",
+            "variation_method": "變化方法"
+        },
+        "outputs": {
+            "regional_prompts": "區域提示詞",
+            "REGIONAL_PROMPTS": "區域提示詞"
+        },
+        "description": "此節點結合了用於指定區域的遮罩，以及套用於每個區域的取樣器，以建立 區域提示詞。"
+    },
+    "CombineRegionalPrompts": {
+        "title": "合併區域提示詞",
+        "inputs": {
+            "regional_prompts1": "區域提示詞1",
+            "regional_prompts2": "區域提示詞2"
+        },
+        "outputs": {
+            "REGIONAL_PROMPTS": "區域提示詞"
+        },
+        "description": "將多個 區域提示詞 合併為一個 區域提示詞。"
+    },
+    "RegionalSampler": {
+        "title": "區域採樣器",
+        "inputs": {
+            "samples": "Latent",
+            "base_sampler": "K採樣器(高階)",
+            "regional_prompts": "區域提示詞"
+        },
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "seed_2nd": "第二隨機種",
+            "seed_2nd_mode": "第二隨機種模式",
+            "steps": "步數",
+            "base_only_steps": "僅基本步",
+            "denoise": "降噪",
+            "overlap_factor": "覆蓋係數",
+            "restore_latent": "暫存Latent",
+            "additional_mode": "附加模式",
+            "additional_sampler": "附加採樣器",
+            "additional_sigma_ratio": "附加sigma比率"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "此節點使用基礎取樣器和區域提示進行取樣。基礎取樣器在每一步執行取樣，而每個區域的取樣則是透過綁定在每個區域的取樣器進行。\n 覆蓋係數 - 指定每個區域的重疊量，以便與遮罩外部的區域良好融合。\n 暫時的Latent- 在對每個區域進行取樣時，將遮罩外的區域還原到基礎潛空間，以避免在區域取樣過程中於遮罩外引入額外的雜訊。"
+    },
+    "RegionalSamplerAdvanced": {
+        "title": "區域取樣器(進階)",
+        "inputs": {
+            "samples": "Latent",
+            "latent_image": "Latent",
+            "base_sampler": "K採樣器(高階)",
+            "regional_prompts": "區域提示詞"
+        },
+        "widgets": {
+            "add_noise": "新增雜訊波",
+            "seed": "隨機種",
+            "noise_seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "steps": "步數",
+            "start_at_step": "開始降噪步數",
+            "end_at_step": "結束降噪步數",
+            "overlap_factor": "覆蓋係數",
+            "restore_latent": "暫存Latent",
+            "return_with_leftover_noise": "返回雜訊",
+            "additional_mode": "附加模式",
+            "additional_sampler": "附加採樣器",
+            "additional_sigma_ratio": "附加sigma比率"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "這是區域取樣器的進階版本。您可以使用 步數 來控制它，而不是 降噪。\n 注意：sde取樣器和uni_pc取樣器在取樣過程的每一步都會引入額外的雜訊。為了減輕這個問題，當對每個區域進行取樣時，uni_pc取樣器會套用額外的dpmpp_fast，而sde取樣器則以dpmpp_2m取樣器作為額外措施。"
+    },
+    "ImpactConcatConditionings": {
+        "title": "條件合併",
+        "inputs": {
+            "conditioning1": "條件1"
+        },
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "它接受多個條件輸入，並將它們串接成一個條件。"
+    },
+    "ImpactImageInfo": {
+        "title": "影像資訊",
+        "inputs": {
+            "value": "影像"
+        },
+        "outputs": {
+            "batch": "批次大小",
+            "height": "高度",
+            "width": "寬度",
+            "channel": "頻道"
+        }
+    },
+    "ImpactLatentInfo": {
+        "title": "Latent資訊",
+        "inputs": {
+            "value": "Latent"
+        },
+        "outputs": {
+            "batch": "批次大小",
+            "height": "高度",
+            "width": "寬度",
+            "channel": "頻道"
+        }
+    },
+    "ImpactMinMax": {
+        "title": "求極值",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "mode": "模式"
+        },
+        "outputs": {
+            "INT": "整數"
+        }
+    },
+    "ImpactQueueTrigger": {
+        "title": "佇列觸發器",
+        "inputs": {
+            "signal": "信號"
+        },
+        "widgets": {
+            "mode": "模式"
+        },
+        "outputs": {
+            "signal_opt": "信號"
+        },
+        "description": "當此節點執行時，它會新增一個佇列以協助執行重複性任務。只有在信號狀態改變時才會執行。"
+    },
+    "ImpactQueueTriggerCountdown": {
+        "title": "佇列觸發器(計數)",
+        "inputs": {
+            "signal": "信號"
+        },
+        "widgets": {
+            "total": "總計",
+            "mode": "模式",
+            "count": "計數"
+        },
+        "outputs": {
+            "total": "總計",
+            "signal_opt": "信號",
+            "count": "計數"
+        },
+        "description": "與佇列觸發器類似，它會新增一個佇列，但如果佇列的大小小於或等於1，則不會新增。每次執行時，計數減一。"
+    },
+    "ImpactSetWidgetValue": {
+        "title": "設定元件值",
+        "inputs": {
+            "signal": "信號",
+            "boolean_value": "布林",
+            "int_value": "整數",
+            "float_value": "浮點",
+            "string_value": "字串"
+        },
+        "widgets": {
+            "node_id": "節點ID",
+            "widget_name": "組件名稱"
+        },
+        "outputs": {
+            "signal_opt": "信號"
+        },
+        "description": "此節點會將一個可選輸入設定為指定節點的控件。如果類型不符，可能會發生錯誤。"
+    },
+    "ImpactNodeSetMuteState": {
+        "title": "停用節點",
+        "inputs": {
+            "signal": "信號"
+        },
+        "widgets": {
+            "node_id": "節點ID",
+            "set_state": "狀態"
+        },
+        "outputs": {
+            "signal_opt": "信號"
+        },
+        "description": "此節點會變更特定節點的靜音狀態。"
+    },
+    "ImpactSleep": {
+        "title": "休眠",
+        "inputs": {
+            "signal": "信號"
+        },
+        "widgets": {
+            "seconds": "秒數"
+        },
+        "outputs": {
+            "signal_opt": "信號"
+        },
+        "description": "等待指定的時間（以秒為單位）"
+    },
+    "ImpactRemoteBoolean": {
+        "title": "遠端布林",
+        "widgets": {
+            "node_id": "節點ID",
+            "widget_name": "組件名稱",
+            "value": "數值"
+        },
+        "description": "在提示開始時，此節點會強制設定 元件名稱 的 節點ID。如果目標元件類型不同，則會被忽略。"
+    },
+    "ImpactRemoteInt": {
+        "title": "遠端整數",
+        "widgets": {
+            "node_id": "節點ID",
+            "widget_name": "組件名稱",
+            "value": "數值"
+        },
+        "description": "在提示開始時，此節點會強制設定 元件名稱 的節點ID。如果目標元件類型不同，則會被忽略。"
+    },
+    "ImpactControlBridge": {
+        "title": "控制橋接",
+        "inputs": {
+            "value": "數值"
+        },
+        "widgets": {
+            "mode": "模式"
+        },
+        "outputs": {
+            "value": "數值"
+        },
+        "description": "此節點會根據 模式 和 行為 修改已連線控制節點的狀態。如果有需要變更的節點，目前的執行將暫停，靜音狀態將更新，並插入一個新的提示佇列。\n 當 模式 為Active時，無論行為為何，它都會讓已連線的控制節點變為啟用。\n 當 模式 為 繞過/靜音 時，會依行為是 繞過 還是 靜音 來變更已連線節點的狀態。\n 限制：由於這些特性，當批次計數超過1時它無法正常運作。此外，當種子被隨機化，或節點狀態因佇列觸發器、設定元件值、停用節點等操作而改變時，在控制橋之前無法保證正常運作。\n 使用此節點時，請將工作流程安排成讓佇列觸發器、設定元件值、停用節點以及類似操作在工作流程的末尾執行。\n 如果您希望在每次迭代時變更種子的值，請確保在工作流程的末尾執行設定控件值，而不是使用隨機化。\n 只要在控制橋接部分之後才進行隨機化，即使種子發生改變也沒有問題。"
+    },
+    "ImpactCompare": {
+        "title": "比較",
+        "inputs": {
+            "a": "A",
+            "b": "B"
+        },
+        "widgets": {
+            "cmp": "比較方法"
+        },
+        "outputs": {
+            "BOOLEAN": "布林"
+        }
+    },
+    "ImpactConditionalBranchSelMode": {
+        "title": "條件分支切換模式",
+        "inputs": {
+            "tt_value": "真",
+            "ff_value": "假"
+        },
+        "widgets": {
+            "cond": "條件"
+        },
+        "outputs": {
+            "*": "輸出"
+        }
+    },
+    "ImpactConditionalBranch": {
+        "title": "條件切換",
+        "inputs": {
+            "tt_value": "真",
+            "ff_value": "假"
+        },
+        "widgets": {
+            "cond": "條件"
+        },
+        "outputs": {
+            "*": "輸出"
+        }
+    },
+    "ImpactIfNone": {
+        "title": "如果沒有",
+        "inputs": {
+            "signal": "信號",
+            "any_input": "任意輸入"
+        },
+        "widgets": {
+            "cond": "條件"
+        },
+        "outputs": {
+            "signal_opt": "信號選擇",
+            "bool": "布林值"
+        },
+        "description": "如果 任意輸入 為 None 則傳回 真，否則如果它不是 None 則傳回 假。"
+    },
+    "ImpactBoolean": {
+        "title": "布林",
+        "inputs": {
+            "signal": "信號",
+            "any_input": "任意輸入"
+        },
+        "widgets": {
+            "value": "數值"
+        },
+        "outputs": {
+            "signal_opt": "信號選擇",
+            "BOOLEAN": "布林"
+        }
+    },
+    "ImpactConvertDataType": {
+        "title": "轉換資料型別",
+        "inputs": {
+            "value": "數值"
+        },
+        "widgets": {
+            "cond": "條件"
+        },
+        "outputs": {
+            "STRING": "字串",
+            "FLOAT": "浮點",
+            "INT": "整數",
+            "BOOLEAN": "布林"
+        }
+    },
+    "ImpactLogicalOperators": {
+        "title": "邏輯運算子",
+        "inputs": {
+            "bool_a": "布林a",
+            "bool_b": "布林b"
+        },
+        "widgets": {
+            "operator": "運算"
+        },
+        "outputs": {
+            "STRING": "字串",
+            "FLOAT": "浮點",
+            "INT": "整數",
+            "BOOLEAN": "布林"
+        }
+    },
+    "ImpactInt": {
+        "title": "整數",
+        "widgets": {
+            "value": "數值"
+        },
+        "outputs": {
+            "INT": "整數"
+        }
+    },
+    "ImpactFloat": {
+        "title": "浮點",
+        "widgets": {
+            "value": "數值"
+        },
+        "outputs": {
+            "FLOAT": "浮點"
+        }
+    },
+    "ImpactValueSender": {
+        "title": "傳送值",
+        "inputs": {
+            "value": "數值",
+            "signal_opt": "信號選擇"
+        },
+        "widgets": {
+            "link_id": "連接ID"
+        },
+        "outputs": {
+            "signal": "信號"
+        }
+    },
+    "ImpactValueReceiver": {
+        "title": "接收值",
+        "widgets": {
+            "typ": "類型",
+            "value": "數值",
+            "link_id": "連接ID"
+        },
+        "outputs": {
+            "*": "輸出"
+        }
+    },
+    "ImpactNeg": {
+        "title": "反轉值",
+        "inputs": {
+            "value": "數值"
+        },
+        "outputs": {
+            "BOOLEAN": "布林"
+        }
+    },
+    "ImpactConditionalStopIteration": {
+        "title": "條件停止迭代",
+        "inputs": {
+            "cond": "條件"
+        }
+    },
+    "ImpactIsNotEmptySEGS": {
+        "title": "是否為非空Seg",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "BOOLEAN": "布林"
+        },
+        "description": "此節點僅在輸入Seg不為空時回傳true"
+    },
+    "ImpactLogger": {
+        "title": "輸出記錄",
+        "inputs": {
+            "data": "數據"
+        }
+    },
+    "ImpactDummyInput": {
+        "title": "虛擬輸入",
+        "outputs": {
+            "*": "輸出"
+        }
+    },
+    "ImpactHFTransformersClassifierProvider": {
+        "title": "HFTransformer分類器",
+        "widgets": {
+            "preset_repo_id": "預設倉庫ID",
+            "manual_repo_id": "手動倉庫ID",
+            "device_mode": "裝置模式"
+        },
+        "outputs": {
+            "TRANSFORMERS_CLASSIFIER": "TF分類器"
+        },
+        "description": "這是基於HuggingFace的transformers模型所提供之分類器的節點。\n 「倉庫ID」參數應包含HuggingFace的倉庫ID。當預設倉庫ID設定為手動倉庫ID時，會使用手動輸入的手動倉庫ID。\n 例如，'rizvandwiki/gender-classification-2' 是提供性別分類模型的程式庫。"
+    },
+    "ImpactSEGSClassify": {
+        "title": "Seg分類",
+        "inputs": {
+            "classifier": "分類器",
+            "segs": "Seg",
+            "ref_image_opt": "參考影像"
+        },
+        "widgets": {
+            "preset_expr": "預設運算式",
+            "manual_expr": "手動表達式"
+        },
+        "outputs": {
+            "filtered_SEGS": "遮蔽Seg",
+            "remained_SEGS": "剩餘Seg",
+            "detected_labels": "偵測標籤"
+        },
+        "description": "此節點利用 TF分類器 載入的 'HFTransformer分類器' 進行分類 Seg。\n 「運算式」允許使用形如 label > number 的形式，並且當 預設運算式 為 Manual expr 時，它會使用在 manual_expr 中輸入的運算式。\n 例如，在 male <= 0.4的情況下，如果分類結果中 male 標籤的分數小於或等於 0.4，則歸類為 遮蔽Seg，否則歸類為 剩餘Seg。\n 關於支援的標籤，請參閱config.json的對應HuggingFace倉庫。\n #Female 和 #Male 是用於將多個標籤（如 Female, women, woman, ...）分組的符號，以便於使用，而不是單一標籤。"
+    },
+    "SAMLoader": {
+        "title": "SAM載入器",
+        "widgets": {
+            "model_name": "模型名稱",
+            "device_mode": "裝置模式"
+        },
+        "outputs": {
+            "SAM_MODEL": "SAM 模型"
+        },
+        "description": "載入SAM模型"
+    },
+    "ONNXDetectorProvider": {
+        "title": "ONNX載入器",
+        "widgets": {
+            "model_name": "模型名稱"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox偵測",
+            "ONNX_DETECTOR": "ONNX偵測"
+        },
+        "description": "載入 ONNX 模型以提供 ONNX偵測。"
+    },
+    "PreviewDetailerHookProvider": {
+        "title": "預覽優化增強器約束提供器",
+        "widgets": {
+            "quality": "品質"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束",
+            "UPSCALER_HOOK": "超解析度約束"
+        },
+        "description": "連接此約束節點有助於在SEGS優化任務完成後提供預覽檢視協助。\n 在處理大量Seg，例如 產生平鋪分塊Seg 時，它讓您在改進逐步進行時監控狀況。\n 由於這是套用於貼到原始影像上的約束，因此對像 Seg優化 這樣的節點沒有影響。"
+    },
+    "BlackPatchRetryHookProvider": {
+        "title": "黑色補丁重試掛鉤提供器",
+        "widgets": {
+            "mean_thresh": "平均閾值",
+            "var_thresh": "變化閾值"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束",
+            "UPSCALER_HOOK": "超解析度約束"
+        }
+    },
+    "ImpactIPAdapterApplySEGS": {
+        "title": "套用IPAdapter(Seg)",
+        "inputs": {
+            "segs": "Seg",
+            "ipadapter_pipe": "ipadapter束",
+            "neg_image": "底片影像",
+            "reference_image": "參考圖片"
+        },
+        "widgets": {
+            "weight": "權重",
+            "noise": "噪音",
+            "weight_type": "權重類型",
+            "seed": "隨機種",
+            "start_at": "開始步數",
+            "end_at": "結束步數",
+            "cfg": "CFG",
+            "unfold_batch": "展開批",
+            "faceid_v2": "FaceID_V2",
+            "weight_v2": "權重_v2",
+            "context_crop_factor": "上下文裁剪係數",
+            "combine_embeds": "融合嵌入"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "若要在Seg套用IPAdapter，您需要使用來自Inspire Pack的Preprocessor Provider節點來利用此節點。"
+    },
+    "ImpactFrom_SEG_ELT_bbox": {
+        "title": "從SEG元素 bbox",
+        "inputs": {
+            "bbox": "BBox"
+        },
+        "outputs": {
+            "left": "左側",
+            "top": "上方",
+            "right": "右側",
+            "bottom": "下方"
+        }
+    },
+    "ImpactFrom_SEG_ELT_crop_region": {
+        "title": "從SEG元素裁剪區域",
+        "inputs": {
+            "crop_region": "裁切區域"
+        },
+        "outputs": {
+            "left": "左側",
+            "top": "上方",
+            "right": "右側",
+            "bottom": "下方"
+        }
+    },
+    "ImpactSEGSMerge": {
+        "title": "Seg合併",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        },
+        "description": "BBoxSeg包含多個seg。Seg合併會將多個Seg整合成一個合併的Seg。標籤改為「合併」，信心度變為最小信心度。套用的ControlNet和裁切的影像會被移除。"
+    },
+    "ImpactCount_Elts_in_SEGS": {
+        "title": "以SEGS計算元素",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "INT": "整數"
+        }
+    },
+    "ImpactMakeAnyList": {
+        "title": "製作清單(任意)",
+        "inputs": {
+            "value1": "值1"
+        },
+        "outputs": {
+            "INT": "整數"
+        },
+        "description": "建立一個包含任意值的清單，可以接受任意數量的輸入並產生一個輸出。它的類型在連接到任何節點時確定，連接輸入會增加可用的連接槽。"
+    },
+    "ImpactMakeMaskList": {
+        "title": "製作遮罩清單",
+        "inputs": {
+            "mask1": "遮罩1"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "它與製作影像清單節點具有相同的功能，但使用遮罩作為輸入而不是影像。"
+    },
+    "ImpactMakeMaskBatch": {
+        "title": "批量製作遮罩",
+        "inputs": {
+            "mask1": "遮罩1"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "它與製作影像清單節點具有相同的功能，但使用遮罩作為輸入而不是影像。"
+    },
+    "ImpactSelectNthItemOfAnyList": {
+        "title": "選擇第n項(任意清單)",
+        "inputs": {
+            "any_list": "任意清單"
+        },
+        "widgets": {
+            "index": "指數"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "從清單中選擇第N個元素。如果索引超出範圍，它會傳回清單中的最後一個元素。"
+    },
+    "ImpactSEGSLabelAssign": {
+        "title": "Seg分配（標籤）",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "ImpactSEGSIntersectionFilter": {
+        "title": "Seg濾波器(交集)",
+        "inputs": {
+            "segs1": "Seg1",
+            "segs2": "Seg2"
+        },
+        "widgets": {
+            "iou_threshold": "iou閾值",
+            "ioa_threshold": "ioa閾值"
+        },
+        "outputs": {
+            "filtered_SEGS": "過濾後的Seg"
+        }
+    },
+    "ImpactSEGSNMSFilter": {
+        "title": "Seg濾波器(非最大抑制)",
+        "inputs": {
+            "segs": "Seg"
+        },
+        "widgets": {
+            "iou_threshold": "iou閾值"
+        },
+        "outputs": {
+            "filtered_SEGS": "過濾後的Seg"
+        }
+    },
+    "StringListToString": {
+        "title": "字串清單到字串",
+        "inputs": {
+            "string_list": "字串清單"
+        },
+        "widgets": {
+            "join_with": "加入"
+        },
+        "outputs": {
+            "STRING": "字串"
+        },
+        "description": "將字串清單轉換為字串。"
+    },
+    "WildcardPromptFromString": {
+        "title": "從字串產生提示詞提示",
+        "inputs": {
+            "string": "字串"
+        },
+        "widgets": {
+            "delimiter": "分隔符號",
+            "prefix_all": "所有前綴",
+            "postfix_all": "後綴都",
+            "restrict_to_tags": "限制為標籤",
+            "exclude_tags": "排除標籤"
+        },
+        "outputs": {
+            "wildcard": "提示詞",
+            "segs_labels": "Seg標籤"
+        },
+        "description": "從字串為詳細資訊建立帶標籤的提示詞。\n 此節點在與 產生平鋪分塊Seg 一起使用時表現良好。"
+    },
+    "ImpactExecutionOrderController": {
+        "title": "執行指令控制器",
+        "inputs": {
+            "signal": "信號",
+            "value": "數值"
+        },
+        "outputs": {
+            "signal": "信號",
+            "value": "數值"
+        },
+        "description": "可協助強制控制節點執行順序的輔助節點。\n 將應先執行的節點的輸出連接到信號，並讓應後執行的節點的輸入通過此節點。"
+    },
+    "ImpactListBridge": {
+        "title": "清單橋接器",
+        "inputs": {
+            "list_input": "清單輸入"
+        },
+        "outputs": {
+            "list_output": "清單輸出"
+        },
+        "description": "當透過此節點傳遞清單輸出時，它會蒐集並整理資料，然後再轉發出去，這能確保前一階段的子工作流程已完成。"
+    },
+    "ImpactSchedulerAdapter": {
+        "title": "排程適配器",
+        "widgets": {
+            "scheduler": "調度器",
+            "extra_scheduler": "額外排程器"
+        },
+        "outputs": {
+            "scheduler": "調度器"
+        },
+        "description": "由於Impact Pack和Inspire Pack的排程器中加入了AYS，當現有的排程器小工具轉換為輸入時，會出現不相容的問題。排程適配器 允許進行間接連接。"
+    },
+    "ImpactFlattenMask": {
+        "title": "遮罩清單到遮罩",
+        "inputs": {
+            "masks": "遮罩"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        },
+        "description": "它與製作影像清單節點具有相同的功能，但使用遮罩作為輸入而不是影像。"
+    },
+    "MaskRectArea": {
+        "title": "遮罩矩形面積",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "w": "寬度",
+            "h": "高度",
+            "image_width": "影像的寬度",
+            "image_height": "影像的高度",
+            "blur_radius": "模糊半徑",
+            "extra_scheduler": "額外排程器"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "MaskRectAreaAdvanced": {
+        "title": "遮罩矩形面積(進階)",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "image_width": "影像的寬度",
+            "image_height": "影像的高度",
+            "blur_radius": "模糊半徑",
+            "extra_scheduler": "額外排程器"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "ImpactNegativeConditioningPlaceholder": {
+        "title": "負向條件佔位符",
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "FLUX.1 這類模型不使用負向條件。這是它們的佔位節點。您可以將 Impact K取樣器、K取樣器 (Inspire) 與 優化 中使用的負向條件替換為此節點，以使用 FLUX.1。"
+    },
+    "GITSSchedulerFuncProvider": {
+        "title": "GITS排程器函數提供器",
+        "widgets": {
+            "coeff": "係數",
+            "denoise": "降噪強度"
+        },
+        "outputs": {
+            "SCHEDULER_FUNC": "排程程序函數"
+        },
+        "description": "提供排程器函數用於GITS排程器"
+    },
+    "VariationNoiseDetailerHookProvider": {
+        "title": "變體雜訊優化增強器約束提供器",
+        "widgets": {
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "strength": "強度"
+        },
+        "outputs": {
+            "DETAILER_HOOK": "優化約束"
+        },
+        "description": "將變體種子套用到優化處理器。它可以透過組合在多個階段套用。"
+    },
+    "ImpactMakeTileSEGS": {
+        "title": "生成平鋪分塊Seg",
+        "inputs": {
+            "images": "影像",
+            "filter_in_segs_opt": "Seg選項中的濾波器",
+            "filter_out_segs_opt": "過濾掉Seg選項"
+        },
+        "widgets": {
+            "bbox_size": "BBox尺寸",
+            "crop_factor": "裁剪係數",
+            "min_overlap": "最小重疊量",
+            "filter_segs_dilation": "分割區域膨脹過濾",
+            "mask_irregularity": "遮罩不規則度",
+            "irregular_mask_mode": "不規則遮罩模式"
+        },
+        "outputs": {
+            "SEGS": "Seg"
+        }
+    },
+    "workflow>Impact::MAKE_BASIC_PIPE": {
+        "title": "Impact:製作基本束",
+        "inputs": {
+            "images": "影像",
+            "filter_in_segs_opt": "Seg選項中的濾波器",
+            "filter_out_segs_opt": "過濾掉Seg選項"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt名字",
+            "Positive prompt": "正向提示詞",
+            "Negative prompt": "負面提示詞",
+            "filter_segs_dilation": "分割區域膨脹過濾",
+            "mask_irregularity": "遮罩不規則度",
+            "irregular_mask_mode": "不規則遮罩模式"
+        },
+        "outputs": {
+            "basic_pipe": "基本束"
+        }
+    },
+    "workflow>MAKE_BASIC_PIPE": {
+        "title": "製作基本束",
+        "inputs": {
+            "images": "影像",
+            "filter_in_segs_opt": "Seg選項中的濾波器",
+            "filter_out_segs_opt": "過濾掉Seg選項"
+        },
+        "widgets": {
+            "ckpt_name": "ckpt名字",
+            "text": "文字",
+            "CLIPTextEncode text": "CLIP文字編碼文字",
+            "vae_name": "VAE名字",
+            "mask_irregularity": "遮罩不規則度",
+            "irregular_mask_mode": "不規則遮罩模式"
+        },
+        "outputs": {
+            "basic_pipe": "基本束"
+        }
+    },
+    "UltralyticsDetectorProvider": {
+        "title": "偵測載入器",
+        "widgets": {
+            "model_name": "模型名稱"
+        },
+        "outputs": {
+            "BBOX_DETECTOR": "BBox偵測",
+            "SEGM_DETECTOR": "SEGM檢測"
+        }
+    }
+}

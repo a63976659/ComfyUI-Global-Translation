@@ -1,0 +1,402 @@
+{
+    "Flux2KleinKSamplerExperimental": {
+        "title": "Flux2Klein K採樣器（實驗版）",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "latent_image": "Latent影像",
+            "negative": "反向條件"
+        },
+        "widgets": {
+            "steps": "步數",
+            "seed": "隨機種子",
+            "denoise": "去雜強度",
+            "base_shift": "基礎偏移量",
+            "max_shift": "最大偏移量",
+            "cfg_scale": "CFG縮放係數",
+            "guidance_embed": "引導嵌入"
+        },
+        "description": ""
+    },
+    "Flux2KleinColorAnchor": {
+        "title": "Flux2Klein 顏色錨定器",
+        "inputs": {
+            "model": "模型",
+            "conditioning": "條件控制"
+        },
+        "widgets": {
+            "strength": "強度",
+            "ramp_curve": "漸變曲線",
+            "ref_index": "參考索引",
+            "channel_weights": "通道權重",
+            "debug": "偵錯模式"
+        },
+        "description": ""
+    },
+    "Flux2KleinEnhancer": {
+        "title": "Flux2Klein 增強器",
+        "inputs": {
+            "conditioning": "條件控制",
+            "device": "執行裝置"
+        },
+        "widgets": {
+            "active_scale": "啟用區域縮放",
+            "per_token_whiten": "逐權杖白化",
+            "norm_equalize": "範數均衡",
+            "early_layer_scale": "淺層縮放係數",
+            "mid_layer_scale": "中層縮放係數",
+            "late_layer_scale": "深層縮放係數",
+            "preserve_original": "保留原始數據",
+            "active_end_override": "啟用終點覆寫",
+            "debug": "偵錯模式"
+        },
+        "description": "對Klein條件控制的啟用區域執行純量/白化作業，同時提供Klein專屬的Qwen3分層縮放功能。"
+    },
+    "Flux2KleinDetailController": {
+        "title": "Flux2Klein 細節控制器",
+        "inputs": {
+            "conditioning": "條件控制",
+            "device": "執行裝置"
+        },
+        "widgets": {
+            "front_mult": "前部分倍率",
+            "mid_mult": "中部分倍率",
+            "end_mult": "後部分倍率",
+            "emphasis_start": "強調起始位置",
+            "emphasis_end": "強調結束位置",
+            "emphasis_mult": "強調倍率",
+            "preserve_original": "保留原始數據",
+            "debug": "偵錯模式"
+        },
+        "description": "分段嵌入倍率調節器。\n\n真實模式（建議）：配合分段編碼器使用。編碼器會生成分段權杖範圍作為條件控制中繼數據 (`meta[\"klein_sections\"]`)；本節點會按照使用者設定的係數對對應範圍內的啟用嵌入進行倍率調整。\n\n相容模式（舊版/不建議）：如果不存在分段中繼數據，節點會自動將啟用區域按照25%/50%/25%的固定比例分割。這些分割邊界是任意的——Qwen3的權杖沒有固定的位置語義——本節點v1版本在此模式下基本沒有實際效果。保留此模式是為了相容舊工作流；建議切換到分段編碼器以獲得有實際意義的分段感知縮放效果。"
+    },
+    "Flux2KleinMaskRefController": {
+        "title": "Flux2Klein 遮罩參考控制器",
+        "inputs": {
+            "conditioning": "條件控制",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "strength": "強度",
+            "invert_mask": "反轉遮罩",
+            "feather": "遮罩羽化",
+            "reference_index": "參考索引",
+            "debug": "偵錯模式"
+        },
+        "description": "使用繪製的遮罩對參考Latent進行空間衰減處理。\n\n將參考Latent與遮罩生成的逐像素純量相乘。條件控制Latent會直接原地修改（替換 meta['reference_Latents']）。"
+    },
+    "Flux2KleinRefLatentController": {
+        "title": "Flux2Klein 參考Latent控制器",
+        "inputs": {
+            "model": "模型",
+            "conditioning": "條件控制"
+        },
+        "widgets": {
+            "strength": "強度",
+            "reference_index": "參考索引",
+            "spatial_fade": "空間漸隱",
+            "spatial_fade_strength": "空間漸隱強度",
+            "debug": "偵錯模式"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextRefBalance": {
+        "title": "Flux2Klein 文字參考平衡器",
+        "inputs": {
+            "model": "模型",
+            "conditioning": "條件控制"
+        },
+        "widgets": {
+            "balance": "平衡係數",
+            "debug": "偵錯模式"
+        },
+        "description": ""
+    },
+    "Flux2KleinRefLatentWeight": {
+        "title": "Flux2Klein 參考Latent權重調節器",
+        "inputs": {
+            "model": "模型"
+        },
+        "widgets": {
+            "reference_index": "參考索引",
+            "weight": "權重"
+        },
+        "description": ""
+    },
+    "Flux2KleinTextEnhancer": {
+        "title": "Flux2Klein 文字增強器",
+        "inputs": {
+            "conditioning": "條件控制"
+        },
+        "widgets": {
+            "magnitude": "全域幅度",
+            "contrast": "對比",
+            "normalize_strength": "標準化強度",
+            "skip_bos": "跳過起始權杖",
+            "debug": "偵錯模式"
+        },
+        "description": "修改文字條件控制權杖。\n\n操作順序：\n1. 標準化：均衡權杖幅度\n2. 對比度：放大/縮小權杖之間的差異\n3. 幅度：全域縮放"
+    },
+    "Flux2KleinSectionedEncoder": {
+        "title": "Flux2Klein 分段編碼器",
+        "inputs": {
+            "clip": "剪輯",
+            "separator": "分隔符"
+        },
+        "widgets": {
+            "front_text": "前部文字",
+            "mid_text": "中部文字",
+            "end_text": "後部文字",
+            "combined_prompt": "合併提示詞",
+            "show_preview": "顯示預覽",
+            "debug": "偵錯模式"
+        },
+        "outputs": {
+            "conditioning": "條件控制",
+            "front_section": "前部分段",
+            "mid_section": "中部分段",
+            "end_section": "後部分段",
+            "full_prompt": "完整提示詞"
+        },
+        "description": "將三段式提示詞進行切分，並生成分段權杖範圍作為條件控制中繼數據，供細節控制器讀取使用。"
+    },
+    "IdentityFeatureTransfer": {
+        "title": "身分特徵遷移",
+        "inputs": {
+            "model": "模型"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_block": "起始區塊",
+            "end_block": "結束區塊",
+            "mode": "模式",
+            "top_k_percent": "Top K百分比"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferAdvanced": {
+        "title": "身分特徵遷移（進階版）",
+        "inputs": {
+            "model": "模型",
+            "subject_mask": "主體遮罩"
+        },
+        "widgets": {
+            "reference_index": "參考索引",
+            "mode": "模式",
+            "top_k_percent": "Top K百分比",
+            "double_enable": "啟用雙重遷移",
+            "double_strength": "雙重遷移強度",
+            "double_start": "雙重遷移起始點",
+            "double_end": "雙重遷移結束點",
+            "single_enable": "啟用單次遷移",
+            "single_strength": "單次遷移強度",
+            "single_start": "單次遷移起始點",
+            "single_end": "單次遷移結束點",
+            "block_schedule": "區塊調度",
+            "sim_floor": "相似度下限",
+            "mask_threshold": "遮罩閾值"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferV3": {
+        "title": "身分特徵遷移 V3",
+        "inputs": {
+            "model": "模型",
+            "subject_mask": "主體遮罩"
+        },
+        "widgets": {
+            "preset": "預設",
+            "reference_index": "參考索引",
+            "double_schedule": "雙重遷移調度",
+            "single_schedule": "單次遷移調度",
+            "double_sim": "雙重遷移相似度",
+            "single_sim": "單次遷移相似度",
+            "commit_margin": "提交餘量",
+            "commit_confirm": "提交確認",
+            "commit_anchor": "提交錨點",
+            "mask_threshold": "遮罩閾值",
+            "debug": "偵錯模式"
+        },
+        "description": ""
+    },
+    "IdentityFeatureTransferFinal": {
+        "title": "最終身分特徵遷移",
+        "inputs": {
+            "model": "模型",
+            "subject_mask_1": "主體遮罩1",
+            "subject_mask_2": "主體遮罩2",
+            "subject_mask_3": "主體遮罩3",
+            "subject_mask_4": "主體遮罩4",
+            "subject_mask_5": "主體遮罩5",
+            "subject_mask_6": "主體遮罩6",
+            "subject_mask_7": "主體遮罩7",
+            "subject_mask_8": "主體遮罩8"
+        },
+        "widgets": {
+            "preset": "預設",
+            "enabled": "啟用",
+            "reference_index": "參考索引",
+            "reference_indices": "參考索引清單",
+            "similarity_floor": "相似度下限",
+            "softmax_temperature": "Softmax溫度係數",
+            "mask_threshold": "遮罩閾值",
+            "double_blocks": "雙模組範圍",
+            "single_blocks": "單模組範圍",
+            "total_sampling_steps": "總取樣步數",
+            "debug": "偵錯模式"
+        },
+        "description": ""
+    },
+    "IdentityGuidance": {
+        "title": "身分特徵引導",
+        "inputs": {
+            "model": "模型",
+            "identity_latent": "身分特徵Latent"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "生效起始百分比",
+            "end_percent": "生效結束百分比",
+            "mode": "模式"
+        },
+        "description": ""
+    },
+    "Flux2KleinMultiReferenceLatent": {
+        "title": "Flux2 Klein多參考Latent處理",
+        "inputs": {
+            "conditioning": "條件控制",
+            "latent_1": "Latent1",
+            "latent_2": "Latent2",
+            "latent_3": "Latent3",
+            "latent_4": "Latent4",
+            "latent_5": "Latent5",
+            "latent_6": "Latent6",
+            "latent_7": "Latent7",
+            "latent_8": "Latent8"
+        },
+        "outputs": {
+            "conditioning": "條件控制"
+        },
+        "description": ""
+    },
+    "Flux2KleinKSampler": {
+        "title": "FLUX.2 Klein K採樣器",
+        "inputs": {
+            "model": "模型",
+            "positive": "正面提示詞",
+            "negative": "負面提示詞",
+            "latent_image": "影像Latent"
+        },
+        "widgets": {
+            "steps": "步數",
+            "guidance_scale": "引導比例",
+            "seed": "種子",
+            "denoise": "去噪",
+            "base_shift": "基礎偏移",
+            "max_shift": "最大偏移"
+        },
+        "description": "FLUX.2 Klein KSampler 節點用於在Latent空間中進行影像生成。"
+    },
+    "FluxxKleinEnhancer": {
+        "title": "Flux2 Klein增強器",
+        "inputs": {
+            "conditioning": "條件"
+        },
+        "widgets": {
+            "magnitude": "幅度",
+            "contrast": "對比",
+            "normalize_strength": "標準化強度",
+            "preserve_original": "保留原始",
+            "preserve_mode": "保留模式",
+            "edit_text_weight": "編輯文字權重",
+            "active_end_override": "啟用結束覆寫",
+            "low_vram": "低顯示記憶體",
+            "device": "裝置",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "FLUX. .Klein 條件增強器。\n\n操作包括：\n- 幅度：直接縮放活動區域嵌入\n- 對比度：放大標記之間的差異\n- 標準化：等量標記大小\n- 保留原始：以多種模式混合回原始嵌入\n\n所有操作只修改活動文字區域（填充部分未受影響）。",
+        "api_version": "V1"
+    },
+    "FluxxKleinDetailController": {
+        "title": "Flux2 Klein細節控制器",
+        "inputs": {
+            "conditioning": "條件"
+        },
+        "widgets": {
+            "front_mult": "前部倍數",
+            "mid_mult": "中部倍數",
+            "end_mult": "結尾倍數",
+            "emphasis_start": "強調開始",
+            "emphasis_end": "強調結束",
+            "emphasis_mult": "強調倍數",
+            "preserve_original": "保留原始",
+            "preserve_mode": "保留模式",
+            "low_vram": "低顯示記憶體",
+            "device": "裝置",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "FLUX. .Klein 條件的區域控制。\n\n將活動標記分為區域：\n- 前部：主題/主要概念\n- 中部：詳細資訊/修飾符\n- 結尾：風格/品質術語",
+        "api_version": "V1"
+    },
+    "FluxxKleinRefLatentController": {
+        "title": "Flux2 Klein參考Latent控制器",
+        "inputs": {
+            "model": "模型",
+            "conditioning": "條件"
+        },
+        "widgets": {
+            "strength": "強度",
+            "reference_index": "參考索引",
+            "spatial_fade": "空間淡化",
+            "spatial_fade_strength": "空間淡化強度",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "MODEL": "模型",
+            "CONDITIONING": "條件"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextRefBalance": {
+        "title": "Flux2 Klein文字與參考平衡",
+        "inputs": {
+            "model": "模型",
+            "conditioning": "條件"
+        },
+        "widgets": {
+            "balance": "平衡",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "MODEL": "模型",
+            "CONDITIONING": "條件"
+        },
+        "description": "",
+        "api_version": "V1"
+    },
+    "FluxxKleinTextEnhancer": {
+        "title": "Flux2 Klein文字增強器",
+        "inputs": {
+            "conditioning": "條件"
+        },
+        "widgets": {
+            "magnitude": "幅度",
+            "contrast": "對比",
+            "normalize_strength": "標準化強度",
+            "skip_bos": "跳過起始符號",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "CONDITIONING": "條件"
+        },
+        "description": "修改文字條件標記。\n\n操作順序：\n1. 標準化：等量標記大小\n2. 對比度：放大/減少標記間的差異\n3. 幅度：全域縮放",
+        "api_version": "V1"
+    }
+}

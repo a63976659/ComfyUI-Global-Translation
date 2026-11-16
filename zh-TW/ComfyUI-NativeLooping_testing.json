@@ -1,0 +1,139 @@
+{
+    "TensorLoopOpen": {
+        "title": "張量循環開始",
+        "inputs": {
+            "initial_value": "初始值"
+        },
+        "widgets": {
+            "mode": "模式",
+            "iterations": "迭代次數"
+        },
+        "outputs": {
+            "flow_control": "流控制",
+            "accumulated_count": "累計數量",
+            "previous_value": "上一個值",
+            "current_iteration": "當前迭代次數"
+        },
+        "description": "開啟一個用於收集輸出的循環。支援兩種模式：\n- 迭代次數：運行固定次數的迭代\n- 總幀數：運行直到累計達到目標幀數\n將flow_control連接到TensorLoopClose，使用`previous_value`作為生成的輸入，並將生成的輸出連接到TensorLoopClose.processed。\n支援影像、遮罩和Latent類型。"
+    },
+    "TensorLoopClose": {
+        "title": "張量循環結束",
+        "widgets": {
+            "flow_control": "流控制",
+            "processed": "已處理",
+            "accumulate": "累計",
+            "overlap": "重疊",
+            "stop": "停止"
+        },
+        "outputs": {
+            "output": "輸出"
+        },
+        "description": "關閉由TensorLoopOpen開啟的循環。\n連接：\n  - 來自TensorLoopOpen的flow_control\n  - processed：本次迭代生成的輸出\n支援影像、遮罩和Latent類型。"
+    },
+    "_AccumulateNode": {
+        "title": "累計節點",
+        "widgets": {
+            "to_add": "待新增",
+            "accumulation": "累計值"
+        },
+        "description": ""
+    },
+    "_WhileLoopOpen": {
+        "title": "條件循環開始",
+        "widgets": {
+            "condition": "條件"
+        },
+        "outputs": {
+            "flow_control": "流控制"
+        },
+        "description": ""
+    },
+    "_WhileLoopClose": {
+        "title": "條件循環結束",
+        "widgets": {
+            "flow_control": "流控制",
+            "condition": "條件"
+        },
+        "description": ""
+    },
+    "_IntOperations": {
+        "title": "整數運算",
+        "widgets": {
+            "a": "a",
+            "b": "b",
+            "operation": "運算"
+        },
+        "description": ""
+    },
+    "_AccumulationToImageBatch": {
+        "title": "累計轉影像批次",
+        "widgets": {
+            "accumulation": "累計值",
+            "overlap_frames": "重疊幀數",
+            "overlap_mode": "重疊模式"
+        },
+        "outputs": {
+            "result": "結果"
+        },
+        "description": "將影像/遮罩張量或Latent字典的累計值拼接為單個批次。"
+    },
+    "_ConditionalSelect": {
+        "title": "條件選擇",
+        "widgets": {
+            "condition": "條件",
+            "value_if_true": "條件為真時的值",
+            "value_if_false": "條件為假時的值"
+        },
+        "outputs": {
+            "result": "結果"
+        },
+        "description": "當條件為True時返回value_if_true，否則返回value_if_false。\n使用惰性求值，僅解析選取的分支。"
+    },
+    "_ImageAccumStatePack": {
+        "title": "影像累計狀態打包",
+        "widgets": {
+            "remaining": "剩餘數量",
+            "accum": "累計值",
+            "previous_value": "前一個值",
+            "count": "計數",
+            "open_node_id": "開始節點ID",
+            "total_frames": "總幀數",
+            "prev_accumulated_count": "之前累計數量",
+            "blend_overlap": "混合重疊"
+        },
+        "outputs": {
+            "loop_state": "循環狀態",
+            "should_continue": "是否繼續"
+        },
+        "description": "將循環狀態打包為單個字典，供TensorLoopOpen的initial_value0使用。"
+    },
+    "_ImageAccumStateUnpack": {
+        "title": "影像累計狀態解包",
+        "widgets": {
+            "loop_state": "循環狀態"
+        },
+        "outputs": {
+            "remaining": "剩餘數量",
+            "accumulation": "累計值",
+            "previous_value": "前一個值",
+            "accumulated_count": "累計數量",
+            "count": "計數",
+            "open_node_id": "開始節點ID",
+            "total_frames": "總幀數"
+        },
+        "description": "從TensorLoopOpen中解包循環狀態。"
+    },
+    "_BatchOps": {
+        "title": "批次運算",
+        "widgets": {
+            "batch": "批次",
+            "operation": "運算",
+            "amount": "數量",
+            "batch_b": "批次B"
+        },
+        "outputs": {
+            "output": "輸出"
+        },
+        "description": "批次切片、修剪和拼接運算。"
+    }
+}
