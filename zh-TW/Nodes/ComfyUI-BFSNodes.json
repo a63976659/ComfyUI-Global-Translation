@@ -1,0 +1,584 @@
+{
+    "BFSAmvGuideBuilder": {
+        "title": "BFS AMV引導產生器",
+        "inputs": {
+            "video": "影片",
+            "images": "影像",
+            "audio": "音訊"
+        },
+        "widgets": {
+            "mode": "模式",
+            "length": "長度",
+            "hold": "保持",
+            "fill": "填充",
+            "placement": "放置",
+            "fps": "幀率",
+            "indices": "索引",
+            "scene_threshold": "場景閾值"
+        },
+        "outputs": {
+            "guide": "引導",
+            "debug": "偵錯"
+        },
+        "description": "產生AMV引導（關鍵幀+空白幀）。external_images可自動將影像放置在音樂節拍處（placement設為audio_beats）。將`引導`輸入VAE或參考模組。"
+    },
+    "BFSAnime2RealBerniniConditioning": {
+        "title": "BFS Bernini動漫轉真實感條件產生",
+        "inputs": {
+            "positive": "正向",
+            "negative": "負向",
+            "vae": "VAE",
+            "guide_video": "引導影片"
+        },
+        "widgets": {
+            "length": "長度"
+        },
+        "outputs": {
+            "positive": "正向",
+            "negative": "負向",
+            "latent": "Latent",
+            "debug": "偵錯"
+        },
+        "description": "用於Bernini-R動漫轉真實感LoRA的純影片轉影片（v2v）動漫→真實感條件產生。guide_video對應source_id 1（動漫畫布）| 輸出對應source_id 0（真實照片）。無參考模組。引導同時應用於正向和負向，因此CFG僅放大文字提示（真實照片風格），而非參考。使用適中的CFG；引導保留運動/佈局。請勿將此LoRA與換臉節點配合使用：它會注入source_id 2標記，而動漫轉真實感LoRA在訓練中從未見過該標記。"
+    },
+    "LTXColorMask": {
+        "title": "LTX顏色遮罩",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "color": "顏色",
+            "style": "樣式",
+            "marker_radius_frac": "標記半徑比例",
+            "custom_r": "自訂R",
+            "custom_g": "自訂G",
+            "custom_b": "自訂B",
+            "background_black": "黑色背景"
+        },
+        "outputs": {
+            "colored_mask": "彩色遮罩"
+        },
+        "description": "將純白/二值SAM2風格的遮罩重新著色為scail2v2訓練約定。'silhouette'用於引導遮罩槽，'flat_marker'（小色點，無形狀）用於身份遮罩槽——檢視每個輸入的提示以了解兩者差異的原因。"
+    },
+    "BFSHeadSwapBerniniConditioning": {
+        "title": "BFS Bernini換臉條件產生",
+        "inputs": {
+            "positive": "正向",
+            "negative": "負向",
+            "vae": "VAE",
+            "guide_video": "引導影片",
+            "head_image": "頭部影像"
+        },
+        "widgets": {
+            "length": "長度",
+            "amplify_reference": "放大參考"
+        },
+        "outputs": {
+            "positive": "正向",
+            "negative": "負向",
+            "latent": "Latent",
+            "debug": "偵錯"
+        },
+        "description": ""
+    },
+    "BFSHeadSwapLoRADebug": {
+        "title": "BFS換臉LoRA偵錯",
+        "inputs": {
+            "model": "模型"
+        },
+        "outputs": {
+            "model": "模型",
+            "debug": "偵錯"
+        },
+        "description": ""
+    },
+    "LTXVEditAnythingSplitLora": {
+        "title": "LTXV編輯任意內容拆分LoRA",
+        "inputs": {
+            "lora_name": "LoRA名稱"
+        },
+        "widgets": {
+            "overwrite": "覆蓋"
+        },
+        "outputs": {
+            "standard_lora_name": "標準LoRA名稱",
+            "editanything_module_name": "編輯任意內容模組名稱"
+        },
+        "description": "將編輯任意內容檢查點拆分為標準LoRA和輔助模組。"
+    },
+    "LTXVEditAnythingModuleLoader": {
+        "title": "LTXV編輯任意內容模組載入器",
+        "widgets": {
+            "module_name": "模組名稱"
+        },
+        "outputs": {
+            "editanything_module": "編輯任意內容模組"
+        },
+        "description": "載入由LTXV編輯任意內容拆分LoRA產生的輔助模組。"
+    },
+    "LTXVEditAnythingLoraLoader": {
+        "title": "LTXV編輯任意內容LoRA載入器",
+        "inputs": {
+            "model": "模型",
+            "lora_name": "LoRA名稱"
+        },
+        "widgets": {
+            "strength_model": "模型強度"
+        },
+        "outputs": {
+            "model": "模型"
+        },
+        "description": "用於編輯任意內容檢查點的LoRA載入器。"
+    },
+    "LTXVEditAnythingApply": {
+        "title": "LTXV編輯任意內容應用",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向",
+            "negative": "負向",
+            "vae": "VAE",
+            "latent": "Latent",
+            "ref_image": "參考影像",
+            "lora_name": "LoRA名稱",
+            "guide_frames": "引導幀",
+            "ref_temporal_offset_latents": "參考時間偏移Latent"
+        },
+        "widgets": {
+            "resize_mode": "縮放模式",
+            "guide_strength": "引導強度",
+            "ref_strength": "參考強度",
+            "role_strength": "角色強度",
+            "adaln_scale": "AdaLN縮放",
+            "enable_adaln": "啟用AdaLN",
+            "enable_role_embedding": "啟用角色嵌入",
+            "debug": "偵錯"
+        },
+        "outputs": {
+            "model": "模型",
+            "positive": "正向",
+            "negative": "負向",
+            "latent": "Latent",
+            "ref_image_preview": "參考影像預覽"
+        },
+        "description": "用於影片轉影片參考AdaLN LoRA的統一編輯任意內容條件產生。在單一節點中應用來自單一LoRA檢查點的全部3種條件訊號：① IC-LoRA序列 對參考影像和可選引導影片進行編碼，將它們作為乾淨的條件幀附加到Latent中。在Transformer中的佈局：[目標標記 | 參考標記 @ t=-1 | 引導標記 @ t=0..T] ② 角色嵌入（role_embedding.embedding.權重[0]） 在patchify_proj之前，向參考影像標記添加學習到的128維指紋，以便模型透過自注意力區分@參考圖和引導幀。③ AdaLN條件產生（ref_adaln_proj: fc1 → SiLU → proj） 使用LoRA中儲存的投影器形狀池化參考影像Latent，透過2層MLP投影到AdaLN時間步空間，並將其添加到每個Transformer塊的時間步偏置中——這是一個持久的全域外觀錨點。連接在標準LoRA載入器之後，KSampler之前。"
+    },
+    "LTXVApplyNeutralMask": {
+        "title": "LTXV應用中性遮罩",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "background": "背景",
+            "hard_edges": "硬邊"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "以乾淨的純色背景替換遮罩掉的影像/影片區域，在將參考影像或引導幀輸入LTXV條件產生之前很有用。"
+    },
+    "LTXVResizeReferenceByMask": {
+        "title": "LTXV按遮罩調整參考大小",
+        "inputs": {
+            "ref_image": "參考影像",
+            "size_mask": "尺寸遮罩",
+            "ref_mask": "參考遮罩"
+        },
+        "widgets": {
+            "fit": "適應",
+            "background": "背景",
+            "padding": "填充",
+            "hard_edges": "硬邊"
+        },
+        "outputs": {
+            "image": "影像",
+            "object_mask": "物件遮罩"
+        },
+        "description": "使用遮罩邊界框作為目標物件尺寸，在乾淨畫布上調整參考物件的大小。遮罩位置被忽略；僅其寬度和高度定義目標縮放比例。"
+    },
+    "LTXVEditAnythingLoopingSampler": {
+        "title": "LTXV編輯任意內容迴圈採樣器",
+        "inputs": {
+            "model": "模型",
+            "vae": "VAE",
+            "noise": "噪音",
+            "sampler": "採樣器",
+            "sigmas": "西格瑪",
+            "guider": "引導器",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "latents": "Latent",
+            "editanything_module": "編輯任意內容模組",
+            "ref_image": "參考影像",
+            "guide_frames": "引導幀"
+        },
+        "widgets": {
+            "temporal_tile_size": "時間塊大小",
+            "temporal_overlap": "時間重疊",
+            "blend_overlap": "混合重疊",
+            "lora_name": "LORA名稱",
+            "ref_resize_mode": "參考縮放模式",
+            "ref_strength": "參考強度",
+            "guide_strength": "引導強度",
+            "role_strength": "角色強度",
+            "adaln_scale": "AdaLN縮放",
+            "enable_ic_lora": "啟用IC-LORA",
+            "enable_role_embedding": "啟用角色嵌入",
+            "enable_adaln": "啟用AdaLN",
+            "reapply_per_chunk": "每塊重新應用",
+            "enable_visual_crossattn": "啟用視覺交叉注意力",
+            "ref_context_scale": "參考上下文縮放",
+            "ref_token_scale": "參考令牌縮放",
+            "ref_start_block": "參考起始塊",
+            "ref_end_block": "參考結束塊",
+            "ref_init_from": "參考初始化來源",
+            "ref_init_seed": "參考初始化隨機種子",
+            "ref_attn_lora_strength": "參考注意力LORA強度",
+            "debug_ea": "偵錯EA",
+            "ref_temporal_offset_latents": "參考時間偏移Latent"
+        },
+        "outputs": {
+            "denoised_output": "去噪輸出",
+            "ref_image_preview": "參考影像預覽",
+            "diff_vs_previous_run": "與前一次執行的差異"
+        },
+        "description": "時間迴圈採樣器，每個塊都帶有完整的編輯任意內容條件。\n\n與LTXVEditAnythingApply類似，但會在時間上對影片進行切片，並在每個塊中重新應用參考+引導IC-LoRA令牌（透過LTXVAddGuide.append_keyframe）、角色嵌入和AdaLN。每個塊對應引導影片的一個切片。\n\n輸入為明確的正向/負向條件；GUIDER輸入僅提供採樣機制（CFG/STG參數），其條件會透過guider.set_conds在每個塊中被覆蓋。"
+    },
+    "LTXVLatentDiffMetrics": {
+        "title": "LTXVLatent差異指標",
+        "inputs": {
+            "latent_a": "LatentA",
+            "latent_b": "LatentB"
+        },
+        "widgets": {
+            "label": "標籤",
+            "print_console": "列印至控制台",
+            "compare_noise_mask": "比較雜訊遮罩"
+        },
+        "outputs": {
+            "metrics": "指標",
+            "latent_a": "LatentA",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1",
+            "cosine": "餘弦相似度"
+        },
+        "description": "比較兩個Latent並回報MSE/RMSE/L1/PSNR/餘弦相似度。\n\n用於A/B測試切換項：使用配置A執行採樣器，儲存Latent→使用配置B執行→將SaveLatent.A和新輸出連接至此節點。輸出既包含用於UI/控制台的格式化字串，也包含單獨的浮點數，以便您可以鏈接到繪圖器或另存為文字節點。\n\n如果兩個Latent形狀不同（例如因VAE差異導致空間不匹配），則會回退至比較重疊子區域。"
+    },
+    "LTXVImageDiffMetrics": {
+        "title": "LTXV影像差異指標",
+        "inputs": {
+            "image_a": "影像A",
+            "image_b": "影像B"
+        },
+        "widgets": {
+            "label": "標籤",
+            "print_console": "列印至控制台"
+        },
+        "outputs": {
+            "metrics": "指標",
+            "image_a": "影像A",
+            "mse": "MSE",
+            "psnr": "PSNR",
+            "l1": "L1"
+        },
+        "description": "與LTXVLatentDiffMetrics類似，但適用於解碼後的影像（VAE之後）——PSNR使用[0,1]像素範圍。在兩次執行解碼後用於比較視覺相關的像素誤差非常有用。"
+    },
+    "LTXIdentityCAN": {
+        "title": "LTX身份CAN",
+        "inputs": {
+            "model": "模型",
+            "reference_image": "參考影像",
+            "can_weights": "CAN權重"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "description": ""
+    },
+    "LTXIdentityGemmaVision": {
+        "title": "LTX身份Gemma視覺",
+        "inputs": {
+            "clip": "剪輯",
+            "reference_image": "參考影像"
+        },
+        "widgets": {
+            "prompt": "提示詞"
+        },
+        "outputs": {
+            "conditioning": "條件"
+        },
+        "description": ""
+    },
+    "LTXIdentityMultiAngle": {
+        "title": "LTX多視角身份",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_face_front": "參考正面人臉",
+            "reference_back_head": "參考後腦勺",
+            "reference_body_front": "參考正面身體",
+            "reference_side_profile": "參考側面輪廓"
+        },
+        "widgets": {
+            "identity_projector": "身份投影器",
+            "phase_scale": "相位縮放",
+            "id_strength": "身份強度",
+            "arcface_mode": "ArcFace模式",
+            "debug_log": "偵錯日誌",
+            "reference_temporal_offset_latents": "參考時間偏移Latent"
+        },
+        "outputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "latent": "Latent",
+            "debug": "偵錯"
+        },
+        "description": "多視角身份遷移：正面人臉（必填）+ 可選的後腦勺/身體/側面參考視圖，每個視圖作為獨立的重疊+來源相位段（source_id 2/3/4/5）注入，與多視圖訓練匹配。請先在MODEL上載入多視圖LoRA。"
+    },
+    "LTXIdentityOverlapConditioning": {
+        "title": "LTX重疊身份條件",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "參考影像"
+        },
+        "widgets": {
+            "source_id": "來源ID",
+            "phase_scale": "相位縮放",
+            "ref_resize_mode": "參考縮放模式",
+            "debug_log": "偵錯日誌",
+            "crop_anchor": "裁切錨點",
+            "layout": "佈局",
+            "reference_guidance_scale": "參考引導強度",
+            "reference_temporal_offset_latents": "參考時間偏移Latent"
+        },
+        "outputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "latent": "Latent",
+            "debug": "偵錯",
+            "ref_preview": "參考預覽",
+            "crop_overlay": "裁切疊加"
+        },
+        "description": "透過模型補丁實現的重疊/st_drc/strata + 來源相位參考條件，帶有實驗性的僅參考時間偏移以減少第0幀的合成洩漏。參考為獨立令牌（非I2V），適用於任何主體——不僅僅是人臉。對於在堆疊參考上訓練的檢查點（佈局='strata'），可接受影像批次。請先在MODEL上載入LoRA。ref_preview/crop_overlay輸出精確顯示編碼內容，以及對於match_target，參考中哪些部分在裁切後保留（綠色框）、哪些被丟棄。"
+    },
+    "LTXIdentityTransfer": {
+        "title": "LTX 身份遷移",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "reference_image": "參考影像"
+        },
+        "widgets": {
+            "source_id": "來源ID",
+            "phase_scale": "相位縮放",
+            "ref_resize_mode": "參考縮放模式",
+            "debug_log": "偵錯日誌",
+            "crop_anchor": "裁切錨點",
+            "layout": "佈局",
+            "reference_guidance_scale": "參考引導強度",
+            "reference_temporal_offset_latents": "參考時間偏移Latent"
+        },
+        "outputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "latent": "Latent",
+            "debug": "偵錯",
+            "ref_preview": "參考預覽",
+            "crop_overlay": "裁切疊加"
+        },
+        "description": "透過模型補丁實現的重疊/st_drc/strata + 來源相位參考條件，帶有實驗性的僅參考時間偏移以減少第0幀的合成洩漏。參考為獨立令牌（非圖生影片），適用於任何主體——不僅僅是人臉。對於在堆疊參考上訓練的檢查點（佈局='strata'），可接受影像批次。請先在MODEL上載入LoRA。ref_preview/crop_overlay輸出精確顯示編碼內容，以及對於match_target，參考中哪些部分在裁切後保留（綠色框）、哪些被丟棄。"
+    },
+    "LTXMultipleControls": {
+        "title": "LTX多控制項",
+        "inputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "vae": "VAE",
+            "latent": "Latent",
+            "guide_video": "引導影片",
+            "mask_video": "遮罩影片",
+            "identity_image": "身份影像",
+            "identity_mask_image": "身份遮罩影像"
+        },
+        "widgets": {
+            "guide_source_id": "引導來源ID",
+            "guide_phase_scale": "引導相位縮放",
+            "guide_layout": "引導佈局",
+            "guide_ref_resize_mode": "引導參考圖縮放模式",
+            "guide_downscale_factor": "引導下採樣因子",
+            "mask_source_id": "遮罩來源ID",
+            "mask_phase_scale": "遮罩相位縮放",
+            "mask_layout": "遮罩佈局",
+            "mask_ref_resize_mode": "遮罩參考圖縮放模式",
+            "mask_downscale_factor": "遮罩下採樣因子",
+            "auto_mask_guide": "自動遮罩引導",
+            "mask_white_thresh": "遮罩白色閾值",
+            "identity_source_id": "身份來源ID",
+            "identity_phase_scale": "身份相位縮放",
+            "identity_layout": "身份佈局",
+            "identity_ref_resize_mode": "身份參考圖縮放模式",
+            "identity_downscale_factor": "身份下採樣因子",
+            "identity_mask_source_id": "身份遮罩來源ID",
+            "identity_mask_phase_scale": "身份遮罩相位縮放",
+            "identity_mask_layout": "身份遮罩佈局",
+            "identity_mask_ref_resize_mode": "身份遮罩參考圖縮放模式",
+            "identity_mask_downscale_factor": "身份遮罩下採樣因子",
+            "crop_anchor": "裁切錨點",
+            "reference_guidance_scale": "參考引導縮放",
+            "debug_log": "偵錯日誌",
+            "identity_temporal_offset_latents": "身份時間偏移Latent"
+        },
+        "outputs": {
+            "model": "模型",
+            "positive": "正向條件",
+            "negative": "負向條件",
+            "latent": "Latent",
+            "debug": "偵錯資訊"
+        },
+        "description": "在單一節點呼叫中整合引導、遮罩、身份及身份遮罩參考條件，因此所有啟用插槽的RoPE參考規範實際會合併（鏈式呼叫LTXIdentityOverlapConditioning節點不會——每次呼叫會覆蓋前一次的規範）。每個插槽都是可選的，且擁有各自的來源ID/相位縮放/佈局/參考縮放模式——無硬編碼，僅預設匹配scail2v2_r128_v13（引導=0，遮罩=0，均無相位；身份=2，帶相位）。引導影片會在替換區域自動以黑色遮罩（auto_mask_guide），以匹配v13的訓練方式——這是讓身份遷移實際生效的修復方案。identity_mask未被v13使用（請留空不連接）；保留它是為了相容舊檢查點。"
+    },
+    "LTXMultishotPrompt": {
+        "title": "LTX多鏡頭提示詞",
+        "inputs": {
+            "image_1": "參考圖1",
+            "image_2": "參考圖2",
+            "image_3": "參考圖3",
+            "image_4": "參考圖4"
+        },
+        "widgets": {
+            "shot_modifier_1": "鏡頭修正1",
+            "shot_size_1": "鏡頭尺寸1",
+            "camera_move_1": "相機移動1",
+            "shot_modifier_2": "鏡頭修正2",
+            "shot_size_2": "鏡頭尺寸2",
+            "camera_move_2": "相機移動2",
+            "shot_modifier_3": "鏡頭修正3",
+            "shot_size_3": "鏡頭尺寸3",
+            "camera_move_3": "相機移動3",
+            "shot_modifier_4": "鏡頭修正4",
+            "shot_size_4": "鏡頭尺寸4",
+            "camera_move_4": "相機移動4"
+        },
+        "outputs": {
+            "prompt": "提示詞",
+            "references": "參考圖",
+            "num_shots": "鏡頭數量"
+        },
+        "description": "產生ShotPlan格式的多鏡頭提示詞，以及多鏡頭分層LoRA所需的有序、灰色填充的參考批次。將`references`輸入到LTX身份遷移（佈局='strata'，來源ID=2，相位縮放=1.0），將`提示詞`輸入到你的LTX文字編碼節點。"
+    },
+    "LTXTrimFirstFrames": {
+        "title": "LTX裁切首幀",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "trim": "裁切幀數"
+        },
+        "outputs": {
+            "images": "影像"
+        },
+        "description": "刪除影片（影像批次）的前N幀——消除了參考幀0的洩漏問題。"
+    },
+    "BFSMultiRefSheetBuilder": {
+        "title": "BFS多參考圖拼接器",
+        "inputs": {
+            "ref_image_1": "參考圖1",
+            "ref_image_2": "參考圖2",
+            "ref_image_3": "參考圖3",
+            "ref_image_4": "參考圖4",
+            "ref_image_5": "參考圖5"
+        },
+        "widgets": {
+            "fit_mode": "適應模式"
+        },
+        "outputs": {
+            "sheet": "拼接圖",
+            "n_refs": "參考圖數量",
+            "debug": "偵錯資訊"
+        },
+        "description": "將1-5個已接入的參考圖合併為多參考LoRA訓練所用的固定1536x1024拼接圖。插槽留空則減少參考圖數量；空插槽會直接跳過，不會以空白內容填充。"
+    },
+    "BFSEntitySheet2x2": {
+        "title": "實體2x2拼接圖",
+        "inputs": {
+            "person": "人物",
+            "clothing": "服裝",
+            "object_or_person2": "物體/人物2",
+            "scene": "場景"
+        },
+        "outputs": {
+            "sheet": "拼接圖",
+            "n_refs": "參考圖數量",
+            "debug": "偵錯資訊"
+        },
+        "description": "產生humoset_sheets_v7多參考LoRA訓練所用的固定1536x1024的2x2實體拼接圖。象限含義固定（左上：人物，右上：服裝，左下：物件/人物2，右下：場景）；輸入留空則對應象限為白色。與LTXIdentityOverlapConditioning配合使用：佈局=重疊度，來源ID=2，相位縮放=1.0，參考縮放模式=native_resolution。"
+    },
+    "FrameRangedFaceLoader": {
+        "title": "幀範圍人臉載入器",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "frame_start": "起始畫面",
+            "frame_end": "結束幀"
+        },
+        "outputs": {
+            "face_sequence": "人臉序列"
+        },
+        "description": "將單張人臉影像包裝為幀範圍[起始幀, 結束幀]。返回人臉序列——ReservedRegionFrameComposer使用的字典清單。結束幀=-1表示「直到最後一幀」（無上限）。"
+    },
+    "FaceSequenceBatch": {
+        "title": "人臉序列批處理",
+        "inputs": {
+            "face_sequence_a": "人臉序列A",
+            "face_sequence_b": "人臉序列B"
+        },
+        "outputs": {
+            "face_sequence": "人臉序列"
+        },
+        "description": "將兩個人臉序列清單合併為一個。鏈式連接多個節點可建構包含多個範圍的批次。"
+    },
+    "ReservedRegionFrameComposer": {
+        "title": "預留區域幀合成器",
+        "inputs": {
+            "frames": "影格",
+            "face_sequence": "人臉序列",
+            "face_images": "人臉影像"
+        },
+        "widgets": {
+            "region_position": "區域位置",
+            "region_size_px": "區域像素尺寸",
+            "face_distribution": "人臉分布",
+            "interval_frames": "間隔幀數",
+            "overflow_mode": "溢出模式",
+            "stack_direction": "堆疊方向",
+            "face_scale_pct": "人臉縮放百分比",
+            "face_padding_px": "人臉像素邊距",
+            "face_gap_px": "人臉像素間距",
+            "face_align_main": "人臉主對齊",
+            "face_align_cross": "人臉交叉對齊",
+            "chroma_r": "色度R",
+            "chroma_g": "色度G",
+            "chroma_b": "色度B"
+        },
+        "outputs": {
+            "frames_out": "輸出幀"
+        },
+        "description": "ComfyUI節點，用於在每一幀中合成預留區域（左/右/上/下），同時保留原始輸出幀尺寸。主要特性：- 保持最終輸出解析度與原始幀解析度一致- 將影片內容適應到剩餘區域，無裁切- 用色度顏色填充預留區域- 在該區域放置一張或多張人臉影像- 支援人臉批次（影像輸入）的時間分布模式- 支援透過人臉序列輸入設定逐幀範圍"
+    }
+}

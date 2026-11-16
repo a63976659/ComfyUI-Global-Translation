@@ -1,0 +1,1706 @@
+{
+    "1hew_ImageColorMatch": {
+        "title": "影像色彩匹配",
+        "inputs": {
+            "source_image": "源影像",
+            "reference_image": "參考影像"
+        },
+        "widgets": {
+            "method": "方法"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "將參考影像的色彩轉移到來源影像上。支援批次處理；當參考影像數量與來源批次不同時，會循環使用參考影像（i % ref_count）。wavelet/adain 原生執行；mkl/hm/reinhard/mvgd 及其混合版本使用 '顏色-matcher' 套件。"
+    },
+    "1hew_ImageColorRestore": {
+        "title": "影像色彩還原",
+        "inputs": {
+            "edit_image": "編輯影像",
+            "org_image": "原始影像"
+        },
+        "widgets": {
+            "background_threshold": "背景閾值",
+            "unchanged_threshold": "不變閾值",
+            "seam_max_distance": "接縫最大距離",
+            "seam_decay": "接縫衰減",
+            "seam_residual_blur": "接縫殘差模糊",
+            "seam_color_sigma": "接縫色彩標準差",
+            "occlusion_residual_blur": "遮擋殘差模糊",
+            "occlusion_bridge_width": "遮擋橋接寬度"
+        },
+        "outputs": {
+            "image": "影像",
+            "unchanged_mask": "不變遮罩"
+        },
+        "description": "在局部平滑物件移除所產生的遮擋接縫的同時，將對齊後的AI編輯色彩還原到原始參考。使用可靠的仿射色彩擬合與連續接縫場（結構不變遮罩清理已停用）。當編輯影像存在Alpha通道時會保留。"
+    },
+    "1hew_ImageAlignChangeMask": {
+        "title": "影像對齊變更遮罩",
+        "inputs": {
+            "edit_image": "編輯影像",
+            "org_image": "原始影像"
+        },
+        "widgets": {
+            "mode": "模式",
+            "max_offset": "最大偏移",
+            "max_rotation": "最大旋轉",
+            "max_scale": "最大縮放",
+            "min_align_score": "最小對齊分數",
+            "color_compensation": "色彩補償",
+            "sensitivity": "靈敏度",
+            "min_component_area": "最小元件面積",
+            "expand": "擴展",
+            "feather": "羽化"
+        },
+        "outputs": {
+            "align_image": "對齊影像",
+            "clean_mask": "乾淨遮罩",
+            "raw_mask": "原始遮罩",
+            "change_score": "變更分數",
+            "overlay_image": "疊加影像"
+        },
+        "description": "將AI編輯後的影像與原始影像對齊，利用穩定的背景像素拒絕小範圍全域色彩漂移，並輸出原始／乾淨的變更遮罩。"
+    },
+    "1hew_ImageAlphaEdge": {
+        "title": "影像Alpha邊緣處理",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "edge": "邊緣",
+            "feather": "羽化"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "調整帶Alpha通道影像的不透明區域邊緣：向內縮邊 / 向外擴邊 + 羽化。\n\n典型場景：去背（移除背景）後元素邊緣仍殘留一圈被背景色污染的\n半透明「毛邊 / 彩邊」。本節點先用形態學向內縮邊，把被污染的\n邊緣像素直接裁除，再做高斯羽化得到乾淨的過渡；羽化前會固定把\n不透明區域的色彩向外擴散至過渡帶（bleed），避免羽化後出現暗邊 / 彩邊。\n\n處理順序：縮邊 / 擴邊 → 色彩外擴 → 羽化。\n輸出帶Alpha的4通道影像，並同時給出處理後的Alpha遮罩。\n\n縮邊 / 擴邊是灰度形態學（最小值 / 最大值 濾波），直接作用在Alpha上：\n對局部線性的軟邊，半徑為r的濾波恰好等於把該斜坡平移r像素，\n因此Alpha的每一條等值線都被整體平移r，matte自帶的抗鋸齒完整\n保留，不會退化成1px台階。填孔屬於遮罩修補，交給別的節點處理。"
+    },
+    "1hew_ImageBlur": {
+        "title": "影像模糊",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "blur": "模糊度"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "對整張影像進行高斯模糊，行為與 LayerStyle 的 LayerFilter: Gaussian Blur V2 一致。\n\n- 模糊 參數支援小數（FLOAT），語意上更接近 V2 版本；\n- 當 模糊 為 0 時直接透傳原圖；\n- 依批次逐幀處理，保持通道數與 資料類型 不變。"
+    },
+    "1hew_ImageResizeDoubaoSeedream50Pro": {
+        "title": "影像縮放 豆包 Seedream 5.0 Pro",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "native_image": "原生影像",
+            "native_mask": "原生遮罩"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30": {
+        "title": "影像縮放 千問影像 3.0",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "native_image": "原生影像",
+            "native_mask": "原生遮罩"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeQwenImage30Pro": {
+        "title": "影像縮放 千問影像 3.0 Pro",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "native_image": "原生影像",
+            "native_mask": "原生遮罩"
+        },
+        "description": ""
+    },
+    "1hew_ImageMinimumArea": {
+        "title": "影像最小面積",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "length_to_sq_area": "參考邊長",
+            "method": "方法",
+            "divisible_by": "可整除",
+            "fit": "適應",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "resize_bool": "是否縮放"
+        },
+        "description": "將影像放大，直到其面積達到最小的平方參考面積。\n\n- ``length_to_sq_area`` 定義參考正方形的邊長（目標面積 = N²）。\n- ``適應`` 的行為類似「通用影像縮放」：裁剪／填滿／拉伸。\n- ``可整除`` 會將最終尺寸向上取整為某個數的倍數。\n- ``resize_bool`` 會報告是否實際發生了放大操作。"
+    },
+    "1hew_StringRandom": {
+        "title": "隨機字串",
+        "widgets": {
+            "custom_text": "自訂文字",
+            "seed": "隨機種子"
+        },
+        "outputs": {
+            "string": "字串"
+        },
+        "description": ""
+    },
+    "1hew_TextCompare": {
+        "title": "文字比較",
+        "widgets": {
+            "a": "a",
+            "operator": "運算子",
+            "b": "b"
+        },
+        "outputs": {
+            "bool": "布林值"
+        },
+        "description": ""
+    },
+    "1hew_MultiMaskMathOps": {
+        "title": "多遮罩數學運算",
+        "inputs": {
+            "mask_1": "遮罩1",
+            "mask_2": "遮罩2"
+        },
+        "widgets": {
+            "operation": "運算"
+        },
+        "outputs": {
+            "mask": "遮罩"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioJimeng": {
+        "title": "Jimeng 文字比例",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "selection": "選擇項"
+        },
+        "outputs": {
+            "string": "字串"
+        },
+        "description": ""
+    },
+    "1hew_MaskLevels": {
+        "title": "遮罩層級",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "black_point": "黑點",
+            "white_point": "白點"
+        },
+        "outputs": {
+            "mask": "遮罩"
+        },
+        "description": "用於設定遮罩影像的黑點與白點閾值，以調整遮罩的對比度與範圍。"
+    },
+    "1hew_IntNumberCompare": {
+        "title": "整數比較",
+        "inputs": {
+            "a": "數值 a",
+            "operator": "運算子",
+            "b": "數值 b"
+        },
+        "widgets": {
+            "bool": "布林值"
+        },
+        "description": "比較兩個整數的大小關係"
+    },
+    "1hew_FloatNumberCompare": {
+        "title": "浮點數比較",
+        "widgets": {
+            "a": "數值 a",
+            "operator": "運算子",
+            "b": "數值 b"
+        },
+        "outputs": {
+            "bool": "布林值"
+        },
+        "description": "比較兩個浮點數的大小關係"
+    },
+    "1hew_ImageBWMatte": {
+        "title": "影像黑白磨邊",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "gamma": "伽瑪",
+            "shrink_radius": "收縮半徑",
+            "blur_radius": "模糊半徑"
+        },
+        "outputs": {
+            "mask": "遮罩"
+        }
+    },
+    "1hew_MaskStroke": {
+        "title": "描邊遮罩",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "fill_hole": "填補孔洞",
+            "stroke_width": "描邊寬度",
+            "include_mask": "包含遮罩"
+        },
+        "outputs": {
+            "mask": "遮罩"
+        },
+        "description": "對遮罩進行描邊處理"
+    },
+    "1hew_VideoToURL": {
+        "title": "影片轉URL",
+        "inputs": {
+            "video": "影片檔案路徑"
+        },
+        "widgets": {
+            "timeout": "逾時時間（秒）"
+        },
+        "outputs": {
+            "url": "產生的URL"
+        },
+        "description": "將影片檔案轉換為可存取的 URL 連結"
+    },
+    "1hew_VideoToImage": {
+        "title": "影片轉影像",
+        "inputs": {
+            "video": "影片"
+        },
+        "outputs": {
+            "image": "影像",
+            "audio": "音訊",
+            "fps": "幀率",
+            "frame_count": "幀數"
+        },
+        "description": "將影片轉換為影像、音訊、影格率與影格數"
+    },
+    "1hew_IntVideoCount": {
+        "title": "影片計數器",
+        "inputs": {
+            "video_1": "影片1"
+        },
+        "outputs": {
+            "int": "整數"
+        },
+        "description": "用於計數影片的節點"
+    },
+    "1hew_ImageToMask": {
+        "title": "影像轉遮罩",
+        "inputs": {
+            "image": "影像"
+        },
+        "outputs": {
+            "mask": "遮罩"
+        },
+        "description": "將影像轉換為遮罩"
+    },
+    "1hew_ImageBatchIndex": {
+        "title": "影像批次索引",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "index": "索引"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchUniform": {
+        "title": "影像批次均勻化",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "num_frame": "幀數"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": ""
+    },
+    "1hew_ImageListInterleave": {
+        "title": "影像清單交錯",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "segment_count": "分段數"
+        },
+        "outputs": {
+            "image_list": "影像列表"
+        },
+        "description": ""
+    },
+    "1hew_ImagePadByBBoxMask": {
+        "title": "邊界框填滿",
+        "inputs": {
+            "paste_image": "貼上影像",
+            "bbox_mask": "邊界框遮罩"
+        },
+        "widgets": {
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "影像邊界框填充器 - 依 bbox_遮罩 的外接框放置影像，並將其餘區域填滿為指定顏色。"
+    },
+    "1hew_IntImageCount": {
+        "title": "整數影像數量",
+        "inputs": {
+            "image_1": "影像1"
+        },
+        "outputs": {
+            "int": "整數"
+        },
+        "description": ""
+    },
+    "1hew_LoadPS": {
+        "title": "載入PS",
+        "widgets": {
+            "file": "檔案",
+            "index": "索引",
+            "include_hidden": "包含隱藏項",
+            "group_mode": "分組模式",
+            "output_mode": "輸出模式",
+            "preview": "預覽",
+            "choose psd to upload": "選擇 PSD 檔案上傳"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "filename": "檔案名稱",
+            "layer_name": "圖層名稱"
+        },
+        "description": ""
+    },
+    "1hew_MaskToBBoxMask": {
+        "title": "遮罩轉邊界框遮罩",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "output_mode": "輸出模式",
+            "divisible_by": "可整除"
+        },
+        "outputs": {
+            "bbox_mask": "邊界框遮罩"
+        },
+        "description": ""
+    },
+    "1hew_MultiImageList": {
+        "title": "多影像清單",
+        "inputs": {
+            "image_1": "影像1"
+        },
+        "widgets": {
+            "image_1": "影像1"
+        },
+        "outputs": {
+            "image_list": "影像列表"
+        },
+        "description": ""
+    },
+    "1hew_MemoryCleanup": {
+        "title": "記憶體清理",
+        "widgets": {
+            "anything": "任意內容",
+            "unload_model": "解除安裝模型"
+        },
+        "description": "請求 ComfyUI 在當前工作結束之後釋放執行快取與模型佔用，適合在多次排隊執行之間清理 RAM/VRAM。"
+    },
+    "1hew_AudioDuration": {
+        "title": "音訊時長",
+        "inputs": {
+            "audio": "音訊"
+        },
+        "description": "取得音訊的時長。"
+    },
+    "1hew_ImageBatchExtract": {
+        "title": "影像批次擷取",
+        "inputs": {
+            "image": "影像",
+            "mode": "模式",
+            "index": "索引",
+            "step": "步長",
+            "uniform": "均勻",
+            "max_keep": "最大保留數量"
+        },
+        "description": "從影像批次中擷取指定模式下的影像。"
+    },
+    "1hew_ImageBatchGroup": {
+        "title": "影像批次分組",
+        "inputs": {
+            "image": "影像",
+            "batch_size": "批次大小",
+            "overlap": "重疊",
+            "last_batch_mode": "最後一個批次模式",
+            "color": "顏色"
+        },
+        "description": "將影像批次進行分組處理。"
+    },
+    "1hew_ImageBatchRange": {
+        "title": "影像批次範圍",
+        "inputs": {
+            "image": "影像",
+            "start_index": "起始索引",
+            "num_frame": "幀數"
+        },
+        "description": "從影像批次中擷取指定範圍內的影像。"
+    },
+    "1hew_ImageBatchSplit": {
+        "title": "影像批次分割",
+        "inputs": {
+            "image": "影像",
+            "take_count": "取幀數",
+            "from_start": "從開始"
+        },
+        "description": "從影像批次中依指定數量分割影像。"
+    },
+    "1hew_ImageListAppend": {
+        "title": "影像清單追加",
+        "inputs": {
+            "image_1": "影像1",
+            "image_2": "影像2"
+        },
+        "description": "將兩個影像追加到清單中。"
+    },
+    "1hew_MaskBatchMathOps": {
+        "title": "遮罩批次數學運算",
+        "inputs": {
+            "mask": "遮罩",
+            "operation": "操作"
+        },
+        "description": "對遮罩批次執行數學運算。"
+    },
+    "1hew_MaskBatchRange": {
+        "title": "遮罩批次範圍",
+        "inputs": {
+            "mask": "遮罩",
+            "start_index": "起始索引",
+            "num_frame": "幀數"
+        },
+        "description": "自遮罩批次中擷取指定範圍內的遮罩。"
+    },
+    "1hew_MaskBatchSplit": {
+        "title": "遮罩批次分割",
+        "inputs": {
+            "mask": "遮罩",
+            "take_count": "取幀數",
+            "from_start": "從開始"
+        },
+        "description": "自遮罩批次中依指定數量分割遮罩。"
+    },
+    "1hew_VideoCutGroup": {
+        "title": "影片剪輯分組",
+        "inputs": {
+            "image": "影像",
+            "threshold_base": "閾值基礎",
+            "threshold_range": "閾值範圍",
+            "threshold_count": "閾值計數",
+            "kernel": "核心",
+            "min_frame_count": "最小影格數",
+            "max_frame_count": "最大影格數",
+            "fast": "快速",
+            "add_frame": "增加影格",
+            "delete_frame": "刪除影格"
+        },
+        "description": "依影像進行影片剪輯分組。"
+    },
+    "1hew_MatchBrightnessContrast": {
+        "title": "匹配亮度對比度",
+        "inputs": {
+            "source_image": "源影像",
+            "reference_image": "參考影像",
+            "edge_amount": "邊緣量",
+            "consistency": "一致性",
+            "method": "方法"
+        },
+        "description": "匹配來源影像與參考影像之間的亮度與對比度。"
+    },
+    "1hew_TextEncodeQwenImageEdit": {
+        "title": "文字編碼Qwen影像編輯",
+        "description": "使用 Qwen 模型對文字進行編碼，以供影像編輯使用。"
+    },
+    "1hew_ImageBatchToList": {
+        "title": "影像批次轉清單",
+        "inputs": {
+            "image_batch": "影像批次"
+        },
+        "description": "將影像批次轉換為影像清單。"
+    },
+    "1hew_ImageListToBatch": {
+        "title": "影像清單轉批次",
+        "inputs": {
+            "image_list": "影像列表"
+        },
+        "description": "將影像清單轉換為影像批次。"
+    },
+    "1hew_ImageToURL": {
+        "title": "影像轉網址連結 URL",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "mode": "模式",
+            "timeout": "逾時"
+        },
+        "outputs": {
+            "url": "網址連結 URL"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskBatchToList": {
+        "title": "遮罩批次轉清單",
+        "inputs": {
+            "mask_batch": "遮罩批次"
+        },
+        "description": "將遮罩批次轉換為遮罩清單。"
+    },
+    "1hew_MaskListToBatch": {
+        "title": "遮罩清單轉換為批次",
+        "description": "將多個遮罩轉換為一個批次。",
+        "inputs": {
+            "mask_list": "遮罩清單"
+        }
+    },
+    "1hew_MaskToSam3Box": {
+        "title": "遮罩轉Sam3Box",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "condition": "狀態",
+            "output_mode": "輸出模式"
+        },
+        "description": ""
+    },
+    "1hew_StringCoordinateToBBoxes": {
+        "title": "字串座標轉邊界框",
+        "description": "自座標字串產生邊界框。",
+        "inputs": {
+            "coordinates_string": "座標字串"
+        }
+    },
+    "1hew_StringCoordinateToBBoxMask": {
+        "title": "字串座標轉邊界框遮罩",
+        "description": "自座標字串產生邊界框遮罩。",
+        "inputs": {
+            "image": "影像",
+            "coordinates_string": "座標字串",
+            "output_mode": "輸出模式"
+        }
+    },
+    "1hew_TextListToString": {
+        "title": "文字清單轉字串",
+        "description": "將文字清單合併為一個字串。",
+        "inputs": {
+            "text_list": "文字清單",
+            "prefix": "前綴",
+            "suffix": "後綴",
+            "separator": "分隔符號"
+        }
+    },
+    "1hew_TextToAny": {
+        "title": "文字轉任意格式",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "any": "任意"
+        },
+        "description": ""
+    },
+    "1hew_URLToVideo": {
+        "title": "URL轉影片",
+        "description": "自 URL 取得影片。",
+        "inputs": {
+            "video_url": "影片URL",
+            "timeout": "逾時時間"
+        }
+    },
+    "1hew_DetectGuideLine": {
+        "title": "偵測引導線",
+        "description": "偵測影像中的引導線。",
+        "inputs": {
+            "image": "影像",
+            "canny_low": "Canny低閾值",
+            "canny_high": "Canny高閾值",
+            "seg_min_len": "最小分割長度",
+            "seg_max_gap": "最大分割間隙",
+            "guide_filter": "引導濾波器",
+            "guide_width": "引導線寬度",
+            "cluster_eps": "聚類ε值"
+        }
+    },
+    "1hew_DetectRemoveBG": {
+        "title": "移除背景",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "model": "模型",
+            "add_background": "新增背景"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectRemoveBGRefine": {
+        "title": "移除背景最佳化",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "type": "類型",
+            "subject_protect": "主體保護",
+            "feather": "羽化",
+            "decolor_edge": "邊緣去色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_DetectYolo": {
+        "title": "偵測 Yolo",
+        "description": "使用YOLO模型偵測影像中的物件。",
+        "inputs": {
+            "image": "影像",
+            "yolo_model": "YOLO模型",
+            "threshold": "閾值",
+            "mask_index": "遮罩索引",
+            "label": "標籤",
+            "label_size": "標籤大小"
+        }
+    },
+    "1hew_ImageAddLabel": {
+        "title": "影像新增標籤",
+        "description": "在影像上新增文字標籤。",
+        "inputs": {
+            "image": "影像",
+            "height_pad": "高度填補",
+            "font_size": "字體大小",
+            "invert_color": "反色",
+            "font": "字體",
+            "text": "文字",
+            "direction": "方向",
+            "input1": "輸入1",
+            "input2": "輸入2"
+        }
+    },
+    "1hew_ImageAlphaClean": {
+        "title": "Alpha 通道清理",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "clean_strength": "清理強度",
+            "detect_only": "僅檢測"
+        },
+        "outputs": {
+            "mask": "遮罩",
+            "noise_mask": "雜訊遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageAlphaSplit": {
+        "title": "Alpha 通道分離",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "background_color": "背景顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageBBoxOverlayByMask": {
+        "title": "透過遮罩在影像上繪製邊界框",
+        "description": "透過遮罩在影像上繪製邊界框。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "bbox_color": "邊界框顏色",
+            "stroke_width": "描邊寬度",
+            "fill": "填補",
+            "padding": "內距",
+            "output_mode": "輸出模式"
+        }
+    },
+    "1hew_ImageEditStitch": {
+        "title": "影像編輯拼接",
+        "description": "編輯並拼接影像。",
+        "inputs": {
+            "reference_image": "參考影像",
+            "edit_image": "編輯影像",
+            "edit_mask": "編輯遮罩",
+            "edit_image_position": "編輯影像位置",
+            "match_edit_size": "匹配編輯尺寸",
+            "spacing": "間距",
+            "spacing_color": "間距顏色",
+            "pad_color": "填滿顏色"
+        }
+    },
+    "1hew_ImageMainStitch": {
+        "title": "影像拼接",
+        "description": "主要的影像拼接。",
+        "inputs": {
+            "image_1": "影像1",
+            "image_2": "影像2",
+            "image_3": "影像3",
+            "direction": "方向",
+            "match_image_size": "匹配影像尺寸",
+            "spacing_width": "間距寬度",
+            "spacing_color": "間距顏色",
+            "pad_color": "填滿顏色"
+        }
+    },
+    "1hew_ImagePingPong": {
+        "title": "影像迴圈",
+        "description": "影像來回處理。",
+        "inputs": {
+            "image": "影像",
+            "pre_reverse": "預先反轉",
+            "ops_count": "操作次數",
+            "frame_count": "幀數",
+            "remove_link_frame": "移除連結影格"
+        }
+    },
+    "1hew_ImagePlot": {
+        "title": "影像繪製",
+        "description": "繪製影像網格佈局。",
+        "inputs": {
+            "image": "影像",
+            "layout": "佈局",
+            "spacing": "間距",
+            "grid_columns": "網格列數",
+            "background_color": "背景顏色"
+        }
+    },
+    "1hew_ImageRotateWithMask": {
+        "title": "連同遮罩旋轉影像",
+        "description": "對影像進行旋轉，並套用遮罩。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "angle": "角度",
+            "pad_color": "填滿顏色",
+            "expand": "擴展",
+            "mask_center": "遮罩中心"
+        }
+    },
+    "1hew_ImageSolid": {
+        "title": "產生純色影像",
+        "description": "產生純色影像。",
+        "inputs": {
+            "get_image_size": "取得影像尺寸",
+            "preset_size": "預設尺寸",
+            "width": "寬度",
+            "height": "高度",
+            "color": "顏色",
+            "alpha": "透明度",
+            "invert": "反轉",
+            "mask_opacity": "遮罩透明度",
+            "divisible_by": "可被整除"
+        }
+    },
+    "1hew_ImageStrokeByMask": {
+        "title": "透過遮罩繪製輪廓",
+        "description": "透過遮罩在影像上繪製輪廓。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "stroke_width": "輪廓寬度",
+            "stroke_color": "輪廓顏色"
+        }
+    },
+    "1hew_ImageBlendModeByAlpha": {
+        "title": "透過Alpha混合模式",
+        "description": "透過Alpha值在疊加影像與基礎影像之間進行混合。",
+        "inputs": {
+            "overlay_image": "疊加影像",
+            "base_image": "基礎影像",
+            "overlay_mask": "疊加遮罩",
+            "blend_mode": "混合模式",
+            "opacity": "不透明度",
+            "invert_mask": "反轉遮罩"
+        }
+    },
+    "1hew_ImageBlendModeByCSS": {
+        "title": "透過CSS混合模式",
+        "description": "透過CSS混合模式在疊加影像與基礎影像之間進行混合。",
+        "inputs": {
+            "overlay_image": "疊加影像",
+            "base_image": "基礎影像",
+            "blend_mode": "混合模式",
+            "blend_percentage": "混合百分比",
+            "overlay_mask": "疊加遮罩",
+            "invert_mask": "反轉遮罩"
+        }
+    },
+    "1hew_ImageMaskBlend": {
+        "title": "透過遮罩混合影像",
+        "description": "透過遮罩在影像之間進行混合。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "fill_hole": "填補空洞",
+            "invert": "反轉",
+            "feather": "羽化",
+            "opacity": "不透明度",
+            "expansion": "擴展",
+            "background_color": "背景顏色",
+            "background_opacity": "背景透明度",
+            "output_mask_invert": "輸出遮罩反轉"
+        }
+    },
+    "1hew_ImageCropSquare": {
+        "title": "裁切為正方形影像",
+        "description": "將影像裁切為正方形。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "scale_factor": "縮放因子",
+            "extra_padding": "額外填充",
+            "fill_color": "填滿顏色",
+            "apply_mask": "應用遮罩",
+            "divisible_by": "可被整除"
+        }
+    },
+    "1hew_ImageCropWithBBoxBoxMask": {
+        "title": "邊界框裁切",
+        "widgets": {
+            "image": "影像",
+            "mask": "遮罩",
+            "preset_ratio": "預設比例",
+            "get_crop_ratio": "取得裁切比例",
+            "scale_strength": "縮放強度",
+            "crop_to_side": "裁切至邊長",
+            "crop_to_length": "裁切至長度",
+            "divisible_by": "整除倍數"
+        },
+        "description": "影像裁切器 - 根據遮罩裁切影像，並回傳邊界框遮罩資訊以便後續貼回原位置",
+        "api_version": "V3"
+    },
+    "1hew_ImageEdgeCropPad": {
+        "title": "邊緣裁切並填補",
+        "description": "對影像進行邊緣裁切並填補。",
+        "inputs": {
+            "image": "影像",
+            "uniform_amount": "均勻填補量",
+            "top_amount": "頂部填補量",
+            "bottom_amount": "底部填補量",
+            "left_amount": "左側填補量",
+            "right_amount": "右側填補量",
+            "pad_color": "填滿顏色",
+            "divisible_by": "可被整除"
+        }
+    },
+    "1hew_ImageGridSplit": {
+        "title": "影像網格分割",
+        "description": "將影像分割成網格。",
+        "inputs": {
+            "image": "影像",
+            "rows": "行數",
+            "columns": "列數",
+            "index": "索引",
+            "all": "全部"
+        }
+    },
+    "1hew_ImageMaskCrop": {
+        "title": "透過遮罩裁剪影像",
+        "description": "透過遮罩裁剪影像。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "output_crop": "輸出裁剪",
+            "output_alpha": "輸出 Alpha"
+        }
+    },
+    "1hew_ImagePasteByBBoxMask": {
+        "title": "透過邊界框遮罩貼上影像",
+        "description": "透過邊界框遮罩在影像上貼上。",
+        "inputs": {
+            "paste_image": "貼上影像",
+            "base_image": "基礎影像",
+            "bbox_mask": "邊界框遮罩",
+            "paste_mask": "貼上遮罩",
+            "position_x": "X 位置",
+            "position_y": "Y 位置",
+            "scale": "縮放",
+            "rotation": "旋轉",
+            "opacity": "不透明度",
+            "apply_paste_mask": "套用貼上遮罩"
+        }
+    },
+    "1hew_ImageHLFreqCombine": {
+        "title": "高頻低頻影像結合",
+        "description": "結合高頻與低頻影像。",
+        "inputs": {
+            "high_freq": "高頻影像",
+            "low_freq": "低頻影像",
+            "method": "方法",
+            "high_strength": "高頻強度",
+            "low_strength": "低頻強度"
+        }
+    },
+    "1hew_ImageHLFreqSeparate": {
+        "title": "影像高頻低頻頻率分離",
+        "inputs": {
+            "image": "影像",
+            "method": "方法",
+            "blur_radius": "模糊半徑"
+        },
+        "description": "將影像中的高頻與低頻成分分開處理。"
+    },
+    "1hew_ImageHLFreqTransform": {
+        "title": "影像高頻低頻頻率變換",
+        "inputs": {
+            "generate_image": "產生影像",
+            "detail_image": "細節影像",
+            "detail_mask": "細節遮罩",
+            "method": "方法",
+            "blur_radius": "模糊半徑"
+        },
+        "description": "對影像的高頻與低頻成分進行變換操作。"
+    },
+    "1hew_ImageResizeFluxKontext": {
+        "title": "影像縮放 Flux Kontext",
+        "description": "使用 Flux Kontext 調整影像大小。",
+        "inputs": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色",
+            "image": "影像",
+            "mask": "遮罩"
+        }
+    },
+    "1hew_ImageResizeGemini30ProImage": {
+        "title": "影像縮放 Gemini 3.0 Pro",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeGemini31FlashImage": {
+        "title": "影像縮放 Gemini 3.1 Flash",
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色",
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeJimeng": {
+        "title": "影像縮放 即夢",
+        "description": "使用 Jimeng 調整影像大小。",
+        "inputs": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色",
+            "image": "影像",
+            "mask": "遮罩"
+        }
+    },
+    "1hew_ImageResizeQwenImage": {
+        "title": "影像縮放 Qwen千問影像",
+        "description": "對影像進行縮放。",
+        "inputs": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色",
+            "image": "影像",
+            "mask": "遮罩"
+        }
+    },
+    "1hew_ImageResizeSquare": {
+        "title": "影像縮放 正方形",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_ImageResizeUniversal": {
+        "title": "通用影像縮放",
+        "description": "對影像進行通用縮放。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "get_image_size": "取得影像尺寸",
+            "preset_ratio": "預設比例",
+            "proportional_width": "依寬度比例縮放",
+            "proportional_height": "依高度比例縮放",
+            "method": "方法",
+            "scale_to_side": "縮放到邊長",
+            "scale_to_length": "縮放到長度",
+            "fit": "適應方式",
+            "pad_color": "填滿顏色",
+            "divisible_by": "可被整除"
+        }
+    },
+    "1hew_ImageTileMerge": {
+        "title": "影像圖塊合併",
+        "inputs": {
+            "tile": "圖塊",
+            "tile_meta": "圖塊中繼資料",
+            "blend_strength": "融合強度"
+        },
+        "description": "將多張圖塊影像合併為一張完整的影像。"
+    },
+    "1hew_ImageTileSplit": {
+        "title": "影像分塊",
+        "inputs": {
+            "image": "影像",
+            "get_tile_size": "取得分塊尺寸",
+            "mode": "模式",
+            "overlap_amount": "重疊量",
+            "grid_row": "行數",
+            "grid_col": "列數",
+            "divisible_by": "可整除數"
+        },
+        "description": "將影像分割成多個分塊。"
+    },
+    "1hew_IntImageSideLength": {
+        "title": "整數影像邊長",
+        "inputs": {
+            "image": "影像",
+            "mode": "模式"
+        },
+        "description": "計算或設定影像的邊長為整數值。"
+    },
+    "1hew_IntImageSize": {
+        "title": "整數影像尺寸",
+        "inputs": {
+            "image": "影像"
+        },
+        "description": "取得影像的整數尺寸。"
+    },
+    "1hew_IntMaskSideLength": {
+        "title": "整數遮罩邊長",
+        "inputs": {
+            "mask": "遮罩",
+            "mode": "模式"
+        },
+        "description": "計算或設定遮罩的邊長為整數值。"
+    },
+    "1hew_IntSplit": {
+        "title": "整數分割",
+        "inputs": {
+            "total": "總數",
+            "split_point": "分割點"
+        },
+        "description": "將一個整數依指定位置分割成兩部分。"
+    },
+    "1hew_IntWan": {
+        "title": "整數萬位",
+        "inputs": {
+            "value": "數值"
+        },
+        "description": "取得或設定整數的萬位。"
+    },
+    "1hew_GetFileCount": {
+        "title": "取得檔案數量",
+        "inputs": {
+            "folder": "資料夾",
+            "type": "類型",
+            "include_subdir": "包含子資料夾"
+        },
+        "description": "統計指定資料夾及其子資料夾下的檔案數量。"
+    },
+    "1hew_LoadImage": {
+        "title": "載入圖片",
+        "inputs": {
+            "get_image_size": "取得影像尺寸",
+            "file": "檔案",
+            "index": "索引",
+            "include_subdir": "包含子資料夾",
+            "all": "全部"
+        },
+        "description": "自指定路徑載入影像檔案。"
+    },
+    "1hew_LoadTxt": {
+        "title": "載入文字",
+        "widgets": {
+            "file": "檔案",
+            "encode": "編碼",
+            "index": "索引",
+            "include_subdir": "包含子資料夾"
+        },
+        "outputs": {
+            "text": "文字",
+            "filename": "檔案名稱"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_LoadVideo": {
+        "title": "載入影片",
+        "inputs": {
+            "file": "檔案",
+            "frame_limit": "幀限制",
+            "fps": "幀率",
+            "start_skip": "開始跳過",
+            "end_skip": "結束跳過",
+            "format": "格式",
+            "video_index": "影片索引",
+            "include_subdir": "包含子資料夾"
+        },
+        "description": "自指定路徑載入影片檔案。"
+    },
+    "1hew_LoadVideoToImage": {
+        "title": "影片轉影像",
+        "inputs": {
+            "file": "檔案",
+            "frame_limit": "幀限制",
+            "fps": "幀率",
+            "start_skip": "開始跳過",
+            "end_skip": "結束跳過",
+            "format": "格式",
+            "video_index": "影片索引",
+            "include_subdir": "包含子資料夾"
+        },
+        "description": "將影片檔案轉換為一系列影像影格。"
+    },
+    "1hew_SaveImage": {
+        "title": "儲存影像",
+        "inputs": {
+            "image": "影像",
+            "filename_prefix": "檔名前綴",
+            "save_output": "儲存輸出",
+            "save_metadata": "儲存中繼資料"
+        },
+        "description": "將影像儲存到指定路徑。"
+    },
+    "1hew_SaveTxt": {
+        "title": "儲存文字",
+        "inputs": {
+            "any": "任意"
+        },
+        "widgets": {
+            "filename": "檔案名稱",
+            "auto_increment": "自動遞增",
+            "save_output": "儲存輸出",
+            "encode": "編碼"
+        },
+        "outputs": {
+            "file_path": "檔案路徑"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_SaveVideo": {
+        "title": "儲存影片",
+        "inputs": {
+            "video": "影片",
+            "filename_prefix": "檔名前綴",
+            "save_output": "儲存輸出",
+            "save_metadata": "儲存中繼資料"
+        },
+        "description": "將影片儲存到指定路徑。"
+    },
+    "1hew_SaveVideoByImage": {
+        "title": "影像儲存為影片",
+        "description": "依影像與音訊儲存影片。",
+        "inputs": {
+            "image": "影像",
+            "audio": "音訊",
+            "fps": "幀率",
+            "filename_prefix": "檔名前綴",
+            "save_output": "儲存輸出",
+            "save_metadata": "儲存中繼資料"
+        }
+    },
+    "1hew_AnyEmptyBool": {
+        "title": "任何 空 布林",
+        "description": "偵測布林值是否為空。",
+        "inputs": {
+            "any": "任意值"
+        }
+    },
+    "1hew_AnyEmptyInt": {
+        "title": "任何 空 整數",
+        "description": "偵測整數值是否為空。",
+        "inputs": {
+            "any": "任意值",
+            "empty": "空值",
+            "not_empty": "非空值"
+        }
+    },
+    "1hew_AnySwitchBool": {
+        "title": "任何開關布林",
+        "description": "根據布林值切換兩個選項。",
+        "inputs": {
+            "boolean": "布林值",
+            "on_true": "為真時",
+            "on_false": "為假時"
+        }
+    },
+    "1hew_AnySwitchSelect": {
+        "title": "選擇器切換",
+        "inputs": {
+            "input_1": "輸入1"
+        },
+        "widgets": {
+            "select": "選擇"
+        },
+        "outputs": {
+            "output": "輸出",
+            "select": "選擇"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiSwitchSelect": {
+        "title": "多重選擇器切換",
+        "inputs": {
+            "input_1": "輸入1"
+        },
+        "widgets": {
+            "select": "選擇"
+        },
+        "outputs": {
+            "output_1": "輸出1",
+            "select": "選擇"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_rownum": {
+        "title": "文字匹配行號",
+        "widgets": {
+            "text_multiline": "多行文字",
+            "text_single": "單行文字"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_text_match_value": {
+        "title": "文字匹配值",
+        "widgets": {
+            "text_multiline": "多行文字",
+            "text_single": "單行文字"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskAlphaClean": {
+        "title": "遮罩透明度清理",
+        "widgets": {
+            "mask": "遮罩",
+            "clean_strength": "清理強度",
+            "detect_only": "僅檢測"
+        },
+        "outputs": {
+            "mask": "遮罩",
+            "noise_mask": "雜訊遮罩"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskCropByBBoxMask": {
+        "title": "透過邊界框遮罩裁剪遮罩",
+        "description": "透過邊界框遮罩裁剪遮罩。",
+        "inputs": {
+            "mask": "遮罩",
+            "bbox_mask": "邊界框遮罩"
+        }
+    },
+    "1hew_MaskFillHole": {
+        "title": "填滿遮罩 孔洞",
+        "description": "填滿遮罩中的孔洞。",
+        "inputs": {
+            "mask": "遮罩",
+            "invert_mask": "反轉遮罩"
+        }
+    },
+    "1hew_MaskPasteByBBoxMask": {
+        "title": "透過邊界框遮罩貼上遮罩",
+        "description": "透過邊界框遮罩貼上遮罩。",
+        "inputs": {
+            "paste_mask": "貼上遮罩",
+            "bbox_mask": "邊界框遮罩",
+            "base_mask": "基礎遮罩"
+        }
+    },
+    "1hew_MaskRepeat": {
+        "title": "複製遮罩",
+        "description": "重複遮罩。",
+        "inputs": {
+            "mask": "遮罩",
+            "invert": "反轉",
+            "count": "次數"
+        }
+    },
+    "1hew_MaskSeparate": {
+        "title": "遮罩分離",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "threshold": "閾值",
+            "min_area": "最小面積",
+            "sort_mode": "排序模式",
+            "connectivity": "連通性"
+        },
+        "outputs": {
+            "mask": "遮罩",
+            "count": "整數"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MaskToImage": {
+        "title": "遮罩轉影像",
+        "inputs": {
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "fill_hole": "填補孔洞",
+            "white_area_color": "白色區域顏色",
+            "black_area_color": "黑色區域顏色",
+            "output_alpha": "輸出 Alpha 通道"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageBatch": {
+        "title": "多影像批次處理",
+        "description": "批次處理多張影像。",
+        "inputs": {
+            "fit": "適應",
+            "pad_color": "填滿顏色",
+            "image_1": "影像1"
+        }
+    },
+    "1hew_MultiImageOverlay": {
+        "title": "多影像疊加",
+        "inputs": {
+            "image_1": "影像 1"
+        },
+        "widgets": {
+            "fit_mode": "適應模式",
+            "color": "顏色"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "多圖層疊加：\n- image_1 為最上層，數字越大越靠下層\n- RGBA 輸入使用 alpha 做正常的圖層合成\n- RGB 輸入視為不透明圖層",
+        "api_version": "V3"
+    },
+    "1hew_MultiImageStitch": {
+        "title": "多影像拼接",
+        "description": "拼接多張影像。",
+        "inputs": {
+            "direction": "方向",
+            "match_image_size": "匹配影像大小",
+            "spacing_width": "間距寬度",
+            "spacing_color": "間距顏色",
+            "pad_color": "填滿顏色",
+            "image_1": "影像1",
+            "image_2": "影像2"
+        }
+    },
+    "1hew_MultiMaskBatch": {
+        "title": "多遮罩拼接",
+        "description": "批次處理多個遮罩。",
+        "inputs": {
+            "fit": "適應",
+            "pad_color": "填滿顏色",
+            "mask_1": "遮罩1"
+        }
+    },
+    "1hew_MaskMathOps": {
+        "title": "多遮罩數學運算",
+        "description": "執行多個遮罩的數學運算。",
+        "inputs": {
+            "mask_1": "遮罩1",
+            "mask_2": "遮罩2",
+            "operation": "操作"
+        }
+    },
+    "1hew_MultiStringJoin": {
+        "title": "多字串連接",
+        "description": "連接多個字串。",
+        "inputs": {
+            "filter_empty_line": "篩選空行",
+            "filter_comment": "篩選註解",
+            "separator": "分隔符號",
+            "input": "輸入"
+        }
+    },
+    "1hew_ListCustomFloat": {
+        "title": "自訂浮點數清單",
+        "description": "自訂浮點數清單。",
+        "inputs": {
+            "custom_text": "自訂文字"
+        }
+    },
+    "1hew_ListCustomInt": {
+        "title": "自訂整數清單",
+        "inputs": {
+            "custom_text": "自訂文字"
+        },
+        "description": "產生一個包含自訂整數的清單。"
+    },
+    "1hew_ListCustomSeed": {
+        "title": "自訂種子清單",
+        "inputs": {
+            "seed": "種子",
+            "count": "數量"
+        },
+        "description": "產生一個包含指定數量隨機種子的清單。"
+    },
+    "1hew_ListCustomString": {
+        "title": "自訂字串清單",
+        "inputs": {
+            "custom_text": "自訂文字"
+        },
+        "description": "產生一個包含自訂字串的清單。"
+    },
+    "1hew_StringFilter": {
+        "title": "字串過濾",
+        "inputs": {
+            "text": "文字",
+            "filter_empty_line": "篩選空行",
+            "filter_comment": "篩選註解",
+            "input": "輸入"
+        },
+        "description": "過濾掉文字中的空行與註解。"
+    },
+    "1hew_StringJoinMulti": {
+        "title": "多字串連接",
+        "inputs": {
+            "text1": "文字1",
+            "text2": "文字2",
+            "text3": "文字3",
+            "text4": "文字4",
+            "text5": "文字5",
+            "filter_empty_line": "篩選空行",
+            "filter_comment": "篩選註解",
+            "separator": "分隔符號",
+            "input": "輸入"
+        },
+        "description": "將多段文字連接成一個字串，並可選擇過濾空行與註解。"
+    },
+    "1hew_TextCustomExtract": {
+        "title": "文字自訂擷取",
+        "inputs": {
+            "json_data": "JSON 資料",
+            "key": "鍵",
+            "precision_match": "精確匹配",
+            "label_filter": "標籤過濾"
+        },
+        "description": "自 JSON 資料中擷取特定鍵的值，並進行精確匹配與標籤過濾。"
+    },
+    "1hew_TextPrefixSuffix": {
+        "title": "文字前綴後綴",
+        "inputs": {
+            "text": "文字",
+            "prefix": "前綴",
+            "suffix": "後綴"
+        },
+        "description": "在文字前後加入指定的前綴與後綴。"
+    },
+    "1hew_RangeMapping": {
+        "title": "範圍映射",
+        "inputs": {
+            "value": "數值",
+            "min": "最小值",
+            "max": "最大值",
+            "rounding": "四捨五入"
+        },
+        "description": "將 0-1 範圍的值映射到 [min,max]，支援小數精度控制。"
+    },
+    "1hew_WorkflowName": {
+        "title": "工作流名稱",
+        "inputs": {
+            "prefix": "前綴",
+            "suffix": "後綴",
+            "date_format": "日期格式",
+            "full_path": "完整路徑",
+            "strip_extension": "移除擴展名"
+        },
+        "description": "產生一個帶有前綴、後綴與日期格式的工作流名稱。"
+    },
+    "1hew_ImageCropWithBBoxMask": {
+        "title": "使用邊界框遮罩裁切影像",
+        "description": "使用邊界框遮罩裁切影像。",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "preset_ratio": "預設比例",
+            "get_crop_ratio": "取得裁切比例",
+            "scale_strength": "縮放強度",
+            "crop_to_side": "裁切到邊長",
+            "crop_to_length": "裁切到長度",
+            "divisible_by": "可被整除"
+        }
+    },
+    "1hew_ImageAlphaJoin": {
+        "title": "影像Alpha串接",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "invert_mask": "反轉遮罩"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": ""
+    },
+    "1hew_ImageBatchInterleave": {
+        "title": "影像批次交錯",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "segment_count": "段數"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGemini31FlashImage": {
+        "title": "字串比例 Gemini3.1 Flash 影像",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "selection": "選擇"
+        },
+        "outputs": {
+            "string": "字串"
+        },
+        "description": ""
+    },
+    "1hew_StringRatioGpt20Image": {
+        "title": "字串比例 GPT影像 2.0",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "selection": "選擇"
+        },
+        "outputs": {
+            "string": "字串"
+        },
+        "description": ""
+    },
+    "1hew_ImageResizeGPTImage20": {
+        "title": "影像尺寸調整 GPT影像 2.0",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "preset_size": "預設尺寸",
+            "fit": "方法",
+            "pad_color": "背景顏色"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "description": ""
+    },
+    "1hew_StringResolution": {
+        "title": "字串解析",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "selection": "選擇"
+        },
+        "outputs": {
+            "string": "字串"
+        },
+        "description": ""
+    },
+    "1hew_AnySwitchInt": {
+        "title": "任何開關 整數",
+        "description": "根據整數值切換選項。"
+    }
+}

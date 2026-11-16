@@ -1,0 +1,421 @@
+{
+    "DownloadAndLoadCogVideoModel": {
+        "title": "下載並載入CogVideo模型",
+        "inputs": {
+            "block_edit": "塊編輯",
+            "lora": "Lora模型",
+            "compile_args": "編譯參數"
+        },
+        "widgets": {
+            "model": "模型",
+            "precision": "精度",
+            "quantization": "量化",
+            "enable_sequential_cpu_offload": "啟用順序CPU卸載",
+            "attention_mode": "注意力模式",
+            "load_device": "載入裝置",
+            "compile": "編譯"
+        },
+        "outputs": {
+            "model": "模型",
+            "cogvideomodel": "CogVideo模型",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoImageEncode": {
+        "title": "CogVideo 影像編碼",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "image": "影像",
+            "vae": "VAE",
+            "start_image": "起始影像",
+            "end_image": "結束影像"
+        },
+        "widgets": {
+            "enable_tiling": "啟用分塊",
+            "noise_aug_strength": "雜訊增強強度",
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "samples": "Latent",
+            "latent": "Latent"
+        }
+    },
+    "CogVideoDecode": {
+        "title": "CogVideo 解碼",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "enable_vae_tiling": "啟用VAE分塊",
+            "tile_sample_min_height": "分塊樣本最小高度",
+            "tile_sample_min_width": "分塊樣本最小寬度",
+            "tile_overlap_factor_height": "分塊重疊高度因子",
+            "tile_overlap_factor_width": "分塊重疊寬度因子",
+            "auto_tile_size": "自動分塊大小",
+            "pipeline": "節點束"
+        },
+        "outputs": {
+            "images": "影像"
+        }
+    },
+    "CogVideoTextEncode": {
+        "title": "CogVideo 文字編碼",
+        "inputs": {
+            "clip": "CLIP",
+            "prompt": "提示詞",
+            "strength": "強度",
+            "force_offload": "強制卸載"
+        },
+        "outputs": {
+            "conditioning": "條件",
+            "clip": "CLIP"
+        }
+    },
+    "CogVideoSampler": {
+        "title": "CogVideo 採樣器",
+        "inputs": {
+            "pipeline": "CogVideo",
+            "positive": "正面條件",
+            "negative": "負面條件",
+            "samples": "Latent",
+            "model": "模型",
+            "image_cond_latents": "影像條件Latent",
+            "context_options": "上下文選項",
+            "controlnet": "ControlNet",
+            "tora_trajectory": "Tora軌跡",
+            "fastercache": "快速快取",
+            "feta_args": "影片增強參數",
+            "teacache_args": "Tea快取參數"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數",
+            "fps": "幀率",
+            "steps": "步數",
+            "cfg": "CFG",
+            "seed": "隨機種",
+            "control_after_generate": "運行後操作",
+            "scheduler": "調度器",
+            "t_tile_length": "分塊長度",
+            "t_tile_overlap": "分塊重疊",
+            "denoise_strength": "降噪"
+        },
+        "outputs": {
+            "cogvideo_pipe": "CogVideo",
+            "samples": "Latent"
+        }
+    },
+    "CogVideoLoraSelect": {
+        "title": "CogVideo Lora選擇器",
+        "inputs": {
+            "lora": "Lora模型",
+            "strength": "強度",
+            "prev_lora": "前一個Lora",
+            "fuse_lora": "融合Lora"
+        },
+        "widgets": {
+            "lora": "Lora模型",
+            "strength": "強度",
+            "prev_lora": "前一個Lora",
+            "fuse_lora": "融合Lora"
+        },
+        "outputs": {
+            "lora": "CogVideo Lora"
+        }
+    },
+    "CogVideoLoraSelectComfy": {
+        "title": "CogVideo Lora選擇器(Comfy版)",
+        "inputs": {
+            "lora": "Lora模型",
+            "strength": "強度",
+            "prev_lora": "前一個Lora",
+            "fuse_lora": "融合Lora"
+        },
+        "widgets": {
+            "lora": "Lora模型",
+            "strength": "強度",
+            "prev_lora": "前一個Lora",
+            "fuse_lora": "融合Lora"
+        },
+        "outputs": {
+            "lora": "CogVideo Lora"
+        }
+    },
+    "DownloadAndLoadCogVideoGGUFModel": {
+        "title": "下載並載入CogVideo GGUF模型",
+        "inputs": {
+            "block_edit": "塊編輯"
+        },
+        "widgets": {
+            "model": "模型",
+            "vae_precision": "VAE精度",
+            "fp8_fastmode": "FP8快速模式",
+            "load_device": "載入裝置",
+            "enable_sequential_cpu_offload": "啟用順序CPU卸載",
+            "attention_mode": "注意力模式",
+            "compile_args": "編譯參數"
+        },
+        "outputs": {
+            "model": "模型",
+            "cogvideomodel": "CogVideo模型",
+            "vae": "VAE"
+        }
+    },
+    "CogVideoXModelLoader": {
+        "title": "CogVideoX模型載入器",
+        "inputs": {
+            "model": "模型",
+            "base_precision": "基礎精度",
+            "quantization": "量化",
+            "load_device": "載入裝置",
+            "enable_sequential_cpu_offload": "啟用順序CPU卸載",
+            "block_edit": "塊編輯",
+            "lora": "Lora模型",
+            "compile_args": "編譯參數",
+            "attention_mode": "注意力模式"
+        },
+        "outputs": {
+            "cogvideomodel": "CogVideo模型"
+        }
+    },
+    "CogVideoXVAELoader": {
+        "title": "CogVideoX VAE載入器",
+        "inputs": {
+            "model_name": "模型名稱",
+            "precision": "精度",
+            "compile_args": "編譯參數"
+        },
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精度",
+            "compile_args": "編譯參數"
+        },
+        "outputs": {
+            "vae": "VAE"
+        }
+    },
+    "DownloadAndLoadToraModel": {
+        "title": "下載並載入Tora模型",
+        "inputs": {
+            "model": "模型"
+        },
+        "widgets": {
+            "model": "模型"
+        },
+        "outputs": {
+            "tora_model": "Tora模型"
+        }
+    },
+    "DownloadAndLoadCogVideoControlNet": {
+        "title": "下載並載入CogVideo ControlNet",
+        "inputs": {
+            "model": "模型"
+        },
+        "widgets": {
+            "model": "模型"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet模型"
+        }
+    },
+    "CogVideoEnhanceAVideo": {
+        "title": "CogVideo 影片增強",
+        "widgets": {
+            "weight": "權重",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "feta_args": "影片增強參數"
+        }
+    },
+    "CogVideoContextOptions": {
+        "title": "CogVideo 上下文選項",
+        "inputs": {
+            "freenoise": "自由雜訊"
+        },
+        "widgets": {
+            "context_schedule": "上下文計畫",
+            "context_frames": "上下文幀數",
+            "context_stride": "上下文步幅",
+            "context_overlap": "上下文重疊",
+            "freenoise": "自由雜訊"
+        },
+        "outputs": {
+            "context_options": "上下文選項"
+        }
+    },
+    "CogVideoTransformerEdit": {
+        "title": "CogVideo Transformer編輯",
+        "inputs": {
+            "remove_blocks": "移除塊"
+        },
+        "outputs": {
+            "block_list": "屏蔽清單",
+            "transformerblocks": "Transformer塊"
+        }
+    },
+    "CogVideoXTorchCompileSettings": {
+        "title": "CogVideo Torch編譯設置",
+        "widgets": {
+            "backend": "後端",
+            "fullgraph": "全圖",
+            "mode": "模式",
+            "dynamic": "動態",
+            "dynamo_cache_size_limit": "Dynamo快取大小限制"
+        },
+        "outputs": {
+            "torch_compile_args": "Torch編譯參數",
+            "compileargs": "編譯參數"
+        }
+    },
+    "CogVideoTextEncodeCombine": {
+        "title": "CogVideo 文字編碼合併",
+        "inputs": {
+            "conditioning_1": "條件1",
+            "conditioning_2": "條件2"
+        },
+        "widgets": {
+            "combination_mode": "合併模式",
+            "weighted_average_ratio": "加權平均比率"
+        },
+        "outputs": {
+            "conditioning": "條件"
+        }
+    },
+    "ToraEncodeTrajectory": {
+        "title": "Tora軌跡編碼",
+        "inputs": {
+            "tora_model": "Tora模型",
+            "vae": "VAE",
+            "coordinates": "座標"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數",
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比",
+            "enable_tiling": "啟用分塊"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora軌跡",
+            "video_flow_images": "影片流影像"
+        }
+    },
+    "ToraEncodeOpticalFlow": {
+        "title": "Tora光流編碼",
+        "inputs": {
+            "vae": "VAE",
+            "tora_model": "Tora模型",
+            "optical_flow": "光流"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "tora_trajectory": "Tora軌跡"
+        }
+    },
+    "CogVideoImageEncodeFunInP": {
+        "title": "CogVideo影像編碼FunInP",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "起始影像",
+            "end_image": "結束影像"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "enable_tiling": "啟用分塊處理",
+            "noise_aug_strength": "雜訊增強強度"
+        },
+        "outputs": {
+            "image_cond_latents": "影像條件Latent"
+        }
+    },
+    "CogVideoXFasterCache": {
+        "title": "CogVideo X快速快取",
+        "inputs": {
+            "num_blocks_to_cache": "快取塊數"
+        },
+        "widgets": {
+            "start_step": "開始步驟",
+            "hf_step": "高頻步驟",
+            "lf_step": "低頻步驟",
+            "cache_device": "快取裝置",
+            "num_blocks_to_cache": "快取塊數"
+        },
+        "outputs": {
+            "fastercache": "快速快取"
+        }
+    },
+    "CogVideoXTeaCache": {
+        "title": "CogVideoX Tea快取",
+        "widgets": {
+            "rel_l1_thresh": "相對L1閾值"
+        },
+        "outputs": {
+            "teacache_args": "Tea快取參數"
+        }
+    },
+    "CogVideoControlNet": {
+        "title": "CogVideo ControlNet",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "images": "影像"
+        },
+        "widgets": {
+            "control_strength": "控制強度",
+            "control_start_percent": "控制開始百分比",
+            "control_end_percent": "控制結束百分比"
+        },
+        "outputs": {
+            "cogvideo_controlnet": "CogVideo ControlNet"
+        }
+    },
+    "CogVideoXFunResizeToClosestBucket": {
+        "title": "CogVideoX智慧調整到最近桶大小",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "base_resolution": "基礎解析度",
+            "upscale_method": "放大方法",
+            "crop": "裁切"
+        },
+        "outputs": {
+            "image": "影像",
+            "images": "影像",
+            "width": "寬度",
+            "height": "高度",
+            "int": "整數"
+        }
+    },
+    "CogVideoLatentPreview": {
+        "title": "CogVideoLatent預覽",
+        "inputs": {
+            "samples": "採樣"
+        },
+        "widgets": {
+            "seed": "種子",
+            "min_val": "最小值",
+            "max_val": "最大值",
+            "r_bias": "R偏差",
+            "g_bias": "G偏差",
+            "b_bias": "B偏差"
+        },
+        "outputs": {
+            "image": "影像",
+            "images": "影像",
+            "latent_rgb_factors": "Latent RGB 因素",
+            "string": "字串"
+        }
+    }
+}
