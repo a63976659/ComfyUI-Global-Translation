@@ -1,0 +1,305 @@
+{
+    "SharpImageAttrsToPLY": {
+        "title": "銳化影像屬性轉PLY",
+        "inputs": {
+            "gaussian_attrs": "高斯屬性",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "output_prefix": "輸出前綴",
+            "focal_length_px": "焦距像素"
+        },
+        "outputs": {
+            "ply_path": "PLY檔案路徑",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "從每個像素的14頻道MULTIBAND_IMAGE（例如來自SharpPredictGaussianAttrs的第一層高斯屬性輸出）+ 匹配的相機外參/內參，並產生一個3D高斯點雲PLY檔案。多波段儲存NDC位置；此節點透過SHARP的unproject_gaussians在儲存之前將其轉換到世界座標系。"
+    },
+    "SharpPanoramaCubeSplit": {
+        "title": "Sharp全景立方體分割",
+        "widgets": {
+            "panorama": "全景圖",
+            "image_w": "影像寬度",
+            "image_h": "影像高度",
+            "fov_x_deg": "X視野角度",
+            "fov_y_deg": "Y視野角度",
+            "rot_deg": "旋轉角度",
+            "pitch_up": "向上俯仰角",
+            "pitch_down": "向下俯仰角"
+        },
+        "outputs": {
+            "face_images": "面影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "fov_x_deg": "X軸視場角",
+            "num_faces": "面數"
+        },
+        "description": "從寬高比為2:1的球形全景圖中固定俯仰角和偏航角網格取樣N個透視裁切（預設為3個俯仰角x3個偏航角=27個視角）。與WorldStereoPanoramaCubeSplit的幾何結構匹配——作為每面深度模型的輸入階段，其輸出可以透過SharpDepthMerge拼接回去。\n\n不同於Sharp的SamplePanorama（（它根據FOV+重疊推導出網格，輸出為正方形），此節點具有固定的俯仰角網格和矩形縱橫比（預設為832x480），並且符合WorldStereo的pano_bank使用的相機/內參約定。"
+    },
+    "SharpPredictForeground": {
+        "title": "Sharp前景預測",
+        "inputs": {
+            "model": "模型",
+            "image": "影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "mode": "模式",
+            "focal_length_mm": "焦距毫米",
+            "output_prefix": "輸出前綴"
+        },
+        "outputs": {
+            "ply_path": "PLY檔案路徑",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "使用Sharp從影像產生3D高斯點雲PLY檔案，僅保留可見表面的高斯點雲，並捨棄被遮擋的部分。相對於SharpPredict，每張影像的高斯點雲數量減半。批次輸入建立一個編號的PLY檔案資料夾。"
+    },
+    "SharpPredictGaussiansFromMetricDepth": {
+        "title": "從度量深度預測高斯點雲",
+        "inputs": {
+            "model": "模型",
+            "image": "影像",
+            "metric_depth_layer0": "度量深度層0",
+            "metric_depth_layer1": "度量深度層1",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "focal_length_mm": "焦距毫米",
+            "output_prefix": "輸出前綴",
+            "save_background_layer": "儲存背景層",
+            "snap_to_external_depth": "對接外部深度",
+            "depth_convention": "深度約定",
+            "edge_crop": "邊緣裁剪"
+        },
+        "outputs": {
+            "ply_path": "PLY檔案路徑",
+            "ply_folder": "PLY資料夾路徑",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "使用外部提供的度量深度作為對齊目標執行Sharp的高斯解碼器。外部深度成為`init_模型`高斯基值的一致性幾何骨架，因此高斯點雲在多個視圖之間共享一致的表面——修復了每個面的接縫問題。\n\n儲存PLY檔案（單張影像->一個.ply；批次->N個NNN.ply資料夾）。透過MergeGaussians管線組合成一個PLY檔案。"
+    },
+    "SharpPredictGaussianAttrs": {
+        "title": "Sharp預測高斯屬性",
+        "inputs": {
+            "model": "模型",
+            "image": "影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "focal_length_mm": "焦距毫米"
+        },
+        "outputs": {
+            "metric_depth": "公制深度",
+            "extrinsics_mdepth": "外參_公制深度",
+            "intrinsics_mdepth": "內參_公制深度",
+            "first_layer_depth_refined": "第一層深度優化",
+            "first_layer_gaussian_attrs": "第一層高斯屬性",
+            "second_layer_depth_refined": "第二層深度優化",
+            "second_layer_gaussian_attrs": "第二層高斯屬性",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "執行Sharp推理並將每個像素的高斯解碼器輸出暴露為結構化的分層張量（深度+所有高斯屬性的MULTIBAND_IMAGE）而不是扁平化為PLY檔案。\n\n使用深度輸出驅動AlignDepthMaps以恢復每個面的比例，然後將比例乘入多波段的位置頻道，在重建PLY檔案之前。"
+    },
+    "SharpPredictMetricDepth": {
+        "title": "Sharp預測度量深度",
+        "widgets": {
+            "model": "模型",
+            "image": "影像",
+            "focal_length_mm": "焦距毫米",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "outputs": {
+            "layer_0_metric_depth": "第0層公制深度",
+            "layer_1_metric_depth": "第1層公制深度",
+            "extrinsics_mdepth": "外參_公制深度",
+            "intrinsics_mdepth": "內參_公制深度",
+            "layer_0_points_raw": "第0層原始點雲",
+            "layer_1_points_raw": "第1層原始點雲"
+        },
+        "description": "僅執行Sharp的編碼器+位移頭部（跳過高斯解碼器）。輸出每個像素的度量深度以及對應的外參/內參。當您只需要深度時，速度約為SharpPredictGaussianAttrs的兩倍。連接至SharpDepthMerge以實現乾淨的球形深度合併。"
+    },
+    "SharpRefinedDepthFromGaussians": {
+        "title": "從高斯分布中取得銳化細化深度",
+        "inputs": {
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "ply_path": "PLY路徑",
+            "out_size": "輸出尺寸"
+        },
+        "outputs": {
+            "depth_maps": "深度圖",
+            "valid_mask": "有效遮罩",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "將Sharp預測的PLY高斯點重新投影回每個面的相機空間，以恢復細化的每個像素深度（實際上是解碼器產生的z值，而不是預細化的視差頭）。每個像素的最小深度=層0（可見表面）。\n\n將深度圖傳遞給AlignDepthMaps進行對數尺度對齊，然後在將結果的每個面比例因子套用回高斯點之前，先合併高斯點。"
+    },
+    "ScaleImageValues": {
+        "title": "調整影像數值",
+        "widgets": {
+            "image": "影像"
+        },
+        "description": "線性地將一個影像的所有數值重新對應到[0, 1]區間。這在預覽深度圖時很有用（因為深度圖可以包含公尺等單位，而ComfyUI的PreviewImage期望的是[0, 1]範圍內的數值）。每個批次項目獨立地根據其自身的(H, W, C)上的最小/最大值進行縮放。常數值影像會變成全是零（而不是由於除零導致的NaN）。"
+    },
+    "SharpRayToPlanarDepth": {
+        "title": "銳射線到平面深度轉換",
+        "inputs": {
+            "image": "影像",
+            "intrinsics": "內參",
+            "extrinsics": "外參"
+        },
+        "outputs": {
+            "image": "影像",
+            "intrinsics": "內參",
+            "extrinsics": "外參"
+        },
+        "description": "面深度慣例轉換器。透過將射線距離深度乘以每個面的餘弦映射(1 / sqrt(((u-cx)/fx)² + ((v-cy)/fy)² + 1)) 來生成 Sharp 高斯解碼器和反投影期望的平面 Z 深度。放置在全景分割深度源（等軸深度全景上的 PanoramaSplit）和 Sharp 預測節點之間。如果內參是以標準化形式傳遞的，則會重新調整為像素 K 單位，以便所有下游節點看到一致的單位。"
+    },
+    "AlignDepthMaps": {
+        "title": "對齊深度圖",
+        "inputs": {
+            "depth_maps": "深度圖",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "reference_view": "參考視圖",
+            "method": "方法"
+        },
+        "outputs": {
+            "aligned_depth_maps": "對齊後的深度圖",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "alignment_info": "對齊資訊"
+        },
+        "description": "類別: Sharp"
+    },
+    "LoadImageWithExif": {
+        "title": "載入含EXIF資訊的影像",
+        "widgets": {
+            "image": "影像",
+            "default_focal_mm": "預設焦距（毫米）"
+        },
+        "outputs": {
+            "image": "影像",
+            "mask": "遮罩",
+            "focal_length_mm": "焦距（毫米）"
+        },
+        "description": "類別: Sharp"
+    },
+    "LoadSharpModel": {
+        "title": "載入Sharp模型",
+        "widgets": {
+            "precision": "精確度",
+            "checkpoint_path": "檢查點路徑"
+        },
+        "outputs": {
+            "model": "模型"
+        },
+        "description": "類別: Sharp"
+    },
+    "MergeGaussians": {
+        "title": "合併高斯分布",
+        "widgets": {
+            "ply_folder": "PLY資料夾",
+            "output_prefix": "輸出前綴",
+            "max_depth": "最大深度",
+            "min_opacity": "最小透明度"
+        },
+        "outputs": {
+            "ply_path": "PLY路徑",
+            "num_gaussians": "高斯分布數量"
+        },
+        "description": "類別: Sharp"
+    },
+    "SharpPredict": {
+        "title": "Sharp預測",
+        "inputs": {
+            "model": "模型",
+            "image": "影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "focal_length_mm": "焦距（毫米）",
+            "output_prefix": "輸出前綴"
+        },
+        "outputs": {
+            "ply_path": "PLY路徑",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "description": "類別: Sharp"
+    },
+    "SharpPredictDepth": {
+        "title": "Sharp預測深度",
+        "inputs": {
+            "model": "模型",
+            "image": "影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "reference_depth": "參考深度"
+        },
+        "outputs": {
+            "depth_maps": "深度圖",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "alignment_maps": "對齊圖"
+        },
+        "description": "類別: Sharp"
+    },
+    "ProjectDepthToPanorama": {
+        "title": "將深度投影到全景圖",
+        "inputs": {
+            "depth_maps": "深度圖",
+            "extrinsics": "外參",
+            "intrinsics": "內參"
+        },
+        "widgets": {
+            "panorama_width": "全景圖寬度",
+            "show_borders": "顯示邊界",
+            "disagreement_scale": "分歧縮放",
+            "blend_mode": "混合模式",
+            "border_color": "邊框顏色"
+        },
+        "outputs": {
+            "panoramic_depth": "全景深度",
+            "debug_overlay": "除錯疊加",
+            "disagreement_heatmap": "分歧熱圖"
+        },
+        "description": "類別: Sharp"
+    },
+    "SamplePanorama": {
+        "title": "取樣全景圖",
+        "inputs": {
+            "panorama": "全景圖"
+        },
+        "widgets": {
+            "fov_degrees": "視野角（度）",
+            "overlap_percent": "重疊百分比",
+            "output_size": "輸出尺寸",
+            "skip_poles": "跳過極點"
+        },
+        "outputs": {
+            "images": "影像",
+            "extrinsics": "外參",
+            "intrinsics": "內參",
+            "num_horizontal": "水平數量",
+            "num_vertical": "垂直數量"
+        },
+        "description": "類別: Sharp"
+    }
+}
