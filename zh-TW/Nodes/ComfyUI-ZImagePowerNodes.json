@@ -1,0 +1,865 @@
+{
+    "AdvancedVAEDecoderX21": {
+        "title": "進階VAE解碼器 ^G2.1",
+        "widgets": {
+            "samples": "取樣",
+            "vae": "VAE",
+            "allow_extended_range": "允許擴展範圍",
+            "low_vram_mode": "低VRAM模式"
+        },
+        "description": "ComfyUI原生VAEDecode節點的實驗性替代方案。它提供了繞過標準輸出鉗位的選項，使像素可以超出[0.0, 1.0]範圍，同時支援強制分塊解碼以減少大影像的VRAM佔用。"
+    },
+    "BasicImageFilters": {
+        "title": "基礎影像濾鏡",
+        "widgets": {
+            "images": "影像",
+            "enable_auto_contrast": "啟用自動對比度",
+            "enable_filters": "啟用濾鏡",
+            "divider1": "分隔線1",
+            "filter_1": "濾鏡1",
+            "filter_1_control": "濾鏡1控制",
+            "divider2": "分隔線2",
+            "filter_2": "濾鏡2",
+            "filter_2_control": "濾鏡2控制",
+            "divider3": "分隔線3",
+            "filter_3": "濾鏡3",
+            "filter_3_control": "濾鏡3控制"
+        },
+        "description": ""
+    },
+    "CustomStylePromptEncoderX21": {
+        "title": "自訂風格+提示詞編碼器 ^G2.1",
+        "widgets": {
+            "clip": "剪輯",
+            "custom_styles": "自訂風格",
+            "custom_style": "自訂風格",
+            "palette": "調色盤",
+            "prompt": "提示詞"
+        },
+        "outputs": {
+            "PROMPT": "提示詞",
+            "style_name": "風格名稱",
+            "palette_name": "調色盤名稱",
+            "original_prompt": "原始提示詞"
+        },
+        "description": "將文字提示詞編碼為嵌入向量，自動適配所選的自訂風格（以及可選的調色盤），隨後由CLIP模型處理生成引導影像生成的條件。⚠️由於此節點為實驗性功能，其參數、行為或存在形式可能會在無預先通知的情況下變更或完全移除。"
+    },
+    "EmptyZImageLatentImage": {
+        "title": "空Z-ImageLatent 影像",
+        "widgets": {
+            "orientation": "方向",
+            "ratio": "寬高比",
+            "size": "輸出尺寸",
+            "batch_size": "批次處理大小"
+        },
+        "description": "建立一批新的空 Latent 影像，用作Z-Image模型降噪的起點。"
+    },
+    "ImageGridBuilder": {
+        "title": "影像網格產生器",
+        "widgets": {
+            "images": "影像",
+            "banner": "橫幅",
+            "banner_height": "橫幅高度",
+            "text": "文字",
+            "text_color": "文字顏色",
+            "lines_color": "線條顏色",
+            "banner_color": "橫幅顏色",
+            "font_name": "字體名稱",
+            "font_size": "字體大小",
+            "columns": "列數",
+            "image_scale": "圖像縮放",
+            "image_spacing": "影像間距"
+        },
+        "description": "生成包含所有輸入影像的網格。"
+    },
+    "ImageLabeler": {
+        "title": "影像標註器",
+        "widgets": {
+            "image": "影像",
+            "text": "文字",
+            "text_color": "文字顏色",
+            "background_color": "背景顏色",
+            "font_name": "字體名稱",
+            "font_size": "字體大小",
+            "font_scale": "字型縮放",
+            "label_position": "標註位置",
+            "label_padding": "標註內邊距",
+            "min_label_width": "最小標註寬度",
+            "min_label_height": "最小標註高度"
+        },
+        "description": "為影像加入自訂文字的標註。"
+    },
+    "LoadQwen34bModel": {
+        "title": "載入Qwen3-4B模型（safetensors / gguf）",
+        "widgets": {
+            "checkpoint": "檢查點",
+            "file_filter": "檔案過濾器",
+            "run_on_gpu": "在GPU上執行"
+        },
+        "description": "以safetensor和GGUF格式載入Z-Image文字編碼器（Qwen3-4B）。"
+    },
+    "LoadZImageModel": {
+        "title": "載入Z-Image模型（safetensors / gguf）",
+        "widgets": {
+            "checkpoint": "檢查點",
+            "file_filter": "檔案過濾器"
+        },
+        "description": "以safetensors和GGUF格式載入Z-Image擴散模型。"
+    },
+    "MyTop10Styles": {
+        "title": "我的Top10風格",
+        "widgets": {
+            "input": "輸入",
+            "top_styles": "Top風格",
+            "style_1": "風格1",
+            "style_2": "風格2",
+            "style_3": "風格3",
+            "style_4": "風格4",
+            "style_5": "風格5",
+            "style_6": "風格6",
+            "style_7": "風格7",
+            "style_8": "風格8",
+            "style_9": "風格9",
+            "style_10": "風格10",
+            "divider": "分隔線",
+            "control_after_generate": "生成後控制",
+            "output_to": "輸出至"
+        },
+        "outputs": {
+            "output": "輸出"
+        },
+        "description": "讓你能從個人化的Top10清單中選擇視覺風格。此節點依賴「我的Top10風格編輯器」來提供你喜愛的風格清單。"
+    },
+    "MyTop10StylesEditor": {
+        "title": "我的Top10風格（編輯器）",
+        "widgets": {
+            "style_1": "風格1",
+            "gallery_1": "畫廊1",
+            "spacer_1": "間隔符1",
+            "style_2": "風格2",
+            "gallery_2": "畫廊2",
+            "spacer_2": "間隔符2",
+            "style_3": "風格3",
+            "gallery_3": "畫廊3",
+            "spacer_3": "間隔符3",
+            "style_4": "風格4",
+            "gallery_4": "畫廊4",
+            "spacer_4": "間隔符4",
+            "style_5": "風格5",
+            "gallery_5": "畫廊5",
+            "spacer_5": "間隔符5",
+            "style_6": "風格6",
+            "gallery_6": "畫廊6",
+            "spacer_6": "間隔符6",
+            "style_7": "風格7",
+            "gallery_7": "畫廊7",
+            "spacer_7": "間隔符7",
+            "style_8": "風格8",
+            "gallery_8": "畫廊8",
+            "spacer_8": "間隔符8",
+            "style_9": "風格9",
+            "gallery_9": "畫廊9",
+            "spacer_9": "間隔符9",
+            "style_10": "風格10",
+            "gallery_10": "畫廊10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Top風格"
+        },
+        "description": "讓你可以建立個人化的Top10視覺風格清單，從所有可用選項中選擇以建構理想的風格集合。此節點旨在與「我的Top10風格」搭配使用，以定義和使用你偏好的風格。"
+    },
+    "SaveImage": {
+        "title": "儲存影像",
+        "widgets": {
+            "images": "圖片",
+            "filename_prefix": "檔名前綴",
+            "civitai_compatible_metadata": "相容Civitai的元數據"
+        },
+        "description": "將輸入影像儲存到 ComfyUI 輸出資料夾內。"
+    },
+    "StylePromptEncoder2": {
+        "title": "風格與提示詞編碼器",
+        "widgets": {
+            "clip": "剪輯",
+            "customization": "自訂",
+            "style": "風格",
+            "gallery": "畫廊",
+            "spacer": "間隔符",
+            "text": "文字"
+        },
+        "description": "將文字提示詞轉換為嵌入向量，自動適配提示詞以符合所選風格。此節點接收提示詞，根據所選選項調整其視覺風格，隨後使用提供的文字編碼器（剪輯）進行編碼，生成用於引導影像生成的嵌入向量。"
+    },
+    "StylePromptEncoderX21": {
+        "title": "風格與提示詞編碼器 ^G2.1",
+        "widgets": {
+            "clip": "剪輯",
+            "customization": "自訂設定",
+            "style": "風格",
+            "palette": "調色盤",
+            "text": "文字"
+        },
+        "outputs": {
+            "PROMPT": "提示詞",
+            "style_name": "風格名稱",
+            "palette_name": "調色盤名稱",
+            "original_prompt": "原始提示詞"
+        },
+        "description": "將文字提示詞轉換為嵌入向量，自動調整提示詞以符合所選風格，還可選擇套用指定調色盤。該節點接收提示詞，根據所選選項調整其視覺風格（若提供調色盤則套用），接著使用提供的CLIP模型對其進行編碼，生成用於引導影像生成的嵌入向量。由於此節點為實驗性功能，其參數、行為或存在形式可能會在無預先通知的情況下發生變更或完全移除。"
+    },
+    "StyleStringInjector2": {
+        "title": "風格字串注入器",
+        "widgets": {
+            "style": "風格",
+            "gallery": "圖庫",
+            "string": "字串"
+        },
+        "description": "向你的提示詞中注入風格。該節點接收文字提示詞，並根據所選風格對其進行修改。"
+    },
+    "VAEEncodeSoftInpainting": {
+        "title": "VAE編碼（用於軟遮罩修復）",
+        "widgets": {
+            "pixels": "影像",
+            "vae": "VAE",
+            "mask": "遮罩",
+            "output_size": "輸出尺寸",
+            "mask_blur_pixels": "遮罩模糊像素"
+        },
+        "description": "使用VAE模型將輸入影像及其修復遮罩編碼至 Latent。"
+    },
+    "ZSamplerTurbo2": {
+        "title": "Z採樣器 Turbo ^G2（擴展版）",
+        "widgets": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面STG2",
+            "positive_stg3": "正面STG3",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "denoise": "降噪",
+            "divider": "分隔符號",
+            "initial_sample_size": "初始取樣尺寸",
+            "divider2": "分隔符2",
+            "intensity": "強度",
+            "intensity_bias": "強度偏移",
+            "turbo_creativity": "Turbo創造力"
+        },
+        "description": "使用專為\"Z-Image Turbo\"最佳化的流程高效對 Latent 影像進行降噪。該節點接收Z-Image Turbo模型、初始 Latent 影像及條件參數，生成可解碼為最終影像的降噪 Latent 輸出。"
+    },
+    "ZSamplerTurbo2Advanced": {
+        "title": "Z採樣器 Turbo ^G2（進階版）",
+        "widgets": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面STG2",
+            "positive_stg3": "正面STG3",
+            "add_noise": "新增雜訊波",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "start_at_step": "起始步數",
+            "end_at_step": "結束步數",
+            "force_final_denoising": "強制最終降噪",
+            "divider": "分隔符號",
+            "initial_sample_size": "初始取樣尺寸",
+            "divider2": "分隔符2",
+            "intensity": "強度",
+            "intensity_bias": "強度偏移",
+            "turbo_creativity": "Turbo創造力"
+        },
+        "description": "使用專為\"Z-Image Turbo\"最佳化的流程高效對 Latent 影像進行降噪。該節點接收Z-Image Turbo模型、初始 Latent 影像及條件參數，生成可解碼為最終影像的降噪 Latent 輸出。此進階版本包含額外參數，用於更精確地控制採樣器及實現採樣器鏈。"
+    },
+    "ZSamplerTurbo2Simple": {
+        "title": "Z採樣器 Turbo ^G2（簡易版）",
+        "widgets": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面STG2",
+            "positive_stg3": "正面STG3",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "ibias": "強度偏移",
+            "divider": "分隔符號",
+            "turbo_creativity": "Turbo創造力",
+            "old_scheduler": "舊調度器",
+            "noise_injection": "噪聲注入",
+            "alternative_refiner": "替代精修器"
+        },
+        "description": "Z採樣器 Turbo（第二代）的簡易版本，提供簡化介面以便快速便捷使用，同時保留其所有功能與特性。該節點接收Z-Image Turbo模型、初始 Latent 影像及提示詞/條件，生成可解碼為最終影像的降噪 Latent 輸出。"
+    },
+    "ZSamplerTurboX21": {
+        "title": "Z採樣器 Turbo ^G2.1",
+        "widgets": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面STG2",
+            "positive_stg3": "正面STG3",
+            "seed": "隨機種子",
+            "divider1": "分隔符1",
+            "steps": "步數",
+            "ibias": "強度偏移",
+            "spectral_tilt": "光譜傾斜",
+            "turbo_creativity": "Turbo創造力",
+            "detailed_refiner": "細節細化器",
+            "new_scheduler": "新調度器"
+        },
+        "description": "Z採樣器 Turbo的實驗性新版本。該節點接收Z-Image Turbo模型、初始 Latent 影像及提示詞/條件，生成可解碼為最終影像的降噪 Latent 輸出。由於此節點為實驗性功能，其參數、行為或存在形式可能會在無預先通知的情況下發生變更或完全移除。"
+    },
+    "ZSamplerTurboX21Advanced": {
+        "title": "Z採樣器 Turbo ^G2.1（進階版）",
+        "widgets": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面STG2",
+            "positive_stg3": "正面STG3",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "ibias": "強度偏移",
+            "divider1": "分隔符1",
+            "turbo_creativity": "Turbo創造力",
+            "alternative_refiner": "替代精修器",
+            "disable_ibias": "停用強度偏移",
+            "old_scheduler": "舊調度器",
+            "divider2": "分隔符2",
+            "spectral_tilt": "光譜傾斜",
+            "spectral_tilt_start": "光譜傾斜起始",
+            "spectral_tilt_end": "光譜傾斜結束",
+            "spectral_tilt_sharpness": "光譜傾斜銳度"
+        },
+        "description": "Z採樣器 Turbo的實驗性新版本。該節點接收Z-Image Turbo模型、初始 Latent 影像及提示詞/條件，生成可解碼為最終影像的降噪 Latent 輸出。由於此節點為實驗性功能，其參數、行為或存在形式可能會在無預先通知的情況下發生變更或完全移除。"
+    },
+    "IllustrationStylePromptEncoder": {
+        "title": "插圖風格提示編碼器",
+        "widgets": {
+            "clip": "剪輯",
+            "customization": "自訂設定",
+            "style_to_apply": "套用風格",
+            "text": "文字"
+        },
+        "description": "將文字提示轉換為符合所選插圖風格的嵌入向量。該節點接收提示，根據所選選項調整其視覺風格，再透過提供的文字編碼器進行編碼，生成用於引導影像生成的嵌入向量。"
+    },
+    "PhotoStylePromptEncoder": {
+        "title": "照片風格提示編碼器",
+        "widgets": {
+            "clip": "剪輯",
+            "customization": "自訂設定",
+            "style_to_apply": "套用風格",
+            "text": "文字"
+        },
+        "description": "將文字提示轉換為符合所選攝影風格的嵌入向量。該節點接收提示，根據所選選項調整其視覺風格，再透過提供的文字編碼器進行編碼，生成用於引導影像生成的嵌入向量。"
+    },
+    "StylePromptEncoder": {
+        "title": "風格與提示編碼器（舊版本）",
+        "widgets": {
+            "clip": "剪輯",
+            "customization": "自訂設定",
+            "category": "類別",
+            "style": "風格",
+            "text": "文字"
+        },
+        "description": "將文字提示轉換為嵌入向量，自動適配所選風格。該節點接收提示，根據所選選項調整其視覺風格，再透過提供的文字編碼器（剪輯）進行編碼，生成用於引導影像生成的嵌入向量。"
+    },
+    "StyleStringInjector": {
+        "title": "風格字串注入器（舊版本）",
+        "widgets": {
+            "category": "類別",
+            "style": "風格",
+            "string": "字串"
+        },
+        "description": "向你的提示中注入風格。該節點接收文字提示，並根據所選風格對其進行修改。"
+    },
+    "ZSamplerTurbo": {
+        "title": "Z-快速採樣器 Turbo ^g1",
+        "widgets": {
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "latent_input": "Latent 輸入",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "denoise": "降噪",
+            "divider": "分隔符號",
+            "initial_noise_calibration": "初始噪聲校準",
+            "lowres_bias": "低解析度偏差"
+        },
+        "description": "高效對 Latent 影像進行降噪，專門針對\"Z-Image Turbo\"模型最佳化。該節點接收Z-Image Turbo模型、初始 Latent 影像和條件參數，生成可用於後續處理或解碼的降噪輸出。"
+    },
+    "ZSamplerTurboAdvanced": {
+        "title": "Z-快速採樣器 Turbo ^g1（進階版）",
+        "widgets": {
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "latent_input": "Latent 輸入",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "denoise": "降噪",
+            "divider": "分隔符號",
+            "initial_noise_calibration": "初始噪聲校準",
+            "noise_bias_estimation": "噪聲偏差估計",
+            "noise_bias_sample_size": "噪聲偏差樣本量",
+            "noise_bias_scale": "噪聲偏差比例",
+            "noise_overdose": "噪聲過量"
+        },
+        "description": "高效對 Latent 影像進行降噪，專門針對\"Z-Image Turbo\"模型最佳化。該節點接收Z-Image Turbo模型、初始 Latent 影像和條件參數，生成可用於後續處理或解碼的降噪輸出。"
+    },
+    "ZSamplerTurbo2Laboratory": {
+        "title": "Z-快速採樣器 Turbo ^G2（實驗室版）",
+        "widgets": {
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "latent_input": "Latent 輸入",
+            "seed": "隨機種子",
+            "steps": "步數",
+            "denoise": "降噪",
+            "divider1": "分隔符1",
+            "initial_noise_bias_level": "初始噪聲偏差等級",
+            "initial_noise_overdose": "初始噪聲過量",
+            "noise_est_sample_size": "噪聲估計樣本量",
+            "divider2": "分隔符2",
+            "extra_noise_freq1": "額外噪聲頻率1",
+            "extra_noise_scale1": "額外噪聲比例1",
+            "extra_noise_freq2": "額外噪聲頻率2",
+            "extra_noise_scale2": "額外噪聲比例2",
+            "extra_noise_freq3": "額外噪聲頻率3",
+            "extra_noise_scale3": "額外噪聲比例3",
+            "divider3": "分隔符3",
+            "scramble_left_count": "左側打亂數量",
+            "scramble_top_count": "頂部打亂數量",
+            "scramble_right_count": "右側打亂數量",
+            "scramble_bottom_count": "底部打亂數量",
+            "stage2_preproc_steps": "階段2預處理步數",
+            "divider4": "分隔符4",
+            "sigma_preset_name": "σ預設名稱",
+            "sigma1_off": "σ1 偏移",
+            "sigma2_off": "σ2 偏移",
+            "sigma3_off": "σ3 偏移",
+            "sigma4_off": "σ4 偏移",
+            "sigma5_off": "σ5 偏移",
+            "sigma6_off": "σ6 偏移",
+            "sigma7_off": "σ7 偏移",
+            "sigma8_off": "σ8 偏移",
+            "sigma9_off": "σ9 偏移",
+            "sigma10_off": "σ10 偏移"
+        },
+        "description": "高效對 Latent 影像進行降噪，專門針對\"Z-Image Turbo\"模型最佳化。該節點允許直接修改zsample_turbo_core(...)方法中的內部參數，在開發過程中用於測試和校準。"
+    },
+    "ZSamplerTurbo2Simple //ZImagePowerNodes": {
+        "title": "⚡| Z-採樣器 Turbo ^G2 (簡單版)",
+        "inputs": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "正面提示詞 階段2",
+            "positive_stg3": "正面提示詞 階段3"
+        },
+        "widgets": {
+            "seed": "隨機種子",
+            "steps": "採樣步數",
+            "ibias": "初始偏差",
+            "turbo_creativity": "Turbo 創造力",
+            "old_scheduler": "舊調度器",
+            "noise_injection": "噪聲注入",
+            "alternative_refiner": "替代精修器"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出"
+        },
+        "description": "一個基於 Turbo 的採樣器節點，支援多階段正面提示詞輸入，包含生成後控制、步數設定、初始偏差調整以及多種增強選項（如創造力增強、舊調度器、噪聲注入和替代精修器）。"
+    },
+    "ImageGridBuilder //ZImagePowerNodes": {
+        "title": "影像網格建構器",
+        "inputs": {
+            "images0": "影像",
+            "images1": "影像1",
+            "images2": "影像2",
+            "images3": "影像3",
+            "images4": "影像4",
+            "images5": "影像5",
+            "images6": "影像6",
+            "images7": "影像7",
+            "images8": "影像8",
+            "images9": "影像9",
+            "images10": "影像10",
+            "images11": "影像11",
+            "images12": "影像12",
+            "images13": "影像13",
+            "images14": "影像14",
+            "images15": "影像15",
+            "images16": "影像16"
+        },
+        "widgets": {
+            "banner": "橫幅",
+            "banner_height": "橫幅高度",
+            "text": "文字",
+            "text_color": "文字顏色",
+            "lines_color": "線條顏色",
+            "banner_color": "橫幅顏色",
+            "font_name": "字體名稱",
+            "font_size": "字體大小",
+            "columns": "列數",
+            "image_scale": "圖像縮放",
+            "image_spacing": "影像間距"
+        },
+        "description": "影像網格排列。",
+        "api_version": "V3"
+    },
+    "ImageLabeler //ZImagePowerNodes": {
+        "title": "影像標籤器",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "text": "文字",
+            "text_color": "文字顏色",
+            "background_color": "背景顏色",
+            "font_name": "字體名稱",
+            "font_size": "字體大小",
+            "font_scale": "字型縮放",
+            "label_position": "標籤位置",
+            "label_padding": "標籤內邊距",
+            "min_label_width": "最小標籤寬度",
+            "min_label_height": "最小標籤高度"
+        },
+        "description": "為影像添加自訂文字標籤。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2 //ZImagePowerNodes": {
+        "title": "⚡| Z-採樣器 渦輪增壓",
+        "inputs": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "第二階段正面條件",
+            "positive_stg3": "第三階段正面條件"
+        },
+        "widgets": {
+            "seed": "隨機種子",
+            "steps": "步驟數",
+            "denoise": "降噪",
+            "z_vibrance": "Z-鮮豔度",
+            "mode": "軌道模式",
+            "lowres_sample": "低解析度 取樣"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出"
+        },
+        "description": "使用專為“Z-Image Turbo”的流程高效去除 Latent 影像中的噪聲。此節點接收一個 Z-Image Turbo 模型、初始 Latent 影像以及調整參數，並產生一個可用於解碼為最終影像的降噪 Latent 輸出。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Advanced //ZImagePowerNodes": {
+        "title": "⚡| Z-採樣器 渦輪增壓 進階版",
+        "inputs": {
+            "latent_input": "Latent 輸入",
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "positive_stg2": "第二階段正面條件",
+            "positive_stg3": "第三階段正面條件"
+        },
+        "widgets": {
+            "add_noise": "新增雜訊波",
+            "seed": "隨機種子",
+            "steps": "步驟數",
+            "start_at_step": "從第幾步開始",
+            "end_at_step": "到第幾步結束",
+            "force_final_denoising": "強制最終降噪",
+            "divider": "分割符",
+            "z_vibrance": "Z-鮮豔度",
+            "initial_bias_level": "初始偏差級別",
+            "initial_sample_size": "初始樣本大小"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出"
+        },
+        "description": "高效去除 Latent 中的噪聲，並針對“Z-Image Turbo”進行了專門調校。此節點接受一個Z-Image Turbo模型、初始 Latent 和條件參數，並生成一個可用於解碼最終影像的降噪 Latent 輸出。進階版本包含額外參數以實現更精確的控制和採樣器串接。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Laboratory //ZImagePowerNodes": {
+        "title": "⚡| Z-採樣器 渦輪增壓 實驗室版",
+        "inputs": {
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "latent_input": "Latent 輸入"
+        },
+        "widgets": {
+            "seed": "隨機種子",
+            "steps": "步驟數",
+            "denoise": "降噪",
+            "divider1": "分割符1",
+            "initial_noise_bias_level": "初始噪聲偏差級別",
+            "initial_noise_overdose": "初始噪聲過量",
+            "noise_est_sample_size": "噪聲估計樣本大小",
+            "noise_est_sample_bias": "噪聲估計樣本偏差",
+            "noise_est_sample_scale": "噪聲估計樣本縮放",
+            "divider2": "分割符2",
+            "inject_noise_st1": "第一階段注入噪聲",
+            "inject_freq_st1": "第一階段注入頻率",
+            "inject_noise_st2": "第二階段注入噪聲",
+            "inject_freq_st2": "第二階段注入頻率",
+            "inject_noise_st3": "第三階段注入噪聲",
+            "inject_freq_st3": "第三階段注入頻率",
+            "divider3": "分割符3",
+            "sigma_preset_name": "預設σ名稱",
+            "sigma0_off": "σ0 偏移",
+            "sigma1_off": "σ1 偏移",
+            "sigma2_off": "σ2 偏移",
+            "sigma3_off": "σ3 偏移",
+            "sigma4_off": "σ4 偏移",
+            "sigma5_off": "σ5 偏移",
+            "sigma6_off": "σ6 偏移",
+            "sigma7_off": "σ7 偏移",
+            "sigma8_off": "σ8 偏移",
+            "sigma9_off": "σ9 偏移",
+            "sigma10_off": "σ10 偏移"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出"
+        },
+        "description": "高效去除 Latent 中的噪聲，並特別針對“Z-Image Turbo”模型進行了最佳化。此節點接受一個Z-Image Turbo模型、Latent 輸入和條件參數，並生成一個可用於進一步處理或解碼的降噪輸出。",
+        "api_version": "V3"
+    },
+    "IllustrationStylePromptEncoder //ZImagePowerNodes": {
+        "title": "❌插圖風格提示編碼器",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "自訂選項"
+        },
+        "widgets": {
+            "style_to_apply": "要套用的風格",
+            "text": "文字提示"
+        },
+        "description": "將文字提示轉換為嵌入，適應所選的插圖風格。此節點接收一個提示，根據選定的選項調整其視覺樣式，然後使用提供的文字編碼器將其編碼為一個引導影像生成的嵌入。",
+        "api_version": "V3"
+    },
+    "PhotoStylePromptEncoder //ZImagePowerNode": {
+        "title": "❌照片風格 提示編碼器",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "自訂選項"
+        },
+        "widgets": {
+            "style_to_apply": "要套用的風格",
+            "text": "文字提示"
+        },
+        "description": "將文字提示轉換為嵌入，適應所選的照片風格。此節點接收一個提示，根據選定的選項調整其視覺樣式，然後使用提供的文字編碼器將其編碼為一個引導影像生成的嵌入。",
+        "api_version": "V3"
+    },
+    "EmptyZImageLatentImage //ZImagePowerNodes": {
+        "title": "⚡| 空 Latent Z 影像",
+        "widgets": {
+            "landscape": "切換橫豎螢幕模式",
+            "ratio": "寬高比",
+            "size": "輸出尺寸",
+            "batch_size": "批次處理大小"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SaveImage //ZImagePowerNodes": {
+        "title": "⚡| 儲存圖片",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "filename_prefix": "檔名前綴",
+            "civitai_compatible_metadata": "Civitai 相容元數據"
+        },
+        "outputs": {
+            "int": "整數",
+            "float": "浮點數",
+            "latent": "Latent"
+        }
+    },
+    "StylePromptEncoder //ZImagePowerNodes": {
+        "title": "⚡| 風格與提示詞 編輯",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "自訂化"
+        },
+        "widgets": {
+            "category": "類別",
+            "style": "風格"
+        },
+        "outputs": {
+            "CONDITIONS": "條件",
+            "STRING": "字串"
+        }
+    },
+    "StyleStringInjector //ZImagePowerNodes": {
+        "title": "⚡| 風格 注入字串",
+        "inputs": {
+            "string": "字串"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️選擇風格",
+            "style": "風格"
+        },
+        "outputs": {
+            "CONDITIONS": "條件",
+            "STRING": "字串"
+        }
+    },
+    "StylePromptEncoder2 //ZImagePowerNodes": {
+        "title": "⚡| 風格 &提示詞 編輯",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "自訂"
+        },
+        "widgets": {
+            "style": "風格",
+            "🖼️ Select Style ...": "🖼️選擇風格",
+            "text": "文字",
+            "gallery": "畫廊",
+            "spacer": "間隔"
+        },
+        "outputs": {
+            "CONDITIONS": "條件",
+            "STRING": "字串"
+        },
+        "description": "將文字提示轉換為嵌入物，自動適應提示以符合所選風格。此節點將提示調整為所選選項的視覺風格，並使用提供的文字編碼器對其進行編碼，以生成引導影像生成的嵌入物。"
+    },
+    "StyleStringInjector2 //ZImagePowerNodes": {
+        "title": "⚡| 風格 注入字串",
+        "inputs": {
+            "string": "字串"
+        },
+        "widgets": {
+            "style": "風格",
+            "🖼️ Select Style ...": "🖼️選擇風格",
+            "gallery": "畫廊"
+        },
+        "outputs": {
+            "STRING": "字串"
+        },
+        "description": "向您的提示中注入一種風格。此節點將文字提示根據所選風格進行修改。"
+    },
+    "ZSamplerTurboAdvanced //ZImagePowerNodes": {
+        "title": "⚡| Z-採樣器 Turbo（進階版）",
+        "inputs": {
+            "model": "模型名稱",
+            "positive": "正面條件",
+            "latent_input": "Latent 輸入"
+        },
+        "widgets": {
+            "seed": "隨機種子",
+            "steps": "步驟",
+            "denoise": "降噪",
+            "initial_noise_calibration": "初始噪聲校準",
+            "noise_bias_estimation": "噪聲偏差估計",
+            "noise_bias_sample_size": "噪聲偏差樣本大小",
+            "noise_bias_scale": "噪聲偏差縮放",
+            "noise_overdose": "噪聲過載",
+            "divider": "分割"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出",
+            "latent": "Latent"
+        },
+        "description": "高效地對 Latent 影像進行降噪，特別針對 'Z-Image Turbo' 模型進行了最佳化。此節點接受一個 Z-Image Turbo 模型、一個初始 Latent 影像以及條件參數，產生一個準備進一步處理或解碼的降噪輸出。"
+    },
+    "MyTop10Styles //ZImagePowerNodes": {
+        "title": "⚡| 我的10種風格",
+        "inputs": {
+            "input": "輸入",
+            "top_styles": "流行風格",
+            "divider": "分割"
+        },
+        "widgets": {
+            "style_1": "風格1",
+            "style_2": "風格2",
+            "style_3": "風格3",
+            "style_4": "風格4",
+            "style_5": "風格5",
+            "style_6": "風格6",
+            "style_7": "風格7",
+            "style_8": "風格8",
+            "style_9": "風格9",
+            "style_10": "風格10",
+            "control_after_generate": "生成後控制",
+            "output_to": "輸出至"
+        },
+        "outputs": {
+            "output": "輸出"
+        },
+        "description": "讓您可以從您的個人化前10種清單中選擇一種視覺風格。此節點依賴於 '我的前10種風格編輯器' 來提供您最喜歡的風格清單。"
+    },
+    "MyTop10StylesEditor //ZImagePowerNodes": {
+        "title": "⚡| 我的10種風格（編輯器）",
+        "inputs": {
+            "gallery_1": "畫廊1",
+            "spacer_1": "間隔1",
+            "gallery_2": "畫廊2",
+            "spacer_2": "間隔2",
+            "gallery_3": "畫廊3",
+            "spacer_3": "間隔3",
+            "gallery_4": "畫廊4",
+            "spacer_4": "間隔4",
+            "gallery_5": "畫廊5",
+            "spacer_5": "間隔5",
+            "gallery_6": "畫廊6",
+            "spacer_6": "間隔6",
+            "gallery_7": "畫廊7",
+            "spacer_7": "間隔7",
+            "gallery_8": "畫廊8",
+            "spacer_8": "間隔8",
+            "gallery_9": "畫廊9",
+            "spacer_9": "間隔9",
+            "gallery_10": "畫廊10"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️選擇風格",
+            "style_1": "風格1",
+            "style_2": "風格2",
+            "style_3": "風格3",
+            "style_4": "風格4",
+            "style_5": "風格5",
+            "style_6": "風格6",
+            "style_7": "風格7",
+            "style_8": "風格8",
+            "style_9": "風格9",
+            "style_10": "風格10"
+        },
+        "outputs": {
+            "TOP_STYLES": "流行風格"
+        },
+        "description": "讓您建立個人化的前10種視覺風格清單，從所有可用選項中選擇以建立您的理想收藏。此節點設計用於與 '我的前10種風格' 搭配工作，定義並使用您偏好的風格。"
+    },
+    "VAEEncodeSoftInpainting //ZImagePowerNodes": {
+        "title": "⚡| VAE 編碼（用於軟修復）",
+        "inputs": {
+            "pixels": "影像",
+            "vae": "vae",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "output_size": "輸出大小",
+            "mask_blur_pixels": "遮罩模糊像素"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出",
+            "latent": "Latent"
+        },
+        "description": "使用 VAE 模型將輸入影像及其修復遮罩編碼到 Latent。"
+    },
+    "ZSamplerTurbo //ZImagePowerNodes": {
+        "title": "⚡| Z採樣器 加速",
+        "inputs": {
+            "model": "模型名稱",
+            "latent_input": "Latent 輸入",
+            "positive": "正面條件"
+        },
+        "widgets": {
+            "seed": "隨機種子",
+            "steps": "步數",
+            "denoise": "降噪",
+            "initial_noise_calibration": "初始噪聲校準",
+            "lowres_bias": "低解析度偏差"
+        },
+        "outputs": {
+            "latent_output": "Latent 輸出",
+            "latent": "Latent"
+        }
+    }
+}

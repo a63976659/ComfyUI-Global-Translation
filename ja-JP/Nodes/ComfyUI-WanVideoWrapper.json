@@ -1,0 +1,2345 @@
+{
+    "LongCatAvatarWhisperEmbeds": {
+        "title": "LongCat アバター 対話 埋め込み (v1.5)",
+        "inputs": {
+            "whisper_model": "対話 モデル",
+            "audio_1": "音声 1",
+            "audio_2": "音声 2",
+            "audio_3": "音声 3",
+            "audio_4": "音声 4",
+            "ref_target_masks": "参照ターゲットマスク"
+        },
+        "widgets": {
+            "normalize_loudness": "ラウドネス正規化",
+            "num_frames": "フレーム数",
+            "fps": "フレームレート",
+            "audio_scale": "音声スケール",
+            "audio_cfg_scale": "音声 CFG スケール",
+            "multi_audio_type": "マルチ音声タイプ"
+        },
+        "outputs": {
+            "num_frames": "フレーム数",
+            "audio": "音声",
+            "multitalk_embeds": "多ターン対話埋め込み"
+        },
+        "description": "このノードはアバターの音声埋め込みを処理するためのもの。マルチ音声入力に対応し、Whisper モデルで特徴を抽出する。フレーム数、フレームレート、音声スケールなどのパラメータを調整可能。"
+    },
+    "WanVideoImageToVideoSkyreelsv3_audio": {
+        "title": "Wan動画 ロングスカイ ReelsV3 音声から動画",
+        "inputs": {
+            "vae": "VAEエンコーダ",
+            "start_image": "開始画像",
+            "reference_video": "参考動画",
+            "clip_embeds": "CLIP 埋め込み"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "frame_window_size": "フレームウィンドウサイズ",
+            "motion_frame": "モーションフレーム",
+            "drop_frames": "破棄フレーム数",
+            "tiled_vae": "タイル VAE",
+            "force_offload": "強制アンロード",
+            "colormatch": "色合わせ",
+            "output_path": "出力パス"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み",
+            "output_path": "出力パス"
+        },
+        "description": "Multi/InfiniteTalk の長尺動画生成サンプリング手法に対応。Windows 環境では動画コンテンツが重複フレームの形式で作成される。この機能は ContextWindows や、Multi/InfiniteTalk 以外の他の複数の機能とは互換性がないか、必要ない。"
+    },
+    "WanVideoEnhanceAVideo": {
+        "title": "Wan動画 強化-A-動画(KJ)",
+        "widgets": {
+            "weight": "重み",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "feta_args": "強化パラメータ"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "Wan動画設定ブロックスワップ(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "block_swap_args": "ブロック交換パラメータ"
+        },
+        "outputs": {
+            "model": "Wan動画モデル"
+        }
+    },
+    "WanVideoSetRadialAttention": {
+        "title": "Wan動画 放射状アテンションを設定(KJ)",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "dense_blocks": "高密度ブロック",
+            "dense_vace_blocks": "高密度VACEブロック",
+            "dense_timesteps": "高密度タイムステップ",
+            "decay_factor": "減衰係数",
+            "dense_attention_mode": "高密度アテンションモード",
+            "block_size": "チャンクサイズ"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "WanVideoBlockList": {
+        "title": "Wan動画 ブロックリスト(KJ)",
+        "widgets": {
+            "blocks": "ブロック"
+        },
+        "outputs": {
+            "block_list": "ブロック一覧"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "Wan動画 テキストエンコード（キャッシュ）(KJ)",
+        "inputs": {
+            "extender_args": "拡張パラメータ"
+        },
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "quantization": "量子化",
+            "device": "デバイス",
+            "positive_prompt": "ポジティブプロンプト",
+            "negative_prompt": "ネガティブプロンプト",
+            "use_disk_cache": "ディスクキャッシュを使用"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ",
+            "negative_text_embeds": "ネガティブテキスト埋め込みグループ",
+            "positive_prompt": "ポジティブプロンプト"
+        },
+        "description": "テキストプロンプトをテキスト埋め込みにエンコードする。\n このノードは T5 の読み込みとアンロードが完了すると自動的に T5 を終了し、VRAM やメモリを一切占有しない。\n T5 の読み込み前にプロンプトがキャッシュされていた場合、T5 は読み込まれない。\n ネガティブ出力は NAG と組み合わせて使うことを想定しており、ネガティブプロンプトのみの埋め込みを含む。\n さらに Qwen LLM モデルを指定でき、元々の Wan テンプレートのいずれかまたはカスタムシステムプロンプトでポジティブプロンプトを拡張できる。"
+    },
+    "WanVideoTextEncode": {
+        "title": "Wan動画 テキストエンコード(KJ)",
+        "inputs": {
+            "t5": "T5エンコーダ",
+            "model_to_offload": "モデルをアンロード"
+        },
+        "widgets": {
+            "positive_prompt": "ポジティブプロンプト",
+            "negative_prompt": "ネガティブプロンプト",
+            "force_offload": "強制アンロード",
+            "use_disk_cache": "ディスクキャッシュを使用",
+            "device": "デバイス"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ"
+        }
+    },
+    "WanVideoTextEncodeSingle": {
+        "title": "Wan動画  テキスト単一エンコード(KJ)",
+        "inputs": {
+            "t5": "T5モデル",
+            "model_to_offload": "モデルをアンロード"
+        },
+        "widgets": {
+            "prompt": "プロンプト",
+            "force_offload": "強制アンロード",
+            "use_disk_cache": "ディスクキャッシュを使用",
+            "device": "デバイス"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ"
+        }
+    },
+    "WanVideoApplyNAG": {
+        "title": "Wan動画  NAGを適用(KJ)",
+        "inputs": {
+            "original_text_embeds": "元テキスト埋め込み",
+            "nag_text_embeds": "NAGテキスト埋め込み"
+        },
+        "widgets": {
+            "nag_scale": "NAGスケール",
+            "nag_tau": "NAG tau",
+            "nag_alpha": "NAG alpha"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ"
+        }
+    },
+    "WanVideoTextEmbedBridge": {
+        "title": "Wan動画 テキスト埋め込みブリッジ(KJ)",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "Wan動画 CLIP ビジョンエンコード(KJ)",
+        "inputs": {
+            "clip_vision": "CLIP ビジョン",
+            "image_1": "画像_1",
+            "image_2": "画像_2",
+            "negative_image": "ネガティブ画像"
+        },
+        "widgets": {
+            "strength_1": "強度_1",
+            "strength_2": "強度_2",
+            "crop": "クロップ",
+            "combine_embeds": "埋め込みグループを結合",
+            "force_offload": "強制アンロード",
+            "tiles": "タイル分割",
+            "ratio": "比率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoRealisDanceLatents": {
+        "title": "Wan動画 RealisDance真実の舞 Latent(KJ)",
+        "inputs": {
+            "ref_latent": "参照Latent",
+            "smpl_latent": "SMPL人体モデル Latent",
+            "hamer_latent": "Hameハマー風 Latent"
+        },
+        "widgets": {
+            "pose_cond_start_percent": "姿勢条件 開始パーセンテージ",
+            "pose_cond_end_percent": "姿勢条件 終了パーセンテージ"
+        },
+        "outputs": {
+            "add_cond_latents": "条件Latentを追加"
+        }
+    },
+    "WanVideoAddStandInLatent": {
+        "title": "Wan動画 代役 Latentを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "ip_image_latent": "IP画像 Latent"
+        },
+        "widgets": {
+            "freq_offset": "周波数オフセット"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddMTVMotion": {
+        "title": "Wan動画 MTV 動的エフェクト(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "mtv_crafter_motion": "MTV 動的エフェクト"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoImageToVideoEncode": {
+        "title": "Wan動画 画像を動画に変換エンコード(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "CLIP埋め込み",
+            "start_image": "開始画像",
+            "end_image": "終了画像",
+            "control_embeds": "制御埋め込みグループ",
+            "temporal_mask": "時間マスク",
+            "extra_latents": "追加Latent",
+            "add_cond_latents": "条件Latentを追加"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数",
+            "noise_aug_strength": "ノイズ強化強度",
+            "start_latent_strength": "開始Latent強度",
+            "end_latent_strength": "終了Latent強度",
+            "force_offload": "強制アンロード",
+            "fun_or_fl2v_model": "funまたはfl2vモデル",
+            "tiled_vae": "分割エンコードVAE"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAnimateEmbeds": {
+        "title": "Wan動画 アニメーション埋め込みグループ(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "CLIP埋め込み",
+            "ref_images": "参考画像",
+            "pose_images": "ポーズ画像",
+            "face_images": "面部画像",
+            "bg_images": "背景画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数",
+            "force_offload": "強制アンロード",
+            "frame_window_size": "フレームウィンドウサイズ",
+            "colormatch": "色合わせ",
+            "pose_strength": "ポーズ強度",
+            "face_strength": "面部強度",
+            "tiled_vae": "分割エンコードVAE"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoEmptyEmbeds": {
+        "title": "Wan動画 空の埋め込みグループ(KJ)",
+        "inputs": {
+            "control_embeds": "制御埋め込みグループ",
+            "extra_latents": "追加Latent"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddExtraLatent": {
+        "title": "Wan動画 追加 Latentを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "extra_latents": "追加Latent"
+        },
+        "widgets": {
+            "latent_index": "Latent インデックス"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoMiniMaxRemoverEmbeds": {
+        "title": "Wan動画 Latent サイズ除去埋め込みグループ(KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "mask_latents": "マスクLatent"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoPhantomEmbeds": {
+        "title": "Wan動画 Phantom幻影埋め込みグループ(KJ)",
+        "inputs": {
+            "phantom_latent_1": "ファントムLatent_1",
+            "phantom_latent_2": "ファントムLatent_2",
+            "phantom_latent_3": "ファントムLatent_3",
+            "phantom_latent_4": "ファントムLatent_4",
+            "vace_embeds": "VACE埋め込み"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "phantom_cfg_scale": "ファントムCFGスケーリング",
+            "phantom_start_percent": "ファントム開始パーセンテージ",
+            "phantom_end_percent": "ファントム終了パーセンテージ"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoControlEmbeds": {
+        "title": "Wan動画 制御埋め込みグループ(KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "fun_ref_image": "Fun参照画像"
+        },
+        "widgets": {
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddControlEmbeds": {
+        "title": "Wan動画 制御埋め込みグループを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "latents": "Latent",
+            "fun_ref_image": "Fun参照画像"
+        },
+        "widgets": {
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddPusaNoise": {
+        "title": "Wan動画 Pusa普萨ノイズを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ"
+        },
+        "widgets": {
+            "noise_multipliers": "ノイズ倍率",
+            "noisy_steps": "ノイズ入りステップ数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoSLG": {
+        "title": "Wan動画 SLG(KJ)",
+        "widgets": {
+            "blocks": "ブロック",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "slg_args": "SLGパラメータ"
+        }
+    },
+    "WanVideoVACEEncode": {
+        "title": "Wan動画 VACEエンコード(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "input_frames": "入力フレーム",
+            "ref_images": "参考画像",
+            "input_masks": "入力マスク",
+            "prev_vace_embeds": "前回のVACE埋め込み"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数",
+            "strength": "強度",
+            "vace_start_percent": "VACE開始パーセンテージ",
+            "vace_end_percent": "VACE終了パーセンテージ",
+            "tiled_vae": "分割エンコードVAE"
+        },
+        "outputs": {
+            "vace_embeds": "VACE埋め込み"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "Wan動画コンテキストオプション(KJ)",
+        "inputs": {
+            "reference_latent": "参照Latent"
+        },
+        "widgets": {
+            "context_schedule": "コンテキストスケジュール",
+            "fuse_method": "融合手法",
+            "context_frames": "コンテキストフレーム数",
+            "context_stride": "コンテキストストライド",
+            "context_overlap": "コンテキスト重複",
+            "freenoise": "フリーノイズ",
+            "verbose": "詳細モード"
+        },
+        "outputs": {
+            "context_options": "コンテキストオプション"
+        }
+    },
+    "WanVideoFlowEdit": {
+        "title": "Wan動画 フロー編集(KJ)",
+        "inputs": {
+            "source_embeds": "ソース埋め込みグループ",
+            "source_image_embeds": "ソース画像埋め込みグループ"
+        },
+        "widgets": {
+            "skip_steps": "スキップステップ数",
+            "drift_steps": "ドリフトステップ数",
+            "drift_flow_shift": "ドリフトフローオフセット",
+            "source_cfg": "ソースCFG比率",
+            "drift_cfg": "ドリフトCFG比率"
+        },
+        "outputs": {
+            "flowedit_args": "流編集 パラメータ"
+        }
+    },
+    "WanVideoLoopArgs": {
+        "title": "Wan動画 ループパラメータ(KJ)",
+        "widgets": {
+            "shift_skip": "オフセットスキップ",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "loop_args": "ループパラメータ"
+        }
+    },
+    "WanVideoExperimentalArgs": {
+        "title": "Wan動画 実験パラメータ(KJ)",
+        "widgets": {
+            "video_attention_split_steps": "動画アテンション分割ステップ数",
+            "cfg_zero_star": "CFGスパース",
+            "use_zero_init": "ゼロ初期化を使用",
+            "zero_star_steps": "散発的ステップ数",
+            "use_fresca": "Frescaを使用",
+            "fresca_scale_low": "Frescaスケール下限",
+            "fresca_scale_high": "Frescaスケール上限",
+            "fresca_freq_cutoff": "Fresca周波数カットオフ値",
+            "use_tcfg": "時間CFGを使用",
+            "raag_alpha": "RAAGアルファ",
+            "bidirectional_sampling": "双方向サンプリング"
+        },
+        "outputs": {
+            "exp_args": "実験パラメータ"
+        }
+    },
+    "WanVideoFreeInitArgs": {
+        "title": "Wan動画  自由初期化パラメータ(KJ)",
+        "widgets": {
+            "freeinit_num_iters": "自由初期化イテレーション回数",
+            "freeinit_method": "自由初期化方法",
+            "freeinit_n": "自由初期化n",
+            "freeinit_d_s": "自由初期化d_s",
+            "freeinit_d_t": "自由初期化d_t"
+        },
+        "outputs": {
+            "freeinit_args": "自由初期化パラメータ"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "Wan動画  スケジューラ(KJ)",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "steps": "ステップ数",
+            "shift": "オフセット",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "sigmas": "シグマ",
+            "steps": "ステップ数",
+            "shift": "オフセット",
+            "scheduler": "スケジューラ",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "Wan動画  スケジューラv2(KJ)",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "scheduler": "スケジューラ",
+            "steps": "ステップ数",
+            "shift": "オフセット",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "sigmas": "シグマ",
+            "scheduler": "スケジューラ",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        }
+    },
+    "WanVideoSchedulerSA_ODE": {
+        "title": "Wan動画  スケジューラSA-ODE(KJ)",
+        "inputs": {
+            "sigmas": "シグマ"
+        },
+        "widgets": {
+            "use_adaptive_order": "適応順序を使用",
+            "use_velocity_smoothing": "速度スムージングを使用",
+            "convergence_threshold": "収束閾値",
+            "smoothing_factor": "平滑係数",
+            "steps": "ステップ数",
+            "shift": "オフセット",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "sigmas": "シグマ",
+            "steps": "ステップ数",
+            "shift": "オフセット",
+            "scheduler": "スケジュールリスト",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ"
+        }
+    },
+    "WanVideoRoPEFunction": {
+        "title": "Wan動画 回転位置埋め込み関数(KJ)",
+        "inputs": {
+            "rope_function": "回転位置埋め込み関数"
+        },
+        "widgets": {
+            "rope_function": "回転位置埋め込み関数",
+            "ntk_scale_f": "NTKスケーリング係数（フレーム）",
+            "ntk_scale_h": "NTKスケーリング係数（高さ）",
+            "ntk_scale_w": "NTKスケーリング係数（幅）"
+        },
+        "outputs": {
+            "rope_function": "回転位置埋め込み関数"
+        },
+        "description": "Wan動画の回転位置エンコーディング（RoPE）設定。NTK対応スケーリングでコンテキスト長を拡張する。"
+    },
+    "WanVideoSampler": {
+        "title": "Wan動画 サンプラー(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "image_embeds": "画像埋め込みグループ",
+            "text_embeds": "テキスト埋め込みグループ",
+            "samples": "サンプリング",
+            "feta_args": "強化パラメータ",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "flowedit_args": "流編集パラメータ",
+            "slg_args": "SLGパラメータ",
+            "rope_function": "Rope関数",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験パラメータ",
+            "sigmas": "シグマ",
+            "unianimate_poses": "UniAnimateユニバーサルアニメ_ポーズ",
+            "fantasytalking_embeds": "FantasyTalkingファンタジー会話_埋め込み",
+            "uni3c_embeds": "Uni3C 埋め込み",
+            "multitalk_embeds": "MultiTalkマルチターン会話 埋め込み",
+            "infinitetalk_embeds": "InfiniteTalk無限会話 埋め込み",
+            "freeinit_args": "自由初期化パラメータグループ"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "shift": "オフセット",
+            "seed": "シード",
+            "force_offload": "強制アンロード",
+            "scheduler": "スケジューラ",
+            "riflex_freq_index": "Riflex周波数インデックス",
+            "denoise_strength": "ノイズ除去",
+            "batched_cfg": "バッチCFG",
+            "start_step": "開始ステップ数",
+            "end_step": "終了ステップ",
+            "rope_function": "Rope関数",
+            "add_noise_to_samples": "サンプリングにノイズを追加"
+        },
+        "outputs": {
+            "samples": "サンプリング",
+            "denoised_samples": "ノイズ除去後サンプル"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "Wan動画 サンプラーv2(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "image_embeds": "画像埋め込みグループ",
+            "scheduler": "スケジューラ",
+            "text_embeds": "テキスト埋め込みグループ",
+            "samples": "サンプリング",
+            "extra_args": "追加パラメータ"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "seed": "シード",
+            "force_offload": "強制アンロード",
+            "add_noise_to_samples": "サンプリングにノイズを追加"
+        },
+        "outputs": {
+            "samples": "サンプリング",
+            "denoised_samples": "ノイズ除去後サンプル"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "Wan動画 サンプラーv2追加パラメータ(KJ)",
+        "inputs": {
+            "feta_args": "強化パラメータ",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "slg_args": "SLGパラメータ",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験パラメータ",
+            "unianimate_poses": "UniAnimateユニバーサルアニメ_ポーズ",
+            "fantasytalking_embeds": "FantasyTalkingファンタジー会話_埋め込み",
+            "uni3c_embeds": "Uni3C 埋め込み",
+            "multitalk_embeds": "MultiTalkマルチターン会話 埋め込み",
+            "infinitetalk_embeds": "InfiniteTalk無限会話 埋め込み",
+            "freeinit_args": "自由初期化パラメータグループ"
+        },
+        "widgets": {
+            "riflex_freq_index": "Riflex周波数インデックス",
+            "rope_function": "Rope関数"
+        },
+        "outputs": {
+            "extra_args": "追加パラメータ"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "Wan動画 サンプラー設定(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "image_embeds": "画像埋め込みグループ",
+            "text_embeds": "テキスト埋め込みグループ",
+            "samples": "サンプリング",
+            "feta_args": "強化パラメータ",
+            "context_options": "コンテキストオプション",
+            "cache_args": "キャッシュパラメータ",
+            "flowedit_args": "流編集パラメータ",
+            "slg_args": "SLGパラメータ",
+            "rope_function": "Rope関数",
+            "loop_args": "ループパラメータ",
+            "experimental_args": "実験パラメータ",
+            "sigmas": "シグマ",
+            "unianimate_poses": "UniAnimateユニバーサルアニメ_ポーズ",
+            "fantasytalking_embeds": "FantasyTalkingファンタジー会話_埋め込み",
+            "uni3c_embeds": "Uni3C 埋め込み",
+            "multitalk_embeds": "MultiTalkマルチターン会話 埋め込み",
+            "infinitetalk_embeds": "InfiniteTalk無限会話 埋め込み",
+            "freeinit_args": "自由初期化パラメータグループ"
+        },
+        "widgets": {
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "shift": "オフセット",
+            "seed": "シード",
+            "force_offload": "強制アンロード",
+            "scheduler": "スケジューラ",
+            "riflex_freq_index": "Riflex周波数インデックス",
+            "denoise_strength": "ノイズ除去",
+            "batched_cfg": "バッチCFG",
+            "rope_function": "Rope関数",
+            "start_step": "開始ステップ数",
+            "end_step": "終了ステップ",
+            "add_noise_to_samples": "サンプリングにノイズを追加"
+        },
+        "outputs": {
+            "sampler_inputs": "サンプラー入力",
+            "denoised_samples": "ノイズ除去後サンプル"
+        },
+        "description": "Wan動画 サンプラー設定ノードのすべての設定と入力情報を出力するノード"
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "Wan動画 設定内サンプラー(KJ)",
+        "inputs": {
+            "sampler_inputs": "サンプラー入力"
+        },
+        "widgets": {
+            "normalization": "正規化"
+        },
+        "outputs": {
+            "samples": "サンプリング",
+            "denoised_samples": "ノイズ除去後サンプル"
+        },
+        "description": "この補助ノードはインターフェースを見やすくするだけの機能しか持たない。元々のメインサンプラーノードは非常に煩雑になっているため、リアルタイムプレビューに非常に役立つ。"
+    },
+    "WanVideoDecode": {
+        "title": "Wan動画 デコーダー(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "サンプリング"
+        },
+        "widgets": {
+            "enable_vae_tiling": "VAEタイル分割有効",
+            "tile_x": "X軸分割",
+            "tile_y": "Y軸分割",
+            "tile_stride_x": "X軸ステップサイズ",
+            "tile_stride_y": "Y軸ステップサイズ",
+            "normalization": "正規化"
+        },
+        "outputs": {
+            "images": "画像",
+            "IMAGE": "画像"
+        }
+    },
+    "WanVideoEncodeLatentBatch": {
+        "title": "Wan動画  エンコーダー Latent バッチ(KJ)",
+        "inputs": {
+            "vae": "vae",
+            "images": "画像"
+        },
+        "widgets": {
+            "enable_vae_tiling": "VAEタイル分割有効",
+            "tile_x": "X軸分割",
+            "tile_y": "Y軸分割",
+            "tile_stride_x": "X軸ステップサイズ",
+            "tile_stride_y": "Y軸ステップサイズ"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "Wan動画 エンコーダー(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "enable_vae_tiling": "VAEタイル分割有効",
+            "tile_x": "X軸分割",
+            "tile_y": "Y軸分割",
+            "tile_stride_x": "X軸ステップサイズ",
+            "tile_stride_y": "Y軸ステップサイズ",
+            "noise_aug_strength": "ノイズ強化強度",
+            "latent_strength": "Latent強度"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoImageClipEncode": {
+        "title": "Wan動画画像CLIPエンコード(KJ)(非推奨)",
+        "inputs": {
+            "clip_vision": "CLIPビジョンモデル",
+            "image": "画像",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "generation_width": "生成幅",
+            "generation_height": "生成高さ",
+            "num_frames": "フレーム数",
+            "force_offload": "強制アンロード",
+            "noise_aug_strength": "ノイズ強化強度",
+            "latent_strength": "Latent強度",
+            "clip_embed_strength": "CLIP埋め込み強度",
+            "adjust_resolution": "解像度を調整"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "Wan動画ブロックスワップ(KJ)",
+        "widgets": {
+            "blocks_to_swap": "交換対象ブロック",
+            "offload_img_emb": "画像埋め込みアンロード",
+            "offload_txt_emb": "テキスト埋め込みアンロード",
+            "use_non_blocking": "ノンブロッキングを使用",
+            "vace_blocks_to_swap": "VACE交換待ちブロック",
+            "prefetch_blocks": "プリフェッチブロック",
+            "block_swap_debug": "ブロック交換デバッグ"
+        },
+        "outputs": {
+            "block_swap_args": "ブロック交換パラメータ"
+        },
+        "description": "これは ComfyUI ネイティブノード向けのシンプルな Wan2.1 ブロックスワップノードで、最大 40 個のブロックを CPU にスワップすることで VRAM を削減します。"
+    },
+    "WanVideoVRAMManagement": {
+        "title": "Wan動画VRAM管理(KJ)",
+        "widgets": {
+            "offload_percent": "アンロードパーセンテージ"
+        },
+        "outputs": {
+            "vram_management_args": "VRAM管理パラメータ"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "Wan動画 Torchコンパイル設定(KJ)",
+        "widgets": {
+            "backend": "バックエンドエンジン",
+            "mode": "コンパイルモード",
+            "fullgraph": "フルグラフ",
+            "dynamic": "動的コンパイル",
+            "dynamo_cache_size_limit": "Dynamoキャッシュサイズ上限",
+            "compile_transformer_blocks_only": "Transformerブロックのみコンパイル",
+            "dynamo_recompile_limit": "Dynamo再コンパイル制限"
+        },
+        "outputs": {
+            "torch_compile_args": "Torchコンパイルパラメータ"
+        },
+        "description": "Torchコンパイル設定。モデルローダーに接続されている場合、選択されたレイヤーに対してTorchコンパイルを実行する。Triton が必要で、torch 2.5.0 バージョンの使用を推奨。"
+    },
+    "WanVideoLoraSelect": {
+        "title": "Wan動画 Lora選択(KJ)",
+        "inputs": {
+            "prev_lora": "前のLoRA",
+            "blocks": "ブロック"
+        },
+        "widgets": {
+            "lora": "Lora",
+            "strength": "強度",
+            "low_mem_load": "低メモリ読み込み",
+            "merge_loras": "結合Lora"
+        },
+        "outputs": {
+            "lora": "Lora",
+            "WanVideo_LoRA": "Wan動画 Lora"
+        }
+    },
+    "WanVideoLoraSelectByName": {
+        "title": "Wan動画 名前でLoraを選択(KJ)",
+        "inputs": {
+            "prev_lora": "前のLoRA",
+            "blocks": "ブロック"
+        },
+        "widgets": {
+            "lora_name": "LoRA名",
+            "strength": "強度",
+            "low_mem_load": "低メモリ読み込み",
+            "merge_loras": "結合Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "Wan動画 Lora複数選択(KJ)",
+        "inputs": {
+            "prev_lora": "前のLoRA",
+            "blocks": "ブロック"
+        },
+        "widgets": {
+            "lora_0": "Lora_0",
+            "lora_1": "Lora_1",
+            "lora_2": "Lora_2",
+            "lora_3": "Lora_3",
+            "lora_4": "Lora_4",
+            "strength_0": "強度_0",
+            "strength_1": "強度_1",
+            "strength_2": "強度_2",
+            "strength_3": "強度_3",
+            "strength_4": "強度_4",
+            "low_mem_load": "低メモリ読み込み",
+            "merge_loras": "結合Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoVACEModelSelect": {
+        "title": "Wan動画 VACEモデル選択(KJ)",
+        "widgets": {
+            "vace_model": "vaceモデル"
+        },
+        "outputs": {
+            "extra_model": "追加モデル",
+            "vacepath": "VACEパス",
+            "vace_model": "vaceモデル"
+        }
+    },
+    "WanVideoExtraModelSelect": {
+        "title": "Wan動画 追加モデルを選択(KJ)",
+        "widgets": {
+            "extra_model": "追加モデル"
+        },
+        "outputs": {
+            "extra_model": "VACEパス"
+        }
+    },
+    "WanVideoLoraBlockEdit": {
+        "title": "Wan動画 Loraブロック編集(KJ)",
+        "widgets": {
+            "layer_filter": "レイヤーフィルター"
+        },
+        "outputs": {
+            "blocks": "選択されたブロック"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "Wan動画  Loraを設定(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "lora": "Lora"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "Lora 重みをモデルの線形層に直接適用されるよう設定する。この操作は Lora 情報をマージしない。"
+    },
+    "WanVideoModelLoader": {
+        "title": "Wan動画 モデルローダー(KJ)",
+        "inputs": {
+            "compile_args": "コンパイルパラメータ",
+            "block_swap_args": "ブロック交換パラメータ",
+            "lora": "Lora",
+            "vram_management_args": "VRAM管理パラメータ",
+            "extra_model": "追加モデル",
+            "vace_model": "VACEモデル",
+            "fantasytalking_model": "FantasyTalkingファンタジー会話モデル",
+            "multitalk_model": "MultiTalkマルチパーソン会話モデル",
+            "fantasyportrait_model": "FantasyPortraitファンタジーポートレートモデル"
+        },
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "quantization": "量子化",
+            "load_device": "読み込みデバイス",
+            "attention_mode": "アテンションモード",
+            "rms_norm_function": "RMS 定数関数"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "Wan動画 VAEローダー(KJ)",
+        "inputs": {
+            "compile_args": "コンパイルパラメータ"
+        },
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan動画 VAE"
+        },
+        "description": "ComfyUI/models/vae パスから Wan VAE モデルを読み込む"
+    },
+    "WanVideoTinyVAELoader": {
+        "title": "Wan動画 マイクロVAEローダー(KJ)",
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "parallel": "並列"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan動画 VAE"
+        }
+    },
+    "LoadWanVideoT5TextEncoder": {
+        "title": "Wan動画 T5テキストエンコーダーを読み込み(KJ)",
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "load_device": "読み込みデバイス",
+            "quantization": "量子化"
+        },
+        "outputs": {
+            "wan_t5_model": "WanT5モデル"
+        }
+    },
+    "LoadWanVideoClipTextEncoder": {
+        "title": "Wan動画 CLIPテキストエンコーダーを読み込み(KJ)",
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度",
+            "load_device": "読み込みデバイス"
+        },
+        "outputs": {
+            "wan_clip_vision": "Wan CLIP Vision"
+        }
+    },
+    "WanVideoImageResizeToClosest": {
+        "title": "Wan動画 画像サイズ最適化(KJ)",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "generation_width": "生成幅",
+            "generation_height": "生成高さ",
+            "aspect_ratio_preservation": "アスペクト比保持"
+        },
+        "outputs": {
+            "image": "画像",
+            "width": "幅",
+            "height": "高さ"
+        }
+    },
+    "ExtractStartFramesForContinuations": {
+        "title": "動画の先頭フレームを抽出(KJ)",
+        "inputs": {
+            "input_video_frames": "入力動画フレーム"
+        },
+        "widgets": {
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "start_frames": "最初のフレーム"
+        }
+    },
+    "WanVideoVACEStartToEndFrame": {
+        "title": "Wan動画 VACE先頭末尾フレーム(KJ)",
+        "inputs": {
+            "start_image": "開始画像",
+            "end_image": "終了画像",
+            "control_images": "制御画像",
+            "inpaint_mask": "インペイントマスク"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "empty_frame_level": "空フレームレベル",
+            "start_index": "開始インデックス",
+            "end_index": "終了インデックス"
+        },
+        "outputs": {
+            "images": "画像",
+            "masks": "マスク"
+        }
+    },
+    "CreateCFGScheduleFloatList": {
+        "title": "CFGスケジュール用 float リストを作成(KJ)",
+        "widgets": {
+            "steps": "ステップ数",
+            "cfg_scale_start": "CFGスケール開始値",
+            "cfg_scale_end": "CFGスケール終了値",
+            "interpolation": "補間手法",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "float_list": "浮動小数点数リスト"
+        },
+        "description": "フロート値のリストを生成する補助ノード。生成された値はステップごとの cfg スケールを割り当てるために使用できる。\n設定範囲を超えた場合、cfg 値は 1.0 に設定される 。"
+    },
+    "CreateScheduleFloatList": {
+        "title": "スケジュール用 float リストを作成(KJ)",
+        "widgets": {
+            "steps": "ステップ数",
+            "start_value": "開始値",
+            "end_value": "終了値",
+            "default_value": "既定値",
+            "interpolation": "補間手法",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "float_list": "浮動小数点数リスト"
+        }
+    },
+    "DummyComfyWanModelObject": {
+        "title": "Wanモデル Comfy仮想オブジェクト(KJ)",
+        "widgets": {
+            "shift": "オフセット量"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "WanVideoLatentReScale": {
+        "title": "Wan動画 Latent テンソル再スケーリング(KJ)",
+        "inputs": {
+            "samples": "サンプリング"
+        },
+        "widgets": {
+            "direction": "方向"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoSigmaToStep": {
+        "title": "Wan動画  Sigmaからステップ数に変換(KJ)",
+        "widgets": {
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "step": "ステップ数"
+        }
+    },
+    "NormalizeAudioLoudness": {
+        "title": "音声のラウドネスを調整(KJ)",
+        "inputs": {
+            "audio": "音声"
+        },
+        "widgets": {
+            "lufs": "ラウドネス単位LUFS"
+        },
+        "outputs": {
+            "audio": "音声"
+        }
+    },
+    "WanVideoPassImagesFromSamples": {
+        "title": "Wan動画  サンプルから画像を出力(KJ)",
+        "inputs": {
+            "samples": "サンプリング"
+        },
+        "outputs": {
+            "images": "画像",
+            "output_path": "出力パス"
+        }
+    },
+    "FaceMaskFromPoseKeypoints": {
+        "title": "ポーズキーポイントから顔マスクを生成(KJ)",
+        "inputs": {
+            "pose_kps": "ポーズキーポイント"
+        },
+        "widgets": {
+            "person_index": "人物インデックス"
+        },
+        "outputs": {
+            "MASK": "マスク"
+        }
+    },
+    "WanVideoATITracks": {
+        "title": "Wan動画  ATI トラック(KJ)",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "tracks": "軌跡",
+            "width": "幅",
+            "height": "高さ",
+            "temperature": "温度",
+            "topk": "前k値",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "model": "Wan動画 モデル"
+        }
+    },
+    "WanVideoATITracksVisualize": {
+        "title": "Wan動画  ATI トラック可視化(KJ)",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "tracks": "軌跡",
+            "min_radius": "最小半径",
+            "max_radius": "最大半径",
+            "max_retain": "最大保持数"
+        },
+        "outputs": {
+            "images": "画像"
+        }
+    },
+    "WanVideoATI_comfy": {
+        "title": "Wan動画  ATI Comfy(KJ)",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "tracks": "軌跡",
+            "temperature": "温度",
+            "topk": "前k値"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "WanVideoTeaCache": {
+        "title": "Wan動画 Tea茶キャッシュ(KJ)",
+        "widgets": {
+            "rel_l1_thresh": "相対L1閾値",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ",
+            "use_coefficients": "使用係数",
+            "cache_device": "キャッシュデバイス",
+            "mode": "キャッシュモード"
+        },
+        "outputs": {
+            "cache_args": "キャッシュパラメータ"
+        }
+    },
+    "WanVideoMagCache": {
+        "title": "Wan動画  Magキャッシュ(KJ)",
+        "widgets": {
+            "magcache_thresh": "Magキャッシュ閾値",
+            "magcache_K": "Magキャッシュ K値",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ",
+            "cache_device": "キャッシュデバイス"
+        },
+        "outputs": {
+            "cache_args": "キャッシュパラメータ"
+        }
+    },
+    "WanVideoEasyCache": {
+        "title": "Wan動画  シンプルキャッシュ(KJ)",
+        "widgets": {
+            "easycache_thresh": "簡易キャッシュ閾値",
+            "start_step": "開始ステップ",
+            "end_step": "終了ステップ",
+            "cache_device": "キャッシュデバイス"
+        },
+        "outputs": {
+            "cache_args": "キャッシュパラメータ"
+        }
+    },
+    "WanVideoControlnetLoader": {
+        "title": "Wan動画 ControlNetを読み込み(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "quantization": "量子化",
+            "load_device": "読み込みデバイス"
+        },
+        "outputs": {
+            "controlnet": "ControlNet"
+        }
+    },
+    "WanVideoControlnet": {
+        "title": "Wan動画  ControlNetを適用(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "controlnet": "ControlNet",
+            "control_images": "制御画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "control_stride": "制御ストライド",
+            "control_start_percent": "制御開始パーセンテージ",
+            "control_end_percent": "制御終了率"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "FantasyPortraitFaceDetector": {
+        "title": "FantasyPortrait幻想人像顔検出器(KJ)",
+        "inputs": {
+            "portrait_model": "人像モデル",
+            "images": "画像"
+        },
+        "widgets": {
+            "adapter_scale": "アダプタースケール",
+            "mouth_scale": "口スケール",
+            "emo_scale": "感情スケール",
+            "device": "デバイス"
+        },
+        "outputs": {
+            "portrait_embeds": "人像埋め込みグループ",
+            "bbox": "バウンディングボックス",
+            "landmarks": "特徴点"
+        }
+    },
+    "LandmarksToImage": {
+        "title": "特徴点を画像に変換(KJ)",
+        "inputs": {
+            "landmarks": "特徴点",
+            "image": "画像"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ"
+        },
+        "outputs": {
+            "keypoints_image": "キーポイント画像"
+        }
+    },
+    "WanVideoAddFantasyPortrait": {
+        "title": "Wan動画 FantasyPortrait幻想人像を追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "portrait_embeds": "人像埋め込みグループ"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "FantasyPortraitModelLoader": {
+        "title": "FantasyPortrait幻想人像 モデルローダー(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "DownloadAndLoadWav2VecModel": {
+        "title": "(ダウンロード) Wav2Vec2音声モデルを読み込み(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "load_device": "読み込みデバイス"
+        },
+        "outputs": {
+            "wav2vec_model": "Wav2Vec2音声モデル"
+        }
+    },
+    "FantasyTalkingModelLoader": {
+        "title": "FantasyTalking幻想対話 モデルローダー(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度"
+        },
+        "outputs": {
+            "model": "FantasyTalkingファンタジー会話モデル"
+        }
+    },
+    "FantasyTalkingWav2VecEmbeds": {
+        "title": "FantasyTalking幻想対話 Wav2Vec2埋め込みグループ(KJ)",
+        "inputs": {
+            "wav2vec_model": "Wav2Vec2音声モデル",
+            "fantasytalking_model": "FantasyTalkingファンタジー会話モデル",
+            "audio": "音声"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "fps": "フレームレート",
+            "audio_scale": "音声スケール",
+            "audio_cfg_scale": "音声CFGスケール"
+        },
+        "outputs": {
+            "fantasytalking_embeds": "FantasyTalkingファンタジー会話_埋め込み"
+        }
+    },
+    "WanVideoFunCameraEmbeds": {
+        "title": "Wan動画 Funカメラ埋め込みグループ(KJ)",
+        "inputs": {
+            "poses": "ポーズ"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WhisperModelLoader": {
+        "title": "音声モデルを読み込み(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "load_device": "読み込みデバイス"
+        },
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "load_device": "読み込みデバイス"
+        },
+        "outputs": {
+            "whisper_model": "音声モデル"
+        }
+    },
+    "HuMoEmbeds": {
+        "title": "HuMo音声 埋め込みグループ(KJ)",
+        "inputs": {
+            "whisper_model": "音声モデル",
+            "vae": "VAE",
+            "reference_images": "参考画像",
+            "audio": "音声"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "width": "幅",
+            "height": "高さ",
+            "audio_scale": "音声スケール",
+            "audio_cfg_scale": "音声CFGスケール",
+            "audio_start_percent": "音声開始率",
+            "audio_end_percent": "音声終了率",
+            "tiled_vae": "分割エンコードVAE"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoCombineEmbeds": {
+        "title": "Wan動画 埋め込みグループをマージ(KJ)",
+        "inputs": {
+            "embeds_1": "埋め込みグループ_1",
+            "embeds_2": "埋め込みグループ_2"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "DownloadAndLoadNLFModel": {
+        "title": "(ダウンロード)NLFモデルを読み込み(KJ)",
+        "inputs": {
+            "url": "ウェブアドレス"
+        },
+        "widgets": {
+            "url": "ウェブアドレス"
+        },
+        "outputs": {
+            "nlf_model": "NLFモデル"
+        }
+    },
+    "LoadNLFModel": {
+        "title": "NLFモデルを読み込み(KJ)",
+        "widgets": {
+            "nlf_model": "NLFモデル",
+            "warmup": "ウォームアップ"
+        },
+        "outputs": {
+            "nlf_model": "NLFモデル"
+        }
+    },
+    "LoadVQVAE": {
+        "title": "VQ VAEを読み込み(KJ)",
+        "inputs": {
+            "model_name": "モデル名"
+        },
+        "widgets": {
+            "model_name": "モデル名"
+        },
+        "outputs": {
+            "vqvae": "VQ VAE"
+        }
+    },
+    "MTVCrafterEncodePoses": {
+        "title": "MTV Crafter ポーズエンコード(KJ)",
+        "inputs": {
+            "vqvae": "VQ VAE",
+            "poses": "ポーズ"
+        },
+        "outputs": {
+            "mtvcrafter_motion": "MTV 動的エフェクト",
+            "pose_results": "ポーズ"
+        },
+        "description": "自然言語によるポーズ予測"
+    },
+    "NLFPredict": {
+        "title": "自然言語 ポーズ予測(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "images": "画像"
+        },
+        "outputs": {
+            "pose_results": "ポーズ"
+        },
+        "description": "自然言語によるポーズ予測"
+    },
+    "DrawNLFPoses": {
+        "title": "自然言語でポーズを描画(KJ)",
+        "inputs": {
+            "poses": "ポーズ"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ"
+        },
+        "outputs": {
+            "image": "画像"
+        }
+    },
+    "Wav2VecModelLoader": {
+        "title": "Wav2vec2音声モデル ローダー(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "load_device": "読み込みデバイス"
+        },
+        "outputs": {
+            "wav2vec_model": "Wav2Vec2音声モデル"
+        }
+    },
+    "MultiTalkModelLoader": {
+        "title": "Multi/InfiniteTalk無限多ターン対話 モデルローダー(KJ)",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度"
+        },
+        "outputs": {
+            "model": "モデル"
+        }
+    },
+    "MultiTalkWav2VecEmbeds": {
+        "title": "Multi/InfiniteTalk無限多ターン対話 Wav2Vec2 埋め込みグループ(KJ)",
+        "inputs": {
+            "wav2vec_model": "Wav2Vec2 モデル",
+            "audio_1": "音声_1",
+            "audio_2": "音声_2",
+            "audio_3": "音声_3",
+            "audio_4": "音声_4",
+            "ref_target_masks": "参照ターゲットマスク"
+        },
+        "widgets": {
+            "normalize_loudness": "音声ラウドネスを調整",
+            "num_frames": "フレーム数",
+            "fps": "フレームレート",
+            "audio_scale": "音声スケール",
+            "multi_audio_type": "マルチ音声タイプ",
+            "audio_cfg_scale": "音声設定スケール"
+        },
+        "outputs": {
+            "multitalk_embeds": "MultiTalkマルチターン会話 埋め込み",
+            "audio": "音声",
+            "num_frames": "フレーム数"
+        }
+    },
+    "MultiTalkSilentEmbeds": {
+        "title": "MultiTalk多ターン対話 無音埋め込みグループ(KJ)",
+        "widgets": {
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "multitalk_embeds": "MultiTalkマルチターン会話 埋め込み"
+        }
+    },
+    "WanVideoImageToVideoMultiTalk": {
+        "title": "Wan動画 画像を動画に変換（MultiTalk多ターン対話）(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "開始画像",
+            "clip_embeds": "CLIP埋め込み"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "frame_window_size": "フレームウィンドウサイズ",
+            "motion_frame": "モーションフレーム",
+            "force_offload": "強制アンロード",
+            "colormatch": "色合わせ",
+            "tiled_vae": "分割エンコードVAE",
+            "output_path": "出力パス",
+            "mode": "モード"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ",
+            "output_path": "出力パス"
+        }
+    },
+    "QwenLoader": {
+        "title": "Qwenローダー(KJ)",
+        "widgets": {
+            "model": "モデル",
+            "load_device": "読み込みデバイス",
+            "precision": "精度"
+        },
+        "outputs": {
+            "QWENMODEL": "Qwenモデル"
+        }
+    },
+    "WanVideoPromptExtender": {
+        "title": "Wan動画 プロンプト拡張ツール(KJ)",
+        "inputs": {
+            "qwen": "Qwen (モデル)",
+            "custom_system_prompt": "カスタムシステムプロンプト"
+        },
+        "widgets": {
+            "prompt": "プロンプト",
+            "max_new_tokens": "最大新規トークン数",
+            "force_offload": "強制アンロード",
+            "seed": "シード",
+            "device": "デバイス",
+            "system_prompt": "システムプロンプト"
+        },
+        "outputs": {
+            "STRING": "文字列"
+        }
+    },
+    "WanVideoPromptExtenderSelect": {
+        "title": "Wan動画 拡張プロンプトを選択(KJ)",
+        "inputs": {
+            "custom_system_prompt": "カスタムシステムプロンプト"
+        },
+        "widgets": {
+            "model": "モデル",
+            "max_new_tokens": "最大新規トークン数",
+            "system_prompt": "システムプロンプト",
+            "seed": "シード"
+        },
+        "outputs": {
+            "extender_args": "拡張 パラメータ"
+        }
+    },
+    "WanVideoReCamMasterDefaultCamera": {
+        "title": "Wan動画  再設定 メインデフォルトカメラ(KJ)",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "camera_type": "カメラタイプ"
+        },
+        "outputs": {
+            "camera_poses": "カメラ姿勢"
+        },
+        "description": "ReCamMasterDefaultCamera"
+    },
+    "WanVideoReCamMasterGenerateOrbitCamera": {
+        "title": "Wan動画  再起動 メイン生成軌道カメラ(KJ)",
+        "widgets": {
+            "num_frames": "フレーム数",
+            "degrees": "度数"
+        },
+        "outputs": {
+            "camera_poses": "カメラ姿勢"
+        },
+        "description": "ReCamMasterGenerateOrbitCamera"
+    },
+    "WanVideoReCamMasterCameraEmbed": {
+        "title": "Wan動画 カメラ埋め込みを再設定(KJ)",
+        "inputs": {
+            "camera_poses": "カメラ姿勢",
+            "latents": "Latent"
+        },
+        "outputs": {
+            "camera_embeds": "カメラ埋め込み",
+            "camera_poses": "カメラ姿勢"
+        },
+        "description": "ReCamMasterCameraEmbed"
+    },
+    "ReCamMasterPoseVisualizer": {
+        "title": "カメラ位置ポーズ可視化(KJ)",
+        "inputs": {
+            "camera_poses": "カメラ姿勢"
+        },
+        "widgets": {
+            "base_xval": "x値",
+            "zval": "z値",
+            "scale": "スケール",
+            "arrow_length": "矢印の長さ"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "ReCamMasterPoseVisualizer"
+    },
+    "WanVideoAddS2VEmbeds": {
+        "title": "Wan動画 S2V埋め込みグループを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "audio_encoder_output": "音声エンコーダー出力",
+            "ref_latent": "参照Latent",
+            "pose_latent": "ポーズLatent",
+            "vae": "変分オートエンコーダー"
+        },
+        "widgets": {
+            "frame_window_size": "フレームウィンドウサイズ",
+            "audio_scale": "音声スケール",
+            "pose_start_percent": "ポーズ開始率",
+            "pose_end_percent": "ポーズ終了率",
+            "enable_framepack": "フレームパックを有効化"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ",
+            "audio_frame_count": "音声フレーム数"
+        }
+    },
+    "WanVideoDiffusionForcingSampler": {
+        "title": "Wan動画 拡散強制サンプラー(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "text_embeds": "テキスト埋め込みグループ",
+            "image_embeds": "画像埋め込みグループ",
+            "samples": "サンプリング",
+            "prefix_samples": "プレフィックスサンプリング",
+            "cache_args": "キャッシュパラメータ",
+            "slg_args": "SLGパラメータ",
+            "experimental_args": "実験パラメータ",
+            "unianimate_poses": "UniAnimateユニバーサルアニメ_ポーズ"
+        },
+        "widgets": {
+            "addnoise_condition": "ノイズ条件を追加",
+            "fps": "フレームレート",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "shift": "オフセット",
+            "seed": "シード",
+            "force_offload": "強制アンロード",
+            "scheduler": "スケジューラ",
+            "rope_function": "RoPE関数",
+            "denoise_strength": "ノイズ除去"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "Wan動画 Uni3C Controlnetローダー(KJ)",
+        "inputs": {
+            "compile_args": "コンパイルパラメータ"
+        },
+        "widgets": {
+            "model": "モデル",
+            "base_precision": "基本精度",
+            "quantization": "量子化",
+            "load_device": "読み込みデバイス",
+            "attention_mode": "アテンションモード",
+            "compile_args": "コンパイルパラメータ"
+        },
+        "outputs": {
+            "controlnet": "ControlNet",
+            "WanVideo Controlnet": "Wan動画 ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "Wan動画 Uni3C 埋め込みグループ(KJ)",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "render_latent": "Latentを描画",
+            "render_mask": "マスクを描画"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "uni3c_embeds": "Uni3C 埋め込み"
+        }
+    },
+    "WanVideoUniAnimateDWPoseDetector": {
+        "title": "Wan動画 UniAnimate汎用アニメーション DWポーズ検出器(KJ)",
+        "inputs": {
+            "pose_images": "ポーズ画像",
+            "reference_pose_image": "参照ポーズ画像"
+        },
+        "widgets": {
+            "score_threshold": "スコア閾値",
+            "stick_width": "線幅",
+            "draw_body": "体描画",
+            "body_keypoint_size": "体キーポイントサイズ",
+            "draw_feet": "足描画",
+            "draw_hands": "手描画",
+            "hand_keypoint_size": "手のキーポイントサイズ",
+            "colorspace": "色空間",
+            "handle_not_detected": "検出されなかった場合の処理",
+            "draw_head": "頭部を描画"
+        },
+        "outputs": {
+            "poses": "ポーズ",
+            "reference_pose": "参照ポーズ"
+        }
+    },
+    "WanVideoAddLucyEditLatents": {
+        "title": "Wan動画 Lucy編集 Latentを追加(KJ)",
+        "inputs": {
+            "embeds": "embeds埋め込みグループ",
+            "extra_latents": "追加Latent"
+        },
+        "outputs": {
+            "image_embeds": "画像 埋め込みグループ"
+        }
+    },
+    "LoadLynxResampler": {
+        "title": "Lynx再サンプリング ローダー (KJ)",
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度"
+        },
+        "outputs": {
+            "resampler": "リサンプリング"
+        }
+    },
+    "LynxEncodeFaceIP": {
+        "title": "Lynxエンコード 顔IP(KJ)",
+        "inputs": {
+            "resampler": "リサンプリング",
+            "ip_image": "顔IP画像"
+        },
+        "outputs": {
+            "lynx_face_embeds": "Lynx 顔 埋め込みグループ"
+        }
+    },
+    "DrawArcFaceLandmarks": {
+        "title": "ArcFace特徴点を描画(KJ)",
+        "inputs": {
+            "lynx_face_embeds": "Lynx 顔 埋め込みグループ",
+            "image": "画像"
+        },
+        "outputs": {
+            "landmarked_image": "特徴点付きの画像"
+        },
+        "description": "可視化・デバッグ用に画像へ顔の特徴点を描画する。"
+    },
+    "WanVideoAddLynxEmbeds": {
+        "title": "Wan動画 Lynx埋め込みグループを追加(KJ)",
+        "inputs": {
+            "embeds": "embeds埋め込みグループ",
+            "vae": "VAE",
+            "lynx_face_embeds": "Lynx 顔 埋め込みグループ",
+            "lynx_ip_embeds": "Lynx 顔 IP 埋め込みグループ",
+            "ref_image": "参考画像",
+            "ref_text_embed": "参考テキスト埋め込み",
+            "ref_blocks_to_use": "使用可能な参考ブロック"
+        },
+        "widgets": {
+            "ip_scale": "IP スケール",
+            "ref_scale": "参考スケール",
+            "lynx_cfg_scale": "Lynx CFG スケール",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "LynxInsightFaceCrop": {
+        "title": "Lynx InsightFace顔検出 クロップ(KJ)",
+        "inputs": {
+            "image": "画像"
+        },
+        "outputs": {
+            "ip_image": "顔IP画像",
+            "ref_image": "参考画像"
+        }
+    },
+    "OviMMAudioVAELoader": {
+        "title": "Ovi MM音声 VAEローダー(KJ)",
+        "widgets": {
+            "vocoder": "ボコーダー",
+            "precision": "精度"
+        },
+        "outputs": {
+            "mmaudio_vae": "MM音声 VAE"
+        },
+        "description": "Ovi音声生成用に MM音声VAE を読み込む"
+    },
+    "WanVideoDecodeOviAudio": {
+        "title": "Wan動画 Ovi音声デコーダー(KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM音声 VAE",
+            "samples": "サンプリング"
+        },
+        "outputs": {
+            "audio": "音声"
+        }
+    },
+    "WanVideoEncodeOviAudio": {
+        "title": "Wan動画 Ovi音声エンコーダー(KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM音声 VAE",
+            "audio": "音声"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoOviCFG": {
+        "title": "Wan動画 Ovi CFGガイド(KJ)",
+        "inputs": {
+            "original_text_embeds": "原文 テキスト埋め込み",
+            "ovi_negative_text_embeds": "Oviネガティブプロンプト テキスト埋め込み"
+        },
+        "widgets": {
+            "ovi_audio_cfg": "Ovi音声 CFG"
+        },
+        "outputs": {
+            "text_embeds": "テキスト埋め込みグループ"
+        },
+        "description": "Ovi のネガティブテキスト埋め込み情報と音声 CFG スケール係数をテキスト埋め込み辞書に追加する"
+    },
+    "WanVideoAddOviAudioToLatents": {
+        "title": "Wan動画 Ovi音声を Latentに追加(KJ)",
+        "inputs": {
+            "original_samples": "元のサンプル",
+            "audio_samples": "音声サンプル"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoEmptyMMAudioLatents": {
+        "title": "Wan動画 MM音声 空の Latent(KJ)",
+        "widgets": {
+            "length": "長さ"
+        },
+        "outputs": {
+            "samples": "サンプリング"
+        }
+    },
+    "WanVideoAddFlashVSRInput": {
+        "title": "Wan動画 Flash VSR 入力を追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "images": "画像バッチ"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "image_embeds": "画像 埋め込みグループ"
+        }
+    },
+    "WanVideoFlashVSRDecoderLoader": {
+        "title": "Wan動画 Flash VSR デコーダーを読み込み(KJ)",
+        "widgets": {
+            "model_name": "モデル名",
+            "precision": "精度"
+        },
+        "outputs": {
+            "vae": "VAE"
+        },
+        "description": "ComfyUI/models/vaeパスからWan VAEモデルを読み込む"
+    },
+    "MochaEmbeds": {
+        "title": "Mocha埋め込みグループ(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "input_video": "入力動画",
+            "mask": "マスク",
+            "ref1": "参照1",
+            "ref2": "参照2"
+        },
+        "widgets": {
+            "force_offload": "タスクオフロード",
+            "tiled_vae": "タイル分割VAE"
+        },
+        "outputs": {
+            "image_embeds": "画像 埋め込みグループ"
+        },
+        "description": "Mocha モデルを入力：https://github.com/Orange-3DV-Team/MoCha"
+    },
+    "DrawGaussianNoiseOnImage": {
+        "title": "画像にガウシアンノイズを描画(KJ)",
+        "inputs": {
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "device": "デバイス",
+            "seed": "シード"
+        },
+        "outputs": {
+            "images": "画像"
+        }
+    },
+    "LatentInpaintTTM": {
+        "title": "Latent インペイントTTM(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "device": "デバイス",
+            "steps": "ステップ数"
+        },
+        "outputs": {
+            "model": "モデル",
+            "MODEL": "モデル"
+        }
+    },
+    "WanVideoAddBindweaveEmbeds": {
+        "title": "Wan動画 バインドウィーブ埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "reference_latents": "参照Latent",
+            "ref_masks": "参考マスク",
+            "qwenvl_embeds_pos": "Qwenvlポジティブプロンプト",
+            "qwenvl_embeds_neg": "Qwenvlネガティブプロンプト"
+        },
+        "widgets": {
+            "device": "デバイス",
+            "steps": "ステップ数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み",
+            "image_embed_preview": "画像埋め込みプレビュー",
+            "mask_preview": "マスクプレビュー"
+        }
+    },
+    "WanVideoAddTTMLatents": {
+        "title": "Wan動画 TTM Latentを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "reference_latents": "参照Latent",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "start_step": "開始ステップ数",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "TextImageEncodeQwenVL": {
+        "title": "QwenVL テキスト画像エンコーダー(KJ)",
+        "inputs": {
+            "clip": "CLIP",
+            "image": "画像"
+        },
+        "widgets": {
+            "start_step": "開始ステップ数",
+            "end_step": "終了ステップ"
+        },
+        "outputs": {
+            "qwenvl_embeds": "Qwen埋め込み"
+        }
+    },
+    "WanVideoUniLumosEmbeds": {
+        "title": "Wan動画 UniLumos 埋め込みテクニック(KJ)",
+        "inputs": {
+            "foreground_latents": "前景Latent",
+            "background_latents": "背景Latent"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoPreviewEmbeds": {
+        "title": "Wan動画 プレビュー 埋め込み(KJ)",
+        "inputs": {
+            "embeds": "埋め込み"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ",
+            "num_frames": "フレーム数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み",
+            "mask": "マスク"
+        }
+    },
+    "WanVideoAddSteadyDancerEmbeds": {
+        "title": "Wan動画 SteadyDancer平稳ダンサー 埋め込みテクニックを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "pose_latents_positive": "ポーズ Latent（ポジティブ）",
+            "pose_latents_negative": "ポーズ Latent（ネガティブ）",
+            "clip_vision_embeds": "CLIPビジョン埋め込み"
+        },
+        "widgets": {
+            "pose_strength_spatial": "ポーズ強度_空間次元",
+            "pose_strength_temporal": "ポーズ強度_時間次元",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoAddOneToAllReferenceEmbeds": {
+        "title": "Wan動画 OneToAll 一から全てへ 参考埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "vae": "VAE",
+            "ref_image": "参考画像",
+            "ref_mask": "参考マスク"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoAddOneToAllPoseEmbeds": {
+        "title": "Wan動画 OneToAll 一から全てへ ポーズ埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "vae": "VAE",
+            "pose_images": "ポーズ画像",
+            "pose_prefix_image": "ポーズプレフィックス画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率",
+            "pose_cfg_scale": "ポーズCFG強度"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み"
+        }
+    },
+    "WanVideoAddOneToAllExtendEmbeds": {
+        "title": "Wan動画 OneToAll 一から全てへ 拡張埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込み",
+            "vae": "VAE",
+            "prev_latents": "前の Latent",
+            "pose_images": "ポーズ画像"
+        },
+        "widgets": {
+            "window_size": "ウィンドウサイズ",
+            "overlap": "オーバーラップ",
+            "frames_processed": "処理フレーム数",
+            "if_not_enough_frames": "フレーム数が不足する場合"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み",
+            "pose_slice": "ポーズ切り出し画像"
+        }
+    },
+    "WanVideoAddWanMoveTracks": {
+        "title": "Wan動画 Wan移動トラックを追加(KJ)",
+        "inputs": {
+            "image_embeds": "画像埋め込み",
+            "tracks": "軌跡",
+            "track_mask": "トラックマスク",
+            "track_coords": "トラック座標"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込み",
+            "tracks": "軌跡"
+        }
+    },
+    "WanVideoWanDrawWanMoveTracks": {
+        "title": "Wan動画 Wan移動トラックを描画(KJ)",
+        "inputs": {
+            "images": "画像",
+            "tracks": "軌跡"
+        },
+        "widgets": {
+            "line_resolution": "線解像度",
+            "circle_size": "円のサイズ",
+            "opacity": "不透明度",
+            "line_width": "線幅"
+        },
+        "outputs": {
+            "image": "画像"
+        }
+    },
+    "WanMove_native": {
+        "title": "Wan MoveNative万移動ネイティブ版(KJ)",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "track_mask": "トラックマスク",
+            "track_coords": "トラック座標"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "tracks": "軌跡"
+        }
+    },
+    "WanVideoAddStoryMemLatents": {
+        "title": "Wan動画 StoryMemストーリー記憶 Latentを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "memory_images": "メモリー画像"
+        },
+        "widgets": {
+            "freq_offset": "周波数オフセット"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddSCAILPoseEmbeds": {
+        "title": "Wan動画 SCAILポーズ埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "pose_images": "ポーズ画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoAddSCAILReferenceEmbeds": {
+        "title": "Wan動画 SCAIL参考埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みグループ",
+            "vae": "VAE",
+            "ref_image": "参考画像",
+            "clip_embeds": "CLIP埋め込み"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ"
+        }
+    },
+    "WanVideoLongCatAvatarExtendEmbeds": {
+        "title": "Wan動画 LongCat アバター拡張 埋め込み(KJ)",
+        "inputs": {
+            "prev_latents": "前の Latent",
+            "audio_embeds": "音声埋め込み",
+            "ref_latent": "参照Latent",
+            "samples": "サンプリング"
+        },
+        "widgets": {
+            "amples": "サンプル",
+            "num_frames": "フレーム数",
+            "overlap": "オーバーラップ",
+            "frames_processed": "処理済みフレーム",
+            "if_not_enough_audio": "音声が不足する場合",
+            "ref_frame_index": "参考フレームインデックス",
+            "ref_mask_frame_range": "参考マスクフレーム範囲"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ",
+            "samples_slice": "サンプルチャンク"
+        }
+    },
+    "WanVideoAddDualControlEmbeds": {
+        "title": "Wan動画 デュアル制御埋め込みを追加(KJ)",
+        "inputs": {
+            "embeds": "埋め込みベクトル",
+            "vae": "VAEモデル",
+            "dense": "密な制御",
+            "sparse": "スパース制御",
+            "prev_images": "前の画像"
+        },
+        "widgets": {
+            "strength": "制御強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率",
+            "first_frame_noise_level": "先頭フレームのグレインレベル"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ",
+            "wanvidimage_embeds": "Wan動画画像 埋め込みグループ"
+        }
+    },
+    "WanVideoSVIProEmbeds": {
+        "title": "Wan動画 SVI プロフェッショナル 埋め込み(KJ)",
+        "inputs": {
+            "prev_samples": "前サンプリング",
+            "anchor_samples": "アンカーサンプリング"
+        },
+        "widgets": {
+            "num_frames": "フレーム数",
+            "motion_latent_count": "モーションLatent数"
+        },
+        "outputs": {
+            "image_embeds": "画像埋め込みグループ",
+            "samples_slice": "サンプルチャンク"
+        }
+    },
+    "WanVideoSetAttentionModeOverride": {
+        "title": "Wan動画 アテンションモード 優先度切替設定(KJ)",
+        "inputs": {
+            "model": "モデル",
+            "blocks": "ブロック"
+        },
+        "widgets": {
+            "attention_mode": "アテンションモード",
+            "start_step": "開始ステップ数",
+            "end_step": "終了ステップ",
+            "verbose": "冗長"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "モデルの 特定ステップ および/または ブロック範囲に対するアテンションモード設定を解除"
+    },
+    "WanVideoUltraVicoSettings": {
+        "title": "Wan動画 UltraVico超維科 設定(KJ)",
+        "inputs": {
+            "model": "モデル"
+        },
+        "widgets": {
+            "alpha": "alpha(アルファ) 不透明度"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "UltraVico のパラメータを設定するが、モードは引き続き sageattn_ultravico に設定する必要がある。関連ドキュメント：https://github.com/thu-ml/DiT-Extrapolation"
+    },
+    "WanVideoUniAnimatePoseInput": {
+        "title": "Wan動画 UniAnimate汎用アニメーション ポーズ入力(KJ)",
+        "inputs": {
+            "pose_images": "ポーズ画像",
+            "reference_pose_image": "参照ポーズ画像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "unianimate_poses": "UniAnimateユニバーサルアニメ_ポーズ"
+        }
+    }
+}

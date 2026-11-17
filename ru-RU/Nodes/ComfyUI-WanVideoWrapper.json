@@ -1,0 +1,2345 @@
+{
+    "LongCatAvatarWhisperEmbeds": {
+        "title": "LongCat Аватар — диалоговые встраивания (v1.5)",
+        "inputs": {
+            "whisper_model": "Диалоговая модель",
+            "audio_1": "Аудио 1",
+            "audio_2": "Аудио 2",
+            "audio_3": "Аудио 3",
+            "audio_4": "Аудио 4",
+            "ref_target_masks": "Опорная целевая маска"
+        },
+        "widgets": {
+            "normalize_loudness": "Нормализация громкости",
+            "num_frames": "Количество кадров",
+            "fps": "Частота кадров",
+            "audio_scale": "Масштаб аудио",
+            "audio_cfg_scale": "Масштаб CFG аудио",
+            "multi_audio_type": "Тип мульти-аудио"
+        },
+        "outputs": {
+            "num_frames": "Количество кадров",
+            "audio": "Аудио",
+            "multitalk_embeds": "Эмбеддинги многоходового диалога"
+        },
+        "description": "Этот узел обрабатывает аудиовстраивания аватара, поддерживает многоканальный аудиовход, извлекает признаки с помощью модели Whisper и позволяет настраивать количество кадров, частоту кадров и масштаб аудио."
+    },
+    "WanVideoImageToVideoSkyreelsv3_audio": {
+        "title": "Wan Видео — Skyreelsv3 (длинные небеса), аудио в видео",
+        "inputs": {
+            "vae": "Энкодер VAE",
+            "start_image": "Начальное изображение",
+            "reference_video": "Опорное видео",
+            "clip_embeds": "CLIP-эмбеддинги"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "frame_window_size": "Размер окна кадров",
+            "motion_frame": "Кадр движения",
+            "drop_frames": "Количество отбрасываемых кадров",
+            "tiled_vae": "Поблочный VAE",
+            "force_offload": "Принудительная выгрузка",
+            "colormatch": "Сопоставление цвета",
+            "output_path": "Путь вывода"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "output_path": "Путь вывода"
+        },
+        "description": "Поддерживает метод сэмплирования генерации длинных видео Multi/InfiniteTalk; содержимое видео создаётся в виде перекрывающихся кадров в среде Windows. Эта функция несовместима с ContextWindows и прочими многократными режимами, кроме Multi/InfiniteTalk, либо не требуется в них."
+    },
+    "WanVideoEnhanceAVideo": {
+        "title": "Wan Видео — Усиление A-видео (KJ)",
+        "widgets": {
+            "weight": "Вес",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "feta_args": "Параметры усиления"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "Wan Видео — Настройка обмена блоков (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "block_swap_args": "Параметры обмена блоков"
+        },
+        "outputs": {
+            "model": "Модель видео Wan"
+        }
+    },
+    "WanVideoSetRadialAttention": {
+        "title": "Wan-видео — настроить радиальное внимание (KJ)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "dense_blocks": "Плотные блоки",
+            "dense_vace_blocks": "Плотные блоки VACE",
+            "dense_timesteps": "Плотные временные шаги",
+            "decay_factor": "Фактор затухания",
+            "dense_attention_mode": "Режим плотного внимания",
+            "block_size": "Размер блока"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "WanVideoBlockList": {
+        "title": "Wan Видео — Список блоков (KJ)",
+        "widgets": {
+            "blocks": "Блок"
+        },
+        "outputs": {
+            "block_list": "Список блоков"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "Wan Видео — Кодирование текста (кэш) (KJ)",
+        "inputs": {
+            "extender_args": "Параметры расширителя промптов"
+        },
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "quantization": "Квантование",
+            "device": "Устройство",
+            "positive_prompt": "Позитивный промпт",
+            "negative_prompt": "Негативный промпт",
+            "use_disk_cache": "Использовать дисковый кэш"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов",
+            "negative_text_embeds": "Группа текстовых встраиваний негативного промпта",
+            "positive_prompt": "Позитивный промпт"
+        },
+        "description": "Кодирует текстовые промпты в текстовые встраивания.\n После завершения загрузки и выгрузки T5 этот узел автоматически закрывает T5 и не занимает ни видеопамять, ни оперативную память.\n Если промпты уже закэшированы до загрузки T5, загрузка T5 не выполняется.\n Отрицательный выход рассчитан на совместное использование с NAG и содержит только встраивания негативного промпта.\n Кроме того, можно передать модель LLM Qwen, чтобы расширить позитивный промпт любым из исходных шаблонов Wan либо собственным системным сообщением."
+    },
+    "WanVideoTextEncode": {
+        "title": "Wan-видео — текстовое кодирование (KJ)",
+        "inputs": {
+            "t5": "Энкодер T5",
+            "model_to_offload": "выгрузить_модель"
+        },
+        "widgets": {
+            "positive_prompt": "Позитивный промпт",
+            "negative_prompt": "Негативный промпт",
+            "force_offload": "Принудительная выгрузка",
+            "use_disk_cache": "Использовать дисковый кэш",
+            "device": "Устройство"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов"
+        }
+    },
+    "WanVideoTextEncodeSingle": {
+        "title": "Wan Видео — Одинарное кодирование текста (KJ)",
+        "inputs": {
+            "t5": "Модель T5",
+            "model_to_offload": "выгрузить_модель"
+        },
+        "widgets": {
+            "prompt": "Промпт",
+            "force_offload": "Принудительная выгрузка",
+            "use_disk_cache": "Использовать дисковый кэш",
+            "device": "Устройство"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов"
+        }
+    },
+    "WanVideoApplyNAG": {
+        "title": "Применение NAG Wan-видео (KJ)",
+        "inputs": {
+            "original_text_embeds": "Исходная группа текстовых эмбедов",
+            "nag_text_embeds": "Группа текстовых эмбедов NAG"
+        },
+        "widgets": {
+            "nag_scale": "Масштаб NAG",
+            "nag_tau": "NAG tau",
+            "nag_alpha": "NAG alpha"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов"
+        }
+    },
+    "WanVideoTextEmbedBridge": {
+        "title": "Wan-видео — мост текстовых эмбеддингов (KJ)",
+        "inputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "Wan Видео — Кодирование CLIP Vision (KJ)",
+        "inputs": {
+            "clip_vision": "CLIP Vision",
+            "image_1": "Изображение_1",
+            "image_2": "Изображение_2",
+            "negative_image": "Негативное изображение"
+        },
+        "widgets": {
+            "strength_1": "Интенсивность_1",
+            "strength_2": "Интенсивность_2",
+            "crop": "Обрезка",
+            "combine_embeds": "Объединение эмбеддингов",
+            "force_offload": "Принудительная выгрузка",
+            "tiles": "Плиточный режим",
+            "ratio": "Пропорция"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoRealisDanceLatents": {
+        "title": "RealisDance (танец реальности) — Latent Wan-видео (KJ)",
+        "inputs": {
+            "ref_latent": "Опорный Latent",
+            "smpl_latent": "Latent модели тела SMPL",
+            "hamer_latent": "Latent в стиле Hame"
+        },
+        "widgets": {
+            "pose_cond_start_percent": "Начальный процент условия позы",
+            "pose_cond_end_percent": "Конечный процент условия позы"
+        },
+        "outputs": {
+            "add_cond_latents": "Добавить Latent условия"
+        }
+    },
+    "WanVideoAddStandInLatent": {
+        "title": "Wan Видео — Добавить Latent дублёра (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "ip_image_latent": "Latent IP-изображения"
+        },
+        "widgets": {
+            "freq_offset": "Смещение частоты"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddMTVMotion": {
+        "title": "Динамические эффекты MTV Wan-видео (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "mtv_crafter_motion": "Динамические эффекты MTV"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoImageToVideoEncode": {
+        "title": "Wan-видео — кодирование изображения-в-видео (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "Группа эмбедов CLIP",
+            "start_image": "Начальное изображение",
+            "end_image": "Конечное изображение",
+            "control_embeds": "Группа управляющих эмбедов",
+            "temporal_mask": "Временные маски",
+            "extra_latents": "Дополнительный Latent",
+            "add_cond_latents": "Добавить Latent условия"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров",
+            "noise_aug_strength": "Интенсивность усиления шума",
+            "start_latent_strength": "Интенсивность начального Latent",
+            "end_latent_strength": "Интенсивность конечного Latent",
+            "force_offload": "Принудительная выгрузка",
+            "fun_or_fl2v_model": "Модель fun или fl2v",
+            "tiled_vae": "Блочное кодирование VAE"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAnimateEmbeds": {
+        "title": "Wan Видео — Группа встраиваний анимации (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "Группа эмбедов CLIP",
+            "ref_images": "Опорное изображение",
+            "pose_images": "Изображения поз",
+            "face_images": "Изображения лица",
+            "bg_images": "Фоновое изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров",
+            "force_offload": "Принудительная выгрузка",
+            "frame_window_size": "Размер окна кадров",
+            "colormatch": "Сопоставление цвета",
+            "pose_strength": "Интенсивность позы",
+            "face_strength": "Интенсивность лица",
+            "tiled_vae": "Блочное кодирование VAE"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoEmptyEmbeds": {
+        "title": "Wan Видео — Пустая группа встраиваний (KJ)",
+        "inputs": {
+            "control_embeds": "Группа управляющих эмбедов",
+            "extra_latents": "Дополнительный Latent"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddExtraLatent": {
+        "title": "Wan-видео — добавить дополнительный Latent (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "extra_latents": "Дополнительный Latent"
+        },
+        "widgets": {
+            "latent_index": "Индекс Latent"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoMiniMaxRemoverEmbeds": {
+        "title": "Wan Видео — Группа встраиваний удаления Latent по размеру (KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "mask_latents": "Маска Latent"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoPhantomEmbeds": {
+        "title": "Phantom — эмбеддинги фантома Wan-видео (KJ)",
+        "inputs": {
+            "phantom_latent_1": "Фантомный Latent_1",
+            "phantom_latent_2": "Фантомный Latent_2",
+            "phantom_latent_3": "Фантомный Latent_3",
+            "phantom_latent_4": "Фантомный Latent_4",
+            "vace_embeds": "Группа эмбедов VACE"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "phantom_cfg_scale": "Масштабирование фантомного CFG",
+            "phantom_start_percent": "Начальный процент фантома",
+            "phantom_end_percent": "Процент окончания фантома"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoControlEmbeds": {
+        "title": "Wan Видео — Группа управляющих встраиваний (KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "fun_ref_image": "Опорное изображение Fun"
+        },
+        "widgets": {
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddControlEmbeds": {
+        "title": "Wan-видео — добавить управляющие эмбеддинги (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "latents": "Latent",
+            "fun_ref_image": "Опорное изображение Fun"
+        },
+        "widgets": {
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddPusaNoise": {
+        "title": "Wan-видео — добавить шум Pusa (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов"
+        },
+        "widgets": {
+            "noise_multipliers": "Множитель шума",
+            "noisy_steps": "Шаги с шумом"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoSLG": {
+        "title": "SLG Wan-видео (KJ)",
+        "widgets": {
+            "blocks": "Блок",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "slg_args": "Параметры SLG"
+        }
+    },
+    "WanVideoVACEEncode": {
+        "title": "Wan Видео — Кодирование VACE (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "input_frames": "Входной кадр",
+            "ref_images": "Опорное изображение",
+            "input_masks": "Входная маска",
+            "prev_vace_embeds": "Предыдущая группа эмбедов VACE"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров",
+            "strength": "Интенсивность",
+            "vace_start_percent": "Начальный процент VACE",
+            "vace_end_percent": "Процент окончания VACE",
+            "tiled_vae": "Блочное кодирование VAE"
+        },
+        "outputs": {
+            "vace_embeds": "Группа эмбедов VACE"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "Параметры контекста Wan-видео (KJ)",
+        "inputs": {
+            "reference_latent": "Опорный Latent"
+        },
+        "widgets": {
+            "context_schedule": "Планирование контекста",
+            "fuse_method": "Метод слияния",
+            "context_frames": "Число кадров контекста",
+            "context_stride": "Контекстный шаг (stride)",
+            "context_overlap": "Перекрытие контекста",
+            "freenoise": "Свободный шум",
+            "verbose": "Подробный режим"
+        },
+        "outputs": {
+            "context_options": "Параметры контекста"
+        }
+    },
+    "WanVideoFlowEdit": {
+        "title": "Wan-видео — редактирование потока (FlowEdit) (KJ)",
+        "inputs": {
+            "source_embeds": "Группа исходных эмбедов",
+            "source_image_embeds": "Группа эмбедов исходного изображения"
+        },
+        "widgets": {
+            "skip_steps": "Пропускаемые шаги",
+            "drift_steps": "Шаги дрейфа",
+            "drift_flow_shift": "Сдвиг дрейфующего потока",
+            "source_cfg": "Коэффициент CFG источника",
+            "drift_cfg": "Коэффициент дрейфа CFG"
+        },
+        "outputs": {
+            "flowedit_args": "Параметры редактирования потока"
+        }
+    },
+    "WanVideoLoopArgs": {
+        "title": "Wan Видео — Параметры цикла (KJ)",
+        "widgets": {
+            "shift_skip": "Смещение пропуска",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "loop_args": "Параметры цикла"
+        }
+    },
+    "WanVideoExperimentalArgs": {
+        "title": "Wan-видео — экспериментальные параметры (KJ)",
+        "widgets": {
+            "video_attention_split_steps": "Шаги разделения внимания видео",
+            "cfg_zero_star": "CFG-Zero*",
+            "use_zero_init": "Использовать нулевую инициализацию",
+            "zero_star_steps": "Шаги CFG-Zero*",
+            "use_fresca": "Использовать Fresca",
+            "fresca_scale_low": "Нижний предел масштабирования Fresca",
+            "fresca_scale_high": "Верхний предел масштабирования Fresca",
+            "fresca_freq_cutoff": "Частота среза Fresca",
+            "use_tcfg": "Использовать временной CFG",
+            "raag_alpha": "Альфа RAAG",
+            "bidirectional_sampling": "Двунаправленное сэмплирование"
+        },
+        "outputs": {
+            "exp_args": "Экспериментальные параметры"
+        }
+    },
+    "WanVideoFreeInitArgs": {
+        "title": "Параметры FreeInit Wan-видео (KJ)",
+        "widgets": {
+            "freeinit_num_iters": "Число итераций свободной инициализации",
+            "freeinit_method": "Метод свободной инициализации",
+            "freeinit_n": "Свободная инициализация n",
+            "freeinit_d_s": "Свободная инициализация d_s",
+            "freeinit_d_t": "Свободная инициализация d_t"
+        },
+        "outputs": {
+            "freeinit_args": "Параметры свободной инициализации"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "Wan Видео — Планировщик (KJ)",
+        "inputs": {
+            "sigmas": "Сигмы"
+        },
+        "widgets": {
+            "scheduler": "Планировщик",
+            "steps": "Количество шагов",
+            "shift": "Сдвиг",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        },
+        "outputs": {
+            "sigmas": "Сигмы",
+            "steps": "Количество шагов",
+            "shift": "Сдвиг",
+            "scheduler": "Планировщик",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "Планировщик v2 Wan-видео (KJ)",
+        "inputs": {
+            "sigmas": "Сигмы"
+        },
+        "widgets": {
+            "scheduler": "Планировщик",
+            "steps": "Количество шагов",
+            "shift": "Сдвиг",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        },
+        "outputs": {
+            "sigmas": "Сигмы",
+            "scheduler": "Планировщик",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        }
+    },
+    "WanVideoSchedulerSA_ODE": {
+        "title": "Wan Видео — Планировщик SA-ODE (KJ)",
+        "inputs": {
+            "sigmas": "Сигмы"
+        },
+        "widgets": {
+            "use_adaptive_order": "Использовать адаптивный порядок",
+            "use_velocity_smoothing": "Использовать сглаживание скорости",
+            "convergence_threshold": "Порог сходимости",
+            "smoothing_factor": "Коэффициент сглаживания",
+            "steps": "Количество шагов",
+            "shift": "Сдвиг",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        },
+        "outputs": {
+            "sigmas": "Сигмы",
+            "steps": "Количество шагов",
+            "shift": "Сдвиг",
+            "scheduler": "Список планировщика",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        }
+    },
+    "WanVideoRoPEFunction": {
+        "title": "Wan-видео — функция вращаемых позиционных эмбеддингов (RoPE) (KJ)",
+        "inputs": {
+            "rope_function": "Функция вращаемых позиционных эмбеддингов (RoPE)"
+        },
+        "widgets": {
+            "rope_function": "Функция вращаемых позиционных эмбеддингов (RoPE)",
+            "ntk_scale_f": "Коэффициент масштабирования NTK (кадры)",
+            "ntk_scale_h": "Коэффициент масштабирования NTK (высота)",
+            "ntk_scale_w": "Коэффициент масштабирования NTK (ширина)"
+        },
+        "outputs": {
+            "rope_function": "Функция вращаемых позиционных эмбеддингов (RoPE)"
+        },
+        "description": "Конфигурация ротационного позиционного кодирования (RoPE) для Wan Видео. Расширяет длину контекста за счёт NTK-адаптивного масштабирования."
+    },
+    "WanVideoSampler": {
+        "title": "Wan Видео — Сэмплер (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "image_embeds": "Эмбеддинги изображения",
+            "text_embeds": "Группа текстовых эмбедов",
+            "samples": "Сэмплирование",
+            "feta_args": "Параметры усиления",
+            "context_options": "Параметры контекста",
+            "cache_args": "Параметры кеша",
+            "flowedit_args": "Настройки редактирования потока",
+            "slg_args": "Параметры SLG",
+            "rope_function": "Функция Rope",
+            "loop_args": "Параметры цикла",
+            "experimental_args": "Экспериментальные параметры",
+            "sigmas": "Сигмы",
+            "unianimate_poses": "UniAnimate_поза",
+            "fantasytalking_embeds": "FantasyTalking_группа эмбедов",
+            "uni3c_embeds": "Группа эмбедов Uni3C",
+            "multitalk_embeds": "Группа эмбедов MultiTalk",
+            "infinitetalk_embeds": "Группа эмбедов InfiniteTalk",
+            "freeinit_args": "Группа параметров свободной инициализации"
+        },
+        "widgets": {
+            "steps": "Количество шагов",
+            "cfg": "CFG",
+            "shift": "Сдвиг",
+            "seed": "Зерно",
+            "force_offload": "Принудительная выгрузка",
+            "scheduler": "Планировщик",
+            "riflex_freq_index": "Частотный индекс Riflex",
+            "denoise_strength": "Шумоподавление",
+            "batched_cfg": "Пакетный CFG",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "rope_function": "Функция Rope",
+            "add_noise_to_samples": "Добавить шум к сэмплированию"
+        },
+        "outputs": {
+            "samples": "Сэмплирование",
+            "denoised_samples": "Сэмплы после шумоподавления"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "Wan-видео — сэмплер v2 (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "image_embeds": "Эмбеддинги изображения",
+            "scheduler": "Планировщик",
+            "text_embeds": "Группа текстовых эмбедов",
+            "samples": "Сэмплирование",
+            "extra_args": "Дополнительные параметры"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "seed": "Зерно",
+            "force_offload": "Принудительная выгрузка",
+            "add_noise_to_samples": "Добавить шум к сэмплированию"
+        },
+        "outputs": {
+            "samples": "Сэмплирование",
+            "denoised_samples": "Сэмплы после шумоподавления"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "Wan Видео — Дополнительные параметры сэмплера v2 (KJ)",
+        "inputs": {
+            "feta_args": "Параметры усиления",
+            "context_options": "Параметры контекста",
+            "cache_args": "Параметры кеша",
+            "slg_args": "Параметры SLG",
+            "loop_args": "Параметры цикла",
+            "experimental_args": "Экспериментальные параметры",
+            "unianimate_poses": "UniAnimate_поза",
+            "fantasytalking_embeds": "FantasyTalking_группа эмбедов",
+            "uni3c_embeds": "Группа эмбедов Uni3C",
+            "multitalk_embeds": "Группа эмбедов MultiTalk",
+            "infinitetalk_embeds": "Группа эмбедов InfiniteTalk",
+            "freeinit_args": "Группа параметров свободной инициализации"
+        },
+        "widgets": {
+            "riflex_freq_index": "Частотный индекс Riflex",
+            "rope_function": "Функция Rope"
+        },
+        "outputs": {
+            "extra_args": "Дополнительные параметры"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "Wan Видео — Настройки сэмплера (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "image_embeds": "Эмбеддинги изображения",
+            "text_embeds": "Группа текстовых эмбедов",
+            "samples": "Сэмплирование",
+            "feta_args": "Параметры усиления",
+            "context_options": "Параметры контекста",
+            "cache_args": "Параметры кеша",
+            "flowedit_args": "Настройки редактирования потока",
+            "slg_args": "Параметры SLG",
+            "rope_function": "Функция Rope",
+            "loop_args": "Параметры цикла",
+            "experimental_args": "Экспериментальные параметры",
+            "sigmas": "Сигмы",
+            "unianimate_poses": "UniAnimate_поза",
+            "fantasytalking_embeds": "FantasyTalking_группа эмбедов",
+            "uni3c_embeds": "Группа эмбедов Uni3C",
+            "multitalk_embeds": "Группа эмбедов MultiTalk",
+            "infinitetalk_embeds": "Группа эмбедов InfiniteTalk",
+            "freeinit_args": "Группа параметров свободной инициализации"
+        },
+        "widgets": {
+            "steps": "Количество шагов",
+            "cfg": "CFG",
+            "shift": "Сдвиг",
+            "seed": "Зерно",
+            "force_offload": "Принудительная выгрузка",
+            "scheduler": "Планировщик",
+            "riflex_freq_index": "Частотный индекс Riflex",
+            "denoise_strength": "Шумоподавление",
+            "batched_cfg": "Пакетный CFG",
+            "rope_function": "Функция Rope",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "add_noise_to_samples": "Добавить шум к сэмплированию"
+        },
+        "outputs": {
+            "sampler_inputs": "Входы сэмплера",
+            "denoised_samples": "Сэмплы после шумоподавления"
+        },
+        "description": "Узел служит для вывода всех настроек и входных данных узла «Wan Видео — Сэмплер из настроек»"
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "Wan Видео — Сэмплер из настроек (KJ)",
+        "inputs": {
+            "sampler_inputs": "Входы сэмплера"
+        },
+        "widgets": {
+            "normalization": "Нормализация"
+        },
+        "outputs": {
+            "samples": "Сэмплирование",
+            "denoised_samples": "Сэмплы после шумоподавления"
+        },
+        "description": "Этот вспомогательный узел служит только для того, чтобы интерфейс выглядел аккуратнее; он очень полезен для предпросмотра в реальном времени, поскольку исходный главный сэмплерский узел стал чрезмерно перегруженным."
+    },
+    "WanVideoDecode": {
+        "title": "Wan-видео — декодер (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Сэмплирование"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Включить плиточный режим VAE",
+            "tile_x": "Блоки по оси X",
+            "tile_y": "Блоки по оси Y",
+            "tile_stride_x": "Шаг по оси X",
+            "tile_stride_y": "Шаг по оси Y",
+            "normalization": "Нормализация"
+        },
+        "outputs": {
+            "images": "Изображение",
+            "IMAGE": "Изображение"
+        }
+    },
+    "WanVideoEncodeLatentBatch": {
+        "title": "Wan Видео — Пакет Latent кодировщика (KJ)",
+        "inputs": {
+            "vae": "vae",
+            "images": "Изображение"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Включить плиточный режим VAE",
+            "tile_x": "Блоки по оси X",
+            "tile_y": "Блоки по оси Y",
+            "tile_stride_x": "Шаг по оси X",
+            "tile_stride_y": "Шаг по оси Y"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "Wan Видео — Кодировщик (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "image": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Включить плиточный режим VAE",
+            "tile_x": "Блоки по оси X",
+            "tile_y": "Блоки по оси Y",
+            "tile_stride_x": "Шаг по оси X",
+            "tile_stride_y": "Шаг по оси Y",
+            "noise_aug_strength": "Интенсивность усиления шума",
+            "latent_strength": "Интенсивность Latent"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoImageClipEncode": {
+        "title": "CLIP-кодирование изображения Wan-видео (KJ) (устарело)",
+        "inputs": {
+            "clip_vision": "Модель CLIP Vision",
+            "image": "Изображение",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "generation_width": "Ширина генерации",
+            "generation_height": "Высота генерации",
+            "num_frames": "Количество кадров",
+            "force_offload": "Принудительная выгрузка",
+            "noise_aug_strength": "Интенсивность усиления шума",
+            "latent_strength": "Интенсивность Latent",
+            "clip_embed_strength": "Интенсивность эмбеддингов CLIP",
+            "adjust_resolution": "Корректировка разрешения"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "Блочный свап Wan-видео (KJ)",
+        "widgets": {
+            "blocks_to_swap": "Блоки для обмена",
+            "offload_img_emb": "Выгрузить эмбеддинги изображения",
+            "offload_txt_emb": "Выгрузить эмбеддинги текста",
+            "use_non_blocking": "Использовать неблокирующий режим",
+            "vace_blocks_to_swap": "Блоки VACE для обмена",
+            "prefetch_blocks": "Предзагрузка блоков",
+            "block_swap_debug": "Отладка обмена блоков"
+        },
+        "outputs": {
+            "block_swap_args": "Параметры обмена блоков"
+        },
+        "description": "Простой узел обмена блоков Wan2.1 для нативных узлов ComfyUI: снижает потребление VRAM, выгружая до 40 блоков в CPU."
+    },
+    "WanVideoVRAMManagement": {
+        "title": "Управление видеопамятью Wan-видео (KJ)",
+        "widgets": {
+            "offload_percent": "Процент выгрузки"
+        },
+        "outputs": {
+            "vram_management_args": "Параметры управления видеопамятью"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "Настройки компиляции Torch Wan-видео (KJ)",
+        "widgets": {
+            "backend": "Движок бэкенда",
+            "mode": "Режим компиляции",
+            "fullgraph": "Полный граф",
+            "dynamic": "Динамическая компиляция",
+            "dynamo_cache_size_limit": "Ограничение размера кэша Dynamo",
+            "compile_transformer_blocks_only": "Компилировать только блоки Transformer",
+            "dynamo_recompile_limit": "Лимит перекомпиляции Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "Параметры компиляции Torch"
+        },
+        "description": "Настройки компиляции Torch: при подключении к загрузчику модели для выбранных слоёв выполняется компиляция Torch. Требуется Triton, рекомендуется версия torch 2.5.0."
+    },
+    "WanVideoLoraSelect": {
+        "title": "Wan Видео — Выбор LoRA (KJ)",
+        "inputs": {
+            "prev_lora": "Предыдущая LoRA",
+            "blocks": "Блок"
+        },
+        "widgets": {
+            "lora": "Lora",
+            "strength": "Интенсивность",
+            "low_mem_load": "Загрузка с низким потреблением памяти",
+            "merge_loras": "Объединить Lora"
+        },
+        "outputs": {
+            "lora": "Lora",
+            "WanVideo_LoRA": "Видео Wan: Lora"
+        }
+    },
+    "WanVideoLoraSelectByName": {
+        "title": "Wan Видео — Выбор LoRA по имени (KJ)",
+        "inputs": {
+            "prev_lora": "Предыдущая LoRA",
+            "blocks": "Блок"
+        },
+        "widgets": {
+            "lora_name": "Имя Lora",
+            "strength": "Интенсивность",
+            "low_mem_load": "Загрузка с низким потреблением памяти",
+            "merge_loras": "Объединить Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "Wan-видео — множественный выбор LoRA (KJ)",
+        "inputs": {
+            "prev_lora": "Предыдущая LoRA",
+            "blocks": "Блок"
+        },
+        "widgets": {
+            "lora_0": "Lora_0",
+            "lora_1": "Lora_1",
+            "lora_2": "Lora_2",
+            "lora_3": "Lora_3",
+            "lora_4": "Lora_4",
+            "strength_0": "Интенсивность_0",
+            "strength_1": "Интенсивность_1",
+            "strength_2": "Интенсивность_2",
+            "strength_3": "Интенсивность_3",
+            "strength_4": "Интенсивность_4",
+            "low_mem_load": "Загрузка с низким потреблением памяти",
+            "merge_loras": "Объединить Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoVACEModelSelect": {
+        "title": "Wan Видео — Выбор модели VACE (KJ)",
+        "widgets": {
+            "vace_model": "Модель vace"
+        },
+        "outputs": {
+            "extra_model": "Дополнительная модель",
+            "vacepath": "Путь VACE",
+            "vace_model": "Модель vace"
+        }
+    },
+    "WanVideoExtraModelSelect": {
+        "title": "Выбрать дополнительную модель Wan-видео (KJ)",
+        "widgets": {
+            "extra_model": "Дополнительная модель"
+        },
+        "outputs": {
+            "extra_model": "Путь VACE"
+        }
+    },
+    "WanVideoLoraBlockEdit": {
+        "title": "Wan Видео — Редактирование блоков LoRA (KJ)",
+        "widgets": {
+            "layer_filter": "Фильтр слоёв"
+        },
+        "outputs": {
+            "blocks": "Выбранный блок"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "Настроить LoRA для Wan Видео (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "lora": "Lora"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Устанавливает веса LoRA напрямую в линейные слои модели; эта операция не объединяет информацию LoRA."
+    },
+    "WanVideoModelLoader": {
+        "title": "Wan-видео — загрузчик модели (KJ)",
+        "inputs": {
+            "compile_args": "Параметры компиляции",
+            "block_swap_args": "Параметры обмена блоков",
+            "lora": "Lora",
+            "vram_management_args": "Параметры управления видеопамятью",
+            "extra_model": "Дополнительная модель",
+            "vace_model": "Модель VACE",
+            "fantasytalking_model": "Модель FantasyTalking",
+            "multitalk_model": "Модель MultiTalk (многолюдный диалог)",
+            "fantasyportrait_model": "Модель FantasyPortrait (фэнтези-портрет)"
+        },
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "quantization": "Квантование",
+            "load_device": "Загрузить на устройство",
+            "attention_mode": "Режим внимания",
+            "rms_norm_function": "Функция RMS-константы"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "Загрузчик VAE Wan-видео (KJ)",
+        "inputs": {
+            "compile_args": "Параметры компиляции"
+        },
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Видео Wan: VAE"
+        },
+        "description": "Загружает модель Wan VAE из пути ComfyUI/models/vae"
+    },
+    "WanVideoTinyVAELoader": {
+        "title": "Wan-видео — загрузчик мини-VAE (KJ)",
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "parallel": "Параллельно"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Видео Wan: VAE"
+        }
+    },
+    "LoadWanVideoT5TextEncoder": {
+        "title": "Wan-видео — загрузка текстового кодировщика T5 (KJ)",
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "load_device": "Загрузить на устройство",
+            "quantization": "Квантование"
+        },
+        "outputs": {
+            "wan_t5_model": "Модель WanT5"
+        }
+    },
+    "LoadWanVideoClipTextEncoder": {
+        "title": "Wan Видео — Загрузить текстовый кодировщик CLIP (KJ)",
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность",
+            "load_device": "Загрузить на устройство"
+        },
+        "outputs": {
+            "wan_clip_vision": "CLIP Vision Wan"
+        }
+    },
+    "WanVideoImageResizeToClosest": {
+        "title": "Wan Видео — Оптимизация размера изображения (KJ)",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "generation_width": "Ширина генерации",
+            "generation_height": "Высота генерации",
+            "aspect_ratio_preservation": "Сохранение пропорций"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "width": "Ширина",
+            "height": "Высота"
+        }
+    },
+    "ExtractStartFramesForContinuations": {
+        "title": "Извлечение первого кадра видео (KJ)",
+        "inputs": {
+            "input_video_frames": "Входные кадры видео"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "start_frames": "Первый кадр"
+        }
+    },
+    "WanVideoVACEStartToEndFrame": {
+        "title": "Wan Видео — Первый и последний кадр VACE (KJ)",
+        "inputs": {
+            "start_image": "Начальное изображение",
+            "end_image": "Конечное изображение",
+            "control_images": "Контрольное изображение",
+            "inpaint_mask": "Маска инпейнта"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "empty_frame_level": "Пустой уровень кадров",
+            "start_index": "Начальный индекс",
+            "end_index": "Конечный индекс"
+        },
+        "outputs": {
+            "images": "Изображение",
+            "masks": "Маска"
+        }
+    },
+    "CreateCFGScheduleFloatList": {
+        "title": "Создать список вещественных чисел расписания CFG (KJ)",
+        "widgets": {
+            "steps": "Количество шагов",
+            "cfg_scale_start": "Начальное значение масштабирования CFG",
+            "cfg_scale_end": "Конечное значение масштабирования CFG",
+            "interpolation": "Метод интерполяции",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "float_list": "Список чисел с плавающей точкой"
+        },
+        "description": "Вспомогательный узел создаёт серию списков чисел с плавающей точкой, которые можно использовать для распределения пропорций cfg по шагам.\n При выходе за заданный диапазон значение cfg устанавливается в 1.0 ."
+    },
+    "CreateScheduleFloatList": {
+        "title": "Создание списка плавающих чисел расписания (KJ)",
+        "widgets": {
+            "steps": "Количество шагов",
+            "start_value": "Начальное значение",
+            "end_value": "Конечное значение",
+            "default_value": "Значение по умолчанию",
+            "interpolation": "Метод интерполяции",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "float_list": "Список чисел с плавающей точкой"
+        }
+    },
+    "DummyComfyWanModelObject": {
+        "title": "Wan-модель Фиктивный объект Comfy (KJ)",
+        "widgets": {
+            "shift": "Смещение"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "WanVideoLatentReScale": {
+        "title": "Перемасштабирование тензоров Latent Wan-видео (KJ)",
+        "inputs": {
+            "samples": "Сэмплирование"
+        },
+        "widgets": {
+            "direction": "Направление"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoSigmaToStep": {
+        "title": "Преобразование Sigma в количество шагов Wan-видео (KJ)",
+        "widgets": {
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "step": "Количество шагов"
+        }
+    },
+    "NormalizeAudioLoudness": {
+        "title": "Настройка громкости аудио (KJ)",
+        "inputs": {
+            "audio": "Аудио"
+        },
+        "widgets": {
+            "lufs": "Единица громкости LUFS"
+        },
+        "outputs": {
+            "audio": "Аудио"
+        }
+    },
+    "WanVideoPassImagesFromSamples": {
+        "title": "Wan Видео — Выходное изображение из сэмплирования (KJ)",
+        "inputs": {
+            "samples": "Сэмплирование"
+        },
+        "outputs": {
+            "images": "Изображение",
+            "output_path": "Путь вывода"
+        }
+    },
+    "FaceMaskFromPoseKeypoints": {
+        "title": "Генерация маски лица из ключевых точек позы (KJ)",
+        "inputs": {
+            "pose_kps": "Ключевые точки позы"
+        },
+        "widgets": {
+            "person_index": "Индекс человека"
+        },
+        "outputs": {
+            "MASK": "Маска"
+        }
+    },
+    "WanVideoATITracks": {
+        "title": "ATI-траектории Wan-видео (KJ)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "tracks": "Траектория",
+            "width": "Ширина",
+            "height": "Высота",
+            "temperature": "Температура",
+            "topk": "Значение top-k",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "model": "Видео Wan: модель"
+        }
+    },
+    "WanVideoATITracksVisualize": {
+        "title": "Визуализация ATI-траекторий Wan-видео (KJ)",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "tracks": "Траектория",
+            "min_radius": "Минимальный радиус",
+            "max_radius": "Максимальный радиус",
+            "max_retain": "Максимальное число сохраняемых"
+        },
+        "outputs": {
+            "images": "Изображение"
+        }
+    },
+    "WanVideoATI_comfy": {
+        "title": "Wan Видео — ATI Comfy (KJ)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "tracks": "Траектория",
+            "temperature": "Температура",
+            "topk": "Значение top-k"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "WanVideoTeaCache": {
+        "title": "Tea-кэш Wan-видео (KJ)",
+        "widgets": {
+            "rel_l1_thresh": "Относительный порог L1",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "use_coefficients": "Коэффициент использования",
+            "cache_device": "Устройство кэша",
+            "mode": "Режим кэша"
+        },
+        "outputs": {
+            "cache_args": "Параметры кеша"
+        }
+    },
+    "WanVideoMagCache": {
+        "title": "Wan Видео — Mag-кэш (KJ)",
+        "widgets": {
+            "magcache_thresh": "Порог кэша Mag",
+            "magcache_K": "Значение K кэша Mag",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "cache_device": "Устройство кэша"
+        },
+        "outputs": {
+            "cache_args": "Параметры кеша"
+        }
+    },
+    "WanVideoEasyCache": {
+        "title": "Простое кэширование Wan-видео (KJ)",
+        "widgets": {
+            "easycache_thresh": "Порог простого кэша",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "cache_device": "Устройство кэша"
+        },
+        "outputs": {
+            "cache_args": "Параметры кеша"
+        }
+    },
+    "WanVideoControlnetLoader": {
+        "title": "Wan Видео — Загрузить ControlNet (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "quantization": "Квантование",
+            "load_device": "Загрузить на устройство"
+        },
+        "outputs": {
+            "controlnet": "ControlNet"
+        }
+    },
+    "WanVideoControlnet": {
+        "title": "Wan Видео — Применить ControlNet (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "controlnet": "ControlNet",
+            "control_images": "Контрольное изображение"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "control_stride": "Управляющий шаг (stride)",
+            "control_start_percent": "Начальный процент управления",
+            "control_end_percent": "Конечный процент управления"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "FantasyPortraitFaceDetector": {
+        "title": "Детектор лиц FantasyPortrait (фэнтези-портрет) (KJ)",
+        "inputs": {
+            "portrait_model": "Портретная модель",
+            "images": "Изображение"
+        },
+        "widgets": {
+            "adapter_scale": "Масштаб адаптера",
+            "mouth_scale": "Масштаб рта",
+            "emo_scale": "Масштаб эмоции",
+            "device": "Устройство"
+        },
+        "outputs": {
+            "portrait_embeds": "Группа встраиваний портрета",
+            "bbox": "Ограничивающая рамка",
+            "landmarks": "Опорные точки"
+        }
+    },
+    "LandmarksToImage": {
+        "title": "Точки признаков в изображение (KJ)",
+        "inputs": {
+            "landmarks": "Опорные точки",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "outputs": {
+            "keypoints_image": "Изображение ключевых точек"
+        }
+    },
+    "WanVideoAddFantasyPortrait": {
+        "title": "Wan Видео — Добавить фантазийный портрет FantasyPortrait (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "portrait_embeds": "Группа встраиваний портрета"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "FantasyPortraitModelLoader": {
+        "title": "FantasyPortrait Фантазийный портрет — загрузчик модели (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "DownloadAndLoadWav2VecModel": {
+        "title": "(Скачать) Загрузка аудиомодели Wav2Vec2 (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "load_device": "Загрузить на устройство"
+        },
+        "outputs": {
+            "wav2vec_model": "Аудиомодель Wav2Vec2"
+        }
+    },
+    "FantasyTalkingModelLoader": {
+        "title": "FantasyTalking — загрузчик модели фэнтези-диалога (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность"
+        },
+        "outputs": {
+            "model": "Модель FantasyTalking"
+        }
+    },
+    "FantasyTalkingWav2VecEmbeds": {
+        "title": "FantasyTalking Фантастический диалог — группа встраиваний Wav2Vec2 (KJ)",
+        "inputs": {
+            "wav2vec_model": "Аудиомодель Wav2Vec2",
+            "fantasytalking_model": "Модель FantasyTalking",
+            "audio": "Аудио"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "fps": "Частота кадров",
+            "audio_scale": "Масштаб аудио",
+            "audio_cfg_scale": "Аудио CFG масштабирование"
+        },
+        "outputs": {
+            "fantasytalking_embeds": "FantasyTalking_группа эмбедов"
+        }
+    },
+    "WanVideoFunCameraEmbeds": {
+        "title": "Эмбеддинги Fun-камеры Wan-видео (KJ)",
+        "inputs": {
+            "poses": "Позы"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WhisperModelLoader": {
+        "title": "Загрузить речевую модель (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "load_device": "Загрузить на устройство"
+        },
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "load_device": "Загрузить на устройство"
+        },
+        "outputs": {
+            "whisper_model": "Модель речи"
+        }
+    },
+    "HuMoEmbeds": {
+        "title": "HuMo Аудио — группа встраиваний (KJ)",
+        "inputs": {
+            "whisper_model": "Модель речи",
+            "vae": "VAE",
+            "reference_images": "Опорное изображение",
+            "audio": "Аудио"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "width": "Ширина",
+            "height": "Высота",
+            "audio_scale": "Масштаб аудио",
+            "audio_cfg_scale": "Аудио CFG масштабирование",
+            "audio_start_percent": "Процент начала аудио",
+            "audio_end_percent": "Процент окончания аудио",
+            "tiled_vae": "Блочное кодирование VAE"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoCombineEmbeds": {
+        "title": "Wan-видео — объединение эмбеддингов (KJ)",
+        "inputs": {
+            "embeds_1": "Эмбеддинги_1",
+            "embeds_2": "Группа встраиваний_2"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "DownloadAndLoadNLFModel": {
+        "title": "(Загрузка) Загрузить модель NLF (KJ)",
+        "inputs": {
+            "url": "Веб-адрес"
+        },
+        "widgets": {
+            "url": "Веб-адрес"
+        },
+        "outputs": {
+            "nlf_model": "Модель NLF"
+        }
+    },
+    "LoadNLFModel": {
+        "title": "Загрузить модель NLF (KJ)",
+        "widgets": {
+            "nlf_model": "Модель NLF",
+            "warmup": "Прогрев"
+        },
+        "outputs": {
+            "nlf_model": "Модель NLF"
+        }
+    },
+    "LoadVQVAE": {
+        "title": "Загрузить VQ VAE (KJ)",
+        "inputs": {
+            "model_name": "Название модели"
+        },
+        "widgets": {
+            "model_name": "Название модели"
+        },
+        "outputs": {
+            "vqvae": "VQ VAE"
+        }
+    },
+    "MTVCrafterEncodePoses": {
+        "title": "Кодирование поз MTV Crafter (KJ)",
+        "inputs": {
+            "vqvae": "VQ VAE",
+            "poses": "Позы"
+        },
+        "outputs": {
+            "mtvcrafter_motion": "Динамические эффекты MTV",
+            "pose_results": "Позы"
+        },
+        "description": "Предсказание позы естественным языком"
+    },
+    "NLFPredict": {
+        "title": "Предсказание позы естественным языком (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "images": "Изображение"
+        },
+        "outputs": {
+            "pose_results": "Позы"
+        },
+        "description": "Предсказание позы естественным языком"
+    },
+    "DrawNLFPoses": {
+        "title": "Рисование поз естественным языком (KJ)",
+        "inputs": {
+            "poses": "Позы"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "outputs": {
+            "image": "Изображение"
+        }
+    },
+    "Wav2VecModelLoader": {
+        "title": "Wav2vec2 Аудиомодель — загрузчик (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "load_device": "Загрузить на устройство"
+        },
+        "outputs": {
+            "wav2vec_model": "Аудиомодель Wav2Vec2"
+        }
+    },
+    "MultiTalkModelLoader": {
+        "title": "Multi/InfiniteTalk Неограниченный многоходовый диалог — загрузчик модели (KJ)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность"
+        },
+        "outputs": {
+            "model": "Модель"
+        }
+    },
+    "MultiTalkWav2VecEmbeds": {
+        "title": "Multi/InfiniteTalk Неограниченный многоходовый диалог — группа встраиваний Wav2Vec2 (KJ)",
+        "inputs": {
+            "wav2vec_model": "Модель Wav2Vec2",
+            "audio_1": "Аудио_1",
+            "audio_2": "Аудио_2",
+            "audio_3": "Аудио_3",
+            "audio_4": "Аудио_4",
+            "ref_target_masks": "Опорная целевая маска"
+        },
+        "widgets": {
+            "normalize_loudness": "Корректировка громкости аудио",
+            "num_frames": "Количество кадров",
+            "fps": "Частота кадров",
+            "audio_scale": "Масштаб аудио",
+            "multi_audio_type": "Тип мульти-аудио",
+            "audio_cfg_scale": "Масштаб конфигурации аудио"
+        },
+        "outputs": {
+            "multitalk_embeds": "Группа эмбедов MultiTalk",
+            "audio": "Аудио",
+            "num_frames": "Количество кадров"
+        }
+    },
+    "MultiTalkSilentEmbeds": {
+        "title": "MultiTalk (многоходовый диалог) — эмбеддинги тишины (KJ)",
+        "widgets": {
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "multitalk_embeds": "Группа эмбедов MultiTalk"
+        }
+    },
+    "WanVideoImageToVideoMultiTalk": {
+        "title": "Wan-видео — изображение-в-видео (MultiTalk, многоходовый диалог) (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "Начальное изображение",
+            "clip_embeds": "Группа эмбедов CLIP"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "frame_window_size": "Размер окна кадров",
+            "motion_frame": "Кадр движения",
+            "force_offload": "Принудительная выгрузка",
+            "colormatch": "Сопоставление цвета",
+            "tiled_vae": "Блочное кодирование VAE",
+            "output_path": "Путь вывода",
+            "mode": "Режим"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения",
+            "output_path": "Путь вывода"
+        }
+    },
+    "QwenLoader": {
+        "title": "Загрузчик Цяньвэнь (Qwen) (KJ)",
+        "widgets": {
+            "model": "Модель",
+            "load_device": "Загрузить на устройство",
+            "precision": "Точность"
+        },
+        "outputs": {
+            "QWENMODEL": "Модель Цяньвэнь (Qwen)"
+        }
+    },
+    "WanVideoPromptExtender": {
+        "title": "Wan Видео — Расширитель промптов (KJ)",
+        "inputs": {
+            "qwen": "Цяньвэнь (Qwen)",
+            "custom_system_prompt": "Пользовательский системный промпт"
+        },
+        "widgets": {
+            "prompt": "Промпт",
+            "max_new_tokens": "Максимальное число новых токенов",
+            "force_offload": "Принудительная выгрузка",
+            "seed": "Зерно",
+            "device": "Устройство",
+            "system_prompt": "Системный промпт"
+        },
+        "outputs": {
+            "STRING": "Строка"
+        }
+    },
+    "WanVideoPromptExtenderSelect": {
+        "title": "Wan Видео — Выбор расширенного промпта (KJ)",
+        "inputs": {
+            "custom_system_prompt": "Пользовательский системный промпт"
+        },
+        "widgets": {
+            "model": "Модель",
+            "max_new_tokens": "Максимальное число новых токенов",
+            "system_prompt": "Системный промпт",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "extender_args": "Параметры расширения"
+        }
+    },
+    "WanVideoReCamMasterDefaultCamera": {
+        "title": "Wan-видео — переустановка основной камеры по умолчанию (KJ)",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "camera_type": "Тип камеры"
+        },
+        "outputs": {
+            "camera_poses": "Поза камеры"
+        },
+        "description": "ReCamMasterDefaultCamera"
+    },
+    "WanVideoReCamMasterGenerateOrbitCamera": {
+        "title": "Wan-видео — перезапуск основной орбитальной камеры генерации (KJ)",
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "degrees": "Градусы"
+        },
+        "outputs": {
+            "camera_poses": "Поза камеры"
+        },
+        "description": "ReCamMasterGenerateOrbitCamera"
+    },
+    "WanVideoReCamMasterCameraEmbed": {
+        "title": "Wan-видео — переустановка эмбеддингов камеры (KJ)",
+        "inputs": {
+            "camera_poses": "Поза камеры",
+            "latents": "Latent"
+        },
+        "outputs": {
+            "camera_embeds": "Эмбед камеры",
+            "camera_poses": "Поза камеры"
+        },
+        "description": "ReCamMasterCameraEmbed"
+    },
+    "ReCamMasterPoseVisualizer": {
+        "title": "Визуализация позы положения камеры (KJ)",
+        "inputs": {
+            "camera_poses": "Поза камеры"
+        },
+        "widgets": {
+            "base_xval": "Значение x",
+            "zval": "Значение z",
+            "scale": "Масштаб",
+            "arrow_length": "Длина стрелки"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": "ReCamMasterPoseVisualizer"
+    },
+    "WanVideoAddS2VEmbeds": {
+        "title": "Wan Видео — Добавить группу встраиваний S2V (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "audio_encoder_output": "Выход кодировщика аудио",
+            "ref_latent": "Опорный Latent",
+            "pose_latent": "Latent позы",
+            "vae": "Вариационный автоэнкодер"
+        },
+        "widgets": {
+            "frame_window_size": "Размер окна кадров",
+            "audio_scale": "Масштаб аудио",
+            "pose_start_percent": "Процент начала позы",
+            "pose_end_percent": "Конечный процент позы",
+            "enable_framepack": "Включить упаковку кадров"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения",
+            "audio_frame_count": "Количество аудио-кадров"
+        }
+    },
+    "WanVideoDiffusionForcingSampler": {
+        "title": "Wan-видео — сэмплер принудительной диффузии (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "text_embeds": "Группа текстовых эмбедов",
+            "image_embeds": "Эмбеддинги изображения",
+            "samples": "Сэмплирование",
+            "prefix_samples": "Префиксное сэмплирование",
+            "cache_args": "Параметры кеша",
+            "slg_args": "Параметры SLG",
+            "experimental_args": "Экспериментальные параметры",
+            "unianimate_poses": "UniAnimate_поза"
+        },
+        "widgets": {
+            "addnoise_condition": "Добавить шумовое условие",
+            "fps": "Частота кадров",
+            "steps": "Количество шагов",
+            "cfg": "CFG",
+            "shift": "Сдвиг",
+            "seed": "Зерно",
+            "force_offload": "Принудительная выгрузка",
+            "scheduler": "Планировщик",
+            "rope_function": "Функция RoPE",
+            "denoise_strength": "Шумоподавление"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "Wan Видео — Загрузчик ControlNet Uni3C (KJ)",
+        "inputs": {
+            "compile_args": "Параметры компиляции"
+        },
+        "widgets": {
+            "model": "Модель",
+            "base_precision": "Базовая точность",
+            "quantization": "Квантование",
+            "load_device": "Загрузить на устройство",
+            "attention_mode": "Режим внимания",
+            "compile_args": "Параметры компиляции"
+        },
+        "outputs": {
+            "controlnet": "ControlNet",
+            "WanVideo Controlnet": "Видео Wan: ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "Wan Видео — Группа встраиваний Uni3C (KJ)",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "render_latent": "Рендер Latent",
+            "render_mask": "Рендер маски"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "uni3c_embeds": "Группа эмбедов Uni3C"
+        }
+    },
+    "WanVideoUniAnimateDWPoseDetector": {
+        "title": "Wan Видео — Универсальная анимация UniAnimate, детектор поз DW (KJ)",
+        "inputs": {
+            "pose_images": "Изображение позы",
+            "reference_pose_image": "Изображение опорной позы"
+        },
+        "widgets": {
+            "score_threshold": "Порог оценки",
+            "stick_width": "Толщина линии",
+            "draw_body": "Рисовать тело",
+            "body_keypoint_size": "Размер ключевых точек тела",
+            "draw_feet": "Рисовать ступни",
+            "draw_hands": "Рисовать кисти рук",
+            "hand_keypoint_size": "Размер ключевых точек кистей",
+            "colorspace": "Цветовое пространство",
+            "handle_not_detected": "Обработка случая необнаружения",
+            "draw_head": "Рисовать голову"
+        },
+        "outputs": {
+            "poses": "Позы",
+            "reference_pose": "Опорная поза"
+        }
+    },
+    "WanVideoAddLucyEditLatents": {
+        "title": "Wan Видео — Добавить Latent редактирования Lucy (KJ)",
+        "inputs": {
+            "embeds": "Группа встраиваний embeds",
+            "extra_latents": "Дополнительный Latent"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "LoadLynxResampler": {
+        "title": "Загрузчик ресемплера Lynx (KJ)",
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность"
+        },
+        "outputs": {
+            "resampler": "Пересэмплирование"
+        }
+    },
+    "LynxEncodeFaceIP": {
+        "title": "Кодирование IP лица Lynx (KJ)",
+        "inputs": {
+            "resampler": "Пересэмплирование",
+            "ip_image": "IP-изображение лица"
+        },
+        "outputs": {
+            "lynx_face_embeds": "Лицевые эмбеддинги Lynx"
+        }
+    },
+    "DrawArcFaceLandmarks": {
+        "title": "Рисование опорных точек дуги лица (KJ)",
+        "inputs": {
+            "lynx_face_embeds": "Лицевые эмбеддинги Lynx",
+            "image": "Изображение"
+        },
+        "outputs": {
+            "landmarked_image": "Изображение с опорными точками"
+        },
+        "description": "Рисует на изображении опорные точки лица для визуализации и отладки."
+    },
+    "WanVideoAddLynxEmbeds": {
+        "title": "Wan Видео — Добавить группу встраиваний Lynx (KJ)",
+        "inputs": {
+            "embeds": "Группа встраиваний embeds",
+            "vae": "VAE",
+            "lynx_face_embeds": "Лицевые эмбеддинги Lynx",
+            "lynx_ip_embeds": "Lynx — группа встраиваний IP лица",
+            "ref_image": "Опорное изображение",
+            "ref_text_embed": "Опорные текстовые встраивания",
+            "ref_blocks_to_use": "Доступные для использования опорные блоки"
+        },
+        "widgets": {
+            "ip_scale": "Масштаб IP",
+            "ref_scale": "Опорный масштаб",
+            "lynx_cfg_scale": "Масштаб CFG Lynx",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "LynxInsightFaceCrop": {
+        "title": "Обнаружение и cropping лиц Lynx InsightFace (KJ)",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "outputs": {
+            "ip_image": "IP-изображение лица",
+            "ref_image": "Опорное изображение"
+        }
+    },
+    "OviMMAudioVAELoader": {
+        "title": "Загрузчик VAE MM-аудио Ovi (KJ)",
+        "widgets": {
+            "vocoder": "Вокодер",
+            "precision": "Точность"
+        },
+        "outputs": {
+            "mmaudio_vae": "MM-аудио VAE"
+        },
+        "description": "Загружает MM-аудио VAE для генерации аудио Ovi"
+    },
+    "WanVideoDecodeOviAudio": {
+        "title": "Декодер аудио Ovi Wan-видео (KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM-аудио VAE",
+            "samples": "Сэмплирование"
+        },
+        "outputs": {
+            "audio": "Аудио"
+        }
+    },
+    "WanVideoEncodeOviAudio": {
+        "title": "Wan Видео — Кодировщик аудио Ovi (KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM-аудио VAE",
+            "audio": "Аудио"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoOviCFG": {
+        "title": "CFG-гид Ovi Wan-видео (KJ)",
+        "inputs": {
+            "original_text_embeds": "Исходный текст — встраивания",
+            "ovi_negative_text_embeds": "Ovi Негативный промпт — текстовые встраивания"
+        },
+        "widgets": {
+            "ovi_audio_cfg": "CFG аудио Ovi"
+        },
+        "outputs": {
+            "text_embeds": "Группа текстовых эмбедов"
+        },
+        "description": "Добавляет в словарь текстовых встраиваний негативные текстовые встраивания Ovi и коэффициент масштаба аудио CFG"
+    },
+    "WanVideoAddOviAudioToLatents": {
+        "title": "Wan-видео — добавить аудио Ovi в Latent (KJ)",
+        "inputs": {
+            "original_samples": "Исходная выборка",
+            "audio_samples": "Образцы аудио"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoEmptyMMAudioLatents": {
+        "title": "Wan Видео — Пустой Latent аудио MM (KJ)",
+        "widgets": {
+            "length": "Длина"
+        },
+        "outputs": {
+            "samples": "Сэмплирование"
+        }
+    },
+    "WanVideoAddFlashVSRInput": {
+        "title": "Wan-видео — добавить вход FlashVSR (вспышка) (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "images": "Группа изображений"
+        },
+        "widgets": {
+            "strength": "Интенсивность"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoFlashVSRDecoderLoader": {
+        "title": "Wan Видео — Загрузить декодер Flash VSR (KJ)",
+        "widgets": {
+            "model_name": "Название модели",
+            "precision": "Точность"
+        },
+        "outputs": {
+            "vae": "VAE"
+        },
+        "description": "Загружает модель Wan VAE из пути ComfyUI/models/vae"
+    },
+    "MochaEmbeds": {
+        "title": "Группа встраиваний Mocha (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "input_video": "Входное видео",
+            "mask": "Маска",
+            "ref1": "Референс1",
+            "ref2": "Референс2"
+        },
+        "widgets": {
+            "force_offload": "Выгрузка задачи",
+            "tiled_vae": "Блочный VAE"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        },
+        "description": "Входная модель Mocha: https://github.com/Orange-3DV-Team/MoCha"
+    },
+    "DrawGaussianNoiseOnImage": {
+        "title": "Рисование гауссова шума на изображении (KJ)",
+        "inputs": {
+            "image": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "device": "Устройство",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "images": "Изображение"
+        }
+    },
+    "LatentInpaintTTM": {
+        "title": "Дорисовка Latent TTM (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "device": "Устройство",
+            "steps": "Количество шагов"
+        },
+        "outputs": {
+            "model": "Модель",
+            "MODEL": "Модель"
+        }
+    },
+    "WanVideoAddBindweaveEmbeds": {
+        "title": "Wan Видео — Добавить встраивания Bindweave (связывание и переплетение) (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "reference_latents": "Опорный Latent",
+            "ref_masks": "Опорная маска",
+            "qwenvl_embeds_pos": "Позитивный промпт Цяньвэнь vl",
+            "qwenvl_embeds_neg": "Qwen VL, негативный промпт"
+        },
+        "widgets": {
+            "device": "Устройство",
+            "steps": "Количество шагов"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "image_embed_preview": "Предпросмотр встраиваний изображения",
+            "mask_preview": "Предпросмотр маски"
+        }
+    },
+    "WanVideoAddTTMLatents": {
+        "title": "Wan-видео — добавить Latent TTM (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "reference_latents": "Опорный Latent",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "TextImageEncodeQwenVL": {
+        "title": "Тексто-визуальный кодировщик Цяньвэнь VL (KJ)",
+        "inputs": {
+            "clip": "CLIP",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг"
+        },
+        "outputs": {
+            "qwenvl_embeds": "Qwen — встраивания"
+        }
+    },
+    "WanVideoUniLumosEmbeds": {
+        "title": "UniLumos — техника эмбеддингов Wan-видео (KJ)",
+        "inputs": {
+            "foreground_latents": "Latent переднего плана",
+            "background_latents": "Фоновый Latent"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "WanVideoPreviewEmbeds": {
+        "title": "Wan Видео — Встраивания предпросмотра (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "num_frames": "Количество кадров"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "mask": "Маска"
+        }
+    },
+    "WanVideoAddSteadyDancerEmbeds": {
+        "title": "Wan Видео — Добавить технику встраиваний SteadyDancer (устойчивый танцор) (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "pose_latents_positive": "Latent поз (положительный)",
+            "pose_latents_negative": "Latent позы (негативный)",
+            "clip_vision_embeds": "Эмбеддинги CLIP Vision"
+        },
+        "widgets": {
+            "pose_strength_spatial": "Интенсивность позы_пространственное измерение",
+            "pose_strength_temporal": "Интенсивность позы_временное измерение",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "WanVideoAddOneToAllReferenceEmbeds": {
+        "title": "Wan-видео — добавить OneToAll (один ко всем) опорные эмбеддинги (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "vae": "VAE",
+            "ref_image": "Опорное изображение",
+            "ref_mask": "Опорная маска"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "WanVideoAddOneToAllPoseEmbeds": {
+        "title": "Wan Видео — Добавить встраивания поз OneToAll (один ко всем) (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "vae": "VAE",
+            "pose_images": "Изображение позы",
+            "pose_prefix_image": "Префиксное изображение позы"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания",
+            "pose_cfg_scale": "Интенсивность CFG позы"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения"
+        }
+    },
+    "WanVideoAddOneToAllExtendEmbeds": {
+        "title": "Wan-видео — добавить OneToAll (один ко всем) расширенные эмбеддинги (KJ)",
+        "inputs": {
+            "embeds": "Эмбеддинги",
+            "vae": "VAE",
+            "prev_latents": "Предыдущий Latent",
+            "pose_images": "Изображение позы"
+        },
+        "widgets": {
+            "window_size": "Размер окна",
+            "overlap": "Наложение",
+            "frames_processed": "Обработанное количество кадров",
+            "if_not_enough_frames": "Если кадров недостаточно"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "pose_slice": "Срез позы (изображение)"
+        }
+    },
+    "WanVideoAddWanMoveTracks": {
+        "title": "Wan-видео — добавить траектории движения Wan (KJ)",
+        "inputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "tracks": "Траектория",
+            "track_mask": "Маска траектории",
+            "track_coords": "Координаты траектории"
+        },
+        "widgets": {
+            "strength": "Интенсивность"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинг изображения",
+            "tracks": "Траектория"
+        }
+    },
+    "WanVideoWanDrawWanMoveTracks": {
+        "title": "Wan-видео — нарисовать траектории движения Wan (KJ)",
+        "inputs": {
+            "images": "Изображение",
+            "tracks": "Траектория"
+        },
+        "widgets": {
+            "line_resolution": "Разрешение линии",
+            "circle_size": "Размер круга",
+            "opacity": "Прозрачность",
+            "line_width": "Толщина линии"
+        },
+        "outputs": {
+            "image": "Изображение"
+        }
+    },
+    "WanMove_native": {
+        "title": "Wan MoveNative — нативная версия перемещения Wan (KJ)",
+        "inputs": {
+            "positive": "Положительное условие",
+            "track_mask": "Маска траектории",
+            "track_coords": "Координаты траектории"
+        },
+        "outputs": {
+            "positive": "Положительное условие",
+            "tracks": "Траектория"
+        }
+    },
+    "WanVideoAddStoryMemLatents": {
+        "title": "Wan Видео — Добавить Latent StoryMem (память истории) (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "memory_images": "Изображения памяти"
+        },
+        "widgets": {
+            "freq_offset": "Смещение частоты"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddSCAILPoseEmbeds": {
+        "title": "Wan Видео — Добавить встраивания поз SCAIL (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "pose_images": "Изображение позы"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoAddSCAILReferenceEmbeds": {
+        "title": "Wan-видео — добавить SCAIL-опорные эмбеддинги (KJ)",
+        "inputs": {
+            "embeds": "Группы эмбедов",
+            "vae": "VAE",
+            "ref_image": "Опорное изображение",
+            "clip_embeds": "CLIP-эмбеддинги"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения"
+        }
+    },
+    "WanVideoLongCatAvatarExtendEmbeds": {
+        "title": "Wan-видео — эмбеддинги расширения аватара LongCat (большая кошка) (KJ)",
+        "inputs": {
+            "prev_latents": "Предыдущий Latent",
+            "audio_embeds": "Встраивания аудио",
+            "ref_latent": "Опорный Latent",
+            "samples": "Сэмплирование"
+        },
+        "widgets": {
+            "amples": "Образец",
+            "num_frames": "Количество кадров",
+            "overlap": "Наложение",
+            "frames_processed": "Обработанные кадры",
+            "if_not_enough_audio": "Если аудио недостаточно",
+            "ref_frame_index": "Индекс опорного кадра",
+            "ref_mask_frame_range": "Диапазон кадров опорной маски"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения",
+            "samples_slice": "Сэмпл-фрагменты"
+        }
+    },
+    "WanVideoAddDualControlEmbeds": {
+        "title": "Wan Видео — Добавить двойные управляющие встраивания (KJ)",
+        "inputs": {
+            "embeds": "Вектор эмбеддинга",
+            "vae": "Модель VAE",
+            "dense": "Плотное управление",
+            "sparse": "Разреженное управление",
+            "prev_images": "Предыдущее изображение"
+        },
+        "widgets": {
+            "strength": "Интенсивность управления",
+            "start_percent": "Начальный процент",
+            "end_percent": "Процент окончания",
+            "first_frame_noise_level": "Уровень шума первого кадра"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения",
+            "wanvidimage_embeds": "Эмбеддинги изображения Wan-видео"
+        }
+    },
+    "WanVideoSVIProEmbeds": {
+        "title": "Wan Видео — Встраивания SVI Pro (KJ)",
+        "inputs": {
+            "prev_samples": "Предыдущая выборка",
+            "anchor_samples": "Якорная выборка"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "motion_latent_count": "Число Latent-движений"
+        },
+        "outputs": {
+            "image_embeds": "Эмбеддинги изображения",
+            "samples_slice": "Сэмпл-фрагменты"
+        }
+    },
+    "WanVideoSetAttentionModeOverride": {
+        "title": "Wan Видео — Настройка переопределения режима внимания (KJ)",
+        "inputs": {
+            "model": "Модель",
+            "blocks": "Блок"
+        },
+        "widgets": {
+            "attention_mode": "Режим внимания",
+            "start_step": "Начальный шаг",
+            "end_step": "Конечный шаг",
+            "verbose": "Многословный режим"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Сбрасывает настройки режима внимания для определённых шагов и/или диапазонов блоков модели"
+    },
+    "WanVideoUltraVicoSettings": {
+        "title": "Настройки UltraVico Wan-видео (KJ)",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "alpha": "alpha (альфа) — непрозрачность"
+        },
+        "outputs": {
+            "model": "Модель"
+        },
+        "description": "Задаёт параметры UltraVico, но обратите внимание: режим всё равно нужно установить в sageattn_ultravico; документация: https://github.com/thu-ml/DiT-Extrapolation"
+    },
+    "WanVideoUniAnimatePoseInput": {
+        "title": "UniAnimate — вход поз универсальной анимации Wan-видео (KJ)",
+        "inputs": {
+            "pose_images": "Изображение позы",
+            "reference_pose_image": "Изображение опорной позы"
+        },
+        "widgets": {
+            "strength": "Интенсивность",
+            "start_percent": "Процент начала",
+            "end_percent": "Процент окончания"
+        },
+        "outputs": {
+            "unianimate_poses": "UniAnimate_поза"
+        }
+    }
+}

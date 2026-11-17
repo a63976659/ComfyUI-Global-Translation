@@ -1,0 +1,657 @@
+{
+    "VHS_SplitLatents": {
+        "title": "تقسيم Latent",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "split_index": "فهرس التقسيم"
+        },
+        "outputs": {
+            "LATENT_A": "Latent A",
+            "A_count": "عدد عناصر المجموعة A",
+            "LATENT_B": "Latent B",
+            "B_count": "عدد مجموعة B"
+        },
+        "description": "تقسيم مجموعة مساحات كامنَة Latent إلى مجموعتين \n\n"
+    },
+    "VHS_MergeLatents": {
+        "title": "دمج Latent",
+        "inputs": {
+            "latents_A": "Latent A",
+            "latents_B": "Latent B"
+        },
+        "widgets": {
+            "merge_strategy": "استراتيجية الدمج",
+            "match A": "مطابقة A",
+            "match B": "مطابقة B",
+            "match smaller": "مطابقة الأصغر",
+            "match larger": "مطابقة الأكبر",
+            "scale_method": "طريقة القياس",
+            "nearest-exact": "أقرب-دقيق",
+            "bilinear": "استيفاء ثنائي الخط",
+            "area": "منطقة",
+            "bislerp": "استيفاء كروي ثنائي",
+            "bicubic": "استيفاء ثنائي التكعيبي",
+            "crop": "قصّ",
+            "disabled": "إغلاق",
+            "ceter": "مركز"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "count": "عدّ"
+        },
+        "description": "دمج مجموعتي مساحات كامنَة في مجموعة مساحات كامنَة واحدة \n\n"
+    },
+    "VHS_SelectEveryNthLatent": {
+        "title": "اختيار Latent（مدى）",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "select_every_nth": "الفاصل",
+            "skip_first_latents": "تخطّي أول X"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "count": "عدّ"
+        },
+        "description": "الإبقاء على Latent واحد فقط من كل مدى \n\n"
+    },
+    "VHS_SelectLatents": {
+        "title": "اختيار Latent (بالفهرس)",
+        "inputs": {
+            "latent": "Latent"
+        },
+        "widgets": {
+            "indexes": "الفهرس",
+            "err_if_missing": "خطأ عند الفقد",
+            "err_if_empty": "خطأ عند الفراغ"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "اختيار العناصر المُدخلة بالترتيب المعطى باستخدام فهارس مرقّمة مفصولة بفواصل\n\nيدعم الفهارس السالبة، ونطاقات بأسلوب Python (بدون تضمين فهرس النهاية)، وطول خطوة النطاق\n\nأمثلة (بافتراض 16 عنصرًا مُدخلًا، الفهارس 0-15):\n\n• 0         → الإخراج [0]\n• -1        → الإخراج [15]\n• 0,1,13    → الإخراج [0,1,13]\n• 0:5,13    → الإخراج [0,1,2,3,4,13]\n• 0:-1      → الإخراج [0,1,2,...,14]\n• 0:5:-1    → الإخراج [4,3,2,1,0]\n• 0:5:2     → الإخراج [0,2,4]\n• ::-1      → الإخراج [15,14,...,0]"
+    },
+    "VHS_GetLatentCount": {
+        "title": "جلب عدد Latent",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "outputs": {
+            "count": "عدّ"
+        },
+        "description": "إرجاع عدد المساحات الكامنَة Latent في الإدخال عددًا صحيحًا \n\n"
+    },
+    "VHS_DuplicateLatents": {
+        "title": "نسخ Latent",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "multiply_by": "معامل"
+        },
+        "outputs": {
+            "LATENT": "Latent",
+            "count": "عدّ"
+        },
+        "description": "إلحاق نسخة من الفضاء الكامن بنفسه لتكراره \n\n"
+    },
+    "VHS_SplitImages": {
+        "title": "تقسيم الصور",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "split_index": "فهرس التقسيم"
+        },
+        "outputs": {
+            "IMAGE_A": "الصورة_A",
+            "A_count": "عدد عناصر المجموعة A",
+            "IMAGE_B": "الصورة_B",
+            "B_count": "عدد مجموعة B"
+        },
+        "description": "تقسيم مجموعة صور إلى مجموعتين \n\n"
+    },
+    "VHS_MergeImages": {
+        "title": "دمج الصور",
+        "inputs": {
+            "images_A": "الصورة_A",
+            "images_B": "الصورة_B"
+        },
+        "widgets": {
+            "merge_strategy": "استراتيجية الدمج",
+            "match A": "مطابقة A",
+            "match B": "مطابقة B",
+            "match smaller": "مطابقة الأصغر",
+            "match larger": "مطابقة الأكبر",
+            "scale_method": "طريقة القياس",
+            "nearest-exact": "أقرب-دقيق",
+            "bilinear": "استيفاء ثنائي الخط",
+            "area": "منطقة",
+            "bislerp": "استيفاء كروي ثنائي",
+            "bicubic": "استيفاء ثنائي التكعيبي",
+            "crop": "قصّ",
+            "disabled": "إغلاق",
+            "ceter": "مركز"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "count": "عدّ"
+        },
+        "description": "دمج مجموعتي صور في مجموعة صور واحدة \n\n"
+    },
+    "VHS_SelectEveryNthImage": {
+        "title": "اختيار الصور（مدى）",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "select_every_nth": "الفاصل",
+            "skip_first_images": "تخطّي أول X"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "count": "عدّ"
+        },
+        "description": "الاحتفاظ بصورة واحدة فقط لكل فترة \n\n"
+    },
+    "VHS_SelectImages": {
+        "title": "اختيار الصور (بالفهرس)",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "indexes": "الفهرس",
+            "err_if_missing": "خطأ عند الفقد",
+            "err_if_empty": "خطأ عند الفراغ"
+        },
+        "outputs": {
+            "IMAGE": "صورة"
+        },
+        "description": "اختيار العناصر المُدخلة بالترتيب المعطى باستخدام فهارس مرقّمة مفصولة بفواصل\n\nيدعم الفهارس السالبة، ونطاقات بأسلوب Python (بدون تضمين فهرس النهاية)، وطول خطوة النطاق\n\nأمثلة (بافتراض 16 عنصرًا مُدخلًا، الفهارس 0-15):\n\n• 0         → الإخراج [0]\n• -1        → الإخراج [15]\n• 0,1,13    → الإخراج [0,1,13]\n• 0:5,13    → الإخراج [0,1,2,3,4,13]\n• 0:-1      → الإخراج [0,1,2,...,14]\n• 0:5:-1    → الإخراج [4,3,2,1,0]\n• 0:5:2     → الإخراج [0,2,4]\n• ::-1      → الإخراج [15,14,...,0]"
+    },
+    "VHS_GetImageCount": {
+        "title": "عدد الصور المطلوب جلبها",
+        "inputs": {
+            "images": "صورة"
+        },
+        "outputs": {
+            "count": "عدّ"
+        },
+        "description": "إرجاع عدد الصور في الإدخال عددًا صحيحًا \n\n"
+    },
+    "VHS_DuplicateImages": {
+        "title": "نسخ الصورة",
+        "inputs": {
+            "images": "صورة"
+        },
+        "widgets": {
+            "multiply_by": "معامل"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "count": "عدّ"
+        },
+        "description": "إلحاق نسخة من الصور بنفسها لتكرارها \n\n"
+    },
+    "VHS_SplitMasks": {
+        "title": "قناع التجزئة",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "split_index": "فهرس التقسيم"
+        },
+        "outputs": {
+            "MASK_A": "القناع أ (A)",
+            "A_count": "عدد عناصر المجموعة A",
+            "MASK_B": "القناع_B",
+            "B_count": "عدد مجموعة B"
+        },
+        "description": "تقسيم مجموعة أقنعة إلى مجموعتين \n\n"
+    },
+    "VHS_MergeMasks": {
+        "title": "دمج الأقنعة",
+        "inputs": {
+            "mask_A": "القناع أ (A)",
+            "mask_B": "القناع_B"
+        },
+        "widgets": {
+            "merge_strategy": "استراتيجية الدمج",
+            "scale_method": "طريقة القياس",
+            "crop": "قصّ"
+        },
+        "outputs": {
+            "MASK": "قناع",
+            "count": "عدّ"
+        },
+        "description": "دمج مجموعتين من الأقنعة في مجموعة أقنعة واحدة \n\n"
+    },
+    "VHS_SelectEveryNthMask": {
+        "title": "اختيار الأقنعة (بالفترة)",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "select_every_nth": "الفاصل",
+            "skip_first_masks": "تخطّي أول X"
+        },
+        "outputs": {
+            "MASK": "قناع",
+            "count": "عدّ"
+        },
+        "description": "الإبقاء على قناع واحد فقط من كل مدى \n\n"
+    },
+    "VHS_SelectMasks": {
+        "title": "اختيار الأقنعة (بالفهرس)",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "indexes": "الفهرس",
+            "err_if_missing": "خطأ عند الفقد",
+            "err_if_empty": "خطأ عند الفراغ"
+        },
+        "outputs": {
+            "MASK": "قناع"
+        },
+        "description": "اختيار عناصر الإدخال بالترتيب المعطى باستخدام فهارس رقمية مفصولة بفواصل\n\nالأنواع المدعومة：\n• الفهارس السالبة\n• المدى بنمط Python（دون تضمين فهرس النهاية）\n• خطوة المدى\n\nأمثلة（بفرض إدخال 16 عنصرًا، الفهارس 0-15）：\n• 0        → الإخراج [0]\n• -1       → الإخراج [15]\n• 0,1,13   → الإخراج [0,1,13]\n• 0:5,13   → الإخراج [0,1,2,3,4,13]\n• 0:-1     → الإخراج [0,1,2,...,14]\n• 0:5:-1   → الإخراج [4,3,2,1,0]\n• 0:5:2    → الإخراج [0,2,4]\n• ::-1     → الإخراج [15,14,...,0]"
+    },
+    "VHS_GetMaskCount": {
+        "title": "عدد الأقنعة",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "outputs": {
+            "count": "عدّ"
+        },
+        "description": "يعيد عدد الأقنعة في الإدخال كعدد صحيح \n\n"
+    },
+    "VHS_DuplicateMasks": {
+        "title": "نسخ القناع",
+        "inputs": {
+            "mask": "قناع"
+        },
+        "widgets": {
+            "multiply_by": "معامل"
+        },
+        "outputs": {
+            "MASK": "قناع",
+            "count": "عدّ"
+        },
+        "description": "إلحاق نسخة من قناع بنفسه لتكراره \n\n"
+    },
+    "VHS_VAEEncodeBatched": {
+        "title": "ترميز VAE (دفعة)",
+        "inputs": {
+            "pixels": "صورة",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "per_batch": "لكل دفعة"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "ترميز الصور إلى فضاء كامن بحجم معالجة مُعيَّن يدويًا. \n\n"
+    },
+    "VHS_VAEDecodeBatched": {
+        "title": "فكّ ترميز VAE (دفعة)",
+        "inputs": {
+            "samples": "أخذ العينات",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "per_batch": "لكل دفعة"
+        },
+        "outputs": {
+            "IMAGE": "صورة"
+        },
+        "description": "فك ترميز الفضاء الكامن إلى صور بحجم معالجة مُعيَّن يدويًا \n\n"
+    },
+    "VHS_VideoCombine": {
+        "title": "دمج في فيديو",
+        "inputs": {
+            "images": "صورة",
+            "audio": "صوت",
+            "batch_manager": "إدارة الدفعة",
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "frame_rate": "معدل الإطارات",
+            "loop_count": "عدد مرات الدوران",
+            "filename_prefix": "بادئة اسم الملف",
+            "format": "صيغة",
+            "pix_fmt": "صيغة البكسل",
+            "pingpong": "دورة Ping-Pong (ذهاب وعودة)",
+            "save_image": "حفظ الصورة",
+            "Sync playback": "تشغيل متزامن",
+            "save_metadata": "حفظ البيانات الوصفية",
+            "save metadata": "حفظ البيانات الوصفية",
+            "audio_file": "ملف صوتي",
+            "trim_to_audio": "تقليم الصوت",
+            "lossless": "بلا فقدان",
+            "input_color_depth": "عمق لون الإدخال",
+            "dither": "الرفرفة (Dither)",
+            "level": "المستوى",
+            "coder": "مبرمج",
+            "context": "السياق",
+            "gop_size": "حجم GOP",
+            "slices": "شريحة",
+            "slicecrc": "مجموع الشريحة التواصلي",
+            "bitrate": "معدّل البت",
+            "megabit": "مغابت",
+            "profile": "الملف الشخصي",
+            "save_output": "الحفظ في مجلد الإخراج"
+        },
+        "outputs": {
+            "Filenames": "اسم الملف"
+        },
+        "description": "تجميع تتابع الصور في فيديو \n\n"
+    },
+    "VHS_LoadVideo": {
+        "title": "تحميل فيديو",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "video": "فيديو",
+            "force_rate": "فرض معدّل الإطارات",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "frame_load_cap": "حدّ قراءة عدد الإطارات",
+            "skip_first_frames": "تخطّي أول X إطار",
+            "select_every_nth": "الفاصل",
+            "format": "صيغة",
+            "choose video to upload": "اختيار فيديو للرفع"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "frame_count": "إحصاء الإطارات",
+            "audio": "صوت",
+            "video_info": "معلومات الفيديو"
+        },
+        "description": "تحميل فيديو من مجلد الإدخال \n\n"
+    },
+    "VHS_LoadVideoPath": {
+        "title": "تحميل فيديو (مسار)",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "video": "فيديو",
+            "force_rate": "فرض معدّل الإطارات",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "frame_load_cap": "حدّ قراءة عدد الإطارات",
+            "skip_first_frames": "تخطّي أول X إطار",
+            "format": "صيغة",
+            "select_every_nth": "الفاصل"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "frame_count": "إحصاء الإطارات",
+            "audio": "صوت",
+            "video_info": "معلومات الفيديو"
+        },
+        "description": "تحميل فيديو من أي مسار \n\n"
+    },
+    "VHS_LoadVideoFFmpeg": {
+        "title": "تحميل فيديو FFmpeg (رفع)🎥🅥🅗🅢",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "video": "فيديو",
+            "force_rate": "فرض معدّل الإطارات",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "frame_load_cap": "حدّ قراءة عدد الإطارات",
+            "start_time": "وقت البداية",
+            "format": "صيغة",
+            "choose video to upload": "اختيار فيديو للرفع"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "mask": "قناع",
+            "audio": "صوت",
+            "video_info": "معلومات الفيديو"
+        },
+        "description": "باستخدام ffmpeg بدل opencv \n تحميل فيديو من مجلد الإدخال \n"
+    },
+    "VHS_LoadVideoFFmpegPath": {
+        "title": "تحميل فيديو FFmpeg (مسار)🎥🅥🅗🅢",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "video": "فيديو",
+            "force_rate": "فرض معدّل الإطارات",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "frame_load_cap": "حدّ قراءة عدد الإطارات",
+            "start_time": "وقت البداية",
+            "format": "صيغة"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "mask": "قناع",
+            "audio": "صوت",
+            "video_info": "معلومات الفيديو"
+        },
+        "description": "استخدام ffmpeg بدلًا من opencv \n لتحميل فيديو من أي مسار \n"
+    },
+    "VHS_LoadImagePath": {
+        "title": "تحميل صورة (مسار)🎥🅥🅗🅢",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "image": "صورة",
+            "directory": "مسار",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "frame_load_cap": "حدّ قراءة عدد الإطارات",
+            "choose folder to upload": "اختيار مجلد للرفع"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "mask": "قناع"
+        },
+        "description": "تحميل صورة واحدة من مسار محدّد مسبقًا \n\n"
+    },
+    "VHS_LoadImages": {
+        "title": "تحميل صورة",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "directory": "مسار",
+            "choose folder to upload": "اختيار مجلد للرفع",
+            "image_load_cap": "الحدّ الأقصى لقراءة الصور",
+            "skip_first_images": "تخطّي أول X",
+            "select_every_nth": "الفاصل"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "MASK": "قناع",
+            "frame_count": "عدد الإطارات"
+        },
+        "description": "تحميل سلسلة صور من دليل فرعي في مجلد الإدخال \n\n"
+    },
+    "VHS_LoadImagesPath": {
+        "title": "تحميل الصور（مسار）",
+        "inputs": {
+            "meta_batch": "إدارة الدفعة"
+        },
+        "widgets": {
+            "image": "صورة",
+            "directory": "مسار",
+            "image_load_cap": "الحدّ الأقصى لقراءة الصور",
+            "skip_first_images": "تخطّي أول X",
+            "select_every_nth": "الفاصل",
+            "choose folder to upload": "اختيار مجلد للرفع"
+        },
+        "outputs": {
+            "IMAGE": "صورة",
+            "MASK": "قناع",
+            "frame_count": "عدد الإطارات"
+        },
+        "description": "تحميل سلسلة صور من أي مسار \n\n"
+    },
+    "VHS_LoadAudioUpload": {
+        "title": "تحميل الصوت",
+        "widgets": {
+            "audio": "صوت",
+            "start_time": "وقت البداية",
+            "duration": "المدة",
+            "choose audio to upload": "اختيار صوت للرفع",
+            "seek_secods": "ثوانٍ البداية"
+        },
+        "outputs": {
+            "duration": "المدة",
+            "audio": "صوت"
+        },
+        "description": "تحميل ملف صوتي من دليل الإدخال \n\n"
+    },
+    "VHS_LoadAudio": {
+        "title": "تحميل الصوت（مسار）",
+        "widgets": {
+            "audio_file": "ملف صوتي",
+            "duration": "المدة",
+            "start_time": "وقت البداية",
+            "seek_seconds": "ثوانٍ البداية"
+        },
+        "outputs": {
+            "duration": "المدة",
+            "audio": "صوت"
+        },
+        "description": "تحميل ملف صوتي من أي مسار \n\n"
+    },
+    "VHS_AudioToVHSAudio": {
+        "title": "تحويل الصوت إلى صوت VHS",
+        "inputs": {
+            "audio": "صوت"
+        },
+        "outputs": {
+            "vhs_audio": "صوت VHS"
+        },
+        "description": "دوال مساعدة للتوافق مع العقد الخارجية \n\n"
+    },
+    "VHS_VHSAudioToAudio": {
+        "title": "تحويل صوت VHS إلى صوت",
+        "inputs": {
+            "vhs_audio": "صوت VHS"
+        },
+        "outputs": {
+            "audio": "صوت"
+        },
+        "description": "دوال مساعدة للتوافق مع العقد الخارجية \n\n"
+    },
+    "VHS_PruneOutputs": {
+        "title": "ضبط المخرجات",
+        "inputs": {
+            "filenames": "اسم الملف"
+        },
+        "widgets": {
+            "options": "الخيار"
+        },
+        "description": "حذف تلقائي للمخرجات غير المطلوبة من عقدة تجميع الفيديو \n\n"
+    },
+    "VHS_BatchManager": {
+        "title": "إدارة الدفعة",
+        "widgets": {
+            "frames_per_batch": "عدد الإطارات لكل دفعة"
+        },
+        "outputs": {
+            "VHS_BatchManager": "إدارة الدفعة",
+            "meta_batch": "إدارة الدفعة"
+        },
+        "description": "تقسيم عمل معالجة الفيديوهات الطويلة جدًا إلى عدة مجموعات دفعات فرعية أصغر \n\n"
+    },
+    "VHS_VideoInfo": {
+        "title": "معلومات الفيديو",
+        "inputs": {
+            "video_info": "معلومات الفيديو"
+        },
+        "outputs": {
+            "source_fps🟨": "FPS أولي🟨",
+            "source_frame_count🟨": "عدد الإطارات الابتداي🟨",
+            "source_duration🟨": "المدة الأولية🟨",
+            "source_width🟨": "العرض الأولي🟨",
+            "source_height🟨": "الارتفاع الأولي🟨",
+            "loaded_fps🟦": "FPS المحدّد🟦",
+            "loaded_frame_count🟦": "عدد الإطارات المحدّد🟦",
+            "loaded_duration🟦": "المدة المحدّدة🟦",
+            "loaded_width🟦": "العرض المحدّد🟦",
+            "loaded_height🟦": "الارتفاع المحدّد🟦"
+        },
+        "description": "تقسيم معلومات الفيديو إلى مخرجات متعددة \n\n"
+    },
+    "VHS_VideoInfoSource": {
+        "title": "معلومات الفيديو (الأولية)",
+        "inputs": {
+            "video_info": "معلومات الفيديو"
+        },
+        "outputs": {
+            "fps🟨": "FPS🟨",
+            "frame_count🟨": "عدد الإطارات🟨",
+            "duration🟨": "المدة🟨",
+            "width🟨": "العرض🟨",
+            "height🟨": "الارتفاع🟨"
+        },
+        "description": "تقسيم معلومات الفيديو إلى مخرجات متعدّدة تصف الملف نفسه \n دون النظر إلى خيارات التحميل\n"
+    },
+    "VHS_VideoInfoLoaded": {
+        "title": "معلومات الفيديو (المحدّدة)",
+        "inputs": {
+            "video_info": "معلومات الفيديو"
+        },
+        "outputs": {
+            "fps🟦": "FPS🟦",
+            "frame_count🟦": "عدد الإطارات🟦",
+            "duration🟦": "المدة🟦",
+            "width🟦": "العرض🟦",
+            "height🟦": "الارتفاع🟦"
+        },
+        "description": "بعد مراعاة خيارات التحميل \n تقسيم معلومات الفيديو إلى مخرجات متعددة تصف الملف نفسه \n"
+    },
+    "VHS_SelectFilename": {
+        "title": "اختيار اسم الملف",
+        "inputs": {
+            "filenames": "اسم الملف"
+        },
+        "widgets": {
+            "index": "فهرس"
+        },
+        "outputs": {
+            "Filename": "اسم الملف"
+        },
+        "description": "اختيار اسم ملف من أسماء ملفات VHS لمخرج الفيديو \n وتجميعه وإرجاعه كنص \n"
+    },
+    "VHS_SelectLatest": {
+        "title": "اختيار أحدث نسخة 🎥🅥🅗🅢",
+        "inputs": {
+            "filenames": "اسم الملف"
+        },
+        "widgets": {
+            "filename_prefix": "بادئة اسم الملف",
+            "filename_postfix": "لاحقة اسم الملف"
+        },
+        "outputs": {
+            "Filename": "اسم الملف"
+        },
+        "description": " Select Latest 🎥🅥🅗🅢\n\n"
+    },
+    "VHS_Unbatch": {
+        "title": "تفكيك الدفعة",
+        "inputs": {
+            "batched": "دفعة"
+        },
+        "outputs": {
+            "unbatched": "تفكيك الدفعة"
+        },
+        "description": "إلغاء تجميع قائمة العناصر إلى عنصر واحد مُوصَل \n\n"
+    }
+}

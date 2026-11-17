@@ -1,0 +1,2075 @@
+{
+    "Trellis2LoadModel": {
+        "title": "Загрузчик моделей Trellis2",
+        "widgets": {
+            "modelname": "Название модели",
+            "backend": "Бэкенд вычислений",
+            "device": "Устройство выполнения",
+            "low_vram": "Режим низкой видеопамяти",
+            "keep_models_loaded": "Держать модели в памяти",
+            "conv_backend": "Бэкенд свёрточных вычислений",
+            "sparse_backend": "Бэкенд разреженных вычислений",
+            "use_reconviagen": "Включить генератор ReconViagen"
+        },
+        "outputs": {
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelGenerator": {
+        "title": "Генератор воксельных сеток Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "pipeline_type": "Тип конвейера",
+            "sparse_structure_steps": "Число шагов генерации разреженной структуры",
+            "shape_steps": "Число шагов генерации формы",
+            "texture_steps": "Число шагов генерации текстур",
+            "max_num_tokens": "Максимальное число токенов",
+            "max_views": "Максимальное число ракурсов",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "generate_texture_slat": "Формировать тайлы текстур",
+            "use_tiled_decoder": "Использовать тайловый декодер",
+            "sampler": "Сэмплер",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "keep_only_shell": "Сохранить только оболочку сетки"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "BVH-структура охватывающего бокса"
+        },
+        "description": ""
+    },
+    "Trellis2LoadImageWithTransparency": {
+        "title": "Загрузчик изображений с прозрачностью Trellis2",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска",
+            "image_with_alpha": "Изображение с прозрачностью"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMesh": {
+        "title": "Инструмент упрощения сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "method": "Алгоритм упрощения"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimesh": {
+        "title": "Инструмент упрощения триангулированной сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "method": "Алгоритм упрощения"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2ProgressiveSimplify": {
+        "title": "Инструмент постепенного упрощения сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка",
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "max_edge_length": "Порог максимальной длины ребра",
+            "max_triangle_aspect_ratio": "Порог максимального соотношения сторон треугольника",
+            "strategy": "Стратегия упрощения",
+            "stabilizer": "Параметры стабилизатора",
+            "touch_near_boundary_edges": "Обрабатывать рёбра у границы",
+            "optimize_vertex_positions": "Оптимизировать положения вершин",
+            "angle_based_weights": "Использовать веса на основе угла"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToTrimesh": {
+        "title": "Инструмент преобразования сетки с вокселями в триангулированную сетку Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "reorient_vertices": "Переориентировать направления вершин"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2ExportMesh": {
+        "title": "Инструмент экспорта сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "file_format": "Формат экспортируемого файла"
+        },
+        "outputs": {
+            "glb_path": "Путь к файлу GLB",
+            "relative_path": "Относительный путь"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessMesh": {
+        "title": "Инструмент постобработки сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "remove_duplicate_faces": "Удалить повторяющиеся грани",
+            "repair_non_manifold_edges": "Исправить non-manifold рёбра",
+            "remove_non_manifold_faces": "Удалить non-manifold грани",
+            "remove_small_connected_components": "Удалить мелкие связные компоненты",
+            "remove_small_connected_components_size": "Порог размера мелких связных компонентов",
+            "unify_faces_orientation": "Унифицировать ориентацию граней",
+            "remove_floaters": "Удалить парящие фрагменты граней",
+            "remove_infinite_vertices": "Удалить вершины с бесконечными координатами",
+            "merge_vertices": "Объединение вершин",
+            "merge_distance": "Порог расстояния слияния вершин",
+            "remove_nan_vertices": "Удалить вершины с недопустимыми значениями"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapAndRasterizer": {
+        "title": "Инструмент UV-развёртки и растеризации сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "BVH-структура охватывающего бокса"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Порог полуугла конуса кластеризации сетки (в радианах)",
+            "mesh_cluster_refine_iterations": "Число итераций уточнения кластеризации сетки",
+            "mesh_cluster_global_iterations": "Число глобальных итераций кластеризации сетки",
+            "mesh_cluster_smooth_strength": "Интенсивность сглаживания кластеризации сетки",
+            "texture_size": "Размер текстуры",
+            "texture_alpha_mode": "Режим канала прозрачности текстур",
+            "double_side_material": "Включить двусторонний материал",
+            "bake_on_vertices": "Запекать в цвет вершин",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "inpainting": "Включить инпейнтинг",
+            "reorient_vertices": "Переориентировать направления вершин"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Текстура основного цвета",
+            "metallic_roughness_texture": "Текстура металличности-шероховатости"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelAdvancedGenerator": {
+        "title": "Расширенный генератор воксельных сеток Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "pipeline_type": "Тип конвейера",
+            "sparse_structure_steps": "Число шагов генерации разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Перемасштабирование направления разреженной структуры",
+            "sparse_structure_rescale_t": "Значение T перемасштабирования разреженной структуры",
+            "shape_steps": "Число шагов генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Перемасштабирование направления формы",
+            "shape_rescale_t": "Значение T перемасштабирования формы",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Значение T перемасштабирования текстур",
+            "max_num_tokens": "Максимальное число токенов",
+            "max_views": "Максимальное число ракурсов",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "generate_texture_slat": "Формировать тайлы текстур",
+            "sparse_structure_guidance_interval_start": "Начальное значение интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечное значение интервала направления разреженной структуры",
+            "shape_guidance_interval_start": "Начальное значение интервала направления формы",
+            "shape_guidance_interval_end": "Конечное значение интервала направления формы",
+            "texture_guidance_interval_start": "Начальное значение интервала направления текстур",
+            "texture_guidance_interval_end": "Конечное значение интервала направления текстур",
+            "use_tiled_decoder": "Использовать тайловый декодер",
+            "sampler": "Сэмплер",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "dino_foundation_cap": "Лимит базы DINO",
+            "keep_only_shell": "Сохранить только оболочку сетки"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "BVH-структура охватывающего бокса"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelMultiViewGenerator": {
+        "title": "Многовидовой генератор сетки с вокселями Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "front_image": "Позитивное изображение",
+            "back_image": "Изображение задней стороны",
+            "left_image": "Левое изображение",
+            "right_image": "Правое изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "pipeline_type": "Тип конвейера",
+            "sparse_structure_steps": "Число шагов генерации разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Перемасштабирование направления разреженной структуры",
+            "sparse_structure_rescale_t": "Значение T перемасштабирования разреженной структуры",
+            "shape_steps": "Число шагов генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Перемасштабирование направления формы",
+            "shape_rescale_t": "Значение T перемасштабирования формы",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Значение T перемасштабирования текстур",
+            "max_num_tokens": "Максимальное число токенов",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "generate_texture_slat": "Формировать slat текстур",
+            "sparse_structure_guidance_interval_start": "Начальная точка интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечная точка интервала направления разреженной структуры",
+            "shape_guidance_interval_start": "Начальная точка интервала направления формы",
+            "shape_guidance_interval_end": "Конечная точка интервала направления формы",
+            "texture_guidance_interval_start": "Начальная точка интервала направления текстур",
+            "texture_guidance_interval_end": "Конечная точка интервала направления текстур",
+            "use_tiled_decoder": "Включить тайловый декодер",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Значение температуры смешивания",
+            "sampler": "Сэмплер",
+            "fill_holes": "Заполнять отверстия",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка модели DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "dino_foundation_cap": "Максимум базы DINO",
+            "keep_only_shell": "Сохранять только внешнюю оболочку сетки"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "Иерархия охватывающих боксов BVH"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessAndUnWrapAndRasterizer": {
+        "title": "Постобработка, UV-развёртка и растеризатор Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "Иерархия охватывающих боксов BVH"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Порог конуса, полууго кластеров сетки (в радианах)",
+            "mesh_cluster_refine_iterations": "Число итераций оптимизации кластеризации сетки",
+            "mesh_cluster_global_iterations": "Число глобальных итераций кластеризации сетки",
+            "mesh_cluster_smooth_strength": "Интенсивность сглаживания кластеризации сетки",
+            "texture_size": "Размер текстуры",
+            "remesh": "Пересетка",
+            "remesh_band": "Полоса ремешинга",
+            "remesh_project": "Проекция пересетки",
+            "target_face_num": "Целевое число граней",
+            "simplify_method": "Метод упрощения",
+            "fill_holes": "Заполнять отверстия",
+            "texture_alpha_mode": "Режим альфа-канала текстуры",
+            "dual_contouring_resolution": "Разрешение алгоритма двойного контурирования",
+            "double_side_material": "Двусторонний материал",
+            "remove_floaters": "Удалить парящие грани",
+            "bake_on_vertices": "Запекать на вершинах",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "remove_inner_faces": "Удалить внутренние грани",
+            "inpainting": "Восстановление изображения",
+            "reorient_vertices": "Переориентация вершин"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Текстура основного цвета",
+            "metallic_roughness_texture": "Текстура металличности-шероховатости"
+        },
+        "description": ""
+    },
+    "Trellis2Remesh": {
+        "title": "Ремешинг Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "remesh_band": "Полоса ремешинга",
+            "remesh_project": "Проекция пересетки",
+            "dual_contouring_resolution": "Разрешение алгоритма двойного контурирования",
+            "remove_floaters": "Удалить парящие грани",
+            "remove_inner_faces": "Удалить внутренние грани"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMesh": {
+        "title": "Реконструкция сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "remesh_band": "Полоса ремешинга",
+            "resolution": "Разрешение"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMeshWithQuad": {
+        "title": "Восстановление четырёхугольной сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "remesh_band": "Полоса ремешинга",
+            "resolution": "Разрешение",
+            "remove_floaters": "Удалить парящие грани",
+            "remove_inner_faces": "Удалить внутренние грани"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturing": {
+        "title": "Генерация текстур сетки Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image": "Изображение",
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Значение T перемасштабирования текстур",
+            "resolution": "Разрешение",
+            "texture_size": "Размер текстуры",
+            "texture_alpha_mode": "Режим альфа-канала текстуры",
+            "double_side_material": "Двусторонний материал",
+            "texture_guidance_interval_start": "Начальная точка интервала направления текстур",
+            "texture_guidance_interval_end": "Конечная точка интервала направления текстур",
+            "max_views": "Максимальное число видов",
+            "bake_on_vertices": "Запекать на вершинах",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Порог конуса, полууго кластеров сетки (в радианах)",
+            "sampler": "Сэмплер",
+            "inpainting": "Восстановление изображения",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка модели DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "dino_foundation_cap": "Максимум базы DINO"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Текстура основного цвета",
+            "metallic_roughness_texture": "Текстура металличности-шероховатости"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturingMultiView": {
+        "title": "Многовидовое наложение текстур на сетку Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер обработки",
+            "front_image": "Позитивное изображение",
+            "trimesh": "Треугольная сетка",
+            "back_image": "Изображение задней стороны",
+            "left_image": "Левое изображение",
+            "right_image": "Правое изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Порог T перемасштабирования текстур",
+            "resolution": "Разрешение",
+            "texture_size": "Размер текстуры",
+            "texture_alpha_mode": "Режим альфа-канала текстуры",
+            "double_side_material": "Двусторонний материал",
+            "texture_guidance_interval_start": "Начальное значение интервала направления текстур",
+            "texture_guidance_interval_end": "Конечное значение интервала направления текстур",
+            "bake_on_vertices": "Запекать на вершинах",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Пороговый полууго конуса кластеров (в радианах)",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Температура смешивания",
+            "sampler": "Сэмплер",
+            "inpainting": "Восстановление изображения",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка модели DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "dino_foundation_cap": "Максимум базовой модели DINO"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Текстура основного цвета",
+            "metallic_roughness_texture": "Текстура металличности-шероховатости"
+        },
+        "description": ""
+    },
+    "Trellis2LoadMesh": {
+        "title": "Загрузка модели сетки Trellis2",
+        "widgets": {
+            "glb_path": "Путь к файлу GLB"
+        },
+        "outputs": {
+            "trimesh": "Модель сетки GLB, ожидающая генерации текстур"
+        },
+        "description": "Загружает модель в формате GLB по указанному пути."
+    },
+    "Trellis2PreProcessImage": {
+        "title": "Предобработка изображения Trellis2",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "padding": "Внутренний отступ",
+            "remove_background": "Удаление фона",
+            "max_size": "Максимальный размер"
+        },
+        "outputs": {
+            "image": "Изображение"
+        },
+        "description": ""
+    },
+    "Trellis2MeshRefiner": {
+        "title": "Оптимизатор сетки Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер обработки",
+            "trimesh": "Треугольная сетка",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "resolution": "Разрешение",
+            "shape_steps": "Количество шагов оптимизации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Перемасштабирование направления формы",
+            "shape_rescale_t": "Порог T перемасштабирования формы",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Порог T перемасштабирования текстур",
+            "max_num_tokens": "Максимальное число токенов",
+            "generate_texture_slat": "Создавать атлас текстур",
+            "downsampling": "Коэффициент даунсемплинга",
+            "shape_guidance_interval_start": "Начальное значение интервала направления формы",
+            "shape_guidance_interval_end": "Конечное значение интервала направления формы",
+            "texture_guidance_interval_start": "Начальное значение интервала направления текстур",
+            "texture_guidance_interval_end": "Конечное значение интервала направления текстур",
+            "use_tiled_decoder": "Использовать декодер по частям",
+            "max_views": "Максимальное число видов",
+            "sampler": "Сэмплер",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка модели DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "dino_foundation_cap": "Максимум базовой модели DINO"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "Иерархия ограничивающих объёмов (BVH)"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess2": {
+        "title": "Постобработка сетки V2 Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "fill_holes": "Заполнять отверстия",
+            "fix_normals": "Исправить нормали",
+            "fix_face_orientation": "Поправить ориентацию граней",
+            "remove_duplicate_faces": "Удалить повторяющиеся грани",
+            "weld_vertices": "Сварить вершины",
+            "weld_vertices_digits": "Число разрядов точности сварки вершин",
+            "smooth": "Сглаживание",
+            "smooth_iterations": "Число итераций сглаживания",
+            "subdivide": "Детализация сетки",
+            "subdivide_iterations": "Число итераций подразбиения"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2OvoxelExportToGLB": {
+        "title": "Экспорт воксельной сетки в GLB Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "texture_size": "Размер текстуры",
+            "target_face_num": "Целевое число граней"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2TrimeshToMeshWithVoxel": {
+        "title": "Преобразование триангулированной сетки в сетку с вокселями Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "resolution": "Разрешение"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2Continue": {
+        "title": "Двухканальный узел-ретранслятор Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1",
+            "input_2": "Ввод 2"
+        },
+        "outputs": {
+            "output_1": "Выход 1",
+            "output_2": "Выход 2"
+        },
+        "description": ""
+    },
+    "Trellis2Continue3": {
+        "title": "Трёхканальный узел-ретранслятор Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1",
+            "input_2": "Ввод 2",
+            "input_3": "Ввод 3"
+        },
+        "outputs": {
+            "output_1": "Выход 1",
+            "output_2": "Выход 2",
+            "output_3": "Выход 3"
+        },
+        "description": ""
+    },
+    "Trellis2Continue4": {
+        "title": "Четырёхканальный узел-ретранслятор Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1",
+            "input_2": "Ввод 2",
+            "input_3": "Ввод 3",
+            "input_4": "Ввод 4"
+        },
+        "outputs": {
+            "output_1": "Выход 1",
+            "output_2": "Выход 2",
+            "output_3": "Выход 3",
+            "output_4": "Выход 4"
+        },
+        "description": ""
+    },
+    "Trellis2Continue5": {
+        "title": "Пятиканальный узел-ретранслятор Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1",
+            "input_2": "Ввод 2",
+            "input_3": "Ввод 3",
+            "input_4": "Ввод 4",
+            "input_5": "Ввод 5"
+        },
+        "outputs": {
+            "output_1": "Выход 1",
+            "output_2": "Выход 2",
+            "output_3": "Выход 3",
+            "output_4": "Выход 4",
+            "output_5": "Выход 5"
+        },
+        "description": ""
+    },
+    "Trellis2Continue6": {
+        "title": "Шестиканальный узел-ретранслятор Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1",
+            "input_2": "Ввод 2",
+            "input_3": "Ввод 3",
+            "input_4": "Ввод 4",
+            "input_5": "Ввод 5",
+            "input_6": "Ввод 6"
+        },
+        "outputs": {
+            "output_1": "Выход 1",
+            "output_2": "Выход 2",
+            "output_3": "Выход 3",
+            "output_4": "Выход 4",
+            "output_5": "Выход 5",
+            "output_6": "Выход 6"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToMeshlibMesh": {
+        "title": "Преобразование сетки с вокселями в сетку Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "outputs": {
+            "meshlib_mesh": "Сетка в формате Meshlib"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithMeshlib": {
+        "title": "Заполнение отверстий сетки Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "holes_filled": "Заполнено отверстий"
+        },
+        "description": "Заполняет все отверстия в сетке оптимальным алгоритмом триангуляции."
+    },
+    "Trellis2FillHolesNicelyWithMeshlib": {
+        "title": "Качественное заполнение отверстий сетки Meshlib Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "holes_filled": "Заполнено отверстий"
+        },
+        "description": "Качественно заполняет все отверстия в сетке оптимальным алгоритмом триангуляции."
+    },
+    "Trellis2SmoothNormals": {
+        "title": "Сглаживание нормалей Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2RemeshWithQuad": {
+        "title": "Ремешинг квадами Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "remesh_band": "Ширина полосы ремешинга",
+            "remesh_project": "Выравнивание проекции при ремеше",
+            "dual_contouring_resolution": "Разрешение извлечения двойных контуров",
+            "remove_floaters": "Удалить несвязные грани",
+            "remove_inner_faces": "Удалить внутренние грани"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2BatchSimplifyMeshAndExport": {
+        "title": "Пакетное упрощение и экспорт сетки Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "method": "Метод упрощения",
+            "fill_holes": "Заполнение пустот",
+            "reorient_vertices": "Переориентация вершин",
+            "filename_prefix": "Префикс имени файла",
+            "file_format": "Формат файла",
+            "weld_vertices": "Сварка совпадающих вершин",
+            "weld_vertices_digits": "Число разрядов точности сварки вершин"
+        },
+        "outputs": {
+            "lst_glb_path": "Список путей к файлам GLB"
+        },
+        "description": ""
+    },
+    "Trellis2WeldVertices": {
+        "title": "Сварка вершин Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "merge_texture": "Объединять текстуры",
+            "merge_normals": "Объединять нормали",
+            "digits": "Число знаков точности"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2StringSelector": {
+        "title": "Выбор строки Trellis2",
+        "widgets": {
+            "strings": "Список строк",
+            "index": "Выбранные индексы"
+        },
+        "outputs": {
+            "string": "Выбранная строка"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithCuMesh": {
+        "title": "Заполнение отверстий CuMesh Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "max_permieters": "Порог максимального периметра отверстия"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": "Заполнить все отверстия в сетке"
+    },
+    "Trellis2LaplacianSmoothingWithOpen3d": {
+        "title": "Сглаживание Лапласа Open3D Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "iterations": "Количество итераций",
+            "method": "Метод сглаживания"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimesh": {
+        "title": "UV-развёртка триангулированной сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Порог полуугла конуса кластеризации сетки (в радианах)",
+            "mesh_cluster_refine_iterations": "Число итераций оптимизации кластеризации сетки",
+            "mesh_cluster_global_iterations": "Число глобальных итераций кластеризации сетки",
+            "mesh_cluster_smooth_strength": "Интенсивность сглаживания кластеризации сетки"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelCascadeGenerator": {
+        "title": "Каскадный генератор сетки с вокселями Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "pipeline_type": "Тип конвейера",
+            "sparse_structure_steps": "Число шагов сэмплирования разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Перемасштабирование направления разреженной структуры",
+            "sparse_structure_rescale_t": "Временной шаг перемасштабирования разреженной структуры",
+            "sparse_structure_sampler": "Сэмплер разреженной структуры",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "sparse_structure_guidance_interval_start": "Начальный шаг интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечный шаг интервала направления разреженной структуры",
+            "low_res_shape_steps": "Число шагов сэмплирования формы низкого разрешения",
+            "low_res_shape_guidance_strength": "Интенсивность направления формы низкого разрешения",
+            "low_res_shape_guidance_rescale": "Перемасштабирование направления формы низкого разрешения",
+            "low_res_shape_rescale_t": "Временной шаг перемасштабирования формы низкого разрешения",
+            "low_res_shape_sampler": "Сэмплер формы низкого разрешения",
+            "low_res_shape_guidance_interval_start": "Начальный шаг интервала направления формы низкого разрешения",
+            "low_res_shape_guidance_interval_end": "Конечный шаг интервала направления формы низкого разрешения",
+            "high_res_shape_steps": "Число шагов сэмплирования формы высокого разрешения",
+            "high_res_shape_guidance_strength": "Интенсивность направления формы высокого разрешения",
+            "high_res_shape_guidance_rescale": "Перемасштабирование направления формы высокого разрешения",
+            "high_res_shape_rescale_t": "Временной шаг перемасштабирования формы высокого разрешения",
+            "high_res_shape_sampler": "Сэмплер формы высокого разрешения",
+            "high_res_shape_guidance_interval_start": "Начальный шаг интервала направления формы высокого разрешения",
+            "high_res_shape_guidance_interval_end": "Конечный шаг интервала направления формы высокого разрешения",
+            "generate_texture_slat": "Создавать атлас текстур",
+            "texture_steps": "Число шагов сэмплирования текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Перемасштабирование направления текстур",
+            "texture_rescale_t": "Временной шаг перемасштабирования текстур",
+            "texture_sampler": "Сэмплер текстур",
+            "texture_guidance_interval_start": "Начальный шаг интервала направления текстур",
+            "texture_guidance_interval_end": "Конечный шаг интервала направления текстур",
+            "max_num_tokens": "Макс. число токенов",
+            "use_tiled_decoder": "Использовать тайловый декодер",
+            "max_views": "Максимальное число ракурсов",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка Dino",
+            "dino_substeps": "Размер подшага Dino",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "dino_foundation_cap": "Максимум базы Dino",
+            "keep_only_shell": "Сохранить только оболочку"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "Ускоряющая структура BVH"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondGenerator": {
+        "title": "Генератор условия по изображению Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image": "Изображение"
+        },
+        "widgets": {
+            "max_views": "Максимальное число ракурсов"
+        },
+        "outputs": {
+            "cond_512": "Условие при разрешении 512",
+            "cond_1024": "Условие при разрешении 1024",
+            "pipeline": "Конвейер",
+            "moge_camera_config": "Конфигурация камеры Moge"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGenerator": {
+        "title": "Генератор разреженной структуры Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_cond": "Условие по изображению",
+            "image": "Изображение",
+            "moge_camera_config": "Конфигурация камеры Moge"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "sparse_structure_steps": "Число шагов сэмплирования разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Перемасштабирование направления разреженной структуры",
+            "sparse_structure_rescale_t": "Временной шаг перемасштабирования разреженной структуры",
+            "sparse_structure_sampler": "Сэмплер разреженной структуры",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "sparse_structure_guidance_interval_start": "Начальный шаг интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечный шаг интервала направления разреженной структуры",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Блокировка Dino",
+            "dino_substeps": "Размер подшага Dino",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "dino_foundation_cap": "Максимум базы Dino",
+            "keep_only_shell": "Сохранить только оболочку"
+        },
+        "outputs": {
+            "coords": "Набор координат",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeGenerator": {
+        "title": "Генератор формы Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_cond": "Условное изображение",
+            "coords": "Координаты",
+            "image": "Изображение",
+            "moge_camera_config": "Конфигурация камеры Moge"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "shape_steps": "Число шагов генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Коэффициент перемасштабирования направления формы",
+            "shape_rescale_t": "Порог T перемасштабирования формы",
+            "shape_sampler": "Сэмплер формы",
+            "shape_guidance_interval_start": "Начальный шаг интервала направления формы",
+            "shape_guidance_interval_end": "Конечный шаг интервала направления формы",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков Dino",
+            "dino_substeps": "Число подшагов Dino",
+            "dino_foundation_cap": "Максимум базовых признаков Dino"
+        },
+        "outputs": {
+            "shape_slat": "Признаки сетки формы",
+            "resolution": "Разрешение",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeGenerator": {
+        "title": "Каскадный генератор формы Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_cond": "Условное изображение",
+            "shape_slat": "Признаки сетки формы",
+            "image": "Изображение",
+            "moge_camera_config": "Конфигурация камеры Moge"
+        },
+        "widgets": {
+            "from_resolution": "Исходное разрешение",
+            "to_resolution": "Целевое разрешение",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "max_num_tokens": "Максимальное число токенов",
+            "shape_steps": "Число шагов генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Коэффициент перемасштабирования направления формы",
+            "shape_rescale_t": "Порог T перемасштабирования формы",
+            "shape_sampler": "Сэмплер формы",
+            "shape_guidance_interval_start": "Начальный шаг интервала направления формы",
+            "shape_guidance_interval_end": "Конечный шаг интервала направления формы",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков Dino",
+            "dino_substeps": "Число подшагов Dino",
+            "dino_foundation_cap": "Максимум базовых признаков Dino"
+        },
+        "outputs": {
+            "shape_slat": "Признаки сетки формы",
+            "resolution": "Разрешение",
+            "pipeline": "Конвейер",
+            "num_tokens": "Количество токенов"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatGenerator": {
+        "title": "Генератор признаков сетки текстур Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_cond": "Условное изображение",
+            "shape_slat": "Признаки сетки формы",
+            "image": "Изображение",
+            "moge_camera_config": "Конфигурация камеры Moge"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "texture_steps": "Число шагов генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Коэффициент перемасштабирования направления текстур",
+            "texture_rescale_t": "Порог T перемасштабирования текстур",
+            "texture_sampler": "Сэмплер текстур",
+            "texture_guidance_interval_start": "Начальный шаг интервала направления текстур",
+            "texture_guidance_interval_end": "Конечный шаг интервала направления текстур",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков Dino",
+            "dino_substeps": "Число подшагов Dino",
+            "dino_foundation_cap": "Максимум базовых признаков Dino",
+            "from_resolution": "Исходное разрешение"
+        },
+        "outputs": {
+            "texture_slat": "Признаки сетки текстур",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatents": {
+        "title": "Декодирование Latent Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "shape_slat": "Признаки сетки формы",
+            "texture_slat": "Признаки сетки текстур"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "use_tiled_decoder": "Использовать декодер по частям"
+        },
+        "outputs": {
+            "mesh": "Модель сетки",
+            "bvh": "Ускоряющая структура BVH",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMeshAdvanced": {
+        "title": "Расширенное упрощение сетки Trellis2",
+        "inputs": {
+            "mesh": "Модель сетки"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "thresh": "Порог упрощения",
+            "lambda_edge_length": "Коэффициент веса длины ребра",
+            "lambda_skinny": "Вес подавления узких треугольников",
+            "lambda_curvature": "Вес сохранения кривизны",
+            "lambda_boundary": "Вес сохранения границы",
+            "lambda_area": "Вес площади",
+            "qem_regularization": "Интенсивность регуляризации QEM"
+        },
+        "outputs": {
+            "mesh": "Модель сетки"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimeshAdvanced": {
+        "title": "Расширенное упрощение триангулированной сетки Trellis2",
+        "inputs": {
+            "trimesh": "Модель триангулированной сетки"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "thresh": "Порог упрощения",
+            "lambda_edge_length": "Коэффициент веса длины ребра",
+            "lambda_skinny": "Вес подавления узких треугольников",
+            "lambda_curvature": "Вес сохранения кривизны",
+            "lambda_boundary": "Вес сохранения границы",
+            "lambda_area": "Вес площади",
+            "qem_regularization": "Интенсивность регуляризации QEM"
+        },
+        "outputs": {
+            "trimesh": "Модель триангулированной сетки"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturing": {
+        "title": "Многовидовое запекание текстур Trellis2",
+        "inputs": {
+            "trimesh": "Модель триангулированной сетки",
+            "front_image": "Позитивное изображение",
+            "back_image": "Изображение задней стороны",
+            "left_image": "Левое изображение",
+            "right_image": "Правое изображение",
+            "top_image": "Изображение верхнего вида",
+            "bottom_image": "Изображение нижнего вида",
+            "custom_images": "Изображения пользовательских ракурсов",
+            "camera_config": "Конфигурация камеры"
+        },
+        "widgets": {
+            "texture_size": "Размер текстуры",
+            "blend_texture": "Включить смешивание текстур",
+            "blend_exponent": "Экспонента смешивания",
+            "ortho_scale": "Коэффициент масштаба ортографической проекции",
+            "norm_size": "Нормализованный размер",
+            "fill_holes": "Заполнять пустоты текстур",
+            "max_hole_size": "Максимальный размер заполняемой полости",
+            "use_metallic": "Формировать канал металличности и шероховатости",
+            "depth_eps": "Порог смещения глубины",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Порог полуугла конуса кластеров сетки (в радианах)",
+            "add_alpha_channel": "Добавить канал прозрачности",
+            "front_weight": "Вес переднего вида",
+            "back_weight": "Вес задней стороны",
+            "left_weight": "Вес левого вида",
+            "right_weight": "Вес правого вида",
+            "top_weight": "Вес верхнего вида",
+            "bottom_weight": "Вес нижнего вида",
+            "custom_azimuths": "Азимут пользовательского ракурса",
+            "custom_elevations": "Пользовательский тангаж ракурса",
+            "custom_weights": "Вес пользовательского ракурса"
+        },
+        "outputs": {
+            "trimesh": "Модель триангулированной сетки",
+            "base_color": "Карта базового цвета",
+            "metallic_roughness": "Карта металличности и шероховатости"
+        },
+        "description": "Добавляет текстуры к модели сетки через проекцию многовидовых изображений.\n\nАлгоритм смешивания с весами по углу: каждая поверхность получает сведения о текстуре изо всех видимых ракурсов, а вес определяется тем, насколько прямо поверхность ориентирована к взгляду камеры.\n\nОпределение углов камеры (система координат с осью Y вверх):\n- Азимут: угол поворота вокруг оси Y\n  - 0° = перед (взгляд в сторону -Z)\n  - 90° = левая сторона (взгляд в сторону -X)\n  - 180° = задняя сторона (взгляд в сторону +Z)\n  - 270° = правая сторона (взгляд в сторону +X)\n- Тангаж: угол поворота вокруг оси X\n  - 0° = горизонтальный взгляд\n  - 90° = верхняя сторона (взгляд в сторону -Y, то есть сверху вниз)\n  - -90° = нижняя сторона (взгляд в сторону +Y, то есть снизу вверх)"
+    },
+    "Trellis2ProjectHighPolyToLowPoly": {
+        "title": "Проекция высокополигональной модели в низкополигональную Trellis2",
+        "inputs": {
+            "high_poly_trimesh": "Высокополигональная триангулированная сетка",
+            "low_poly_trimesh": "Низкополигональная триангулированная сетка",
+            "front_image": "Позитивное изображение",
+            "back_image": "Изображение задней стороны",
+            "left_image": "Левое изображение",
+            "right_image": "Правое изображение",
+            "top_image": "Изображение верхней стороны",
+            "bottom_image": "Изображение нижней части",
+            "custom_images": "Пользовательское изображение",
+            "camera_config": "Конфигурация камеры"
+        },
+        "widgets": {
+            "texture_size": "Размер текстуры",
+            "blend_texture": "Смешивание текстур",
+            "blend_exponent": "Экспонента смешивания",
+            "ortho_scale": "Масштаб ортографической проекции",
+            "norm_size": "Нормализованный размер",
+            "fill_holes": "Заполнение пустот",
+            "max_hole_size": "Максимальный размер отверстия",
+            "use_metallic": "Включить канал металличности",
+            "depth_eps": "Порог ошибки глубины",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Значение полуугла конуса порога кластеризации сетки в радианах",
+            "add_alpha_channel": "Добавить альфа-канал",
+            "front_weight": "Вес переднего вида",
+            "back_weight": "Вес задней стороны",
+            "left_weight": "Вес левого вида",
+            "right_weight": "Вес правого вида",
+            "top_weight": "Вес верхней стороны",
+            "bottom_weight": "Вес нижней стороны",
+            "custom_azimuths": "Пользовательский список азимутов",
+            "custom_elevations": "Пользовательский список углов тангажа",
+            "custom_weights": "Список пользовательских весов"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color": "Текстура основного цвета",
+            "metallic_roughness": "Текстура металличности и шероховатости"
+        },
+        "description": "Наносит текстуры на сетку проекцией многовидовых изображений.\n\nАлгоритм смешивания с весами по углу: каждая поверхность получает текстуры изо всех ракурсов, где она наблюдаема, а вес определяется тем, насколько прямо она ориентирована к соответствующей камере.\n\nУглы камеры (система координат с осью Y вверх):\n- Азимут: поворот вокруг оси Y\n  - 0° = перед (взгляд в сторону -Z)\n  - 90° = левая сторона (взгляд в сторону -X)  \n  - 180° = зад (взгляд в сторону +Z)\n  - 270° = правая сторона (взгляд в сторону +X)\n- Тангаж: поворот вокруг оси X\n  - 0° = горизонтальное направление\n  - 90° = верх (взгляд сверху вниз в сторону -Y)\n  - -90° = низ (взгляд снизу вверх в сторону +Y)"
+    },
+    "Trellis2RenderMultiView": {
+        "title": "Многовидовой рендер Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "render_size": "Размер рендеринга",
+            "ortho_scale": "Масштаб ортографической проекции",
+            "blender_exec_path": "Путь к исполняемому файлу Blender",
+            "azimuths": "Список азимутов",
+            "elevations": "Список углов наклона"
+        },
+        "outputs": {
+            "images": "Изображение",
+            "ortho_scale": "Масштаб ортографической проекции",
+            "azimuths": "Список азимутов",
+            "elevations": "Список углов наклона"
+        },
+        "description": ""
+    },
+    "Trellis2CudaReset": {
+        "title": "Сброс CUDA Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1"
+        },
+        "outputs": {
+            "output_1": "Выход 1"
+        },
+        "description": ""
+    },
+    "Trellis2SaveImage": {
+        "title": "Сохранение изображения Trellis2",
+        "inputs": {
+            "images": "Изображение"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "compress_level": "Уровень сжатия"
+        },
+        "outputs": {
+            "images_path": "путь к изображениям"
+        },
+        "description": "Сохраняет входные изображения в каталог вывода ComfyUI."
+    },
+    "Trellis2VoxelToMesh": {
+        "title": "Преобразование вокселей в сетку Trellis2",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "target_height_mm": "Целевая высота (мм)",
+            "sigma": "Коэффициент сглаживания sigma",
+            "coarse_downsample": "Коэффициент грубого даунсемплинга",
+            "taubin_iterations": "Число итераций сглаживания Таубина"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2UnloadAllModels": {
+        "title": "Выгрузка всех моделей Trellis2",
+        "inputs": {
+            "input_1": "Ввод 1"
+        },
+        "outputs": {
+            "output_1": "Выход 1"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGeneratorWithReconViaGen": {
+        "title": "Генератор разреженной структуры с генеративной реконструкцией Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер обработки",
+            "images": "Изображение"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "sparse_structure_steps": "Число итерационных шагов разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Коэффициент перемасштабирования направления разреженной структуры",
+            "sparse_structure_rescale_t": "Значение T перемасштабирования разреженной структуры",
+            "sparse_structure_sampler": "Сэмплер разреженной структуры",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "sparse_structure_guidance_interval_start": "Начальная точка интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечная точка интервала направления разреженной структуры",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "dino_foundation_cap": "Порог базового DINO",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "keep_only_shell": "Сохранить только оболочку"
+        },
+        "outputs": {
+            "coords": "Список координат",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "pipeline": "Конвейер обработки"
+        },
+        "description": ""
+    },
+    "Trellis2ExtractImagesFromVideo": {
+        "title": "Извлечение кадров из видео Trellis2",
+        "widgets": {
+            "video_file": "Видеофайл",
+            "frames_per_second": "Число извлекаемых кадров в секунду"
+        },
+        "outputs": {
+            "images": "Изображение"
+        },
+        "description": ""
+    },
+    "Trellis2MaxTokensCalculator": {
+        "title": "Калькулятор максимального числа токенов Trellis2",
+        "widgets": {
+            "default_max_tokens": "Максимум токенов по умолчанию"
+        },
+        "outputs": {
+            "max_tokens": "Максимальное число токенов"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondMultiViewGenerator": {
+        "title": "Многовидовой генератор условия по изображению Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер обработки",
+            "front_image": "Позитивное изображение",
+            "back_image": "Изображение задней стороны",
+            "left_image": "Левое изображение",
+            "right_image": "Правое изображение"
+        },
+        "outputs": {
+            "conds_512": "cond при разрешении 512",
+            "conds_1024": "cond при разрешении 1024",
+            "views_list": "Список ракурсов",
+            "pipeline": "Конвейер обработки"
+        },
+        "description": ""
+    },
+    "Trellis2SparseMultiViewGenerator": {
+        "title": "Разреженный многовидовой генератор Trellis2",
+        "inputs": {
+            "pipeline": "Конвейер обработки",
+            "image_conds": "Условие по изображению",
+            "views_list": "Список ракурсов"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "sparse_structure_steps": "Число итерационных шагов разреженной структуры",
+            "sparse_structure_guidance_strength": "Интенсивность направления разреженной структуры",
+            "sparse_structure_guidance_rescale": "Коэффициент перемасштабирования направления разреженной структуры",
+            "sparse_structure_rescale_t": "Значение T перемасштабирования разреженной структуры",
+            "sparse_structure_sampler": "Сэмплер разреженной структуры",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "sparse_structure_guidance_interval_start": "Начальная точка интервала направления разреженной структуры",
+            "sparse_structure_guidance_interval_end": "Конечная точка интервала направления разреженной структуры",
+            "fill_holes": "Заполнение пустот",
+            "hole_iterations": "Число итераций заполнения отверстий",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "hole_fill_algorithm": "Алгоритм заполнения отверстий",
+            "dino_foundation_cap": "Порог базового DINO",
+            "keep_only_shell": "Сохранить только оболочку",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Коэффициент температуры смешивания"
+        },
+        "outputs": {
+            "coords": "Список координат",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "views_list": "Список ракурсов",
+            "pipeline": "Конвейер обработки"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeMultiViewGenerator": {
+        "title": "Многовидовой генератор формы Trellis",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_conds": "Условие по изображению",
+            "views_list": "Список видов",
+            "coords": "Координаты"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "shape_steps": "Число step генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Коэффициент перемасштабирования направления формы",
+            "shape_rescale_t": "t временного шага перемасштабирования формы",
+            "shape_sampler": "Сэмплер формы",
+            "shape_guidance_interval_start": "Начальный шаг интервала направления формы",
+            "shape_guidance_interval_end": "Конечный шаг интервала направления формы",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число step подшагов DINO",
+            "dino_foundation_cap": "Порог базового DINO",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Коэффициент температуры слияния"
+        },
+        "outputs": {
+            "shape_slat": "Разреженный latent slat формы",
+            "resolution": "Разрешение",
+            "views_list": "Список видов",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeMultiViewGenerator": {
+        "title": "Каскадный многовидовой генератор формы Trellis",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_conds": "Условие по изображению",
+            "views_list": "Список видов",
+            "shape_slat": "Разреженный latent slat формы"
+        },
+        "widgets": {
+            "from_resolution": "Исходное разрешение",
+            "to_resolution": "Целевое разрешение",
+            "sparse_structure_resolution": "Разрешение разреженной структуры",
+            "max_num_tokens": "Макс. число токенов",
+            "shape_steps": "Число step генерации формы",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_guidance_rescale": "Коэффициент перемасштабирования направления формы",
+            "shape_rescale_t": "t временного шага перемасштабирования формы",
+            "shape_sampler": "Сэмплер формы",
+            "shape_guidance_interval_start": "Начальный шаг интервала направления формы",
+            "shape_guidance_interval_end": "Конечный шаг интервала направления формы",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число step подшагов DINO",
+            "dino_foundation_cap": "Порог базового DINO",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Коэффициент температуры слияния"
+        },
+        "outputs": {
+            "shape_slat": "Разреженный latent slat формы",
+            "resolution": "Разрешение",
+            "views_list": "Список видов",
+            "pipeline": "Конвейер",
+            "num_tokens": "Количество Token"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatMultiViewGenerator": {
+        "title": "Многовидовой генератор slat текстур Trellis",
+        "inputs": {
+            "pipeline": "Конвейер",
+            "image_conds": "Условие по изображению",
+            "views_list": "Список видов",
+            "shape_slat": "Разреженный latent slat формы"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "texture_steps": "Число step генерации текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Коэффициент перемасштабирования направления текстур",
+            "texture_rescale_t": "t временного шага перемасштабирования текстур",
+            "texture_sampler": "Сэмплер текстур",
+            "texture_guidance_interval_start": "Начальный шаг интервала направления текстур",
+            "texture_guidance_interval_end": "Конечный шаг интервала направления текстур",
+            "verbose": "Выводить подробный лог",
+            "dino_lock": "Фиксация признаков DINO",
+            "dino_substeps": "Число step подшагов DINO",
+            "dino_foundation_cap": "Порог базового DINO",
+            "front_axis": "Ось направления вперёд",
+            "blend_temperature": "Коэффициент температуры слияния"
+        },
+        "outputs": {
+            "texture_slat": "Разреженный latent slat текстур",
+            "views_list": "Список видов",
+            "pipeline": "Конвейер"
+        },
+        "description": ""
+    },
+    "Trellis2MoGeCameraConfig": {
+        "title": "Конфигурация камеры MoGe Trellis",
+        "widgets": {
+            "camera_angle_x": "Угол вокруг оси X камеры",
+            "distance": "Дистанция съёмки",
+            "mesh_scale": "Масштаб сетки"
+        },
+        "outputs": {
+            "moge_camera_config": "Конфигурация камеры MoGe"
+        },
+        "description": ""
+    },
+    "Trellis2FovMoGeCameraConfig": {
+        "title": "Конфигурация камеры MoGe по углу обзора Trellis",
+        "widgets": {
+            "fov": "Угол обзора (FOV)",
+            "unit": "Единица",
+            "extend_pixel": "Число расширяющих пикселей",
+            "mesh_scale": "Масштаб сетки"
+        },
+        "outputs": {
+            "moge_camera_config": "Конфигурация камеры MoGe"
+        },
+        "description": ""
+    },
+    "Trellis2RenderPreview": {
+        "title": "Создать изображение предпросмотра",
+        "inputs": {
+            "trimesh": "Формат trimesh"
+        },
+        "widgets": {
+            "num_views": "Число ракурсов",
+            "resolution": "Разрешение",
+            "render_mode": "Режим рендеринга"
+        },
+        "outputs": {
+            "preview_images": "Изображение предпросмотра",
+            "IMAGE": "Изображение"
+        },
+        "description": "\nСоздаёт изображение предпросмотра по геометрии 3D-сетки.\n\nПараметры:\n- trimesh: геометрия 3D-сетки\n- Количество ракурсов: число рендеримых ракурсов (поворот вокруг центра)\n- Разрешение: разрешение рендера\n- Режим рендера: стиль рендера (обычный, глиняный, основной цвет)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RenderVideo": {
+        "title": "Создать вращающееся видео",
+        "inputs": {
+            "trimesh": "Формат trimesh"
+        },
+        "widgets": {
+            "num_frames": "Количество кадров",
+            "fps": "Кадров в секунду",
+            "resolution": "Разрешение",
+            "filename_prefix": "Префикс файла"
+        },
+        "outputs": {
+            "video_path": "Путь к видео",
+            "STRING": "Строка"
+        },
+        "description": "\nСоздаёт видео с вращением по геометрии 3D-сетки.\n\nПараметры:\n- trimesh: геометрия 3D-сетки\n- num_frames: число кадров в видео\n- fps: кадров в секунду\n- resolution: разрешение рендера\n- filename_prefix: префикс имени выходного файла\n",
+        "api_version": "V1"
+    },
+    "Trellis2GetConditioning": {
+        "title": "Получить условие",
+        "inputs": {
+            "model_config": "Конфигурация модели",
+            "image": "Изображение",
+            "mask": "Маска"
+        },
+        "widgets": {
+            "background_color": "Цвет фона"
+        },
+        "outputs": {
+            "conditioning": "Условие",
+            "preprocessed_image": "Предобработанное изображение",
+            "TRELLIS2_CONDITIONING": "Условие TRELLIS2",
+            "IMAGE": "Изображение"
+        },
+        "description": "\nПредобрабатывает изображение средствами DinoV3 и извлекает визуальные признаки.\n\nУзел выполняет:\n1. Применяет маску как альфа-канал\n2. Кадрирует по ограничивающей рамке объекта\n3. Предварительное умножение на альфа\n4. Извлекает признаки через DinoV3\n\nПараметры:\n- model_config: загруженная конфигурация TRELLIS.\n- image: входное изображение (в формате RGB)\n- mask: маска переднего плана (белое = объект, чёрное = фон)\nМаску получает любой узел удаления фона (BiRefNet, rembg и т.п.).",
+        "api_version": "V1"
+    },
+    "Trellis2ImageToShape": {
+        "title": "Генерация формы из изображения",
+        "inputs": {
+            "model_config": "Конфигурация модели",
+            "conditioning": "Условие"
+        },
+        "widgets": {
+            "seed": "Случайное зерно",
+            "ss_guidance_strength": "Интенсивность направления разреженной структуры",
+            "ss_sampling_steps": "Шаг сэмплирования разреженной структуры",
+            "shape_guidance_strength": "Интенсивность направления формы",
+            "shape_sampling_steps": "Шаги сэмплирования формы",
+            "max_tokens": "Максимальное число токенов"
+        },
+        "outputs": {
+            "shape_result": "Результат формы",
+            "mesh": "Сетка (3D mesh)",
+            "TRELLIS2_SHAPE_RESULT": "Результат формы TRELLIS2",
+            "TRIMESH": "Формат trimesh"
+        },
+        "description": "\nСоздаёт 3D-форму из условия по изображению.\n\nЭтот узел строит геометрию формы (без текстур и PBR-материалов).\nПодключите shape_result к «Форма в текстурированную сетку», чтобы получить PBR-материалы.\n\nПараметры:\n- model_config: загруженная конфигурация модели (разрешение задаётся в узле загрузки модели)\n- conditioning: условие DinoV3 из узла «Получить условие»\n- seed: случайное зерно для воспроизводимости\n- ss_*: параметры сэмплирования разреженной структуры\n- shape_*: параметры сэмплирования латента формы\n\nВозвращает:\n- shape_result: данные формы для генерации текстур\n- mesh: неокрашенная сетка для предпросмотра и экспорта\n",
+        "api_version": "V1"
+    },
+    "Trellis2ShapeToTexturedMesh": {
+        "title": "Генерация текстурированной сетки из формы",
+        "inputs": {
+            "model_config": "Конфигурация модели",
+            "conditioning": "Условие",
+            "shape_result": "Результат формы"
+        },
+        "widgets": {
+            "seed": "Случайное зерно",
+            "tex_guidance_strength": "Интенсивность направления текстур",
+            "tex_sampling_steps": "Шаги сэмплирования текстур"
+        },
+        "outputs": {
+            "mesh_glb_path": "Путь к сетке (файл .glb)",
+            "voxelgrid_npz_path": "Путь к воксельной сетке (файл .npz)",
+            "STRING": "Строка"
+        },
+        "description": "\nСоздаёт из формы текстурированную сетку с PBR-материалами.\n\nБерёт shape_result из узла «Изображение в форму» и создаёт PBR-материалы:\n- base_color (RGB) - metallic - roughness - alpha\n\nПараметры:\n- model_config: загруженная конфигурация модели\n- conditioning: условие DinoV3 (то же, что и для формы)\n- shape_result: данные формы из узла «Изображение в форму»\n- seed: случайное зерно для вариаций текстуры\n- tex_*: параметры сэмплирования текстур\n\nВозвращает:\n- mesh_glb_path: путь к геометрии сетки (файл .glb)\n- voxelgrid_npz_path: путь к данным воксельной сетки (файл .npz с координатами, свойствами, вершинами, гранями и т.д.)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RemoveBackground": {
+        "title": "Удаление фона",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "low_vram": "Низкая видеопамять"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска",
+            "IMAGE": "Изображение",
+            "MASK": "Маска"
+        },
+        "description": "\nУдаляет фон изображения с помощью BiRefNet (как rembg в TRELLIS).\n\nЭтот узел использует модель сегментации BiRefNet для извлечения маски переднего плана.\nМаску можно подать в узел «Получить условие».\n\nПараметры:\n- image: входное RGB-изображение\n- low_vram: перемещает модель на CPU, когда она не используется (медленнее, но экономит видеопамять)\n\nВозвращает:\n- image: исходное изображение (без изменений)\n- mask: маска переднего плана (белое = объект, чёрное = фон)\n",
+        "api_version": "V1"
+    },
+    "LoadTrellis2Models": {
+        "title": "Загрузить модели Trellis2",
+        "widgets": {
+            "resolution": "Разрешение",
+            "precision": "Точность",
+            "attn_backend": "Бэкенд внимания"
+        },
+        "outputs": {
+            "model_config": "Конфигурация модели",
+            "TRELLIS2_MODEL_CONFIG": "Конфигурация модели TRELLIS2"
+        },
+        "description": "\nЗагружает конфигурацию модели Trellis2 для генерации 3D из изображения.\n\nЭтот узел создаёт объект конфигурации, по которому узлы вывода загружают модели по мере необходимости.\n\nРежимы разрешения:\n- 512: быстро, качество ниже\n- 1024_cascade: наивысшее качество, каскад 512->1024\n- 1536_cascade: максимальное разрешение на выходе\n\nБэкенды внимания:\n- auto: лучший доступный (saseattn > flash_attn > xformers > sdpa)\n- flash_attn: FlashAttention (нужен пакет flash_attn)\n- xformers: экономичное по памяти внимание (нужен пакет xformers)\n- sdpa: встроенный в PyTorch scaled_dot_product_attention (PyTorch >= 2.0)\n- sageattn: SageAttention (самый быстрый, нужен пакет sageattention)\n",
+        "api_version": "V1"
+    },
+    "Trellis2LoadSSFlowModel": {
+        "title": "Загрузка потоковой модели разреженной структуры",
+        "inputs": {
+            "model_config": "Конфигурация модели"
+        },
+        "outputs": {
+            "model": "Модель",
+            "MODEL": "Модель"
+        },
+        "description": "\nОборачивает потоковую модель разреженной структуры в стандартный ComfyUI MODEL.\n\nЭтот узел заключает потоковую модель в систему BaseModel/ModelPatcher ComfyUI,\nчтобы KSampler мог управлять ею с любым сэмплером и планировщиком.\n\nПодключите выход MODEL ко входу 'model' узла KSampler.\nИспользуйте Trellis2SSConditioning для позитивного и негативного условий.\nИспользуйте Trellis2Empty3DLatent как начальный Latent.\n",
+        "api_version": "V1"
+    },
+    "Trellis2SSConditioning": {
+        "title": "Преобразовать условие DinoV3 Trellis2",
+        "inputs": {
+            "conditioning": "Условие"
+        },
+        "outputs": {
+            "positive": "Положительное условие",
+            "negative": "Отрицательное условие"
+        },
+        "description": "\nПреобразует условие DinoV3 Trellis2 в стандартное условие ComfyUI.\n\nПринимает выход узла «Trellis2 Получить условие» и выдаёт\nположительное и отрицательное условия, совместимые с KSampler.\n\nПодключите 'positive' к положительному входу KSampler.\nПодключите 'negative' к отрицательному входу KSampler.\n",
+        "api_version": "V1"
+    },
+    "Trellis2Empty3DLatent": {
+        "title": "Создать пустой 3D Latent",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "batch_size": "Размер пакета"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "\nСоздаёт пустой 3D Latent-тензор для сэмплирования разреженной структуры.\n\nСчитывает разрешение и число каналов модели, чтобы построить правильную форму: [пакет, каналы, разрешение, разрешение, разрешение].\n\nДля модели Trellis2 по умолчанию: [1, 8, 16, 16, 16].\n",
+        "api_version": "V1"
+    },
+    "Trellis2ApplyGuidanceInterval": {
+        "title": "Применить интервал направления",
+        "inputs": {
+            "model": "Модель"
+        },
+        "widgets": {
+            "guidance_interval_start": "Начальный интервал",
+            "guidance_interval_end": "Конечный интервал"
+        },
+        "outputs": {
+            "MODEL": "Модель"
+        },
+        "description": "\nЗадаёт, в какой момент сэмплирования включать CFG.\n\nВ потоковом матчинге TRELLIS2 sigma меняется от 1.0 (чистый шум) до 0.0 (чистые данные).\n- (0.0, 1.0) = CFG применяется всегда (настройка по умолчанию, как в стандартном KSampler)\n- (0.2, 0.8) = CFG применяется только когда sigma находится между 0.2 и 0.8\n\nВне этого интервала используется только условное предсказание (без CFG).",
+        "api_version": "V1"
+    },
+    "Trellis2DecodeSSLatent": {
+        "title": "Декодировать Latent разреженной структуры",
+        "inputs": {
+            "model_config": "Конфигурация модели",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "ss_resolution": "Разрешение SS"
+        },
+        "outputs": {
+            "coords": "Координаты",
+            "TRELLIS2_SS_COORDCOORD": "Координаты Trellis2"
+        },
+        "description": "\nДекодирует Latent разреженной структуры в воксельные координаты.\n\nБерёт признаки, отсэмплированные KSampler, и выполняет:\n1. Запуск SparseStructureDecoder (logits -> бинарная занятость)\n2. При желании прореживание max-pooling до целевого разрешения\n3. Извлечение координат активных вокселей\n\nВыходные координаты можно передать в последующие узлы генерации формы.",
+        "api_version": "V1"
+    },
+    "Trellis2Simplify": {
+        "title": "Упрощение сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "target_face_count": "Целевое число граней",
+            "fill_holes": "Заполнение пустот",
+            "fill_holes_perimeter": "Порог периметра отверстия",
+            "remesh": "Пересетка",
+            "remesh_band": "Ширина полосы пересетки"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": "\nУпрощает сетку до целевого количества граней.\n\nИспользует CuMesh для GPU-ускоренного упрощения.\n\nПараметры:\n- target_face_count: целевое число граней\n- fill_holes: заполнять мелкие отверстия перед упрощением\n- fill_holes_perimeter: максимальный периметр заполняемого отверстия\n- remesh: применить ремешинг двойным контурированием ради более чистой топологии\n- remesh_band: ширина полосы ремешинга",
+        "api_version": "V1"
+    },
+    "Trellis2UVUnwrap": {
+        "title": "UV-развёртка сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "chart_cone_angle": "Конусный угол диаграммы",
+            "chart_refine_iterations": "Число итераций уточнения",
+            "chart_global_iterations": "Число глобальных итераций оптимизации",
+            "chart_smooth_strength": "Интенсивность сглаживания"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": "\nВыполняет UV-развёртку сетки через xatlas.\n\nСоздаёт только UV-развёртку, без запекания текстур. Запекание текстур выполняют после узла Rasterize PBR.\n\nПараметры:\n- chart_cone_angle: порог кластеризации карт (в градусах)\n- chart_refine_iterations: уточнение UV-карт\n- chart_global_iterations: число глобальных итераций оптимизации UV\n- chart_smooth_strength: интенсивность сглаживания UV\n\nСовет: сначала упростите сетку! UV-развёртка 10-миллионной по граням сетки занимает очень много времени.",
+        "api_version": "V1"
+    },
+    "Trellis2RasterizePBR": {
+        "title": "Запекание PBR-текстур из воксельных данных",
+        "inputs": {
+            "trimesh": "Треугольная сетка",
+            "voxelgrid": "Воксельная сетка"
+        },
+        "widgets": {
+            "texture_size": "Разрешение текстуры"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "description": "\nЗапекает PBR-текстуры из воксельных данных на сетку с UV-развёрткой.\n\nТребуется сетка с UV; из VOXELGRID запекаются цвет, металличность и шероховатость.\n\nВходная сетка должна иметь UV (сначала используйте узел UV Unwrap).\n\nПараметры:\n- texture_size: разрешение запекаемой текстуры (512-16384 пикселей)",
+        "api_version": "V1"
+    },
+    "Trellis2ExportGLB": {
+        "title": "Экспорт файла GLB Trellis2",
+        "widgets": {
+            "voxelgrid_path": "Путь к воксельной сетке",
+            "decimation_target": "Целевое число граней",
+            "texture_size": "Разрешение текстуры",
+            "remesh": "Пересетка",
+            "filename_prefix": "Префикс имени файла"
+        },
+        "outputs": {
+            "glb_path": "Путь GLB"
+        },
+        "description": "\nЗа один проход экспортирует текстурированный GLTF из воксельных данных.\n\nБерёт voxelgrid_npz_path из «Форма в текстурированную сетку» и выполняет:\n1. Упрощает сетку до целевого числа граней\n2. Делает UV-развёртку\n3. Запекает PBR-текстуры из воксельных данных (базовый цвет, металличность, шероховатость)\n4. Экспортирует текстурированный GLTF в папку вывода ComfyUI\n\nПараметры:\n- voxelgrid_path: путь к .npz-файлу из «Форма в текстурированную сетку»\n- decimation_target: целевое число граней после упрощения\n- texture_size: разрешение запекаемых PBR-текстур\n- remesh: применить ремешинг перед упрощением ради более чистой топологии\n- filename_prefix: префикс имени выходного файла",
+        "api_version": "V1"
+    },
+    "Trellis2ExportTrimesh": {
+        "title": "Экспорт триангулированной сетки Trellis2",
+        "inputs": {
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "file_format": "Формат файла"
+        },
+        "outputs": {
+            "file_path": "Путь к файлу"
+        },
+        "description": "\nЭкспортирует триангулированную сетку в несколько форматов 3D-файлов.\n\nПоддерживаются: GLB, OBJ, PLY, STL, 3MF, DAE",
+        "api_version": "V1"
+    },
+    "Trellis2MeshWithVoxeltoTrimesmesh": {
+        "title": "Преобразование сетки на вокселях в триангулированную сетку Trellis2",
+        "widgets": {
+            "mesh": "Сетка (3D mesh)",
+            "reorient_vertices": "Заново переориентировать вершины"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "TRIMESH": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexture": {
+        "title": "Trellis2MeshTexture",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "pipeline": "Конвейер",
+            "trimesh": "Треугольная сетка",
+            "seed": "Зерно",
+            "texture_steps": "Шаги текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Регулировка пропорции текстур",
+            "texture_rescale_t": "t регулировки пропорции текстур",
+            "resolution": "Разрешение",
+            "texture_size": "Размер текстур",
+            "texture_alpha_mode": "Прозрачный режим текстур",
+            "double_side_material": "Двусторонний материал",
+            "texture_guidance_interval_start": "Начало интервала направления текстур",
+            "texture_guidance_interval_end": "Конец интервала направления текстур",
+            "max_views": "Максимум ракурсов",
+            "bake_on_vertices": "Запекать на вершинах",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Радиус порогового угла кластеров сетки (в радианах)",
+            "sampler": "Сэмплер",
+            "inpainting": "Исправление",
+            "verbose": "Подробная информация",
+            "dino_lock": "Блокировка DINO",
+            "dino_substeps": "Подшаг DINO",
+            "dino_foundation_cap": "Ограничитель базы DINO"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Базовая цветовая текстура",
+            "metallic_roughness_texture": "Текстура металличности",
+            "TRIMESH": "Треугольная сетка",
+            "IMAGE": "Изображение"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturerMultiView": {
+        "title": "Trellis2MeshTexturerMultiView",
+        "inputs": {
+            "pipeline": "pipeline",
+            "front_image": "Изображение переднего вида",
+            "trimesh": "Треугольная сетка",
+            "back_image": "Изображение вида сзади",
+            "left_image": "Изображение вида слева",
+            "right_image": "Изображение вида справа"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "纹理步骤": "Шаги текстур",
+            "纹理引导强度": "Интенсивность направления текстур",
+            "纹理引导缩放": "Масштаб направления текстур",
+            "纹理缩放t": "t масштабирования текстур",
+            "分辨率": "Разрешение",
+            "纹理大小": "Размер текстур",
+            "纹理alpha模式": "Альфа-режим текстур",
+            "双面材质": "Двусторонний материал",
+            "纹理引导区间开始": "Начало интервала направления текстур",
+            "纹理引导区间结束": "Конец интервала направления текстур",
+            "烘焙在顶点上": "Запекать на вершинах",
+            "使用自定义法线": "Использовать пользовательские нормали",
+            "网格聚类阈值圆锥半角弧度": "Полууго конуса порога кластеризации сетки в радианах",
+            "前方轴": "Ось, направленная вперёд",
+            "混合温度": "Температура смешивания",
+            "采样器": "Сэмплер",
+            "修复": "Исправление",
+            "详细信息": "Подробная информация",
+            "DINO锁定": "Блокировка DINO",
+            "DINO子步数": "Число подшагов DINO",
+            "DINO基础帽": "Ограничитель базы DINO"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "基色纹理": "Текстура базового цвета",
+            "金属光泽粗糙度纹理": "Текстура металличности и шероховатости"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess": {
+        "title": "Trellis2PostProcess",
+        "inputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "widgets": {
+            "填充孔洞": "Заполнение пустот",
+            "修复法线": "Исправить нормали",
+            "修复面朝向": "Исправить ориентацию граней",
+            "删除重复面": "Удалить дубликаты граней",
+            "焊接顶点": "Сварить вершины",
+            "焊接顶点位数": "Число разрядов для сварки вершин",
+            "平滑": "Сглаживание",
+            "平滑迭代次数": "Число итераций сглаживания",
+            "细分": "Детализация",
+            "细分迭代次数": "Число итераций подразбиения"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimessh": {
+        "title": "Развернуть триангулированную сетку",
+        "widgets": {
+            "trimessh": "Треугольная сетка",
+            "网格簇阈值圆锥半角弧度": "Порог полуугла конуса кластеров сетки в радианах",
+            "网格簇细化迭代次数": "Число итераций уточнения кластеров сетки",
+            "网格簇全局迭代次数": "Число глобальных итераций кластеров сетки",
+            "网格簇光滑强度": "Интенсивность сглаживания кластеров сетки"
+        },
+        "outputs": {
+            "trresm": "Треугольная сетка",
+            "TRIMESH": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexture": {
+        "title": "Многовидовые текстуры Trellis2",
+        "widgets": {
+            "trimesh": "Треугольная сетка",
+            "texture_size": "Размер текстур",
+            "blend_texture": "Смешивание текстур",
+            "blend_exponent": "Экспонента смешивания",
+            "ortho_scale": "Ортографическая пропорция",
+            "norm_size": "Нормализованный размер",
+            "fill_holes": "Заполнение пустот",
+            "max_hole_size": "Максимальный размер отверстия",
+            "use_metallic": "Использовать металличность",
+            "depth_eps": "Ошибка глубины",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Полууго конуса порога кластеризации сетки в радианах",
+            "add_alpha_channel": "Добавить канал прозрачности",
+            "front_image": "Вид спереди",
+            "back_image": "Вид сзади",
+            "left_image": "Вид слева",
+            "right_image": "Вид справа",
+            "top_image": "Вид сверху",
+            "bottom_image": "Вид снизу",
+            "front_weight": "Вес переднего вида",
+            "back_weight": "Вес вида сзади",
+            "left_weight": "Вес вида слева",
+            "right_weight": "Вес вида справа",
+            "top_weight": "Вес вида сверху",
+            "bottom_weight": "Вес вида снизу",
+            "custom_images": "Пользовательское изображение",
+            "custom_azimuths": "Пользовательский азимут",
+            "custom_elevations": "Пользовательский угол наклона",
+            "custom_weights": "Пользовательские веса",
+            "camera_config": "Конфигурация камеры"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color": "Базовый цвет",
+            "metallic_roughness": "Металличность",
+            "TRIMESH": "TRIMESH",
+            "IMAGE": "Изображение"
+        },
+        "description": "Наносит текстуры на сетку проекцией нескольких видов.\n\nСмешивание с весами по углу: каждая поверхность получает текстуры изо всех видов, где она видна, с весом по тому, насколько прямо она смотрит на каждую камеру.\n\nУглы камеры (система координат с Y вверх):\n- Азимут: поворот вокруг оси Y\n  - 0° = перед (в сторону -Z)\n  - 90° = левая сторона (в сторону -X)\n  - 180° = зад (в сторону +Z)\n  - 270° = правая сторона (в сторону +X)\n- Тангаж: поворот вокруг оси X\n  - 0° = горизонт\n  - 90° = верх (сверху в сторону -Y)\n  - -90° = низ (снизу в сторону +Y)"
+    },
+    "Trellis2TexxlatMultiViewGenerator": {
+        "title": "Trellis2TexxlatMultiViewGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_conds": "Изображение условия",
+            "views_list": "Список видов",
+            "shape_slat": "Слот формы"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "texture_steps": "Шаги текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Регулировка пропорции текстур",
+            "texture_rescale_t": "Время пропорции текстур",
+            "texture_sampler": "Сэмплер текстур",
+            "texture_guidance_interval_start": "Начало интервала направления текстур",
+            "texture_guidance_interval_end": "Конец интервала направления текстур",
+            "verbose": "Подробная информация",
+            "dino_lock": "Блокировка DINO",
+            "dino_substeps": "Число подшагов DINO",
+            "dino_foundation_cap": "Ограничитель базы DINO",
+            "front_axis": "Передняя ось",
+            "blend_temperature": "Температура смешивания"
+        },
+        "outputs": {
+            "texture_slat": "Слот текстур",
+            "views_list": "Список видов",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTextture": {
+        "title": "Trellis2MeshTextture",
+        "inputs": {
+            "pipeline": "Труба",
+            "image": "Изображение",
+            "trimesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "texture_steps": "Шаги текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Масштаб направления текстур",
+            "texture_rescale_t": "t масштабирования текстур",
+            "resolution": "Разрешение",
+            "texture_size": "Размер текстуры",
+            "texture_alpha_mode": "Прозрачный режим текстур",
+            "double_side_material": "Двусторонний материал",
+            "texture_guidance_interval_start": "Начало интервала направления текстур",
+            "texture_guidance_interval_end": "Конец интервала направления текстур",
+            "max_views": "Максимум видов",
+            "bake_on_vertices": "Запекать на вершинах",
+            "use_custom_normals": "Использовать пользовательские нормали",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Полууго конуса порога кластеризации сетки в радианах",
+            "sampler": "Сэмплер",
+            "inpainting": "Исправление",
+            "verbose": "Подробная информация",
+            "dino_lock": "dino_lock",
+            "dino_substeps": "Подшаг dino",
+            "dino_foundation_cap": "Ограничитель базы dino"
+        },
+        "outputs": {
+            "trimesh": "Треугольная сетка",
+            "base_color_texture": "Базовая цветовая текстура",
+            "metallic_roughness_texture": "Текстура металличности"
+        },
+        "description": ""
+    },
+    "Trellis2UnwrapTrimesmes": {
+        "title": "Trellis2UnwrapTrimesmes",
+        "inputs": {
+            "trresm": "trresm"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "Полууго конуса порога кластеризации сетки в радианах",
+            "mesh_cluster_refinement_iterations": "Число итераций уточнения сетки",
+            "mesh_cluster_global_iterations": "Число глобальных итераций оптимизации сетки",
+            "mesh_cluster_smooth_strength": "Интенсивность сглаживания сетки"
+        },
+        "outputs": {
+            "trresm": "trresm"
+        },
+        "description": ""
+    },
+    "Trellis2TexxlatGenerator": {
+        "title": "Trellis2TexxlatGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_cond": "Изображение условия",
+            "shape_slat": "slat формы",
+            "image": "Изображение",
+            "moge_camera_config": "Конфигурация камеры moge"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "texture_steps": "Шаги текстур",
+            "texture_guidance_strength": "Интенсивность направления текстур",
+            "texture_guidance_rescale": "Масштаб направления текстур",
+            "texture_rescale_t": "t масштабирования текстур",
+            "texture_sampler": "Сэмплер текстур",
+            "texture_guidance_interval_start": "Начало интервала направления текстур",
+            "texture_guidance_interval_end": "Конец интервала направления текстур",
+            "verbose": "Подробная информация",
+            "dino_lock": "Блокировка dino",
+            "dino_substeps": "Число подшагов dino",
+            "dino_foundation_cap": "Ограничитель базы dino",
+            "from_resolution": "Начальное разрешение"
+        },
+        "outputs": {
+            "texture_slat": "slat текстуры",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatent": {
+        "title": "Trellis2DecodeLatent",
+        "inputs": {
+            "pipeline": "pipeline",
+            "shape_slat": "slat формы",
+            "texture_slat": "slat текстуры"
+        },
+        "widgets": {
+            "resolution": "Разрешение",
+            "use_tiled_decoder": "Использовать плиточный декодер"
+        },
+        "outputs": {
+            "mesh": "Сетка (3D mesh)",
+            "bvh": "Охватывающий бокс",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2simplifyTrimeseshAdvanced": {
+        "title": "Trellis2simplifyTrimeseshAdvanced",
+        "inputs": {
+            "trimesmesh": "Треугольная сетка"
+        },
+        "widgets": {
+            "target_face_num": "Целевое число граней",
+            "thresh": "Порог",
+            "lambda_edge_length": "Вес длины ребра",
+            "lambda_skinny": "Вес узких граней",
+            "lambda_curvature": "Вес кривизны",
+            "lambda_boundary": "Вес границы",
+            "lambda_area": "Вес площади",
+            "qem_regularization": "Регуляризация QEM"
+        },
+        "outputs": {
+            "trimesmesh": "Треугольная сетка"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturer": {
+        "title": "Trellis2MultiViewTexturer",
+        "inputs": {
+            "trimesh": "trimesh",
+            "front_image": "Изображение переднего вида",
+            "back_image": "Изображение вида сзади",
+            "left_image": "Изображение вида слева",
+            "right_image": "Изображение вида справа",
+            "top_image": "Изображение вида сверху",
+            "bottom_image": "Изображение вида снизу",
+            "custom_images": "Пользовательское изображение",
+            "camera_config": "Конфигурация камеры"
+        },
+        "widgets": {
+            "texture_size": "Размер текстур",
+            "blend_texture": "Смешивание текстур",
+            "blend_exponent": "Экспонента смешивания",
+            "ortho_scale": "Ортографическая пропорция",
+            "norm_size": "Размер нормалей",
+            "fill_holes": "Заполнение пустот",
+            "max_hole_size": "Максимальный размер отверстия",
+            "use_metallic": "Использовать металличность",
+            "depth_eps": "Порог глубины",
+            "mesh_cluster_threshold_cone_half_angle_rad": "Полууго конуса порога кластеризации сетки в радианах",
+            "add_alpha_channel": "Добавить альфа-канал",
+            "front_weight": "Вес переднего вида",
+            "back_weight": "Вес вида сзади",
+            "left_weight": "Вес вида слева",
+            "right_weight": "Вес вида справа",
+            "top_weight": "Вес вида сверху",
+            "bottom_weight": "Вес вида снизу",
+            "custom_azimuths": "Пользовательский азимут",
+            "custom_elevations": "Пользовательский угол наклона",
+            "custom_weights": "Пользовательские веса"
+        },
+        "outputs": {
+            "trimesh": "trimesh",
+            "base_color": "Базовый цвет",
+            "metallic_roughness": "Металличность и шероховатость"
+        },
+        "description": "Применяет текстуры проекцией нескольких видов.\n\nСмешивание с весами по углу: каждая поверхность получает текстуры изо всех видов, где она может быть «увидена», а вес определяется углом, под которым поверхность смотрит прямо на каждую камеру.\n\nУглы камеры (система координат с Y вверх):\n- Азимут: поворот вокруг оси Y\n  - 1° = перед (в сторону -Z)   - 91° = левая сторона (в сторону -X)   - 181° = зад (в сторону +Z)   - 271° = правая сторона (в сторону +X) - Тангаж: поворот вокруг оси X\n  - 1° = горизонт\n  - 91° = верх (в сторону -Y, взгляд сверху)   - -91° = низ (в сторону +Y, взгляд снизу)"
+    }
+}

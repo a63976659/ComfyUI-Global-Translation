@@ -1,0 +1,2345 @@
+{
+    "LongCatAvatarWhisperEmbeds": {
+        "title": "LongCat 虛擬形象 對話 嵌入 (v1.5)",
+        "inputs": {
+            "whisper_model": "對話 模型",
+            "audio_1": "音訊 1",
+            "audio_2": "音訊 2",
+            "audio_3": "音訊 3",
+            "audio_4": "音訊 4",
+            "ref_target_masks": "參考目標遮罩"
+        },
+        "widgets": {
+            "normalize_loudness": "標準化響度",
+            "num_frames": "幀數",
+            "fps": "幀率",
+            "audio_scale": "音訊縮放",
+            "audio_cfg_scale": "音訊 CFG 縮放",
+            "multi_audio_type": "多音訊類型"
+        },
+        "outputs": {
+            "num_frames": "幀數",
+            "audio": "音訊",
+            "multitalk_embeds": "多對話嵌入"
+        },
+        "description": "該節點用於處理虛擬形象的音訊嵌入，支援多路音訊輸入，利用 Whisper 模型擷取特徵，並允許調整幀數、幀率及音訊縮放比例等參數。"
+    },
+    "WanVideoImageToVideoSkyreelsv3_audio": {
+        "title": "Wan影片 長天空 ReelsV3 音訊到影片",
+        "inputs": {
+            "vae": "VAE編碼器",
+            "start_image": "起始影像",
+            "reference_video": "參考影片",
+            "clip_embeds": "CLIP 嵌入"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "frame_window_size": "幀視窗大小",
+            "motion_frame": "運動幀",
+            "drop_frames": "丟棄幀數",
+            "tiled_vae": "分塊 VAE",
+            "force_offload": "強制卸載",
+            "colormatch": "色彩匹配",
+            "output_path": "輸出路徑"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入",
+            "output_path": "輸出路徑"
+        },
+        "description": "支援Multi/InfiniteTalk長影片生成取樣方法，影片內容在Windows環境下以重疊幀的形式建立。此功能與ContextWindows以及其他除Multi/InfiniteTalk之外的多重功能並不相容或非必要。"
+    },
+    "WanVideoEnhanceAVideo": {
+        "title": "Wan影片 增強-A-影片(KJ)",
+        "widgets": {
+            "weight": "權重",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "feta_args": "增強參數"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "Wan影片設定區塊交換(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "block_swap_args": "區塊交換參數"
+        },
+        "outputs": {
+            "model": "Wan影片模型"
+        }
+    },
+    "WanVideoSetRadialAttention": {
+        "title": "Wan影片 設定徑向注意力(KJ)",
+        "inputs": {
+            "model": "模型名稱"
+        },
+        "widgets": {
+            "dense_blocks": "密集區塊",
+            "dense_vace_blocks": "密集VACE區塊",
+            "dense_timesteps": "密集時間步",
+            "decay_factor": "衰減因子",
+            "dense_attention_mode": "密集注意力模式",
+            "block_size": "區塊大小"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "WanVideoBlockList": {
+        "title": "Wan影片 區塊清單(KJ)",
+        "widgets": {
+            "blocks": "區塊"
+        },
+        "outputs": {
+            "block_list": "區塊清單"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "Wan影片 文字編碼（快取）(KJ)",
+        "inputs": {
+            "extender_args": "擴展器參數"
+        },
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度",
+            "quantization": "量化",
+            "device": "裝置",
+            "positive_prompt": "正面提示詞",
+            "negative_prompt": "負面提示詞",
+            "use_disk_cache": "使用磁碟快取"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組",
+            "negative_text_embeds": "負面文字嵌入組",
+            "positive_prompt": "正面提示詞"
+        },
+        "description": "將文字提示詞編碼為文字嵌入。\n 此節點在完成載入和卸載 T5 後會自動關閉 T5，不會佔用任何顯存或記憶體空間。\n 如果在載入 T5 之前已快取了提示，則不會載入 T5。\n 負向輸出旨在與 NAG 搭配使用，其中僅包含負面提示詞的嵌入。\n 此外，您還可以提供一個 千問 LLM 模型，以便用原始的Wan範本中的任何一個或者自訂的系統提示詞來擴展這個正面提示詞。"
+    },
+    "WanVideoTextEncode": {
+        "title": "Wan影片 文字編碼(KJ)",
+        "inputs": {
+            "t5": "T5編碼器",
+            "model_to_offload": "解除安裝模型"
+        },
+        "widgets": {
+            "positive_prompt": "正面提示詞",
+            "negative_prompt": "負面提示詞",
+            "force_offload": "強制卸載",
+            "use_disk_cache": "使用磁碟快取",
+            "device": "裝置"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組"
+        }
+    },
+    "WanVideoTextEncodeSingle": {
+        "title": "Wan影片  文字單編碼(KJ)",
+        "inputs": {
+            "t5": "T5模型",
+            "model_to_offload": "解除安裝模型"
+        },
+        "widgets": {
+            "prompt": "提示詞",
+            "force_offload": "強制卸載",
+            "use_disk_cache": "使用磁碟快取",
+            "device": "裝置"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組"
+        }
+    },
+    "WanVideoApplyNAG": {
+        "title": "Wan影片  套用NAG(KJ)",
+        "inputs": {
+            "original_text_embeds": "原始文字嵌入組",
+            "nag_text_embeds": "NAG文字嵌入組"
+        },
+        "widgets": {
+            "nag_scale": "NAG縮放",
+            "nag_tau": "NAG tau",
+            "nag_alpha": "NAG alpha"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組"
+        }
+    },
+    "WanVideoTextEmbedBridge": {
+        "title": "Wan影片 文字嵌入橋接(KJ)",
+        "inputs": {
+            "positive": "正面條件",
+            "negative": "負面條件"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "Wan影片 CLIP視覺編碼(KJ)",
+        "inputs": {
+            "clip_vision": "CLIP視覺",
+            "image_1": "圖像_1",
+            "image_2": "圖像_2",
+            "negative_image": "負面影像"
+        },
+        "widgets": {
+            "strength_1": "強度_1",
+            "strength_2": "強度_2",
+            "crop": "裁切",
+            "combine_embeds": "合併嵌入群組",
+            "force_offload": "強制卸載",
+            "tiles": "平鋪分塊",
+            "ratio": "寬高比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoRealisDanceLatents": {
+        "title": "Wan影片 RealisDance真實之舞 Latent(KJ)",
+        "inputs": {
+            "ref_latent": "參考Latent",
+            "smpl_latent": "SMPL人體模型 Latent",
+            "hamer_latent": "Hame哈默風格 Latent"
+        },
+        "widgets": {
+            "pose_cond_start_percent": "姿勢條件 起始百分比",
+            "pose_cond_end_percent": "姿勢條件 結束百分比"
+        },
+        "outputs": {
+            "add_cond_latents": "新增條件Latent"
+        }
+    },
+    "WanVideoAddStandInLatent": {
+        "title": "Wan影片 新增替身 Latent(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "ip_image_latent": "IP影像 Latent"
+        },
+        "widgets": {
+            "freq_offset": "頻率偏移"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddMTVMotion": {
+        "title": "Wan影片 MTV 動態特效(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "mtv_crafter_motion": "MTV 動態特效"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoImageToVideoEncode": {
+        "title": "Wan影片 影像轉影片編碼(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "CLIP嵌入組",
+            "start_image": "起始影像",
+            "end_image": "結束影像",
+            "control_embeds": "控制嵌入組",
+            "temporal_mask": "時間遮罩",
+            "extra_latents": "額外Latent",
+            "add_cond_latents": "新增條件Latent"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數",
+            "noise_aug_strength": "雜訊增強強度",
+            "start_latent_strength": "起始Latent強度",
+            "end_latent_strength": "結束Latent強度",
+            "force_offload": "強制卸載",
+            "fun_or_fl2v_model": "fun或fl2v模型",
+            "tiled_vae": "分塊編碼VAE"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAnimateEmbeds": {
+        "title": "Wan影片 動畫嵌入組(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "CLIP嵌入組",
+            "ref_images": "參考影像",
+            "pose_images": "姿勢影像",
+            "face_images": "面部影像",
+            "bg_images": "背景影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數",
+            "force_offload": "強制卸載",
+            "frame_window_size": "幀視窗大小",
+            "colormatch": "色彩匹配",
+            "pose_strength": "姿勢強度",
+            "face_strength": "面部強度",
+            "tiled_vae": "分塊編碼VAE"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoEmptyEmbeds": {
+        "title": "Wan影片 空嵌入組(KJ)",
+        "inputs": {
+            "control_embeds": "控制嵌入組",
+            "extra_latents": "額外Latent"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddExtraLatent": {
+        "title": "Wan影片 新增額外 Latent(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "extra_latents": "額外Latent"
+        },
+        "widgets": {
+            "latent_index": "Latent索引"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoMiniMaxRemoverEmbeds": {
+        "title": "Wan影片 Latent 尺寸去除嵌入組(KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "mask_latents": "遮罩Latent"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoPhantomEmbeds": {
+        "title": "Wan影片 Phantom幻影嵌入組(KJ)",
+        "inputs": {
+            "phantom_latent_1": "幻影Latent_1",
+            "phantom_latent_2": "幻影Latent_2",
+            "phantom_latent_3": "幻影Latent_3",
+            "phantom_latent_4": "幻影Latent_4",
+            "vace_embeds": "VACE嵌入組"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "phantom_cfg_scale": "幻影CFG縮放",
+            "phantom_start_percent": "幻影開始百分比",
+            "phantom_end_percent": "幻影結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoControlEmbeds": {
+        "title": "Wan影片 控制嵌入組(KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "fun_ref_image": "Fun參考影像"
+        },
+        "widgets": {
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddControlEmbeds": {
+        "title": "Wan影片 新增控制嵌入組(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "latents": "Latent",
+            "fun_ref_image": "Fun參考影像"
+        },
+        "widgets": {
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddPusaNoise": {
+        "title": "Wan影片 新增Pusa普薩噪聲(KJ)",
+        "inputs": {
+            "embeds": "嵌入組"
+        },
+        "widgets": {
+            "noise_multipliers": "噪聲乘數",
+            "noisy_steps": "含噪步數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoSLG": {
+        "title": "Wan影片 SLG(KJ)",
+        "widgets": {
+            "blocks": "區塊",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "slg_args": "SLG參數"
+        }
+    },
+    "WanVideoVACEEncode": {
+        "title": "Wan影片 VACE編碼(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "input_frames": "輸入幀",
+            "ref_images": "參考影像",
+            "input_masks": "輸入遮罩",
+            "prev_vace_embeds": "先前的VACE嵌入組"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數",
+            "strength": "強度",
+            "vace_start_percent": "VACE開始百分比",
+            "vace_end_percent": "VACE結束百分比",
+            "tiled_vae": "分塊編碼VAE"
+        },
+        "outputs": {
+            "vace_embeds": "VACE嵌入組"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "Wan影片內容選項(KJ)",
+        "inputs": {
+            "reference_latent": "參考Latent"
+        },
+        "widgets": {
+            "context_schedule": "情境調度",
+            "fuse_method": "融合方法",
+            "context_frames": "上下文幀數",
+            "context_stride": "內容步長",
+            "context_overlap": "上下文重疊",
+            "freenoise": "自由噪音",
+            "verbose": "詳細模式"
+        },
+        "outputs": {
+            "context_options": "上下文選項"
+        }
+    },
+    "WanVideoFlowEdit": {
+        "title": "Wan影片 串流編輯(KJ)",
+        "inputs": {
+            "source_embeds": "來源嵌入組",
+            "source_image_embeds": "來源影像嵌入組"
+        },
+        "widgets": {
+            "skip_steps": "跳過步數",
+            "drift_steps": "漂移步數",
+            "drift_flow_shift": "漂移流偏移",
+            "source_cfg": "來源CFG比例",
+            "drift_cfg": "漂移CFG比例"
+        },
+        "outputs": {
+            "flowedit_args": "流編輯 參數"
+        }
+    },
+    "WanVideoLoopArgs": {
+        "title": "Wan影片 循環參數(KJ)",
+        "widgets": {
+            "shift_skip": "偏移跳過",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "loop_args": "迴圈參數"
+        }
+    },
+    "WanVideoExperimentalArgs": {
+        "title": "Wan影片 實驗參數(KJ)",
+        "widgets": {
+            "video_attention_split_steps": "影片注意力分割步數",
+            "cfg_zero_star": "CFG零星",
+            "use_zero_init": "使用零初始化",
+            "zero_star_steps": "零星步數",
+            "use_fresca": "使用Fresca",
+            "fresca_scale_low": "Fresca縮放下限",
+            "fresca_scale_high": "Fresca縮放上限",
+            "fresca_freq_cutoff": "Fresca頻率截止值",
+            "use_tcfg": "使用時間CFG",
+            "raag_alpha": "RAAG阿爾法",
+            "bidirectional_sampling": "雙向取樣"
+        },
+        "outputs": {
+            "exp_args": "實驗參數"
+        }
+    },
+    "WanVideoFreeInitArgs": {
+        "title": "Wan影片  自由初始化參數(KJ)",
+        "widgets": {
+            "freeinit_num_iters": "自由初始化迭代次數",
+            "freeinit_method": "自由初始化方法",
+            "freeinit_n": "自由初始化n",
+            "freeinit_d_s": "自由初始化d_s",
+            "freeinit_d_t": "自由初始化d_t"
+        },
+        "outputs": {
+            "freeinit_args": "自由初始化參數"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "Wan影片  調度器(KJ)",
+        "inputs": {
+            "sigmas": "噪聲級別（Sigmas）"
+        },
+        "widgets": {
+            "scheduler": "調度器",
+            "steps": "步數",
+            "shift": "偏移",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        },
+        "outputs": {
+            "sigmas": "噪聲級別（Sigmas）",
+            "steps": "步數",
+            "shift": "偏移",
+            "scheduler": "調度器",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "Wan影片  調度器v2(KJ)",
+        "inputs": {
+            "sigmas": "噪聲級別（Sigmas）"
+        },
+        "widgets": {
+            "scheduler": "調度器",
+            "steps": "步數",
+            "shift": "偏移",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        },
+        "outputs": {
+            "sigmas": "噪聲級別（Sigmas）",
+            "scheduler": "調度器",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        }
+    },
+    "WanVideoSchedulerSA_ODE": {
+        "title": "Wan影片  調度器SA-ODE(KJ)",
+        "inputs": {
+            "sigmas": "噪聲級別（Sigmas）"
+        },
+        "widgets": {
+            "use_adaptive_order": "使用自適應排序",
+            "use_velocity_smoothing": "使用速度平滑處理",
+            "convergence_threshold": "收斂閾值",
+            "smoothing_factor": "平滑因子",
+            "steps": "步數",
+            "shift": "偏移",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        },
+        "outputs": {
+            "sigmas": "噪聲級別（Sigmas）",
+            "steps": "步數",
+            "shift": "偏移",
+            "scheduler": "調度器清單",
+            "start_step": "起始步數",
+            "end_step": "結束步數"
+        }
+    },
+    "WanVideoRoPEFunction": {
+        "title": "Wan影片 旋轉位置嵌入函式(KJ)",
+        "inputs": {
+            "rope_function": "旋轉位置嵌入函式"
+        },
+        "widgets": {
+            "rope_function": "旋轉位置嵌入函式",
+            "ntk_scale_f": "NTK縮放係數（幀）",
+            "ntk_scale_h": "NTK縮放係數（高度）",
+            "ntk_scale_w": "NTK縮放係數（寬度）"
+        },
+        "outputs": {
+            "rope_function": "旋轉位置嵌入函式"
+        },
+        "description": "Wan影片旋轉位置編碼（RoPE）設定。透過NTK感知縮放擴展內容長度。"
+    },
+    "WanVideoSampler": {
+        "title": "Wan影片 採樣器(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "image_embeds": "影像嵌入群組",
+            "text_embeds": "文字嵌入組",
+            "samples": "取樣",
+            "feta_args": "增強參數",
+            "context_options": "上下文選項",
+            "cache_args": "快取參數",
+            "flowedit_args": "流編輯參數",
+            "slg_args": "SLG參數",
+            "rope_function": "Rope函數",
+            "loop_args": "迴圈參數",
+            "experimental_args": "實驗參數",
+            "sigmas": "噪聲級別（Sigmas）",
+            "unianimate_poses": "UniAnimate通用動畫_姿態",
+            "fantasytalking_embeds": "FantasyTalking幻想對話_嵌入組",
+            "uni3c_embeds": "Uni3C 嵌入組",
+            "multitalk_embeds": "MultiTalk多輪對話 嵌入組",
+            "infinitetalk_embeds": "InfiniteTalk無限對話 嵌入組",
+            "freeinit_args": "自由初始化參數組"
+        },
+        "widgets": {
+            "steps": "步數",
+            "cfg": "CFG",
+            "shift": "偏移",
+            "seed": "隨機種子",
+            "force_offload": "強制卸載",
+            "scheduler": "調度器",
+            "riflex_freq_index": "Riflex頻率索引",
+            "denoise_strength": "降噪",
+            "batched_cfg": "批次CFG",
+            "start_step": "開始步數",
+            "end_step": "結束步數",
+            "rope_function": "Rope函數",
+            "add_noise_to_samples": "新增雜訊到取樣"
+        },
+        "outputs": {
+            "samples": "取樣",
+            "denoised_samples": "去噪後樣本"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "Wan影片 採樣器v2(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "image_embeds": "影像嵌入群組",
+            "scheduler": "調度器",
+            "text_embeds": "文字嵌入組",
+            "samples": "取樣",
+            "extra_args": "額外參數"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "seed": "隨機種子",
+            "force_offload": "強制卸載",
+            "add_noise_to_samples": "新增雜訊到取樣"
+        },
+        "outputs": {
+            "samples": "取樣",
+            "denoised_samples": "去噪後樣本"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "Wan影片 採樣器v2額外參數(KJ)",
+        "inputs": {
+            "feta_args": "增強參數",
+            "context_options": "上下文選項",
+            "cache_args": "快取參數",
+            "slg_args": "SLG參數",
+            "loop_args": "迴圈參數",
+            "experimental_args": "實驗參數",
+            "unianimate_poses": "UniAnimate通用動畫_姿態",
+            "fantasytalking_embeds": "FantasyTalking幻想對話_嵌入組",
+            "uni3c_embeds": "Uni3C 嵌入組",
+            "multitalk_embeds": "MultiTalk多輪對話 嵌入組",
+            "infinitetalk_embeds": "InfiniteTalk無限對話 嵌入組",
+            "freeinit_args": "自由初始化參數組"
+        },
+        "widgets": {
+            "riflex_freq_index": "Riflex頻率索引",
+            "rope_function": "Rope函數"
+        },
+        "outputs": {
+            "extra_args": "額外參數"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "Wan影片 設定採樣器(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "image_embeds": "影像嵌入群組",
+            "text_embeds": "文字嵌入組",
+            "samples": "取樣",
+            "feta_args": "增強參數",
+            "context_options": "上下文選項",
+            "cache_args": "快取參數",
+            "flowedit_args": "流編輯參數",
+            "slg_args": "SLG參數",
+            "rope_function": "Rope函數",
+            "loop_args": "迴圈參數",
+            "experimental_args": "實驗參數",
+            "sigmas": "噪聲級別（Sigmas）",
+            "unianimate_poses": "UniAnimate通用動畫_姿態",
+            "fantasytalking_embeds": "FantasyTalking幻想對話_嵌入組",
+            "uni3c_embeds": "Uni3C 嵌入組",
+            "multitalk_embeds": "MultiTalk多輪對話 嵌入組",
+            "infinitetalk_embeds": "InfiniteTalk無限對話 嵌入組",
+            "freeinit_args": "自由初始化參數組"
+        },
+        "widgets": {
+            "steps": "步數",
+            "cfg": "CFG",
+            "shift": "偏移",
+            "seed": "隨機種子",
+            "force_offload": "強制卸載",
+            "scheduler": "調度器",
+            "riflex_freq_index": "Riflex頻率索引",
+            "denoise_strength": "降噪",
+            "batched_cfg": "批次CFG",
+            "rope_function": "Rope函數",
+            "start_step": "開始步數",
+            "end_step": "結束步數",
+            "add_noise_to_samples": "新增雜訊到取樣"
+        },
+        "outputs": {
+            "sampler_inputs": "採樣器輸入",
+            "denoised_samples": "去噪後樣本"
+        },
+        "description": "節點用於輸出 Wan影片 設定中的採樣器 節點的所有設定和輸入資訊"
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "Wan影片 設定中的採樣器(KJ)",
+        "inputs": {
+            "sampler_inputs": "採樣器輸入"
+        },
+        "widgets": {
+            "normalization": "標準化"
+        },
+        "outputs": {
+            "samples": "取樣",
+            "denoised_samples": "去噪後樣本"
+        },
+        "description": "這個輔助節點僅具有使介面看起來更整潔的功能，對於即時預覽來說非常有用，因為原來的主取樣節點已經變得非常雜亂不堪了。"
+    },
+    "WanVideoDecode": {
+        "title": "Wan影片 解碼器(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "取樣"
+        },
+        "widgets": {
+            "enable_vae_tiling": "啟用VAE分塊",
+            "tile_x": "X軸分塊",
+            "tile_y": "Y軸分塊",
+            "tile_stride_x": "X軸步長",
+            "tile_stride_y": "Y軸步長",
+            "normalization": "標準化"
+        },
+        "outputs": {
+            "images": "影像",
+            "IMAGE": "影像"
+        }
+    },
+    "WanVideoEncodeLatentBatch": {
+        "title": "Wan影片  編碼器 Latent 批次(KJ)",
+        "inputs": {
+            "vae": "vae",
+            "images": "影像"
+        },
+        "widgets": {
+            "enable_vae_tiling": "啟用VAE分塊",
+            "tile_x": "X軸分塊",
+            "tile_y": "Y軸分塊",
+            "tile_stride_x": "X軸步長",
+            "tile_stride_y": "Y軸步長"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "Wan影片 編碼器(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "enable_vae_tiling": "啟用VAE分塊",
+            "tile_x": "X軸分塊",
+            "tile_y": "Y軸分塊",
+            "tile_stride_x": "X軸步長",
+            "tile_stride_y": "Y軸步長",
+            "noise_aug_strength": "雜訊增強強度",
+            "latent_strength": "Latent強度"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoImageClipEncode": {
+        "title": "Wan影片影像CLIP編碼(KJ)(已棄用)",
+        "inputs": {
+            "clip_vision": "CLIP視覺模型",
+            "image": "影像",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "generation_width": "生成寬度",
+            "generation_height": "生成高度",
+            "num_frames": "幀數",
+            "force_offload": "強制卸載",
+            "noise_aug_strength": "雜訊增強強度",
+            "latent_strength": "Latent強度",
+            "clip_embed_strength": "CLIP嵌入強度",
+            "adjust_resolution": "調整解析度"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "Wan影片區塊交換(KJ)",
+        "widgets": {
+            "blocks_to_swap": "待交換區塊",
+            "offload_img_emb": "卸載影像嵌入",
+            "offload_txt_emb": "卸載文字嵌入",
+            "use_non_blocking": "使用非封鎖",
+            "vace_blocks_to_swap": "VACE待交換區塊",
+            "prefetch_blocks": "預取區塊",
+            "block_swap_debug": "區塊交換偵錯"
+        },
+        "outputs": {
+            "block_swap_args": "區塊交換參數"
+        },
+        "description": "這是一個用於 ComfyUI 原生節點的簡單Wan2.1區塊交換節點，透過將最多 40 個區塊交換到 CPU 來減少 VRAM。"
+    },
+    "WanVideoVRAMManagement": {
+        "title": "Wan影片顯存管理(KJ)",
+        "widgets": {
+            "offload_percent": "卸載百分比"
+        },
+        "outputs": {
+            "vram_management_args": "顯示記憶體管理參數"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "Wan影片 Torch編譯設定(KJ)",
+        "widgets": {
+            "backend": "後端引擎",
+            "mode": "編譯模式",
+            "fullgraph": "全圖",
+            "dynamic": "動態編譯",
+            "dynamo_cache_size_limit": "Dynamo快取大小限制",
+            "compile_transformer_blocks_only": "僅編譯Transformer區塊",
+            "dynamo_recompile_limit": "Dynamo重新編譯限制"
+        },
+        "outputs": {
+            "torch_compile_args": "Torch編譯參數"
+        },
+        "description": "Torch編譯設定，當與模型載入器連接時，對所選層執行了 Torch編譯操作，需要使用 Triton 並且推薦使用 torch 2.5.0 版本。"
+    },
+    "WanVideoLoraSelect": {
+        "title": "Wan影片 Lora選擇(KJ)",
+        "inputs": {
+            "prev_lora": "前一個Lora",
+            "blocks": "區塊"
+        },
+        "widgets": {
+            "lora": "Lora",
+            "strength": "強度",
+            "low_mem_load": "低記憶體載入",
+            "merge_loras": "合併Lora"
+        },
+        "outputs": {
+            "lora": "Lora",
+            "WanVideo_LoRA": "Wan影片 Lora"
+        }
+    },
+    "WanVideoLoraSelectByName": {
+        "title": "Wan影片 按名稱選擇Lora(KJ)",
+        "inputs": {
+            "prev_lora": "前一個Lora",
+            "blocks": "區塊"
+        },
+        "widgets": {
+            "lora_name": "Lora名稱",
+            "strength": "強度",
+            "low_mem_load": "低記憶體載入",
+            "merge_loras": "合併Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "Wan影片 多選Lora(KJ)",
+        "inputs": {
+            "prev_lora": "前一個Lora",
+            "blocks": "區塊"
+        },
+        "widgets": {
+            "lora_0": "Lora_0",
+            "lora_1": "Lora_1",
+            "lora_2": "Lora_2",
+            "lora_3": "Lora_3",
+            "lora_4": "Lora_4",
+            "strength_0": "強度_0",
+            "strength_1": "強度_1",
+            "strength_2": "強度_2",
+            "strength_3": "強度_3",
+            "strength_4": "強度_4",
+            "low_mem_load": "低記憶體載入",
+            "merge_loras": "合併Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoVACEModelSelect": {
+        "title": "Wan影片 VACE模型選擇(KJ)",
+        "widgets": {
+            "vace_model": "vace模型"
+        },
+        "outputs": {
+            "extra_model": "額外模型",
+            "vacepath": "VACE路徑",
+            "vace_model": "vace模型"
+        }
+    },
+    "WanVideoExtraModelSelect": {
+        "title": "選擇Wan影片 額外模型(KJ)",
+        "widgets": {
+            "extra_model": "額外模型"
+        },
+        "outputs": {
+            "extra_model": "VACE路徑"
+        }
+    },
+    "WanVideoLoraBlockEdit": {
+        "title": "Wan影片 Lora區塊編輯(KJ)",
+        "widgets": {
+            "layer_filter": "層濾波器"
+        },
+        "outputs": {
+            "blocks": "所選區塊"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "設定Wan影片  Lora(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "lora": "Lora"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        },
+        "description": "將 Lora 權重設定為直接用於模型的線性層中，此操作不會合併 Lora 資訊。"
+    },
+    "WanVideoModelLoader": {
+        "title": "Wan影片 模型載入器(KJ)",
+        "inputs": {
+            "compile_args": "編譯參數",
+            "block_swap_args": "區塊交換參數",
+            "lora": "Lora",
+            "vram_management_args": "顯示記憶體管理參數",
+            "extra_model": "額外模型",
+            "vace_model": "VACE模型",
+            "fantasytalking_model": "FantasyTalking幻想對話模型",
+            "multitalk_model": "MultiTalk多人對話模型",
+            "fantasyportrait_model": "FantasyPortrait幻想肖像模型"
+        },
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "quantization": "量化",
+            "load_device": "載入裝置",
+            "attention_mode": "注意力模式",
+            "rms_norm_function": "RMS 常數函式"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "Wan影片 VAE載入器(KJ)",
+        "inputs": {
+            "compile_args": "編譯參數"
+        },
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan影片 VAE"
+        },
+        "description": "從ComfyUI/models/vae路徑載入 Wan VAE 模型"
+    },
+    "WanVideoTinyVAELoader": {
+        "title": "Wan影片 微型VAE載入器(KJ)",
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度",
+            "parallel": "平行"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan影片 VAE"
+        }
+    },
+    "LoadWanVideoT5TextEncoder": {
+        "title": "Wan影片 載入T5文字編碼器(KJ)",
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度",
+            "load_device": "載入裝置",
+            "quantization": "量化"
+        },
+        "outputs": {
+            "wan_t5_model": "WanT5模型"
+        }
+    },
+    "LoadWanVideoClipTextEncoder": {
+        "title": "Wan影片 載入CLIP文字編碼器(KJ)",
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度",
+            "load_device": "載入裝置"
+        },
+        "outputs": {
+            "wan_clip_vision": "Wan CLIP視覺"
+        }
+    },
+    "WanVideoImageResizeToClosest": {
+        "title": "Wan影片 影像大小最佳化(KJ)",
+        "inputs": {
+            "image": "影像"
+        },
+        "widgets": {
+            "generation_width": "生成寬度",
+            "generation_height": "生成高度",
+            "aspect_ratio_preservation": "寬高比保持"
+        },
+        "outputs": {
+            "image": "影像",
+            "width": "寬度",
+            "height": "高度"
+        }
+    },
+    "ExtractStartFramesForContinuations": {
+        "title": "擷取影片的首幀(KJ)",
+        "inputs": {
+            "input_video_frames": "輸入影片幀"
+        },
+        "widgets": {
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "start_frames": "首格"
+        }
+    },
+    "WanVideoVACEStartToEndFrame": {
+        "title": "Wan影片 VACE首尾幀(KJ)",
+        "inputs": {
+            "start_image": "起始影像",
+            "end_image": "結束影像",
+            "control_images": "控制影像",
+            "inpaint_mask": "修復遮罩"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "empty_frame_level": "空幀層級",
+            "start_index": "起始時間(秒)",
+            "end_index": "結束索引"
+        },
+        "outputs": {
+            "images": "影像",
+            "masks": "遮罩"
+        }
+    },
+    "CreateCFGScheduleFloatList": {
+        "title": "建立CFG調度浮點數清單(KJ)",
+        "widgets": {
+            "steps": "步數",
+            "cfg_scale_start": "CFG縮放起始值",
+            "cfg_scale_end": "CFG縮放結束值",
+            "interpolation": "插值",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "float_list": "浮點數清單"
+        },
+        "description": "輔助節點用於生成一連串浮點數清單，這些浮點數可用於為步驟安排 cfg 比例。\n 超出設定範圍時，cfg 值將被設置為 1.0 。"
+    },
+    "CreateScheduleFloatList": {
+        "title": "建立調度浮點數清單(KJ)",
+        "widgets": {
+            "steps": "步數",
+            "start_value": "起始值",
+            "end_value": "結束值",
+            "default_value": "預設值",
+            "interpolation": "插值",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "float_list": "浮點數清單"
+        }
+    },
+    "DummyComfyWanModelObject": {
+        "title": "Wan模型 Comfy虛擬物件(KJ)",
+        "widgets": {
+            "shift": "偏移量"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "WanVideoLatentReScale": {
+        "title": "Wan影片 Latent 張量重新縮放(KJ)",
+        "inputs": {
+            "samples": "取樣"
+        },
+        "widgets": {
+            "direction": "方向"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoSigmaToStep": {
+        "title": "Wan影片  Sigma轉步數(KJ)",
+        "widgets": {
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "step": "步數"
+        }
+    },
+    "NormalizeAudioLoudness": {
+        "title": "調整音訊響度(KJ)",
+        "inputs": {
+            "audio": "音訊"
+        },
+        "widgets": {
+            "lufs": "響度單位LUFS"
+        },
+        "outputs": {
+            "audio": "音訊"
+        }
+    },
+    "WanVideoPassImagesFromSamples": {
+        "title": "Wan影片  從取樣輸出影像(KJ)",
+        "inputs": {
+            "samples": "取樣"
+        },
+        "outputs": {
+            "images": "影像",
+            "output_path": "輸出路徑"
+        }
+    },
+    "FaceMaskFromPoseKeypoints": {
+        "title": "從姿態關鍵點生成臉部遮罩(KJ)",
+        "inputs": {
+            "pose_kps": "姿態關鍵點"
+        },
+        "widgets": {
+            "person_index": "人員索引"
+        },
+        "outputs": {
+            "MASK": "遮罩"
+        }
+    },
+    "WanVideoATITracks": {
+        "title": "Wan影片  ATI 軌跡(KJ)",
+        "inputs": {
+            "model": "模型名稱"
+        },
+        "widgets": {
+            "tracks": "軌跡",
+            "width": "寬度",
+            "height": "高度",
+            "temperature": "溫度",
+            "topk": "前k值",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "model": "Wan影片 模型"
+        }
+    },
+    "WanVideoATITracksVisualize": {
+        "title": "Wan影片  ATI 軌跡視覺化(KJ)",
+        "inputs": {
+            "images": "影像"
+        },
+        "widgets": {
+            "tracks": "軌跡",
+            "min_radius": "最小半徑",
+            "max_radius": "最大半徑",
+            "max_retain": "最大保留數量"
+        },
+        "outputs": {
+            "images": "影像"
+        }
+    },
+    "WanVideoATI_comfy": {
+        "title": "Wan影片  ATI Comfy(KJ)",
+        "inputs": {
+            "model": "模型名稱"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "tracks": "軌跡",
+            "temperature": "溫度",
+            "topk": "前k值"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "WanVideoTeaCache": {
+        "title": "Wan影片 Tea茶快取(KJ)",
+        "widgets": {
+            "rel_l1_thresh": "相對L1閾值",
+            "start_step": "起始步數",
+            "end_step": "結束步數",
+            "use_coefficients": "使用係數",
+            "cache_device": "快取裝置",
+            "mode": "快取模式"
+        },
+        "outputs": {
+            "cache_args": "快取參數"
+        }
+    },
+    "WanVideoMagCache": {
+        "title": "Wan影片  Mag快取(KJ)",
+        "widgets": {
+            "magcache_thresh": "Mag快取閾值",
+            "magcache_K": "Mag快取 K值",
+            "start_step": "起始步數",
+            "end_step": "結束步數",
+            "cache_device": "快取裝置"
+        },
+        "outputs": {
+            "cache_args": "快取參數"
+        }
+    },
+    "WanVideoEasyCache": {
+        "title": "Wan影片  簡易快取(KJ)",
+        "widgets": {
+            "easycache_thresh": "簡易快取閾值",
+            "start_step": "起始步數",
+            "end_step": "結束步數",
+            "cache_device": "快取裝置"
+        },
+        "outputs": {
+            "cache_args": "快取參數"
+        }
+    },
+    "WanVideoControlnetLoader": {
+        "title": "Wan影片 載入ControlNet(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "quantization": "量化",
+            "load_device": "載入裝置"
+        },
+        "outputs": {
+            "controlnet": "ControlNet"
+        }
+    },
+    "WanVideoControlnet": {
+        "title": "Wan影片  套用ControlNet(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "controlnet": "ControlNet",
+            "control_images": "控制影像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "control_stride": "控制步幅",
+            "control_start_percent": "控制起始百分比",
+            "control_end_percent": "控制結束百分比"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "FantasyPortraitFaceDetector": {
+        "title": "FantasyPortrait幻想人像面部偵測器(KJ)",
+        "inputs": {
+            "portrait_model": "人像模型",
+            "images": "影像"
+        },
+        "widgets": {
+            "adapter_scale": "適配器縮放",
+            "mouth_scale": "嘴巴縮放",
+            "emo_scale": "情感縮放",
+            "device": "裝置"
+        },
+        "outputs": {
+            "portrait_embeds": "人像嵌入組",
+            "bbox": "邊界框",
+            "landmarks": "特徵點"
+        }
+    },
+    "LandmarksToImage": {
+        "title": "特徵點轉影像(KJ)",
+        "inputs": {
+            "landmarks": "特徵點",
+            "image": "影像"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度"
+        },
+        "outputs": {
+            "keypoints_image": "關鍵點影像"
+        }
+    },
+    "WanVideoAddFantasyPortrait": {
+        "title": "Wan影片 新增FantasyPortrait幻想人像(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "portrait_embeds": "人像嵌入組"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "FantasyPortraitModelLoader": {
+        "title": "FantasyPortrait幻想人像 模型載入器(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "DownloadAndLoadWav2VecModel": {
+        "title": "(下載)載入 Wav2Vec2音訊模型(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "load_device": "載入裝置"
+        },
+        "outputs": {
+            "wav2vec_model": "Wav2Vec2音訊模型"
+        }
+    },
+    "FantasyTalkingModelLoader": {
+        "title": "FantasyTalking幻想對話 模型載入器(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度"
+        },
+        "outputs": {
+            "model": "FantasyTalking幻想對話模型"
+        }
+    },
+    "FantasyTalkingWav2VecEmbeds": {
+        "title": "FantasyTalking幻想對話 Wav2Vec2嵌入組(KJ)",
+        "inputs": {
+            "wav2vec_model": "Wav2Vec2音訊模型",
+            "fantasytalking_model": "FantasyTalking幻想對話模型",
+            "audio": "音訊"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "fps": "幀率",
+            "audio_scale": "音訊縮放",
+            "audio_cfg_scale": "音訊CFG縮放"
+        },
+        "outputs": {
+            "fantasytalking_embeds": "FantasyTalking幻想對話_嵌入組"
+        }
+    },
+    "WanVideoFunCameraEmbeds": {
+        "title": "Wan影片 Fun相機嵌入組(KJ)",
+        "inputs": {
+            "poses": "姿勢"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WhisperModelLoader": {
+        "title": "載入語音模型(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "load_device": "載入裝置"
+        },
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "load_device": "載入裝置"
+        },
+        "outputs": {
+            "whisper_model": "語音模型"
+        }
+    },
+    "HuMoEmbeds": {
+        "title": "HuMo音訊 嵌入組(KJ)",
+        "inputs": {
+            "whisper_model": "語音模型",
+            "vae": "VAE",
+            "reference_images": "參考影像",
+            "audio": "音訊"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "width": "寬度",
+            "height": "高度",
+            "audio_scale": "音訊縮放",
+            "audio_cfg_scale": "音訊CFG縮放",
+            "audio_start_percent": "音訊起始百分比",
+            "audio_end_percent": "音訊結束百分比",
+            "tiled_vae": "分塊編碼VAE"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoCombineEmbeds": {
+        "title": "Wan影片 合併嵌入組(KJ)",
+        "inputs": {
+            "embeds_1": "嵌入組_1",
+            "embeds_2": "嵌入組_2"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "DownloadAndLoadNLFModel": {
+        "title": "(下載)載入NLF模型(KJ)",
+        "inputs": {
+            "url": "網址"
+        },
+        "widgets": {
+            "url": "網址"
+        },
+        "outputs": {
+            "nlf_model": "NLF模型"
+        }
+    },
+    "LoadNLFModel": {
+        "title": "載入NLF模型(KJ)",
+        "widgets": {
+            "nlf_model": "NLF模型",
+            "warmup": "預熱"
+        },
+        "outputs": {
+            "nlf_model": "NLF模型"
+        }
+    },
+    "LoadVQVAE": {
+        "title": "載入VQ VAE(KJ)",
+        "inputs": {
+            "model_name": "模型名稱"
+        },
+        "widgets": {
+            "model_name": "模型名稱"
+        },
+        "outputs": {
+            "vqvae": "VQ VAE"
+        }
+    },
+    "MTVCrafterEncodePoses": {
+        "title": "MTV Crafter 編碼姿勢(KJ)",
+        "inputs": {
+            "vqvae": "VQ VAE",
+            "poses": "姿勢"
+        },
+        "outputs": {
+            "mtvcrafter_motion": "MTV 動態特效",
+            "pose_results": "姿勢"
+        },
+        "description": "自然語言預測 姿勢"
+    },
+    "NLFPredict": {
+        "title": "自然語言 預測姿勢(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "images": "影像"
+        },
+        "outputs": {
+            "pose_results": "姿勢"
+        },
+        "description": "自然語言預測 姿勢"
+    },
+    "DrawNLFPoses": {
+        "title": "自然語言 繪製姿勢(KJ)",
+        "inputs": {
+            "poses": "姿勢"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度"
+        },
+        "outputs": {
+            "image": "影像"
+        }
+    },
+    "Wav2VecModelLoader": {
+        "title": "Wav2vec2音訊模型 載入器(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "load_device": "載入裝置"
+        },
+        "outputs": {
+            "wav2vec_model": "Wav2Vec2音訊模型"
+        }
+    },
+    "MultiTalkModelLoader": {
+        "title": "Multi/InfiniteTalk無限多輪對話 模型載入器(KJ)",
+        "inputs": {
+            "model": "模型名稱"
+        },
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        }
+    },
+    "MultiTalkWav2VecEmbeds": {
+        "title": "Multi/InfiniteTalk無限多輪對話 Wav2Vec2 嵌入組(KJ)",
+        "inputs": {
+            "wav2vec_model": "Wav2Vec2 模型",
+            "audio_1": "音訊_1",
+            "audio_2": "音訊_2",
+            "audio_3": "音訊_3",
+            "audio_4": "音訊_4",
+            "ref_target_masks": "參考目標遮罩"
+        },
+        "widgets": {
+            "normalize_loudness": "調整音訊響度",
+            "num_frames": "幀數",
+            "fps": "幀率",
+            "audio_scale": "音訊縮放",
+            "multi_audio_type": "多音訊類型",
+            "audio_cfg_scale": "音訊配置縮放"
+        },
+        "outputs": {
+            "multitalk_embeds": "MultiTalk多輪對話 嵌入組",
+            "audio": "音訊",
+            "num_frames": "幀數"
+        }
+    },
+    "MultiTalkSilentEmbeds": {
+        "title": "MultiTalk多輪對話 無聲嵌入組(KJ)",
+        "widgets": {
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "multitalk_embeds": "MultiTalk多輪對話 嵌入組"
+        }
+    },
+    "WanVideoImageToVideoMultiTalk": {
+        "title": "Wan影片 影像轉影片（MultiTalk多輪對話）(KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "起始影像",
+            "clip_embeds": "CLIP嵌入組"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "frame_window_size": "幀視窗大小",
+            "motion_frame": "運動幀",
+            "force_offload": "強制卸載",
+            "colormatch": "色彩匹配",
+            "tiled_vae": "分塊編碼VAE",
+            "output_path": "輸出路徑",
+            "mode": "軌道模式"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組",
+            "output_path": "輸出路徑"
+        }
+    },
+    "QwenLoader": {
+        "title": "千問 載入器(KJ)",
+        "widgets": {
+            "model": "模型名稱",
+            "load_device": "載入裝置",
+            "precision": "精確度"
+        },
+        "outputs": {
+            "QWENMODEL": "千問模型"
+        }
+    },
+    "WanVideoPromptExtender": {
+        "title": "Wan影片 提示詞擴展器(KJ)",
+        "inputs": {
+            "qwen": "千問",
+            "custom_system_prompt": "自訂系統提示詞"
+        },
+        "widgets": {
+            "prompt": "提示詞",
+            "max_new_tokens": "最大新標記數",
+            "force_offload": "強制卸載",
+            "seed": "隨機種子",
+            "device": "裝置",
+            "system_prompt": "系統提示詞"
+        },
+        "outputs": {
+            "STRING": "字串"
+        }
+    },
+    "WanVideoPromptExtenderSelect": {
+        "title": "Wan影片 選擇擴展提示詞(KJ)",
+        "inputs": {
+            "custom_system_prompt": "自訂系統提示詞"
+        },
+        "widgets": {
+            "model": "模型名稱",
+            "max_new_tokens": "最大新標記數",
+            "system_prompt": "系統提示詞",
+            "seed": "隨機種子"
+        },
+        "outputs": {
+            "extender_args": "擴展 參數"
+        }
+    },
+    "WanVideoReCamMasterDefaultCamera": {
+        "title": "Wan影片  重新設定 主預設相機(KJ)",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "camera_type": "相機類型"
+        },
+        "outputs": {
+            "camera_poses": "相機姿態"
+        },
+        "description": "ReCamMasterDefaultCamera"
+    },
+    "WanVideoReCamMasterGenerateOrbitCamera": {
+        "title": "Wan影片  重新啟動 主生成軌道攝影機(KJ)",
+        "widgets": {
+            "num_frames": "幀數",
+            "degrees": "度數"
+        },
+        "outputs": {
+            "camera_poses": "相機姿態"
+        },
+        "description": "ReCamMasterGenerateOrbitCamera"
+    },
+    "WanVideoReCamMasterCameraEmbed": {
+        "title": "Wan影片 重新設定相機嵌入(KJ)",
+        "inputs": {
+            "camera_poses": "相機姿態",
+            "latents": "Latent"
+        },
+        "outputs": {
+            "camera_embeds": "相機嵌入",
+            "camera_poses": "相機姿態"
+        },
+        "description": "ReCamMasterCameraEmbed"
+    },
+    "ReCamMasterPoseVisualizer": {
+        "title": "相機位置姿態視覺化(KJ)",
+        "inputs": {
+            "camera_poses": "相機姿態"
+        },
+        "widgets": {
+            "base_xval": "x值",
+            "zval": "z值",
+            "scale": "縮放",
+            "arrow_length": "箭頭長度"
+        },
+        "outputs": {
+            "image": "影像"
+        },
+        "description": "ReCamMasterPoseVisualizer"
+    },
+    "WanVideoAddS2VEmbeds": {
+        "title": "Wan影片 新增S2V嵌入組(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "audio_encoder_output": "音訊編碼器輸出",
+            "ref_latent": "參考Latent",
+            "pose_latent": "姿態Latent",
+            "vae": "變分自動編碼器"
+        },
+        "widgets": {
+            "frame_window_size": "幀視窗大小",
+            "audio_scale": "音訊縮放",
+            "pose_start_percent": "姿態起始百分比",
+            "pose_end_percent": "姿態結束百分比",
+            "enable_framepack": "啟用幀打包"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組",
+            "audio_frame_count": "音訊幀數"
+        }
+    },
+    "WanVideoDiffusionForcingSampler": {
+        "title": "Wan影片 擴散強制採樣器(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "text_embeds": "文字嵌入組",
+            "image_embeds": "影像嵌入群組",
+            "samples": "取樣",
+            "prefix_samples": "前綴取樣",
+            "cache_args": "快取參數",
+            "slg_args": "SLG參數",
+            "experimental_args": "實驗參數",
+            "unianimate_poses": "UniAnimate通用動畫_姿態"
+        },
+        "widgets": {
+            "addnoise_condition": "新增雜訊條件",
+            "fps": "幀率",
+            "steps": "步數",
+            "cfg": "CFG",
+            "shift": "偏移",
+            "seed": "隨機種子",
+            "force_offload": "強制卸載",
+            "scheduler": "調度器",
+            "rope_function": "RoPE函數",
+            "denoise_strength": "降噪"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "Wan影片 Uni3C Controlnet載入器(KJ)",
+        "inputs": {
+            "compile_args": "編譯參數"
+        },
+        "widgets": {
+            "model": "模型名稱",
+            "base_precision": "基礎精度",
+            "quantization": "量化",
+            "load_device": "載入裝置",
+            "attention_mode": "注意力模式",
+            "compile_args": "編譯參數"
+        },
+        "outputs": {
+            "controlnet": "ControlNet",
+            "WanVideo Controlnet": "Wan影片 ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "Wan影片 Uni3C 嵌入組(KJ)",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "render_latent": "渲染Latent",
+            "render_mask": "渲染遮罩"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "uni3c_embeds": "Uni3C 嵌入組"
+        }
+    },
+    "WanVideoUniAnimateDWPoseDetector": {
+        "title": "Wan影片 UniAnimate通用動畫 DW姿態 偵測器(KJ)",
+        "inputs": {
+            "pose_images": "姿態影像",
+            "reference_pose_image": "參考姿態影像"
+        },
+        "widgets": {
+            "score_threshold": "分數閾值",
+            "stick_width": "線條寬度",
+            "draw_body": "繪製身體",
+            "body_keypoint_size": "身體關鍵點大小",
+            "draw_feet": "繪製腳部",
+            "draw_hands": "繪製手部",
+            "hand_keypoint_size": "手部關鍵點大小",
+            "colorspace": "色彩空間",
+            "handle_not_detected": "處理未偵測到的情況",
+            "draw_head": "繪製頭部"
+        },
+        "outputs": {
+            "poses": "姿態",
+            "reference_pose": "參考姿態"
+        }
+    },
+    "WanVideoAddLucyEditLatents": {
+        "title": "Wan影片 新增Lucy編輯 Latent(KJ)",
+        "inputs": {
+            "embeds": "embeds嵌入組",
+            "extra_latents": "額外Latent"
+        },
+        "outputs": {
+            "image_embeds": "影像 嵌入組"
+        }
+    },
+    "LoadLynxResampler": {
+        "title": "Lynx重取樣 載入器 (KJ)",
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度"
+        },
+        "outputs": {
+            "resampler": "重採樣"
+        }
+    },
+    "LynxEncodeFaceIP": {
+        "title": "Lynx編碼 面部IP(KJ)",
+        "inputs": {
+            "resampler": "重採樣",
+            "ip_image": "面部IP影像"
+        },
+        "outputs": {
+            "lynx_face_embeds": "Lynx 面部 嵌入組"
+        }
+    },
+    "DrawArcFaceLandmarks": {
+        "title": "繪製弧形臉特徵點(KJ)",
+        "inputs": {
+            "lynx_face_embeds": "Lynx 面部 嵌入組",
+            "image": "影像"
+        },
+        "outputs": {
+            "landmarked_image": "具有特徵點的影像"
+        },
+        "description": "在影像上繪製面部特徵點以進行視覺化/除錯操作。"
+    },
+    "WanVideoAddLynxEmbeds": {
+        "title": "Wan影片 新增Lynx 嵌入組(KJ)",
+        "inputs": {
+            "embeds": "embeds嵌入組",
+            "vae": "VAE",
+            "lynx_face_embeds": "Lynx 面部 嵌入組",
+            "lynx_ip_embeds": "Lynx 面部IP 嵌入組",
+            "ref_image": "參考影像",
+            "ref_text_embed": "參考文字嵌入",
+            "ref_blocks_to_use": "可使用的參考塊"
+        },
+        "widgets": {
+            "ip_scale": "IP 規模",
+            "ref_scale": "參考規模",
+            "lynx_cfg_scale": "Lynx CFG 規模",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "LynxInsightFaceCrop": {
+        "title": "Lynx InsightFace偵測面部 裁剪(KJ)",
+        "inputs": {
+            "image": "影像"
+        },
+        "outputs": {
+            "ip_image": "面部IP影像",
+            "ref_image": "參考影像"
+        }
+    },
+    "OviMMAudioVAELoader": {
+        "title": "Ovi MM音訊 VAE載入器(KJ)",
+        "widgets": {
+            "vocoder": "語音合成器",
+            "precision": "精確度"
+        },
+        "outputs": {
+            "mmaudio_vae": "MM音訊 VAE"
+        },
+        "description": "載入 MM音訊VAE 以生成 Ovi音訊"
+    },
+    "WanVideoDecodeOviAudio": {
+        "title": "Wan影片 Ovi音訊解碼器(KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM音訊 VAE",
+            "samples": "取樣"
+        },
+        "outputs": {
+            "audio": "音訊"
+        }
+    },
+    "WanVideoEncodeOviAudio": {
+        "title": "Wan影片 Ovi音訊編碼器(KJ)",
+        "inputs": {
+            "mmaudio_vae": "MM音訊 VAE",
+            "audio": "音訊"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoOviCFG": {
+        "title": "Wan影片 Ovi CFG引導器(KJ)",
+        "inputs": {
+            "original_text_embeds": "原文 文字嵌入",
+            "ovi_negative_text_embeds": "Ovi負面提示詞 文字嵌入"
+        },
+        "widgets": {
+            "ovi_audio_cfg": "Ovi音訊 CFG"
+        },
+        "outputs": {
+            "text_embeds": "文字嵌入組"
+        },
+        "description": "將 Ovi 的負面文字嵌入資訊和音訊 CFG 比例係數新增到文字嵌入字典中"
+    },
+    "WanVideoAddOviAudioToLatents": {
+        "title": "Wan影片 新增Ovi音訊到 Latent(KJ)",
+        "inputs": {
+            "original_samples": "原始取樣",
+            "audio_samples": "音訊取樣"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoEmptyMMAudioLatents": {
+        "title": "Wan影片 MM音訊 空 Latent(KJ)",
+        "widgets": {
+            "length": "長度"
+        },
+        "outputs": {
+            "samples": "取樣"
+        }
+    },
+    "WanVideoAddFlashVSRInput": {
+        "title": "Wan影片 新增 Flash閃VSR 輸入(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "images": "影像組"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "image_embeds": "影像 嵌入組"
+        }
+    },
+    "WanVideoFlashVSRDecoderLoader": {
+        "title": "Wan影片 載入Flash閃VSR 解碼器(KJ)",
+        "widgets": {
+            "model_name": "模型名稱",
+            "precision": "精確度"
+        },
+        "outputs": {
+            "vae": "VAE"
+        },
+        "description": "從ComfyUI/models/vae路徑載入Wan VAE模型"
+    },
+    "MochaEmbeds": {
+        "title": "Mocha嵌入組(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "input_video": "輸入影片",
+            "mask": "遮罩",
+            "ref1": "參考1",
+            "ref2": "參考2"
+        },
+        "widgets": {
+            "force_offload": "任務卸載",
+            "tiled_vae": "分塊VAE"
+        },
+        "outputs": {
+            "image_embeds": "影像 嵌入組"
+        },
+        "description": "輸入Mocha模型：https://github.com/Orange-3DV-Team/MoCha"
+    },
+    "DrawGaussianNoiseOnImage": {
+        "title": "在影像上繪製高斯噪聲(KJ)",
+        "inputs": {
+            "image": "影像",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "device": "裝置",
+            "seed": "隨機種子"
+        },
+        "outputs": {
+            "images": "影像"
+        }
+    },
+    "LatentInpaintTTM": {
+        "title": "Latent 重繪TTM(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "device": "裝置",
+            "steps": "步數"
+        },
+        "outputs": {
+            "model": "模型名稱",
+            "MODEL": "模型名稱"
+        }
+    },
+    "WanVideoAddBindweaveEmbeds": {
+        "title": "Wan影片 新增綁定編織嵌入項(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "reference_latents": "參考Latent",
+            "ref_masks": "參考遮罩",
+            "qwenvl_embeds_pos": "千問vl正面提示詞",
+            "qwenvl_embeds_neg": "千問vl負面提示詞"
+        },
+        "widgets": {
+            "device": "裝置",
+            "steps": "步數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入",
+            "image_embed_preview": "影像嵌入預覽",
+            "mask_preview": "遮罩預覽"
+        }
+    },
+    "WanVideoAddTTMLatents": {
+        "title": "Wan影片 新增 TTM Latent(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "reference_latents": "參考Latent",
+            "mask": "遮罩"
+        },
+        "widgets": {
+            "start_step": "開始步數",
+            "end_step": "結束步數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "TextImageEncodeQwenVL": {
+        "title": "千問VL 文字影像編碼器(KJ)",
+        "inputs": {
+            "clip": "CLIP",
+            "image": "影像"
+        },
+        "widgets": {
+            "start_step": "開始步數",
+            "end_step": "結束步數"
+        },
+        "outputs": {
+            "qwenvl_embeds": "千問 嵌入"
+        }
+    },
+    "WanVideoUniLumosEmbeds": {
+        "title": "Wan影片 UniLumos 嵌入技術(KJ)",
+        "inputs": {
+            "foreground_latents": "前景Latent",
+            "background_latents": "背景Latent"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "WanVideoPreviewEmbeds": {
+        "title": "Wan影片 預覽 嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入"
+        },
+        "widgets": {
+            "width": "寬度",
+            "height": "高度",
+            "num_frames": "幀數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入",
+            "mask": "遮罩"
+        }
+    },
+    "WanVideoAddSteadyDancerEmbeds": {
+        "title": "Wan影片 新增SteadyDancer平穩舞者 嵌入技術(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "pose_latents_positive": "姿態 Latent（正面）",
+            "pose_latents_negative": "姿態 Latent（負向）",
+            "clip_vision_embeds": "CLIP視覺嵌入"
+        },
+        "widgets": {
+            "pose_strength_spatial": "姿態強度_空間維度",
+            "pose_strength_temporal": "姿態強度_時間維度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "WanVideoAddOneToAllReferenceEmbeds": {
+        "title": "Wan影片 新增OneToAll 一到全部 參考嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "vae": "VAE",
+            "ref_image": "參考影像",
+            "ref_mask": "參考遮罩"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "WanVideoAddOneToAllPoseEmbeds": {
+        "title": "Wan影片 新增OneToAll 一到全部 姿態嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "vae": "VAE",
+            "pose_images": "姿態影像",
+            "pose_prefix_image": "姿態前綴影像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比",
+            "pose_cfg_scale": "姿態CFG強度"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入"
+        }
+    },
+    "WanVideoAddOneToAllExtendEmbeds": {
+        "title": "Wan影片 新增OneToAll 一到全部 擴展嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入",
+            "vae": "VAE",
+            "prev_latents": "前面的 Latent",
+            "pose_images": "姿態影像"
+        },
+        "widgets": {
+            "window_size": "視窗大小",
+            "overlap": "重疊",
+            "frames_processed": "處理幀數",
+            "if_not_enough_frames": "如果幀數不足"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入",
+            "pose_slice": "姿勢切片圖"
+        }
+    },
+    "WanVideoAddWanMoveTracks": {
+        "title": "Wan影片 新增Wan移動軌跡(KJ)",
+        "inputs": {
+            "image_embeds": "影像嵌入",
+            "tracks": "軌跡",
+            "track_mask": "軌跡遮罩",
+            "track_coords": "軌跡座標"
+        },
+        "widgets": {
+            "strength": "強度"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入",
+            "tracks": "軌跡"
+        }
+    },
+    "WanVideoWanDrawWanMoveTracks": {
+        "title": "Wan影片 繪製Wan移動軌跡(KJ)",
+        "inputs": {
+            "images": "影像",
+            "tracks": "軌跡"
+        },
+        "widgets": {
+            "line_resolution": "線條解析度",
+            "circle_size": "圓的大小",
+            "opacity": "透明度",
+            "line_width": "線條寬度"
+        },
+        "outputs": {
+            "image": "影像"
+        }
+    },
+    "WanMove_native": {
+        "title": "Wan MoveNative萬移動原生版(KJ)",
+        "inputs": {
+            "positive": "正面條件",
+            "track_mask": "軌跡遮罩",
+            "track_coords": "軌跡座標"
+        },
+        "outputs": {
+            "positive": "正面條件",
+            "tracks": "軌跡"
+        }
+    },
+    "WanVideoAddStoryMemLatents": {
+        "title": "Wan影片 新增StoryMem故事記憶 Latent(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "memory_images": "記憶影像"
+        },
+        "widgets": {
+            "freq_offset": "頻率偏移"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddSCAILPoseEmbeds": {
+        "title": "Wan影片 新增 SCAIL姿態 嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "pose_images": "姿態影像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoAddSCAILReferenceEmbeds": {
+        "title": "Wan影片 新增 SCAIL參考 嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入組",
+            "vae": "VAE",
+            "ref_image": "參考影像",
+            "clip_embeds": "CLIP嵌入"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組"
+        }
+    },
+    "WanVideoLongCatAvatarExtendEmbeds": {
+        "title": "Wan影片 大貓虛擬影像擴展 嵌入(KJ)",
+        "inputs": {
+            "prev_latents": "前面的 Latent",
+            "audio_embeds": "音訊嵌入",
+            "ref_latent": "參考Latent",
+            "samples": "取樣"
+        },
+        "widgets": {
+            "amples": "樣本",
+            "num_frames": "幀數",
+            "overlap": "重疊",
+            "frames_processed": "已處理的幀",
+            "if_not_enough_audio": "音訊不足時",
+            "ref_frame_index": "參考幀索引",
+            "ref_mask_frame_range": "參考遮罩幀範圍"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組",
+            "samples_slice": "取樣分塊"
+        }
+    },
+    "WanVideoAddDualControlEmbeds": {
+        "title": "Wan影片 新增雙控制嵌入(KJ)",
+        "inputs": {
+            "embeds": "嵌入向量",
+            "vae": "VAE 模型",
+            "dense": "密集控制",
+            "sparse": "稀疏控制",
+            "prev_images": "前序影像"
+        },
+        "widgets": {
+            "strength": "控制強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比",
+            "first_frame_noise_level": "首幀噪點水平"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組",
+            "wanvidimage_embeds": "Wan影片影像 嵌入組"
+        }
+    },
+    "WanVideoSVIProEmbeds": {
+        "title": "Wan影片 SVI 專業 嵌入(KJ)",
+        "inputs": {
+            "prev_samples": "前 採樣",
+            "anchor_samples": "錨點 取樣"
+        },
+        "widgets": {
+            "num_frames": "幀數",
+            "motion_latent_count": "運動Latent 次數"
+        },
+        "outputs": {
+            "image_embeds": "影像嵌入群組",
+            "samples_slice": "取樣分塊"
+        }
+    },
+    "WanVideoSetAttentionModeOverride": {
+        "title": "Wan影片 注意力模式 優先權切換設定(KJ)",
+        "inputs": {
+            "model": "模型名稱",
+            "blocks": "區塊"
+        },
+        "widgets": {
+            "attention_mode": "注意力模式",
+            "start_step": "開始步數",
+            "end_step": "結束步數",
+            "verbose": "囉嗦的"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        },
+        "description": "為模型的 特定步驟 及/或 區塊範圍 取消注意力模式設定"
+    },
+    "WanVideoUltraVicoSettings": {
+        "title": "Wan影片 UltraVico超維科 設定(KJ)",
+        "inputs": {
+            "model": "模型名稱"
+        },
+        "widgets": {
+            "alpha": "alpha阿爾法 不透明度"
+        },
+        "outputs": {
+            "model": "模型名稱"
+        },
+        "description": "設定 UltraVico 參數，但注意模式仍需設定為 sageattn_ultravico，相關文件請參考：https://github.com/thu-ml/DiT-Extrapolation"
+    },
+    "WanVideoUniAnimatePoseInput": {
+        "title": "Wan影片 UniAnimate通用動畫 姿態輸入(KJ)",
+        "inputs": {
+            "pose_images": "姿態影像",
+            "reference_pose_image": "參考姿態影像"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始百分比",
+            "end_percent": "結束百分比"
+        },
+        "outputs": {
+            "unianimate_poses": "UniAnimate通用動畫_姿態"
+        }
+    }
+}

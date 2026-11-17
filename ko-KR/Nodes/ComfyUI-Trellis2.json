@@ -1,0 +1,2075 @@
+{
+    "Trellis2LoadModel": {
+        "title": "Trellis2 모델 로더",
+        "widgets": {
+            "modelname": "모델 이름",
+            "backend": "연산 백엔드",
+            "device": "실행 장치",
+            "low_vram": "저VRAM 모드",
+            "keep_models_loaded": "모델을 메모리에 상주",
+            "conv_backend": "컨볼루션 연산 백엔드",
+            "sparse_backend": "희소 연산 백엔드",
+            "use_reconviagen": "ReconViagen 생성기 활성화"
+        },
+        "outputs": {
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelGenerator": {
+        "title": "Trellis2 복셀 메시 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image": "이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "pipeline_type": "파이프라인 유형",
+            "sparse_structure_steps": "희소 구조 생성 스텝 수",
+            "shape_steps": "형태 생성 스텝 수",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "max_num_tokens": "최대 Token 수량",
+            "max_views": "최대 뷰 수량",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "generate_texture_slat": "텍스처 슬랫 분할 생성",
+            "use_tiled_decoder": "분할 디코더 사용",
+            "sampler": "샘플러",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "keep_only_shell": "셸 메시만 유지"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "BVH 바운딩 박스 구조"
+        },
+        "description": ""
+    },
+    "Trellis2LoadImageWithTransparency": {
+        "title": "Trellis2 투명 채널 포함 이미지 로더",
+        "inputs": {
+            "image": "이미지"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "image_with_alpha": "투명 채널 포함 이미지"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMesh": {
+        "title": "Trellis2 메시 단순화 도구",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "method": "단순화 알고리즘"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimesh": {
+        "title": "Trellis2 트라이메시 단순화 도구",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "method": "단순화 알고리즘"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2ProgressiveSimplify": {
+        "title": "Trellis2 점진적 메시 단순화 도구",
+        "inputs": {
+            "trimesh": "삼각 메시",
+            "mesh": "메시"
+        },
+        "widgets": {
+            "max_edge_length": "최대 변장 임계값",
+            "max_triangle_aspect_ratio": "최대 삼각형 종횡비 임계값",
+            "strategy": "단순화 전략",
+            "stabilizer": "스테빌라이저 파라미터",
+            "touch_near_boundary_edges": "경계 근처 변 처리",
+            "optimize_vertex_positions": "정점 위치 최적화",
+            "angle_based_weights": "각도 기반 가중치 사용"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToTrimesh": {
+        "title": "Trellis2 복셀 메시를 트라이메시로 변환하는 도구",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "reorient_vertices": "정점 방향 전환"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2ExportMesh": {
+        "title": "Trellis2 메시 내보내기 도구",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "file_format": "내보내기 파일 형식"
+        },
+        "outputs": {
+            "glb_path": "GLB 파일 경로",
+            "relative_path": "상대 경로"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessMesh": {
+        "title": "Trellis2 메시 후처리 도구",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "remove_duplicate_faces": "중복 페이스 제거",
+            "repair_non_manifold_edges": "비매니폴드 변 복구",
+            "remove_non_manifold_faces": "비매니폴드 페이스 제거",
+            "remove_small_connected_components": "소형 연결 컴포넌트 제거",
+            "remove_small_connected_components_size": "소형 연결 컴포넌트 크기 임계값",
+            "unify_faces_orientation": "페이스 방향 통일",
+            "remove_floaters": "플로터 파편 제거",
+            "remove_infinite_vertices": "무한 좌표 정점 제거",
+            "merge_vertices": "버텍스 병합",
+            "merge_distance": "정점 병합 거리 임계값",
+            "remove_nan_vertices": "잘못된 값의 정점 제거"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapAndRasterizer": {
+        "title": "Trellis2 메시 UV 전개 및 래스터화 도구",
+        "inputs": {
+            "mesh": "메시",
+            "bvh": "BVH 바운딩 박스 구조"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 원추 반각 임계값（라디안）",
+            "mesh_cluster_refine_iterations": "메시 군집화 정밀화 반복 횟수",
+            "mesh_cluster_global_iterations": "메시 군집화 전역 반복 횟수",
+            "mesh_cluster_smooth_strength": "메시 군집화 스무딩 강도",
+            "texture_size": "텍스처 크기",
+            "texture_alpha_mode": "텍스처 투명 채널 모드",
+            "double_side_material": "양면 머티리얼 활성화",
+            "bake_on_vertices": "정점 색으로 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "inpainting": "이미지 인페인트 활성화",
+            "reorient_vertices": "정점 방향 전환"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이직 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭니스 거친도 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelAdvancedGenerator": {
+        "title": "Trellis2 복셀 메시 고급 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image": "이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "pipeline_type": "파이프라인 유형",
+            "sparse_structure_steps": "희소 구조 생성 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 T값",
+            "shape_steps": "형태 생성 스텝 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일",
+            "shape_rescale_t": "형태 리스케일 T값",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 T값",
+            "max_num_tokens": "최대 Token 수량",
+            "max_views": "최대 뷰 수량",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "generate_texture_slat": "텍스처 슬랫 분할 생성",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작값",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료값",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작값",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료값",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작값",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료값",
+            "use_tiled_decoder": "분할 디코더 사용",
+            "sampler": "샘플러",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "dino_foundation_cap": "DINO 기본 상한값",
+            "keep_only_shell": "셸 메시만 유지"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "BVH 바운딩 박스 구조"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelMultiViewGenerator": {
+        "title": "Trellis2 복셀 멀티뷰 메시 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "front_image": "긍정 이미지",
+            "back_image": "후면 이미지",
+            "left_image": "왼쪽 이미지",
+            "right_image": "오른쪽 이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "pipeline_type": "파이프라인 유형",
+            "sparse_structure_steps": "희소 구조 생성 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 T값",
+            "shape_steps": "형태 생성 스텝 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일",
+            "shape_rescale_t": "형태 리스케일 T값",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 T값",
+            "max_num_tokens": "최대 토큰 수",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "generate_texture_slat": "텍스처 슬랫 생성(리본)",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작점",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료점",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작점",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료점",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작점",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료점",
+            "use_tiled_decoder": "분할 디코더 활성화",
+            "front_axis": "전방 축",
+            "blend_temperature": "블렌딩 온도 값",
+            "sampler": "샘플러",
+            "fill_holes": "구멍 메우기",
+            "hole_iterations": "구멍 채우기 반복 횟수",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 모델 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "dino_foundation_cap": "DINO 기본 상한",
+            "keep_only_shell": "메시 셸만 유지"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "BVH 계층 바운딩 박스"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcessAndUnWrapAndRasterizer": {
+        "title": "Trellis2 후처리·UV 전개·래스터라이저",
+        "inputs": {
+            "mesh": "메시",
+            "bvh": "BVH 계층 바운딩 박스"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원뿔 반각（라디안）",
+            "mesh_cluster_refine_iterations": "메시 군집화 최적화 반복 횟수",
+            "mesh_cluster_global_iterations": "메시 군집화 전역 반복 횟수",
+            "mesh_cluster_smooth_strength": "메시 군집화 스무딩 강도",
+            "texture_size": "텍스처 크기",
+            "remesh": "리메시",
+            "remesh_band": "리메쉬 대역폭",
+            "remesh_project": "리메시 투영",
+            "target_face_num": "대상 폴리곤 수",
+            "simplify_method": "단순화 방법",
+            "fill_holes": "구멍 메우기",
+            "texture_alpha_mode": "텍스처 alpha 채널 모드",
+            "dual_contouring_resolution": "듀얼 컨투어링 알고리즘 해상도",
+            "double_side_material": "양면 머티리얼",
+            "remove_floaters": "플로터 페이스 제거",
+            "bake_on_vertices": "정점으로 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "remove_inner_faces": "내부 페이스 제거",
+            "inpainting": "이미지 인페인팅",
+            "reorient_vertices": "정점 방향 재지정"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이직 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭니스 거친도 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2Remesh": {
+        "title": "Trellis2 리메시",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "remesh_band": "리메쉬 대역폭",
+            "remesh_project": "리메시 투영",
+            "dual_contouring_resolution": "듀얼 컨투어링 알고리즘 해상도",
+            "remove_floaters": "플로터 페이스 제거",
+            "remove_inner_faces": "내부 페이스 제거"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMesh": {
+        "title": "Trellis2 메시 재구성",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "remesh_band": "리메쉬 대역폭",
+            "resolution": "해상도"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2ReconstructMeshWithQuad": {
+        "title": "Trellis2 사변형 메시 재구성",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "remesh_band": "리메쉬 대역폭",
+            "resolution": "해상도",
+            "remove_floaters": "플로터 페이스 제거",
+            "remove_inner_faces": "내부 페이스 제거"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturing": {
+        "title": "Trellis2 메시 텍스처 생성",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image": "이미지",
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 T값",
+            "resolution": "해상도",
+            "texture_size": "텍스처 크기",
+            "texture_alpha_mode": "텍스처 alpha 채널 모드",
+            "double_side_material": "양면 머티리얼",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작점",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료점",
+            "max_views": "최대 뷰 수",
+            "bake_on_vertices": "정점으로 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원뿔 반각（라디안）",
+            "sampler": "샘플러",
+            "inpainting": "이미지 인페인팅",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 모델 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "dino_foundation_cap": "DINO 기본 상한"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이직 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭니스 거친도 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturingMultiView": {
+        "title": "Trellis2 멀티뷰 메시 텍스처 매핑",
+        "inputs": {
+            "pipeline": "처리 파이프라인",
+            "front_image": "긍정 이미지",
+            "trimesh": "삼각 메시",
+            "back_image": "후면 이미지",
+            "left_image": "왼쪽 이미지",
+            "right_image": "오른쪽 이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 임계값 T",
+            "resolution": "해상도",
+            "texture_size": "텍스처 크기",
+            "texture_alpha_mode": "텍스처 alpha 채널 모드",
+            "double_side_material": "양면 머티리얼",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작값",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료값",
+            "bake_on_vertices": "정점으로 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 콘 반각(라디안)",
+            "front_axis": "전방 축",
+            "blend_temperature": "블렌딩 온도",
+            "sampler": "샘플러",
+            "inpainting": "이미지 인페인팅",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 모델 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "dino_foundation_cap": "DINO 기본 모델 상한"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이직 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭니스 거친도 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2LoadMesh": {
+        "title": "Trellis2 메시 모델 로드",
+        "widgets": {
+            "glb_path": "GLB 파일 경로"
+        },
+        "outputs": {
+            "trimesh": "텍스처를 생성할 GLB 메시 모델"
+        },
+        "description": "지정된 경로에서 GLB 형식의 모델을 로드합니다."
+    },
+    "Trellis2PreProcessImage": {
+        "title": "Trellis2 이미지 전처리",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "padding": "내부 여백",
+            "remove_background": "배경 제거",
+            "max_size": "최대 크기"
+        },
+        "outputs": {
+            "image": "이미지"
+        },
+        "description": ""
+    },
+    "Trellis2MeshRefiner": {
+        "title": "Trellis2 메시 옵티마이저",
+        "inputs": {
+            "pipeline": "처리 파이프라인",
+            "trimesh": "삼각 메시",
+            "image": "이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "resolution": "해상도",
+            "shape_steps": "형태 최적화 스텝 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일",
+            "shape_rescale_t": "형태 리스케일 임계값 T",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 임계값 T",
+            "max_num_tokens": "최대 토큰 수",
+            "generate_texture_slat": "텍스처 슬랫 생성",
+            "downsampling": "다운샘플 배율",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작값",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료값",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작값",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료값",
+            "use_tiled_decoder": "샤드 디코더 사용",
+            "max_views": "최대 뷰 수",
+            "sampler": "샘플러",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 모델 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "dino_foundation_cap": "DINO 기본 모델 상한"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "바운딩 볼륨 계층(BVH) 구조"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess2": {
+        "title": "Trellis2 메시 후처리 V2",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "fill_holes": "구멍 메우기",
+            "fix_normals": "법선 수정",
+            "fix_face_orientation": "페이스 방향 수정",
+            "remove_duplicate_faces": "중복 페이스 제거",
+            "weld_vertices": "버텍스 용접",
+            "weld_vertices_digits": "정점 용접 정밀도 자릿수",
+            "smooth": "스무딩",
+            "smooth_iterations": "평활화 반복 횟수",
+            "subdivide": "세분화 메싱",
+            "subdivide_iterations": "세분화 반복 횟수"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2OvoxelExportToGLB": {
+        "title": "Trellis2 복셀 메시를 GLB로 내보내기",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "texture_size": "텍스처 크기",
+            "target_face_num": "대상 폴리곤 수"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2TrimeshToMeshWithVoxel": {
+        "title": "Trellis2 트라이메시를 복셀 포함 메시로 변환",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "resolution": "해상도"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2Continue": {
+        "title": "Trellis2 2방향 릴레이 노드",
+        "inputs": {
+            "input_1": "입력 1",
+            "input_2": "입력 2"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "output_2": "출력2"
+        },
+        "description": ""
+    },
+    "Trellis2Continue3": {
+        "title": "Trellis2 3방향 릴레이 노드",
+        "inputs": {
+            "input_1": "입력 1",
+            "input_2": "입력 2",
+            "input_3": "입력 3"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "output_2": "출력2",
+            "output_3": "출력3"
+        },
+        "description": ""
+    },
+    "Trellis2Continue4": {
+        "title": "Trellis2 4방향 릴레이 노드",
+        "inputs": {
+            "input_1": "입력 1",
+            "input_2": "입력 2",
+            "input_3": "입력 3",
+            "input_4": "입력 4"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "output_2": "출력2",
+            "output_3": "출력3",
+            "output_4": "출력4"
+        },
+        "description": ""
+    },
+    "Trellis2Continue5": {
+        "title": "Trellis2 5방향 릴레이 노드",
+        "inputs": {
+            "input_1": "입력 1",
+            "input_2": "입력 2",
+            "input_3": "입력 3",
+            "input_4": "입력 4",
+            "input_5": "입력 5"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "output_2": "출력2",
+            "output_3": "출력3",
+            "output_4": "출력4",
+            "output_5": "출력5"
+        },
+        "description": ""
+    },
+    "Trellis2Continue6": {
+        "title": "Trellis2 6방향 릴레이 노드",
+        "inputs": {
+            "input_1": "입력 1",
+            "input_2": "입력 2",
+            "input_3": "입력 3",
+            "input_4": "입력 4",
+            "input_5": "입력 5",
+            "input_6": "입력 6"
+        },
+        "outputs": {
+            "output_1": "출력1",
+            "output_2": "출력2",
+            "output_3": "출력3",
+            "output_4": "출력4",
+            "output_5": "출력5",
+            "output_6": "출력6"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelToMeshlibMesh": {
+        "title": "Trellis2 복셀 포함 메시를 Meshlib 메시로 변환",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "outputs": {
+            "meshlib_mesh": "Meshlib 형식 메시"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithMeshlib": {
+        "title": "Trellis2 Meshlib 메시 구멍 메우기",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "holes_filled": "메운 구멍 수"
+        },
+        "description": "최적의 삼각 분할 알고리즘으로 메시의 모든 구멍을 메웁니다."
+    },
+    "Trellis2FillHolesNicelyWithMeshlib": {
+        "title": "Trellis2 Meshlib 고품질 메시 구멍 채우기",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "holes_filled": "메운 구멍 수"
+        },
+        "description": "최적의 삼각 분할 알고리즘으로 메시의 모든 구멍을 고품질로 메웁니다."
+    },
+    "Trellis2SmoothNormals": {
+        "title": "Trellis2 노멀 스무딩 처리",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2RemeshWithQuad": {
+        "title": "Trellis2 사변형 리메시",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "remesh_band": "리메시 대역폭",
+            "remesh_project": "리메시 투영 정렬",
+            "dual_contouring_resolution": "듀얼 컨투어링 추출 해상도",
+            "remove_floaters": "고립 페이스 제거",
+            "remove_inner_faces": "내부 페이스 제거"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2BatchSimplifyMeshAndExport": {
+        "title": "Trellis2 메시 배치 단순화 내보내기",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "method": "단순화 방법",
+            "fill_holes": "구멍 채우기",
+            "reorient_vertices": "정점 재지정",
+            "filename_prefix": "파일명 접두사",
+            "file_format": "파일 형식",
+            "weld_vertices": "중복 정점 용접",
+            "weld_vertices_digits": "정점 용접 정밀도 자릿수"
+        },
+        "outputs": {
+            "lst_glb_path": "GLB 파일 경로 목록"
+        },
+        "description": ""
+    },
+    "Trellis2WeldVertices": {
+        "title": "Trellis2 정점 용접",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "merge_texture": "텍스처 병합",
+            "merge_normals": "노멀 병합",
+            "digits": "정밀도 자릿수"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2StringSelector": {
+        "title": "Trellis2 문자열 셀렉터",
+        "widgets": {
+            "strings": "문자열 목록",
+            "index": "선택 인덱스"
+        },
+        "outputs": {
+            "string": "선택된 문자열"
+        },
+        "description": ""
+    },
+    "Trellis2FillHolesWithCuMesh": {
+        "title": "Trellis2 CuMesh 구멍 메우기",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "max_permieters": "최대 구멍 둘레 임계값"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": "메시의 모든 구멍 메우기"
+    },
+    "Trellis2LaplacianSmoothingWithOpen3d": {
+        "title": "Trellis2 Open3D 라플라시안 스무딩",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "iterations": "반복 횟수",
+            "method": "스무딩 방법"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimesh": {
+        "title": "Trellis2 트라이메시 UV 전개",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 원추 반각 임계값（라디안）",
+            "mesh_cluster_refine_iterations": "메시 군집화 최적화 반복 횟수",
+            "mesh_cluster_global_iterations": "메시 군집화 전역 반복 횟수",
+            "mesh_cluster_smooth_strength": "메시 군집화 스무딩 강도"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2MeshWithVoxelCascadeGenerator": {
+        "title": "Trellis2 복셀 캐스케이드 메시 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image": "이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "pipeline_type": "파이프라인 유형",
+            "sparse_structure_steps": "희소 구조 샘플링 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 타임스텝",
+            "sparse_structure_sampler": "희소 구조 샘플러",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작 스텝",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료 스텝",
+            "low_res_shape_steps": "저해상도 형태 샘플링 스텝 수",
+            "low_res_shape_guidance_strength": "저해상도 형태 가이드 강도",
+            "low_res_shape_guidance_rescale": "저해상도 형태 가이드 리스케일",
+            "low_res_shape_rescale_t": "저해상도 형태 리스케일 타임스텝",
+            "low_res_shape_sampler": "저해상도 형태 샘플러",
+            "low_res_shape_guidance_interval_start": "저해상도 형태 가이드 구간 시작 스텝",
+            "low_res_shape_guidance_interval_end": "저해상도 형태 가이드 구간 종료 스텝",
+            "high_res_shape_steps": "고해상도 형태 샘플링 스텝 수",
+            "high_res_shape_guidance_strength": "고해상도 형태 가이드 강도",
+            "high_res_shape_guidance_rescale": "고해상도 형태 가이드 리스케일",
+            "high_res_shape_rescale_t": "고해상도 형태 리스케일 타임스텝",
+            "high_res_shape_sampler": "고해상도 형태 샘플러",
+            "high_res_shape_guidance_interval_start": "고해상도 형태 가이드 구간 시작 스텝",
+            "high_res_shape_guidance_interval_end": "고해상도 형태 가이드 구간 종료 스텝",
+            "generate_texture_slat": "텍스처 슬랫 생성",
+            "texture_steps": "텍스처 샘플링 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일",
+            "texture_rescale_t": "텍스처 리스케일 타임스텝",
+            "texture_sampler": "텍스처 샘플러",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작 스텝",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료 스텝",
+            "max_num_tokens": "최대 Token 수",
+            "use_tiled_decoder": "분할 디코더 사용",
+            "max_views": "최대 뷰 수",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "Dino 잠금",
+            "dino_substeps": "Dino 서브 스텝 길이",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "dino_foundation_cap": "Dino 기본 상한",
+            "keep_only_shell": "셸만 유지"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "BVH 가속 구조"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondGenerator": {
+        "title": "Trellis2 이미지 컨디셔닝 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image": "이미지"
+        },
+        "widgets": {
+            "max_views": "최대 뷰 수"
+        },
+        "outputs": {
+            "cond_512": "512 해상도 컨디셔닝",
+            "cond_1024": "1024 해상도 컨디셔닝",
+            "pipeline": "파이프라인",
+            "moge_camera_config": "Moge 카메라 구성"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGenerator": {
+        "title": "Trellis2 희소 구조 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_cond": "이미지 컨디셔닝",
+            "image": "이미지",
+            "moge_camera_config": "Moge 카메라 구성"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "sparse_structure_steps": "희소 구조 샘플링 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 타임스텝",
+            "sparse_structure_sampler": "희소 구조 샘플러",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작 스텝",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료 스텝",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "Dino 잠금",
+            "dino_substeps": "Dino 서브 스텝 길이",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "dino_foundation_cap": "Dino 기본 상한",
+            "keep_only_shell": "셸만 유지"
+        },
+        "outputs": {
+            "coords": "좌표 세트",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeGenerator": {
+        "title": "Trellis2 형태 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_cond": "컨디셔닝 이미지",
+            "coords": "좌표",
+            "image": "이미지",
+            "moge_camera_config": "Moge 카메라 구성"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "shape_steps": "형태 생성 스텝 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일 계수",
+            "shape_rescale_t": "형태 리스케일 임계값 T",
+            "shape_sampler": "형태 샘플러",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작 스텝",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "Dino 특징 잠금",
+            "dino_substeps": "Dino 서브 스텝 수",
+            "dino_foundation_cap": "Dino 기본 특징 상한"
+        },
+        "outputs": {
+            "shape_slat": "형태 슬랫 특징",
+            "resolution": "해상도",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeGenerator": {
+        "title": "Trellis2 캐스케이드 형태 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_cond": "컨디셔닝 이미지",
+            "shape_slat": "형태 슬랫 특징",
+            "image": "이미지",
+            "moge_camera_config": "Moge 카메라 구성"
+        },
+        "widgets": {
+            "from_resolution": "소스 해상도",
+            "to_resolution": "목표 해상도",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "max_num_tokens": "최대 토큰 수",
+            "shape_steps": "형태 생성 스텝 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일 계수",
+            "shape_rescale_t": "형태 리스케일 임계값 T",
+            "shape_sampler": "형태 샘플러",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작 스텝",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "Dino 특징 잠금",
+            "dino_substeps": "Dino 서브 스텝 수",
+            "dino_foundation_cap": "Dino 기본 특징 상한"
+        },
+        "outputs": {
+            "shape_slat": "형태 슬랫 특징",
+            "resolution": "해상도",
+            "pipeline": "파이프라인",
+            "num_tokens": "토큰 수"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatGenerator": {
+        "title": "Trellis2 텍스처 슬랫 특징 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_cond": "컨디셔닝 이미지",
+            "shape_slat": "형태 슬랫 특징",
+            "image": "이미지",
+            "moge_camera_config": "Moge 카메라 구성"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "texture_steps": "텍스처 생성 스텝 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일 계수",
+            "texture_rescale_t": "텍스처 리스케일 임계값 T",
+            "texture_sampler": "텍스처 샘플러",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작 스텝",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "Dino 특징 잠금",
+            "dino_substeps": "Dino 서브 스텝 수",
+            "dino_foundation_cap": "Dino 기본 특징 상한",
+            "from_resolution": "소스 해상도"
+        },
+        "outputs": {
+            "texture_slat": "텍스처 슬랫 특징",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatents": {
+        "title": "Trellis2 Latent 디코딩",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "shape_slat": "형태 슬랫 특징",
+            "texture_slat": "텍스처 슬랫 특징"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "use_tiled_decoder": "샤드 디코더 사용"
+        },
+        "outputs": {
+            "mesh": "메시 모델",
+            "bvh": "BVH 가속 구조",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyMeshAdvanced": {
+        "title": "Trellis2 고급 메시 단순화",
+        "inputs": {
+            "mesh": "메시 모델"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "thresh": "단순화 임계값",
+            "lambda_edge_length": "변장 가중치 계수",
+            "lambda_skinny": "슬리너리 삼각형 억제 가중치",
+            "lambda_curvature": "곡률 보존 가중치",
+            "lambda_boundary": "경계 보존 가중치",
+            "lambda_area": "면적 가중치",
+            "qem_regularization": "QEM 정규화 강도"
+        },
+        "outputs": {
+            "mesh": "메시 모델"
+        },
+        "description": ""
+    },
+    "Trellis2SimplifyTrimeshAdvanced": {
+        "title": "Trellis2 고급 트라이메시 단순화",
+        "inputs": {
+            "trimesh": "트라이메시 모델"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "thresh": "단순화 임계값",
+            "lambda_edge_length": "변장 가중치 계수",
+            "lambda_skinny": "슬리너리 삼각형 억제 가중치",
+            "lambda_curvature": "곡률 보존 가중치",
+            "lambda_boundary": "경계 보존 가중치",
+            "lambda_area": "면적 가중치",
+            "qem_regularization": "QEM 정규화 강도"
+        },
+        "outputs": {
+            "trimesh": "트라이메시 모델"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturing": {
+        "title": "Trellis2 멀티뷰 텍스처 베이크",
+        "inputs": {
+            "trimesh": "트라이메시 모델",
+            "front_image": "긍정 이미지",
+            "back_image": "후면 이미지",
+            "left_image": "왼쪽 이미지",
+            "right_image": "오른쪽 이미지",
+            "top_image": "천면 이미지",
+            "bottom_image": "바닥면 이미지",
+            "custom_images": "사용자 지정 뷰 이미지",
+            "camera_config": "카메라 설정"
+        },
+        "widgets": {
+            "texture_size": "텍스처 크기",
+            "blend_texture": "텍스처 블렌딩 활성화",
+            "blend_exponent": "블렌드 지수",
+            "ortho_scale": "직교 투영 스케일 계수",
+            "norm_size": "정규화 크기",
+            "fill_holes": "텍스처 공동 메우기",
+            "max_hole_size": "최대 메우기 가능한 공동 크기",
+            "use_metallic": "메탈릭 러프니스 채널 생성",
+            "depth_eps": "깊이 오프셋 임계값",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 원뿔 반각 임계값（라디안）",
+            "add_alpha_channel": "투명 채널 추가",
+            "front_weight": "전면 가중치",
+            "back_weight": "후면 가중치",
+            "left_weight": "좌측 가중치",
+            "right_weight": "우측 가중치",
+            "top_weight": "천면 가중치",
+            "bottom_weight": "바닥면 가중치",
+            "custom_azimuths": "사용자 지정 뷰 방위각",
+            "custom_elevations": "사용자 지정 뷰 피치각",
+            "custom_weights": "사용자 지정 뷰 가중치"
+        },
+        "outputs": {
+            "trimesh": "트라이메시 모델",
+            "base_color": "베이직 컬러 맵",
+            "metallic_roughness": "메탈릭 러프니스 맵"
+        },
+        "description": "멀티뷰 이미지를 투영해 메시 모델에 텍스처를 추가합니다.\n\n각도 가중 블렌딩 알고리즘 사용: 각 표면이 보이는 모든 뷰에서 텍스처 정보를 받고, 표면 방향과 카메라 시선의 정면 정도가 가중치를 결정합니다.\n\n카메라 각도 정의（Y축 업 좌표계）:\n- 방위각: Y축 둘레 회전 각도\n  - 0° = 정면（-Z 방향 관측）\n  - 90° = 좌측（-X 방향 관측）\n  - 180° = 후면（+Z 방향 관측）\n  - 270° = 우측（+X 방향 관측）\n- 피치각: X축 둘레 회전 각도\n  - 0° = 수평 시선\n  - 90° = 상면（-Y 방향 관측, 위에서 아래）\n  - -90° = 하면（+Y 방향 관측, 아래에서 위）"
+    },
+    "Trellis2ProjectHighPolyToLowPoly": {
+        "title": "Trellis2 고 폴리 투사로 로 폴리 변환",
+        "inputs": {
+            "high_poly_trimesh": "하이폴리 트라이메시",
+            "low_poly_trimesh": "로우폴리 트라이메시",
+            "front_image": "긍정 이미지",
+            "back_image": "후면 이미지",
+            "left_image": "왼쪽 이미지",
+            "right_image": "오른쪽 이미지",
+            "top_image": "상단 이미지",
+            "bottom_image": "하단 이미지",
+            "custom_images": "커스텀 이미지",
+            "camera_config": "카메라 설정"
+        },
+        "widgets": {
+            "texture_size": "텍스처 크기",
+            "blend_texture": "텍스처 블렌딩",
+            "blend_exponent": "블렌드 지수",
+            "ortho_scale": "직교 투영 스케일 비율",
+            "norm_size": "정규화 크기",
+            "fill_holes": "구멍 채우기",
+            "max_hole_size": "최대 홀 사이즈",
+            "use_metallic": "메탈릭니스 채널 활성화",
+            "depth_eps": "깊이 오차 임계값",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원추 반각 라디안값",
+            "add_alpha_channel": "alpha 채널 추가",
+            "front_weight": "전면 가중치",
+            "back_weight": "후면 가중치",
+            "left_weight": "좌측 가중치",
+            "right_weight": "우측 가중치",
+            "top_weight": "상단 가중치",
+            "bottom_weight": "하단 가중치",
+            "custom_azimuths": "사용자 지정 방위각 목록",
+            "custom_elevations": "사용자 지정 피치각 목록",
+            "custom_weights": "사용자 지정 가중치 목록"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color": "베이직 컬러 텍스처",
+            "metallic_roughness": "메탈릭 거친도 텍스처"
+        },
+        "description": "투사한 멀티뷰 이미지로 메시에 텍스처를 부여합니다.\n\n각도 가중 블렌딩 알고리즘 사용: 각 표면이 자신을 관측할 수 있는 모든 뷰의 텍스처를 받고, 가중치는 표면과 해당 카메라의 정면 정도가 결정합니다.\n\n카메라 각도（Y축 업 좌표계）:\n- 방위각: Y축 둘레 회전\n  - 0° = 정면（-Z 방향 관측）\n  - 90° = 좌측（-X 방향 관측）  \n  - 180° = 후면（+Z 방향 관측）\n  - 270° = 우측（+X 방향 관측）\n- 피치각: X축 둘레 회전\n  - 0° = 수평 방향\n  - 90° = 상부（위에서 -Y 방향 관측）\n  - -90° = 하부（아래에서 +Y 방향 관측）"
+    },
+    "Trellis2RenderMultiView": {
+        "title": "Trellis2 멀티뷰 렌더링",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "render_size": "렌더링 사이즈",
+            "ortho_scale": "직교 투영 스케일 비율",
+            "blender_exec_path": "Blender 실행 파일 경로",
+            "azimuths": "방위각 목록",
+            "elevations": "고도각 목록"
+        },
+        "outputs": {
+            "images": "이미지",
+            "ortho_scale": "직교 투영 스케일 비율",
+            "azimuths": "방위각 목록",
+            "elevations": "고도각 목록"
+        },
+        "description": ""
+    },
+    "Trellis2CudaReset": {
+        "title": "Trellis2 CUDA 리셋",
+        "inputs": {
+            "input_1": "입력 1"
+        },
+        "outputs": {
+            "output_1": "출력1"
+        },
+        "description": ""
+    },
+    "Trellis2SaveImage": {
+        "title": "Trellis2 이미지 저장",
+        "inputs": {
+            "images": "이미지"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "compress_level": "압축 레벨"
+        },
+        "outputs": {
+            "images_path": "이미지 경로"
+        },
+        "description": "입력 이미지를 ComfyUI 출력 디렉터리에 저장합니다."
+    },
+    "Trellis2VoxelToMesh": {
+        "title": "Trellis2 복셀을 메시로",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "target_height_mm": "목표 높이（밀리미터）",
+            "sigma": "스무딩 계수 sigma",
+            "coarse_downsample": "러프 다운샘플 배율",
+            "taubin_iterations": "Taubin 스무딩 반복 횟수"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2UnloadAllModels": {
+        "title": "Trellis2 모든 모델 언로드",
+        "inputs": {
+            "input_1": "입력 1"
+        },
+        "outputs": {
+            "output_1": "출력1"
+        },
+        "description": ""
+    },
+    "Trellis2SparseGeneratorWithReconViaGen": {
+        "title": "Trellis2 생성형 재구성 포함 희소 구조 생성기",
+        "inputs": {
+            "pipeline": "처리 파이프라인",
+            "images": "이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "sparse_structure_steps": "희소 구조 반복 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일 계수",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 T값",
+            "sparse_structure_sampler": "희소 구조 샘플러",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작점",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료점",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "dino_foundation_cap": "DINO 기본 임계값",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "keep_only_shell": "셸만 유지"
+        },
+        "outputs": {
+            "coords": "좌표 목록",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "pipeline": "처리 파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2ExtractImagesFromVideo": {
+        "title": "Trellis2 비디오 프레임 추출",
+        "widgets": {
+            "video_file": "비디오 파일",
+            "frames_per_second": "초당 추출 프레임 수"
+        },
+        "outputs": {
+            "images": "이미지"
+        },
+        "description": ""
+    },
+    "Trellis2MaxTokensCalculator": {
+        "title": "Trellis2 최대 토큰 수 계산기",
+        "widgets": {
+            "default_max_tokens": "기본 최대 토큰 수"
+        },
+        "outputs": {
+            "max_tokens": "최대 토큰 수"
+        },
+        "description": ""
+    },
+    "Trellis2ImageCondMultiViewGenerator": {
+        "title": "Trellis2 이미지 컨디셔닝 멀티뷰 생성기",
+        "inputs": {
+            "pipeline": "처리 파이프라인",
+            "front_image": "긍정 이미지",
+            "back_image": "후면 이미지",
+            "left_image": "왼쪽 이미지",
+            "right_image": "오른쪽 이미지"
+        },
+        "outputs": {
+            "conds_512": "512 해상도 cond",
+            "conds_1024": "1024 해상도 cond",
+            "views_list": "뷰 목록",
+            "pipeline": "처리 파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2SparseMultiViewGenerator": {
+        "title": "Trellis2 희소 멀티뷰 생성기",
+        "inputs": {
+            "pipeline": "처리 파이프라인",
+            "image_conds": "이미지 컨디셔닝",
+            "views_list": "뷰 목록"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "sparse_structure_steps": "희소 구조 반복 스텝 수",
+            "sparse_structure_guidance_strength": "희소 구조 가이드 강도",
+            "sparse_structure_guidance_rescale": "희소 구조 가이드 리스케일 계수",
+            "sparse_structure_rescale_t": "희소 구조 리스케일 T값",
+            "sparse_structure_sampler": "희소 구조 샘플러",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "sparse_structure_guidance_interval_start": "희소 구조 가이드 구간 시작점",
+            "sparse_structure_guidance_interval_end": "희소 구조 가이드 구간 종료점",
+            "fill_holes": "구멍 채우기",
+            "hole_iterations": "구멍 메우기 반복 횟수",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "hole_fill_algorithm": "구멍 메우기 알고리즘",
+            "dino_foundation_cap": "DINO 기본 임계값",
+            "keep_only_shell": "셸만 유지",
+            "front_axis": "전방 축",
+            "blend_temperature": "블렌딩 온도 계수"
+        },
+        "outputs": {
+            "coords": "좌표 목록",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "views_list": "뷰 목록",
+            "pipeline": "처리 파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeMultiViewGenerator": {
+        "title": "Trellis 형태 멀티뷰 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_conds": "이미지 컨디셔닝",
+            "views_list": "뷰 목록",
+            "coords": "좌표"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "shape_steps": "형태 생성 step 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일 계수",
+            "shape_rescale_t": "형태 리스케일 타임스텝 t",
+            "shape_sampler": "형태 샘플러",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작 스텝",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 step 수",
+            "dino_foundation_cap": "DINO 기본 임계값",
+            "front_axis": "전방 축",
+            "blend_temperature": "융합 온도 계수"
+        },
+        "outputs": {
+            "shape_slat": "형태 slat 희소 Latent",
+            "resolution": "해상도",
+            "views_list": "뷰 목록",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2ShapeCascadeMultiViewGenerator": {
+        "title": "Trellis 캐스케이드 형태 멀티뷰 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_conds": "이미지 컨디셔닝",
+            "views_list": "뷰 목록",
+            "shape_slat": "형태 slat 희소 Latent"
+        },
+        "widgets": {
+            "from_resolution": "소스 해상도",
+            "to_resolution": "목표 해상도",
+            "sparse_structure_resolution": "희소 구조 해상도",
+            "max_num_tokens": "최대 Token 수",
+            "shape_steps": "형태 생성 step 수",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_guidance_rescale": "형태 가이드 리스케일 계수",
+            "shape_rescale_t": "형태 리스케일 타임스텝 t",
+            "shape_sampler": "형태 샘플러",
+            "shape_guidance_interval_start": "형태 가이드 구간 시작 스텝",
+            "shape_guidance_interval_end": "형태 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 step 수",
+            "dino_foundation_cap": "DINO 기본 임계값",
+            "front_axis": "전방 축",
+            "blend_temperature": "융합 온도 계수"
+        },
+        "outputs": {
+            "shape_slat": "형태 slat 희소 Latent",
+            "resolution": "해상도",
+            "views_list": "뷰 목록",
+            "pipeline": "파이프라인",
+            "num_tokens": "토큰 수"
+        },
+        "description": ""
+    },
+    "Trellis2TexSlatMultiViewGenerator": {
+        "title": "Trellis 텍스처 slat 멀티뷰 생성기",
+        "inputs": {
+            "pipeline": "파이프라인",
+            "image_conds": "이미지 컨디셔닝",
+            "views_list": "뷰 목록",
+            "shape_slat": "형태 slat 희소 Latent"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "texture_steps": "텍스처 생성 step 수",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 리스케일 계수",
+            "texture_rescale_t": "텍스처 리스케일 타임스텝 t",
+            "texture_sampler": "텍스처 샘플러",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작 스텝",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료 스텝",
+            "verbose": "상세 로그 출력",
+            "dino_lock": "DINO 특징 잠금",
+            "dino_substeps": "DINO 서브 step 수",
+            "dino_foundation_cap": "DINO 기본 임계값",
+            "front_axis": "전방 축",
+            "blend_temperature": "융합 온도 계수"
+        },
+        "outputs": {
+            "texture_slat": "텍스처 slat 희소 Latent",
+            "views_list": "뷰 목록",
+            "pipeline": "파이프라인"
+        },
+        "description": ""
+    },
+    "Trellis2MoGeCameraConfig": {
+        "title": "Trellis MoGe 카메라 구성",
+        "widgets": {
+            "camera_angle_x": "카메라 X축 각도",
+            "distance": "촬영 거리",
+            "mesh_scale": "메시 스케일 비율"
+        },
+        "outputs": {
+            "moge_camera_config": "MoGe 카메라 구성"
+        },
+        "description": ""
+    },
+    "Trellis2FovMoGeCameraConfig": {
+        "title": "Trellis 시야각 MoGe 카메라 구성",
+        "widgets": {
+            "fov": "시야각(FOV)",
+            "unit": "단위",
+            "extend_pixel": "확장 픽셀 수",
+            "mesh_scale": "메시 스케일 비율"
+        },
+        "outputs": {
+            "moge_camera_config": "MoGe 카메라 구성"
+        },
+        "description": ""
+    },
+    "Trellis2RenderPreview": {
+        "title": "미리보기 이미지 생성",
+        "inputs": {
+            "trimesh": "trimesh 형식"
+        },
+        "widgets": {
+            "num_views": "뷰 개수",
+            "resolution": "해상도",
+            "render_mode": "렌더링 모드"
+        },
+        "outputs": {
+            "preview_images": "미리보기 이미지",
+            "IMAGE": "이미지"
+        },
+        "description": "\n3D 메시 지오메트리로 미리보기 이미지를 생성합니다.\n\n파라미터:\n- trimesh: 3D 메시 지오메트리\n- 뷰 개수: 렌더링 뷰의 수(중심을 둘레로 회전\n- 해상도: 렌더링 해상도\n- 렌더링 모드: 렌더링 스타일((노멀, 클레이, 베이스 컬러)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RenderVideo": {
+        "title": "회전 비디오 생성",
+        "inputs": {
+            "trimesh": "trimesh 형식"
+        },
+        "widgets": {
+            "num_frames": "프레임 수",
+            "fps": "초당 프레임 수",
+            "resolution": "해상도",
+            "filename_prefix": "파일 접두사"
+        },
+        "outputs": {
+            "video_path": "비디오 경로",
+            "STRING": "문자열"
+        },
+        "description": "\n3D 메시 지오메트리로 회전 비디오를 생성합니다.\n\n파라미터:\n- trimesh: 3D 메시 지오메트리\n- num_frames: 비디오의 프레임 수\n- fps: 초당 프레임 수\n- resolution: 렌더링 해상도\n- filename_prefix: 출력 파일명의 접두사\n",
+        "api_version": "V1"
+    },
+    "Trellis2GetConditioning": {
+        "title": "컨디셔닝 가져오기",
+        "inputs": {
+            "model_config": "모델 설정",
+            "image": "이미지",
+            "mask": "마스크"
+        },
+        "widgets": {
+            "background_color": "배경색"
+        },
+        "outputs": {
+            "conditioning": "컨디셔닝",
+            "preprocessed_image": "전처리 이미지",
+            "TRELLIS2_CONDITIONING": "TRELLIS2 컨디셔닝",
+            "IMAGE": "이미지"
+        },
+        "description": "\nDinoV3로 이미지를 전처리하고 시각적 특징을 추출합니다.\n\n이 노드는 다음 작업을 처리합니다:\n1. 마스크를 alpha 채널로 적용\n2. 물체의 바운딩 박스로 크롭\n3. alpha 사전 곱셈\n4. DinoV3로 특징 추출\n\n파라미터:\n- model_config: 로드된 TRELLIS. 구성\n- image: 입력 이미지（RGB 형식\n- mask: 전경 마스크（흰색=물체, 검은색=배경\nBiRefNet·rembg 등 아무 배경 제거 노드나 사용해 마스크를 생성하세요.",
+        "api_version": "V1"
+    },
+    "Trellis2ImageToShape": {
+        "title": "이미지에서 형태 생성",
+        "inputs": {
+            "model_config": "모델 설정",
+            "conditioning": "컨디셔닝"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "ss_guidance_strength": "희소 구조 가이드 강도",
+            "ss_sampling_steps": "희소 구조 샘플링 스텝",
+            "shape_guidance_strength": "형태 가이드 강도",
+            "shape_sampling_steps": "형태 샘플링 스텝",
+            "max_tokens": "최대 토큰 수"
+        },
+        "outputs": {
+            "shape_result": "형태 결과",
+            "mesh": "메시",
+            "TRELLIS2_SHAPE_RESULT": "TRELLIS2 형태 결과",
+            "TRIMESH": "trimesh 형식"
+        },
+        "description": "\n이미지 컨디셔닝으로 3D 형태를 생성합니다.\n\n이 노드는 형태 지오메트리만 생성합니다(텍스처/PBR 머티리얼 없음).\nPBR 머티리얼을 얻으려면 shape_result를 “형태를 텍스처 메시로” 노드에 연결하세요.\n\n파라미터:\n- model_config: 로드된 모델 구성((해상도는 모델 로드 노드에서 설정)\n- conditioning: “컨디셔닝 가져오기” 노드의 DinoV3 컨디셔닝\n- seed: 재현성을 위한 랜덤 시드\n- ss_*: 희소 구조 샘플링 파라미터\n- shape_*: 형태 Latent 샘플링 파라미터\n\n반환:\n- shape_result: 텍스처 생성용 형태 데이터\n- mesh: 미리보기/내보내기용 무광 메시\n",
+        "api_version": "V1"
+    },
+    "Trellis2ShapeToTexturedMesh": {
+        "title": "형태에서 텍스처 메시 생성",
+        "inputs": {
+            "model_config": "모델 설정",
+            "conditioning": "컨디셔닝",
+            "shape_result": "형태 결과"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "tex_guidance_strength": "텍스처 가이드 강도",
+            "tex_sampling_steps": "텍스처 샘플링 스텝"
+        },
+        "outputs": {
+            "mesh_glb_path": "메시 경로(.glb 파일)",
+            "voxelgrid_npz_path": "복셀 메시 경로(.npz 파일)",
+            "STRING": "문자열"
+        },
+        "description": "\n형태에서 PBR 머티리얼을 갖춘 텍스처 메시를 생성합니다.\n\n“이미지에서 형태” 노드의 shape_result를 받아 PBR 머티리얼을 생성합니다:\n- base_color (RGB) - metallic - roughness - alpha\n\n파라미터:\n- model_config: 로드된 모델 구성\n- conditioning: DinoV3 컨디셔닝（형태에 사용한 것과 동일\n- shape_result: “이미지에서 형태” 노드의 형태 데이터\n- seed: 텍스처 변이를 위한 랜덤 시드\n- tex_*: 텍스처 샘플링 파라미터\n\n반환:\n- mesh_glb_path: 메시 지오메트리 경로(.glb 파일)\n- voxelgrid_npz_path: 복셀 메시 데이터 경로(.npz 파일, 좌표·속성·정점·페이스 등 포함)\n",
+        "api_version": "V1"
+    },
+    "Trellis2RemoveBackground": {
+        "title": "배경 제거",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "low_vram": "저VRAM"
+        },
+        "outputs": {
+            "image": "이미지",
+            "mask": "마스크",
+            "IMAGE": "이미지",
+            "MASK": "마스크"
+        },
+        "description": "\nBiRefNet로 이미지의 배경을 제거합니다(TRELLIS rembg와 동일).\n\n이 노드는 BiRefNet 분할 모델을 사용해 전경 마스크를 추출합니다.\n마스크는 “컨디셔닝 가져오기” 노드에 사용할 수 있습니다.\n\n파라미터:\n- image: 입력 RGB 이미지\n- low_vram: 사용하지 않을 때 모델을 CPU로 이동(느리지만 VRAM 절약)\n\n반환:\n- image: 원본 이미지(변경 없음)\n- mask: 전경 마스크(흰색=물체, 검은색=배경)\n",
+        "api_version": "V1"
+    },
+    "LoadTrellis2Models": {
+        "title": "Trellis2 모델 로드",
+        "widgets": {
+            "resolution": "해상도",
+            "precision": "정밀도",
+            "attn_backend": "어텐션 백엔드"
+        },
+        "outputs": {
+            "model_config": "모델 설정",
+            "TRELLIS2_MODEL_CONFIG": "TRELLIS2 모델 구성"
+        },
+        "description": "\n이미지 투 3D 생성용 Trellis2 모델 구성을 로드합니다.\n\n이 노드는 추론 노드가 필요할 때 모델을 로드하는 데 사용하는 구성 개체를 만듭니다.\n\n해상도 모드:\n- 512: 빠름, 품질은 낮음\n- 1024_cascade: 최고 품질, 512->1024 캐스케이드 사용\n- 1536_cascade: 최고 해상도 출력\n\n어텐션 백엔드:\n- auto: 사용 가능 한 최고 성능((saseattn > flash_attn > xformers > sdpa)\n- flash_attn: FlashAttention (flash_attn 패키지 필요)\n- xformers: 메모리 효율 어텐션 (xformers 패키지 필요)\n- sdpa: PyTorch 내장 scaled_dot_product_attention (PyTorch >= 2.0)\n- sageattn: SageAttention (최고속, sageattention 패키지 필요)\n",
+        "api_version": "V1"
+    },
+    "Trellis2LoadSSFlowModel": {
+        "title": "희소 구조 흐름 모델 로드",
+        "inputs": {
+            "model_config": "모델 설정"
+        },
+        "outputs": {
+            "model": "모델",
+            "MODEL": "모델"
+        },
+        "description": "\n희소 구조 흐름 모델을 표준 ComfyUI MODEL로 래핑합니다.\n\n이 노드는 흐름 모델을 ComfyUI의 BaseModel/ModelPatcher 시스템에 감싸\n임의의 샘플러/스케줄러로 KSampler가 구동할 수 있게 합니다.\n\n출력 MODEL을 KSampler의 'model' 입력에 연결하세요.\n긍정/부정 컨디셔닝은 Trellis2SSConditioning을 사용합니다.\n초기 Latent은 Trellis2Empty3DLatent를 사용합니다.\n",
+        "api_version": "V1"
+    },
+    "Trellis2SSConditioning": {
+        "title": "Trellis2 DinoV3 컨디셔닝 변환",
+        "inputs": {
+            "conditioning": "컨디셔닝"
+        },
+        "outputs": {
+            "positive": "긍정 컨디셔닝",
+            "negative": "부정 컨디셔닝"
+        },
+        "description": "\nTrellis2 DinoV3 컨디셔닝을 표준 ComfyUI 컨디셔닝으로 변환합니다.\n\n‘Trellis2 컨디셔닝 가져오기’의 출력을 받아\nKSampler 호환 긍정/부정 컨디셔닝을 생성합니다.\n\n'positive'를 KSampler의 긍정 입력에 연결하세요.\n'negative'를 KSampler의 부정 입력에 연결하세요.\n",
+        "api_version": "V1"
+    },
+    "Trellis2Empty3DLatent": {
+        "title": "빈 3D Latent 생성",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "batch_size": "배치 크기"
+        },
+        "outputs": {
+            "LATENT": "Latent"
+        },
+        "description": "\n희소 구조 샘플링을 위한 빈 3D Latent 텐서를 만듭니다.\n\n모델의 해상도와 채널 수를 읽어 올바른 형태 [배치, 채널, 해상도, 해상도, 해상도]를 만듭니다.\n\n기본 Trellis2 모델의 경우 [1, 8, 16, 16, 16]입니다.\n",
+        "api_version": "V1"
+    },
+    "Trellis2ApplyGuidanceInterval": {
+        "title": "가이드 간격 적용",
+        "inputs": {
+            "model": "모델"
+        },
+        "widgets": {
+            "guidance_interval_start": "시작 간격",
+            "guidance_interval_end": "종료 간격"
+        },
+        "outputs": {
+            "MODEL": "모델"
+        },
+        "description": "\n샘플링 중에 CFG를 언제 활성화할지 제어합니다.\n\nTRELLIS2 흐름 매칭에서 sigma는 1.0（순수 노이즈）에서 0.0（깨끗한 데이터）으로 변합니다.\n- （0.0, 1.0）= 항상 CFG 적용（기본 설정, 표준 KSampler와 동일）\n- （0.2, 0.8）= sigma가 0.2와 0.8 사이에 있을 때만 CFG 적용\n\n해당 구간 밖에서는 조건부 예측만 사용합니다（CFG 없음）.",
+        "api_version": "V1"
+    },
+    "Trellis2DecodeSSLatent": {
+        "title": "희소 구조 Latent 디코딩",
+        "inputs": {
+            "model_config": "모델 설정",
+            "samples": "Latent"
+        },
+        "widgets": {
+            "ss_resolution": "SS 해상도"
+        },
+        "outputs": {
+            "coords": "좌표",
+            "TRELLIS2_SS_COORDCOORD": "Trellis2 좌표"
+        },
+        "description": "\n희소 구조 Latent를 복셀 좌표로 디코딩합니다.\n\nKSampler로 샘플링한 잠재 특징에서 다음 단계를 수행합니다:\n1. SparseStructureDecoder 실행（（logits -> 이진 점유율）\n2. 선택적으로 맥스 풀링으로 목표 해상까지 다운샘플\n3. 활성 복셀 좌표 추출\n\n출력 좌표는 이후의 형태 생성 노드에 전달할 수 있습니다.",
+        "api_version": "V1"
+    },
+    "Trellis2Simplify": {
+        "title": "Trellis2 메시 단순화",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "target_face_count": "대상 폴리곤 수",
+            "fill_holes": "구멍 채우기",
+            "fill_holes_perimeter": "구멍 둘레 임계값",
+            "remesh": "리메시",
+            "remesh_band": "리메싱 대역폭"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": "\n메시를 목표 페이스 수로 단순화합니다.\n\nGPU 가속 단순화를 위해 CuMesh를 사용합니다.\n\n파라미터:\n- target_face_count: 목표 페이스 수\n- fill_holes: 단순화 전에 작은 구멍 메우기\n- fill_holes_perimeter: 메울 최대 구멍 둘레\n- remesh: 더 깔끔한 위상을 위해 듀얼 컨투어링 리메시 적용\n- remesh_band: 리메시 대역폭",
+        "api_version": "V1"
+    },
+    "Trellis2UVUnwrap": {
+        "title": "Trellis2 UV 전개 메시",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "chart_cone_angle": "챠트 콘 각도",
+            "chart_refine_iterations": "정밀화 반복 횟수",
+            "chart_global_iterations": "전역 최적화 반복 횟수",
+            "chart_smooth_strength": "스무딩 강도"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": "\nxatlas로 메시에 UV 전개를 수행합니다.\n\nUV 맵만 만들고 텍스처는 굽지 않습니다. 텍스처를 구우려면 Rasterize PBR 노드를 사용하세요.\n\n파라미터:\n- chart_cone_angle: 차트 군집화 임계값（도）\n- chart_refine_iterations: UV 차트 최적화\n- chart_global_iterations: 전역 UV 최적화 반복 횟수\n- chart_smooth_strength: UV 스무딩 강도\n\n팁: 먼저 메시를 단순화하세요! 1000만 페이스의 UV 전개는 매우 오래 걸립니다.",
+        "api_version": "V1"
+    },
+    "Trellis2RasterizePBR": {
+        "title": "복셀 데이터에서 PBR 텍스처 베이킹",
+        "inputs": {
+            "trimesh": "삼각 메시",
+            "voxelgrid": "복셀 격자"
+        },
+        "widgets": {
+            "texture_size": "텍스처 해상도"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시"
+        },
+        "description": "\nPBR 텍스처를 복셀 데이터에서 UV 매핑 메시로 굽습니다.\n\nUV가 있는 메시가 필요하며 VOXELGRID에서 색상/메탈릭/러프니스를 굽습니다.\n\n입력 메시에는 UV가 있어야 합니다((먼저 UV Unwrap 노드를 사용하세요).\n\n파라미터:\n- texture_size: 구워질 텍스처의 해상도((512-16384 픽셀)",
+        "api_version": "V1"
+    },
+    "Trellis2ExportGLB": {
+        "title": "Trellis2 GLB 파일 내보내기",
+        "widgets": {
+            "voxelgrid_path": "복셀 메시 경로",
+            "decimation_target": "대상 폴리곤 수",
+            "texture_size": "텍스처 해상도",
+            "remesh": "리메시",
+            "filename_prefix": "파일명 접두사"
+        },
+        "outputs": {
+            "glb_path": "GLB 경로"
+        },
+        "description": "\n복셀 데이터에서 텍스처를 입힌 GLTF를 한 번에 내보냅니다.\n\n“형태를 텍스처 메시로”에서 voxelgrid_npz_path를 받아 다음 작업을 수행합니다:\n1. 메시를 목표 페이스 수로 단순화\n2. UV 전개 수행\n3. 복셀 데이터에서 PBR 텍스처 베이크（베이스 컬러, 메탈릭니스, 거친도）\n4. 텍스처를 입힌 GLTF를 ComfyUI 출력 폴더에 내보내기\n\n파라미터:\n- voxelgrid_path: “형태를 텍스처 메시로”의 .npz 파일 경로\n- decimation_target: 단순화 후의 목표 페이스 수\n- texture_size: 굽는 PBR 텍스처의 해상도\n- remesh: 단순화 전에 리메시를 적용해 더 깔끔한 위상을 얻음\n- filename_prefix: 출력 파일명 접두사",
+        "api_version": "V1"
+    },
+    "Trellis2ExportTrimesh": {
+        "title": "Trellis2 트라이메시 내보내기",
+        "inputs": {
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "filename_prefix": "파일명 접두사",
+            "file_format": "파일 형식"
+        },
+        "outputs": {
+            "file_path": "파일 경로"
+        },
+        "description": "\n트라이메시를 다양한 3D 파일 형식으로 내보냅니다.\n\n지원: GLB, OBJ, PLY, STL, 3MF, DAE",
+        "api_version": "V1"
+    },
+    "Trellis2MeshWithVoxeltoTrimesmesh": {
+        "title": "Trellis2 복셀 기반 메시를 트라이메시로 변환",
+        "widgets": {
+            "mesh": "메시",
+            "reorient_vertices": "정점 재지향"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "TRIMESH": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexture": {
+        "title": "Trellis2MeshTexture",
+        "inputs": {
+            "image": "이미지"
+        },
+        "widgets": {
+            "pipeline": "파이프라인",
+            "trimesh": "삼각 메시",
+            "seed": "랜덤 시드",
+            "texture_steps": "텍스처 스텝",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 비율 조정",
+            "texture_rescale_t": "텍스처 비율 조정 t",
+            "resolution": "해상도",
+            "texture_size": "텍스처 크기",
+            "texture_alpha_mode": "텍스처 투명 모드",
+            "double_side_material": "양면 머티리얼",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료",
+            "max_views": "최대 뷰",
+            "bake_on_vertices": "정점에 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 클러스터 임계 각도 반경 라디안",
+            "sampler": "샘플러",
+            "inpainting": "인페인트",
+            "verbose": "상세 정보",
+            "dino_lock": "DINO 잠금",
+            "dino_substeps": "DINO 서브 스텝",
+            "dino_foundation_cap": "DINO 기본 캡"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이스 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭 광택 텍스처",
+            "TRIMESH": "삼각 메시",
+            "IMAGE": "이미지"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTexturerMultiView": {
+        "title": "Trellis2MeshTexturerMultiView",
+        "inputs": {
+            "pipeline": "pipeline",
+            "front_image": "전면 뷰 이미지",
+            "trimesh": "삼각 메시",
+            "back_image": "후면 뷰 이미지",
+            "left_image": "좌측 뷰 이미지",
+            "right_image": "우측 뷰 이미지"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "纹理步骤": "텍스처 스텝",
+            "纹理引导强度": "텍스처 가이드 강도",
+            "纹理引导缩放": "텍스처 가이드 스케일",
+            "纹理缩放t": "텍스처 스케일 t",
+            "分辨率": "해상도",
+            "纹理大小": "텍스처 크기",
+            "纹理alpha模式": "텍스처 alpha 모드",
+            "双面材质": "양면 머티리얼",
+            "纹理引导区间开始": "텍스처 가이드 구간 시작",
+            "纹理引导区间结束": "텍스처 가이드 구간 종료",
+            "烘焙在顶点上": "정점 베이크",
+            "使用自定义法线": "사용자 지정 노멀 사용",
+            "网格聚类阈值圆锥半角弧度": "메시 군집화 임계 원추 반각 라디안",
+            "前方轴": "앞쪽 축",
+            "混合温度": "블렌딩 온도",
+            "采样器": "샘플러",
+            "修复": "인페인트",
+            "详细信息": "상세 정보",
+            "DINO锁定": "DINO 잠금",
+            "DINO子步数": "DINO 서브 스텝 수",
+            "DINO基础帽": "DINO 기본 캡"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "基色纹理": "기본 색 텍스처",
+            "金属光泽粗糙度纹理": "메탈릭 광택 거친도 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2PostProcess": {
+        "title": "Trellis2PostProcess",
+        "inputs": {
+            "mesh": "메시"
+        },
+        "widgets": {
+            "填充孔洞": "구멍 채우기",
+            "修复法线": "노멀 복원",
+            "修复面朝向": "페이스 방향 복원",
+            "删除重复面": "중복 페이스 삭제",
+            "焊接顶点": "버텍스 용접",
+            "焊接顶点位数": "정점 용접 자릿수",
+            "平滑": "스무딩",
+            "平滑迭代次数": "평활화 반복 횟수",
+            "细分": "디바이드",
+            "细分迭代次数": "세분화 반복 횟수"
+        },
+        "outputs": {
+            "mesh": "메시"
+        },
+        "description": ""
+    },
+    "Trellis2UnWrapTrimessh": {
+        "title": "트라이메시 전개",
+        "widgets": {
+            "trimessh": "삼각 메시",
+            "网格簇阈值圆锥半角弧度": "메시 클러스터 임계 원뿔 반각(라디안)",
+            "网格簇细化迭代次数": "메시 클러스터 정밀화 반복 횟수",
+            "网格簇全局迭代次数": "메시 클러스터 전역 반복 횟수",
+            "网格簇光滑强度": "메시 클러스터 평활 강도"
+        },
+        "outputs": {
+            "trresm": "삼각 메시",
+            "TRIMESH": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexture": {
+        "title": "Trellis2 멀티뷰 텍스처",
+        "widgets": {
+            "trimesh": "삼각 메시",
+            "texture_size": "텍스처 크기",
+            "blend_texture": "텍스처 블렌딩",
+            "blend_exponent": "블렌드 지수",
+            "ortho_scale": "직교 비율",
+            "norm_size": "정규화 크기",
+            "fill_holes": "구멍 채우기",
+            "max_hole_size": "최대 홀 크기",
+            "use_metallic": "메탈릭 사용",
+            "depth_eps": "깊이 오차",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원추 반각 라디안",
+            "add_alpha_channel": "투명 채널 추가",
+            "front_image": "정면 뷰",
+            "back_image": "후면 뷰",
+            "left_image": "좌측 뷰",
+            "right_image": "우측 뷰",
+            "top_image": "상단 뷰",
+            "bottom_image": "바닥 뷰",
+            "front_weight": "전면 뷰 가중치",
+            "back_weight": "후면 뷰 가중치",
+            "left_weight": "좌측 뷰 가중치",
+            "right_weight": "우측 뷰 가중치",
+            "top_weight": "상단 뷰 가중치",
+            "bottom_weight": "바닥 뷰 가중치",
+            "custom_images": "커스텀 이미지",
+            "custom_azimuths": "사용자 지정 방위각",
+            "custom_elevations": "사용자 지정 승각",
+            "custom_weights": "사용자 지정 가중치",
+            "camera_config": "카메라 설정"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color": "베이스 컬러",
+            "metallic_roughness": "메탈릭 광택",
+            "TRIMESH": "TRIMESH",
+            "IMAGE": "이미지"
+        },
+        "description": "투사한 멀티뷰 이미지로 메시에 텍스처를 적용합니다.\n\n각도 가중 블렌딩 사용: 모든 표면이 자신을 볼 수 있는 모든 뷰에서 텍스처를 받고, 각 카메라를 향한 정면 정도에 따라 가중됩니다.\n\n카메라 각도(Y-업 좌표계:\n- 방위각: Y축 둘레 회전\n  - 0° = 정면(-Z 방향)\n  - 90° = 좌측(-X 방향)\n  - 180° = 후면(+Z 방향)\n  - 270° = 우측(+X 방향)\n- 피치각: X축 둘레 회전\n  - 0° = 수평\n  - 90° = 상부(위에서 -Y 방향)\n  - -90° = 하부(아래에서 +Y 방향)"
+    },
+    "Trellis2TexxlatMultiViewGenerator": {
+        "title": "Trellis2TexxlatMultiViewGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_conds": "컨디셔닝 이미지",
+            "views_list": "뷰 목록",
+            "shape_slat": "형태 슬롯"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "texture_steps": "텍스처 스텝",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 비율 조정",
+            "texture_rescale_t": "텍스처 비율 시간",
+            "texture_sampler": "텍스처 샘플러",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료",
+            "verbose": "상세 정보",
+            "dino_lock": "DINO 잠금",
+            "dino_substeps": "DINO 서브 스텝 수",
+            "dino_foundation_cap": "DINO 기본 캡",
+            "front_axis": "전축",
+            "blend_temperature": "블렌딩 온도"
+        },
+        "outputs": {
+            "texture_slat": "텍스처 슬롯",
+            "views_list": "뷰 목록",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2MeshTextture": {
+        "title": "Trellis2MeshTextture",
+        "inputs": {
+            "pipeline": "튜브",
+            "image": "이미지",
+            "trimesh": "삼각 메시"
+        },
+        "widgets": {
+            "seed": "랜덤 시드",
+            "texture_steps": "텍스처 스텝",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 스케일",
+            "texture_rescale_t": "텍스처 스케일 t",
+            "resolution": "해상도",
+            "texture_size": "텍스처 크기",
+            "texture_alpha_mode": "텍스처 투명 모드",
+            "double_side_material": "양면 머티리얼",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료",
+            "max_views": "최대 뷰",
+            "bake_on_vertices": "정점에 베이크",
+            "use_custom_normals": "사용자 지정 노멀 사용",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원추 반각 라디안",
+            "sampler": "샘플러",
+            "inpainting": "인페인트",
+            "verbose": "상세 정보",
+            "dino_lock": "dino_lock",
+            "dino_substeps": "dino 서브 스텝",
+            "dino_foundation_cap": "dino 기본 캡"
+        },
+        "outputs": {
+            "trimesh": "삼각 메시",
+            "base_color_texture": "베이스 컬러 텍스처",
+            "metallic_roughness_texture": "메탈릭 광택 텍스처"
+        },
+        "description": ""
+    },
+    "Trellis2UnwrapTrimesmes": {
+        "title": "Trellis2UnwrapTrimesmes",
+        "inputs": {
+            "trresm": "trresm"
+        },
+        "widgets": {
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원추 반각 라디안",
+            "mesh_cluster_refinement_iterations": "메시 정밀화 반복 횟수",
+            "mesh_cluster_global_iterations": "전역 메시 최적화 반복 횟수",
+            "mesh_cluster_smooth_strength": "메시 스무딩 강도"
+        },
+        "outputs": {
+            "trresm": "trresm"
+        },
+        "description": ""
+    },
+    "Trellis2TexxlatGenerator": {
+        "title": "Trellis2TexxlatGenerator",
+        "inputs": {
+            "pipeline": "pipeline",
+            "image_cond": "컨디셔닝 이미지",
+            "shape_slat": "형태 slat",
+            "image": "이미지",
+            "moge_camera_config": "moge 카메라 구성"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "texture_steps": "텍스처 스텝",
+            "texture_guidance_strength": "텍스처 가이드 강도",
+            "texture_guidance_rescale": "텍스처 가이드 스케일",
+            "texture_rescale_t": "텍스처 스케일 t",
+            "texture_sampler": "텍스처 샘플러",
+            "texture_guidance_interval_start": "텍스처 가이드 구간 시작",
+            "texture_guidance_interval_end": "텍스처 가이드 구간 종료",
+            "verbose": "상세 정보",
+            "dino_lock": "dino 잠금",
+            "dino_substeps": "dino 서브 스텝 수",
+            "dino_foundation_cap": "dino 기본 캡",
+            "from_resolution": "시작 해상도"
+        },
+        "outputs": {
+            "texture_slat": "텍스처 slat",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2DecodeLatent": {
+        "title": "Trellis2DecodeLatent",
+        "inputs": {
+            "pipeline": "pipeline",
+            "shape_slat": "형태 slat",
+            "texture_slat": "텍스처 slat"
+        },
+        "widgets": {
+            "resolution": "해상도",
+            "use_tiled_decoder": "타일 디코더 사용"
+        },
+        "outputs": {
+            "mesh": "메시",
+            "bvh": "바운딩 박스",
+            "pipeline": "pipeline"
+        },
+        "description": ""
+    },
+    "Trellis2simplifyTrimeseshAdvanced": {
+        "title": "Trellis2simplifyTrimeseshAdvanced",
+        "inputs": {
+            "trimesmesh": "삼각 메시"
+        },
+        "widgets": {
+            "target_face_num": "대상 폴리곤 수",
+            "thresh": "임계값",
+            "lambda_edge_length": "변장 가중치",
+            "lambda_skinny": "슬리너리 가중치",
+            "lambda_curvature": "곡률 가중치",
+            "lambda_boundary": "경계 가중치",
+            "lambda_area": "면적 가중치",
+            "qem_regularization": "QEM 정규화"
+        },
+        "outputs": {
+            "trimesmesh": "삼각 메시"
+        },
+        "description": ""
+    },
+    "Trellis2MultiViewTexturer": {
+        "title": "Trellis2MultiViewTexturer",
+        "inputs": {
+            "trimesh": "trimesh",
+            "front_image": "전면 뷰 이미지",
+            "back_image": "후면 뷰 이미지",
+            "left_image": "좌측 뷰 이미지",
+            "right_image": "우측 뷰 이미지",
+            "top_image": "상단 뷰 이미지",
+            "bottom_image": "바닥 뷰 이미지",
+            "custom_images": "커스텀 이미지",
+            "camera_config": "카메라 설정"
+        },
+        "widgets": {
+            "texture_size": "텍스처 크기",
+            "blend_texture": "텍스처 블렌딩",
+            "blend_exponent": "블렌드 지수",
+            "ortho_scale": "직교 비율",
+            "norm_size": "노멀 크기",
+            "fill_holes": "구멍 채우기",
+            "max_hole_size": "최대 홀 크기",
+            "use_metallic": "메탈릭 사용",
+            "depth_eps": "깊이 임계값",
+            "mesh_cluster_threshold_cone_half_angle_rad": "메시 군집화 임계 원추 반각 라디안",
+            "add_alpha_channel": "alpha 채널 추가",
+            "front_weight": "전면 뷰 가중치",
+            "back_weight": "후면 뷰 가중치",
+            "left_weight": "좌측 뷰 가중치",
+            "right_weight": "우측 뷰 가중치",
+            "top_weight": "상단 뷰 가중치",
+            "bottom_weight": "바닥 뷰 가중치",
+            "custom_azimuths": "사용자 지정 방위각",
+            "custom_elevations": "사용자 지정 승각",
+            "custom_weights": "사용자 지정 가중치"
+        },
+        "outputs": {
+            "trimesh": "trimesh",
+            "base_color": "베이스 컬러",
+            "metallic_roughness": "메탈릭 광택 거친도"
+        },
+        "description": "여러 뷰 이미지를 투영해 텍스처를 적용합니다.\n\n각도 가중 블렌딩 사용: 각 표면이 자신을 볼 수 있는 모든 뷰의 텍스처를 받고, 표면이 각 카메라를 향한 정면 정도가 가중치를 결정합니다.\n\n카메라 각도（Y-업 좌표계）:\n- 방위각: Y축 둘레 회전\n  - 1° = 정면（-Z 방향）   - 91° = 좌측（-X 방향）   - 181° = 후면（+Z 방향）   - 271° = 우측（+X 방향） - 피치각: X축 둘레 회전\n  - 1° = 수평\n  - 91° = 상부（-Y 방향, 위에서 본）   - -91° = 하부（+Y 방향, 아래에서 본）"
+    }
+}

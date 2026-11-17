@@ -1,0 +1,938 @@
+{
+    "🔀 Batch Wildcard Upscale Sampler": {
+        "title": "🔀 Campionatore di prompt in batch",
+        "inputs": {
+            "model": "Modello",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "upscale_model": "Modello di ingrandimento"
+        },
+        "widgets": {
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "seed": "Seme casuale",
+            "batch_size": "Dimensione batch",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "steps": "Numero di passi",
+            "cfg": "Scala CFG",
+            "sampler_name": "Campionatore",
+            "scheduler": "Pianificatore",
+            "denoise": "Riduzione rumore",
+            "upscale": "Fattore di ingrandimento",
+            "upscale_rate": "Rapporto di ingrandimento",
+            "upscale_denoise": "Denoising di ingrandimento",
+            "upscale_steps": "Passi di ingrandimento",
+            "upscale_cfg": "CFG di ingrandimento",
+            "upscale_sampler_name": "Nome del campionatore di ingrandimento",
+            "upscale_scheduler": "Pianificatore di ingrandimento",
+            "upscale_noise_inject_strength": "Intensità di iniezione del rumore per l'ingrandimento",
+            "strip_prompt_weights": "Rimuovi i pesi del prompt",
+            "recache_wildcards": "Ricache dei prompt",
+            "console_log": "Registro console"
+        },
+        "outputs": {
+            "model": "Modello",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Positivo",
+            "negative": "Negativo",
+            "latent": "Latent",
+            "prompt": "Prompt (descrizione)"
+        },
+        "description": "Risolve i prompt in modo indipendente per ogni immagine del batch, quindi una singola esecuzione genera per ciascun indice di batch un prompt diverso e di conseguenza immagini diverse. Le LoRAs possono essere caricate una per immagine tramite i tag <lora:name:strength> nel prompt. Puoi collegare il modello e il CLIP al campionatore, oppure ometterli per anteprimare soltanto i prompt risolti."
+    },
+    "💾 Save Image With Metadata": {
+        "title": "💾 Salva immagine con metadati",
+        "inputs": {
+            "images": "Immagine",
+            "positive_override": "Sovrascrittura positiva"
+        },
+        "widgets": {
+            "filename_prefix": "Prefisso del nome file",
+            "folder": "Cartella",
+            "file_format": "Formato del file",
+            "quality": "Qualità",
+            "embed_workflow": "Incorpora workflow",
+            "strip_lora_prompt": "Rimuovi i prompt LoRA"
+        },
+        "description": "Salva l'immagine allegando i metadati"
+    },
+    "🖼️ Load Image Temporarily": {
+        "title": "🖼️ Carica immagine temporanea",
+        "widgets": {
+            "image": "Immagine"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "mask": "Maschera",
+            "width": "Larghezza",
+            "height": "Altezza"
+        },
+        "description": "Carica temporaneamente un'immagine e ne restituisce immagine, maschera, larghezza e altezza."
+    },
+    "📝 Wildcard Processor Advanced": {
+        "title": "📝 Elaboratore avanzato di prompt",
+        "inputs": {
+            "seed": "Seme casuale"
+        },
+        "widgets": {
+            "multiple_separator": "Più separatori",
+            "recache_wildcards": "Ricache dei prompt",
+            "console_log": "Registro console"
+        },
+        "outputs": {
+            "processed_text": "Testo elaborato",
+            "seed": "Seme casuale",
+            "extracted_tags_string": "Stringa dei tag estratti",
+            "extracted_tags_list": "Elenco dei tag estratti",
+            "raw_tags_string": "Stringa dei tag originali",
+            "raw_tags_list": "Elenco dei tag originali"
+        },
+        "description": "Nodo avanzato per elaborare i prompt ed estrarre i tag"
+    },
+    "🎵📊 Audio Visualizer": {
+        "title": "🎵📊 Visualizzatore audio",
+        "inputs": {
+            "audio": "Audio (suono)"
+        },
+        "widgets": {
+            "output_type": "Tipo di output",
+            "visualizer_script": "Script di visualizzazione",
+            "scale": "Proporzione di scala",
+            "stereo_to_mono": "Da stereofonia a mono",
+            "framerate": "Frame rate",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "image_batch": "Batch di immagini",
+            "video": "Video (filmato)"
+        }
+    },
+    "🎨 Colorful Starting Image": {
+        "title": "🎨 Immagine iniziale colorata",
+        "widgets": {
+            "width": "Larghezza",
+            "height": "Altezza",
+            "components": "Numero di componenti",
+            "component_scale": "Scala dei componenti",
+            "shape_string": "Stringa delle forme",
+            "color_palette": "Tavolozza di colori",
+            "color_harmony": "Grado di armonia cromatica",
+            "fill_mode": "Modalità di riempimento",
+            "shape_opacity": "Opacità delle forme",
+            "background_color": "Colore di sfondo",
+            "positioning_bias": "Scostamento di posizionamento",
+            "arrangement": "Modalità di disposizione",
+            "size_distribution": "Distribuzione delle dimensioni",
+            "allow_rotation": "Consenti rotazione",
+            "noise_level": "Livello di grana",
+            "noise_scale": "Scala della grana",
+            "noise_color": "Colore della grana",
+            "warp_type": "Tipo di deformazione",
+            "warp_intensity": "Intensità di deformazione",
+            "blur_radius": "Raggio di sfocatura",
+            "seed": "Seme casuale",
+            "harmony": "Armonia",
+            "palette": "Tavolozza",
+            "harmony_colors": "Colori armonici",
+            "colorized_hue": "Tonalità a colori",
+            "bias": "Scostamento",
+            "arrangement_params": "Parametri di disposizione",
+            "max_size": "Dimensione massima",
+            "distribution": "Distribuzione",
+            "draw": "Disegno",
+            "points": "Punti",
+            "color": "Colore",
+            "color1": "Colore 1",
+            "color2": "Colore 2",
+            "opacity": "Opacità",
+            "shape": "Forma",
+            "image": "Immagine",
+            "mask": "Maschera",
+            "pos_bias": "Scostamento di posizione",
+            "size_dist": "Distribuzione delle dimensioni",
+            "rotation": "Rotazione",
+            "noise_rng": "Generatore di numeri casuali della grana",
+            "intensity": "Intensità"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "mask": "Maschera"
+        }
+    },
+    "🖼️ Download Image from URL": {
+        "title": "🖼️ Scarica immagine da URL",
+        "widgets": {
+            "image_url": "URL dell'immagine",
+            "save_file_name_override": "Sovrascrittura del nome file salvato",
+            "save_path": "Percorso di salvataggio"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "int": "Intero"
+        }
+    },
+    "📅 Format Date Time": {
+        "title": "📅 Data e ora formattata",
+        "inputs": {
+            "date_format": "Formato data"
+        },
+        "widgets": {
+            "date_format": "Formato data"
+        },
+        "outputs": {
+            "formatted_date_time": "Data e ora formattate"
+        }
+    },
+    "⛔ Generate Negative Prompt": {
+        "title": "⛔ Genera prompt negativo",
+        "inputs": {
+            "input_prompt": "Prompt di input"
+        },
+        "widgets": {
+            "max_length": "Lunghezza massima",
+            "num_beams": "Numero di ricerche a fascio",
+            "temperature": "Temperatura",
+            "top_k": "Top-K",
+            "top_p": "Top-P",
+            "blocked_words": "Lessico bloccato"
+        },
+        "outputs": {
+            "negative_prompt": "Prompt negativo"
+        }
+    },
+    "📁 Get File Path": {
+        "title": "Ottieni il percorso del file",
+        "inputs": {
+            "image": "Immagine"
+        },
+        "widgets": {
+            "image": "Immagine"
+        },
+        "outputs": {
+            "full_file_path": "Percorso file completo",
+            "file_path_only": "Solo percorso file",
+            "file_name_only": "Solo nome file",
+            "file_extension_only": "Solo estensione del file"
+        }
+    },
+    "GroqAudiotranscription": {
+        "title": "Trascrizione audio GroqI",
+        "widgets": {
+            "model": "Modello",
+            "file_path": "Percorso file",
+            "preset": "Impostazione predefinita",
+            "user_input": "Input utente",
+            "response_format": "Formato della risposta",
+            "temperature": "Temperatura",
+            "language": "Lingua",
+            "max_retries": "Numero massimo di tentativi"
+        },
+        "outputs": {
+            "transcription_result": "Risultato della trascrizione",
+            "success": "Operazione riuscita",
+            "status_code": "Codice di stato"
+        }
+    },
+    "✨📝 Groq ALM API - Transcribe": {
+        "title": "Traduzione di testo API Groq",
+        "widgets": {
+            "model": "Modello",
+            "file_path": "Percorso file",
+            "preset": "Impostazione predefinita",
+            "user_input": "Input utente",
+            "response_format": "Formato della risposta",
+            "temperature": "Temperatura",
+            "language": "Lingua",
+            "max_retries": "Numero massimo di tentativi"
+        },
+        "outputs": {
+            "transcription_result": "Risultato della trascrizione",
+            "success": "Operazione riuscita",
+            "status_code": "Codice di stato"
+        }
+    },
+    "GroqAPICompletion": {
+        "title": "Completamento API Groq",
+        "inputs": {
+            "image": "Immagine",
+            "prompt_name": "Nome del prompt",
+            "image_path": "Percorso delle immagini",
+            "image_tensor": "Tensore immagine",
+            "image_pil": "Immagine PIL",
+            "filename": "Nome file"
+        },
+        "widgets": {
+            "model": "Modello",
+            "preset": "Impostazione predefinita",
+            "system_message": "Messaggio di sistema",
+            "user_input": "Input utente",
+            "temperature": "Temperatura",
+            "max_tokens": "Numero massimo di token",
+            "top_p": "Top-P",
+            "seed": "Seme casuale",
+            "max_retries": "Numero massimo di tentativi",
+            "stop": "Sequenza di arresto",
+            "json_mode": "Modalità JSON"
+        },
+        "outputs": {
+            "string": "Stringa",
+            "boolean": "Booleano"
+        }
+    },
+    "✨💬 Groq LLM API": {
+        "title": "✨💬 Groq API LLM (grande modello linguistico)",
+        "widgets": {
+            "model": "Modello",
+            "preset": "Impostazione predefinita",
+            "system_message": "Messaggio di sistema",
+            "user_input": "Input utente",
+            "temperature": "Temperatura",
+            "max_tokens": "Numero massimo di token",
+            "top_p": "Top-P",
+            "seed": "Seme casuale",
+            "max_retries": "Numero massimo di tentativi",
+            "stop": "Sequenza di arresto",
+            "json_mode": "Modalità JSON"
+        },
+        "outputs": {
+            "api_response": "Risposta API",
+            "success": "Operazione riuscita",
+            "status_code": "Codice di stato"
+        }
+    },
+    "✨📷 Groq VLM API": {
+        "title": "✨📷 Groq API VLM (modello visivo-linguistico)",
+        "inputs": {
+            "image": "Immagine"
+        },
+        "widgets": {
+            "model": "Modello",
+            "preset": "Impostazione predefinita",
+            "system_message": "Messaggio di sistema",
+            "user_input": "Input utente",
+            "temperature": "Temperatura",
+            "max_tokens": "Numero massimo di token",
+            "top_p": "Top-P",
+            "seed": "Seme casuale",
+            "max_retries": "Numero massimo di tentativi",
+            "stop": "Sequenza di arresto",
+            "json_mode": "Modalità JSON"
+        },
+        "outputs": {
+            "api_response": "Risposta API",
+            "success": "Operazione riuscita",
+            "status_code": "Codice di stato"
+        }
+    },
+    "📂 Load Images From Path": {
+        "title": "📂 Carica immagini da un percorso",
+        "widgets": {
+            "seed": "Seme casuale",
+            "input_path": "Percorso di input"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "mask": "Maschera",
+            "string": "Stringa",
+            "image_path": "Percorso delle immagini",
+            "current_index": "Indice corrente",
+            "total_count": "Quantità totale"
+        }
+    },
+    "🖼️ Load Image Advanced": {
+        "title": "🖼️ Caricamento avanzato di immagini",
+        "inputs": {
+            "image": "Immagine"
+        },
+        "widgets": {
+            "image": "Immagine"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "mask": "Maschera",
+            "image_path": "Percorso delle immagini",
+            "positive_prompt": "Prompt positivo",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "string": "Stringa",
+            "int": "Intero"
+        }
+    },
+    "🎲 Load Random Checkpoint": {
+        "title": "Caricamento casuale di un modello checkpoint",
+        "widgets": {
+            "checkpoints": "Modello checkpoint",
+            "seed": "Seme casuale",
+            "repeat_count": "Ripetizioni",
+            "shuffle": "Rimescolamento casuale",
+            "query": "Query di ricerca",
+            "candidates": "Insieme dei candidati",
+            "limit_to_paths": "Limita ai percorsi"
+        },
+        "outputs": {
+            "model": "Modello",
+            "clip": "Modello CLIP",
+            "vae": "Modello VAE",
+            "path": "Percorso"
+        }
+    },
+    "LoadTextImagePairsList": {
+        "title": "Carica l'elenco delle coppie testo-immagine",
+        "inputs": {
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "folder_path": "Percorso della cartella",
+            "force_reload": "Forza il ricaricamento",
+            "text_input": "Input di testo",
+            "limit_count": "Limite di quantità",
+            "text_format_extension": "Estensione del formato di testo",
+            "img_tensor": "Tensore immagine",
+            "target_height": "Altezza target",
+            "target_width": "Larghezza target"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "string": "Stringa",
+            "int": "Intero"
+        }
+    },
+    "LoadTextImagePairSingle": {
+        "title": "Carica una singola coppia testo-immagine",
+        "inputs": {
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "folder_path": "Percorso della cartella",
+            "image_input": "Input immagine",
+            "text_input": "Input di testo",
+            "text_format_extension": "Estensione del formato di testo"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "string": "Stringa",
+            "int": "Intero"
+        }
+    },
+    "🏷️ LoRA Loader Prompt Tags": {
+        "title": "🏷️ Carica i tag LoRA",
+        "inputs": {
+            "MODEL": "Modello",
+            "CLIP": "Modello CLIP",
+            "STRING": "Stringa"
+        },
+        "widgets": {
+            "console_log": "Registro console"
+        },
+        "outputs": {
+            "model": "Modello",
+            "clip": "Modello CLIP",
+            "string": "Stringa",
+            "MODEL": "Modello",
+            "CLIP": "Modello CLIP",
+            "STRING": "Stringa"
+        }
+    },
+    "🖼️📊 Metadata Extractor (List)": {
+        "title": "🖼️📊 Estrattore di metadati (elenco)",
+        "inputs": {
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "input_path": "Percorso di input",
+            "filter_params": "Parametri di filtro",
+            "max_file_count": "Numero massimo di file"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo",
+            "parsed_params_json": "Dati JSON dei parametri analizzati",
+            "filtered_params_grouped": "Parametri filtrati e raggruppati",
+            "raw_metadata_json": "Dati JSON dei metadati originali",
+            "string": "Stringa"
+        }
+    },
+    "🖼️📊 Metadata Extractor (Single)": {
+        "title": "🖼️📊 Estrattore di metadati (file singolo)",
+        "inputs": {
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "input_path": "Percorso di input",
+            "filter_params": "Parametri di filtro"
+        },
+        "outputs": {
+            "image": "Immagine",
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo",
+            "parsed_params_json": "Dati JSON dei parametri analizzati",
+            "filtered_params_grouped": "Parametri filtrati e raggruppati",
+            "filtered_params_list": "Elenco dei parametri filtrati",
+            "raw_metadata_json": "Dati JSON dei metadati originali",
+            "string": "Stringa"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pair (Single)": {
+        "title": "🖼️+📝 Carica una coppia testo+immagine (singola)",
+        "inputs": {
+            "text_input": "Input di testo",
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "folder_path": "Percorso della cartella",
+            "text_format_extension": "Estensione del formato di testo"
+        },
+        "outputs": {
+            "image_single": "Immagine singola",
+            "string_single": "Stringa singola",
+            "image_path_single": "Percorso dell'immagine singola",
+            "image_filename_single": "Nome file dell'immagine singola",
+            "total_count": "Quantità totale",
+            "string": "Stringa"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pairs (List)": {
+        "title": "🖼️+📝 Carica una coppia testo+immagine (elenco)",
+        "inputs": {
+            "text_input": "Input di testo",
+            "image_input": "Input immagine"
+        },
+        "widgets": {
+            "seed": "Seme casuale",
+            "folder_path": "Percorso della cartella",
+            "force_reload": "Forza il ricaricamento",
+            "limit_count": "Limite di occorrenze",
+            "text_format_extension": "Estensione del formato di testo"
+        },
+        "outputs": {
+            "image_list": "Elenco immagini",
+            "string_list": "Elenco di stringhe",
+            "image_path_list": "Elenco dei percorsi delle immagini",
+            "image_filename_list": "Elenco dei nomi file delle immagini",
+            "total_count": "Quantità totale",
+            "string": "Stringa"
+        }
+    },
+    "⚙️ Prompt Property Extractor": {
+        "title": "⚙️ Estrattore di proprietà del prompt",
+        "inputs": {
+            "model": "Modello",
+            "clip": "Modello CLIP",
+            "vae": "Modello VAE"
+        },
+        "widgets": {
+            "input_string": "Stringa di input",
+            "load_clip_from_checkpoint": "Carica il CLIP dal modello checkpoint",
+            "load_vae_from_checkpoint": "Carica il VAE dal modello checkpoint",
+            "cfg": "CFG",
+            "steps": "Numero di passi",
+            "sampler_name": "Campionatore",
+            "denoise": "Riduzione rumore",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "seed": "Seme casuale",
+            "start_step": "Passo iniziale",
+            "end_step": "Passo finale"
+        },
+        "outputs": {
+            "model": "Modello",
+            "clip": "Modello CLIP",
+            "vae": "Modello VAE",
+            "positive": "Prompt positivo",
+            "negative": "Prompt negativo",
+            "seed": "Seme casuale",
+            "steps": "Numero di passi",
+            "latent": "Latent",
+            "cfg": "CFG",
+            "sampler": "Campionatore",
+            "denoise": "Riduzione rumore",
+            "int": "Intero",
+            "float": "Numero a virgola mobile",
+            "none": "Nessuno",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "start_step": "Passo iniziale",
+            "end_step": "Passo finale",
+            "other_tags": "Altri tag",
+            "resolved_string": "Stringa risolta",
+            "string": "Stringa"
+        }
+    },
+    "📐 Resolution Image Size Selector": {
+        "title": "📐 Selettore delle dimensioni dell'immagine",
+        "inputs": {
+            "image (optional)": "Immagine (facoltativa)"
+        },
+        "widgets": {
+            "preset": "Impostazione predefinita",
+            "preset_user": "Preset utente",
+            "custom_width": "Larghezza personalizzata",
+            "custom_height": "Altezza personalizzata",
+            "multiply": "Moltiplicatore",
+            "swap_width_and_height": "Scambia larghezza/altezza",
+            "image_min_length": "Lunghezza minima dell'immagine",
+            "image_max_length": "Lunghezza massima dell'immagine",
+            "snap_to_nearest": "Aggancia al valore più vicino",
+            "snap_resolution": "Allinea risoluzione",
+            "batch_size": "Dimensione batch",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "preset_name": "Nome del preset",
+            "from_user_presets": "Da preset utente",
+            "image": "Immagine"
+        },
+        "outputs": {
+            "width": "Larghezza",
+            "height": "Altezza",
+            "latent": "Latent"
+        }
+    },
+    "💾 Save Text File With Path": {
+        "title": "💾 Salva il file di testo in un percorso",
+        "inputs": {
+            "file_text": "Testo del file"
+        },
+        "widgets": {
+            "path": "Percorso",
+            "prefix": "Prefisso",
+            "counter_separator": "Separatore del contatore",
+            "counter_length": "Lunghezza del contatore",
+            "suffix": "Suffisso",
+            "output_extension": "Estensione di output",
+            "separator": "Separatore",
+            "number_padding": "Riempimento numerico",
+            "extension": "Estensione file",
+            "file": "File selezionato",
+            "content": "Contenuto"
+        },
+        "outputs": {
+            "output_full_path": "Percorso completo di output",
+            "output_name": "nome output",
+            "output_path": "Percorso di output"
+        }
+    },
+    "🧹 String Cleaning": {
+        "title": "🧹 Pulizia della stringa",
+        "inputs": {
+            "input_string": "Stringa di input"
+        },
+        "widgets": {
+            "collapse_sequential_spaces": "Unisci gli spazi consecutivi",
+            "strip_leading_spaces": "Rimuovi spazi iniziali",
+            "strip_trailing_spaces": "Rimuovi spazi finali",
+            "strip_empty_lines": "Rimuovi le righe vuote",
+            "strip_leading_symbols": "Rimuovi simboli iniziali",
+            "strip_trailing_symbols": "Rimuovi simboli finali",
+            "strip_newlines": "Rimuovi gli a capo",
+            "replace_newlines_with_period_space": "Sostituisci gli a capo con un punto e uno spazio",
+            "strip_inside_tags": "Rimuovi il contenuto interno dei tag",
+            "strip_between_start": "Rimozione tra i marcatori iniziali",
+            "strip_between_end": "Rimozione tra i marcatori finali",
+            "strip_leading_custom": "Rimuovi caratteri iniziali personalizzati",
+            "strip_trailing_custom": "Rimuovi caratteri finali personalizzati",
+            "strip_all_custom": "Rimuovi tutti i caratteri personalizzati",
+            "remove_text_before": "Rimuovi il testo precedente",
+            "remove_text_after": "Rimuovi il testo successivo",
+            "multiline_find": "Ricerca su più righe",
+            "multiline_replace": "Sostituzione su più righe"
+        },
+        "outputs": {
+            "string": "Stringa",
+            "cleaned_string": "Stringa pulita"
+        }
+    },
+    "✂️ String Text Extractor": {
+        "title": "✂️ Estrattore di stringa di testo",
+        "inputs": {
+            "input_string": "Stringa di input"
+        },
+        "widgets": {
+            "input_string": "Stringa di input",
+            "delimiters": "Separatore"
+        },
+        "outputs": {
+            "string": "Stringa",
+            "extracted_text": "Testo estratto",
+            "remainder_text": "Testo rimanente",
+            "extracted_list": "Elenco estratto"
+        }
+    },
+    "✂️ String Text Splitter": {
+        "title": "✂️ Divisore di stringa di testo",
+        "inputs": {
+            "input_string": "Stringa di input"
+        },
+        "widgets": {
+            "delimiter": "Separatore",
+            "split_at_linebreaks": "Dividi in corrispondenza dell'a capo",
+            "target_indices": "Indice di destinazione"
+        },
+        "outputs": {
+            "string": "Stringa",
+            "first_chunk": "Prima parte",
+            "remainder": "Resto",
+            "chunk_list": "Elenco dei blocchi",
+            "targeted_chunks": "Blocchi di destinazione"
+        }
+    },
+    "🔠 Tiktoken Tokenizer Info": {
+        "title": "🔠 Tokenizzatore Tiktoken",
+        "inputs": {
+            "input_string": "Stringa di input"
+        },
+        "widgets": {
+            "input_string": "Stringa di input",
+            "encoding_type": "Tipo di codifica",
+            "token_chunk_size": "Dimensione del blocco di token"
+        },
+        "outputs": {
+            "int": "Intero",
+            "list": "Elenco",
+            "token_count": "Conteggio dei token",
+            "character_count": "Conteggio dei caratteri",
+            "word_count": "Conteggio delle parole",
+            "split_string": "Dividi stringa",
+            "split_string_list": "Elenco delle stringhe divise",
+            "split_token_ids": "ID dei token divisi",
+            "split_token_ids_list": "Elenco degli ID dei token divisi",
+            "text_hash": "Hash del testo",
+            "special_tokens_used": "Token speciali usati",
+            "special_tokens_used_list": "Elenco dei token speciali usati",
+            "token_chunk_by_size": "Token suddivisi per dimensione",
+            "token_chunk_by_size_to_word": "Blocchi per dimensione fino alla parola",
+            "token_chunk_by_size_to_section": "Suddivisione per dimensione fino al paragrafo"
+        }
+    },
+    "🎲 Random Int in Range": {
+        "title": "🎲 Intero casuale nell'intervallo specificato",
+        "widgets": {
+            "min_value": "minimo",
+            "max_value": "massimo",
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "random_int": "Intero casuale"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🎲 Random Float in Range": {
+        "title": "🎲 Decimale casuale nell'intervallo specificato",
+        "widgets": {
+            "min_value": "minimo",
+            "max_value": "massimo",
+            "decimals": "Cifre decimali",
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "random_float": "Numero decimale casuale"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🎲 Random Bool": {
+        "title": "🎲 Valore booleano casuale",
+        "widgets": {
+            "true_probability": "Probabilità del vero",
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "random_bool": "Valore booleano casuale"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🎲 Random String": {
+        "title": "🎲 Stringa casuale",
+        "widgets": {
+            "input_list": "Elenco di input",
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "random_choice": "Scelta casuale"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🎲 Random Seed": {
+        "title": "🎲 Seme casuale",
+        "outputs": {
+            "seed": "Seme casuale"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🎲 Random Color": {
+        "title": "🎲 Colore casuale",
+        "widgets": {
+            "seed": "Seme casuale"
+        },
+        "outputs": {
+            "hex_color": "Colore esadecimale",
+            "red": "Rosso",
+            "green": "Verde",
+            "blue": "Blu"
+        },
+        "description": "Category: ⚡ nodi MNeMiC"
+    },
+    "🔗 String Concat / Append": {
+        "title": "🔗 Concatenazione/aggiunta di stringhe",
+        "inputs": {
+            "string_0": "Stringa 0",
+            "string_1": "Stringa 1"
+        },
+        "widgets": {
+            "delimiter": "Separatore"
+        },
+        "outputs": {
+            "concatenated_string": "Stringa concatenata"
+        },
+        "description": "Categoria: ⚡ nodi MNeMiC"
+    },
+    "✏️ Literal Bool": {
+        "title": "✏️ Booleano letterale",
+        "widgets": {
+            "value": "Valore"
+        },
+        "outputs": {
+            "value": "Valore"
+        },
+        "description": "Categoria: ⚡ nodi MNeMiC"
+    },
+    "✏️ Literal Float": {
+        "title": "✏️ Decimale letterale",
+        "widgets": {
+            "value": "Valore"
+        },
+        "outputs": {
+            "value": "Valore"
+        },
+        "description": "Categoria: ⚡ nodi MNeMiC"
+    },
+    "✏️ Literal Int": {
+        "title": "✏️ Intero letterale",
+        "widgets": {
+            "value": "Valore"
+        },
+        "outputs": {
+            "value": "Valore"
+        },
+        "description": "Categoria: ⚡ nodi MNeMiC"
+    },
+    "✏️ Literal String": {
+        "title": "✏️ Stringa letterale",
+        "widgets": {
+            "value": "Valore"
+        },
+        "outputs": {
+            "value": "Valore"
+        },
+        "description": "Categoria: ⚡ nodi MNeMiC"
+    },
+    "🎲 Ideogram 4 Random Prompter": {
+        "title": "🎲 Generatore di prompt casuali Ideogram 4",
+        "widgets": {
+            "seed": "Seme casuale",
+            "width": "Larghezza",
+            "height": "Altezza",
+            "region_count_min": "Numero minimo di aree",
+            "region_count_max": "Numero massimo di aree",
+            "background_weight": "Pesi dello sfondo",
+            "large_weight": "Pesi dell'area grande",
+            "medium_weight": "Pesi dell'area media",
+            "small_weight": "Pesi dell'area piccola",
+            "word_length_bias": "Scostamento della lunghezza delle parole",
+            "word_length_randomness": "Casualità della lunghezza delle parole",
+            "scene_framing": "Composizione della scena",
+            "region_word_min": "Numero minimo di parole per area",
+            "region_word_max": "Numero massimo di parole per area",
+            "freeform_chance": "Probabilità di forma libera",
+            "text_region_min": "Numero minimo di aree di testo",
+            "text_region_max": "Numero massimo di aree di testo",
+            "element_palette_chance": "Probabilità della tavolozza degli elementi",
+            "description_length": "Lunghezza della didascalia",
+            "description_override": "Sovrascrittura della descrizione",
+            "description_prefix": "Prefisso della descrizione",
+            "medium": "Mezzo",
+            "color_palette": "Tavolozza",
+            "color_harmony": "Armonia cromatica",
+            "positioning_bias": "Scostamento di posizionamento",
+            "arrangement": "Disposizione",
+            "description_background_prefix": "Prefisso della descrizione dello sfondo"
+        },
+        "outputs": {
+            "prompt": "Prompt (descrizione)",
+            "preview": "Anteprima",
+            "bboxes": "Riquadro di delimitazione",
+            "width": "Larghezza",
+            "height": "Altezza"
+        },
+        "description": "Generatore sperimentale di prompt casuali per il formato JSON strutturato di didascalie di Ideogram 4. Ogni parola proviene direttamente dal dizionario wonderwords (nessun valore hard-coded). Distribuisce aree pesate (sfondo/grande/media/piccola) e randomizza stile, illuminazione, mezzo, tavolozza e layout. Output: prompt/anteprima/caselle di delimitazione/larghezza/altezza. Richiede l'installazione del pacchetto 'wonderwords'"
+    },
+    "🧩 Ideogram 4 Prompt Builder w. String Inputs": {
+        "title": "🧩 Costruttore di prompt Ideogram 4",
+        "inputs": {
+            "image": "Immagine",
+            "import_json": "Importa JSON"
+        },
+        "widgets": {
+            "width": "Larghezza",
+            "height": "Altezza",
+            "high_level_description": "Descrizione avanzata",
+            "background": "Sfondo",
+            "style": "Stile",
+            "photo": "Foto",
+            "art_style": "Stile artistico",
+            "aesthetics": "Estetica",
+            "lighting": "Illuminazione",
+            "medium": "Mezzo",
+            "style_palette_data": "Dati della palette di stile",
+            "elements_data": "Dati degli elementi"
+        },
+        "outputs": {
+            "prompt": "Prompt (descrizione)",
+            "preview": "Anteprima",
+            "bboxes": "Riquadro di delimitazione",
+            "width": "Larghezza",
+            "height": "Altezza"
+        },
+        "description": "Costruttore di prompt visivo per il formato JSON strutturato di didascalie di Ideogram 4. Trascina sulla tela o premi '+ Area' per aggiungere un'area; ogni area ha un corrispondente pin di input stringa region_N che, se collegato, ne sovrascrive la descrizione. Le caselle di delimitazione sono normalizzate su una griglia 0-1000 nel formato [ymin, xmin, ymax, xmax]; larghezza/altezza impostano le proporzioni della tela"
+    },
+    "📝 Wildcard Processor": {
+        "title": "📝 Elaboratore di prompt",
+        "inputs": {
+            "wildcard_string": "Stringa prompt"
+        },
+        "widgets": {
+            "wildcard_string": "Stringa prompt",
+            "seed": "Seme casuale",
+            "multiple_separator": "Separatore multiplo",
+            "recache_wildcards": "Ricache dei prompt",
+            "console_log": "Registro console",
+            "message": "Messaggio",
+            "level": "Livello",
+            "log": "Registrazione",
+            "wildcard_name": "Nome del prompt",
+            "match": "Corrispondenza",
+            "text": "Testo",
+            "tag_delimiters_str": "Stringa dei separatori dei tag"
+        },
+        "outputs": {
+            "string": "Stringa",
+            "processed_text": "Testo elaborato",
+            "seed": "Seme casuale",
+            "extracted_tags_string": "Tag estratti (stringa)",
+            "extracted_tags_list": "Tag estratti (elenco)",
+            "raw_tags_string": "Tag originale (stringa)",
+            "raw_tags_list": "Tag originali (elenco)"
+        }
+    }
+}

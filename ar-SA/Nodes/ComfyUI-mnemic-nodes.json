@@ -1,0 +1,938 @@
+{
+    "🔀 Batch Wildcard Upscale Sampler": {
+        "title": "🔀عيّان الموجّهات الدفعي",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "upscale_model": "نموذج التكبير"
+        },
+        "widgets": {
+            "positive": "موجّه موجب",
+            "negative": "الموجّه السلبي",
+            "seed": "البذرة",
+            "batch_size": "حجم الدفعة",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "steps": "عدد الخطوات",
+            "cfg": "معامل CFG",
+            "sampler_name": "العيّان",
+            "scheduler": "الجدّول",
+            "denoise": "إزالة الضوضاء",
+            "upscale": "معامل التكبير",
+            "upscale_rate": "معدل التكبير",
+            "upscale_denoise": "إزالة الضوضاء عند التكبير",
+            "upscale_steps": "خطوات التكبير",
+            "upscale_cfg": "CFG للتكبير",
+            "upscale_sampler_name": "اسم عيّان التكبير",
+            "upscale_scheduler": "جدّول التكبير",
+            "upscale_noise_inject_strength": "قوة حقن الضوضاء عند التكبير",
+            "strip_prompt_weights": "إزالة أوزان الموجّه",
+            "recache_wildcards": "إعادة تخزين الموسِّعات في الذاكرة المؤقتة",
+            "console_log": "سجل الطرفية"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "موجب",
+            "negative": "سالب",
+            "latent": "Latent",
+            "prompt": "الموجّه"
+        },
+        "description": "يحلّ إشكالية الموسِّعات في الموجّه لكل صورة في الدفعة بشكل مستقل، لذا يُنتج كل تشغيل موجّهات متمايزة — وبالتالي صورًا متمايزة — لكل فهرس دفعة. يمكن تحميل LoRAs صورة بصورة عبر وسم <lora:name:strength> في الموجّه. يمكن توصيل النموذج وCLIP بالعيّان أو تركهما لمعاينة الموسِّعات المحلولة فقط."
+    },
+    "💾 Save Image With Metadata": {
+        "title": "💾حفظ الصور مع البيانات الوصفية",
+        "inputs": {
+            "images": "صورة",
+            "positive_override": "استبدال موجب"
+        },
+        "widgets": {
+            "filename_prefix": "بادئة اسم الملف",
+            "folder": "مجلد",
+            "file_format": "صيغة الملف",
+            "quality": "الجودة",
+            "embed_workflow": "تضمين سير العمل",
+            "strip_lora_prompt": "إزالة موجّهات LoRA"
+        },
+        "description": "حفظ الصور مرفقة ببيانات وصفية"
+    },
+    "🖼️ Load Image Temporarily": {
+        "title": "🖼️تحميل مؤقت للصورة",
+        "widgets": {
+            "image": "صورة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "width": "العرض",
+            "height": "الارتفاع"
+        },
+        "description": "تحميل الصور مؤقتًا وإخراج الصورة والقناع والعرض والارتفاع."
+    },
+    "📝 Wildcard Processor Advanced": {
+        "title": "📝معالج الموجّهات المتقدم",
+        "inputs": {
+            "seed": "البذرة"
+        },
+        "widgets": {
+            "multiple_separator": "فواصل متعددة",
+            "recache_wildcards": "إعادة تخزين الموسِّعات في الذاكرة المؤقتة",
+            "console_log": "سجل الطرفية"
+        },
+        "outputs": {
+            "processed_text": "النص بعد المعالجة",
+            "seed": "البذرة",
+            "extracted_tags_string": "سلسلة الوسوم المستخرَجة",
+            "extracted_tags_list": "قائمة الوسوم المستخرجة",
+            "raw_tags_string": "سلسلة الوسوم الأولية",
+            "raw_tags_list": "قائمة الوسوم الأولية"
+        },
+        "description": "عقدة متقدمة تُعالج الموجّهات وتستخرج الوسوم"
+    },
+    "🎵📊 Audio Visualizer": {
+        "title": "🎵📊 مصوِّر الصوت",
+        "inputs": {
+            "audio": "صوت"
+        },
+        "widgets": {
+            "output_type": "نوع الإخراج",
+            "visualizer_script": "سكربت التصوير",
+            "scale": "نسبة التحجيم",
+            "stereo_to_mono": "تحويل ستريو إلى أحادي",
+            "framerate": "معدل الإطارات",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "image_batch": "دفعة الصور",
+            "video": "فيديو"
+        }
+    },
+    "🎨 Colorful Starting Image": {
+        "title": "🎨 صورة البداية الملوّنة",
+        "widgets": {
+            "width": "العرض",
+            "height": "الارتفاع",
+            "components": "عدد المكوّنات",
+            "component_scale": "تحجيم المكوّنات",
+            "shape_string": "سلسلة الأشكال",
+            "color_palette": "لوحة الألوان",
+            "color_harmony": "درجة تناغم الألوان",
+            "fill_mode": "وضع الحشو",
+            "shape_opacity": "عتامة الشكل",
+            "background_color": "لون الخلفية",
+            "positioning_bias": "إزاحة التموضع",
+            "arrangement": "طريقة الترتيب",
+            "size_distribution": "توزيع الأحجام",
+            "allow_rotation": "السماح بالدوران",
+            "noise_level": "مستوى الحبيبات",
+            "noise_scale": "تحجيم الحبيبات",
+            "noise_color": "لون الحبيبات",
+            "warp_type": "نوع الالتواء",
+            "warp_intensity": "قوة الالتواء",
+            "blur_radius": "نصف قطر التمويه",
+            "seed": "البذرة",
+            "harmony": "درجة التناغم",
+            "palette": "لوحة الألوان",
+            "harmony_colors": "الألوان المتناغمة",
+            "colorized_hue": "الدرجة اللونية الملوّنة",
+            "bias": "الانحياز",
+            "arrangement_params": "معاملات التنسيق",
+            "max_size": "الحجم الأقصى",
+            "distribution": "التوزيع",
+            "draw": "رسم",
+            "points": "النقاط",
+            "color": "لون",
+            "color1": "لون 1",
+            "color2": "لون 2",
+            "opacity": "التعتيم",
+            "shape": "الشكل",
+            "image": "صورة",
+            "mask": "قناع",
+            "pos_bias": "انحياز الموضع",
+            "size_dist": "توزيع الأحجام",
+            "rotation": "تدوير",
+            "noise_rng": "مولّد الأعداد العشوائية للحبيبات",
+            "intensity": "قوة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع"
+        }
+    },
+    "🖼️ Download Image from URL": {
+        "title": "🖼️ تنزيل الصورة من URL",
+        "widgets": {
+            "image_url": "رابط الصورة",
+            "save_file_name_override": "استبدال اسم الملف المحفوظ",
+            "save_path": "مسار الحفظ"
+        },
+        "outputs": {
+            "image": "صورة",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "int": "عدد صحيح"
+        }
+    },
+    "📅 Format Date Time": {
+        "title": "📅 تنسيق التاريخ والوقت",
+        "inputs": {
+            "date_format": "تنسيق التاريخ"
+        },
+        "widgets": {
+            "date_format": "تنسيق التاريخ"
+        },
+        "outputs": {
+            "formatted_date_time": "تنسيق التاريخ والوقت"
+        }
+    },
+    "⛔ Generate Negative Prompt": {
+        "title": "⛔ توليد الموجّه السلبي",
+        "inputs": {
+            "input_prompt": "الموجّه المُدخل"
+        },
+        "widgets": {
+            "max_length": "أقصى طول",
+            "num_beams": "عدد حزم البحث",
+            "temperature": "الحرارة",
+            "top_k": "Top-K",
+            "top_p": "Top-P",
+            "blocked_words": "المفردات المحجوبة"
+        },
+        "outputs": {
+            "negative_prompt": "الموجّه السلبي"
+        }
+    },
+    "📁 Get File Path": {
+        "title": "الحصول على مسار الملف",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "image": "صورة"
+        },
+        "outputs": {
+            "full_file_path": "مسار الملف الكامل",
+            "file_path_only": "مسار الملف فقط",
+            "file_name_only": "اسم الملف فقط",
+            "file_extension_only": "امتداد الملف فقط"
+        }
+    },
+    "GroqAudiotranscription": {
+        "title": "تفريغ صوت GroqI",
+        "widgets": {
+            "model": "النموذج",
+            "file_path": "مسار الملف",
+            "preset": "إعداد مسبق",
+            "user_input": "إدخال المستخدم",
+            "response_format": "صيغة الاستجابة",
+            "temperature": "الحرارة",
+            "language": "اللغة",
+            "max_retries": "أقصى عدد لإعادة المحاولة"
+        },
+        "outputs": {
+            "transcription_result": "نتيجة التفريغ",
+            "success": "نجح",
+            "status_code": "رمز الحالة"
+        }
+    },
+    "✨📝 Groq ALM API - Transcribe": {
+        "title": "ترجمة نصية عبر Groq API",
+        "widgets": {
+            "model": "النموذج",
+            "file_path": "مسار الملف",
+            "preset": "إعداد مسبق",
+            "user_input": "إدخال المستخدم",
+            "response_format": "صيغة الاستجابة",
+            "temperature": "الحرارة",
+            "language": "اللغة",
+            "max_retries": "أقصى عدد لإعادة المحاولة"
+        },
+        "outputs": {
+            "transcription_result": "نتيجة التفريغ",
+            "success": "نجح",
+            "status_code": "رمز الحالة"
+        }
+    },
+    "GroqAPICompletion": {
+        "title": "استكمال Groq API",
+        "inputs": {
+            "image": "صورة",
+            "prompt_name": "اسم الموجّه",
+            "image_path": "مسار الصورة",
+            "image_tensor": "موتر الصورة",
+            "image_pil": "صورة PIL",
+            "filename": "اسم الملف"
+        },
+        "widgets": {
+            "model": "النموذج",
+            "preset": "إعداد مسبق",
+            "system_message": "رسالة النظام",
+            "user_input": "إدخال المستخدم",
+            "temperature": "الحرارة",
+            "max_tokens": "الحد الأقصى للرموز",
+            "top_p": "Top-P",
+            "seed": "البذرة",
+            "max_retries": "أقصى عدد لإعادة المحاولة",
+            "stop": "سلسلة التوقف",
+            "json_mode": "وضع JSON"
+        },
+        "outputs": {
+            "string": "نص",
+            "boolean": "قيمة منطقية"
+        }
+    },
+    "✨💬 Groq LLM API": {
+        "title": "✨💬Groq API نموذج اللغة الكبير LLM",
+        "widgets": {
+            "model": "النموذج",
+            "preset": "إعداد مسبق",
+            "system_message": "رسالة النظام",
+            "user_input": "إدخال المستخدم",
+            "temperature": "الحرارة",
+            "max_tokens": "الحد الأقصى للرموز",
+            "top_p": "Top-P",
+            "seed": "البذرة",
+            "max_retries": "أقصى عدد لإعادة المحاولة",
+            "stop": "سلسلة التوقف",
+            "json_mode": "وضع JSON"
+        },
+        "outputs": {
+            "api_response": "استجابة API",
+            "success": "نجح",
+            "status_code": "رمز الحالة"
+        }
+    },
+    "✨📷 Groq VLM API": {
+        "title": "✨📷 Groq API نموذج اللغة البصرية VLM",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "model": "النموذج",
+            "preset": "إعداد مسبق",
+            "system_message": "رسالة النظام",
+            "user_input": "إدخال المستخدم",
+            "temperature": "الحرارة",
+            "max_tokens": "الحد الأقصى للرموز",
+            "top_p": "Top-P",
+            "seed": "البذرة",
+            "max_retries": "أقصى عدد لإعادة المحاولة",
+            "stop": "سلسلة التوقف",
+            "json_mode": "وضع JSON"
+        },
+        "outputs": {
+            "api_response": "استجابة API",
+            "success": "نجح",
+            "status_code": "رمز الحالة"
+        }
+    },
+    "📂 Load Images From Path": {
+        "title": "📂تحميل الصور من مسار",
+        "widgets": {
+            "seed": "البذرة",
+            "input_path": "مسار الإدخال"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "string": "نص",
+            "image_path": "مسار الصورة",
+            "current_index": "الفهرس الحالي",
+            "total_count": "العدد الإجمالي"
+        }
+    },
+    "🖼️ Load Image Advanced": {
+        "title": "🖼️ تحميل متقدم للصور",
+        "inputs": {
+            "image": "صورة"
+        },
+        "widgets": {
+            "image": "صورة"
+        },
+        "outputs": {
+            "image": "صورة",
+            "mask": "قناع",
+            "image_path": "مسار الصورة",
+            "positive_prompt": "موجّه موجب",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "string": "نص",
+            "int": "عدد صحيح"
+        }
+    },
+    "🎲 Load Random Checkpoint": {
+        "title": "تحميل عشوائي لنموذج نقطة التفتيش",
+        "widgets": {
+            "checkpoints": "نموذج نقطة التفتيش",
+            "seed": "البذرة",
+            "repeat_count": "عدد التكرارات",
+            "shuffle": "بعثرة عشوائية",
+            "query": "استعلام",
+            "candidates": "مجموعة المرشّحين",
+            "limit_to_paths": "تقييد المسارات"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "clip": "نموذج CLIP",
+            "vae": "نموذج VAE",
+            "path": "مسار"
+        }
+    },
+    "LoadTextImagePairsList": {
+        "title": "تحميل قائمة أزواج النص والصورة",
+        "inputs": {
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "folder_path": "مسار المجلد",
+            "force_reload": "إعادة التحميل قسرًا",
+            "text_input": "إدخال نص",
+            "limit_count": "تقييد العدد",
+            "text_format_extension": "امتداد صيغة النص",
+            "img_tensor": "موتر الصورة",
+            "target_height": "الارتفاع المستهدف",
+            "target_width": "العرض المستهدف"
+        },
+        "outputs": {
+            "image": "صورة",
+            "string": "نص",
+            "int": "عدد صحيح"
+        }
+    },
+    "LoadTextImagePairSingle": {
+        "title": "تحميل زوج واحد من النص والصورة",
+        "inputs": {
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "folder_path": "مسار المجلد",
+            "image_input": "إدخال صورة",
+            "text_input": "إدخال نص",
+            "text_format_extension": "امتداد صيغة النص"
+        },
+        "outputs": {
+            "image": "صورة",
+            "string": "نص",
+            "int": "عدد صحيح"
+        }
+    },
+    "🏷️ LoRA Loader Prompt Tags": {
+        "title": "🏷️ تحميل وسوم LoRA",
+        "inputs": {
+            "MODEL": "النموذج",
+            "CLIP": "نموذج CLIP",
+            "STRING": "نص"
+        },
+        "widgets": {
+            "console_log": "سجل الطرفية"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "clip": "نموذج CLIP",
+            "string": "نص",
+            "MODEL": "النموذج",
+            "CLIP": "نموذج CLIP",
+            "STRING": "نص"
+        }
+    },
+    "🖼️📊 Metadata Extractor (List)": {
+        "title": "🖼️📊 مستخرِج البيانات الوصفية (قائمة)",
+        "inputs": {
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "input_path": "مسار الإدخال",
+            "filter_params": "معاملات التصفية",
+            "max_file_count": "أقصى عدد للملفات"
+        },
+        "outputs": {
+            "image": "صورة",
+            "positive_prompt": "موجّه موجب",
+            "negative_prompt": "الموجّه السلبي",
+            "parsed_params_json": "بيانات المعاملات المُحلَّلة بصيغة JSON",
+            "filtered_params_grouped": "المعاملات المصفّاة والمجمَّعة",
+            "raw_metadata_json": "بيانات JSON الوصفية الأولية",
+            "string": "نص"
+        }
+    },
+    "🖼️📊 Metadata Extractor (Single)": {
+        "title": "🖼️📊 مستخرِج البيانات الوصفية (ملف مفرد)",
+        "inputs": {
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "input_path": "مسار الإدخال",
+            "filter_params": "معاملات التصفية"
+        },
+        "outputs": {
+            "image": "صورة",
+            "positive_prompt": "موجّه موجب",
+            "negative_prompt": "الموجّه السلبي",
+            "parsed_params_json": "بيانات المعاملات المُحلَّلة بصيغة JSON",
+            "filtered_params_grouped": "المعاملات المصفّاة والمجمَّعة",
+            "filtered_params_list": "قائمة المعاملات المصفّاة",
+            "raw_metadata_json": "بيانات JSON الوصفية الأولية",
+            "string": "نص"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pair (Single)": {
+        "title": "🖼️+📝تحميل زوج واحد من النص والصورة (مفرد)",
+        "inputs": {
+            "text_input": "إدخال نص",
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "folder_path": "مسار المجلد",
+            "text_format_extension": "امتداد صيغة النص"
+        },
+        "outputs": {
+            "image_single": "صورة مفردة",
+            "string_single": "سلسلة مفردة",
+            "image_path_single": "مسار الصورة المفردة",
+            "image_filename_single": "اسم ملف الصورة المفردة",
+            "total_count": "العدد الإجمالي",
+            "string": "نص"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pairs (List)": {
+        "title": "🖼️+📝تحميل أزواج النص+الصورة (قائمة)",
+        "inputs": {
+            "text_input": "إدخال نص",
+            "image_input": "إدخال صورة"
+        },
+        "widgets": {
+            "seed": "البذرة",
+            "folder_path": "مسار المجلد",
+            "force_reload": "إعادة التحميل قسرًا",
+            "limit_count": "حد العدد",
+            "text_format_extension": "امتداد صيغة النص"
+        },
+        "outputs": {
+            "image_list": "قائمة صور",
+            "string_list": "قائمة نصوص",
+            "image_path_list": "قائمة مسارات الصور",
+            "image_filename_list": "قائمة أسماء ملفات الصور",
+            "total_count": "العدد الإجمالي",
+            "string": "نص"
+        }
+    },
+    "⚙️ Prompt Property Extractor": {
+        "title": "⚙️ مستخرِج خصائص الموجّه",
+        "inputs": {
+            "model": "النموذج",
+            "clip": "نموذج CLIP",
+            "vae": "نموذج VAE"
+        },
+        "widgets": {
+            "input_string": "نص الإدخال",
+            "load_clip_from_checkpoint": "تحميل CLIP من نموذج نقطة التفتيش",
+            "load_vae_from_checkpoint": "تحميل VAE من نموذج نقطة تفتيش",
+            "cfg": "CFG",
+            "steps": "عدد الخطوات",
+            "sampler_name": "العيّان",
+            "denoise": "إزالة الضوضاء",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "seed": "البذرة",
+            "start_step": "خطوة البداية",
+            "end_step": "خطوة النهاية"
+        },
+        "outputs": {
+            "model": "النموذج",
+            "clip": "نموذج CLIP",
+            "vae": "نموذج VAE",
+            "positive": "موجّه موجب",
+            "negative": "الموجّه السلبي",
+            "seed": "البذرة",
+            "steps": "عدد الخطوات",
+            "latent": "Latent",
+            "cfg": "CFG",
+            "sampler": "العيّان",
+            "denoise": "إزالة الضوضاء",
+            "int": "عدد صحيح",
+            "float": "عدد عشري",
+            "none": "بدون",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "start_step": "خطوة البداية",
+            "end_step": "خطوة النهاية",
+            "other_tags": "وسوم أخرى",
+            "resolved_string": "السلسلة المُحلَّلة",
+            "string": "نص"
+        }
+    },
+    "📐 Resolution Image Size Selector": {
+        "title": "📐 منتقي حجم الصورة",
+        "inputs": {
+            "image (optional)": "الصورة (اختياري)"
+        },
+        "widgets": {
+            "preset": "إعداد مسبق",
+            "preset_user": "إعداد مستخدم",
+            "custom_width": "عرض مخصص",
+            "custom_height": "ارتفاع مخصص",
+            "multiply": "مضاعف",
+            "swap_width_and_height": "تبديل العرض والارتفاع",
+            "image_min_length": "أدنى طول للصورة",
+            "image_max_length": "أقصى طول للصورة",
+            "snap_to_nearest": "المحاذاة إلى أقرب قيمة",
+            "snap_resolution": "محاذاة الدقّة",
+            "batch_size": "حجم الدفعة",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "preset_name": "اسم الإعداد المسبق",
+            "from_user_presets": "من إعدادات المستخدم المسبقة",
+            "image": "صورة"
+        },
+        "outputs": {
+            "width": "العرض",
+            "height": "الارتفاع",
+            "latent": "Latent"
+        }
+    },
+    "💾 Save Text File With Path": {
+        "title": "💾حفظ الملف النصي في مسار",
+        "inputs": {
+            "file_text": "نص الملف"
+        },
+        "widgets": {
+            "path": "مسار",
+            "prefix": "بادئة",
+            "counter_separator": "فاصل العدّاد",
+            "counter_length": "طول العدّاد",
+            "suffix": "لاحقة",
+            "output_extension": "امتداد الإخراج",
+            "separator": "الفاصل",
+            "number_padding": "حشو الأرقام",
+            "extension": "امتداد",
+            "file": "ملف",
+            "content": "المحتوى"
+        },
+        "outputs": {
+            "output_full_path": "إخراج المسار الكامل",
+            "output_name": "اسم المخرج",
+            "output_path": "مسار الإخراج"
+        }
+    },
+    "🧹 String Cleaning": {
+        "title": "🧹 تنظيف السلاسل",
+        "inputs": {
+            "input_string": "نص الإدخال"
+        },
+        "widgets": {
+            "collapse_sequential_spaces": "دمج المسافات المتتالية",
+            "strip_leading_spaces": "تجريد المسافات البادئة",
+            "strip_trailing_spaces": "تجريد المسافات اللاحقة",
+            "strip_empty_lines": "تجريد الأسطر الفارغة",
+            "strip_leading_symbols": "تجريد الرموز البادئة",
+            "strip_trailing_symbols": "تجريد الرموز اللاحقة",
+            "strip_newlines": "تجريد محارف الأسطر الجديدة",
+            "replace_newlines_with_period_space": "تبديل الأسطر الجديدة بنقطة ومسافة",
+            "strip_inside_tags": "تجريد المحتوى داخل الوسوم",
+            "strip_between_start": "تجريد ما بين علامات البداية",
+            "strip_between_end": "التجريد بين علامات النهاية",
+            "strip_leading_custom": "تجريد أحرف بادئة مخصصة",
+            "strip_trailing_custom": "تجريد الأحرف اللاحقة المخصصة",
+            "strip_all_custom": "تجريد كل الأحرف المخصصة",
+            "remove_text_before": "إزالة النص السابق",
+            "remove_text_after": "إزالة النص التالي",
+            "multiline_find": "بحث متعدد الأسطر",
+            "multiline_replace": "استبدال متعدد الأسطر"
+        },
+        "outputs": {
+            "string": "نص",
+            "cleaned_string": "السلسلة بعد التنظيف"
+        }
+    },
+    "✂️ String Text Extractor": {
+        "title": "✂️ مستخرِج نص من السلاسل",
+        "inputs": {
+            "input_string": "نص الإدخال"
+        },
+        "widgets": {
+            "input_string": "نص الإدخال",
+            "delimiters": "الفاصل"
+        },
+        "outputs": {
+            "string": "نص",
+            "extracted_text": "النص المستخرَج",
+            "remainder_text": "النص المتبقي",
+            "extracted_list": "القائمة المستخرجة"
+        }
+    },
+    "✂️ String Text Splitter": {
+        "title": "✂️ مقسّم نص السلاسل",
+        "inputs": {
+            "input_string": "نص الإدخال"
+        },
+        "widgets": {
+            "delimiter": "الفاصل",
+            "split_at_linebreaks": "التقسيم عند أسطر الجدة",
+            "target_indices": "الفهرس الهدف"
+        },
+        "outputs": {
+            "string": "نص",
+            "first_chunk": "الجزء الأول",
+            "remainder": "الباقي",
+            "chunk_list": "قائمة الكتل",
+            "targeted_chunks": "الكتل المستهدفة"
+        }
+    },
+    "🔠 Tiktoken Tokenizer Info": {
+        "title": "🔠 المجزّئ Tiktoken",
+        "inputs": {
+            "input_string": "نص الإدخال"
+        },
+        "widgets": {
+            "input_string": "نص الإدخال",
+            "encoding_type": "نوع الترميز",
+            "token_chunk_size": "حجم كتلة العلامة"
+        },
+        "outputs": {
+            "int": "عدد صحيح",
+            "list": "قائمة",
+            "token_count": "عدد الرموز",
+            "character_count": "عدد المحارف",
+            "word_count": "عدد الكلمات",
+            "split_string": "سلسلة مقسومة",
+            "split_string_list": "قائمة السلاسل المقسومة",
+            "split_token_ids": "تقسيم معرّفات الرموز",
+            "split_token_ids_list": "قائمة تقسيم معرّفات الرموز",
+            "text_hash": "بصمة النص",
+            "special_tokens_used": "الرموز الخاصة المستخدمة",
+            "special_tokens_used_list": "قائمة الرموز الخاصة المستخدمة",
+            "token_chunk_by_size": "الرموز المقطَّعة بحسب الحجم",
+            "token_chunk_by_size_to_word": "تقطيع إلى كتل بحجم يصل إلى الكلمة",
+            "token_chunk_by_size_to_section": "التقطيع بحسب الحجم حتى مستوى الفقرة"
+        }
+    },
+    "🎲 Random Int in Range": {
+        "title": "🎲 عدد صحيح عشوائي ضمن نطاق محدد",
+        "widgets": {
+            "min_value": "القيمة الدنيا",
+            "max_value": "القيمة القصوى",
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "random_int": "عدد صحيح عشوائي"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🎲 Random Float in Range": {
+        "title": "🎲 عدد عشري عشوائي ضمن نطاق محدد",
+        "widgets": {
+            "min_value": "القيمة الدنيا",
+            "max_value": "القيمة القصوى",
+            "decimals": "عدد المنازل العشرية",
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "random_float": "عدد عشري عشوائي"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🎲 Random Bool": {
+        "title": "🎲 قيمة منطقية عشوائية",
+        "widgets": {
+            "true_probability": "احتمال القيمة الصحيحة",
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "random_bool": "قيمة منطقية عشوائية"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🎲 Random String": {
+        "title": "🎲 سلسلة عشوائية",
+        "widgets": {
+            "input_list": "قائمة الإدخال",
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "random_choice": "اختيار عشوائي"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🎲 Random Seed": {
+        "title": "🎲 بذرة عشوائية",
+        "outputs": {
+            "seed": "البذرة"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🎲 Random Color": {
+        "title": "🎲 لون عشوائي",
+        "widgets": {
+            "seed": "البذرة"
+        },
+        "outputs": {
+            "hex_color": "لون ست عشري",
+            "red": "أحمر",
+            "green": "أخضر",
+            "blue": "أزرق"
+        },
+        "description": "Category: ⚡ عقد MNeMiC"
+    },
+    "🔗 String Concat / Append": {
+        "title": "🔗 وصل السلاسل/إلحاقها",
+        "inputs": {
+            "string_0": "السلسلة 0",
+            "string_1": "السلسلة 1"
+        },
+        "widgets": {
+            "delimiter": "الفاصل"
+        },
+        "outputs": {
+            "concatenated_string": "السلسلة بعد الوصل"
+        },
+        "description": "الفئة: ⚡ عقد MNeMiC"
+    },
+    "✏️ Literal Bool": {
+        "title": "✏️ قيمة منطقية حرفية",
+        "widgets": {
+            "value": "القيمة"
+        },
+        "outputs": {
+            "value": "القيمة"
+        },
+        "description": "الفئة: ⚡ عقد MNeMiC"
+    },
+    "✏️ Literal Float": {
+        "title": "✏️ عدد عشري حرفي",
+        "widgets": {
+            "value": "القيمة"
+        },
+        "outputs": {
+            "value": "القيمة"
+        },
+        "description": "الفئة: ⚡ عقد MNeMiC"
+    },
+    "✏️ Literal Int": {
+        "title": "✏️ عدد صحيح حرفي",
+        "widgets": {
+            "value": "القيمة"
+        },
+        "outputs": {
+            "value": "القيمة"
+        },
+        "description": "الفئة: ⚡ عقد MNeMiC"
+    },
+    "✏️ Literal String": {
+        "title": "✏️سلسلة نصية حرفية",
+        "widgets": {
+            "value": "القيمة"
+        },
+        "outputs": {
+            "value": "القيمة"
+        },
+        "description": "الفئة: ⚡ عقد MNeMiC"
+    },
+    "🎲 Ideogram 4 Random Prompter": {
+        "title": "🎲 مولّد الموجّهات العشوائي Ideogram 4",
+        "widgets": {
+            "seed": "البذرة",
+            "width": "العرض",
+            "height": "الارتفاع",
+            "region_count_min": "أدنى عدد للمناطق",
+            "region_count_max": "أقصى عدد للمناطق",
+            "background_weight": "وزن الخلفية",
+            "large_weight": "وزن المنطقة الكبيرة",
+            "medium_weight": "وزن المنطقة المتوسطة",
+            "small_weight": "وزن المنطقة الصغيرة",
+            "word_length_bias": "انحياز طول الكلمة",
+            "word_length_randomness": "عشوائية طول الكلمة",
+            "scene_framing": "تركيب المشهد",
+            "region_word_min": "الحد الأدنى لكلمات المنطقة",
+            "region_word_max": "الحد الأقصى لكلمات المنطقة",
+            "freeform_chance": "احتمال الصيغة الحرة",
+            "text_region_min": "أدنى عدد لمناطق النص",
+            "text_region_max": "أقصى عدد لمناطق النص",
+            "element_palette_chance": "احتمال لوحة ألوان العناصر",
+            "description_length": "طول الوصف",
+            "description_override": "استبدال الوصف",
+            "description_prefix": "بادئة الوصف",
+            "medium": "وسيط",
+            "color_palette": "لوحة الألوان",
+            "color_harmony": "تناغم الألوان",
+            "positioning_bias": "انحياز التموضع",
+            "arrangement": "التخطيط",
+            "description_background_prefix": "بادئة وصف الخلفية"
+        },
+        "outputs": {
+            "prompt": "الموجّه",
+            "preview": "معاينة",
+            "bboxes": "الإطار الحدودي",
+            "width": "العرض",
+            "height": "الارتفاع"
+        },
+        "description": "مولّد عشوائي تجريبي للموجّهات بصيغة JSON المهيكلة من نوع Ideogram 4. كل كلمة مأخوذة مباشرة من قاموس wonderwords (بدون ترميز ثابت). يوزّع مناطق خلفية/كبيرة/متوسطة/صغيرة بأوزان، ويغيّر عشوائيًا الأسلوب والإضاءة والوسيط ولوحة الألوان والتخطيط. يُخرج موجّهًا/معاينة/مربعات إحاطة/عرضًا/ارتفاعًا. يتطلب تثبيت حزمة 'wonderwords'"
+    },
+    "🧩 Ideogram 4 Prompt Builder w. String Inputs": {
+        "title": "🧩بانٍ الموجّهات Ideogram 4",
+        "inputs": {
+            "image": "صورة",
+            "import_json": "استيراد JSON"
+        },
+        "widgets": {
+            "width": "العرض",
+            "height": "الارتفاع",
+            "high_level_description": "وصف متقدّم",
+            "background": "الخلفية",
+            "style": "النمط",
+            "photo": "صورة فوتوغرافية",
+            "art_style": "الأسلوب الفني",
+            "aesthetics": "جماليات",
+            "lighting": "إضاءة",
+            "medium": "وسيط",
+            "style_palette_data": "بيانات لوحة ألوان النمط",
+            "elements_data": "بيانات العناصر"
+        },
+        "outputs": {
+            "prompt": "الموجّه",
+            "preview": "معاينة",
+            "bboxes": "الإطار الحدودي",
+            "width": "العرض",
+            "height": "الارتفاع"
+        },
+        "description": "باني موجّهات مرئي بصيغة JSON المهيكلة من Ideogram 4. اسحب المناطق على اللوحة أو أضفها بالزر «+ منطقة»؛ يقابل كل مدخلٍ نصي باسم region_N، وتوصيله يستبدل وصف تلك المنطقة. تُطبَّع مربعات الإحاطة على شبكة 0-1000 بصيغة [ymin, xmin, ymax, xmax]؛ ويضبط العرض/الارتفاع نسبة أبعاد اللوحة"
+    },
+    "📝 Wildcard Processor": {
+        "title": "📝معالج الموجّهات",
+        "inputs": {
+            "wildcard_string": "سلسلة نصية للموجّه"
+        },
+        "widgets": {
+            "wildcard_string": "سلسلة نصية للموجّه",
+            "seed": "البذرة",
+            "multiple_separator": "الفواصل المتعددة",
+            "recache_wildcards": "إعادة تخزين الموسِّعات في الذاكرة المؤقتة",
+            "console_log": "سجل الطرفية",
+            "message": "الرسالة",
+            "level": "المستوى",
+            "log": "السجل",
+            "wildcard_name": "اسم الموجّه",
+            "match": "مطابقة",
+            "text": "نص",
+            "tag_delimiters_str": "سلسلة فواصل الوسوم"
+        },
+        "outputs": {
+            "string": "نص",
+            "processed_text": "النص المعالَج",
+            "seed": "البذرة",
+            "extracted_tags_string": "الوسوم المستخرجة (سلسلة)",
+            "extracted_tags_list": "الوسوم المستخرجة (قائمة)",
+            "raw_tags_string": "الوسوم الأولية (سلسلة)",
+            "raw_tags_list": "الوسوم الأولية (قائمة)"
+        }
+    }
+}

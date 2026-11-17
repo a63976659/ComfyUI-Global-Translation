@@ -1,0 +1,938 @@
+{
+    "🔀 Batch Wildcard Upscale Sampler": {
+        "title": "🔀نمونه‌گیر انبوه پرامپت",
+        "inputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "upscale_model": "مدل بزرگ‌نمایی"
+        },
+        "widgets": {
+            "positive": "پرامپت مثبت",
+            "negative": "پرامپت منفی",
+            "seed": "بذر",
+            "batch_size": "اندازه دسته",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "steps": "تعداد گام",
+            "cfg": "ضریب راهنمای CFG",
+            "sampler_name": "نمونه‌گیر",
+            "scheduler": "زمان‌بند",
+            "denoise": "حذف نویز",
+            "upscale": "ضریب بزرگ‌نمایی",
+            "upscale_rate": "ضریب بزرگ‌نمایی",
+            "upscale_denoise": "بدون‌نویزسازی بزرگ‌نمایی",
+            "upscale_steps": "تعداد گام بزرگ‌نمایی",
+            "upscale_cfg": "CFG بزرگ‌نمایی",
+            "upscale_sampler_name": "نام نمونه‌گیر بزرگ‌نمایی",
+            "upscale_scheduler": "زمان‌بند بزرگ‌نمایی",
+            "upscale_noise_inject_strength": "شدت تزریق نویز بزرگ‌نمایی",
+            "strip_prompt_weights": "حذف وزن پرامپت",
+            "recache_wildcards": "پرامپت‌ها را دوباره کش می‌کند",
+            "console_log": "لاگ کنسول"
+        },
+        "outputs": {
+            "model": "مدل",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "مثبت",
+            "negative": "منفی",
+            "latent": "Latent",
+            "prompt": "پرامپت"
+        },
+        "description": "پرامپت برای هر تصویر انبوه به‌طور مستقل حل می‌شود، بنابراین هر اجرا برای هر شاخص دسته پرامپت متفاوت — و تصویر متفاوت — تولید می‌کند. LoRAها می‌توانند با برچسب <lora:name:strength> در پرامپت، تصویر‌به‌تصویر بارگذاری شوند. می‌توانید مدل و CLIP را به نمونه‌گیر وصل کنید، یا برای پیش‌نمایش تنها پرامپت‌های حل‌شده، آن‌ها را حذف کنید."
+    },
+    "💾 Save Image With Metadata": {
+        "title": "💾ذخیره تصویر با فراداده",
+        "inputs": {
+            "images": "تصویر",
+            "positive_override": "پوشاندن مثبت"
+        },
+        "widgets": {
+            "filename_prefix": "پیشوند نام فایل",
+            "folder": "پوشه",
+            "file_format": "قالب فایل",
+            "quality": "کیفیت",
+            "embed_workflow": "جاسازی گردش کار",
+            "strip_lora_prompt": "حذف پرامپت LoRA"
+        },
+        "description": "ذخیره تصویر و افزودن فراداده"
+    },
+    "🖼️ Load Image Temporarily": {
+        "title": "🖼️بارگذاری موقت تصویر",
+        "widgets": {
+            "image": "تصویر"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "width": "عرض",
+            "height": "ارتفاع"
+        },
+        "description": "تصویر را به‌طور موقت بارگذاری و تصویر، ماسک، عرض و ارتفاع را خروجی می‌دهد."
+    },
+    "📝 Wildcard Processor Advanced": {
+        "title": "📝پردازشگر پیشرفته پرامپت",
+        "inputs": {
+            "seed": "بذر"
+        },
+        "widgets": {
+            "multiple_separator": "جداکننده متعدد",
+            "recache_wildcards": "پرامپت‌ها را دوباره کش می‌کند",
+            "console_log": "لاگ کنسول"
+        },
+        "outputs": {
+            "processed_text": "متن پردازش‌شده",
+            "seed": "بذر",
+            "extracted_tags_string": "رشته برچسب استخراج‌شده",
+            "extracted_tags_list": "فهرست برچسب‌های استخراج‌شده",
+            "raw_tags_string": "رشته برچسب دست‌نخورده",
+            "raw_tags_list": "فهرست برچسب‌های دست‌نخورده"
+        },
+        "description": "گره پیشرفته برای پردازش پرامپت و استخراج برچسب"
+    },
+    "🎵📊 Audio Visualizer": {
+        "title": "🎵📊بصری‌ساز صدا",
+        "inputs": {
+            "audio": "صدا"
+        },
+        "widgets": {
+            "output_type": "نوع خروجی",
+            "visualizer_script": "اسکریپت بصری‌سازی",
+            "scale": "نسبت مقیاس",
+            "stereo_to_mono": "تبدیل استریو به مونو",
+            "framerate": "نرخ فریم",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "seed": "بذر"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "image_batch": "دستهٔ تصویر",
+            "video": "ویدیو"
+        }
+    },
+    "🎨 Colorful Starting Image": {
+        "title": "🎨 تصویر آغازین رنگارنگ",
+        "widgets": {
+            "width": "عرض",
+            "height": "ارتفاع",
+            "components": "تعداد اجزا",
+            "component_scale": "مقیاس جزء",
+            "shape_string": "رشته شکل",
+            "color_palette": "پالت رنگ",
+            "color_harmony": "میزان هماهنگی رنگ",
+            "fill_mode": "حالت پدینگ",
+            "shape_opacity": "کدری شکل",
+            "background_color": "رنگ پس‌زمینه",
+            "positioning_bias": "سوگیری مکان‌یابی",
+            "arrangement": "شیوه چیدمان",
+            "size_distribution": "توزیع اندازه",
+            "allow_rotation": "اجازه چرخش",
+            "noise_level": "سطح نویز",
+            "noise_scale": "مقیاس نویز",
+            "noise_color": "رنگ نویز",
+            "warp_type": "نوع اعوجاج",
+            "warp_intensity": "شدت اعوجاج",
+            "blur_radius": "شعاع محو",
+            "seed": "بذر",
+            "harmony": "هماهنگی",
+            "palette": "پالت رنگ",
+            "harmony_colors": "رنگ‌های هماهنگ",
+            "colorized_hue": "رنگ‌مایه رنگی",
+            "bias": "بایاس",
+            "arrangement_params": "پارامترهای چیدمان",
+            "max_size": "حداکثر اندازه",
+            "distribution": "توزیع",
+            "draw": "ترسیم",
+            "points": "مجموعه نقاط",
+            "color": "رنگ",
+            "color1": "رنگ 1",
+            "color2": "رنگ 2",
+            "opacity": "کدورت",
+            "shape": "شکل",
+            "image": "تصویر",
+            "mask": "ماسک",
+            "pos_bias": "سوگیری مکان",
+            "size_dist": "توزیع اندازه",
+            "rotation": "چرخش",
+            "noise_rng": "تولیدکننده تصادفی نویز",
+            "intensity": "شدت"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک"
+        }
+    },
+    "🖼️ Download Image from URL": {
+        "title": "🖼️ دانلود تصویر از URL",
+        "widgets": {
+            "image_url": "URL تصویر",
+            "save_file_name_override": "پوشاندن نام فایل ذخیره",
+            "save_path": "مسیر ذخیره"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "int": "عدد صحیح"
+        }
+    },
+    "📅 Format Date Time": {
+        "title": "📅 تاریخ و زمان قالب‌بندی‌شده",
+        "inputs": {
+            "date_format": "قالب تاریخ"
+        },
+        "widgets": {
+            "date_format": "قالب تاریخ"
+        },
+        "outputs": {
+            "formatted_date_time": "تاریخ و زمان قالب‌بندی‌شده"
+        }
+    },
+    "⛔ Generate Negative Prompt": {
+        "title": "⛔ تولید پرامپت منفی",
+        "inputs": {
+            "input_prompt": "پرامپت ورودی"
+        },
+        "widgets": {
+            "max_length": "حداکثر طول",
+            "num_beams": "تعداد جست‌وجوی پرتویی",
+            "temperature": "دما",
+            "top_k": "Top-K",
+            "top_p": "Top-P",
+            "blocked_words": "واژه‌های مسدودشده"
+        },
+        "outputs": {
+            "negative_prompt": "پرامپت منفی"
+        }
+    },
+    "📁 Get File Path": {
+        "title": "دریافت مسیر فایل",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "image": "تصویر"
+        },
+        "outputs": {
+            "full_file_path": "مسیر کامل فایل",
+            "file_path_only": "فقط مسیر فایل",
+            "file_name_only": "فقط نام فایل",
+            "file_extension_only": "فقط پسوند فایل"
+        }
+    },
+    "GroqAudiotranscription": {
+        "title": "رونویسی صدای GroqI",
+        "widgets": {
+            "model": "مدل",
+            "file_path": "مسیر فایل",
+            "preset": "پیش‌تنظیم",
+            "user_input": "ورودی کاربر",
+            "response_format": "قالب پاسخ",
+            "temperature": "دما",
+            "language": "زبان",
+            "max_retries": "بیشینهٔ تلاش مجدد"
+        },
+        "outputs": {
+            "transcription_result": "نتیجه رونویسی",
+            "success": "موفق",
+            "status_code": "کد وضعیت"
+        }
+    },
+    "✨📝 Groq ALM API - Transcribe": {
+        "title": "ترجمه متن Groq API",
+        "widgets": {
+            "model": "مدل",
+            "file_path": "مسیر فایل",
+            "preset": "پیش‌تنظیم",
+            "user_input": "ورودی کاربر",
+            "response_format": "قالب پاسخ",
+            "temperature": "دما",
+            "language": "زبان",
+            "max_retries": "بیشینهٔ تلاش مجدد"
+        },
+        "outputs": {
+            "transcription_result": "نتیجه رونویسی",
+            "success": "موفق",
+            "status_code": "کد وضعیت"
+        }
+    },
+    "GroqAPICompletion": {
+        "title": "تکمیل Groq API",
+        "inputs": {
+            "image": "تصویر",
+            "prompt_name": "نام پرامپت",
+            "image_path": "مسیر تصویر",
+            "image_tensor": "تنسور تصویر",
+            "image_pil": "تصویر PIL",
+            "filename": "نام فایل"
+        },
+        "widgets": {
+            "model": "مدل",
+            "preset": "پیش‌تنظیم",
+            "system_message": "پیام سیستم",
+            "user_input": "ورودی کاربر",
+            "temperature": "دما",
+            "max_tokens": "حداکثر تعداد توکن",
+            "top_p": "Top-P",
+            "seed": "بذر",
+            "max_retries": "بیشینهٔ تلاش مجدد",
+            "stop": "توالی توقف",
+            "json_mode": "حالت JSON"
+        },
+        "outputs": {
+            "string": "رشته",
+            "boolean": "مقدار بولین"
+        }
+    },
+    "✨💬 Groq LLM API": {
+        "title": "✨💬مدل زبانی بزرگ Groq API LLM",
+        "widgets": {
+            "model": "مدل",
+            "preset": "پیش‌تنظیم",
+            "system_message": "پیام سیستم",
+            "user_input": "ورودی کاربر",
+            "temperature": "دما",
+            "max_tokens": "حداکثر تعداد توکن",
+            "top_p": "Top-P",
+            "seed": "بذر",
+            "max_retries": "بیشینهٔ تلاش مجدد",
+            "stop": "توالی توقف",
+            "json_mode": "حالت JSON"
+        },
+        "outputs": {
+            "api_response": "پاسخ API",
+            "success": "موفق",
+            "status_code": "کد وضعیت"
+        }
+    },
+    "✨📷 Groq VLM API": {
+        "title": "✨📷 Groq API مدل زبانی-بینایی VLM",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "model": "مدل",
+            "preset": "پیش‌تنظیم",
+            "system_message": "پیام سیستم",
+            "user_input": "ورودی کاربر",
+            "temperature": "دما",
+            "max_tokens": "حداکثر تعداد توکن",
+            "top_p": "Top-P",
+            "seed": "بذر",
+            "max_retries": "بیشینهٔ تلاش مجدد",
+            "stop": "توالی توقف",
+            "json_mode": "حالت JSON"
+        },
+        "outputs": {
+            "api_response": "پاسخ API",
+            "success": "موفق",
+            "status_code": "کد وضعیت"
+        }
+    },
+    "📂 Load Images From Path": {
+        "title": "📂بارگذاری تصاویر از مسیر",
+        "widgets": {
+            "seed": "بذر",
+            "input_path": "مسیر ورودی"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "string": "رشته",
+            "image_path": "مسیر تصویر",
+            "current_index": "نمایهٔ فعلی",
+            "total_count": "تعداد کل"
+        }
+    },
+    "🖼️ Load Image Advanced": {
+        "title": "🖼️ بارگذاری پیشرفته تصویر",
+        "inputs": {
+            "image": "تصویر"
+        },
+        "widgets": {
+            "image": "تصویر"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "mask": "ماسک",
+            "image_path": "مسیر تصویر",
+            "positive_prompt": "پرامپت مثبت",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "string": "رشته",
+            "int": "عدد صحیح"
+        }
+    },
+    "🎲 Load Random Checkpoint": {
+        "title": "بارگذاری تصادفی مدل Checkpoint",
+        "widgets": {
+            "checkpoints": "مدل Checkpoint",
+            "seed": "بذر",
+            "repeat_count": "تعداد تکرار",
+            "shuffle": "درهم‌سازی تصادفی",
+            "query": "پرسش",
+            "candidates": "مجموعه نامزد",
+            "limit_to_paths": "محدودکردن مسیرها"
+        },
+        "outputs": {
+            "model": "مدل",
+            "clip": "مدل CLIP",
+            "vae": "مدل VAE",
+            "path": "مسیر"
+        }
+    },
+    "LoadTextImagePairsList": {
+        "title": "بارگذاری فهرست جفت‌های متن-تصویر",
+        "inputs": {
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "folder_path": "مسیر پوشه",
+            "force_reload": "بارگذاری مجدد اجباری",
+            "text_input": "ورودی متن",
+            "limit_count": "محدودیت تعداد",
+            "text_format_extension": "پسوند قالب متن",
+            "img_tensor": "تنسور تصویر",
+            "target_height": "ارتفاع هدف",
+            "target_width": "عرض هدف"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "string": "رشته",
+            "int": "عدد صحیح"
+        }
+    },
+    "LoadTextImagePairSingle": {
+        "title": "بارگذاری یک جفت متن-تصویر",
+        "inputs": {
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "folder_path": "مسیر پوشه",
+            "image_input": "ورودی تصویر",
+            "text_input": "ورودی متن",
+            "text_format_extension": "پسوند قالب متن"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "string": "رشته",
+            "int": "عدد صحیح"
+        }
+    },
+    "🏷️ LoRA Loader Prompt Tags": {
+        "title": "🏷️ بارگذاری برچسب‌های LoRA",
+        "inputs": {
+            "MODEL": "مدل",
+            "CLIP": "مدل CLIP",
+            "STRING": "رشته"
+        },
+        "widgets": {
+            "console_log": "لاگ کنسول"
+        },
+        "outputs": {
+            "model": "مدل",
+            "clip": "مدل CLIP",
+            "string": "رشته",
+            "MODEL": "مدل",
+            "CLIP": "مدل CLIP",
+            "STRING": "رشته"
+        }
+    },
+    "🖼️📊 Metadata Extractor (List)": {
+        "title": "🖼️📊 استخراج‌گر فراداده (فهرست)",
+        "inputs": {
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "input_path": "مسیر ورودی",
+            "filter_params": "پارامترهای فیلتر",
+            "max_file_count": "بیشینهٔ تعداد فایل"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "positive_prompt": "پرامپت مثبت",
+            "negative_prompt": "پرامپت منفی",
+            "parsed_params_json": "داده JSON پارامترهای تحلیل‌شده",
+            "filtered_params_grouped": "پارامترهای فیلترشده و گروه‌بندی‌شده",
+            "raw_metadata_json": "داده JSON فراداده دست‌نخورده",
+            "string": "رشته"
+        }
+    },
+    "🖼️📊 Metadata Extractor (Single)": {
+        "title": "🖼️📊 استخراج‌گر فراداده (تک فایل)",
+        "inputs": {
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "input_path": "مسیر ورودی",
+            "filter_params": "پارامترهای فیلتر"
+        },
+        "outputs": {
+            "image": "تصویر",
+            "positive_prompt": "پرامپت مثبت",
+            "negative_prompt": "پرامپت منفی",
+            "parsed_params_json": "داده JSON پارامترهای تحلیل‌شده",
+            "filtered_params_grouped": "پارامترهای فیلترشده و گروه‌بندی‌شده",
+            "filtered_params_list": "فهرست پارامترهای فیلترشده",
+            "raw_metadata_json": "داده JSON فراداده دست‌نخورده",
+            "string": "رشته"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pair (Single)": {
+        "title": "🖼️+📝بارگذاری یک جفت متن+تصویر（تکی）",
+        "inputs": {
+            "text_input": "ورودی متن",
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "folder_path": "مسیر پوشه",
+            "text_format_extension": "پسوند قالب متن"
+        },
+        "outputs": {
+            "image_single": "تصویر تکی",
+            "string_single": "رشته تکی",
+            "image_path_single": "مسیر تصویر تکی",
+            "image_filename_single": "نام فایل تصویر تکی",
+            "total_count": "تعداد کل",
+            "string": "رشته"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pairs (List)": {
+        "title": "🖼️+📝بارگذاری یک جفت متن+تصویر（فهرست）",
+        "inputs": {
+            "text_input": "ورودی متن",
+            "image_input": "ورودی تصویر"
+        },
+        "widgets": {
+            "seed": "بذر",
+            "folder_path": "مسیر پوشه",
+            "force_reload": "بارگذاری مجدد اجباری",
+            "limit_count": "محدودیت تعداد",
+            "text_format_extension": "پسوند قالب متن"
+        },
+        "outputs": {
+            "image_list": "فهرست تصاویر",
+            "string_list": "فهرست رشته‌ها",
+            "image_path_list": "فهرست مسیر تصاویر",
+            "image_filename_list": "فهرست نام فایل تصاویر",
+            "total_count": "تعداد کل",
+            "string": "رشته"
+        }
+    },
+    "⚙️ Prompt Property Extractor": {
+        "title": "⚙️ استخراج‌گر ویژگی‌های پرامپت",
+        "inputs": {
+            "model": "مدل",
+            "clip": "مدل CLIP",
+            "vae": "مدل VAE"
+        },
+        "widgets": {
+            "input_string": "رشته ورودی",
+            "load_clip_from_checkpoint": "بارگذاری CLIP از مدل Checkpoint",
+            "load_vae_from_checkpoint": "بارگذاری VAE از مدل Checkpoint",
+            "cfg": "CFG",
+            "steps": "تعداد گام",
+            "sampler_name": "نمونه‌گیر",
+            "denoise": "حذف نویز",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "seed": "بذر",
+            "start_step": "گام شروع",
+            "end_step": "گام پایان"
+        },
+        "outputs": {
+            "model": "مدل",
+            "clip": "مدل CLIP",
+            "vae": "مدل VAE",
+            "positive": "پرامپت مثبت",
+            "negative": "پرامپت منفی",
+            "seed": "بذر",
+            "steps": "تعداد گام",
+            "latent": "Latent",
+            "cfg": "CFG",
+            "sampler": "نمونه‌گیر",
+            "denoise": "حذف نویز",
+            "int": "عدد صحیح",
+            "float": "عدد اعشاری",
+            "none": "هیچ",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "start_step": "گام شروع",
+            "end_step": "گام پایان",
+            "other_tags": "برچسب‌های دیگر",
+            "resolved_string": "رشته حل‌شده",
+            "string": "رشته"
+        }
+    },
+    "📐 Resolution Image Size Selector": {
+        "title": "📐 انتخاب‌گر اندازه تصویر",
+        "inputs": {
+            "image (optional)": "تصویر (اختیاری)"
+        },
+        "widgets": {
+            "preset": "پیش‌تنظیم",
+            "preset_user": "پیش‌تنظیم کاربر",
+            "custom_width": "عرض دلخواه",
+            "custom_height": "ارتفاع سفارشی",
+            "multiply": "مضرب",
+            "swap_width_and_height": "جابه‌جایی عرض و ارتفاع",
+            "image_min_length": "حداقل طول تصویر",
+            "image_max_length": "حداکثر طول تصویر",
+            "snap_to_nearest": "هم‌ترازی به نزدیک‌ترین مقدار",
+            "snap_resolution": "هم‌ترازی وضوح",
+            "batch_size": "اندازه دسته",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "preset_name": "نام پیش‌تنظیم",
+            "from_user_presets": "از پیش‌تنظیم کاربر",
+            "image": "تصویر"
+        },
+        "outputs": {
+            "width": "عرض",
+            "height": "ارتفاع",
+            "latent": "Latent"
+        }
+    },
+    "💾 Save Text File With Path": {
+        "title": "💾ذخیره فایل متنی در مسیر",
+        "inputs": {
+            "file_text": "متن فایل"
+        },
+        "widgets": {
+            "path": "مسیر",
+            "prefix": "پیشوند",
+            "counter_separator": "جداکننده شمارنده",
+            "counter_length": "طول شمارنده",
+            "suffix": "پسوند",
+            "output_extension": "پسوند خروجی",
+            "separator": "جداکننده",
+            "number_padding": "پدینگ عدد",
+            "extension": "پسوند",
+            "file": "فایل",
+            "content": "محتوا"
+        },
+        "outputs": {
+            "output_full_path": "مسیر کامل خروجی",
+            "output_name": "نام خروجی",
+            "output_path": "مسیر خروجی"
+        }
+    },
+    "🧹 String Cleaning": {
+        "title": "🧹 پاک‌سازی رشته",
+        "inputs": {
+            "input_string": "رشته ورودی"
+        },
+        "widgets": {
+            "collapse_sequential_spaces": "ادغام فاصله‌های پیوسته",
+            "strip_leading_spaces": "حذف فاصله‌های آغازین",
+            "strip_trailing_spaces": "حذف فاصله‌های پایانی",
+            "strip_empty_lines": "حذف خطوط خالی",
+            "strip_leading_symbols": "حذف نمادهای آغازین",
+            "strip_trailing_symbols": "حذف نمادهای پایانی",
+            "strip_newlines": "حذف شکست خط",
+            "replace_newlines_with_period_space": "جایگزینی شکست خط با نقطه و فاصله",
+            "strip_inside_tags": "حذف محتوای داخل برچسب",
+            "strip_between_start": "حذف بین نشانه‌های آغازین",
+            "strip_between_end": "حذف بین نشانه‌های پایانی",
+            "strip_leading_custom": "حذف نویسه آغازین سفارشی",
+            "strip_trailing_custom": "حذف نویسه پایانی سفارشی",
+            "strip_all_custom": "حذف همه نویسه‌های سفارشی",
+            "remove_text_before": "حذف متن پیش از آن",
+            "remove_text_after": "حذف متن پس از آن",
+            "multiline_find": "جست‌وجوی چندخطی",
+            "multiline_replace": "جایگزینی چندخطی"
+        },
+        "outputs": {
+            "string": "رشته",
+            "cleaned_string": "رشته پاک‌سازی‌شده"
+        }
+    },
+    "✂️ String Text Extractor": {
+        "title": "✂️ استخراج‌کننده متن رشته",
+        "inputs": {
+            "input_string": "رشته ورودی"
+        },
+        "widgets": {
+            "input_string": "رشته ورودی",
+            "delimiters": "جداکننده"
+        },
+        "outputs": {
+            "string": "رشته",
+            "extracted_text": "متن استخراج‌شده",
+            "remainder_text": "متن باقی‌مانده",
+            "extracted_list": "فهرست استخراج‌شده"
+        }
+    },
+    "✂️ String Text Splitter": {
+        "title": "✂️ تقسیم‌کننده متن رشته",
+        "inputs": {
+            "input_string": "رشته ورودی"
+        },
+        "widgets": {
+            "delimiter": "جداکننده",
+            "split_at_linebreaks": "تقسیم در محل شکست خط",
+            "target_indices": "شاخص هدف"
+        },
+        "outputs": {
+            "string": "رشته",
+            "first_chunk": "بخش نخست",
+            "remainder": "باقی‌مانده",
+            "chunk_list": "فهرست تکه‌ها",
+            "targeted_chunks": "تکه‌های هدف"
+        }
+    },
+    "🔠 Tiktoken Tokenizer Info": {
+        "title": "🔠 توکن‌ساز Tiktoken",
+        "inputs": {
+            "input_string": "رشته ورودی"
+        },
+        "widgets": {
+            "input_string": "رشته ورودی",
+            "encoding_type": "نوع کدگذاری",
+            "token_chunk_size": "اندازه بلوک نشانه"
+        },
+        "outputs": {
+            "int": "عدد صحیح",
+            "list": "فهرست",
+            "token_count": "تعداد توکن",
+            "character_count": "تعداد نویسه",
+            "word_count": "تعداد واژه",
+            "split_string": "رشته تقسیم‌شده",
+            "split_string_list": "فهرست رشته‌های تقسیم‌شده",
+            "split_token_ids": "شناسه توکن‌های تقسیم‌شده",
+            "split_token_ids_list": "فهرست شناسه توکن‌های تقسیم‌شده",
+            "text_hash": "هش متن",
+            "special_tokens_used": "توکن‌های ویژه استفاده‌شده",
+            "special_tokens_used_list": "فهرست توکن‌های ویژه استفاده‌شده",
+            "token_chunk_by_size": "توکن‌های قطعه‌بندی‌شده بر پایه اندازه",
+            "token_chunk_by_size_to_word": "قطعه‌بندی بر پایه اندازه تا مرز واژه",
+            "token_chunk_by_size_to_section": "قطعه‌بندی بر پایه اندازه تا مرز پاراگراف"
+        }
+    },
+    "🎲 Random Int in Range": {
+        "title": "🎲 عدد صحیح تصادفی در بازه مشخص",
+        "widgets": {
+            "min_value": "کمینه",
+            "max_value": "بیشینه",
+            "seed": "بذر"
+        },
+        "outputs": {
+            "random_int": "عدد صحیح تصادفی"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🎲 Random Float in Range": {
+        "title": "🎲 عدد اعشاری تصادفی در بازه مشخص",
+        "widgets": {
+            "min_value": "کمینه",
+            "max_value": "بیشینه",
+            "decimals": "تعداد ارقام اعشار",
+            "seed": "بذر"
+        },
+        "outputs": {
+            "random_float": "عدد اعشاری تصادفی"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🎲 Random Bool": {
+        "title": "🎲 مقدار بولین تصادفی",
+        "widgets": {
+            "true_probability": "احتمال برآوردن شرط",
+            "seed": "بذر"
+        },
+        "outputs": {
+            "random_bool": "مقدار بولین تصادفی"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🎲 Random String": {
+        "title": "🎲 رشته تصادفی",
+        "widgets": {
+            "input_list": "فهرست ورودی",
+            "seed": "بذر"
+        },
+        "outputs": {
+            "random_choice": "انتخاب تصادفی"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🎲 Random Seed": {
+        "title": "🎲 بذر تصادفی",
+        "outputs": {
+            "seed": "بذر"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🎲 Random Color": {
+        "title": "🎲 رنگ تصادفی",
+        "widgets": {
+            "seed": "بذر"
+        },
+        "outputs": {
+            "hex_color": "رنگ مبنای ۱۶",
+            "red": "قرمز",
+            "green": "سبز",
+            "blue": "آبی"
+        },
+        "description": "دسته: ⚡ گره MNeMiC"
+    },
+    "🔗 String Concat / Append": {
+        "title": "🔗 الحاق/افزودن رشته",
+        "inputs": {
+            "string_0": "رشته 0",
+            "string_1": "رشته 1"
+        },
+        "widgets": {
+            "delimiter": "جداکننده"
+        },
+        "outputs": {
+            "concatenated_string": "رشته الحاق‌شده"
+        },
+        "description": "دسته：⚡ گره MNeMiC"
+    },
+    "✏️ Literal Bool": {
+        "title": "✏️ لیترال بولین",
+        "widgets": {
+            "value": "مقدار"
+        },
+        "outputs": {
+            "value": "مقدار"
+        },
+        "description": "دسته：⚡ گره MNeMiC"
+    },
+    "✏️ Literal Float": {
+        "title": "✏️ لیترال عدد اعشاری",
+        "widgets": {
+            "value": "مقدار"
+        },
+        "outputs": {
+            "value": "مقدار"
+        },
+        "description": "دسته：⚡ گره MNeMiC"
+    },
+    "✏️ Literal Int": {
+        "title": "✏️ لیترال عدد صحیح",
+        "widgets": {
+            "value": "مقدار"
+        },
+        "outputs": {
+            "value": "مقدار"
+        },
+        "description": "دسته：⚡ گره MNeMiC"
+    },
+    "✏️ Literal String": {
+        "title": "✏️لیترال رشته",
+        "widgets": {
+            "value": "مقدار"
+        },
+        "outputs": {
+            "value": "مقدار"
+        },
+        "description": "دسته：⚡ گره MNeMiC"
+    },
+    "🎲 Ideogram 4 Random Prompter": {
+        "title": "🎲 تولیدکننده پرامپت تصادفی Ideogram 4",
+        "widgets": {
+            "seed": "بذر",
+            "width": "عرض",
+            "height": "ارتفاع",
+            "region_count_min": "حداقل تعداد ناحیه",
+            "region_count_max": "حداکثر تعداد ناحیه",
+            "background_weight": "وزن پس‌زمینه",
+            "large_weight": "وزن ناحیه بزرگ",
+            "medium_weight": "وزن ناحیه متوسط",
+            "small_weight": "وزن ناحیه کوچک",
+            "word_length_bias": "انحراف طول واژه",
+            "word_length_randomness": "تصادفی بودن طول واژه",
+            "scene_framing": "ترکیب‌بندی صحنه",
+            "region_word_min": "حداقل تعداد واژه ناحیه",
+            "region_word_max": "حداکثر تعداد واژه ناحیه",
+            "freeform_chance": "احتمال فرم آزاد",
+            "text_region_min": "حداقل تعداد ناحیه متنی",
+            "text_region_max": "حداکثر تعداد ناحیه متنی",
+            "element_palette_chance": "احتمال پالت عنصر",
+            "description_length": "طول توضیح",
+            "description_override": "پوشاندن توضیح",
+            "description_prefix": "پیشوند توضیح",
+            "medium": "رسانه",
+            "color_palette": "پالت رنگ",
+            "color_harmony": "هماهنگی رنگ",
+            "positioning_bias": "انحراف مکان‌یابی",
+            "arrangement": "چیدمان",
+            "description_background_prefix": "پیشوند توضیح پس‌زمینه"
+        },
+        "outputs": {
+            "prompt": "پرامپت",
+            "preview": "پیش‌نمایش",
+            "bboxes": "جعبه مرزی",
+            "width": "عرض",
+            "height": "ارتفاع"
+        },
+        "description": "تولیدکننده آزمایشی پرامپت تصادفی برای قالب زیرنویس JSON ساختارمند Ideogram 4. هر واژه مستقیماً از واژه‌نامه wonderwords می‌آید (بدون مقدار ثابت درون‌کد). نواحی پس‌زمینه/بزرگ/متوسط/کوچک با وزن پراکنده می‌شوند و سبک، نورپردازی، رسانه، پالت رنگ و چیدمان تصادفی‌سازی می‌شوند. پرامپت/پیش‌نمایش/کادر مرزی/عرض/ارتفاع را خروجی می‌دهد. نصب بسته 'wonderwords' لازم است"
+    },
+    "🧩 Ideogram 4 Prompt Builder w. String Inputs": {
+        "title": "🧩سازنده پرامپت Ideogram 4",
+        "inputs": {
+            "image": "تصویر",
+            "import_json": "وارد کردن JSON"
+        },
+        "widgets": {
+            "width": "عرض",
+            "height": "ارتفاع",
+            "high_level_description": "توضیح پیشرفته",
+            "background": "پس‌زمینه",
+            "style": "سبک",
+            "photo": "عکس",
+            "art_style": "سبک هنری",
+            "aesthetics": "زیبایی‌شناسی",
+            "lighting": "نورپردازی",
+            "medium": "رسانه",
+            "style_palette_data": "دادهٔ پالت رنگ سبک",
+            "elements_data": "دادهٔ عناصر"
+        },
+        "outputs": {
+            "prompt": "پرامپت",
+            "preview": "پیش‌نمایش",
+            "bboxes": "جعبه مرزی",
+            "width": "عرض",
+            "height": "ارتفاع"
+        },
+        "description": "سازنده پرامپت بصری برای قالب زیرنویس JSON ساختارمند Ideogram 4. روی بوم بکشید یا با '+ ناحیه' ناحیه بیفزایید؛ هر ناحیه یک پایه ورودی رشته region_N مربوط دارد که پس از اتصال، توضیحش را می‌پوشاند. کادرهای مرزی روی شبکه 0-1000 نرمال می‌شوند، به قالب [ymin, xmin, ymax, xmax]؛ عرض/ارتفاع نسبت ابعاد بوم را تنظیم می‌کند"
+    },
+    "📝 Wildcard Processor": {
+        "title": "📝پردازشگر پرامپت",
+        "inputs": {
+            "wildcard_string": "رشته پرامپت"
+        },
+        "widgets": {
+            "wildcard_string": "رشته پرامپت",
+            "seed": "بذر",
+            "multiple_separator": "جداکننده چندگانه",
+            "recache_wildcards": "پرامپت‌ها را دوباره کش می‌کند",
+            "console_log": "لاگ کنسول",
+            "message": "پیام",
+            "level": "سطح",
+            "log": "گزارش",
+            "wildcard_name": "نام پرامپت",
+            "match": "تطبیق",
+            "text": "متن",
+            "tag_delimiters_str": "رشته جداکننده برچسب"
+        },
+        "outputs": {
+            "string": "رشته",
+            "processed_text": "متن پردازش‌شده",
+            "seed": "بذر",
+            "extracted_tags_string": "برچسب استخراج‌شده（رشته）",
+            "extracted_tags_list": "برچسب استخراج‌شده（فهرست）",
+            "raw_tags_string": "برچسب دست‌نخورده（رشته）",
+            "raw_tags_list": "برچسب دست‌نخورده（فهرست）"
+        }
+    }
+}

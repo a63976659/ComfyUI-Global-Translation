@@ -1,0 +1,442 @@
+{
+    "WanVideoAnimateEmbeds": {
+        "title": "WanAnimate 애니메이션 임베드",
+        "description": "참조 이미지·포즈·얼굴·배경·prefix_frames·transition_video를 지원하는 WanAnimate 핵심 임베드 노드입니다",
+        "inputs": {
+            "vae": "VAE 모델",
+            "width": "너비",
+            "height": "높이",
+            "num_frames": "총 프레임 수",
+            "force_offload": "강제 오프로드",
+            "frame_window_size": "컨텍스트 윈도우 크기",
+            "colormatch": "색상 매칭",
+            "pose_strength": "포즈 강도",
+            "face_strength": "얼굴 강도",
+            "clip_embeds": "CLIP 비전 임베드",
+            "ref_images": "참조 이미지",
+            "pose_images": "포즈 이미지",
+            "face_images": "얼굴 이미지",
+            "bg_images": "배경 이미지",
+            "mask": "마스크",
+            "start_ref_image": "시작 참조 이미지",
+            "transition_video": "전환 비디오 프레임",
+            "prefix_frames": "접두 참조 프레임",
+            "tiled_vae": "타일 VAE 인코딩"
+        },
+        "outputs": {
+            "image_embeds": "이미지 임베딩"
+        }
+    },
+    "WanVideoSampler": {
+        "title": "WanAnimate 샘플러",
+        "description": "CFG/APG/APG 체인 가이드를 지원하는 WanAnimate 비디오 샘플러",
+        "inputs": {
+            "model": "WanVideo 모델",
+            "image_embeds": "이미지 임베딩",
+            "steps": "샘플링 스텝",
+            "cfg": "CFG",
+            "shift": "노이즈 오프셋",
+            "seed": "랜덤 시드",
+            "force_offload": "강제 오프로드",
+            "scheduler": "스케줄러",
+            "riflex_freq_index": "RIFLEX 주파수 인덱스",
+            "text_embeds": "텍스트 임베드",
+            "samples": "샘플링",
+            "denoise_strength": "노이즈 제거",
+            "feta_args": "Enhance-A-Video 파라미터",
+            "context_options": "컨텍스트 옵션",
+            "cache_args": "캐시 파라미터",
+            "flowedit_args": "FlowEdit 파라미터",
+            "batched_cfg": "배치 CFG",
+            "slg_args": "SLG 파라미터",
+            "rope_function": "RoPE 함수",
+            "loop_args": "루프 파라미터",
+            "experimental_args": "실험적 파라미터",
+            "sigmas": "노이즈 레벨 (Sigmas)",
+            "unianimate_poses": "UniAnimate 포즈",
+            "fantasytalking_embeds": "FantasyTalking 임베드",
+            "uni3c_embeds": "Uni3C 임베드",
+            "multitalk_embeds": "MultiTalk 임베드",
+            "freeinit_args": "FreeInit 파라미터",
+            "start_step": "시작 스텝",
+            "end_step": "종료 스텝",
+            "add_noise_to_samples": "샘플링에 노이즈 추가",
+            "guidance_mode": "가이드 모드",
+            "apg_eta": "APG eta 값",
+            "apg_momentum": "APG 모멘텀",
+            "apg_norm_threshold": "APG 노름 임계값",
+            "apg_omega": "APG omega 값",
+            "apg_omega_I": "APG omega_I 값",
+            "apg_omega_TI": "APG omega_TI 값",
+            "chain_omega_V": "체인 CFG omega_V 값",
+            "chain_omega_I": "체인 CFG omega_I 값",
+            "chain_omega_TI": "체인 CFG omega_TI 값"
+        },
+        "outputs": {
+            "samples": "샘플링",
+            "denoised_samples": "노이즈 제거 후 샘플"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "WanAnimate 샘플러 v2",
+        "description": "WanAnimate 샘플러 v2 버전",
+        "inputs": {
+            "model": "WanVideo 모델",
+            "image_embeds": "이미지 임베딩",
+            "steps": "샘플링 스텝",
+            "cfg": "CFG",
+            "shift": "노이즈 오프셋",
+            "seed": "랜덤 시드",
+            "force_offload": "강제 오프로드",
+            "scheduler": "스케줄러",
+            "text_embeds": "텍스트 임베드",
+            "samples": "샘플링",
+            "denoise_strength": "노이즈 제거",
+            "context_options": "컨텍스트 옵션",
+            "cache_args": "캐시 파라미터",
+            "batched_cfg": "배치 CFG",
+            "slg_args": "SLG 파라미터",
+            "rope_function": "RoPE 함수",
+            "loop_args": "루프 파라미터",
+            "experimental_args": "실험적 파라미터",
+            "sigmas": "노이즈 레벨 (Sigmas)",
+            "start_step": "시작 스텝",
+            "end_step": "종료 스텝"
+        },
+        "outputs": {
+            "samples": "샘플링",
+            "denoised_samples": "노이즈 제거 후 샘플"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "WanAnimate 스케줄러",
+        "description": "WanAnimate 노이즈 스케줄러",
+        "inputs": {
+            "steps": "샘플링 스텝",
+            "shift": "노이즈 오프셋",
+            "scheduler": "스케줄러",
+            "start_percent": "시작 백분율",
+            "end_percent": "종료 백분율"
+        },
+        "outputs": {
+            "sample_scheduler": "샘플 스케줄러",
+            "timesteps": "타임스텝"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "WanAnimate 스케줄러 v2",
+        "description": "WanAnimate 스케줄러 v2 버전",
+        "inputs": {
+            "steps": "샘플링 스텝",
+            "shift": "노이즈 오프셋",
+            "scheduler": "스케줄러"
+        },
+        "outputs": {
+            "sample_scheduler": "샘플 스케줄러",
+            "timesteps": "타임스텝"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "WanAnimate 샘플러 설정",
+        "description": "샘플링 파라미터를 설정 개체로 패키징해 재사용하기 쉽게 합니다",
+        "inputs": {
+            "steps": "샘플링 스텝",
+            "cfg": "CFG",
+            "shift": "노이즈 오프셋",
+            "scheduler": "스케줄러",
+            "riflex_freq_index": "RIFLEX 주파수 인덱스",
+            "guidance_mode": "가이드 모드",
+            "apg_eta": "APG eta 값",
+            "apg_momentum": "APG 모멘텀",
+            "apg_norm_threshold": "APG 노름 임계값"
+        },
+        "outputs": {
+            "sampler_settings": "샘플러 설정"
+        }
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "WanAnimate 설정에서 샘플링",
+        "description": "사전 설정된 샘플러 설정으로 샘플링",
+        "inputs": {
+            "model": "WanVideo 모델",
+            "image_embeds": "이미지 임베딩",
+            "sampler_settings": "샘플러 설정",
+            "seed": "랜덤 시드",
+            "force_offload": "강제 오프로드",
+            "text_embeds": "텍스트 임베드",
+            "samples": "샘플링",
+            "denoise_strength": "노이즈 제거",
+            "context_options": "컨텍스트 옵션",
+            "cache_args": "캐시 파라미터",
+            "batched_cfg": "배치 CFG",
+            "slg_args": "SLG 파라미터",
+            "rope_function": "RoPE 함수",
+            "loop_args": "루프 파라미터",
+            "experimental_args": "실험적 파라미터",
+            "sigmas": "노이즈 레벨 (Sigmas)",
+            "start_step": "시작 스텝",
+            "end_step": "종료 스텝"
+        },
+        "outputs": {
+            "samples": "샘플링",
+            "denoised_samples": "노이즈 제거 후 샘플"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "WanAnimate VAE 인코딩",
+        "description": "이미지/비디오를 Latent로 인코딩",
+        "inputs": {
+            "vae": "VAE 모델",
+            "width": "너비",
+            "height": "높이",
+            "num_frames": "총 프레임 수",
+            "noise_aug_strength": "노이즈 증강 강도",
+            "start_latent_strength": "시작 Latent 강도",
+            "end_latent_strength": "종료 Latent 강도",
+            "force_offload": "강제 오프로드",
+            "start_image": "시작 이미지",
+            "end_image": "종료 이미지",
+            "clip_embeds": "CLIP 비전 임베드",
+            "control_embeds": "컨트롤 임베드",
+            "fun_or_fl2v_model": "Fun/FL2V 모델",
+            "temporal_mask": "시간 마스크",
+            "extra_latents": "추가 Latent",
+            "tiled_vae": "타일 VAE 인코딩",
+            "add_cond_latents": "추가 컨디셔닝 Latent",
+            "augment_empty_frames": "빈 프레임 강화",
+            "empty_frame_pad_image": "빈 프레임 패드 이미지"
+        },
+        "outputs": {
+            "image_embeds": "이미지 임베딩"
+        }
+    },
+    "WanVideoDecode": {
+        "title": "WanAnimate VAE 디코딩",
+        "description": "Latent를 비디오 픽셀로 디코딩합니다",
+        "inputs": {
+            "samples": "샘플링",
+            "vae": "VAE 모델",
+            "enable_tiling": "타일 활성화",
+            "force_offload": "강제 오프로드"
+        },
+        "outputs": {
+            "images": "이미지"
+        }
+    },
+    "WanVideoModelLoader": {
+        "title": "WanAnimate 모델 로더",
+        "description": "Wan Animate 비디오 생성 모델 로드",
+        "inputs": {
+            "model_path": "모델 경로",
+            "precision": "정밀도",
+            "attention_mode": "어텐션 모드",
+            "load_device": "장치 로드",
+            "enable_5b": "5B 모델 활성화"
+        },
+        "outputs": {
+            "model": "WanVideo 모델"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "WanAnimate VAE 로더",
+        "description": "VAE 모델 로드",
+        "inputs": {
+            "model_path": "모델 경로"
+        },
+        "outputs": {
+            "vae": "VAE 모델"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "WanAnimate 컨텍스트 옵션",
+        "description": "컨텍스트 윈도우 샘플링 파라미터 구성",
+        "inputs": {
+            "context_schedule": "컨텍스트 스케줄",
+            "context_frames": "컨텍스트 프레임 수",
+            "context_stride": "컨텍스트 스텝",
+            "context_overlap": "컨텍스트 중복",
+            "freenoise": "FreeNoise",
+            "verbose": "상세 출력"
+        },
+        "outputs": {
+            "context_options": "컨텍스트 옵션"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "WanAnimate 텍스트 인코딩(캐시)",
+        "description": "텍스트 프롬프트를 임베드로 인코딩하며 디스크 캐시와 Qwen LLM 확장을 지원합니다",
+        "inputs": {
+            "model_name": "모델 이름",
+            "precision": "정밀도",
+            "positive_prompt": "긍정 프롬프트",
+            "negative_prompt": "부정 프롬프트",
+            "quantization": "양자화 방법",
+            "use_disk_cache": "디스크 캐시 사용",
+            "device": "실행 장치",
+            "extender_args": "프롬프트 확장 파라미터"
+        },
+        "outputs": {
+            "text_embeds": "텍스트 임베드",
+            "negative_text_embeds": "부정 텍스트 임베드",
+            "positive_prompt": "긍정 프롬프트"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "WanAnimate CLIP 비전 인코딩",
+        "description": "CLIP 비전 모델로 참조 이미지를 인코딩합니다",
+        "inputs": {
+            "clip_vision": "CLIP 비전 모델",
+            "image_1": "이미지1",
+            "strength_1": "강도1",
+            "strength_2": "강도2",
+            "crop": "크롭 방식",
+            "combine_embeds": "임베드 병합 방식",
+            "force_offload": "강제 오프로드",
+            "image_2": "이미지2",
+            "negative_image": "부정 이미지",
+            "tiles": "분할 수",
+            "ratio": "타일 비율"
+        },
+        "outputs": {
+            "image_embeds": "이미지 임베딩"
+        }
+    },
+    "WanVideoLoraSelect": {
+        "title": "WanAnimate LoRA 선택",
+        "description": "LoRA 모델 하나를 선택하고 가중치를 구성합니다",
+        "inputs": {
+            "model_path": "모델 경로",
+            "strength": "가중치"
+        },
+        "outputs": {
+            "lora": "LoRA 구성"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "WanAnimate 멀티 LoRA 선택",
+        "description": "LoRA 모델 여러 개를 선택해 각각의 가중치를 구성합니다",
+        "inputs": {
+            "lora_1": "LoRA 1",
+            "strength_1": "가중치1",
+            "lora_2": "LoRA 2",
+            "strength_2": "가중치2",
+            "lora_3": "LoRA 3",
+            "strength_3": "가중치3",
+            "lora_4": "LoRA 4",
+            "strength_4": "가중치4"
+        },
+        "outputs": {
+            "loras": "LoRA 목록"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "WanAnimate LoRA 적용",
+        "description": "LoRA 구성을 비디오 모델에 적용합니다",
+        "inputs": {
+            "model": "WanVideo 모델",
+            "lora": "LoRA 구성",
+            "loras": "LoRA 목록"
+        },
+        "outputs": {
+            "model": "WanVideo 모델"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "WanAnimate 블록 스왑 구성",
+        "description": "블록 스왑 전략을 구성해 모델의 VRAM을 절약합니다",
+        "inputs": {
+            "blocks_to_swap": "스왑 블록 수",
+            "use_non_blocking": "논블로킹 전송 사용",
+            "vace_blocks_to_swap": "VACE 스왑 블록 수",
+            "prefetch_blocks": "선취출 블록 수",
+            "block_swap_debug": "블록 스왑 디버그",
+            "offload_img_emb": "이미지 임베드 언로드",
+            "offload_txt_emb": "텍스트 임베드 언로드"
+        },
+        "outputs": {
+            "block_swap_args": "블록 스왑 파라미터"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "WanAnimate 블록 스왑 설정",
+        "description": "블록 스왑 구성을 모델에 적용합니다",
+        "inputs": {
+            "model": "WanVideo 모델",
+            "block_swap_args": "블록 스왑 파라미터"
+        },
+        "outputs": {
+            "model": "WanVideo 모델"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "WanAnimate Torch 컴파일 설정",
+        "description": "torch.compile을 구성해 모델 추론을 가속합니다",
+        "inputs": {
+            "compile_mode": "컴파일 모드",
+            "fullgraph": "전체 계산 그래프",
+            "dynamic": "동적 형태",
+            "backend": "백엔드",
+            "options": "옵션"
+        },
+        "outputs": {
+            "compile_args": "컴파일 파라미터"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "WanAnimate Uni3C ControlNet 로더",
+        "description": "Uni3C ControlNet 모델 로드",
+        "inputs": {
+            "model_path": "모델 경로"
+        },
+        "outputs": {
+            "uni3c_controlnet": "Uni3C ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "WanAnimate Uni3C 임베드",
+        "description": "Uni3C ControlNet 컨트롤 임베드 생성",
+        "inputs": {
+            "uni3c_controlnet": "Uni3C ControlNet",
+            "control_images": "제어 이미지",
+            "strength": "제어 강도",
+            "start_percent": "시작 백분율",
+            "end_percent": "종료 백분율"
+        },
+        "outputs": {
+            "uni3c_embeds": "Uni3C 임베드"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "WanAnimate 샘플러 추가 파라미터",
+        "description": "샘플러의 추가 파라미터(선택적 CFG, 선택적 노이즈 오프셋 등)를 구성합니다",
+        "inputs": {
+            "optional_cfg": "선택적 CFG",
+            "optional_noise_offset": "선택적 노이즈 오프셋",
+            "optional_cfg_scale": "선택적 CFG 스케일",
+            "optional_sigma_max": "선택적 Sigma 최대값",
+            "optional_sigma_min": "선택적 Sigma 최소값"
+        },
+        "outputs": {
+            "sampler_extra_args": "샘플러 추가 파라미터"
+        }
+    },
+    "WanAnimatePlusBernini": {
+        "title": "WanAnimate Bernini 컨디셔닝 생성",
+        "description": "Bernini 모델 컨디셔닝 생성, v2v/rv2v/r2v/t2v 작업 지원",
+        "inputs": {
+            "vae": "VAE 모델",
+            "width": "너비",
+            "height": "높이",
+            "num_frames": "총 프레임 수",
+            "source_video": "원본 비디오",
+            "reference_video": "참고 비디오",
+            "reference_images": "참조 이미지",
+            "ref_max_size": "참조 미디어 최대 변장",
+            "force_offload": "강제 오프로드",
+            "tiled_vae": "타일 VAE 인코딩"
+        },
+        "outputs": {
+            "image_embeds": "이미지 임베딩"
+        }
+    }
+}

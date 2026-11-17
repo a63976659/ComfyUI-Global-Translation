@@ -1,0 +1,2345 @@
+{
+    "LongCatAvatarWhisperEmbeds": {
+        "title": "Incrustações de Diálogo do Avatar LongCat (v1.5)",
+        "inputs": {
+            "whisper_model": "Modelo de diálogo",
+            "audio_1": "Áudio 1",
+            "audio_2": "Áudio 2",
+            "audio_3": "Áudio 3",
+            "audio_4": "Áudio 4",
+            "ref_target_masks": "Máscara de Destino de Referência"
+        },
+        "widgets": {
+            "normalize_loudness": "Normalizar loudness",
+            "num_frames": "Número de quadros",
+            "fps": "Taxa de quadros",
+            "audio_scale": "Escala do áudio",
+            "audio_cfg_scale": "Escala CFG do áudio",
+            "multi_audio_type": "Tipo de áudio múltiplo"
+        },
+        "outputs": {
+            "num_frames": "Número de quadros",
+            "audio": "Áudio",
+            "multitalk_embeds": "Incrustações de múltiplos diálogos"
+        },
+        "description": "Este nó processa as incrustações de áudio do avatar virtual, suporta múltiplas entradas de áudio, extrai características com o modelo Whisper e permite ajustar parâmetros como número de quadros, taxa de quadros e escala do áudio."
+    },
+    "WanVideoImageToVideoSkyreelsv3_audio": {
+        "title": "Vídeo Wan ReelsV3 Áudio para Vídeo",
+        "inputs": {
+            "vae": "Codificador VAE",
+            "start_image": "Imagem inicial",
+            "reference_video": "Vídeo de referência",
+            "clip_embeds": "Incrustações CLIP"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "frame_window_size": "Tamanho da janela de quadros",
+            "motion_frame": "Quadros de movimento",
+            "drop_frames": "Número de quadros descartados",
+            "tiled_vae": "VAE em blocos (tiled)",
+            "force_offload": "Descarregar à força",
+            "colormatch": "combinação de cores",
+            "output_path": "Caminho de saída"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem",
+            "output_path": "Caminho de saída"
+        },
+        "description": "Método de amostragem para geração de vídeo longo com suporte a Multi/InfiniteTalk; o conteúdo do vídeo é criado em forma de quadros sobrepostos no ambiente Windows. Este recurso não é compatível nem necessário para o ContextWindows e outras funcionalidades múltiplas além de Multi/InfiniteTalk."
+    },
+    "WanVideoEnhanceAVideo": {
+        "title": "Vídeo Wan Aprimoramento-A-Vídeo (KJ)",
+        "widgets": {
+            "weight": "Peso",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "feta_args": "Parâmetros de realce"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "Definir Troca de Blocos de Vídeo Wan (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "block_swap_args": "Parâmetros de troca de blocos"
+        },
+        "outputs": {
+            "model": "Wan Vídeo Modelo"
+        }
+    },
+    "WanVideoSetRadialAttention": {
+        "title": "Vídeo Wan Definir Atenção Radial (KJ)",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "dense_blocks": "Blocos densos",
+            "dense_vace_blocks": "Bloco VACE denso",
+            "dense_timesteps": "Passos temporais densos",
+            "decay_factor": "Fator de decaimento",
+            "dense_attention_mode": "Modo de atenção densa",
+            "block_size": "Tamanho do bloco"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "WanVideoBlockList": {
+        "title": "Vídeo Wan Lista de Blocos (KJ)",
+        "widgets": {
+            "blocks": "Bloco"
+        },
+        "outputs": {
+            "block_list": "Lista de blocos"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "Vídeo Wan Codificação de Texto (cache) (KJ)",
+        "inputs": {
+            "extender_args": "Parâmetros do expansor"
+        },
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão",
+            "quantization": "Quantização",
+            "device": "Dispositivo",
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo",
+            "use_disk_cache": "Usar Cache em Disco"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto",
+            "negative_text_embeds": "Grupo de Incrustações de Texto Negativo",
+            "positive_prompt": "Prompt positivo"
+        },
+        "description": "Codifica o prompt de texto em incrustações de texto.\n Após concluir o carregamento e o descarregamento, este nó desliga automaticamente o T5, sem ocupar nenhuma VRAM ou memória.\n Se o prompt já estiver em cache antes de carregar o T5, o T5 não será carregado.\n A saída negativa foi feita para ser usada com o NAG, contendo apenas as incrustações do prompt negativo.\n Além disso, você pode fornecer um modelo LLM Qwen para estender o prompt positivo com qualquer um dos modelos originais da Wan ou com um prompt de sistema personalizado."
+    },
+    "WanVideoTextEncode": {
+        "title": "Vídeo Wan Codificação de Texto (KJ)",
+        "inputs": {
+            "t5": "Codificador T5",
+            "model_to_offload": "Descarregar modelos"
+        },
+        "widgets": {
+            "positive_prompt": "Prompt positivo",
+            "negative_prompt": "Prompt negativo",
+            "force_offload": "Descarregar à força",
+            "use_disk_cache": "Usar Cache em Disco",
+            "device": "Dispositivo"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto"
+        }
+    },
+    "WanVideoTextEncodeSingle": {
+        "title": "Vídeo Wan Codificação de texto única (KJ)",
+        "inputs": {
+            "t5": "Modelo T5",
+            "model_to_offload": "Descarregar modelos"
+        },
+        "widgets": {
+            "prompt": "Prompt (texto)",
+            "force_offload": "Descarregar à força",
+            "use_disk_cache": "Usar Cache em Disco",
+            "device": "Dispositivo"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto"
+        }
+    },
+    "WanVideoApplyNAG": {
+        "title": "Vídeo Wan Aplicar NAG (KJ)",
+        "inputs": {
+            "original_text_embeds": "Grupo de Embeddings de Texto Original",
+            "nag_text_embeds": "Grupo de Embeddings de Texto NAG"
+        },
+        "widgets": {
+            "nag_scale": "Escala NAG",
+            "nag_tau": "NAG tau",
+            "nag_alpha": "NAG alpha"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto"
+        }
+    },
+    "WanVideoTextEmbedBridge": {
+        "title": "Vídeo Wan Ponte de Incrustações de Texto (KJ)",
+        "inputs": {
+            "positive": "Condição positiva",
+            "negative": "Condição negativa"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "Vídeo Wan Codificação CLIP Visual (KJ)",
+        "inputs": {
+            "clip_vision": "CLIP Visual",
+            "image_1": "Imagem_1",
+            "image_2": "Imagem_2",
+            "negative_image": "Imagem negativa"
+        },
+        "widgets": {
+            "strength_1": "Intensidade_1",
+            "strength_2": "Intensidade_2",
+            "crop": "Recortar",
+            "combine_embeds": "Combinar incorporações",
+            "force_offload": "Descarregar à força",
+            "tiles": "Blocos de mosaico",
+            "ratio": "Proporção"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoRealisDanceLatents": {
+        "title": "Vídeo Wan RealisDance Dança Real Latent (KJ)",
+        "inputs": {
+            "ref_latent": "Latent de referência",
+            "smpl_latent": "Latent do Modelo Corporal SMPL",
+            "hamer_latent": "Latent no Estilo Hame"
+        },
+        "widgets": {
+            "pose_cond_start_percent": "Porcentagem inicial da condição de pose",
+            "pose_cond_end_percent": "Porcentagem final da condição de pose"
+        },
+        "outputs": {
+            "add_cond_latents": "Adicionar Latent de condição"
+        }
+    },
+    "WanVideoAddStandInLatent": {
+        "title": "Vídeo Wan Adicionar Latent Dublê (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "ip_image_latent": "Latent de imagem IP"
+        },
+        "widgets": {
+            "freq_offset": "Deslocamento de frequência"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddMTVMotion": {
+        "title": "Vídeo Wan Efeito de Movimento MTV (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "mtv_crafter_motion": "Efeito de Movimento MTV"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoImageToVideoEncode": {
+        "title": "Vídeo Wan Codificação de Imagem para Vídeo (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "Grupo de Embeddings CLIP",
+            "start_image": "Imagem inicial",
+            "end_image": "Imagem final",
+            "control_embeds": "Grupo de embeddings de controle",
+            "temporal_mask": "Máscaras temporais",
+            "extra_latents": "Latent extra",
+            "add_cond_latents": "Adicionar Latent de condição"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros",
+            "noise_aug_strength": "Força do realce de ruído",
+            "start_latent_strength": "Intensidade do Latent inicial",
+            "end_latent_strength": "Intensidade do Latent final",
+            "force_offload": "Descarregar à força",
+            "fun_or_fl2v_model": "Modelo fun ou fl2v",
+            "tiled_vae": "Codificação VAE em Blocos"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAnimateEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações de Animação (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "clip_embeds": "Grupo de Embeddings CLIP",
+            "ref_images": "Imagem de referência",
+            "pose_images": "Imagens de pose",
+            "face_images": "Imagens do rosto",
+            "bg_images": "Imagem de fundo",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros",
+            "force_offload": "Descarregar à força",
+            "frame_window_size": "Tamanho da janela de quadros",
+            "colormatch": "combinação de cores",
+            "pose_strength": "Força da pose",
+            "face_strength": "Força facial",
+            "tiled_vae": "Codificação VAE em Blocos"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoEmptyEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações Vazio (KJ)",
+        "inputs": {
+            "control_embeds": "Grupo de embeddings de controle",
+            "extra_latents": "Latent extra"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddExtraLatent": {
+        "title": "Vídeo Wan Adicionar Latent Extra (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "extra_latents": "Latent extra"
+        },
+        "widgets": {
+            "latent_index": "Índice do Latent"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoMiniMaxRemoverEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações Removedor de Tamanho de Latent (KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "mask_latents": "Latent de máscara"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoPhantomEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações Phantom (KJ)",
+        "inputs": {
+            "phantom_latent_1": "Latent fantasma_1",
+            "phantom_latent_2": "Latent fantasma_2",
+            "phantom_latent_3": "Latent fantasma_3",
+            "phantom_latent_4": "Latent fantasma_4",
+            "vace_embeds": "Grupo de Embeddings VACE"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "phantom_cfg_scale": "Escala de CFG fantasma",
+            "phantom_start_percent": "Porcentagem inicial do fantasma",
+            "phantom_end_percent": "Porcentagem final do fantasma"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoControlEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações de Controle (KJ)",
+        "inputs": {
+            "latents": "Latent",
+            "fun_ref_image": "Imagem de Referência Fun"
+        },
+        "widgets": {
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddControlEmbeds": {
+        "title": "Vídeo Wan Adicionar Grupo de Incrustações de Controle (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "latents": "Latent",
+            "fun_ref_image": "Imagem de Referência Fun"
+        },
+        "widgets": {
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddPusaNoise": {
+        "title": "Vídeo Wan Adicionar Ruído Pusa (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding"
+        },
+        "widgets": {
+            "noise_multipliers": "Multiplicadores de ruído",
+            "noisy_steps": "Etapas com ruído"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoSLG": {
+        "title": "Vídeo Wan SLG (KJ)",
+        "widgets": {
+            "blocks": "Bloco",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "slg_args": "Parâmetros do SLG"
+        }
+    },
+    "WanVideoVACEEncode": {
+        "title": "Vídeo Wan Codificação VACE (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "input_frames": "Quadro de entrada",
+            "ref_images": "Imagem de referência",
+            "input_masks": "Máscara de entrada",
+            "prev_vace_embeds": "Grupo de Embeddings VACE Anterior"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros",
+            "strength": "Força",
+            "vace_start_percent": "Porcentagem Inicial VACE",
+            "vace_end_percent": "Porcentagem Final VACE",
+            "tiled_vae": "Codificação VAE em Blocos"
+        },
+        "outputs": {
+            "vace_embeds": "Grupo de Embeddings VACE"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "Opções de Contexto de Vídeo Wan (KJ)",
+        "inputs": {
+            "reference_latent": "Latent de referência"
+        },
+        "widgets": {
+            "context_schedule": "Agendamento do contexto",
+            "fuse_method": "Método de mesclagem",
+            "context_frames": "Quadros de contexto",
+            "context_stride": "Passo de contexto",
+            "context_overlap": "Sobreposição do contexto",
+            "freenoise": "Ruído livre",
+            "verbose": "Modo detalhado"
+        },
+        "outputs": {
+            "context_options": "Opções de contexto"
+        }
+    },
+    "WanVideoFlowEdit": {
+        "title": "Vídeo Wan Edição de Fluxo (KJ)",
+        "inputs": {
+            "source_embeds": "Grupo de embeddings de origem",
+            "source_image_embeds": "Grupo de embeddings de imagem de origem"
+        },
+        "widgets": {
+            "skip_steps": "Etapas ignoradas",
+            "drift_steps": "Passos de deriva",
+            "drift_flow_shift": "Deslocamento de fluxo de deriva",
+            "source_cfg": "Proporção do CFG de origem",
+            "drift_cfg": "Proporção de deriva do CFG"
+        },
+        "outputs": {
+            "flowedit_args": "Parâmetros do editor de fluxo"
+        }
+    },
+    "WanVideoLoopArgs": {
+        "title": "Vídeo Wan Parâmetros de Loop (KJ)",
+        "widgets": {
+            "shift_skip": "Pular Deslocamento",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "loop_args": "Parâmetros do loop"
+        }
+    },
+    "WanVideoExperimentalArgs": {
+        "title": "Vídeo Wan Parâmetros Experimentais (KJ)",
+        "widgets": {
+            "video_attention_split_steps": "Passos de segmentação de atenção do vídeo",
+            "cfg_zero_star": "Esparsidade de CFG",
+            "use_zero_init": "Usar inicialização zero",
+            "zero_star_steps": "Passos esporádicos",
+            "use_fresca": "Usar Fresca",
+            "fresca_scale_low": "Limite Inferior da Escala Fresca",
+            "fresca_scale_high": "Limite Superior da Escala Fresca",
+            "fresca_freq_cutoff": "Valor de Corte de Frequência Fresca",
+            "use_tcfg": "Usar CFG Temporal",
+            "raag_alpha": "Alfa RAAG",
+            "bidirectional_sampling": "Amostragem Bidirecional"
+        },
+        "outputs": {
+            "exp_args": "Parâmetros experimentais"
+        }
+    },
+    "WanVideoFreeInitArgs": {
+        "title": "Vídeo Wan Parâmetros de Inicialização Livre (KJ)",
+        "widgets": {
+            "freeinit_num_iters": "Número de iterações da inicialização livre",
+            "freeinit_method": "Método de inicialização livre",
+            "freeinit_n": "Inicialização livre n",
+            "freeinit_d_s": "Inicialização livre d_s",
+            "freeinit_d_t": "Inicialização livre d_t"
+        },
+        "outputs": {
+            "freeinit_args": "Parâmetros de inicialização livre"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "Vídeo Wan Agendador (KJ)",
+        "inputs": {
+            "sigmas": "Nível de ruído (Sigmas)"
+        },
+        "widgets": {
+            "scheduler": "Agendador",
+            "steps": "Etapas",
+            "shift": "Deslocamento",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        },
+        "outputs": {
+            "sigmas": "Nível de ruído (Sigmas)",
+            "steps": "Etapas",
+            "shift": "Deslocamento",
+            "scheduler": "Agendador",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "Vídeo Wan Agendador v2 (KJ)",
+        "inputs": {
+            "sigmas": "Nível de ruído (Sigmas)"
+        },
+        "widgets": {
+            "scheduler": "Agendador",
+            "steps": "Etapas",
+            "shift": "Deslocamento",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        },
+        "outputs": {
+            "sigmas": "Nível de ruído (Sigmas)",
+            "scheduler": "Agendador",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        }
+    },
+    "WanVideoSchedulerSA_ODE": {
+        "title": "Vídeo Wan Agendador SA-ODE (KJ)",
+        "inputs": {
+            "sigmas": "Nível de ruído (Sigmas)"
+        },
+        "widgets": {
+            "use_adaptive_order": "Usar ordenação adaptativa",
+            "use_velocity_smoothing": "Usar suavização de velocidade",
+            "convergence_threshold": "Limiar de convergência",
+            "smoothing_factor": "Fator de suavização",
+            "steps": "Etapas",
+            "shift": "Deslocamento",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        },
+        "outputs": {
+            "sigmas": "Nível de ruído (Sigmas)",
+            "steps": "Etapas",
+            "shift": "Deslocamento",
+            "scheduler": "Lista de agendadores",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        }
+    },
+    "WanVideoRoPEFunction": {
+        "title": "Vídeo Wan Função de Incrustação Posicional Rotacional (KJ)",
+        "inputs": {
+            "rope_function": "Função de incrustação posicional rotacional"
+        },
+        "widgets": {
+            "rope_function": "Função de incrustação posicional rotacional",
+            "ntk_scale_f": "Fator de escala NTK (quadros)",
+            "ntk_scale_h": "Fator de escala NTK (altura)",
+            "ntk_scale_w": "Fator de escala NTK (largura)"
+        },
+        "outputs": {
+            "rope_function": "Função de incrustação posicional rotacional"
+        },
+        "description": "Configuração da codificação posicional rotacional (RoPE) de Vídeo Wan. Estende o comprimento do contexto por meio do escalonamento consciente de NTK."
+    },
+    "WanVideoSampler": {
+        "title": "Vídeo Wan Amostrador (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "image_embeds": "Incorporações da imagem",
+            "text_embeds": "Grupo de embeddings de texto",
+            "samples": "Amostragem",
+            "feta_args": "Parâmetros de realce",
+            "context_options": "Opções de contexto",
+            "cache_args": "Parâmetros do cache",
+            "flowedit_args": "Parâmetros do editor de fluxo",
+            "slg_args": "Parâmetros do SLG",
+            "rope_function": "Função Rope",
+            "loop_args": "Parâmetros do loop",
+            "experimental_args": "Parâmetros experimentais",
+            "sigmas": "Nível de ruído (Sigmas)",
+            "unianimate_poses": "UniAnimate Animação Universal_Pose",
+            "fantasytalking_embeds": "FantasyTalking_Grupo de Embeddings",
+            "uni3c_embeds": "Grupo de Embeddings Uni3C",
+            "multitalk_embeds": "Grupo de Embeddings MultiTalk",
+            "infinitetalk_embeds": "Grupo de Embeddings InfiniteTalk",
+            "freeinit_args": "Grupo de parâmetros de inicialização livre"
+        },
+        "widgets": {
+            "steps": "Etapas",
+            "cfg": "CFG",
+            "shift": "Deslocamento",
+            "seed": "Semente aleatória",
+            "force_offload": "Descarregar à força",
+            "scheduler": "Agendador",
+            "riflex_freq_index": "Índice de Frequência Riflex",
+            "denoise_strength": "Redução de ruído (denoise)",
+            "batched_cfg": "CFG em lote",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "rope_function": "Função Rope",
+            "add_noise_to_samples": "Adicionar ruído à amostragem"
+        },
+        "outputs": {
+            "samples": "Amostragem",
+            "denoised_samples": "Amostras após a redução de ruído"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "Vídeo Wan Amostrador v2 (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "image_embeds": "Incorporações da imagem",
+            "scheduler": "Agendador",
+            "text_embeds": "Grupo de embeddings de texto",
+            "samples": "Amostragem",
+            "extra_args": "Parâmetros extras"
+        },
+        "widgets": {
+            "cfg": "CFG",
+            "seed": "Semente aleatória",
+            "force_offload": "Descarregar à força",
+            "add_noise_to_samples": "Adicionar ruído à amostragem"
+        },
+        "outputs": {
+            "samples": "Amostragem",
+            "denoised_samples": "Amostras após a redução de ruído"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "Vídeo Wan Parâmetros Extras do Amostrador v2 (KJ)",
+        "inputs": {
+            "feta_args": "Parâmetros de realce",
+            "context_options": "Opções de contexto",
+            "cache_args": "Parâmetros do cache",
+            "slg_args": "Parâmetros do SLG",
+            "loop_args": "Parâmetros do loop",
+            "experimental_args": "Parâmetros experimentais",
+            "unianimate_poses": "UniAnimate Animação Universal_Pose",
+            "fantasytalking_embeds": "FantasyTalking_Grupo de Embeddings",
+            "uni3c_embeds": "Grupo de Embeddings Uni3C",
+            "multitalk_embeds": "Grupo de Embeddings MultiTalk",
+            "infinitetalk_embeds": "Grupo de Embeddings InfiniteTalk",
+            "freeinit_args": "Grupo de parâmetros de inicialização livre"
+        },
+        "widgets": {
+            "riflex_freq_index": "Índice de Frequência Riflex",
+            "rope_function": "Função Rope"
+        },
+        "outputs": {
+            "extra_args": "Parâmetros extras"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "Vídeo Wan Configurações do Amostrador (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "image_embeds": "Incorporações da imagem",
+            "text_embeds": "Grupo de embeddings de texto",
+            "samples": "Amostragem",
+            "feta_args": "Parâmetros de realce",
+            "context_options": "Opções de contexto",
+            "cache_args": "Parâmetros do cache",
+            "flowedit_args": "Parâmetros do editor de fluxo",
+            "slg_args": "Parâmetros do SLG",
+            "rope_function": "Função Rope",
+            "loop_args": "Parâmetros do loop",
+            "experimental_args": "Parâmetros experimentais",
+            "sigmas": "Nível de ruído (Sigmas)",
+            "unianimate_poses": "UniAnimate Animação Universal_Pose",
+            "fantasytalking_embeds": "FantasyTalking_Grupo de Embeddings",
+            "uni3c_embeds": "Grupo de Embeddings Uni3C",
+            "multitalk_embeds": "Grupo de Embeddings MultiTalk",
+            "infinitetalk_embeds": "Grupo de Embeddings InfiniteTalk",
+            "freeinit_args": "Grupo de parâmetros de inicialização livre"
+        },
+        "widgets": {
+            "steps": "Etapas",
+            "cfg": "CFG",
+            "shift": "Deslocamento",
+            "seed": "Semente aleatória",
+            "force_offload": "Descarregar à força",
+            "scheduler": "Agendador",
+            "riflex_freq_index": "Índice de Frequência Riflex",
+            "denoise_strength": "Redução de ruído (denoise)",
+            "batched_cfg": "CFG em lote",
+            "rope_function": "Função Rope",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "add_noise_to_samples": "Adicionar ruído à amostragem"
+        },
+        "outputs": {
+            "sampler_inputs": "Entradas do amostrador",
+            "denoised_samples": "Amostras após a redução de ruído"
+        },
+        "description": "Nó que exporta todas as configurações e informações de entrada do nó Amostrador das Configurações de Vídeo Wan"
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "Vídeo Wan Amostrador das Configurações (KJ)",
+        "inputs": {
+            "sampler_inputs": "Entradas do amostrador"
+        },
+        "widgets": {
+            "normalization": "Normalizar"
+        },
+        "outputs": {
+            "samples": "Amostragem",
+            "denoised_samples": "Amostras após a redução de ruído"
+        },
+        "description": "Este nó auxiliar serve apenas para deixar a interface mais organizada; é muito útil para visualizações em tempo real, já que o nó de amostragem principal original ficou excessivamente poluído."
+    },
+    "WanVideoDecode": {
+        "title": "Vídeo Wan Decodificador (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "samples": "Amostragem"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Ativar blocos do VAE",
+            "tile_x": "Blocos do Eixo X",
+            "tile_y": "Blocos do Eixo Y",
+            "tile_stride_x": "Passo do Eixo X",
+            "tile_stride_y": "Passo do Eixo Y",
+            "normalization": "Normalizar"
+        },
+        "outputs": {
+            "images": "Imagem",
+            "IMAGE": "Imagem"
+        }
+    },
+    "WanVideoEncodeLatentBatch": {
+        "title": "Vídeo Wan Lote de codificação Latent (KJ)",
+        "inputs": {
+            "vae": "vae",
+            "images": "Imagem"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Ativar blocos do VAE",
+            "tile_x": "Blocos do Eixo X",
+            "tile_y": "Blocos do Eixo Y",
+            "tile_stride_x": "Passo do Eixo X",
+            "tile_stride_y": "Passo do Eixo Y"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "Vídeo Wan Codificador (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "enable_vae_tiling": "Ativar blocos do VAE",
+            "tile_x": "Blocos do Eixo X",
+            "tile_y": "Blocos do Eixo Y",
+            "tile_stride_x": "Passo do Eixo X",
+            "tile_stride_y": "Passo do Eixo Y",
+            "noise_aug_strength": "Força do realce de ruído",
+            "latent_strength": "Força do Latent"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoImageClipEncode": {
+        "title": "Vídeo Wan Codificação CLIP de Imagem (KJ) (descontinuado)",
+        "inputs": {
+            "clip_vision": "Modelo CLIP Visual",
+            "image": "Imagem",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "generation_width": "Largura de geração",
+            "generation_height": "Altura de geração",
+            "num_frames": "Número de quadros",
+            "force_offload": "Descarregar à força",
+            "noise_aug_strength": "Força do realce de ruído",
+            "latent_strength": "Força do Latent",
+            "clip_embed_strength": "Intensidade do Embedding CLIP",
+            "adjust_resolution": "Ajustar resolução"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "Troca de Blocos de Vídeo Wan (KJ)",
+        "widgets": {
+            "blocks_to_swap": "Blocos a trocar",
+            "offload_img_emb": "Descarregar Embeddings de Imagem",
+            "offload_txt_emb": "Descarregar Embeddings de Texto",
+            "use_non_blocking": "Usar Não Bloqueante",
+            "vace_blocks_to_swap": "Blocos a Trocar VACE",
+            "prefetch_blocks": "Pré-carregamento de blocos",
+            "block_swap_debug": "Depuração da troca de blocos"
+        },
+        "outputs": {
+            "block_swap_args": "Parâmetros de troca de blocos"
+        },
+        "description": "Este é um nó simples de troca de blocos Wan2.1 para nós nativos do ComfyUI que reduz a VRAM trocando até 40 blocos para a CPU."
+    },
+    "WanVideoVRAMManagement": {
+        "title": "Gerenciamento de VRAM de Vídeo Wan (KJ)",
+        "widgets": {
+            "offload_percent": "Porcentagem de Descarregamento"
+        },
+        "outputs": {
+            "vram_management_args": "Parâmetros de gerenciamento de memória de vídeo"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "Vídeo Wan Configurações de Compilação Torch (KJ)",
+        "widgets": {
+            "backend": "Motor de Backend",
+            "mode": "Modo de compilação",
+            "fullgraph": "Grafo completo",
+            "dynamic": "Compilação Dinâmica",
+            "dynamo_cache_size_limit": "Limite de tamanho do cache do Dynamo",
+            "compile_transformer_blocks_only": "Compilar apenas blocos Transformer",
+            "dynamo_recompile_limit": "Limite de Recompilação do Dynamo"
+        },
+        "outputs": {
+            "torch_compile_args": "Parâmetros de compilação Torch"
+        },
+        "description": "Configurações de compilação Torch; quando conectado ao carregador de modelo, executa a compilação Torch nas camadas selecionadas; requer o Triton, com a versão torch 2.5.0 recomendada."
+    },
+    "WanVideoLoraSelect": {
+        "title": "Vídeo Wan Seleção de Lora (KJ)",
+        "inputs": {
+            "prev_lora": "Lora anterior",
+            "blocks": "Bloco"
+        },
+        "widgets": {
+            "lora": "Lora",
+            "strength": "Força",
+            "low_mem_load": "Carregamento com Baixa Memória",
+            "merge_loras": "Mesclar Lora"
+        },
+        "outputs": {
+            "lora": "Lora",
+            "WanVideo_LoRA": "Wan Vídeo Lora"
+        }
+    },
+    "WanVideoLoraSelectByName": {
+        "title": "Vídeo Wan Selecionar Lora por Nome (KJ)",
+        "inputs": {
+            "prev_lora": "Lora anterior",
+            "blocks": "Bloco"
+        },
+        "widgets": {
+            "lora_name": "Nome do Lora",
+            "strength": "Força",
+            "low_mem_load": "Carregamento com Baixa Memória",
+            "merge_loras": "Mesclar Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "Vídeo Wan Seleção Múltipla de Lora (KJ)",
+        "inputs": {
+            "prev_lora": "Lora anterior",
+            "blocks": "Bloco"
+        },
+        "widgets": {
+            "lora_0": "Lora_0",
+            "lora_1": "Lora_1",
+            "lora_2": "Lora_2",
+            "lora_3": "Lora_3",
+            "lora_4": "Lora_4",
+            "strength_0": "Intensidade_0",
+            "strength_1": "Intensidade_1",
+            "strength_2": "Intensidade_2",
+            "strength_3": "Intensidade_3",
+            "strength_4": "Intensidade_4",
+            "low_mem_load": "Carregamento com Baixa Memória",
+            "merge_loras": "Mesclar Lora"
+        },
+        "outputs": {
+            "lora": "Lora"
+        }
+    },
+    "WanVideoVACEModelSelect": {
+        "title": "Vídeo Wan Seleção de Modelo VACE (KJ)",
+        "widgets": {
+            "vace_model": "Modelo vace"
+        },
+        "outputs": {
+            "extra_model": "Modelo extra",
+            "vacepath": "Caminho VACE",
+            "vace_model": "Modelo vace"
+        }
+    },
+    "WanVideoExtraModelSelect": {
+        "title": "Selecionar modelo extra de Vídeo Wan (KJ)",
+        "widgets": {
+            "extra_model": "Modelo extra"
+        },
+        "outputs": {
+            "extra_model": "Caminho VACE"
+        }
+    },
+    "WanVideoLoraBlockEdit": {
+        "title": "Vídeo Wan Edição de Blocos de Lora (KJ)",
+        "widgets": {
+            "layer_filter": "Filtro de camadas"
+        },
+        "outputs": {
+            "blocks": "Blocos selecionados"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "Definir Lora de Vídeo Wan (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "lora": "Lora"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Define os pesos de Lora para uso direto nas camadas lineares do modelo; esta operação não mescla as informações de Lora."
+    },
+    "WanVideoModelLoader": {
+        "title": "Vídeo Wan Carregador de Modelo (KJ)",
+        "inputs": {
+            "compile_args": "Parâmetros de compilação",
+            "block_swap_args": "Parâmetros de troca de blocos",
+            "lora": "Lora",
+            "vram_management_args": "Parâmetros de gerenciamento de memória de vídeo",
+            "extra_model": "Modelo extra",
+            "vace_model": "Modelo VACE",
+            "fantasytalking_model": "Modelo FantasyTalking",
+            "multitalk_model": "Modelo de Conversa com Várias Pessoas MultiTalk",
+            "fantasyportrait_model": "Modelo de Retrato Fantasioso FantasyPortrait"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "quantization": "Quantização",
+            "load_device": "Dispositivo de carregamento",
+            "attention_mode": "Modo de atenção",
+            "rms_norm_function": "Função de constante RMS"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "Vídeo Wan Carregador de VAE (KJ)",
+        "inputs": {
+            "compile_args": "Parâmetros de compilação"
+        },
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan Vídeo VAE"
+        },
+        "description": "Carrega o modelo Wan VAE a partir do caminho ComfyUI/models/vae"
+    },
+    "WanVideoTinyVAELoader": {
+        "title": "Vídeo Wan Carregador de Micro VAE (KJ)",
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão",
+            "parallel": "Paralelo"
+        },
+        "outputs": {
+            "vae": "VAE",
+            "WanVAE": "Wan Vídeo VAE"
+        }
+    },
+    "LoadWanVideoT5TextEncoder": {
+        "title": "Vídeo Wan Carregar Codificador de Texto T5 (KJ)",
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão",
+            "load_device": "Dispositivo de carregamento",
+            "quantization": "Quantização"
+        },
+        "outputs": {
+            "wan_t5_model": "Modelo WanT5"
+        }
+    },
+    "LoadWanVideoClipTextEncoder": {
+        "title": "Vídeo Wan Carregar Codificador de Texto CLIP (KJ)",
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "outputs": {
+            "wan_clip_vision": "Wan Visão CLIP"
+        }
+    },
+    "WanVideoImageResizeToClosest": {
+        "title": "Vídeo Wan Otimização de Tamanho de Imagem (KJ)",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "generation_width": "Largura de geração",
+            "generation_height": "Altura de geração",
+            "aspect_ratio_preservation": "Manter proporção"
+        },
+        "outputs": {
+            "image": "Imagem",
+            "width": "Largura",
+            "height": "Altura"
+        }
+    },
+    "ExtractStartFramesForContinuations": {
+        "title": "Extrair o primeiro quadro do vídeo (KJ)",
+        "inputs": {
+            "input_video_frames": "Quadros de vídeo de entrada"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "start_frames": "Primeiro quadro"
+        }
+    },
+    "WanVideoVACEStartToEndFrame": {
+        "title": "Vídeo Wan Quadros Inicial e Final VACE (KJ)",
+        "inputs": {
+            "start_image": "Imagem inicial",
+            "end_image": "Imagem final",
+            "control_images": "Imagem de controle",
+            "inpaint_mask": "Máscara de inpaint"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "empty_frame_level": "Nível de quadro vazio",
+            "start_index": "Índice inicial",
+            "end_index": "Índice final"
+        },
+        "outputs": {
+            "images": "Imagem",
+            "masks": "Máscara"
+        }
+    },
+    "CreateCFGScheduleFloatList": {
+        "title": "Criar lista de float de agendamento CFG (KJ)",
+        "widgets": {
+            "steps": "Etapas",
+            "cfg_scale_start": "Valor Inicial da Escala de CFG",
+            "cfg_scale_end": "Valor Final da Escala de CFG",
+            "interpolation": "Método de interpolação",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "float_list": "Lista de números de ponto flutuante"
+        },
+        "description": "Nó auxiliar que gera uma série de listas de números de ponto flutuante, usáveis para definir a proporção de cfg ao longo das etapas.\n Fora do intervalo definido, o valor de cfg é definido como 1.0 ."
+    },
+    "CreateScheduleFloatList": {
+        "title": "Criar lista de float de agendamento (KJ)",
+        "widgets": {
+            "steps": "Etapas",
+            "start_value": "Valor inicial",
+            "end_value": "Valor final",
+            "default_value": "Valor Padrão",
+            "interpolation": "Método de interpolação",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "float_list": "Lista de números de ponto flutuante"
+        }
+    },
+    "DummyComfyWanModelObject": {
+        "title": "Modelo Wan Objeto Comfy fictício (KJ)",
+        "widgets": {
+            "shift": "Deslocamento"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "WanVideoLatentReScale": {
+        "title": "Vídeo Wan Reescalonar Tensor Latent (KJ)",
+        "inputs": {
+            "samples": "Amostragem"
+        },
+        "widgets": {
+            "direction": "Direção"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoSigmaToStep": {
+        "title": "Vídeo Wan Sigma para Etapas (KJ)",
+        "widgets": {
+            "sigma": "Sigma"
+        },
+        "outputs": {
+            "step": "Etapas"
+        }
+    },
+    "NormalizeAudioLoudness": {
+        "title": "Ajustar loudness do áudio (KJ)",
+        "inputs": {
+            "audio": "Áudio"
+        },
+        "widgets": {
+            "lufs": "Unidade de loudness LUFS"
+        },
+        "outputs": {
+            "audio": "Áudio"
+        }
+    },
+    "WanVideoPassImagesFromSamples": {
+        "title": "Vídeo Wan Passar imagens da amostragem (KJ)",
+        "inputs": {
+            "samples": "Amostragem"
+        },
+        "outputs": {
+            "images": "Imagem",
+            "output_path": "Caminho de saída"
+        }
+    },
+    "FaceMaskFromPoseKeypoints": {
+        "title": "Gerar máscara de rosto a partir dos pontos-chave de pose (KJ)",
+        "inputs": {
+            "pose_kps": "Pontos-chave de Pose"
+        },
+        "widgets": {
+            "person_index": "Índice da pessoa"
+        },
+        "outputs": {
+            "MASK": "Máscara"
+        }
+    },
+    "WanVideoATITracks": {
+        "title": "Vídeo Wan Trilhas ATI (KJ)",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "tracks": "Trajetória",
+            "width": "Largura",
+            "height": "Altura",
+            "temperature": "Temperatura",
+            "topk": "Valor k Anterior",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "model": "Wan Vídeo Modelo"
+        }
+    },
+    "WanVideoATITracksVisualize": {
+        "title": "Vídeo Wan Visualização de Trilhas ATI (KJ)",
+        "inputs": {
+            "images": "Imagem"
+        },
+        "widgets": {
+            "tracks": "Trajetória",
+            "min_radius": "Raio mínimo",
+            "max_radius": "Raio máximo",
+            "max_retain": "Quantidade máxima a manter"
+        },
+        "outputs": {
+            "images": "Imagem"
+        }
+    },
+    "WanVideoATI_comfy": {
+        "title": "Vídeo Wan ATI Comfy (KJ)",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "tracks": "Trajetória",
+            "temperature": "Temperatura",
+            "topk": "Valor k Anterior"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "WanVideoTeaCache": {
+        "title": "Vídeo Wan Cache Tea (Chá) (KJ)",
+        "widgets": {
+            "rel_l1_thresh": "Limiar L1 relativo",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "use_coefficients": "Coeficiente de Uso",
+            "cache_device": "Dispositivo de cache",
+            "mode": "Modo de cache"
+        },
+        "outputs": {
+            "cache_args": "Parâmetros do cache"
+        }
+    },
+    "WanVideoMagCache": {
+        "title": "Vídeo Wan Cache Mag (KJ)",
+        "widgets": {
+            "magcache_thresh": "Limiar do Cache Mag",
+            "magcache_K": "Valor K do Cache Mag",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "cache_device": "Dispositivo de cache"
+        },
+        "outputs": {
+            "cache_args": "Parâmetros do cache"
+        }
+    },
+    "WanVideoEasyCache": {
+        "title": "Vídeo Wan Cache Simples (KJ)",
+        "widgets": {
+            "easycache_thresh": "Limiar simples de cache",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "cache_device": "Dispositivo de cache"
+        },
+        "outputs": {
+            "cache_args": "Parâmetros do cache"
+        }
+    },
+    "WanVideoControlnetLoader": {
+        "title": "Vídeo Wan Carregar ControlNet (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "quantization": "Quantização",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "outputs": {
+            "controlnet": "ControlNet"
+        }
+    },
+    "WanVideoControlnet": {
+        "title": "Vídeo Wan Aplicar ControlNet (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "controlnet": "ControlNet",
+            "control_images": "Imagem de controle"
+        },
+        "widgets": {
+            "strength": "Força",
+            "control_stride": "Passo de controle",
+            "control_start_percent": "Porcentagem inicial do controle",
+            "control_end_percent": "Porcentagem final de controle"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "FantasyPortraitFaceDetector": {
+        "title": "FantasyPortrait Retrato Fantástico - Detector de Rosto (KJ)",
+        "inputs": {
+            "portrait_model": "Modelo de retrato",
+            "images": "Imagem"
+        },
+        "widgets": {
+            "adapter_scale": "Escala do adaptador",
+            "mouth_scale": "Escala da boca",
+            "emo_scale": "Escala da emoção",
+            "device": "Dispositivo"
+        },
+        "outputs": {
+            "portrait_embeds": "Grupo de Incrustações de Retrato",
+            "bbox": "Caixa delimitadora",
+            "landmarks": "Pontos de referência"
+        }
+    },
+    "LandmarksToImage": {
+        "title": "Pontos de referência para imagem (KJ)",
+        "inputs": {
+            "landmarks": "Pontos de referência",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "outputs": {
+            "keypoints_image": "Imagem de Pontos-Chave"
+        }
+    },
+    "WanVideoAddFantasyPortrait": {
+        "title": "Vídeo Wan Adicionar FantasyPortrait Retrato Fantástico (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "portrait_embeds": "Grupo de Incrustações de Retrato"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "FantasyPortraitModelLoader": {
+        "title": "FantasyPortrait Retrato Fantástico - Carregador de Modelo (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "DownloadAndLoadWav2VecModel": {
+        "title": "(Download) Carregar modelo de áudio Wav2Vec2 (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "outputs": {
+            "wav2vec_model": "Modelo de Áudio Wav2Vec2"
+        }
+    },
+    "FantasyTalkingModelLoader": {
+        "title": "FantasyTalking Diálogo Fantástico - Carregador de Modelo (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base"
+        },
+        "outputs": {
+            "model": "Modelo FantasyTalking"
+        }
+    },
+    "FantasyTalkingWav2VecEmbeds": {
+        "title": "FantasyTalking Diálogo Fantástico - Grupo de Incrustações Wav2Vec2 (KJ)",
+        "inputs": {
+            "wav2vec_model": "Modelo de Áudio Wav2Vec2",
+            "fantasytalking_model": "Modelo FantasyTalking",
+            "audio": "Áudio"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "fps": "Taxa de quadros",
+            "audio_scale": "Escala do áudio",
+            "audio_cfg_scale": "Escala CFG de áudio"
+        },
+        "outputs": {
+            "fantasytalking_embeds": "FantasyTalking_Grupo de Embeddings"
+        }
+    },
+    "WanVideoFunCameraEmbeds": {
+        "title": "Vídeo Wan Grupo de Incrustações de Câmera Fun (KJ)",
+        "inputs": {
+            "poses": "Poses do Corpo"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WhisperModelLoader": {
+        "title": "Carregar modelo de voz (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "outputs": {
+            "whisper_model": "Modelo de voz"
+        }
+    },
+    "HuMoEmbeds": {
+        "title": "Grupo de Incrustações de Áudio HuMo (KJ)",
+        "inputs": {
+            "whisper_model": "Modelo de voz",
+            "vae": "VAE",
+            "reference_images": "Imagem de referência",
+            "audio": "Áudio"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "width": "Largura",
+            "height": "Altura",
+            "audio_scale": "Escala do áudio",
+            "audio_cfg_scale": "Escala CFG de áudio",
+            "audio_start_percent": "Porcentagem inicial do áudio",
+            "audio_end_percent": "Porcentagem final do áudio",
+            "tiled_vae": "Codificação VAE em Blocos"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoCombineEmbeds": {
+        "title": "Vídeo Wan Combinar Grupos de Incrustações (KJ)",
+        "inputs": {
+            "embeds_1": "Grupo de incrustações_1",
+            "embeds_2": "Grupo de incrustações_2"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "DownloadAndLoadNLFModel": {
+        "title": "(Download) Carregar modelo NLF (KJ)",
+        "inputs": {
+            "url": "Endereço web"
+        },
+        "widgets": {
+            "url": "Endereço web"
+        },
+        "outputs": {
+            "nlf_model": "Modelo NLF"
+        }
+    },
+    "LoadNLFModel": {
+        "title": "Carregar modelo NLF (KJ)",
+        "widgets": {
+            "nlf_model": "Modelo NLF",
+            "warmup": "Aquecimento"
+        },
+        "outputs": {
+            "nlf_model": "Modelo NLF"
+        }
+    },
+    "LoadVQVAE": {
+        "title": "Carregar VQ VAE (KJ)",
+        "inputs": {
+            "model_name": "Nome do modelo"
+        },
+        "widgets": {
+            "model_name": "Nome do modelo"
+        },
+        "outputs": {
+            "vqvae": "VQ VAE"
+        }
+    },
+    "MTVCrafterEncodePoses": {
+        "title": "Codificação de pose MTV Crafter (KJ)",
+        "inputs": {
+            "vqvae": "VQ VAE",
+            "poses": "Poses do Corpo"
+        },
+        "outputs": {
+            "mtvcrafter_motion": "Efeito de Movimento MTV",
+            "pose_results": "Poses do Corpo"
+        },
+        "description": "Previsão de pose por linguagem natural"
+    },
+    "NLFPredict": {
+        "title": "Previsão de pose por linguagem natural (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "images": "Imagem"
+        },
+        "outputs": {
+            "pose_results": "Poses do Corpo"
+        },
+        "description": "Previsão de pose por linguagem natural"
+    },
+    "DrawNLFPoses": {
+        "title": "Desenhar pose por linguagem natural (KJ)",
+        "inputs": {
+            "poses": "Poses do Corpo"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura"
+        },
+        "outputs": {
+            "image": "Imagem"
+        }
+    },
+    "Wav2VecModelLoader": {
+        "title": "Carregador de modelo de áudio Wav2vec2 (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "load_device": "Dispositivo de carregamento"
+        },
+        "outputs": {
+            "wav2vec_model": "Modelo de Áudio Wav2Vec2"
+        }
+    },
+    "MultiTalkModelLoader": {
+        "title": "Multi/InfiniteTalk Diálogo Multiturno Infinito - Carregador de Modelo (KJ)",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base"
+        },
+        "outputs": {
+            "model": "Modelo"
+        }
+    },
+    "MultiTalkWav2VecEmbeds": {
+        "title": "Multi/InfiniteTalk Diálogo Multiturno Infinito - Grupo de Incrustações Wav2Vec2 (KJ)",
+        "inputs": {
+            "wav2vec_model": "Modelo Wav2Vec2",
+            "audio_1": "Áudio_1",
+            "audio_2": "Áudio_2",
+            "audio_3": "Áudio_3",
+            "audio_4": "Áudio_4",
+            "ref_target_masks": "Máscara de Destino de Referência"
+        },
+        "widgets": {
+            "normalize_loudness": "Ajustar o volume do áudio",
+            "num_frames": "Número de quadros",
+            "fps": "Taxa de quadros",
+            "audio_scale": "Escala do áudio",
+            "multi_audio_type": "Tipo de áudio múltiplo",
+            "audio_cfg_scale": "Escala de configuração de áudio"
+        },
+        "outputs": {
+            "multitalk_embeds": "Grupo de Embeddings MultiTalk",
+            "audio": "Áudio",
+            "num_frames": "Número de quadros"
+        }
+    },
+    "MultiTalkSilentEmbeds": {
+        "title": "MultiTalk Diálogo Multiturno - Grupo de Incrustações Silenciosas (KJ)",
+        "widgets": {
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "multitalk_embeds": "Grupo de Embeddings MultiTalk"
+        }
+    },
+    "WanVideoImageToVideoMultiTalk": {
+        "title": "Vídeo Wan Imagem para Vídeo (MultiTalk Diálogo Multiturno) (KJ)",
+        "inputs": {
+            "vae": "VAE",
+            "start_image": "Imagem inicial",
+            "clip_embeds": "Grupo de Embeddings CLIP"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "frame_window_size": "Tamanho da janela de quadros",
+            "motion_frame": "Quadros de movimento",
+            "force_offload": "Descarregar à força",
+            "colormatch": "combinação de cores",
+            "tiled_vae": "Codificação VAE em Blocos",
+            "output_path": "Caminho de saída",
+            "mode": "Modo"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem",
+            "output_path": "Caminho de saída"
+        }
+    },
+    "QwenLoader": {
+        "title": "Carregador Qwen (KJ)",
+        "widgets": {
+            "model": "Modelo",
+            "load_device": "Dispositivo de carregamento",
+            "precision": "Precisão"
+        },
+        "outputs": {
+            "QWENMODEL": "Modelo Qwen"
+        }
+    },
+    "WanVideoPromptExtender": {
+        "title": "Vídeo Wan Expansor de Prompt (KJ)",
+        "inputs": {
+            "qwen": "Qwen (modelo)",
+            "custom_system_prompt": "Prompt de sistema personalizado"
+        },
+        "widgets": {
+            "prompt": "Prompt (texto)",
+            "max_new_tokens": "Máximo de novos tokens",
+            "force_offload": "Descarregar à força",
+            "seed": "Semente aleatória",
+            "device": "Dispositivo",
+            "system_prompt": "Prompt do sistema"
+        },
+        "outputs": {
+            "STRING": "Cadeia de Caracteres"
+        }
+    },
+    "WanVideoPromptExtenderSelect": {
+        "title": "Vídeo Wan Selecionar Prompt Estendido (KJ)",
+        "inputs": {
+            "custom_system_prompt": "Prompt de sistema personalizado"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "max_new_tokens": "Máximo de novos tokens",
+            "system_prompt": "Prompt do sistema",
+            "seed": "Semente aleatória"
+        },
+        "outputs": {
+            "extender_args": "Parâmetros de extensão"
+        }
+    },
+    "WanVideoReCamMasterDefaultCamera": {
+        "title": "Vídeo Wan Redefinir Câmera Padrão Principal (KJ)",
+        "inputs": {
+            "latents": "Latent"
+        },
+        "widgets": {
+            "camera_type": "Tipo de câmera"
+        },
+        "outputs": {
+            "camera_poses": "Postura da câmera"
+        },
+        "description": "ReCamMasterDefaultCamera"
+    },
+    "WanVideoReCamMasterGenerateOrbitCamera": {
+        "title": "Vídeo Wan Reiniciar Câmera Orbital Principal de Geração (KJ)",
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "degrees": "Graus"
+        },
+        "outputs": {
+            "camera_poses": "Postura da câmera"
+        },
+        "description": "ReCamMasterGenerateOrbitCamera"
+    },
+    "WanVideoReCamMasterCameraEmbed": {
+        "title": "Vídeo Wan Redefinir Incrustações da Câmera (KJ)",
+        "inputs": {
+            "camera_poses": "Postura da câmera",
+            "latents": "Latent"
+        },
+        "outputs": {
+            "camera_embeds": "Embedding de câmera",
+            "camera_poses": "Postura da câmera"
+        },
+        "description": "ReCamMasterCameraEmbed"
+    },
+    "ReCamMasterPoseVisualizer": {
+        "title": "Visualização da posição e pose da câmera (KJ)",
+        "inputs": {
+            "camera_poses": "Postura da câmera"
+        },
+        "widgets": {
+            "base_xval": "Valor x",
+            "zval": "Valor z",
+            "scale": "Escala",
+            "arrow_length": "Comprimento da seta"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "ReCamMasterPoseVisualizer"
+    },
+    "WanVideoAddS2VEmbeds": {
+        "title": "Vídeo Wan Adicionar Grupo de Incrustações S2V (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "audio_encoder_output": "Saída do codificador de áudio",
+            "ref_latent": "Latent de referência",
+            "pose_latent": "Latent de pose",
+            "vae": "Autoencoder variacional"
+        },
+        "widgets": {
+            "frame_window_size": "Tamanho da janela de quadros",
+            "audio_scale": "Escala do áudio",
+            "pose_start_percent": "Porcentagem inicial da pose",
+            "pose_end_percent": "Percentual final da pose",
+            "enable_framepack": "Ativar empacotamento de quadros"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem",
+            "audio_frame_count": "Número de quadros de áudio"
+        }
+    },
+    "WanVideoDiffusionForcingSampler": {
+        "title": "Vídeo Wan Amostrador de Difusão Forçada (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "text_embeds": "Grupo de embeddings de texto",
+            "image_embeds": "Incorporações da imagem",
+            "samples": "Amostragem",
+            "prefix_samples": "Amostragem de Prefixo",
+            "cache_args": "Parâmetros do cache",
+            "slg_args": "Parâmetros do SLG",
+            "experimental_args": "Parâmetros experimentais",
+            "unianimate_poses": "UniAnimate Animação Universal_Pose"
+        },
+        "widgets": {
+            "addnoise_condition": "Adicionar condição de ruído",
+            "fps": "Taxa de quadros",
+            "steps": "Etapas",
+            "cfg": "CFG",
+            "shift": "Deslocamento",
+            "seed": "Semente aleatória",
+            "force_offload": "Descarregar à força",
+            "scheduler": "Agendador",
+            "rope_function": "Função RoPE",
+            "denoise_strength": "Redução de ruído (denoise)"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "Vídeo Wan Carregador de ControlNet Uni3C (KJ)",
+        "inputs": {
+            "compile_args": "Parâmetros de compilação"
+        },
+        "widgets": {
+            "model": "Modelo",
+            "base_precision": "Precisão base",
+            "quantization": "Quantização",
+            "load_device": "Dispositivo de carregamento",
+            "attention_mode": "Modo de atenção",
+            "compile_args": "Parâmetros de compilação"
+        },
+        "outputs": {
+            "controlnet": "ControlNet",
+            "WanVideo Controlnet": "Wan Vídeo ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "Vídeo Wan Grupo de Incrustações Uni3C (KJ)",
+        "inputs": {
+            "controlnet": "ControlNet",
+            "render_latent": "Renderizar Latent",
+            "render_mask": "Renderizar máscara"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "uni3c_embeds": "Grupo de Embeddings Uni3C"
+        }
+    },
+    "WanVideoUniAnimateDWPoseDetector": {
+        "title": "Vídeo Wan UniAnimate Animação Universal Detector de Pose DW (KJ)",
+        "inputs": {
+            "pose_images": "Imagem de pose",
+            "reference_pose_image": "Imagem de Pose de Referência"
+        },
+        "widgets": {
+            "score_threshold": "Limiar de pontuação",
+            "stick_width": "Largura da linha",
+            "draw_body": "Desenhar corpo",
+            "body_keypoint_size": "Tamanho dos pontos do corpo",
+            "draw_feet": "Desenhar pés",
+            "draw_hands": "Desenhar mãos",
+            "hand_keypoint_size": "Tamanho dos pontos da mão",
+            "colorspace": "Espaço de cor",
+            "handle_not_detected": "Tratar casos não detectados",
+            "draw_head": "Desenhar cabeçalho"
+        },
+        "outputs": {
+            "poses": "Pose",
+            "reference_pose": "Pose de Referência"
+        }
+    },
+    "WanVideoAddLucyEditLatents": {
+        "title": "Vídeo Wan Adicionar Latent de Edição Lucy (KJ)",
+        "inputs": {
+            "embeds": "Grupo de incrustações (embeds)",
+            "extra_latents": "Latent extra"
+        },
+        "outputs": {
+            "image_embeds": "Grupo de incrustações de imagem"
+        }
+    },
+    "LoadLynxResampler": {
+        "title": "Carregador de reamostragem Lynx (KJ)",
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão"
+        },
+        "outputs": {
+            "resampler": "reamostrar"
+        }
+    },
+    "LynxEncodeFaceIP": {
+        "title": "Codificação de IP Facial Lynx (KJ)",
+        "inputs": {
+            "resampler": "reamostrar",
+            "ip_image": "Imagem IP facial"
+        },
+        "outputs": {
+            "lynx_face_embeds": "Grupo de incrustações faciais Lynx"
+        }
+    },
+    "DrawArcFaceLandmarks": {
+        "title": "Desenhar pontos de referência do ArcFace (KJ)",
+        "inputs": {
+            "lynx_face_embeds": "Grupo de incrustações faciais Lynx",
+            "image": "Imagem"
+        },
+        "outputs": {
+            "landmarked_image": "Imagem com pontos de referência"
+        },
+        "description": "Desenha os pontos de referência faciais sobre a imagem para visualização/debugação."
+    },
+    "WanVideoAddLynxEmbeds": {
+        "title": "Vídeo Wan Adicionar Grupo de Incrustações Lynx (KJ)",
+        "inputs": {
+            "embeds": "Grupo de incrustações (embeds)",
+            "vae": "VAE",
+            "lynx_face_embeds": "Grupo de incrustações faciais Lynx",
+            "lynx_ip_embeds": "Grupo de Incrustações IP Facial Lynx",
+            "ref_image": "Imagem de referência",
+            "ref_text_embed": "Incrustações de texto de referência",
+            "ref_blocks_to_use": "Blocos de referência utilizáveis"
+        },
+        "widgets": {
+            "ip_scale": "Escala de IP",
+            "ref_scale": "Escala de referência",
+            "lynx_cfg_scale": "Escala CFG Lynx",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "LynxInsightFaceCrop": {
+        "title": "Detecção de rosto InsightFace e recorte Lynx (KJ)",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "outputs": {
+            "ip_image": "Imagem IP facial",
+            "ref_image": "Imagem de referência"
+        }
+    },
+    "OviMMAudioVAELoader": {
+        "title": "Carregador de VAE de áudio MM Ovi (KJ)",
+        "widgets": {
+            "vocoder": "Sintetizador de voz (vocoder)",
+            "precision": "Precisão"
+        },
+        "outputs": {
+            "mmaudio_vae": "VAE de áudio MM"
+        },
+        "description": "Carrega o VAE de áudio MM para gerar áudio Ovi"
+    },
+    "WanVideoDecodeOviAudio": {
+        "title": "Vídeo Wan Decodificador de Áudio Ovi (KJ)",
+        "inputs": {
+            "mmaudio_vae": "VAE de áudio MM",
+            "samples": "Amostragem"
+        },
+        "outputs": {
+            "audio": "Áudio"
+        }
+    },
+    "WanVideoEncodeOviAudio": {
+        "title": "Vídeo Wan Codificador de Áudio Ovi (KJ)",
+        "inputs": {
+            "mmaudio_vae": "VAE de áudio MM",
+            "audio": "Áudio"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoOviCFG": {
+        "title": "Vídeo Wan Orientador CFG Ovi (KJ)",
+        "inputs": {
+            "original_text_embeds": "Incrustações de texto do original",
+            "ovi_negative_text_embeds": "Incrustações de texto do prompt negativo Ovi"
+        },
+        "widgets": {
+            "ovi_audio_cfg": "CFG de áudio Ovi"
+        },
+        "outputs": {
+            "text_embeds": "Grupo de embeddings de texto"
+        },
+        "description": "Adiciona as informações de incrustações de texto negativas e o coeficiente de proporção CFG de áudio do Ovi ao dicionário de incrustações de texto"
+    },
+    "WanVideoAddOviAudioToLatents": {
+        "title": "Vídeo Wan Adicionar Áudio Ovi ao Latent (KJ)",
+        "inputs": {
+            "original_samples": "Amostragem original",
+            "audio_samples": "Amostras de áudio"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoEmptyMMAudioLatents": {
+        "title": "Vídeo Wan Latent Vazio de Áudio MM (KJ)",
+        "widgets": {
+            "length": "Comprimento"
+        },
+        "outputs": {
+            "samples": "Amostragem"
+        }
+    },
+    "WanVideoAddFlashVSRInput": {
+        "title": "Vídeo Wan Adicionar Entrada FlashVSR (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "images": "Grupo de imagens"
+        },
+        "widgets": {
+            "strength": "Força"
+        },
+        "outputs": {
+            "image_embeds": "Grupo de incrustações de imagem"
+        }
+    },
+    "WanVideoFlashVSRDecoderLoader": {
+        "title": "Vídeo Wan Carregar Decodificador FlashVSR (KJ)",
+        "widgets": {
+            "model_name": "Nome do modelo",
+            "precision": "Precisão"
+        },
+        "outputs": {
+            "vae": "VAE"
+        },
+        "description": "Carrega o modelo Wan VAE a partir do caminho ComfyUI/models/vae"
+    },
+    "MochaEmbeds": {
+        "title": "Grupo de Incrustações Mocha (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "input_video": "Vídeo de entrada",
+            "mask": "Máscara",
+            "ref1": "Referência 1",
+            "ref2": "Referência 2"
+        },
+        "widgets": {
+            "force_offload": "Descarregamento de tarefas",
+            "tiled_vae": "VAE em blocos"
+        },
+        "outputs": {
+            "image_embeds": "Grupo de incrustações de imagem"
+        },
+        "description": "Modelo Mocha de entrada: https://github.com/Orange-3DV-Team/MoCha"
+    },
+    "DrawGaussianNoiseOnImage": {
+        "title": "Desenhar ruído gaussiano sobre a imagem (KJ)",
+        "inputs": {
+            "image": "Imagem",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "device": "Dispositivo",
+            "seed": "Semente aleatória"
+        },
+        "outputs": {
+            "images": "Imagem"
+        }
+    },
+    "LatentInpaintTTM": {
+        "title": "Repinção de Latent TTM (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "device": "Dispositivo",
+            "steps": "Etapas"
+        },
+        "outputs": {
+            "model": "Modelo",
+            "MODEL": "Modelo"
+        }
+    },
+    "WanVideoAddBindweaveEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações Bindweave (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "reference_latents": "Latent de referência",
+            "ref_masks": "Máscara de referência",
+            "qwenvl_embeds_pos": "Prompt positivo QwenVL",
+            "qwenvl_embeds_neg": "Prompt negativo QwenVL"
+        },
+        "widgets": {
+            "device": "Dispositivo",
+            "steps": "Etapas"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem",
+            "image_embed_preview": "Pré-visualização das incrustações de imagem",
+            "mask_preview": "Visualização da máscara"
+        }
+    },
+    "WanVideoAddTTMLatents": {
+        "title": "Vídeo Wan Adicionar Latent TTM (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "reference_latents": "Latent de referência",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "TextImageEncodeQwenVL": {
+        "title": "Codificador de texto-imagem QwenVL (KJ)",
+        "inputs": {
+            "clip": "CLIP",
+            "image": "Imagem"
+        },
+        "widgets": {
+            "start_step": "Passo inicial",
+            "end_step": "Passo final"
+        },
+        "outputs": {
+            "qwenvl_embeds": "Incrustações Qwen"
+        }
+    },
+    "WanVideoUniLumosEmbeds": {
+        "title": "Vídeo Wan Truque de Incrustação UniLumos (KJ)",
+        "inputs": {
+            "foreground_latents": "Latent de Primeiro Plano",
+            "background_latents": "Latent de fundo"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "WanVideoPreviewEmbeds": {
+        "title": "Vídeo Wan Incrustações de Visualização (KJ)",
+        "inputs": {
+            "embeds": "Embeddings"
+        },
+        "widgets": {
+            "width": "Largura",
+            "height": "Altura",
+            "num_frames": "Número de quadros"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem",
+            "mask": "Máscara"
+        }
+    },
+    "WanVideoAddSteadyDancerEmbeds": {
+        "title": "Vídeo Wan Truque de Incrustação SteadyDancer Dançarino Estável (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "pose_latents_positive": "Latent de pose (positivo)",
+            "pose_latents_negative": "Latent de pose (negativo)",
+            "clip_vision_embeds": "Embeddings do CLIP Visual"
+        },
+        "widgets": {
+            "pose_strength_spatial": "Força da pose_Dimensão espacial",
+            "pose_strength_temporal": "Força da pose_Dimensão temporal",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "WanVideoAddOneToAllReferenceEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações de Referência OneToAll (um para todos) (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "vae": "VAE",
+            "ref_image": "Imagem de referência",
+            "ref_mask": "Máscara de referência"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "WanVideoAddOneToAllPoseEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações de Pose OneToAll (um para todos) (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "vae": "VAE",
+            "pose_images": "Imagem de pose",
+            "pose_prefix_image": "Imagem de prefixo de pose"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final",
+            "pose_cfg_scale": "Força CFG da pose"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem"
+        }
+    },
+    "WanVideoAddOneToAllExtendEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações Estendidas OneToAll (um para todos) (KJ)",
+        "inputs": {
+            "embeds": "Embeddings",
+            "vae": "VAE",
+            "prev_latents": "Latent anterior",
+            "pose_images": "Imagem de pose"
+        },
+        "widgets": {
+            "window_size": "Tamanho da janela",
+            "overlap": "Sobreposição",
+            "frames_processed": "Quadros processados",
+            "if_not_enough_frames": "Se os quadros forem insuficientes"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem",
+            "pose_slice": "Fatia de imagens de pose"
+        }
+    },
+    "WanVideoAddWanMoveTracks": {
+        "title": "Vídeo Wan Adicionar Trilhas de Movimento Wan (KJ)",
+        "inputs": {
+            "image_embeds": "Embedding de imagem",
+            "tracks": "Trajetória",
+            "track_mask": "Máscara da trilha",
+            "track_coords": "Coordenadas da trilha"
+        },
+        "widgets": {
+            "strength": "Força"
+        },
+        "outputs": {
+            "image_embeds": "Embedding de imagem",
+            "tracks": "Trajetória"
+        }
+    },
+    "WanVideoWanDrawWanMoveTracks": {
+        "title": "Vídeo Wan Desenhar Trilhas de Movimento Wan (KJ)",
+        "inputs": {
+            "images": "Imagem",
+            "tracks": "Trajetória"
+        },
+        "widgets": {
+            "line_resolution": "Resolução da linha",
+            "circle_size": "Tamanho do círculo",
+            "opacity": "Transparência",
+            "line_width": "Largura da linha"
+        },
+        "outputs": {
+            "image": "Imagem"
+        }
+    },
+    "WanMove_native": {
+        "title": "Wan MoveNative Movimento Nativo Wan (KJ)",
+        "inputs": {
+            "positive": "Condição positiva",
+            "track_mask": "Máscara da trilha",
+            "track_coords": "Coordenadas da trilha"
+        },
+        "outputs": {
+            "positive": "Condição positiva",
+            "tracks": "Trajetória"
+        }
+    },
+    "WanVideoAddStoryMemLatents": {
+        "title": "Vídeo Wan Adicionar Latent StoryMem Memória de História (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "memory_images": "Imagens de memória"
+        },
+        "widgets": {
+            "freq_offset": "Deslocamento de frequência"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddSCAILPoseEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações de Pose SCAIL (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "pose_images": "Imagem de pose"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoAddSCAILReferenceEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações de Referência SCAIL (KJ)",
+        "inputs": {
+            "embeds": "Grupos de Embedding",
+            "vae": "VAE",
+            "ref_image": "Imagem de referência",
+            "clip_embeds": "Incrustações CLIP"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem"
+        }
+    },
+    "WanVideoLongCatAvatarExtendEmbeds": {
+        "title": "Vídeo Wan Extensão de Avatar LongCat Incrustações (KJ)",
+        "inputs": {
+            "prev_latents": "Latent anterior",
+            "audio_embeds": "Incrustações de áudio",
+            "ref_latent": "Latent de referência",
+            "samples": "Amostragem"
+        },
+        "widgets": {
+            "amples": "Amostra",
+            "num_frames": "Número de quadros",
+            "overlap": "Sobreposição",
+            "frames_processed": "Quadros processados",
+            "if_not_enough_audio": "Se o áudio for insuficiente",
+            "ref_frame_index": "Índice do quadro de referência",
+            "ref_mask_frame_range": "Intervalo de quadros da máscara de referência"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem",
+            "samples_slice": "Fragmentos de amostragem"
+        }
+    },
+    "WanVideoAddDualControlEmbeds": {
+        "title": "Vídeo Wan Adicionar Incrustações de Controle Duplo (KJ)",
+        "inputs": {
+            "embeds": "Vetor de incorporação",
+            "vae": "Modelo VAE",
+            "dense": "Controle denso",
+            "sparse": "Controle esparso",
+            "prev_images": "Imagens anteriores"
+        },
+        "widgets": {
+            "strength": "Força de controle",
+            "start_percent": "Porcentagem inicial",
+            "end_percent": "Porcentagem final",
+            "first_frame_noise_level": "Nível de granulação do primeiro quadro"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem",
+            "wanvidimage_embeds": "Grupo de Incrustações de Imagem de Vídeo Wan"
+        }
+    },
+    "WanVideoSVIProEmbeds": {
+        "title": "Vídeo Wan Incrustações SVI Pro (KJ)",
+        "inputs": {
+            "prev_samples": "Amostragem prévia",
+            "anchor_samples": "Amostragem âncora"
+        },
+        "widgets": {
+            "num_frames": "Número de quadros",
+            "motion_latent_count": "Vezes do Latent de movimento"
+        },
+        "outputs": {
+            "image_embeds": "Incorporações da imagem",
+            "samples_slice": "Fragmentos de amostragem"
+        }
+    },
+    "WanVideoSetAttentionModeOverride": {
+        "title": "Vídeo Wan Configuração de Alternância de Prioridade do Modo de Atenção (KJ)",
+        "inputs": {
+            "model": "Modelo",
+            "blocks": "Bloco"
+        },
+        "widgets": {
+            "attention_mode": "Modo de atenção",
+            "start_step": "Passo inicial",
+            "end_step": "Passo final",
+            "verbose": "Verboso"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Remove as configurações de modo de atenção para etapas e/ou intervalos de blocos específicos do modelo"
+    },
+    "WanVideoUltraVicoSettings": {
+        "title": "Vídeo Wan UltraVico Configurações (KJ)",
+        "inputs": {
+            "model": "Modelo"
+        },
+        "widgets": {
+            "alpha": "Opacidade alfa (alpha)"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Define os parâmetros UltraVico, mas observe que o modo ainda precisa ser definido como sageattn_ultravico; para a documentação, consulte: https://github.com/thu-ml/DiT-Extrapolation"
+    },
+    "WanVideoUniAnimatePoseInput": {
+        "title": "Vídeo Wan UniAnimate Animação Universal Entrada de Pose (KJ)",
+        "inputs": {
+            "pose_images": "Imagem de pose",
+            "reference_pose_image": "Imagem de Pose de Referência"
+        },
+        "widgets": {
+            "strength": "Força",
+            "start_percent": "Percentual inicial",
+            "end_percent": "Porcentagem final"
+        },
+        "outputs": {
+            "unianimate_poses": "UniAnimate Animação Universal_Pose"
+        }
+    }
+}

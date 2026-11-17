@@ -1,0 +1,865 @@
+{
+    "AdvancedVAEDecoderX21": {
+        "title": "高度なVAEデコーダー ^G2.1",
+        "widgets": {
+            "samples": "サンプリング",
+            "vae": "VAE",
+            "allow_extended_range": "拡張範囲を許可",
+            "low_vram_mode": "低VRAMモード"
+        },
+        "description": "ComfyUI標準のVAEDecodeノードの実験的な代替案。標準の出力クランプを回避するオプションを提供し、ピクセルを[0.0, 1.0]の範囲外にでき、大規模画像では強制タイルデコードでVRAM使用量を抑えることもできる。"
+    },
+    "BasicImageFilters": {
+        "title": "基本画像フィルター",
+        "widgets": {
+            "images": "画像",
+            "enable_auto_contrast": "自動コントラストを有効化",
+            "enable_filters": "フィルターを有効化",
+            "divider1": "区切り線1",
+            "filter_1": "フィルター1",
+            "filter_1_control": "フィルター1制御",
+            "divider2": "区切り線2",
+            "filter_2": "フィルター2",
+            "filter_2_control": "フィルター2制御",
+            "divider3": "区切り線3",
+            "filter_3": "フィルター3",
+            "filter_3_control": "フィルター3制御"
+        },
+        "description": ""
+    },
+    "CustomStylePromptEncoderX21": {
+        "title": "カスタムスタイル+プロンプトエンコーダー ^G2.1",
+        "widgets": {
+            "clip": "クリップ",
+            "custom_styles": "カスタムスタイル",
+            "custom_style": "カスタムスタイル",
+            "palette": "パレット",
+            "prompt": "プロンプト"
+        },
+        "outputs": {
+            "PROMPT": "プロンプト",
+            "style_name": "スタイル名",
+            "palette_name": "パレット名",
+            "original_prompt": "元のプロンプト"
+        },
+        "description": "テキストプロンプトを埋め込みベクトルにエンコードし、選択したカスタムスタイル（およびオプションのパレット）に自動適応する。続いてCLIPモデルで処理され、画像生成を誘導する条件を生成する。⚠️このノードは実験的な機能であるため、パラメータ・動作・存在自体が事前の通知なく変更されたり完全に削除される可能性がある。"
+    },
+    "EmptyZImageLatentImage": {
+        "title": "空のZ-Image Latent 画像",
+        "widgets": {
+            "orientation": "方向",
+            "ratio": "比率",
+            "size": "サイズ",
+            "batch_size": "バッチサイズ"
+        },
+        "description": "Z-Imageモデルのノイズ除去の起点として使う、空の Latent 画像の新規バッチを作成する。"
+    },
+    "ImageGridBuilder": {
+        "title": "画像グリッドジェネレーター",
+        "widgets": {
+            "images": "画像",
+            "banner": "バナー",
+            "banner_height": "バナー高さ",
+            "text": "テキスト",
+            "text_color": "テキスト色",
+            "lines_color": "線色",
+            "banner_color": "バナーカラー",
+            "font_name": "フォント名",
+            "font_size": "フォントサイズ",
+            "columns": "列",
+            "image_scale": "画像拡大縮小",
+            "image_spacing": "画像間隔"
+        },
+        "description": "すべての入力画像を含むグリッドを生成する。"
+    },
+    "ImageLabeler": {
+        "title": "画像ラベラー",
+        "widgets": {
+            "image": "画像",
+            "text": "テキスト",
+            "text_color": "テキスト色",
+            "background_color": "背景色",
+            "font_name": "フォント名",
+            "font_size": "フォントサイズ",
+            "font_scale": "フォントスケール",
+            "label_position": "ラベル位置",
+            "label_padding": "ラベル内側余白",
+            "min_label_width": "最小ラベル幅",
+            "min_label_height": "最小ラベル高さ"
+        },
+        "description": "カスタムテキストのラベルを画像に追加する。"
+    },
+    "LoadQwen34bModel": {
+        "title": "Qwen3-4Bモデルを読み込み（safetensors / gguf）",
+        "widgets": {
+            "checkpoint": "チェックポイント",
+            "file_filter": "ファイルフィルター",
+            "run_on_gpu": "GPU上で実行"
+        },
+        "description": "safetensorとGGUF形式でZ-Imageテキストエンコーダー（Qwen3-4B）を読み込む。"
+    },
+    "LoadZImageModel": {
+        "title": "Z-Imageモデルを読み込み（safetensors / gguf）",
+        "widgets": {
+            "checkpoint": "チェックポイント",
+            "file_filter": "ファイルフィルター"
+        },
+        "description": "safetensorsとGGUF形式でZ-Image拡散モデルを読み込む。"
+    },
+    "MyTop10Styles": {
+        "title": "マイTop10スタイル",
+        "widgets": {
+            "input": "入力",
+            "top_styles": "Topスタイル",
+            "style_1": "スタイル1",
+            "style_2": "スタイル2",
+            "style_3": "スタイル3",
+            "style_4": "スタイル4",
+            "style_5": "スタイル5",
+            "style_6": "スタイル6",
+            "style_7": "スタイル7",
+            "style_8": "スタイル8",
+            "style_9": "スタイル9",
+            "style_10": "スタイル10",
+            "divider": "区切り線",
+            "control_after_generate": "生成後制御",
+            "output_to": "出力先"
+        },
+        "outputs": {
+            "output": "出力"
+        },
+        "description": "パーソナライズされたTop10リストからビジュアルスタイルを選択できる。このノードはお気に入りのスタイルリストを提供する「マイTop10スタイル（エディター）」に依存する。"
+    },
+    "MyTop10StylesEditor": {
+        "title": "マイTop10スタイル（エディター）",
+        "widgets": {
+            "style_1": "スタイル1",
+            "gallery_1": "ギャラリー1",
+            "spacer_1": "スペーサー1",
+            "style_2": "スタイル2",
+            "gallery_2": "ギャラリー2",
+            "spacer_2": "スペーサー2",
+            "style_3": "スタイル3",
+            "gallery_3": "ギャラリー3",
+            "spacer_3": "スペーサー3",
+            "style_4": "スタイル4",
+            "gallery_4": "ギャラリー4",
+            "spacer_4": "スペーサー4",
+            "style_5": "スタイル5",
+            "gallery_5": "ギャラリー5",
+            "spacer_5": "スペーサー5",
+            "style_6": "スタイル6",
+            "gallery_6": "ギャラリー6",
+            "spacer_6": "スペーサー6",
+            "style_7": "スタイル7",
+            "gallery_7": "ギャラリー7",
+            "spacer_7": "スペーサー7",
+            "style_8": "スタイル8",
+            "gallery_8": "ギャラリー8",
+            "spacer_8": "スペーサー8",
+            "style_9": "スタイル9",
+            "gallery_9": "ギャラリー9",
+            "spacer_9": "スペーサー9",
+            "style_10": "スタイル10",
+            "gallery_10": "ギャラリー10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Topスタイル"
+        },
+        "description": "パーソナライズされたTop10ビジュアルスタイルリストを作成し、使用可能なすべての選択肢から選んで理想のスタイル集合を構築できる。このノードは「マイTop10スタイル」と連携して、好みのスタイルを定義・使用するためのもの。"
+    },
+    "SaveImage": {
+        "title": "画像保存",
+        "widgets": {
+            "images": "画像",
+            "filename_prefix": "ファイル名プレフィックス",
+            "civitai_compatible_metadata": "Civitai互換メタデータ"
+        },
+        "description": "SaveImage"
+    },
+    "StylePromptEncoder2": {
+        "title": "スタイル＆プロンプトエンコーダー",
+        "widgets": {
+            "clip": "クリップ",
+            "customization": "カスタム",
+            "style": "スタイル",
+            "gallery": "ギャラリー",
+            "spacer": "区切り文字",
+            "text": "テキスト"
+        },
+        "description": "テキストプロンプトを埋め込みベクトルに変換し、選択したスタイルに合うようプロンプトを自動適応する。このノードはプロンプトを受け取り、視覚スタイルを選択オプションに基づいて調整し、続いて提供されたテキストエンコーダー（クリップ）でエンコードして、画像生成を誘導する埋め込みベクトルを生成する。"
+    },
+    "StylePromptEncoderX21": {
+        "title": "スタイル＆プロンプトエンコーダー ^G2.1",
+        "widgets": {
+            "clip": "クリップ",
+            "customization": "カスタム設定",
+            "style": "スタイル",
+            "palette": "パレット",
+            "text": "テキスト"
+        },
+        "outputs": {
+            "PROMPT": "プロンプト",
+            "style_name": "スタイル名",
+            "palette_name": "パレット名",
+            "original_prompt": "元のプロンプト"
+        },
+        "description": "テキストプロンプトを埋め込みベクトルに変換し、選択したスタイルに合うようプロンプトを自動調整し、指定パレットの適用も選択できる。このノードはプロンプトを受け取り、視覚スタイルを選択オプションに基づいて調整し（パレットが提供されていれば適用）、続いて提供されたCLIPモデルでエンコードして、画像生成を誘導する埋め込みベクトルを生成する。このノードは実験的な機能であるため、パラメータ・動作・存在自体が事前の通知なく変更されたり完全に削除される可能性がある。"
+    },
+    "StyleStringInjector2": {
+        "title": "スタイル文字列インジェクター",
+        "widgets": {
+            "style": "スタイル",
+            "gallery": "ギャラリー",
+            "string": "文字列"
+        },
+        "description": "プロンプトにスタイルを注入する。このノードはテキストプロンプトを受け取り、選択したスタイルに従ってそれを変更する。"
+    },
+    "VAEEncodeSoftInpainting": {
+        "title": "VAEエンコード（ソフトインペイント用）",
+        "widgets": {
+            "pixels": "ピクセル",
+            "vae": "VAE",
+            "mask": "マスク",
+            "output_size": "出力サイズ",
+            "mask_blur_pixels": "マスクぼかしピクセル"
+        },
+        "description": "VAEモデルを使用して入力画像とそのインペイントマスクを Latent にエンコードする。"
+    },
+    "ZSamplerTurbo2": {
+        "title": "Zサンプラー Turbo ^G2（拡張版）",
+        "widgets": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブSTG2",
+            "positive_stg3": "ポジティブSTG3",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "divider": "区切り文字",
+            "initial_sample_size": "初期サンプリングサイズ",
+            "divider2": "区切り2",
+            "intensity": "強度",
+            "intensity_bias": "強度オフセット",
+            "turbo_creativity": "Turbo創造性"
+        },
+        "description": "「Z-Image Turbo」専用に最適化されたフローで Latent 画像のノイズを効率的に除去する。このノードはZ-Image Turboモデル、初期 Latent 画像、条件パラメータを受け取り、最終画像にデコード可能なノイズ除去済み Latent 出力を生成する。"
+    },
+    "ZSamplerTurbo2Advanced": {
+        "title": "Zサンプラー Turbo ^G2（高度版）",
+        "widgets": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブSTG2",
+            "positive_stg3": "ポジティブSTG3",
+            "add_noise": "ノイズ追加",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "start_at_step": "開始ステップ",
+            "end_at_step": "終了ステップ",
+            "force_final_denoising": "最終ノイズ除去を強制",
+            "divider": "区切り文字",
+            "initial_sample_size": "初期サンプリングサイズ",
+            "divider2": "区切り2",
+            "intensity": "強度",
+            "intensity_bias": "強度オフセット",
+            "turbo_creativity": "Turbo創造性"
+        },
+        "description": "「Z-Image Turbo」専用に最適化されたフローで Latent 画像のノイズを効率的に除去する。このノードはZ-Image Turboモデル、初期 Latent 画像、条件パラメータを受け取り、最終画像にデコード可能なノイズ除去済み Latent 出力を生成する。この高度版には、サンプラーのより精密な制御とサンプラーのチェーン化を実現する追加パラメータが含まれる。"
+    },
+    "ZSamplerTurbo2Simple": {
+        "title": "Zサンプラー Turbo ^G2（簡易版）",
+        "widgets": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブSTG2",
+            "positive_stg3": "ポジティブSTG3",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "ibias": "強度オフセット",
+            "divider": "区切り文字",
+            "turbo_creativity": "Turbo創造性",
+            "old_scheduler": "旧スケジューラ",
+            "noise_injection": "ノイズ注入",
+            "alternative_refiner": "代替リファイナー"
+        },
+        "description": "Zサンプラー Turbo（第2世代）の簡易版。すべての機能と特徴を維持しつつ、迅速で便利な使用のためにインターフェースを簡素化している。このノードはZ-Image Turboモデル、初期 Latent 画像、プロンプト/条件を受け取り、最終画像にデコード可能なノイズ除去済み Latent 出力を生成する。"
+    },
+    "ZSamplerTurboX21": {
+        "title": "Zサンプラー Turbo ^G2.1",
+        "widgets": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブSTG2",
+            "positive_stg3": "ポジティブSTG3",
+            "seed": "シード",
+            "divider1": "区切り1",
+            "steps": "ステップ数",
+            "ibias": "強度オフセット",
+            "spectral_tilt": "スペクトル傾斜",
+            "turbo_creativity": "Turbo創造性",
+            "detailed_refiner": "ディテールリファイナー",
+            "new_scheduler": "新スケジューラ"
+        },
+        "description": "Zサンプラー Turboの実験的な新バージョン。このノードはZ-Image Turboモデル、初期 Latent 画像、プロンプト/条件を受け取り、最終画像にデコード可能なノイズ除去済み Latent 出力を生成する。このノードは実験的な機能であるため、パラメータ・動作・存在自体が事前の通知なく変更されたり完全に削除される可能性がある。"
+    },
+    "ZSamplerTurboX21Advanced": {
+        "title": "Zサンプラー Turbo ^G2.1（高度版）",
+        "widgets": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブSTG2",
+            "positive_stg3": "ポジティブSTG3",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "ibias": "強度オフセット",
+            "divider1": "区切り1",
+            "turbo_creativity": "Turbo創造性",
+            "alternative_refiner": "代替リファイナー",
+            "disable_ibias": "強度オフセットを無効化",
+            "old_scheduler": "旧スケジューラ",
+            "divider2": "区切り2",
+            "spectral_tilt": "スペクトル傾斜",
+            "spectral_tilt_start": "スペクトル傾斜開始",
+            "spectral_tilt_end": "スペクトル傾斜終了",
+            "spectral_tilt_sharpness": "スペクトル傾斜シャープネス"
+        },
+        "description": "Zサンプラー Turboの実験的な新バージョン。このノードはZ-Image Turboモデル、初期 Latent 画像、プロンプト/条件を受け取り、最終画像にデコード可能なノイズ除去済み Latent 出力を生成する。このノードは実験的な機能であるため、パラメータ・動作・存在自体が事前の通知なく変更されたり完全に削除される可能性がある。"
+    },
+    "IllustrationStylePromptEncoder": {
+        "title": "イラストスタイルプロンプトエンコーダー",
+        "widgets": {
+            "clip": "クリップ",
+            "customization": "カスタム設定",
+            "style_to_apply": "スタイルを適用",
+            "text": "テキスト"
+        },
+        "description": "テキストプロンプトを、選択したイラストスタイルに適応した埋め込みベクトルに変換する。このノードはプロンプトを受け取り、視覚スタイルを選択オプションに基づいて調整し、提供されたテキストエンコーダーでエンコードして、画像生成を誘導する埋め込みベクトルを生成する。"
+    },
+    "PhotoStylePromptEncoder": {
+        "title": "写真スタイルプロンプトエンコーダー",
+        "widgets": {
+            "clip": "クリップ",
+            "customization": "カスタム設定",
+            "style_to_apply": "スタイルを適用",
+            "text": "テキスト"
+        },
+        "description": "テキストプロンプトを、選択した写真スタイルに適応した埋め込みベクトルに変換する。このノードはプロンプトを受け取り、視覚スタイルを選択オプションに基づいて調整し、提供されたテキストエンコーダーでエンコードして、画像生成を誘導する埋め込みベクトルを生成する。"
+    },
+    "StylePromptEncoder": {
+        "title": "スタイル＆プロンプトエンコーダー（旧バージョン）",
+        "widgets": {
+            "clip": "クリップ",
+            "customization": "カスタム設定",
+            "category": "カテゴリ",
+            "style": "スタイル",
+            "text": "テキスト"
+        },
+        "description": "テキストプロンプトを埋め込みベクトルに変換し、選択したスタイルに自動適応する。このノードはプロンプトを受け取り、視覚スタイルを選択オプションに基づいて調整し、続いて提供されたテキストエンコーダー（クリップ）でエンコードして、画像生成を誘導する埋め込みベクトルを生成する。"
+    },
+    "StyleStringInjector": {
+        "title": "スタイル文字列インジェクター（旧バージョン）",
+        "widgets": {
+            "category": "カテゴリ",
+            "style": "スタイル",
+            "string": "文字列"
+        },
+        "description": "プロンプトにスタイルを注入する。このノードはテキストプロンプトを受け取り、選択したスタイルに基づいてそれを変更する。"
+    },
+    "ZSamplerTurbo": {
+        "title": "Z-高速サンプラー Turbo ^g1",
+        "widgets": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_input": "Latent 入力",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "divider": "区切り文字",
+            "initial_noise_calibration": "初期ノイズキャリブレーション",
+            "lowres_bias": "低解像度バイアス"
+        },
+        "description": "Latent 画像のノイズを効率的に除去し、「Z-Image Turbo」モデル専用に最適化されている。このノードはZ-Image Turboモデル、初期 Latent 画像、条件パラメータを受け取り、さらなる処理またはデコードに使えるノイズ除去出力を生成する。"
+    },
+    "ZSamplerTurboAdvanced": {
+        "title": "Z-高速サンプラー Turbo ^g1（高度版）",
+        "widgets": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_input": "Latent 入力",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "divider": "区切り文字",
+            "initial_noise_calibration": "初期ノイズキャリブレーション",
+            "noise_bias_estimation": "ノイズバイアス推定",
+            "noise_bias_sample_size": "ノイズバイアスサンプル数",
+            "noise_bias_scale": "ノイズバイアス比率",
+            "noise_overdose": "ノイズ過剰"
+        },
+        "description": "Latent 画像のノイズを効率的に除去し、「Z-Image Turbo」モデル専用に最適化されている。このノードはZ-Image Turboモデル、初期 Latent 画像、条件パラメータを受け取り、さらなる処理またはデコードに使えるノイズ除去出力を生成する。"
+    },
+    "ZSamplerTurbo2Laboratory": {
+        "title": "Z-高速サンプラー Turbo ^G2（実験室版）",
+        "widgets": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_input": "Latent 入力",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "divider1": "区切り1",
+            "initial_noise_bias_level": "初期ノイズバイアスレベル",
+            "initial_noise_overdose": "初期ノイズ過剰",
+            "noise_est_sample_size": "ノイズ推定サンプル数",
+            "divider2": "区切り2",
+            "extra_noise_freq1": "追加ノイズ周波数1",
+            "extra_noise_scale1": "追加ノイズ比率1",
+            "extra_noise_freq2": "追加ノイズ周波数2",
+            "extra_noise_scale2": "追加ノイズ比率2",
+            "extra_noise_freq3": "追加ノイズ周波数3",
+            "extra_noise_scale3": "追加ノイズ比率3",
+            "divider3": "区切り3",
+            "scramble_left_count": "左側のシャッフル数",
+            "scramble_top_count": "上部のシャッフル数",
+            "scramble_right_count": "右側のシャッフル数",
+            "scramble_bottom_count": "下部のシャッフル数",
+            "stage2_preproc_steps": "フェーズ2前処理ステップ数",
+            "divider4": "区切り4",
+            "sigma_preset_name": "σプリセット名",
+            "sigma1_off": "σ1 オフセット",
+            "sigma2_off": "σ2 オフセット",
+            "sigma3_off": "σ3 オフセット",
+            "sigma4_off": "σ4 オフセット",
+            "sigma5_off": "σ5 オフセット",
+            "sigma6_off": "σ6 オフセット",
+            "sigma7_off": "σ7 オフセット",
+            "sigma8_off": "σ8 オフセット",
+            "sigma9_off": "σ9 オフセット",
+            "sigma10_off": "σ10 オフセット"
+        },
+        "description": "Latent 画像のノイズを効率的に除去し、「Z-Image Turbo」モデル専用に最適化。このノードは zsample_turbo_core(...) メソッドの内部パラメータを直接変更でき、開発中のテストとキャリブレーションに使用される。"
+    },
+    "ZSamplerTurbo2Simple //ZImagePowerNodes": {
+        "title": "⚡| Z-サンプラー Turbo ^G2 (簡易版)",
+        "inputs": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "ポジティブプロンプト フェーズ2",
+            "positive_stg3": "ポジティブプロンプト フェーズ3"
+        },
+        "widgets": {
+            "seed": "シード",
+            "steps": "サンプリングステップ数",
+            "ibias": "初期バイアス",
+            "turbo_creativity": "Turbo 創造性",
+            "old_scheduler": "旧スケジューラ",
+            "noise_injection": "ノイズ注入",
+            "alternative_refiner": "代替リファイナー"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力"
+        },
+        "description": "Turbo ベースのサンプラーノード。多段階のポジティブプロンプト入力をサポートし、生成後制御、ステップ数設定、初期バイアス調整、複数の強化オプション（創造性強化、旧スケジューラ、ノイズ注入、代替リファイナーなど）を備える。"
+    },
+    "ImageGridBuilder //ZImagePowerNodes": {
+        "title": "画像メッシュビルダー",
+        "inputs": {
+            "images0": "画像",
+            "images1": "画像1",
+            "images2": "画像2",
+            "images3": "画像3",
+            "images4": "画像4",
+            "images5": "画像5",
+            "images6": "画像6",
+            "images7": "画像7",
+            "images8": "画像8",
+            "images9": "画像9",
+            "images10": "画像10",
+            "images11": "画像11",
+            "images12": "画像12",
+            "images13": "画像13",
+            "images14": "画像14",
+            "images15": "画像15",
+            "images16": "画像16"
+        },
+        "widgets": {
+            "banner": "バナー",
+            "banner_height": "バナー高さ",
+            "text": "テキスト",
+            "text_color": "テキスト色",
+            "lines_color": "線色",
+            "banner_color": "バナーカラー",
+            "font_name": "フォント名",
+            "font_size": "フォントサイズ",
+            "columns": "列",
+            "image_scale": "画像拡大縮小",
+            "image_spacing": "画像間隔"
+        },
+        "description": "画像をグリッド状に配置する。",
+        "api_version": "V3"
+    },
+    "ImageLabeler //ZImagePowerNodes": {
+        "title": "画像ラベラー",
+        "inputs": {
+            "image": "画像"
+        },
+        "widgets": {
+            "text": "テキスト",
+            "text_color": "テキスト色",
+            "background_color": "背景色",
+            "font_name": "フォント名",
+            "font_size": "フォントサイズ",
+            "font_scale": "フォントスケール",
+            "label_position": "タグ位置",
+            "label_padding": "タグ内側余白",
+            "min_label_width": "最小タグ幅",
+            "min_label_height": "最小タグ高さ"
+        },
+        "description": "画像にカスタムテキストラベルを追加する。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2 //ZImagePowerNodes": {
+        "title": "⚡| Z-サンプラー ターボ",
+        "inputs": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "第2段階ポジティブ条件",
+            "positive_stg3": "第3段階ポジティブ条件"
+        },
+        "widgets": {
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "z_vibrance": "Z-ビブランス",
+            "mode": "モード",
+            "lowres_sample": "低解像度 サンプリング"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力"
+        },
+        "description": "「Z-画像ターボ」特有のプロセスで潜在画像のノイズを効率的に除去する。このノードはZ-画像ターボモデル、初期潜在画像、条件パラメータを受け取り、最終画像にデコード可能なノイズ除去済み潜在出力を生成する。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Advanced //ZImagePowerNodes": {
+        "title": "⚡| Z-サンプラー ターボ 高度版",
+        "inputs": {
+            "latent_input": "Latent 入力",
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "positive_stg2": "第2段階ポジティブ条件",
+            "positive_stg3": "第3段階ポジティブ条件"
+        },
+        "widgets": {
+            "add_noise": "ノイズ追加",
+            "seed": "シード",
+            "steps": "ステップ数",
+            "start_at_step": "何ステップ目から開始",
+            "end_at_step": "終了ステップ",
+            "force_final_denoising": "最終ノイズ除去を強制",
+            "divider": "区切り",
+            "z_vibrance": "Z-ビブランス",
+            "initial_bias_level": "初期バイアスレベル",
+            "initial_sample_size": "初期サンプルサイズ"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力"
+        },
+        "description": "潜在画像のノイズを効率的に除去し、「Z-イメージアクセラレーター」専用にチューニングされている。このノードは Z-イメージアクセラレーターモデル、初期潜在画像、条件パラメータを受け取り、最終画像のデコードに使えるノイズ除去済み潜在出力を生成する。高度版には、より精密な制御とサンプラーのチェーン接続を実現する追加パラメータが含まれる。",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Laboratory //ZImagePowerNodes": {
+        "title": "⚡| Z-サンプラー ターボ 実験室版",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_input": "Latent 入力"
+        },
+        "widgets": {
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "divider1": "区切り1",
+            "initial_noise_bias_level": "初期ノイズバイアスレベル",
+            "initial_noise_overdose": "初期ノイズ過剰",
+            "noise_est_sample_size": "ノイズ推定サンプルサイズ",
+            "noise_est_sample_bias": "ノイズ推定サンプルバイアス",
+            "noise_est_sample_scale": "ノイズ推定サンプルスケーリング",
+            "divider2": "区切り2",
+            "inject_noise_st1": "第1段階ノイズ注入",
+            "inject_freq_st1": "第1段階注入周波数",
+            "inject_noise_st2": "第2段階ノイズ注入",
+            "inject_freq_st2": "第2段階注入周波数",
+            "inject_noise_st3": "第3段階ノイズ注入",
+            "inject_freq_st3": "第3段階注入周波数",
+            "divider3": "区切り3",
+            "sigma_preset_name": "プリセットσ名",
+            "sigma0_off": "σ0 オフセット",
+            "sigma1_off": "σ1 オフセット",
+            "sigma2_off": "σ2 オフセット",
+            "sigma3_off": "σ3 オフセット",
+            "sigma4_off": "σ4 オフセット",
+            "sigma5_off": "σ5 オフセット",
+            "sigma6_off": "σ6 オフセット",
+            "sigma7_off": "σ7 オフセット",
+            "sigma8_off": "σ8 オフセット",
+            "sigma9_off": "σ9 オフセット",
+            "sigma10_off": "σ10 オフセット"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力"
+        },
+        "description": "Latent のノイズを効率的に除去し、特に「Z-イメージアクセラレーター」モデル向けに最適化されている。このノードは Z-イメージアクセラレーターモデル、Latent 入力、条件パラメータを受け取り、さらなる処理やデコードに使えるノイズ除去出力を生成する。",
+        "api_version": "V3"
+    },
+    "IllustrationStylePromptEncoder //ZImagePowerNodes": {
+        "title": "❌イラストスタイルプロンプトエンコーダー",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "カスタムオプション"
+        },
+        "widgets": {
+            "style_to_apply": "適用するスタイル",
+            "text": "テキストプロンプト"
+        },
+        "description": "テキストプロンプトを埋め込みに変換し、選択したイラストスタイルに適応させる。このノードはプロンプトを受け取り、選択オプションに基づいて視覚スタイルを調整し、提供されたテキストエンコーダーでエンコードして画像生成を誘導する埋め込みを生成する。",
+        "api_version": "V3"
+    },
+    "PhotoStylePromptEncoder //ZImagePowerNode": {
+        "title": "❌写真スタイル プロンプトエンコーダー",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "カスタムオプション"
+        },
+        "widgets": {
+            "style_to_apply": "適用するスタイル",
+            "text": "テキストプロンプト"
+        },
+        "description": "テキストプロンプトを埋め込みに変換し、選択した写真スタイルに適応させる。このノードはプロンプトを受け取り、選択オプションに基づいて視覚スタイルを調整し、提供されたテキストエンコーダーでエンコードして画像生成を誘導する埋め込みを生成する。",
+        "api_version": "V3"
+    },
+    "EmptyZImageLatentImage //ZImagePowerNodes": {
+        "title": "⚡| 空の Latent Z 画像",
+        "widgets": {
+            "landscape": "横画面/縦画面モードを切り替え",
+            "ratio": "アスペクト比",
+            "size": "サイズ",
+            "batch_size": "バッチサイズ"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SaveImage //ZImagePowerNodes": {
+        "title": "⚡| 画像保存",
+        "inputs": {
+            "images": "画像"
+        },
+        "widgets": {
+            "filename_prefix": "ファイル名プレフィックス",
+            "civitai_compatible_metadata": "Civitai 互換メタデータ"
+        },
+        "outputs": {
+            "int": "整数値",
+            "float": "浮動小数点数",
+            "latent": "Latent"
+        }
+    },
+    "StylePromptEncoder //ZImagePowerNodes": {
+        "title": "⚡| スタイルとプロンプト 編集",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "カスタマイズ"
+        },
+        "widgets": {
+            "category": "カテゴリ",
+            "style": "スタイル"
+        },
+        "outputs": {
+            "CONDITIONS": "CONDITIONING",
+            "STRING": "文字列"
+        }
+    },
+    "StyleStringInjector //ZImagePowerNodes": {
+        "title": "⚡| スタイル 文字列注入",
+        "inputs": {
+            "string": "文字列"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️スタイルを選択",
+            "style": "スタイル"
+        },
+        "outputs": {
+            "CONDITIONS": "CONDITIONING",
+            "STRING": "文字列"
+        }
+    },
+    "StylePromptEncoder2 //ZImagePowerNodes": {
+        "title": "⚡| スタイル &プロンプト 編集",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "カスタム"
+        },
+        "widgets": {
+            "style": "スタイル",
+            "🖼️ Select Style ...": "🖼️スタイルを選択",
+            "text": "テキスト",
+            "gallery": "ギャラリー",
+            "spacer": "間隔"
+        },
+        "outputs": {
+            "CONDITIONS": "CONDITIONING",
+            "STRING": "文字列"
+        },
+        "description": "テキストプロンプトを埋め込みに変換し、選択したスタイルに合うようプロンプトを自動適応する。このノードはプロンプトを選択オプションの視覚スタイルに調整し、提供されたテキストエンコーダーでエンコードして、画像生成を誘導する埋め込みを生成する。"
+    },
+    "StyleStringInjector2 //ZImagePowerNodes": {
+        "title": "⚡| スタイル 文字列注入",
+        "inputs": {
+            "string": "文字列"
+        },
+        "widgets": {
+            "style": "スタイル",
+            "🖼️ Select Style ...": "🖼️スタイルを選択",
+            "gallery": "ギャラリー"
+        },
+        "outputs": {
+            "STRING": "文字列"
+        },
+        "description": "プロンプトにスタイルを1つ注入する。このノードはテキストプロンプトを選択したスタイルに従って変更する。"
+    },
+    "ZSamplerTurboAdvanced //ZImagePowerNodes": {
+        "title": "⚡| Z-サンプラー Turbo（高度版）",
+        "inputs": {
+            "model": "モデル",
+            "positive": "ポジティブ条件",
+            "latent_input": "Latent 入力"
+        },
+        "widgets": {
+            "seed": "シード",
+            "steps": "ステップ",
+            "denoise": "ノイズ除去",
+            "initial_noise_calibration": "初期ノイズキャリブレーション",
+            "noise_bias_estimation": "ノイズバイアス推定",
+            "noise_bias_sample_size": "ノイズバイアスサンプルサイズ",
+            "noise_bias_scale": "ノイズバイアススケーリング",
+            "noise_overdose": "ノイズ過剰",
+            "divider": "セグメンテーション"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力",
+            "latent": "Latent"
+        },
+        "description": "潜在画像のノイズを効率的に除去し、特に 'Z-画像 Turbo' モデル向けに最適化されている。このノードは Z-画像 Turbo モデル、初期潜在画像、条件パラメータを受け取り、さらなる処理またはデコードに備えたノイズ除去出力を生成する。"
+    },
+    "MyTop10Styles //ZImagePowerNodes": {
+        "title": "⚡| マイ10スタイル",
+        "inputs": {
+            "input": "入力",
+            "top_styles": "人気スタイル",
+            "divider": "セグメンテーション"
+        },
+        "widgets": {
+            "style_1": "スタイル1",
+            "style_2": "スタイル2",
+            "style_3": "スタイル3",
+            "style_4": "スタイル4",
+            "style_5": "スタイル5",
+            "style_6": "スタイル6",
+            "style_7": "スタイル7",
+            "style_8": "スタイル8",
+            "style_9": "スタイル9",
+            "style_10": "スタイル10",
+            "control_after_generate": "生成後制御",
+            "output_to": "出力先"
+        },
+        "outputs": {
+            "output": "出力"
+        },
+        "description": "パーソナライズされたトップ10リストからビジュアルスタイルを1つ選択できる。このノードはお気に入りのスタイルリストを提供する「マイTop10スタイル（エディター）」に依存している。"
+    },
+    "MyTop10StylesEditor //ZImagePowerNodes": {
+        "title": "⚡| マイ10スタイル（エディター）",
+        "inputs": {
+            "gallery_1": "ギャラリー1",
+            "spacer_1": "間隔1",
+            "gallery_2": "ギャラリー2",
+            "spacer_2": "間隔2",
+            "gallery_3": "ギャラリー3",
+            "spacer_3": "間隔3",
+            "gallery_4": "ギャラリー4",
+            "spacer_4": "間隔4",
+            "gallery_5": "ギャラリー5",
+            "spacer_5": "間隔5",
+            "gallery_6": "ギャラリー6",
+            "spacer_6": "間隔6",
+            "gallery_7": "ギャラリー7",
+            "spacer_7": "間隔7",
+            "gallery_8": "ギャラリー8",
+            "spacer_8": "間隔8",
+            "gallery_9": "ギャラリー9",
+            "spacer_9": "間隔9",
+            "gallery_10": "ギャラリー10"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️スタイルを選択",
+            "style_1": "スタイル1",
+            "style_2": "スタイル2",
+            "style_3": "スタイル3",
+            "style_4": "スタイル4",
+            "style_5": "スタイル5",
+            "style_6": "スタイル6",
+            "style_7": "スタイル7",
+            "style_8": "スタイル8",
+            "style_9": "スタイル9",
+            "style_10": "スタイル10"
+        },
+        "outputs": {
+            "TOP_STYLES": "人気スタイル"
+        },
+        "description": "パーソナライズされたトップ10ビジュアルスタイルリストを作成し、使用可能なすべての選択肢から選んで理想のコレクションを構築できる。このノードは「マイTop10スタイル」と連携して、好みのスタイルを定義・使用するためのもの。"
+    },
+    "VAEEncodeSoftInpainting //ZImagePowerNodes": {
+        "title": "⚡| VAE エンコード（ソフトインペイント用）",
+        "inputs": {
+            "pixels": "ピクセル",
+            "vae": "vae",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "output_size": "出力サイズ",
+            "mask_blur_pixels": "マスクぼかしピクセル"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力",
+            "latent": "Latent"
+        },
+        "description": "VAE モデルを使用して入力画像とそのインペイントマスクを Latent にエンコードする。"
+    },
+    "ZSamplerTurbo //ZImagePowerNodes": {
+        "title": "⚡| Zサンプラー 加速",
+        "inputs": {
+            "model": "モデル",
+            "latent_input": "Latent 入力",
+            "positive": "ポジティブ条件"
+        },
+        "widgets": {
+            "seed": "シード",
+            "steps": "ステップ数",
+            "denoise": "ノイズ除去",
+            "initial_noise_calibration": "初期ノイズキャリブレーション",
+            "lowres_bias": "低解像度バイアス"
+        },
+        "outputs": {
+            "latent_output": "Latent 出力",
+            "latent": "Latent"
+        }
+    }
+}

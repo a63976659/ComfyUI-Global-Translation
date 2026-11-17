@@ -1,0 +1,938 @@
+{
+    "🔀 Batch Wildcard Upscale Sampler": {
+        "title": "🔀 Пакетный промпт-сэмплер",
+        "inputs": {
+            "model": "Модель",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "upscale_model": "Модель апскейла"
+        },
+        "widgets": {
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "seed": "Зерно",
+            "batch_size": "Размер пакета",
+            "width": "Ширина",
+            "height": "Высота",
+            "steps": "Количество шагов",
+            "cfg": "Масштаб CFG",
+            "sampler_name": "Сэмплер",
+            "scheduler": "Планировщик",
+            "denoise": "Шумоподавление",
+            "upscale": "Коэффициент увеличения",
+            "upscale_rate": "Коэффициент увеличения",
+            "upscale_denoise": "Шумоподавление апскейла",
+            "upscale_steps": "Количество шагов увеличения",
+            "upscale_cfg": "CFG апскейла",
+            "upscale_sampler_name": "Имя сэмплера увеличения",
+            "upscale_scheduler": "Планировщик увеличения",
+            "upscale_noise_inject_strength": "Интенсивность внесения шума при увеличении",
+            "strip_prompt_weights": "Удаление весов промпта",
+            "recache_wildcards": "Перекэшировать промпты",
+            "console_log": "Журнал консоли"
+        },
+        "outputs": {
+            "model": "Модель",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "Положительное",
+            "negative": "Отрицательное",
+            "latent": "Latent",
+            "prompt": "Промпт"
+        },
+        "description": "Для каждого изображения пакета промпт разрешается независимо, поэтому один запуск создаёт разные промпты — а значит и разные изображения — для каждого индекса пакета. LoRA можно загружать для каждого изображения по отдельности через метки <lora:name:strength> в промпте. Модель и CLIP можно подключить к сэмплеру либо опустить, чтобы только просмотреть разрешённые промпты."
+    },
+    "💾 Save Image With Metadata": {
+        "title": "💾 Сохранить изображение с метаданными",
+        "inputs": {
+            "images": "Изображение",
+            "positive_override": "Перезапись положительного"
+        },
+        "widgets": {
+            "filename_prefix": "Префикс имени файла",
+            "folder": "Папка",
+            "file_format": "Формат файла",
+            "quality": "Качество",
+            "embed_workflow": "Встраивать рабочий процесс",
+            "strip_lora_prompt": "Удалить подсказку LoRA"
+        },
+        "description": "Сохранить изображение с добавлением метаданных"
+    },
+    "🖼️ Load Image Temporarily": {
+        "title": "🖼️ Загрузить изображение временно",
+        "widgets": {
+            "image": "Изображение"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска",
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "description": "Временная загрузка изображения с выводом изображения, маски, ширины и высоты."
+    },
+    "📝 Wildcard Processor Advanced": {
+        "title": "📝 Расширенный обработчик промптов",
+        "inputs": {
+            "seed": "Зерно"
+        },
+        "widgets": {
+            "multiple_separator": "Несколько разделителей",
+            "recache_wildcards": "Перекэшировать промпты",
+            "console_log": "Журнал консоли"
+        },
+        "outputs": {
+            "processed_text": "Обработанный текст",
+            "seed": "Зерно",
+            "extracted_tags_string": "Извлечённая строка меток",
+            "extracted_tags_list": "Список извлечённых меток",
+            "raw_tags_string": "Строка исходных меток",
+            "raw_tags_list": "Список исходных меток"
+        },
+        "description": "Расширенный узел для обработки промптов и извлечения меток"
+    },
+    "🎵📊 Audio Visualizer": {
+        "title": "🎵📊 Аудиовизуализатор",
+        "inputs": {
+            "audio": "Аудио"
+        },
+        "widgets": {
+            "output_type": "Тип выхода",
+            "visualizer_script": "Сценарий визуализации",
+            "scale": "масштабировать_по",
+            "stereo_to_mono": "Стерео в моно",
+            "framerate": "Частота кадров",
+            "width": "Ширина",
+            "height": "Высота",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "image_batch": "Пакет изображений",
+            "video": "Видео"
+        }
+    },
+    "🎨 Colorful Starting Image": {
+        "title": "🎨 Красочное стартовое изображение",
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "components": "Количество компонентов",
+            "component_scale": "Масштаб компонентов",
+            "shape_string": "Строка форм",
+            "color_palette": "Цветовая палитра",
+            "color_harmony": "Степень гармонии цвета",
+            "fill_mode": "Режим заполнения",
+            "shape_opacity": "Непрозрачность формы",
+            "background_color": "Цвет фона",
+            "positioning_bias": "Смещение позиционирования",
+            "arrangement": "Способ размещения",
+            "size_distribution": "Распределение размеров",
+            "allow_rotation": "Разрешить вращение",
+            "noise_level": "Уровень шума-крапинок",
+            "noise_scale": "Масштаб шума",
+            "noise_color": "Цвет шума-крапинок",
+            "warp_type": "Тип искажения",
+            "warp_intensity": "Интенсивность искажения",
+            "blur_radius": "Радиус размытия",
+            "seed": "Зерно",
+            "harmony": "Гармония",
+            "palette": "Палитра",
+            "harmony_colors": "Гармоничные цвета",
+            "colorized_hue": "Цветной оттенок",
+            "bias": "Смещение",
+            "arrangement_params": "Параметры расположения",
+            "max_size": "Максимальный размер",
+            "distribution": "Распределение",
+            "draw": "Отрисовка",
+            "points": "Набор точек",
+            "color": "Цвет",
+            "color1": "Цвет 1",
+            "color2": "Цвет 2",
+            "opacity": "Непрозрачность",
+            "shape": "Форма",
+            "image": "Изображение",
+            "mask": "Маска",
+            "pos_bias": "Смещение позиции",
+            "size_dist": "Распределение размеров",
+            "rotation": "Поворот",
+            "noise_rng": "Генератор случайных чисел шума-крапинок",
+            "intensity": "Интенсивность"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска"
+        }
+    },
+    "🖼️ Download Image from URL": {
+        "title": "🖼️ Скачать изображение по URL",
+        "widgets": {
+            "image_url": "URL изображения",
+            "save_file_name_override": "Переопределение имени файла сохранения",
+            "save_path": "путь сохранения"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "width": "Ширина",
+            "height": "Высота",
+            "int": "Целое число"
+        }
+    },
+    "📅 Format Date Time": {
+        "title": "📅 Форматирование даты и времени",
+        "inputs": {
+            "date_format": "Формат даты"
+        },
+        "widgets": {
+            "date_format": "Формат даты"
+        },
+        "outputs": {
+            "formatted_date_time": "Форматированные дата и время"
+        }
+    },
+    "⛔ Generate Negative Prompt": {
+        "title": "⛔ Генерация негативного промпта",
+        "inputs": {
+            "input_prompt": "Входной промпт"
+        },
+        "widgets": {
+            "max_length": "Максимальная длина",
+            "num_beams": "Число лучей поиска",
+            "temperature": "Температура",
+            "top_k": "Top-K",
+            "top_p": "Top-P",
+            "blocked_words": "Блокируемая лексика"
+        },
+        "outputs": {
+            "negative_prompt": "Негативный промпт"
+        }
+    },
+    "📁 Get File Path": {
+        "title": "Получить путь к файлу",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "image": "Изображение"
+        },
+        "outputs": {
+            "full_file_path": "Полный путь к файлу",
+            "file_path_only": "Только путь к файлу",
+            "file_name_only": "Только имя файла",
+            "file_extension_only": "Только расширение файла"
+        }
+    },
+    "GroqAudiotranscription": {
+        "title": "Аудиотранскрипция GroqI",
+        "widgets": {
+            "model": "Модель",
+            "file_path": "Путь к файлу",
+            "preset": "Пресеты",
+            "user_input": "Ввод пользователя",
+            "response_format": "Формат ответа",
+            "temperature": "Температура",
+            "language": "Язык",
+            "max_retries": "Максимальное число повторов"
+        },
+        "outputs": {
+            "transcription_result": "Результат транскрипции",
+            "success": "Успешно",
+            "status_code": "Код состояния"
+        }
+    },
+    "✨📝 Groq ALM API - Transcribe": {
+        "title": "Текстовый перевод Groq API",
+        "widgets": {
+            "model": "Модель",
+            "file_path": "Путь к файлу",
+            "preset": "Пресеты",
+            "user_input": "Ввод пользователя",
+            "response_format": "Формат ответа",
+            "temperature": "Температура",
+            "language": "Язык",
+            "max_retries": "Максимальное число повторов"
+        },
+        "outputs": {
+            "transcription_result": "Результат транскрипции",
+            "success": "Успешно",
+            "status_code": "Код состояния"
+        }
+    },
+    "GroqAPICompletion": {
+        "title": "Завершение Groq API",
+        "inputs": {
+            "image": "Изображение",
+            "prompt_name": "Имя промпта",
+            "image_path": "путь к изображениям",
+            "image_tensor": "Тензор изображения",
+            "image_pil": "Изображение PIL",
+            "filename": "Имя файла"
+        },
+        "widgets": {
+            "model": "Модель",
+            "preset": "Пресеты",
+            "system_message": "Системное сообщение",
+            "user_input": "Ввод пользователя",
+            "temperature": "Температура",
+            "max_tokens": "Максимальное число токенов",
+            "top_p": "Top-P",
+            "seed": "Зерно",
+            "max_retries": "Максимальное число повторов",
+            "stop": "Стоп-последовательность",
+            "json_mode": "Режим JSON"
+        },
+        "outputs": {
+            "string": "Строка",
+            "boolean": "Логическое значение"
+        }
+    },
+    "✨💬 Groq LLM API": {
+        "title": "✨💬Groq API LLM большая языковая модель",
+        "widgets": {
+            "model": "Модель",
+            "preset": "Пресеты",
+            "system_message": "Системное сообщение",
+            "user_input": "Ввод пользователя",
+            "temperature": "Температура",
+            "max_tokens": "Максимальное число токенов",
+            "top_p": "Top-P",
+            "seed": "Зерно",
+            "max_retries": "Максимальное число повторов",
+            "stop": "Стоп-последовательность",
+            "json_mode": "Режим JSON"
+        },
+        "outputs": {
+            "api_response": "Ответ API",
+            "success": "Успешно",
+            "status_code": "Код состояния"
+        }
+    },
+    "✨📷 Groq VLM API": {
+        "title": "✨📷 Groq API VLM визуально-языковая модель",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "model": "Модель",
+            "preset": "Пресеты",
+            "system_message": "Системное сообщение",
+            "user_input": "Ввод пользователя",
+            "temperature": "Температура",
+            "max_tokens": "Максимальное число токенов",
+            "top_p": "Top-P",
+            "seed": "Зерно",
+            "max_retries": "Максимальное число повторов",
+            "stop": "Стоп-последовательность",
+            "json_mode": "Режим JSON"
+        },
+        "outputs": {
+            "api_response": "Ответ API",
+            "success": "Успешно",
+            "status_code": "Код состояния"
+        }
+    },
+    "📂 Load Images From Path": {
+        "title": "📂 Загрузить изображения из пути",
+        "widgets": {
+            "seed": "Зерно",
+            "input_path": "Входной путь"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска",
+            "string": "Строка",
+            "image_path": "путь к изображениям",
+            "current_index": "Текущий индекс",
+            "total_count": "Общее количество"
+        }
+    },
+    "🖼️ Load Image Advanced": {
+        "title": "🖼️ Расширенная загрузка изображений",
+        "inputs": {
+            "image": "Изображение"
+        },
+        "widgets": {
+            "image": "Изображение"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "mask": "Маска",
+            "image_path": "путь к изображениям",
+            "positive_prompt": "Позитивный промпт",
+            "width": "Ширина",
+            "height": "Высота",
+            "string": "Строка",
+            "int": "Целое число"
+        }
+    },
+    "🎲 Load Random Checkpoint": {
+        "title": "Случайная загрузка модели контрольной точки",
+        "widgets": {
+            "checkpoints": "Модель Checkpoint",
+            "seed": "Зерно",
+            "repeat_count": "Число повторов",
+            "shuffle": "Случайное перемешивание",
+            "query": "Запрос",
+            "candidates": "Набор кандидатов",
+            "limit_to_paths": "Ограничить путями"
+        },
+        "outputs": {
+            "model": "Модель",
+            "clip": "Модель CLIP",
+            "vae": "Модель VAE",
+            "path": "Путь"
+        }
+    },
+    "LoadTextImagePairsList": {
+        "title": "Загрузить список пар «текст — изображение»",
+        "inputs": {
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "folder_path": "Путь к папке",
+            "force_reload": "Принудительная перезагрузка",
+            "text_input": "Вход текста",
+            "limit_count": "Ограничение количества",
+            "text_format_extension": "Расширение текстового формата",
+            "img_tensor": "Тензор изображения",
+            "target_height": "Целевая высота",
+            "target_width": "Целевая ширина"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "string": "Строка",
+            "int": "Целое число"
+        }
+    },
+    "LoadTextImagePairSingle": {
+        "title": "Загрузка одной пары текст-изображение",
+        "inputs": {
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "folder_path": "Путь к папке",
+            "image_input": "Вход изображения",
+            "text_input": "Вход текста",
+            "text_format_extension": "Расширение текстового формата"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "string": "Строка",
+            "int": "Целое число"
+        }
+    },
+    "🏷️ LoRA Loader Prompt Tags": {
+        "title": "🏷️ Загрузить метки LoRA",
+        "inputs": {
+            "MODEL": "Модель",
+            "CLIP": "Модель CLIP",
+            "STRING": "Строка"
+        },
+        "widgets": {
+            "console_log": "Журнал консоли"
+        },
+        "outputs": {
+            "model": "Модель",
+            "clip": "Модель CLIP",
+            "string": "Строка",
+            "MODEL": "Модель",
+            "CLIP": "Модель CLIP",
+            "STRING": "Строка"
+        }
+    },
+    "🖼️📊 Metadata Extractor (List)": {
+        "title": "🖼️📊 Экстрактор метаданных (список)",
+        "inputs": {
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "input_path": "Входной путь",
+            "filter_params": "Параметры фильтрации",
+            "max_file_count": "Максимальное число файлов"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "positive_prompt": "Позитивный промпт",
+            "negative_prompt": "Негативный промпт",
+            "parsed_params_json": "Разобравшиеся параметры в формате JSON",
+            "filtered_params_grouped": "Отфильтрованные и сгруппированные параметры",
+            "raw_metadata_json": "Необработанные метаданные в формате JSON",
+            "string": "Строка"
+        }
+    },
+    "🖼️📊 Metadata Extractor (Single)": {
+        "title": "🖼️📊 Экстрактор метаданных (один файл)",
+        "inputs": {
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "input_path": "Входной путь",
+            "filter_params": "Параметры фильтрации"
+        },
+        "outputs": {
+            "image": "Изображение",
+            "positive_prompt": "Позитивный промпт",
+            "negative_prompt": "Негативный промпт",
+            "parsed_params_json": "Разобравшиеся параметры в формате JSON",
+            "filtered_params_grouped": "Отфильтрованные и сгруппированные параметры",
+            "filtered_params_list": "Отфильтрованный список параметров",
+            "raw_metadata_json": "Необработанные метаданные в формате JSON",
+            "string": "Строка"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pair (Single)": {
+        "title": "🖼️+📝 Загрузить одну пару «текст + изображение» (одиночная)",
+        "inputs": {
+            "text_input": "Вход текста",
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "folder_path": "Путь к папке",
+            "text_format_extension": "Расширение текстового формата"
+        },
+        "outputs": {
+            "image_single": "Одиночное изображение",
+            "string_single": "Одиночная строка",
+            "image_path_single": "Путь к одиночному изображению",
+            "image_filename_single": "Имя файла одиночного изображения",
+            "total_count": "Общее количество",
+            "string": "Строка"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pairs (List)": {
+        "title": "🖼️+📝 Загрузка пар текст+изображение (список)",
+        "inputs": {
+            "text_input": "Вход текста",
+            "image_input": "Вход изображения"
+        },
+        "widgets": {
+            "seed": "Зерно",
+            "folder_path": "Путь к папке",
+            "force_reload": "Принудительная перезагрузка",
+            "limit_count": "Предел количества",
+            "text_format_extension": "Расширение текстового формата"
+        },
+        "outputs": {
+            "image_list": "Список изображений",
+            "string_list": "Список строк",
+            "image_path_list": "Список путей к изображениям",
+            "image_filename_list": "Список имён файлов изображений",
+            "total_count": "Общее количество",
+            "string": "Строка"
+        }
+    },
+    "⚙️ Prompt Property Extractor": {
+        "title": "⚙️ Экстрактор свойств промпта",
+        "inputs": {
+            "model": "Модель",
+            "clip": "Модель CLIP",
+            "vae": "Модель VAE"
+        },
+        "widgets": {
+            "input_string": "Входная строка",
+            "load_clip_from_checkpoint": "Загрузить CLIP из модели Checkpoint",
+            "load_vae_from_checkpoint": "Загрузить VAE из модели контрольной точки",
+            "cfg": "CFG",
+            "steps": "Количество шагов",
+            "sampler_name": "Сэмплер",
+            "denoise": "Шумоподавление",
+            "width": "Ширина",
+            "height": "Высота",
+            "seed": "Зерно",
+            "start_step": "Начальный шаг",
+            "end_step": "Шаг окончания"
+        },
+        "outputs": {
+            "model": "Модель",
+            "clip": "Модель CLIP",
+            "vae": "Модель VAE",
+            "positive": "Позитивный промпт",
+            "negative": "Негативный промпт",
+            "seed": "Зерно",
+            "steps": "Количество шагов",
+            "latent": "Latent",
+            "cfg": "CFG",
+            "sampler": "Сэмплер",
+            "denoise": "Шумоподавление",
+            "int": "Целое число",
+            "float": "Число с плавающей точкой",
+            "none": "Нет",
+            "width": "Ширина",
+            "height": "Высота",
+            "start_step": "Начальный шаг",
+            "end_step": "Шаг окончания",
+            "other_tags": "Прочие метки",
+            "resolved_string": "Разобранная строка",
+            "string": "Строка"
+        }
+    },
+    "📐 Resolution Image Size Selector": {
+        "title": "📐 Селектор размеров изображения",
+        "inputs": {
+            "image (optional)": "Изображение (необязательно)"
+        },
+        "widgets": {
+            "preset": "Пресеты",
+            "preset_user": "Пользовательский пресет",
+            "custom_width": "Пользовательская ширина",
+            "custom_height": "Пользовательская высота",
+            "multiply": "Множитель",
+            "swap_width_and_height": "Поменять ширину и высоту",
+            "image_min_length": "Минимальная длина изображения",
+            "image_max_length": "Максимальная длина изображения",
+            "snap_to_nearest": "Выровнять к ближайшему значению",
+            "snap_resolution": "Выравнивание разрешения",
+            "batch_size": "Размер пакета",
+            "width": "Ширина",
+            "height": "Высота",
+            "preset_name": "Имя пресета",
+            "from_user_presets": "Из пользовательских пресетов",
+            "image": "Изображение"
+        },
+        "outputs": {
+            "width": "Ширина",
+            "height": "Высота",
+            "latent": "Latent"
+        }
+    },
+    "💾 Save Text File With Path": {
+        "title": "💾 Сохранение текстового файла по пути",
+        "inputs": {
+            "file_text": "Текст файла"
+        },
+        "widgets": {
+            "path": "Путь",
+            "prefix": "Префикс",
+            "counter_separator": "Разделитель счётчика",
+            "counter_length": "Длина счётчика",
+            "suffix": "Суффикс",
+            "output_extension": "Расширение вывода",
+            "separator": "Разделитель",
+            "number_padding": "Дополнение цифр",
+            "extension": "Расширение",
+            "file": "Файл",
+            "content": "Содержимое"
+        },
+        "outputs": {
+            "output_full_path": "Полный путь вывода",
+            "output_name": "Имя вывода",
+            "output_path": "Путь вывода"
+        }
+    },
+    "🧹 String Cleaning": {
+        "title": "🧹 Очистка строки",
+        "inputs": {
+            "input_string": "Входная строка"
+        },
+        "widgets": {
+            "collapse_sequential_spaces": "Объединение последовательных пробелов",
+            "strip_leading_spaces": "Удалить начальные пробелы",
+            "strip_trailing_spaces": "Удалить концевые пробелы",
+            "strip_empty_lines": "Удаление пустых строк",
+            "strip_leading_symbols": "Удаление ведущих символов",
+            "strip_trailing_symbols": "Удаление завершающих символов",
+            "strip_newlines": "Удалить переносы строк",
+            "replace_newlines_with_period_space": "Заменить переносы строк точкой и пробелом",
+            "strip_inside_tags": "Удаление содержимого внутри меток",
+            "strip_between_start": "Удаление между начальными маркерами",
+            "strip_between_end": "Удаление между концевыми метками",
+            "strip_leading_custom": "Удаление пользовательских ведущих символов",
+            "strip_trailing_custom": "Удалить заданные концевые символы",
+            "strip_all_custom": "Удалить все заданные символы",
+            "remove_text_before": "Удалить текст перед",
+            "remove_text_after": "Удаление текста после",
+            "multiline_find": "Многострочный поиск",
+            "multiline_replace": "Замена в несколько строк"
+        },
+        "outputs": {
+            "string": "Строка",
+            "cleaned_string": "Очищенная строка"
+        }
+    },
+    "✂️ String Text Extractor": {
+        "title": "✂️ Экстрактор текста из строки",
+        "inputs": {
+            "input_string": "Входная строка"
+        },
+        "widgets": {
+            "input_string": "Входная строка",
+            "delimiters": "Разделитель"
+        },
+        "outputs": {
+            "string": "Строка",
+            "extracted_text": "Извлечённый текст",
+            "remainder_text": "Остаток текста",
+            "extracted_list": "Извлечённый список"
+        }
+    },
+    "✂️ String Text Splitter": {
+        "title": "✂️ Разделитель строкового текста",
+        "inputs": {
+            "input_string": "Входная строка"
+        },
+        "widgets": {
+            "delimiter": "Разделитель",
+            "split_at_linebreaks": "Разделение на переносах строк",
+            "target_indices": "Целевой индекс"
+        },
+        "outputs": {
+            "string": "Строка",
+            "first_chunk": "Первая часть",
+            "remainder": "Остаток",
+            "chunk_list": "Список частей",
+            "targeted_chunks": "Целевые части"
+        }
+    },
+    "🔠 Tiktoken Tokenizer Info": {
+        "title": "🔠 Токенизатор Tiktoken",
+        "inputs": {
+            "input_string": "Входная строка"
+        },
+        "widgets": {
+            "input_string": "Входная строка",
+            "encoding_type": "Тип кодирования",
+            "token_chunk_size": "Размер блока токенов"
+        },
+        "outputs": {
+            "int": "Целое число",
+            "list": "Список",
+            "token_count": "Количество токенов",
+            "character_count": "Число символов",
+            "word_count": "Количество слов",
+            "split_string": "Разделённая строка",
+            "split_string_list": "Список разделённых строк",
+            "split_token_ids": "ID разделения токенов",
+            "split_token_ids_list": "Список ID разделения токенов",
+            "text_hash": "Хеш текста",
+            "special_tokens_used": "Использованные специальные токены",
+            "special_tokens_used_list": "Список использованных специальных токенов",
+            "token_chunk_by_size": "Токены, разбитые по размеру",
+            "token_chunk_by_size_to_word": "Разбиение на блоки по размеру до слова",
+            "token_chunk_by_size_to_section": "Разбиение по размеру до раздела"
+        }
+    },
+    "🎲 Random Int in Range": {
+        "title": "🎲 Случайное целое число в заданном диапазоне",
+        "widgets": {
+            "min_value": "Минимум",
+            "max_value": "Максимум",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "random_int": "Случайное целое число"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Random Float in Range": {
+        "title": "🎲 Случайное число с плавающей точкой в заданном диапазоне",
+        "widgets": {
+            "min_value": "Минимум",
+            "max_value": "Максимум",
+            "decimals": "Число десятичных знаков",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "random_float": "Случайное число с плавающей точкой"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Random Bool": {
+        "title": "🎲 Случайное логическое значение",
+        "widgets": {
+            "true_probability": "Вероятность истинного значения",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "random_bool": "Случайное булево значение"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Random String": {
+        "title": "🎲 Случайная строка",
+        "widgets": {
+            "input_list": "Входной список",
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "random_choice": "Случайный выбор"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Random Seed": {
+        "title": "🎲 Зерно",
+        "outputs": {
+            "seed": "Зерно"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Random Color": {
+        "title": "🎲 Случайный цвет",
+        "widgets": {
+            "seed": "Зерно"
+        },
+        "outputs": {
+            "hex_color": "Цвет в шестнадцатеричном формате",
+            "red": "Красный",
+            "green": "Зелёный",
+            "blue": "Синий"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🔗 String Concat / Append": {
+        "title": "🔗 Конкатенация/добавление строки",
+        "inputs": {
+            "string_0": "Строка 0",
+            "string_1": "Строка 1"
+        },
+        "widgets": {
+            "delimiter": "Разделитель"
+        },
+        "outputs": {
+            "concatenated_string": "Сшитая строка"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "✏️ Literal Bool": {
+        "title": "✏️ Булев литерал",
+        "widgets": {
+            "value": "Значение"
+        },
+        "outputs": {
+            "value": "Значение"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "✏️ Literal Float": {
+        "title": "✏️ Литеральное число с плавающей точкой",
+        "widgets": {
+            "value": "Значение"
+        },
+        "outputs": {
+            "value": "Значение"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "✏️ Literal Int": {
+        "title": "✏️ Литеральное целое число",
+        "widgets": {
+            "value": "Значение"
+        },
+        "outputs": {
+            "value": "Значение"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "✏️ Literal String": {
+        "title": "✏️ Строковый литерал",
+        "widgets": {
+            "value": "Значение"
+        },
+        "outputs": {
+            "value": "Значение"
+        },
+        "description": "Категория: ⚡ узлы MNeMiC"
+    },
+    "🎲 Ideogram 4 Random Prompter": {
+        "title": "🎲 Случайный генератор промптов Ideogram 4",
+        "widgets": {
+            "seed": "Зерно",
+            "width": "Ширина",
+            "height": "Высота",
+            "region_count_min": "Минимальное количество областей",
+            "region_count_max": "Максимальное количество областей",
+            "background_weight": "Вес фона",
+            "large_weight": "Вес большой области",
+            "medium_weight": "Вес средней области",
+            "small_weight": "Вес малой области",
+            "word_length_bias": "Смещение длины слова",
+            "word_length_randomness": "Случайность длины слов",
+            "scene_framing": "Компоновка сцены",
+            "region_word_min": "Минимум слов в области",
+            "region_word_max": "Максимум слов в области",
+            "freeform_chance": "Вероятность свободной формы",
+            "text_region_min": "Минимальное число текстовых областей",
+            "text_region_max": "Максимальное количество текстовых областей",
+            "element_palette_chance": "Вероятность палитры элементов",
+            "description_length": "Длина описания",
+            "description_override": "Перезапись описания",
+            "description_prefix": "Префикс описания",
+            "medium": "Носитель",
+            "color_palette": "Палитра",
+            "color_harmony": "Гармония цвета",
+            "positioning_bias": "Смещение позиционирования",
+            "arrangement": "Компоновка",
+            "description_background_prefix": "Префикс описания фона"
+        },
+        "outputs": {
+            "prompt": "Промпт",
+            "preview": "Предпросмотр",
+            "bboxes": "Ограничивающая рамка",
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "description": "Экспериментальный генератор случайных промптов в структурированном формате JSON-подписей Ideogram 4. Каждое слово берётся напрямую из словаря wonderwords (без жёсткого кодирования). Размещает взвешенные фоновые/большие/средние/малые области и случайным образом выбирает стиль, освещение, медиум, палитру и компоновку. Выводит промпт/превью/ограничивающие рамки/ширину/высоту. Требуется установить пакет 'wonderwords'"
+    },
+    "🧩 Ideogram 4 Prompt Builder w. String Inputs": {
+        "title": "🧩Конструктор промптов Ideogram 4",
+        "inputs": {
+            "image": "Изображение",
+            "import_json": "Импорт JSON"
+        },
+        "widgets": {
+            "width": "Ширина",
+            "height": "Высота",
+            "high_level_description": "Расширенное описание",
+            "background": "Фон",
+            "style": "Стиль",
+            "photo": "Фото",
+            "art_style": "Художественный стиль",
+            "aesthetics": "Эстетика",
+            "lighting": "Освещение",
+            "medium": "Носитель",
+            "style_palette_data": "Данные стилевой палитры",
+            "elements_data": "Данные элементов"
+        },
+        "outputs": {
+            "prompt": "Промпт",
+            "preview": "Предпросмотр",
+            "bboxes": "Ограничивающая рамка",
+            "width": "Ширина",
+            "height": "Высота"
+        },
+        "description": "Визуальный конструктор промптов в структурированном JSON-формате описаний Ideogram 4. Перетаскивайте на холсте или нажите «+ Область», чтобы добавить область; каждая область получает соответствующий строковый вход region_N, который при подключении выполняет перезапись её описания. Граничные рамки нормализованы к сетке 0-1000 в формате [ymin, xmin, ymax, xmax]; ширина/высота задают соотношение сторон холста"
+    },
+    "📝 Wildcard Processor": {
+        "title": "📝 Обработчик промптов",
+        "inputs": {
+            "wildcard_string": "Строка промпта"
+        },
+        "widgets": {
+            "wildcard_string": "Строка промпта",
+            "seed": "Зерно",
+            "multiple_separator": "Множественные разделители",
+            "recache_wildcards": "Перекэшировать промпты",
+            "console_log": "Журнал консоли",
+            "message": "Сообщение",
+            "level": "Уровень",
+            "log": "Журнал",
+            "wildcard_name": "Имя промпта",
+            "match": "Совпадение",
+            "text": "Текст",
+            "tag_delimiters_str": "Строка разделителей меток"
+        },
+        "outputs": {
+            "string": "Строка",
+            "processed_text": "Обработанный текст",
+            "seed": "Зерно",
+            "extracted_tags_string": "Извлечённые метки (строка)",
+            "extracted_tags_list": "Извлечённые метки (список)",
+            "raw_tags_string": "Исходные метки (строка)",
+            "raw_tags_list": "Исходные метки (список)"
+        }
+    }
+}

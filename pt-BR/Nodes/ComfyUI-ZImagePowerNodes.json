@@ -1,0 +1,865 @@
+{
+    "AdvancedVAEDecoderX21": {
+        "title": "Decodificador VAE avançado ^G2.1",
+        "widgets": {
+            "samples": "Amostragem",
+            "vae": "VAE",
+            "allow_extended_range": "Permitir faixa estendida",
+            "low_vram_mode": "Modo de VRAM baixa"
+        },
+        "description": "Alternativa experimental ao nó VAEDecode nativo do ComfyUI. Oferece a opção de contornar o clamp de saída padrão, permitindo que os pixels ultrapassem o intervalo [0.0, 1.0], e também suporta decodificação forçada em blocos para reduzir o uso de VRAM em imagens grandes."
+    },
+    "BasicImageFilters": {
+        "title": "Filtros básicos de imagem",
+        "widgets": {
+            "images": "Imagem",
+            "enable_auto_contrast": "Ativar contraste automático",
+            "enable_filters": "Ativar Filtro",
+            "divider1": "Linha divisória 1",
+            "filter_1": "Filtro 1",
+            "filter_1_control": "Controle do filtro 1",
+            "divider2": "Linha divisória 2",
+            "filter_2": "Filtro 2",
+            "filter_2_control": "Controle do filtro 2",
+            "divider3": "Linha divisória 3",
+            "filter_3": "Filtro 3",
+            "filter_3_control": "Controle do filtro 3"
+        },
+        "description": ""
+    },
+    "CustomStylePromptEncoderX21": {
+        "title": "Codificador de estilo personalizado + prompt ^G2.1",
+        "widgets": {
+            "clip": "Clipe",
+            "custom_styles": "Estilos personalizados",
+            "custom_style": "Estilos personalizados",
+            "palette": "Paleta",
+            "prompt": "Prompt (texto)"
+        },
+        "outputs": {
+            "PROMPT": "Prompt (texto)",
+            "style_name": "Nome do estilo",
+            "palette_name": "Nome da paleta",
+            "original_prompt": "Prompt original"
+        },
+        "description": "Codifica o prompt de texto em vetores de incrustação, adaptando automaticamente ao estilo personalizado escolhido (e à paleta opcional), e depois o processa com o modelo CLIP para gerar o condicionamento que orienta a geração da imagem. ⚠️Como este nó é uma funcionalidade experimental, seus parâmetros, comportamento ou forma de existência podem ser alterados ou totalmente removidos sem aviso prévio."
+    },
+    "EmptyZImageLatentImage": {
+        "title": "Imagem Z-Image Latent vazia",
+        "widgets": {
+            "orientation": "Direção",
+            "ratio": "Proporção",
+            "size": "Dimensões",
+            "batch_size": "Tamanho do lote"
+        },
+        "description": "Cria um lote de novas imagens Latent vazias para usar como ponto de partida da remoção de ruído do modelo Z-Image."
+    },
+    "ImageGridBuilder": {
+        "title": "Gerador de malha de imagens",
+        "widgets": {
+            "images": "Imagem",
+            "banner": "Faixa",
+            "banner_height": "Altura da faixa",
+            "text": "Texto",
+            "text_color": "Cor do texto",
+            "lines_color": "Cor da Linha",
+            "banner_color": "Cor da faixa",
+            "font_name": "Nome da fonte",
+            "font_size": "Tamanho da fonte",
+            "columns": "Número de colunas",
+            "image_scale": "Redimensionar Imagem",
+            "image_spacing": "Espaçamento entre imagens"
+        },
+        "description": "Gera uma malha com todas as imagens de entrada."
+    },
+    "ImageLabeler": {
+        "title": "Anotador de imagens",
+        "widgets": {
+            "image": "Imagem",
+            "text": "Texto",
+            "text_color": "Cor do texto",
+            "background_color": "Cor de fundo",
+            "font_name": "Nome da fonte",
+            "font_size": "Tamanho da fonte",
+            "font_scale": "Escala da fonte",
+            "label_position": "Posição da anotação",
+            "label_padding": "Margem interna da anotação",
+            "min_label_width": "Largura mínima da anotação",
+            "min_label_height": "Altura mínima da anotação"
+        },
+        "description": "Adiciona anotações com texto personalizado à imagem."
+    },
+    "LoadQwen34bModel": {
+        "title": "Carregar modelo Qwen3-4B (safetensors / gguf)",
+        "widgets": {
+            "checkpoint": "Checkpoint (modelo salvo)",
+            "file_filter": "Filtro de arquivos",
+            "run_on_gpu": "Executar na GPU"
+        },
+        "description": "Carrega o codificador de texto Z-Image (Qwen3-4B) nos formatos safetensor e GGUF."
+    },
+    "LoadZImageModel": {
+        "title": "Carregar modelo Z-Image (safetensors / gguf)",
+        "widgets": {
+            "checkpoint": "Checkpoint (modelo salvo)",
+            "file_filter": "Filtro de arquivos"
+        },
+        "description": "Carrega os modelos de difusão Z-Image nos formatos safetensors e GGUF."
+    },
+    "MyTop10Styles": {
+        "title": "Meus Top 10 Estilos",
+        "widgets": {
+            "input": "Entrada",
+            "top_styles": "Estilos principais (Top)",
+            "style_1": "Estilo 1",
+            "style_2": "Estilo 2",
+            "style_3": "Estilo 3",
+            "style_4": "Estilo 4",
+            "style_5": "Estilo 5",
+            "style_6": "Estilo 6",
+            "style_7": "Estilo 7",
+            "style_8": "Estilo 8",
+            "style_9": "Estilo 9",
+            "style_10": "Estilo 10",
+            "divider": "Linha divisória",
+            "control_after_generate": "Controle pós-geração",
+            "output_to": "Saída para"
+        },
+        "outputs": {
+            "output": "Saída"
+        },
+        "description": "Permite escolher um estilo visual da sua lista pessoal dos 10 principais. Este nó depende do 'Editor dos Meus Top 10 Estilos' para fornecer a lista dos seus estilos favoritos."
+    },
+    "MyTop10StylesEditor": {
+        "title": "Meus Top 10 Estilos (editor)",
+        "widgets": {
+            "style_1": "Estilo 1",
+            "gallery_1": "Galeria 1",
+            "spacer_1": "Espaçador 1",
+            "style_2": "Estilo 2",
+            "gallery_2": "Galeria 2",
+            "spacer_2": "Espaçador 2",
+            "style_3": "Estilo 3",
+            "gallery_3": "Galeria 3",
+            "spacer_3": "Espaçador 3",
+            "style_4": "Estilo 4",
+            "gallery_4": "Galeria 4",
+            "spacer_4": "Espaçador 4",
+            "style_5": "Estilo 5",
+            "gallery_5": "Galeria 5",
+            "spacer_5": "Espaçador 5",
+            "style_6": "Estilo 6",
+            "gallery_6": "Galeria 6",
+            "spacer_6": "Espaçador 6",
+            "style_7": "Estilo 7",
+            "gallery_7": "Galeria 7",
+            "spacer_7": "Espaçador 7",
+            "style_8": "Estilo 8",
+            "gallery_8": "Galeria 8",
+            "spacer_8": "Espaçador 8",
+            "style_9": "Estilo 9",
+            "gallery_9": "Galeria 9",
+            "spacer_9": "Espaçador 9",
+            "style_10": "Estilo 10",
+            "gallery_10": "Galeria 10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Estilos principais (Top)"
+        },
+        "description": "Permite criar sua lista pessoal de Top 10 estilos visuais, escolhendo entre todas as opções disponíveis para montar o conjunto ideal de estilos. Este nó foi feito para ser usado junto com 'Meus Top 10 Estilos', definindo e usando os estilos de sua preferência."
+    },
+    "SaveImage": {
+        "title": "Salvar imagem",
+        "widgets": {
+            "images": "Imagens",
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "civitai_compatible_metadata": "Metadados compatíveis com Civitai"
+        },
+        "description": "Salva a imagem de entrada na pasta de saída do ComfyUI."
+    },
+    "StylePromptEncoder2": {
+        "title": "Codificador de estilo e prompt",
+        "widgets": {
+            "clip": "Clipe",
+            "customization": "Personalizado",
+            "style": "Estilo",
+            "gallery": "Galeria",
+            "spacer": "Separador",
+            "text": "Texto"
+        },
+        "description": "Converte o prompt de texto em vetores de incrustação, adaptando automaticamente o prompt ao estilo escolhido. Este nó recebe o prompt, ajusta seu estilo visual conforme as opções escolhidas e o codifica com o codificador de texto (CLIP) informado, gerando os vetores de incrustação que orientam a geração da imagem."
+    },
+    "StylePromptEncoderX21": {
+        "title": "Codificador de estilo e prompt ^G2.1",
+        "widgets": {
+            "clip": "Clipe",
+            "customization": "Configurações personalizadas",
+            "style": "Estilo",
+            "palette": "Paleta",
+            "text": "Texto"
+        },
+        "outputs": {
+            "PROMPT": "Prompt (texto)",
+            "style_name": "Nome do estilo",
+            "palette_name": "Nome da paleta",
+            "original_prompt": "Prompt original"
+        },
+        "description": "Converte o prompt de texto em vetores de incrustação, ajustando automaticamente o prompt para corresponder ao estilo escolhido e, opcionalmente, aplicando a paleta especificada. Este nó recebe o prompt, ajusta seu estilo visual conforme as opções escolhidas (aplica a paleta se ela for fornecida) e o codifica com o modelo CLIP informado, gerando os vetores de incrustação que orientam a geração da imagem. Como este nó é uma funcionalidade experimental, seus parâmetros, comportamento ou forma de existência podem ser alterados ou totalmente removidos sem aviso prévio."
+    },
+    "StyleStringInjector2": {
+        "title": "Injetor de string de estilo",
+        "widgets": {
+            "style": "Estilo",
+            "gallery": "Biblioteca de galerias",
+            "string": "Cadeia de Caracteres"
+        },
+        "description": "Injeta um estilo no seu prompt. Este nó recebe o prompt de texto e o modifica conforme o estilo selecionado."
+    },
+    "VAEEncodeSoftInpainting": {
+        "title": "Codificação VAE (para correção com máscara suave)",
+        "widgets": {
+            "pixels": "Pixel art",
+            "vae": "VAE",
+            "mask": "Máscara",
+            "output_size": "Tamanho de saída",
+            "mask_blur_pixels": "Desfocagem da máscara em pixels"
+        },
+        "description": "Codifica a imagem de entrada e sua máscara de correção para o Latent usando o modelo VAE."
+    },
+    "ZSamplerTurbo2": {
+        "title": "Z-Amostrador Turbo ^G2 (versão estendida)",
+        "widgets": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "STG2 positivo",
+            "positive_stg3": "STG3 positivo",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "divider": "Separador",
+            "initial_sample_size": "Tamanho da amostragem inicial",
+            "divider2": "Delimitador 2",
+            "intensity": "Força",
+            "intensity_bias": "Deslocamento de força",
+            "turbo_creativity": "Criatividade Turbo"
+        },
+        "description": "Remove o ruído das imagens Latent de forma eficiente com um fluxo otimizado especificamente para o \"Z-Image Turbo\". Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os parâmetros de condição, e gera uma saída Latent sem ruído que pode ser decodificada como imagem final."
+    },
+    "ZSamplerTurbo2Advanced": {
+        "title": "Z-Amostrador Turbo ^G2 (versão avançada)",
+        "widgets": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "STG2 positivo",
+            "positive_stg3": "STG3 positivo",
+            "add_noise": "Adicionar ruído",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "start_at_step": "Passo inicial",
+            "end_at_step": "Passo final",
+            "force_final_denoising": "Forçar remoção de ruído final",
+            "divider": "Separador",
+            "initial_sample_size": "Tamanho da amostragem inicial",
+            "divider2": "Delimitador 2",
+            "intensity": "Força",
+            "intensity_bias": "Deslocamento de força",
+            "turbo_creativity": "Criatividade Turbo"
+        },
+        "description": "Remove o ruído das imagens Latent de forma eficiente com um fluxo otimizado especificamente para o \"Z-Image Turbo\". Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os parâmetros de condição, e gera uma saída Latent sem ruído que pode ser decodificada como imagem final. Esta versão avançada inclui parâmetros extras para controle mais preciso do amostrador e encadeamento de amostradores."
+    },
+    "ZSamplerTurbo2Simple": {
+        "title": "Z-Amostrador Turbo ^G2 (versão simplificada)",
+        "widgets": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "STG2 positivo",
+            "positive_stg3": "STG3 positivo",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "ibias": "Deslocamento de força",
+            "divider": "Separador",
+            "turbo_creativity": "Criatividade Turbo",
+            "old_scheduler": "Agendador antigo",
+            "noise_injection": "Injeção de ruído",
+            "alternative_refiner": "Refinador alternativo"
+        },
+        "description": "Versão simplificada do Z-Amostrador Turbo (segunda geração), com interface reduzida para um uso rápido e prático, mantendo todos os seus recursos e características. Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os prompts/condições, e gera uma saída Latent sem ruído que pode ser decodificada como imagem final."
+    },
+    "ZSamplerTurboX21": {
+        "title": "Z-Amostrador Turbo ^G2.1",
+        "widgets": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "STG2 positivo",
+            "positive_stg3": "STG3 positivo",
+            "seed": "Semente aleatória",
+            "divider1": "Delimitador 1",
+            "steps": "Etapas",
+            "ibias": "Deslocamento de força",
+            "spectral_tilt": "Inclinação espectral",
+            "turbo_creativity": "Criatividade Turbo",
+            "detailed_refiner": "Refinador de detalhes",
+            "new_scheduler": "Novo agendador"
+        },
+        "description": "Nova versão experimental do Z-Amostrador Turbo. Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os prompts/condições, e gera uma saída Latent sem ruído que pode ser decodificada como imagem final. Como este nó é uma funcionalidade experimental, seus parâmetros, comportamento ou forma de existência podem ser alterados ou totalmente removidos sem aviso prévio."
+    },
+    "ZSamplerTurboX21Advanced": {
+        "title": "Z-Amostrador Turbo ^G2.1 (versão avançada)",
+        "widgets": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "STG2 positivo",
+            "positive_stg3": "STG3 positivo",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "ibias": "Deslocamento de força",
+            "divider1": "Delimitador 1",
+            "turbo_creativity": "Criatividade Turbo",
+            "alternative_refiner": "Refinador alternativo",
+            "disable_ibias": "Desativar deslocamento de força",
+            "old_scheduler": "Agendador antigo",
+            "divider2": "Delimitador 2",
+            "spectral_tilt": "Inclinação espectral",
+            "spectral_tilt_start": "Início da inclinação espectral",
+            "spectral_tilt_end": "Inclinação espectral final",
+            "spectral_tilt_sharpness": "Nitidez da inclinação espectral"
+        },
+        "description": "Nova versão experimental do Z-Amostrador Turbo. Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os prompts/condições, e gera uma saída Latent sem ruído que pode ser decodificada como imagem final. Como este nó é uma funcionalidade experimental, seus parâmetros, comportamento ou forma de existência podem ser alterados ou totalmente removidos sem aviso prévio."
+    },
+    "IllustrationStylePromptEncoder": {
+        "title": "Codificador de prompt de estilo de ilustração",
+        "widgets": {
+            "clip": "Clipe",
+            "customization": "Configurações personalizadas",
+            "style_to_apply": "Aplicar estilo",
+            "text": "Texto"
+        },
+        "description": "Converte o prompt de texto em vetores de incrustação adaptados ao estilo de ilustração escolhido. Este nó recebe o prompt, ajusta seu estilo visual conforme as opções escolhidas e o codifica com o codificador de texto fornecido, gerando os vetores de incrustação que orientam a geração da imagem."
+    },
+    "PhotoStylePromptEncoder": {
+        "title": "Codificador de prompt de estilo de fotografia",
+        "widgets": {
+            "clip": "Clipe",
+            "customization": "Configurações personalizadas",
+            "style_to_apply": "Aplicar estilo",
+            "text": "Texto"
+        },
+        "description": "Converte o prompt de texto em vetores de incrustação adaptados ao estilo de fotografia escolhido. Este nó recebe o prompt, ajusta seu estilo visual conforme as opções escolhidas e o codifica com o codificador de texto fornecido, gerando os vetores de incrustação que orientam a geração da imagem."
+    },
+    "StylePromptEncoder": {
+        "title": "Codificador de estilo e prompt (versão antiga)",
+        "widgets": {
+            "clip": "Clipe",
+            "customization": "Configurações personalizadas",
+            "category": "Categorias",
+            "style": "Estilo",
+            "text": "Texto"
+        },
+        "description": "Converte o prompt de texto em vetores de incrustação, adaptando-o automaticamente ao estilo escolhido. Este nó recebe o prompt, ajusta seu estilo visual conforme as opções escolhidas e o codifica com o codificador de texto (CLIP) fornecido, gerando os vetores de incrustação que orientam a geração da imagem."
+    },
+    "StyleStringInjector": {
+        "title": "Injetor de string de estilo (versão antiga)",
+        "widgets": {
+            "category": "Categorias",
+            "style": "Estilo",
+            "string": "Cadeia de Caracteres"
+        },
+        "description": "Injeta um estilo no seu prompt. Este nó recebe o prompt de texto e o modifica conforme o estilo selecionado."
+    },
+    "ZSamplerTurbo": {
+        "title": "Z-Amostrador Turbo ^g1",
+        "widgets": {
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "latent_input": "Entrada Latent",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "divider": "Separador",
+            "initial_noise_calibration": "Calibração do ruído inicial",
+            "lowres_bias": "Viés de baixa resolução"
+        },
+        "description": "Remove o ruído das imagens Latent de forma eficiente, otimizado especificamente para o modelo \"Z-Image Turbo\". Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os parâmetros de condição, e gera uma saída sem ruído que pode ser usada para processamento posterior ou decodificação."
+    },
+    "ZSamplerTurboAdvanced": {
+        "title": "Z-Amostrador Turbo ^g1 (versão avançada)",
+        "widgets": {
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "latent_input": "Entrada Latent",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "divider": "Separador",
+            "initial_noise_calibration": "Calibração do ruído inicial",
+            "noise_bias_estimation": "Estimativa do viés de ruído",
+            "noise_bias_sample_size": "Volume da amostra do viés de ruído",
+            "noise_bias_scale": "Proporção do viés de ruído",
+            "noise_overdose": "Excesso de ruído"
+        },
+        "description": "Remove o ruído das imagens Latent de forma eficiente, otimizado especificamente para o modelo \"Z-Image Turbo\". Este nó recebe o modelo Z-Image Turbo, a imagem Latent inicial e os parâmetros de condição, e gera uma saída sem ruído que pode ser usada para processamento posterior ou decodificação."
+    },
+    "ZSamplerTurbo2Laboratory": {
+        "title": "Z-Amostrador Turbo ^G2 (versão de laboratório)",
+        "widgets": {
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "latent_input": "Entrada Latent",
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "divider1": "Delimitador 1",
+            "initial_noise_bias_level": "Nível de viés do ruído inicial",
+            "initial_noise_overdose": "Excesso de ruído inicial",
+            "noise_est_sample_size": "Tamanho da amostra de estimativa de ruído",
+            "divider2": "Delimitador 2",
+            "extra_noise_freq1": "Frequência de ruído extra 1",
+            "extra_noise_scale1": "Escala de ruído extra 1",
+            "extra_noise_freq2": "Frequência de ruído extra 2",
+            "extra_noise_scale2": "Proporção de ruído extra 2",
+            "extra_noise_freq3": "Frequência de ruído extra 3",
+            "extra_noise_scale3": "Escala de ruído extra 3",
+            "divider3": "Delimitador 3",
+            "scramble_left_count": "Quantidade de embaralhamento à esquerda",
+            "scramble_top_count": "Quantidade de embaralhamento superior",
+            "scramble_right_count": "Quantidade de embaralhamento à direita",
+            "scramble_bottom_count": "Quantidade de embaralhamento inferior",
+            "stage2_preproc_steps": "Etapas de pré-processamento do estágio 2",
+            "divider4": "Delimitador 4",
+            "sigma_preset_name": "Nome do preset σ",
+            "sigma1_off": "Deslocamento σ1",
+            "sigma2_off": "Deslocamento σ2",
+            "sigma3_off": "Deslocamento σ3",
+            "sigma4_off": "Deslocamento σ4",
+            "sigma5_off": "Deslocamento σ5",
+            "sigma6_off": "Deslocamento σ6",
+            "sigma7_off": "Deslocamento σ7",
+            "sigma8_off": "Deslocamento σ8",
+            "sigma9_off": "Deslocamento σ9",
+            "sigma10_off": "Deslocamento σ10"
+        },
+        "description": "Remove o ruído das imagens Latent de forma eficiente, otimizado especificamente para o modelo \"Z-Image Turbo\". Este nó permite alterar diretamente os parâmetros internos do método zsample_turbo_core(...), para testes e calibração durante o desenvolvimento."
+    },
+    "ZSamplerTurbo2Simple //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Turbo ^G2 (versão simples)",
+        "inputs": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "Prompt positivo Estágio 2",
+            "positive_stg3": "Prompt positivo Estágio 3"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "steps": "Passos de Amostragem",
+            "ibias": "Viés inicial",
+            "turbo_creativity": "Criatividade Turbo",
+            "old_scheduler": "Agendador antigo",
+            "noise_injection": "Injeção de ruído",
+            "alternative_refiner": "Refinador alternativo"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent"
+        },
+        "description": "Um nó de amostragem baseado no Turbo, com entrada de prompts positivos em vários estágios, incluindo controle pós-geração, definição de etapas, ajuste de viés inicial e diversas opções de aprimoramento (como aprimoramento de criatividade, agendador antigo, injeção de ruído e refinador alternativo)."
+    },
+    "ImageGridBuilder //ZImagePowerNodes": {
+        "title": "Construtor de malha de imagens",
+        "inputs": {
+            "images0": "Imagem",
+            "images1": "Imagem 1",
+            "images2": "Imagem 2",
+            "images3": "Imagem 3",
+            "images4": "Imagem 4",
+            "images5": "Imagem 5",
+            "images6": "Imagem 6",
+            "images7": "Imagem 7",
+            "images8": "Imagem 8",
+            "images9": "Imagem 9",
+            "images10": "Imagem 10",
+            "images11": "Imagem 11",
+            "images12": "Imagem 12",
+            "images13": "Imagem 13",
+            "images14": "Imagem 14",
+            "images15": "Imagem 15",
+            "images16": "Imagem 16"
+        },
+        "widgets": {
+            "banner": "Faixa",
+            "banner_height": "Altura da faixa",
+            "text": "Texto",
+            "text_color": "Cor do texto",
+            "lines_color": "Cor da Linha",
+            "banner_color": "Cor da faixa",
+            "font_name": "Nome da fonte",
+            "font_size": "Tamanho da fonte",
+            "columns": "Número de colunas",
+            "image_scale": "Redimensionar Imagem",
+            "image_spacing": "Espaçamento entre imagens"
+        },
+        "description": "Disposição em malha de imagens.",
+        "api_version": "V3"
+    },
+    "ImageLabeler //ZImagePowerNodes": {
+        "title": "Rotulador de imagens",
+        "inputs": {
+            "image": "Imagem"
+        },
+        "widgets": {
+            "text": "Texto",
+            "text_color": "Cor do texto",
+            "background_color": "Cor de fundo",
+            "font_name": "Nome da fonte",
+            "font_size": "Tamanho da fonte",
+            "font_scale": "Escala da fonte",
+            "label_position": "Posição do rótulo",
+            "label_padding": "Margem interna do rótulo",
+            "min_label_width": "Largura mínima do rótulo",
+            "min_label_height": "Altura mínima do rótulo"
+        },
+        "description": "Adiciona rótulos de texto personalizados à imagem.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2 //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Turbo",
+        "inputs": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "Condição positiva do estágio 2",
+            "positive_stg3": "Condição positiva do estágio 3"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "steps": "Número de etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "z_vibrance": "Z-Vibrância",
+            "mode": "Modo",
+            "lowres_sample": "Amostragem em baixa resolução"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent"
+        },
+        "description": "Remove o ruído das imagens latentes do espaço latente de forma eficiente com um processo específico para o modelo \"Z-Image Turbo\". Este nó recebe um modelo Z-Image Turbo, a imagem latente inicial e os parâmetros de condição, e produz uma saída latente sem ruído que pode ser decodificada como imagem final.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Advanced //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Turbo (versão avançada)",
+        "inputs": {
+            "latent_input": "Entrada Latent",
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "positive_stg2": "Condição positiva do estágio 2",
+            "positive_stg3": "Condição positiva do estágio 3"
+        },
+        "widgets": {
+            "add_noise": "Adicionar ruído",
+            "seed": "Semente aleatória",
+            "steps": "Número de etapas",
+            "start_at_step": "Começar em qual etapa",
+            "end_at_step": "Terminar na etapa",
+            "force_final_denoising": "Forçar remoção de ruído final",
+            "divider": "Divisor",
+            "z_vibrance": "Z-Vibrância",
+            "initial_bias_level": "Nível de viés inicial",
+            "initial_sample_size": "Tamanho da amostra inicial"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent"
+        },
+        "description": "Remove o ruído das imagens latentes de forma eficiente, ajustado especificamente para o \"Z-Image Turbo\". Este nó recebe um modelo Z-Image Turbo, a imagem latente inicial e os parâmetros de condição, e produz uma saída latente sem ruído que pode ser decodificada como imagem final. A versão avançada inclui parâmetros extras para controle mais preciso e encadeamento de amostradores.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Laboratory //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Turbo (versão de laboratório)",
+        "inputs": {
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "latent_input": "Entrada Latent"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "steps": "Número de etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "divider1": "Divisor 1",
+            "initial_noise_bias_level": "Nível de viés do ruído inicial",
+            "initial_noise_overdose": "Excesso de ruído inicial",
+            "noise_est_sample_size": "Tamanho da amostra de estimativa de ruído",
+            "noise_est_sample_bias": "Viés da amostra de estimativa de ruído",
+            "noise_est_sample_scale": "Escala da amostra de estimativa de ruído",
+            "divider2": "Divisor 2",
+            "inject_noise_st1": "Injeção de ruído no estágio 1",
+            "inject_freq_st1": "Injeção de frequência no estágio 1",
+            "inject_noise_st2": "Injeção de ruído no estágio 2",
+            "inject_freq_st2": "Injeção de frequência no estágio 2",
+            "inject_noise_st3": "Injeção de ruído no estágio 3",
+            "inject_freq_st3": "Injeção de frequência no estágio 3",
+            "divider3": "Divisor 3",
+            "sigma_preset_name": "Nome do preset σ",
+            "sigma0_off": "Deslocamento σ0",
+            "sigma1_off": "Deslocamento σ1",
+            "sigma2_off": "Deslocamento σ2",
+            "sigma3_off": "Deslocamento σ3",
+            "sigma4_off": "Deslocamento σ4",
+            "sigma5_off": "Deslocamento σ5",
+            "sigma6_off": "Deslocamento σ6",
+            "sigma7_off": "Deslocamento σ7",
+            "sigma8_off": "Deslocamento σ8",
+            "sigma9_off": "Deslocamento σ9",
+            "sigma10_off": "Deslocamento σ10"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent"
+        },
+        "description": "Remove o ruído do Latent de forma eficiente, otimizado especialmente para o modelo \"Z-Image Turbo\". Este nó recebe um modelo Z-Image Turbo, a entrada Latent e os parâmetros de condição, e produz uma saída sem ruído que pode ser usada para processamento posterior ou decodificação.",
+        "api_version": "V3"
+    },
+    "IllustrationStylePromptEncoder //ZImagePowerNodes": {
+        "title": "❌ Codificador de prompt de estilo de ilustração",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Opções personalizadas"
+        },
+        "widgets": {
+            "style_to_apply": "Estilo a aplicar",
+            "text": "Prompt de texto"
+        },
+        "description": "Converte o prompt de texto em incrustação, adaptando-a ao estilo de ilustração escolhido. Este nó recebe um prompt, ajusta seu estilo visual conforme as opções selecionadas e o codifica com o codificador de texto fornecido em uma incrustação que orienta a geração da imagem.",
+        "api_version": "V3"
+    },
+    "PhotoStylePromptEncoder //ZImagePowerNode": {
+        "title": "❌ Codificador de prompt de estilo de foto",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Opções personalizadas"
+        },
+        "widgets": {
+            "style_to_apply": "Estilo a aplicar",
+            "text": "Prompt de texto"
+        },
+        "description": "Converte o prompt de texto em incrustação, adaptando-a ao estilo de foto escolhido. Este nó recebe um prompt, ajusta seu estilo visual conforme as opções selecionadas e o codifica com o codificador de texto fornecido em uma incrustação que orienta a geração da imagem.",
+        "api_version": "V3"
+    },
+    "EmptyZImageLatentImage //ZImagePowerNodes": {
+        "title": "⚡| Imagem Z Latent vazia",
+        "widgets": {
+            "landscape": "Alternar entre paisagem e retrato",
+            "ratio": "Proporção",
+            "size": "Dimensões",
+            "batch_size": "Tamanho do lote"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SaveImage //ZImagePowerNodes": {
+        "title": "⚡| Salvar imagem",
+        "inputs": {
+            "images": "Imagem"
+        },
+        "widgets": {
+            "filename_prefix": "Prefixo do nome do arquivo",
+            "civitai_compatible_metadata": "Metadados compatíveis com Civitai"
+        },
+        "outputs": {
+            "int": "Inteiro",
+            "float": "Ponto flutuante",
+            "latent": "Latent"
+        }
+    },
+    "StylePromptEncoder //ZImagePowerNodes": {
+        "title": "⚡| Edição de estilo e prompt",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Personalização"
+        },
+        "widgets": {
+            "category": "Categorias",
+            "style": "Estilo"
+        },
+        "outputs": {
+            "CONDITIONS": "Condicionamento",
+            "STRING": "Cadeia de Caracteres"
+        }
+    },
+    "StyleStringInjector //ZImagePowerNodes": {
+        "title": "⚡| Injetor de string de estilo",
+        "inputs": {
+            "string": "Cadeia de Caracteres"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️ Selecionar estilo",
+            "style": "Estilo"
+        },
+        "outputs": {
+            "CONDITIONS": "Condicionamento",
+            "STRING": "Cadeia de Caracteres"
+        }
+    },
+    "StylePromptEncoder2 //ZImagePowerNodes": {
+        "title": "⚡| Edição de estilo e prompt",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Personalizado"
+        },
+        "widgets": {
+            "style": "Estilo",
+            "🖼️ Select Style ...": "🖼️ Selecionar estilo",
+            "text": "Texto",
+            "gallery": "Galeria",
+            "spacer": "Intervalo"
+        },
+        "outputs": {
+            "CONDITIONS": "Condicionamento",
+            "STRING": "Cadeia de Caracteres"
+        },
+        "description": "Converte o prompt de texto em incrustações, adaptando o prompt ao estilo escolhido. Este nó ajusta o prompt ao estilo visual das opções escolhidas e o codifica com o codificador de texto fornecido para gerar as incrustações que orientam a geração da imagem."
+    },
+    "StyleStringInjector2 //ZImagePowerNodes": {
+        "title": "⚡| Injetor de string de estilo",
+        "inputs": {
+            "string": "Cadeia de Caracteres"
+        },
+        "widgets": {
+            "style": "Estilo",
+            "🖼️ Select Style ...": "🖼️ Selecionar estilo",
+            "gallery": "Galeria"
+        },
+        "outputs": {
+            "STRING": "Cadeia de Caracteres"
+        },
+        "description": "Injeta um estilo no seu prompt. Este nó modifica o prompt de texto de acordo com o estilo escolhido."
+    },
+    "ZSamplerTurboAdvanced //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Turbo (versão avançada)",
+        "inputs": {
+            "model": "Modelo",
+            "positive": "Condição positiva",
+            "latent_input": "Entrada Latent"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "steps": "Passo",
+            "denoise": "Redução de ruído (denoise)",
+            "initial_noise_calibration": "Calibração do ruído inicial",
+            "noise_bias_estimation": "Estimativa do viés de ruído",
+            "noise_bias_sample_size": "Tamanho da amostra do viés de ruído",
+            "noise_bias_scale": "Escala do viés de ruído",
+            "noise_overdose": "Excesso de ruído",
+            "divider": "Segmentação"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent",
+            "latent": "Latent"
+        },
+        "description": "Remove o ruído das imagens latentes de forma eficiente, otimizado especialmente para o modelo 'Z-Image Turbo'. Este nó recebe um modelo Z-Image Turbo, uma imagem latente inicial e os parâmetros de condição, produzindo uma saída sem ruído pronta para processamento posterior ou decodificação."
+    },
+    "MyTop10Styles //ZImagePowerNodes": {
+        "title": "⚡| Meus Top 10 Estilos",
+        "inputs": {
+            "input": "Entrada",
+            "top_styles": "Estilos populares",
+            "divider": "Segmentação"
+        },
+        "widgets": {
+            "style_1": "Estilo 1",
+            "style_2": "Estilo 2",
+            "style_3": "Estilo 3",
+            "style_4": "Estilo 4",
+            "style_5": "Estilo 5",
+            "style_6": "Estilo 6",
+            "style_7": "Estilo 7",
+            "style_8": "Estilo 8",
+            "style_9": "Estilo 9",
+            "style_10": "Estilo 10",
+            "control_after_generate": "Controle pós-geração",
+            "output_to": "Saída para"
+        },
+        "outputs": {
+            "output": "Saída"
+        },
+        "description": "Permite escolher um estilo visual da sua lista pessoal dos 10 principais. Este nó depende do 'Editor dos Meus Top 10 Estilos' para fornecer a lista dos seus estilos favoritos."
+    },
+    "MyTop10StylesEditor //ZImagePowerNodes": {
+        "title": "⚡| Meus Top 10 Estilos (editor)",
+        "inputs": {
+            "gallery_1": "Galeria 1",
+            "spacer_1": "Espaçador 1",
+            "gallery_2": "Galeria 2",
+            "spacer_2": "Espaçador 2",
+            "gallery_3": "Galeria 3",
+            "spacer_3": "Espaçador 3",
+            "gallery_4": "Galeria 4",
+            "spacer_4": "Espaçador 4",
+            "gallery_5": "Galeria 5",
+            "spacer_5": "Espaçador 5",
+            "gallery_6": "Galeria 6",
+            "spacer_6": "Espaçador 6",
+            "gallery_7": "Galeria 7",
+            "spacer_7": "Espaçador 7",
+            "gallery_8": "Galeria 8",
+            "spacer_8": "Espaçador 8",
+            "gallery_9": "Galeria 9",
+            "spacer_9": "Espaçador 9",
+            "gallery_10": "Galeria 10"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️ Selecionar estilo",
+            "style_1": "Estilo 1",
+            "style_2": "Estilo 2",
+            "style_3": "Estilo 3",
+            "style_4": "Estilo 4",
+            "style_5": "Estilo 5",
+            "style_6": "Estilo 6",
+            "style_7": "Estilo 7",
+            "style_8": "Estilo 8",
+            "style_9": "Estilo 9",
+            "style_10": "Estilo 10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Estilos populares"
+        },
+        "description": "Permite criar uma lista pessoal dos 10 principais estilos visuais, selecionando entre todas as opções disponíveis para montar sua coleção ideal. Este nó foi projetado para funcionar com 'Meus Top 10 Estilos', definindo e usando os estilos da sua preferência."
+    },
+    "VAEEncodeSoftInpainting //ZImagePowerNodes": {
+        "title": "⚡| Codificação VAE (para correção suave)",
+        "inputs": {
+            "pixels": "Pixel art",
+            "vae": "vae",
+            "mask": "Máscara"
+        },
+        "widgets": {
+            "output_size": "Tamanho da saída",
+            "mask_blur_pixels": "Desfocagem da máscara em pixels"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent",
+            "latent": "Latent"
+        },
+        "description": "Codifica a imagem de entrada e sua máscara de correção para o Latent usando o modelo VAE."
+    },
+    "ZSamplerTurbo //ZImagePowerNodes": {
+        "title": "⚡| Z-Amostrador Acelerado",
+        "inputs": {
+            "model": "Modelo",
+            "latent_input": "Entrada Latent",
+            "positive": "Condição positiva"
+        },
+        "widgets": {
+            "seed": "Semente aleatória",
+            "steps": "Etapas",
+            "denoise": "Redução de ruído (denoise)",
+            "initial_noise_calibration": "Calibração do ruído inicial",
+            "lowres_bias": "Viés de baixa resolução"
+        },
+        "outputs": {
+            "latent_output": "Saída Latent",
+            "latent": "Latent"
+        }
+    }
+}

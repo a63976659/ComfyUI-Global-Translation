@@ -1,0 +1,865 @@
+{
+    "AdvancedVAEDecoderX21": {
+        "title": "Décodeur VAE avancé ^G2.1",
+        "widgets": {
+            "samples": "Échantillonnage",
+            "vae": "VAE",
+            "allow_extended_range": "Autoriser la plage étendue",
+            "low_vram_mode": "Mode faible VRAM"
+        },
+        "description": "Alternative expérimentale au nœud VAEDecode natif de ComfyUI. Elle propose de contourner l'écrêtage de sortie standard pour laisser les pixels dépasser la plage [0.0, 1.0], et prend en charge un décodage par tuiles forcé pour réduire l'occupation de la VRAM sur les grandes images."
+    },
+    "BasicImageFilters": {
+        "title": "Filtres d'image de base",
+        "widgets": {
+            "images": "Image",
+            "enable_auto_contrast": "Activer le contraste automatique",
+            "enable_filters": "Activer le filtre",
+            "divider1": "Ligne de séparation 1",
+            "filter_1": "Filtre 1",
+            "filter_1_control": "Contrôle du filtre 1",
+            "divider2": "Ligne de séparation 2",
+            "filter_2": "Filtre 2",
+            "filter_2_control": "Contrôle du filtre 2",
+            "divider3": "Ligne de séparation 3",
+            "filter_3": "Filtre 3",
+            "filter_3_control": "Contrôle du filtre 3"
+        },
+        "description": ""
+    },
+    "CustomStylePromptEncoderX21": {
+        "title": "Style personnalisé + codeur de prompt ^G2.1",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "custom_styles": "Style personnalisé",
+            "custom_style": "Style personnalisé",
+            "palette": "Palette de couleurs",
+            "prompt": "Prompt (texte)"
+        },
+        "outputs": {
+            "PROMPT": "Prompt (texte)",
+            "style_name": "Nom du style",
+            "palette_name": "Nom de la palette",
+            "original_prompt": "Prompt d'origine"
+        },
+        "description": "Encode le prompt texte en vecteurs d'embarquement, en l'adaptant automatiquement au style personnalisé sélectionné (et à la palette éventuelle), puis le traite via le modèle CLIP pour générer la condition guidant la génération d'images. ⚠️Ce nœud étant expérimental, ses paramètres, son comportement ou son existence peuvent être modifiés ou supprimés sans préavis."
+    },
+    "EmptyZImageLatentImage": {
+        "title": "Image Latent Z-Image vide",
+        "widgets": {
+            "orientation": "Direction",
+            "ratio": "Ratio d'aspect",
+            "size": "Taille",
+            "batch_size": "Taille du lot"
+        },
+        "description": "Crée un lot de nouvelles images Latent vides servant de point de départ au débruitage du modèle Z-Image."
+    },
+    "ImageGridBuilder": {
+        "title": "Générateur de grille d'images",
+        "widgets": {
+            "images": "Image",
+            "banner": "Bannière",
+            "banner_height": "Hauteur de la bannière",
+            "text": "Texte",
+            "text_color": "Couleur du texte",
+            "lines_color": "Couleur des lignes",
+            "banner_color": "Couleur de la bannière",
+            "font_name": "Nom de la police",
+            "font_size": "Taille de la police",
+            "columns": "Nombre de colonnes",
+            "image_scale": "Redimensionnement d'image",
+            "image_spacing": "Espacement des images"
+        },
+        "description": "Génère une grille contenant toutes les images d'entrée."
+    },
+    "ImageLabeler": {
+        "title": "Étiqueteur d'images",
+        "widgets": {
+            "image": "Image (graphique)",
+            "text": "Texte",
+            "text_color": "Couleur du texte",
+            "background_color": "Couleur d'arrière-plan",
+            "font_name": "Nom de la police",
+            "font_size": "Taille de la police",
+            "font_scale": "Échelle de police",
+            "label_position": "Position de l'annotation",
+            "label_padding": "Marge interne de l'annotation",
+            "min_label_width": "Largeur minimale des annotations",
+            "min_label_height": "Hauteur minimale de l'annotation"
+        },
+        "description": "Ajoute à l'image une annotation avec un texte personnalisé."
+    },
+    "LoadQwen34bModel": {
+        "title": "Charger le modèle Qwen3-4B (safetensors / gguf)",
+        "widgets": {
+            "checkpoint": "Checkpoint (modèle)",
+            "file_filter": "Filtre de fichiers",
+            "run_on_gpu": "Exécuter sur le GPU"
+        },
+        "description": "Charge l'encodeur de texte Z-Image (Qwen3-4B) aux formats safetensor et GGUF."
+    },
+    "LoadZImageModel": {
+        "title": "Charger le modèle Z-Image (safetensors / gguf)",
+        "widgets": {
+            "checkpoint": "Checkpoint (modèle)",
+            "file_filter": "Filtre de fichiers"
+        },
+        "description": "Charge les modèles de diffusion Z-Image aux formats safetensors et GGUF."
+    },
+    "MyTop10Styles": {
+        "title": "Mes Top 10 styles",
+        "widgets": {
+            "input": "Entrée",
+            "top_styles": "Styles Top",
+            "style_1": "Style 1",
+            "style_2": "Style 2",
+            "style_3": "Style 3",
+            "style_4": "Style 4",
+            "style_5": "Style 5",
+            "style_6": "Style 6",
+            "style_7": "Style 7",
+            "style_8": "Style 8",
+            "style_9": "Style 9",
+            "style_10": "Style 10",
+            "divider": "Ligne de séparation",
+            "control_after_generate": "Contrôle post-génération",
+            "output_to": "Sortie vers"
+        },
+        "outputs": {
+            "output": "Sortie"
+        },
+        "description": "Vous permet de choisir un style visuel dans une liste Top 10 personnalisée. Ce nœud dépend de l'« Éditeur de mes Top 10 styles » pour fournir la liste de vos styles préférés."
+    },
+    "MyTop10StylesEditor": {
+        "title": "Mes Top 10 styles (éditeur)",
+        "widgets": {
+            "style_1": "Style 1",
+            "gallery_1": "Galerie 1",
+            "spacer_1": "Écarteur 1",
+            "style_2": "Style 2",
+            "gallery_2": "Galerie 2",
+            "spacer_2": "Séparateur 2",
+            "style_3": "Style 3",
+            "gallery_3": "Galerie 3",
+            "spacer_3": "Écarteur 3",
+            "style_4": "Style 4",
+            "gallery_4": "Galerie 4",
+            "spacer_4": "Séparateur 4",
+            "style_5": "Style 5",
+            "gallery_5": "Galerie 5",
+            "spacer_5": "Écarteur 5",
+            "style_6": "Style 6",
+            "gallery_6": "Galerie 6",
+            "spacer_6": "Séparateur 6",
+            "style_7": "Style 7",
+            "gallery_7": "Galerie 7",
+            "spacer_7": "Écarteur 7",
+            "style_8": "Style 8",
+            "gallery_8": "Galerie 8",
+            "spacer_8": "Séparateur 8",
+            "style_9": "Style 9",
+            "gallery_9": "Galerie 9",
+            "spacer_9": "Écarteur 9",
+            "style_10": "Style 10",
+            "gallery_10": "Galerie 10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Styles Top"
+        },
+        "description": "Permet de créer une liste personnalisée des 10 meilleurs styles visuels en choisissant parmi toutes les options disponibles pour composer la collection de styles idéale. Ce nœud est conçu pour fonctionner avec « Mes 10 meilleurs styles » afin de définir et utiliser vos styles préférés."
+    },
+    "SaveImage": {
+        "title": "Enregistrer l'image",
+        "widgets": {
+            "images": "Image",
+            "filename_prefix": "Préfixe du nom de fichier",
+            "civitai_compatible_metadata": "Métadonnées compatibles Civitai"
+        },
+        "description": "Enregistre l'image d'entrée dans le dossier de sortie de ComfyUI."
+    },
+    "StylePromptEncoder2": {
+        "title": "Encodeur de styles et de prompts",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "customization": "Personnalisé",
+            "style": "Type de style",
+            "gallery": "Galerie",
+            "spacer": "Séparateur",
+            "text": "Texte"
+        },
+        "description": "Convertit le prompt texte en vecteurs d'embedding et adapte automatiquement le prompt au style choisi. Ce nœud reçoit le prompt, ajuste son style visuel selon les options choisies, puis l'encode à l'aide de l'encodeur de texte (clip) fourni pour générer les vecteurs d'embedding qui guident la génération d'images."
+    },
+    "StylePromptEncoderX21": {
+        "title": "Style et codeur de prompt ^G2.1",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "customization": "Paramètres personnalisés",
+            "style": "Type de style",
+            "palette": "Palette de couleurs",
+            "text": "Texte"
+        },
+        "outputs": {
+            "PROMPT": "Prompt (texte)",
+            "style_name": "Nom du style",
+            "palette_name": "Nom de la palette",
+            "original_prompt": "Prompt d'origine"
+        },
+        "description": "Convertit le prompt texte en vecteurs d'embedding, ajuste automatiquement le prompt pour correspondre au style choisi et peut appliquer la palette indiquée. Ce nœud reçoit le prompt, adapte son style visuel selon les options choisies (puis applique la palette si elle est fournie), l'encode avec le modèle CLIP fourni et génère les vecteurs d'embedding qui guident la génération d'images. Ce nœud étant expérimental, ses paramètres, son comportement ou sa présence peuvent être modifiés ou supprimés entièrement sans préavis."
+    },
+    "StyleStringInjector2": {
+        "title": "Injecteur de chaînes de style",
+        "widgets": {
+            "style": "Type de style",
+            "gallery": "Galerie",
+            "string": "Chaîne"
+        },
+        "description": "Injecte un style dans votre prompt. Ce nœud reçoit un prompt texte et le modifie selon le style choisi."
+    },
+    "VAEEncodeSoftInpainting": {
+        "title": "Encodage VAE (pour inpainting à masque doux)",
+        "widgets": {
+            "pixels": "Art pixel",
+            "vae": "VAE",
+            "mask": "Masque",
+            "output_size": "Dimensions de sortie",
+            "mask_blur_pixels": "Flou du masque en pixels"
+        },
+        "description": "Encode l'image d'entrée et son masque de retouche vers un Latent à l'aide du modèle VAE."
+    },
+    "ZSamplerTurbo2": {
+        "title": "Échantillonneur Z Turbo ^G2 (version étendue)",
+        "widgets": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "STG2 positif",
+            "positive_stg3": "STG3 positif",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "divider": "Séparateur",
+            "initial_sample_size": "Taille d'échantillonnage initiale",
+            "divider2": "Séparateur_2",
+            "intensity": "Intensité",
+            "intensity_bias": "Biais d'intensité",
+            "turbo_creativity": "Créativité du Turbo"
+        },
+        "description": "Débruite efficacement l'image Latent grâce à un flux optimisé pour « Z-Image Turbo ». Ce nœud reçoit un modèle Z-Image Turbo, une image Latent initiale et des paramètres de condition, puis produit une sortie Latent débruitée décodable en image finale."
+    },
+    "ZSamplerTurbo2Advanced": {
+        "title": "Échantillonneur Z Turbo ^G2 (version avancée)",
+        "widgets": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "STG2 positif",
+            "positive_stg3": "STG3 positif",
+            "add_noise": "Ajouter du bruit",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "start_at_step": "Pas initial",
+            "end_at_step": "Pas final",
+            "force_final_denoising": "Forcer le débruitage final",
+            "divider": "Séparateur",
+            "initial_sample_size": "Taille d'échantillonnage initiale",
+            "divider2": "Séparateur_2",
+            "intensity": "Intensité",
+            "intensity_bias": "Biais d'intensité",
+            "turbo_creativity": "Créativité du Turbo"
+        },
+        "description": "Débruite efficacement les images Latentes grâce à un flux optimisé pour \"Z-Image Turbo\". Ce nœud reçoit un modèle Z-Image Turbo, une image Latente initiale et des paramètres de conditionnement, et produit une sortie Latente débruitée décodable en image finale. Cette version avancée ajoute des paramètres pour un contrôle plus fin de l'échantillonneur et l'enchaînement des échantillonneurs."
+    },
+    "ZSamplerTurbo2Simple": {
+        "title": "Échantillonneur Z Turbo ^G2 (version simple)",
+        "widgets": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "STG2 positif",
+            "positive_stg3": "STG3 positif",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "ibias": "Biais d'intensité",
+            "divider": "Séparateur",
+            "turbo_creativity": "Créativité du Turbo",
+            "old_scheduler": "Ancien planificateur",
+            "noise_injection": "Injection de bruit",
+            "alternative_refiner": "Raffineur alternatif"
+        },
+        "description": "Version simplifiée de l'échantillonneur Z Turbo (deuxième génération), offrant une interface allégée pour une utilisation rapide et pratique tout en conservant toutes ses fonctions et caractéristiques. Ce nœud reçoit un modèle Z-Image Turbo, une image Latent initiale et des prompts/conditions, puis produit une sortie Latent débruitée décodable en image finale."
+    },
+    "ZSamplerTurboX21": {
+        "title": "Échantillonneur Z Turbo ^G2.1",
+        "widgets": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "STG2 positif",
+            "positive_stg3": "STG3 positif",
+            "seed": "Graine",
+            "divider1": "Séparateur_1",
+            "steps": "Nombre de pas",
+            "ibias": "Biais d'intensité",
+            "spectral_tilt": "Inclinaison spectrale",
+            "turbo_creativity": "Créativité du Turbo",
+            "detailed_refiner": "Affineur de détails",
+            "new_scheduler": "Nouveau planificateur"
+        },
+        "description": "Nouvelle version expérimentale de l'échantillonneur Z Turbo. Ce nœud reçoit un modèle Z-Image Turbo, une image Latent initiale et des prompts/conditions, puis produit une sortie Latent débruitée décodable en image finale. Ce nœud étant expérimental, ses paramètres, son comportement ou sa présence peuvent être modifiés ou supprimés entièrement sans préavis."
+    },
+    "ZSamplerTurboX21Advanced": {
+        "title": "Échantillonneur Z Turbo ^G2.1 (version avancée)",
+        "widgets": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "STG2 positif",
+            "positive_stg3": "STG3 positif",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "ibias": "Biais d'intensité",
+            "divider1": "Séparateur_1",
+            "turbo_creativity": "Créativité du Turbo",
+            "alternative_refiner": "Raffineur alternatif",
+            "disable_ibias": "Désactiver le décalage d'intensité",
+            "old_scheduler": "Ancien planificateur",
+            "divider2": "Séparateur_2",
+            "spectral_tilt": "Inclinaison spectrale",
+            "spectral_tilt_start": "Début de l'inclinaison spectrale",
+            "spectral_tilt_end": "Fin de l'inclinaison spectrale",
+            "spectral_tilt_sharpness": "Netteté de l'inclinaison spectrale"
+        },
+        "description": "Nouvelle version expérimentale de l'échantillonneur Z Turbo. Ce nœud reçoit un modèle Z-Image Turbo, une image Latent initiale et des prompts/conditions, puis produit une sortie Latent débruitée décodable en image finale. Ce nœud étant expérimental, ses paramètres, son comportement ou sa présence peuvent être modifiés ou supprimés entièrement sans préavis."
+    },
+    "IllustrationStylePromptEncoder": {
+        "title": "Codeur de prompt au style illustration",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "customization": "Paramètres personnalisés",
+            "style_to_apply": "Appliquer le style",
+            "text": "Texte"
+        },
+        "description": "Convertit le prompt texte en vecteurs d'embarquement adaptés au style d'illustration sélectionné. Ce nœud reçoit le prompt, ajuste son style visuel selon les options choisies, puis l'encode via le codeur de texte fourni pour produire les embarquements qui guident la génération d'images."
+    },
+    "PhotoStylePromptEncoder": {
+        "title": "Codeur de prompt au style photo",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "customization": "Paramètres personnalisés",
+            "style_to_apply": "Appliquer le style",
+            "text": "Texte"
+        },
+        "description": "Convertit le prompt texte en vecteurs d'embarquement adaptés au style photographique sélectionné. Ce nœud reçoit le prompt, ajuste son style visuel selon les options choisies, puis l'encode via le codeur de texte fourni pour produire les embarquements qui guident la génération d'images."
+    },
+    "StylePromptEncoder": {
+        "title": "Style et codeur de prompt (ancienne version)",
+        "widgets": {
+            "clip": "Encodeur CLIP",
+            "customization": "Paramètres personnalisés",
+            "category": "Catégories",
+            "style": "Type de style",
+            "text": "Texte"
+        },
+        "description": "Convertit le prompt texte en vecteurs d'embarquement en l'adaptant automatiquement au style sélectionné. Ce nœud reçoit le prompt, ajuste son style visuel selon les options choisies, puis l'encode via le codeur de texte fourni (clip) pour produire les embarquements qui guident la génération d'images."
+    },
+    "StyleStringInjector": {
+        "title": "Injecteur de chaînes de style (ancienne version)",
+        "widgets": {
+            "category": "Catégories",
+            "style": "Type de style",
+            "string": "Chaîne"
+        },
+        "description": "Injecte un style dans votre prompt. Ce nœud reçoit un prompt texte et le modifie selon le style choisi."
+    },
+    "ZSamplerTurbo": {
+        "title": "Échantillonneur Z rapide Turbo ^g1",
+        "widgets": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_input": "Entrée Latent",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "divider": "Séparateur",
+            "initial_noise_calibration": "Calibrage du bruit initial",
+            "lowres_bias": "Biais basse résolution"
+        },
+        "description": "Débruite efficacement l'image latente, optimisé spécifiquement pour le modèle \"Z-Image Turbo\". Ce nœud reçoit le modèle Z-Image Turbo, l'image latente initiale et les paramètres de condition, et génère une sortie débruitée exploitable pour un traitement ultérieur ou un décodage."
+    },
+    "ZSamplerTurboAdvanced": {
+        "title": "Z-Échantillonneur rapide Turbo ^g1 (version avancée)",
+        "widgets": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_input": "Entrée Latent",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "divider": "Séparateur",
+            "initial_noise_calibration": "Calibrage du bruit initial",
+            "noise_bias_estimation": "Estimation du biais de bruit",
+            "noise_bias_sample_size": "Nombre d'échantillons du biais de bruit",
+            "noise_bias_scale": "Proportion du biais de bruit",
+            "noise_overdose": "Surcharge de bruit"
+        },
+        "description": "Débruite efficacement l'image latente, optimisé spécifiquement pour le modèle \"Z-Image Turbo\". Ce nœud reçoit le modèle Z-Image Turbo, l'image latente initiale et les paramètres de condition, et génère une sortie débruitée exploitable pour un traitement ultérieur ou un décodage."
+    },
+    "ZSamplerTurbo2Laboratory": {
+        "title": "Échantillonneur Z rapide Turbo ^G2 (version laboratoire)",
+        "widgets": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_input": "Entrée Latent",
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "divider1": "Séparateur_1",
+            "initial_noise_bias_level": "Niveau de biais de bruit initial",
+            "initial_noise_overdose": "Surcharge de bruit initiale",
+            "noise_est_sample_size": "Taille d'échantillon d'estimation du bruit",
+            "divider2": "Séparateur_2",
+            "extra_noise_freq1": "Fréquence de bruit supplémentaire 1",
+            "extra_noise_scale1": "Proportion de bruit supplémentaire 1",
+            "extra_noise_freq2": "Fréquence de bruit supplémentaire 2",
+            "extra_noise_scale2": "Échelle de bruit supplémentaire 2",
+            "extra_noise_freq3": "Fréquence de bruit supplémentaire 3",
+            "extra_noise_scale3": "Proportion de bruit supplémentaire 3",
+            "divider3": "Séparateur_3",
+            "scramble_left_count": "Nombre de brouillages à gauche",
+            "scramble_top_count": "Nombre de brouillages en haut",
+            "scramble_right_count": "Nombre de brouillages à droite",
+            "scramble_bottom_count": "Nombre de brouillages en bas",
+            "stage2_preproc_steps": "Pas de prétraitement de l'étape 2",
+            "divider4": "Séparateur_4",
+            "sigma_preset_name": "Nom du préréglage σ",
+            "sigma1_off": "Décalage σ1",
+            "sigma2_off": "Décalage σ2",
+            "sigma3_off": "Décalage σ3",
+            "sigma4_off": "Décalage σ4",
+            "sigma5_off": "Décalage σ5",
+            "sigma6_off": "Décalage σ6",
+            "sigma7_off": "Décalage σ7",
+            "sigma8_off": "Décalage σ8",
+            "sigma9_off": "Décalage σ9",
+            "sigma10_off": "Décalage σ10"
+        },
+        "description": "Débruite efficacement les images Latent, optimisé spécifiquement pour le modèle « Z-Image Turbo ». Ce nœud permet de modifier directement les paramètres internes de la méthode zsample_turbo_core(...), utilisé pendant le développement pour tester et étalonner."
+    },
+    "ZSamplerTurbo2Simple //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z Turbo ^G2 (version simple)",
+        "inputs": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "Prompt positif étape 2",
+            "positive_stg3": "Prompt positif étape 3"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "steps": "Pas d'échantillonnage",
+            "ibias": "Biais initial",
+            "turbo_creativity": "Créativité Turbo",
+            "old_scheduler": "Ancien planificateur",
+            "noise_injection": "Injection de bruit",
+            "alternative_refiner": "Affineur alternatif"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent"
+        },
+        "description": "Nœud échantillonneur basé sur Turbo prenant en charge plusieurs étapes de prompts positifs, avec contrôle post-génération, réglage du nombre de pas, ajustement du biais initial et diverses options d'amélioration (renforcement de la créativité, ancien planificateur, injection de bruit et raffineur alternatif)."
+    },
+    "ImageGridBuilder //ZImagePowerNodes": {
+        "title": "Constructeur de grille d'images",
+        "inputs": {
+            "images0": "Image",
+            "images1": "Image 1",
+            "images2": "Image 2",
+            "images3": "Image 3",
+            "images4": "Image 4",
+            "images5": "Image5",
+            "images6": "Image6",
+            "images7": "Image7",
+            "images8": "Image8",
+            "images9": "Image9",
+            "images10": "Image 10",
+            "images11": "Image 11",
+            "images12": "Image 12",
+            "images13": "Image 13",
+            "images14": "Image 14",
+            "images15": "Image 15",
+            "images16": "Image 16"
+        },
+        "widgets": {
+            "banner": "Bannière",
+            "banner_height": "Hauteur de la bannière",
+            "text": "Texte",
+            "text_color": "Couleur du texte",
+            "lines_color": "Couleur des lignes",
+            "banner_color": "Couleur de la bannière",
+            "font_name": "Nom de la police",
+            "font_size": "Taille de la police",
+            "columns": "Nombre de colonnes",
+            "image_scale": "Redimensionnement d'image",
+            "image_spacing": "Espacement des images"
+        },
+        "description": "Disposition en grille d'images.",
+        "api_version": "V3"
+    },
+    "ImageLabeler //ZImagePowerNodes": {
+        "title": "Étiqueteuse d'images",
+        "inputs": {
+            "image": "Image (graphique)"
+        },
+        "widgets": {
+            "text": "Texte",
+            "text_color": "Couleur du texte",
+            "background_color": "Couleur d'arrière-plan",
+            "font_name": "Nom de la police",
+            "font_size": "Taille de la police",
+            "font_scale": "Échelle de police",
+            "label_position": "Position de l'étiquette",
+            "label_padding": "Marge interne des étiquettes",
+            "min_label_width": "Largeur minimale des étiquettes",
+            "min_label_height": "Hauteur minimale de l'étiquette"
+        },
+        "description": "Ajoute des étiquettes de texte personnalisées à l'image.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2 //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z Turbo",
+        "inputs": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "Condition positive de l'étape 2",
+            "positive_stg3": "Condition positive de la troisième étape"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "steps": "Nombre d'étapes",
+            "denoise": "Débruitage",
+            "z_vibrance": "Vibrance Z",
+            "mode": "Mode (sélection)",
+            "lowres_sample": "Échantillonnage basse résolution"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent"
+        },
+        "description": "Débruite efficacement les images de l'espace latent à l'aide d'un processus propre à « Z-Image Turbo ». Ce nœud reçoit un modèle Z-Image Turbo, une image latente initiale ainsi que des paramètres de réglage, et produit une sortie latente débruitée pouvant être décodée en image finale.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Advanced //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z Turbo version avancée",
+        "inputs": {
+            "latent_input": "Entrée Latent",
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "positive_stg2": "Condition positive de l'étape 2",
+            "positive_stg3": "Condition positive de la troisième étape"
+        },
+        "widgets": {
+            "add_noise": "Ajouter du bruit",
+            "seed": "Graine",
+            "steps": "Nombre d'étapes",
+            "start_at_step": "Commencer au pas",
+            "end_at_step": "Dernière étape",
+            "force_final_denoising": "Forcer le débruitage final",
+            "divider": "Séparateur",
+            "z_vibrance": "Vibrance Z",
+            "initial_bias_level": "Niveau de biais initial",
+            "initial_sample_size": "Taille de l'échantillon initiale"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent"
+        },
+        "description": "Débruite efficacement le latent et est spécialement réglé pour le modèle « accélérateur Z-Image ». Ce nœud accepte un modèle accélérateur Z-Image, un latent initial et des paramètres de condition, et produit un latent débruité permettant de décoder l'image finale. La version avancée ajoute des paramètres pour un contrôle plus précis et l'enchaînement des échantillonneurs.",
+        "api_version": "V3"
+    },
+    "ZSamplerTurbo2Laboratory //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z Turbo version laboratoire",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_input": "Entrée Latent"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "steps": "Nombre d'étapes",
+            "denoise": "Débruitage",
+            "divider1": "Séparateur 1",
+            "initial_noise_bias_level": "Niveau de biais de bruit initial",
+            "initial_noise_overdose": "Surcharge de bruit initiale",
+            "noise_est_sample_size": "Taille de l'échantillon d'estimation du bruit",
+            "noise_est_sample_bias": "Biais d'échantillon d'estimation du bruit",
+            "noise_est_sample_scale": "Échelle d'échantillon d'estimation du bruit",
+            "divider2": "Séparateur 2",
+            "inject_noise_st1": "Injection de bruit à la première étape",
+            "inject_freq_st1": "Fréquence d'injection de l'étape 1",
+            "inject_noise_st2": "Injection de bruit à la deuxième étape",
+            "inject_freq_st2": "Fréquence d'injection de l'étape 2",
+            "inject_noise_st3": "Bruit injecté à l'étape 3",
+            "inject_freq_st3": "Fréquence d'injection à la troisième étape",
+            "divider3": "Séparateur 3",
+            "sigma_preset_name": "Nom du préréglage σ",
+            "sigma0_off": "Décalage σ0",
+            "sigma1_off": "Décalage σ1",
+            "sigma2_off": "Décalage σ2",
+            "sigma3_off": "Décalage σ3",
+            "sigma4_off": "Décalage σ4",
+            "sigma5_off": "Décalage σ5",
+            "sigma6_off": "Décalage σ6",
+            "sigma7_off": "Décalage σ7",
+            "sigma8_off": "Décalage σ8",
+            "sigma9_off": "Décalage σ9",
+            "sigma10_off": "Décalage σ10"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent"
+        },
+        "description": "Débruite efficacement le latent, avec une optimisation spécifique pour le modèle « accélérateur Z-Image ». Ce nœud accepte un modèle accélérateur Z-Image, un latent d'entrée et des paramètres de condition, et produit une sortie débruitée exploitable pour un traitement ultérieur ou un décodage.",
+        "api_version": "V3"
+    },
+    "IllustrationStylePromptEncoder //ZImagePowerNodes": {
+        "title": "❌ Encodeur de prompts de style illustration",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Options personnalisées"
+        },
+        "widgets": {
+            "style_to_apply": "Style à appliquer",
+            "text": "Prompt texte"
+        },
+        "description": "Convertit le prompt en embedding, adapté au style d'illustration choisi. Ce nœud reçoit un prompt, ajuste son style visuel selon les options choisies, puis l'encode avec l'encodeur de texte fourni pour obtenir un embedding qui guide la génération d'images.",
+        "api_version": "V3"
+    },
+    "PhotoStylePromptEncoder //ZImagePowerNode": {
+        "title": "❌ Encodeur de prompts de style photo",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Options personnalisées"
+        },
+        "widgets": {
+            "style_to_apply": "Style à appliquer",
+            "text": "Prompt texte"
+        },
+        "description": "Convertit le prompt en embedding, adapté au style photo choisi. Ce nœud reçoit un prompt, ajuste son style visuel selon les options choisies, puis l'encode avec l'encodeur de texte fourni pour obtenir un embedding qui guide la génération d'images.",
+        "api_version": "V3"
+    },
+    "EmptyZImageLatentImage //ZImagePowerNodes": {
+        "title": "⚡| Image Latent Z vide",
+        "widgets": {
+            "landscape": "Basculer le mode paysage/portrait",
+            "ratio": "Ratio d'aspect",
+            "size": "Taille",
+            "batch_size": "Taille du lot"
+        },
+        "outputs": {
+            "latent": "Latent"
+        }
+    },
+    "SaveImage //ZImagePowerNodes": {
+        "title": "⚡| Enregistrer l'image",
+        "inputs": {
+            "images": "Image"
+        },
+        "widgets": {
+            "filename_prefix": "Préfixe du nom de fichier",
+            "civitai_compatible_metadata": "Métadonnées compatibles Civitai"
+        },
+        "outputs": {
+            "int": "Entier",
+            "float": "Flottant",
+            "latent": "Latent"
+        }
+    },
+    "StylePromptEncoder //ZImagePowerNodes": {
+        "title": "⚡| Édition des styles et des prompts",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Personnalisation"
+        },
+        "widgets": {
+            "category": "Catégories",
+            "style": "Type de style"
+        },
+        "outputs": {
+            "CONDITIONS": "Condition",
+            "STRING": "Chaîne"
+        }
+    },
+    "StyleStringInjector //ZImagePowerNodes": {
+        "title": "⚡| Injection de chaînes de style",
+        "inputs": {
+            "string": "Chaîne"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️ Choisir un style",
+            "style": "Type de style"
+        },
+        "outputs": {
+            "CONDITIONS": "Condition",
+            "STRING": "Chaîne"
+        }
+    },
+    "StylePromptEncoder2 //ZImagePowerNodes": {
+        "title": "⚡| Édition Style & Prompt",
+        "inputs": {
+            "clip": "CLIP",
+            "customization": "Personnalisé"
+        },
+        "widgets": {
+            "style": "Type de style",
+            "🖼️ Select Style ...": "🖼️ Choisir un style",
+            "text": "Texte",
+            "gallery": "Galerie",
+            "spacer": "Intervalle"
+        },
+        "outputs": {
+            "CONDITIONS": "Condition",
+            "STRING": "Chaîne"
+        },
+        "description": "Convertit le prompt texte en embeddings et adapte automatiquement le prompt au style choisi. Ce nœud ajuste le prompt au style visuel des options retenues, puis l'encode avec l'encodeur de texte fourni afin de générer les embeddings qui guident la génération d'images."
+    },
+    "StyleStringInjector2 //ZImagePowerNodes": {
+        "title": "⚡| Injection de chaînes de style",
+        "inputs": {
+            "string": "Chaîne"
+        },
+        "widgets": {
+            "style": "Type de style",
+            "🖼️ Select Style ...": "🖼️ Choisir un style",
+            "gallery": "Galerie"
+        },
+        "outputs": {
+            "STRING": "Chaîne"
+        },
+        "description": "Injecte un style dans votre prompt. Ce nœud modifie le prompt texte selon le style choisi."
+    },
+    "ZSamplerTurboAdvanced //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z Turbo (avancé)",
+        "inputs": {
+            "model": "Modèle",
+            "positive": "Condition positive",
+            "latent_input": "Entrée Latent"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "steps": "Pas",
+            "denoise": "Débruitage",
+            "initial_noise_calibration": "Calibrage du bruit initial",
+            "noise_bias_estimation": "Estimation du biais de bruit",
+            "noise_bias_sample_size": "Taille de l'échantillon du biais de bruit",
+            "noise_bias_scale": "Mise à l'échelle du biais de bruit",
+            "noise_overdose": "Surcharge de bruit",
+            "divider": "Découpe (segmentation)"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent",
+            "latent": "Latent"
+        },
+        "description": "Débruite efficacement les images latentes, particulièrement optimisé pour le modèle 'Z-Image Turbo'. Ce nœud reçoit un modèle Z-Image Turbo, une image latente initiale et des paramètres de condition, et produit une sortie débruitée prête pour un traitement ou un décodage ultérieur."
+    },
+    "MyTop10Styles //ZImagePowerNodes": {
+        "title": "⚡| Mes 10 styles",
+        "inputs": {
+            "input": "Entrée",
+            "top_styles": "Styles populaires",
+            "divider": "Découpe (segmentation)"
+        },
+        "widgets": {
+            "style_1": "Style 1",
+            "style_2": "Style 2",
+            "style_3": "Style 3",
+            "style_4": "Style 4",
+            "style_5": "Style 5",
+            "style_6": "Style 6",
+            "style_7": "Style 7",
+            "style_8": "Style 8",
+            "style_9": "Style 9",
+            "style_10": "Style 10",
+            "control_after_generate": "Contrôle post-génération",
+            "output_to": "Sortir vers"
+        },
+        "outputs": {
+            "output": "Sortie"
+        },
+        "description": "Permet de choisir un style visuel dans votre liste personnalisée des 10 meilleurs styles. Ce nœud dépend de 'Mon éditeur des 10 meilleurs styles' pour fournir la liste de vos styles préférés."
+    },
+    "MyTop10StylesEditor //ZImagePowerNodes": {
+        "title": "⚡| Mes 10 styles (éditeur)",
+        "inputs": {
+            "gallery_1": "Galerie 1",
+            "spacer_1": "Espacement 1",
+            "gallery_2": "Galerie 2",
+            "spacer_2": "Espacement 2",
+            "gallery_3": "Galerie 3",
+            "spacer_3": "Espacement 3",
+            "gallery_4": "Galerie 4",
+            "spacer_4": "Espacement 4",
+            "gallery_5": "Galerie 5",
+            "spacer_5": "Espacement 5",
+            "gallery_6": "Galerie 6",
+            "spacer_6": "Espacement 6",
+            "gallery_7": "Galerie 7",
+            "spacer_7": "Espacement 7",
+            "gallery_8": "Galerie 8",
+            "spacer_8": "Espacement 8",
+            "gallery_9": "Galerie 9",
+            "spacer_9": "Espacement 9",
+            "gallery_10": "Galerie 10"
+        },
+        "widgets": {
+            "🖼️ Select Style ...": "🖼️ Choisir un style",
+            "style_1": "Style 1",
+            "style_2": "Style 2",
+            "style_3": "Style 3",
+            "style_4": "Style 4",
+            "style_5": "Style 5",
+            "style_6": "Style 6",
+            "style_7": "Style 7",
+            "style_8": "Style 8",
+            "style_9": "Style 9",
+            "style_10": "Style 10"
+        },
+        "outputs": {
+            "TOP_STYLES": "Styles populaires"
+        },
+        "description": "Vous permet de constituer une liste personnalisée de 10 styles visuels en choisissant parmi toutes les options disponibles pour former votre collection idéale. Ce nœud est conçu pour fonctionner avec 'Mes 10 styles' afin de définir et d'exploiter les styles que vous préférez."
+    },
+    "VAEEncodeSoftInpainting //ZImagePowerNodes": {
+        "title": "⚡| Encodage VAE (pour retouche douce)",
+        "inputs": {
+            "pixels": "Art pixel",
+            "vae": "vae",
+            "mask": "Masque"
+        },
+        "widgets": {
+            "output_size": "Taille de sortie",
+            "mask_blur_pixels": "Flou du masque en pixels"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent",
+            "latent": "Latent"
+        },
+        "description": "Encode l'image d'entrée et son masque d'inpainting dans un Latent à l'aide du modèle VAE."
+    },
+    "ZSamplerTurbo //ZImagePowerNodes": {
+        "title": "⚡| Échantillonneur Z accéléré",
+        "inputs": {
+            "model": "Modèle",
+            "latent_input": "Entrée Latent",
+            "positive": "Condition positive"
+        },
+        "widgets": {
+            "seed": "Graine",
+            "steps": "Nombre de pas",
+            "denoise": "Débruitage",
+            "initial_noise_calibration": "Calibrage du bruit initial",
+            "lowres_bias": "Biais basse résolution"
+        },
+        "outputs": {
+            "latent_output": "Sortie Latent",
+            "latent": "Latent"
+        }
+    }
+}

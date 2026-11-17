@@ -1,0 +1,442 @@
+{
+    "WanVideoAnimateEmbeds": {
+        "title": "WanAnimate Animations-Einbettung",
+        "description": "WanAnimate zentraler Einbettungs-Knoten für Referenzbilder, Posen, Gesicht, Hintergrund, prefix_frames und transition_video",
+        "inputs": {
+            "vae": "VAE-Modell",
+            "width": "Breite",
+            "height": "Höhe",
+            "num_frames": "Gesamte Frameanzahl",
+            "force_offload": "Auslagerung erzwingen",
+            "frame_window_size": "Kontextfenstergröße",
+            "colormatch": "Farbanpassung",
+            "pose_strength": "Pose-Stärke",
+            "face_strength": "Intensität des Gesichts",
+            "clip_embeds": "CLIP-Vision-Einbettung",
+            "ref_images": "Referenzbild",
+            "pose_images": "Pose-Bilder",
+            "face_images": "Gesichtsbild",
+            "bg_images": "Hintergrundbild",
+            "mask": "Maske",
+            "start_ref_image": "Start-Referenzbild",
+            "transition_video": "Übergangs-Video-Frames",
+            "prefix_frames": "Präfix-Referenzframes",
+            "tiled_vae": "Kachel-VAE-Kodierung"
+        },
+        "outputs": {
+            "image_embeds": "Bild-Einbettung"
+        }
+    },
+    "WanVideoSampler": {
+        "title": "WanAnimate-Sampler",
+        "description": "WanAnimate-Video-Sampler mit Unterstützung für CFG/APG/APG-Ketten-Guidance",
+        "inputs": {
+            "model": "WanVideo-Modell",
+            "image_embeds": "Bild-Einbettung",
+            "steps": "Sampling-Schritte",
+            "cfg": "CFG",
+            "shift": "Rausch-Offset",
+            "seed": "Zufalls-Seed",
+            "force_offload": "Auslagerung erzwingen",
+            "scheduler": "Scheduler (Ablaufsteuerung)",
+            "riflex_freq_index": "RIFLEX-Frequenzindex",
+            "text_embeds": "Text-Einbettung",
+            "samples": "Sampling",
+            "denoise_strength": "Entrauschung",
+            "feta_args": "Enhance-A-Video-Parameter",
+            "context_options": "Kontextoptionen",
+            "cache_args": "Cache-Parameter",
+            "flowedit_args": "FlowEdit-Parameter",
+            "batched_cfg": "CFG im Batch",
+            "slg_args": "SLG-Parameter",
+            "rope_function": "RoPE-Funktion",
+            "loop_args": "Parameter der Schleife",
+            "experimental_args": "Experimentelle Parameter",
+            "sigmas": "Rauschlevel (Sigmas)",
+            "unianimate_poses": "UniAnimate-Posen",
+            "fantasytalking_embeds": "FantasyTalking-Einbettung",
+            "uni3c_embeds": "Uni3C-Einbettung",
+            "multitalk_embeds": "MultiTalk-Einbettung",
+            "freeinit_args": "FreeInit-Parameter",
+            "start_step": "Anfangsschritte",
+            "end_step": "Endschritte",
+            "add_noise_to_samples": "Rauschen zum Sampling hinzufügen",
+            "guidance_mode": "Guidance-Modus",
+            "apg_eta": "APG eta-Wert",
+            "apg_momentum": "APG-Impuls",
+            "apg_norm_threshold": "APG-Normschwellenwert",
+            "apg_omega": "APG omega-Wert",
+            "apg_omega_I": "APG omega_I-Wert",
+            "apg_omega_TI": "APG omega_TI-Wert",
+            "chain_omega_V": "Ketten-CFG omega_V-Wert",
+            "chain_omega_I": "Ketten-CFG omega_I-Wert",
+            "chain_omega_TI": "Ketten-CFG omega_TI-Wert"
+        },
+        "outputs": {
+            "samples": "Sampling",
+            "denoised_samples": "Samples nach der Entrauschung"
+        }
+    },
+    "WanVideoSamplerv2": {
+        "title": "WanAnimate-Sampler v2",
+        "description": "WanAnimate-Sampler v2 (Version)",
+        "inputs": {
+            "model": "WanVideo-Modell",
+            "image_embeds": "Bild-Einbettung",
+            "steps": "Sampling-Schritte",
+            "cfg": "CFG",
+            "shift": "Rausch-Offset",
+            "seed": "Zufalls-Seed",
+            "force_offload": "Auslagerung erzwingen",
+            "scheduler": "Scheduler (Ablaufsteuerung)",
+            "text_embeds": "Text-Einbettung",
+            "samples": "Sampling",
+            "denoise_strength": "Entrauschung",
+            "context_options": "Kontextoptionen",
+            "cache_args": "Cache-Parameter",
+            "batched_cfg": "CFG im Batch",
+            "slg_args": "SLG-Parameter",
+            "rope_function": "RoPE-Funktion",
+            "loop_args": "Parameter der Schleife",
+            "experimental_args": "Experimentelle Parameter",
+            "sigmas": "Rauschlevel (Sigmas)",
+            "start_step": "Anfangsschritte",
+            "end_step": "Endschritte"
+        },
+        "outputs": {
+            "samples": "Sampling",
+            "denoised_samples": "Samples nach der Entrauschung"
+        }
+    },
+    "WanVideoScheduler": {
+        "title": "WanAnimate-Scheduler (Ablaufsteuerung)",
+        "description": "WanAnimate Rausch-Scheduler",
+        "inputs": {
+            "steps": "Sampling-Schritte",
+            "shift": "Rausch-Offset",
+            "scheduler": "Scheduler (Ablaufsteuerung)",
+            "start_percent": "Start-Prozent",
+            "end_percent": "Ende-Prozent"
+        },
+        "outputs": {
+            "sample_scheduler": "Sampling-Scheduler",
+            "timesteps": "Zeitschritt"
+        }
+    },
+    "WanVideoSchedulerv2": {
+        "title": "WanAnimate-Scheduler v2 (Ablaufsteuerung)",
+        "description": "WanAnimate-Scheduler v2 (Version)",
+        "inputs": {
+            "steps": "Sampling-Schritte",
+            "shift": "Rausch-Offset",
+            "scheduler": "Scheduler (Ablaufsteuerung)"
+        },
+        "outputs": {
+            "sample_scheduler": "Sampling-Scheduler",
+            "timesteps": "Zeitschritt"
+        }
+    },
+    "WanVideoSamplerSettings": {
+        "title": "WanAnimate Sampler-Einstellungen",
+        "description": "Kapselt die Sampler-Parameter in einem Einstellungsobjekt zur einfachen Wiederverwendung",
+        "inputs": {
+            "steps": "Sampling-Schritte",
+            "cfg": "CFG",
+            "shift": "Rausch-Offset",
+            "scheduler": "Scheduler (Ablaufsteuerung)",
+            "riflex_freq_index": "RIFLEX-Frequenzindex",
+            "guidance_mode": "Guidance-Modus",
+            "apg_eta": "APG eta-Wert",
+            "apg_momentum": "APG-Impuls",
+            "apg_norm_threshold": "APG-Normschwellenwert"
+        },
+        "outputs": {
+            "sampler_settings": "Sampler-Einstellung"
+        }
+    },
+    "WanVideoSamplerFromSettings": {
+        "title": "WanAnimate Sampling aus Einstellung",
+        "description": "Sampling mit vordefinierter Sampler-Einstellung",
+        "inputs": {
+            "model": "WanVideo-Modell",
+            "image_embeds": "Bild-Einbettung",
+            "sampler_settings": "Sampler-Einstellung",
+            "seed": "Zufalls-Seed",
+            "force_offload": "Auslagerung erzwingen",
+            "text_embeds": "Text-Einbettung",
+            "samples": "Sampling",
+            "denoise_strength": "Entrauschung",
+            "context_options": "Kontextoptionen",
+            "cache_args": "Cache-Parameter",
+            "batched_cfg": "CFG im Batch",
+            "slg_args": "SLG-Parameter",
+            "rope_function": "RoPE-Funktion",
+            "loop_args": "Parameter der Schleife",
+            "experimental_args": "Experimentelle Parameter",
+            "sigmas": "Rauschlevel (Sigmas)",
+            "start_step": "Anfangsschritte",
+            "end_step": "Endschritte"
+        },
+        "outputs": {
+            "samples": "Sampling",
+            "denoised_samples": "Samples nach der Entrauschung"
+        }
+    },
+    "WanVideoEncode": {
+        "title": "WanAnimate VAE-Kodierung",
+        "description": "Bild/Video als Latente kodieren",
+        "inputs": {
+            "vae": "VAE-Modell",
+            "width": "Breite",
+            "height": "Höhe",
+            "num_frames": "Gesamte Frameanzahl",
+            "noise_aug_strength": "Rauschverstärkungsstärke",
+            "start_latent_strength": "Start-Latent-Stärke",
+            "end_latent_strength": "End-Latent-Stärke",
+            "force_offload": "Auslagerung erzwingen",
+            "start_image": "Startbild",
+            "end_image": "Endbild",
+            "clip_embeds": "CLIP-Vision-Einbettung",
+            "control_embeds": "Control-Einbettung",
+            "fun_or_fl2v_model": "Fun/FL2V-Modell",
+            "temporal_mask": "Zeitliche Masken",
+            "extra_latents": "Zusätzliches Latent",
+            "tiled_vae": "Kachel-VAE-Kodierung",
+            "add_cond_latents": "Zusätzliche bedingte Latente",
+            "augment_empty_frames": "Leere Frames verstärken",
+            "empty_frame_pad_image": "Bild zum Füllen leerer Frames"
+        },
+        "outputs": {
+            "image_embeds": "Bild-Einbettung"
+        }
+    },
+    "WanVideoDecode": {
+        "title": "WanAnimate VAE-Dekodierung",
+        "description": "Latente in Video-Pixel dekodieren",
+        "inputs": {
+            "samples": "Sampling",
+            "vae": "VAE-Modell",
+            "enable_tiling": "Kacheln aktivieren",
+            "force_offload": "Auslagerung erzwingen"
+        },
+        "outputs": {
+            "images": "Bild"
+        }
+    },
+    "WanVideoModelLoader": {
+        "title": "WanAnimate Modell-Lader",
+        "description": "Wan-Animate-Video-Generierungsmodell laden",
+        "inputs": {
+            "model_path": "Modellpfad",
+            "precision": "Genauigkeit",
+            "attention_mode": "Attention-Modus",
+            "load_device": "Gerät laden",
+            "enable_5b": "5B-Modell aktivieren"
+        },
+        "outputs": {
+            "model": "WanVideo-Modell"
+        }
+    },
+    "WanVideoVAELoader": {
+        "title": "WanAnimate VAE-Lader",
+        "description": "VAE-Modell laden",
+        "inputs": {
+            "model_path": "Modellpfad"
+        },
+        "outputs": {
+            "vae": "VAE-Modell"
+        }
+    },
+    "WanVideoContextOptions": {
+        "title": "WanAnimate Kontext-Optionen",
+        "description": "Parameter des Kontextfenster-Sampling konfigurieren",
+        "inputs": {
+            "context_schedule": "Kontext-Zeitplan",
+            "context_frames": "Kontext-Frameanzahl",
+            "context_stride": "Kontext-Schrittweite",
+            "context_overlap": "Kontext-Überlappung",
+            "freenoise": "FreeNoise",
+            "verbose": "Detailausgabe"
+        },
+        "outputs": {
+            "context_options": "Kontextoptionen"
+        }
+    },
+    "WanVideoTextEncodeCached": {
+        "title": "WanAnimate Text-Kodierung (Cache)",
+        "description": "Kodiert Text-Prompts als Einbettungen, mit Festplatten-Cache und Qwen-LLM-Erweiterung",
+        "inputs": {
+            "model_name": "Modellname",
+            "precision": "Genauigkeit",
+            "positive_prompt": "Positiv-Prompt",
+            "negative_prompt": "Negativ-Prompt",
+            "quantization": "Quantisierungsmethode",
+            "use_disk_cache": "Disk-Cache verwenden",
+            "device": "Ausführungsgerät",
+            "extender_args": "Prompt-Extender-Parameter"
+        },
+        "outputs": {
+            "text_embeds": "Text-Einbettung",
+            "negative_text_embeds": "Negative Text-Einbettung",
+            "positive_prompt": "Positiv-Prompt"
+        }
+    },
+    "WanVideoClipVisionEncode": {
+        "title": "WanAnimate CLIP-Vision-Kodierung",
+        "description": "Referenzbild mit CLIP-Vision-Modell kodieren",
+        "inputs": {
+            "clip_vision": "CLIP-Vision-Modell",
+            "image_1": "Bild 1",
+            "strength_1": "Intensität 1",
+            "strength_2": "Intensität 2",
+            "crop": "Zuschnittsart",
+            "combine_embeds": "Methode zum Kombinieren der Einbettungen",
+            "force_offload": "Auslagerung erzwingen",
+            "image_2": "Bild 2",
+            "negative_image": "Negativbild",
+            "tiles": "Blockanzahl",
+            "ratio": "Kachel-Verhältnis"
+        },
+        "outputs": {
+            "image_embeds": "Bild-Einbettung"
+        }
+    },
+    "WanVideoLoraSelect": {
+        "title": "WanAnimate LoRA-Auswahl",
+        "description": "Wählt ein einzelnes LoRA-Modell aus und setzt sein Gewicht",
+        "inputs": {
+            "model_path": "Modellpfad",
+            "strength": "Gewichte"
+        },
+        "outputs": {
+            "lora": "LoRA-Konfiguration"
+        }
+    },
+    "WanVideoLoraSelectMulti": {
+        "title": "WanAnimate Auswahl mehrerer LoRA",
+        "description": "Wählt mehrere LoRA-Modelle aus und konfiguriert deren Gewichte einzeln",
+        "inputs": {
+            "lora_1": "LoRA 1",
+            "strength_1": "Gewichte 1",
+            "lora_2": "LoRA 2",
+            "strength_2": "Gewichte 2",
+            "lora_3": "LoRA 3",
+            "strength_3": "Gewichte 3",
+            "lora_4": "LoRA 4",
+            "strength_4": "Gewicht 4"
+        },
+        "outputs": {
+            "loras": "LoRA-Liste"
+        }
+    },
+    "WanVideoSetLoRAs": {
+        "title": "WanAnimate LoRA anwenden",
+        "description": "LoRA-Konfiguration auf das Video-Modell anwenden",
+        "inputs": {
+            "model": "WanVideo-Modell",
+            "lora": "LoRA-Konfiguration",
+            "loras": "LoRA-Liste"
+        },
+        "outputs": {
+            "model": "WanVideo-Modell"
+        }
+    },
+    "WanVideoBlockSwap": {
+        "title": "WanAnimate Block-Swap-Konfiguration",
+        "description": "Konfiguriert die Block-Swap-Strategie des Modells, um VRAM zu sparen",
+        "inputs": {
+            "blocks_to_swap": "Anzahl der Tausch-Blöcke",
+            "use_non_blocking": "Nicht blockierende Übertragung verwenden",
+            "vace_blocks_to_swap": "Anzahl der zu tauschenden VACE-Blöcke",
+            "prefetch_blocks": "Anzahl der Preread-Blöcke",
+            "block_swap_debug": "Block-Swap-Debugging",
+            "offload_img_emb": "Bild-Embedding entladen",
+            "offload_txt_emb": "Text-Embedding entladen"
+        },
+        "outputs": {
+            "block_swap_args": "Block-Swap-Parameter"
+        }
+    },
+    "WanVideoSetBlockSwap": {
+        "title": "WanAnimate Block-Swap einstellen",
+        "description": "Block-Swap-Konfiguration auf das Modell anwenden",
+        "inputs": {
+            "model": "WanVideo-Modell",
+            "block_swap_args": "Block-Swap-Parameter"
+        },
+        "outputs": {
+            "model": "WanVideo-Modell"
+        }
+    },
+    "WanVideoTorchCompileSettings": {
+        "title": "WanAnimate Torch-Kompilierungseinstellung",
+        "description": "torch.compile konfigurieren, um die Modell-Inferenz zu beschleunigen",
+        "inputs": {
+            "compile_mode": "Kompilierungsmodus",
+            "fullgraph": "Vollständiger Berechnungsgraph",
+            "dynamic": "Dynamische Formen",
+            "backend": "Verarbeitungs-Backend",
+            "options": "Auswahl"
+        },
+        "outputs": {
+            "compile_args": "Kompilierungsparameter"
+        }
+    },
+    "WanVideoUni3C_ControlnetLoader": {
+        "title": "WanAnimate Uni3C ControlNet-Lader",
+        "description": "Uni3C ControlNet-Modell laden",
+        "inputs": {
+            "model_path": "Modellpfad"
+        },
+        "outputs": {
+            "uni3c_controlnet": "Uni3C ControlNet"
+        }
+    },
+    "WanVideoUni3C_embeds": {
+        "title": "WanAnimate Uni3C-Einbettung",
+        "description": "Uni3C ControlNet-Steuerungseinbettungen generieren",
+        "inputs": {
+            "uni3c_controlnet": "Uni3C ControlNet",
+            "control_images": "Steuerungsbild",
+            "strength": "Steuerungsintensität",
+            "start_percent": "Start-Prozent",
+            "end_percent": "Ende-Prozent"
+        },
+        "outputs": {
+            "uni3c_embeds": "Uni3C-Einbettung"
+        }
+    },
+    "WanVideoSamplerExtraArgs": {
+        "title": "WanAnimate Sampler-Zusatzparameter",
+        "description": "Konfiguriert Zusatzparameter des Samplers (z. B. optionales CFG, optionales Rausch-Offset)",
+        "inputs": {
+            "optional_cfg": "Optionales CFG",
+            "optional_noise_offset": "Optionales Rausch-Offset",
+            "optional_cfg_scale": "Optionale CFG-Skala",
+            "optional_sigma_max": "Optionaler Sigma-Maximalwert",
+            "optional_sigma_min": "Optionaler Sigma-Minimalwert"
+        },
+        "outputs": {
+            "sampler_extra_args": "Sampler-Zusatzparameter"
+        }
+    },
+    "WanAnimatePlusBernini": {
+        "title": "WanAnimate Bernini-Bedingungsgenerierung",
+        "description": "Bernini-Bedingungsgenerierung des Modells, unterstützt die Aufgaben v2v/rv2v/r2v/t2v",
+        "inputs": {
+            "vae": "VAE-Modell",
+            "width": "Breite",
+            "height": "Höhe",
+            "num_frames": "Gesamte Frameanzahl",
+            "source_video": "Quellvideo",
+            "reference_video": "Referenzvideo",
+            "reference_images": "Referenzbild",
+            "ref_max_size": "Maximale Kantenlänge der Referenzmedien",
+            "force_offload": "Auslagerung erzwingen",
+            "tiled_vae": "Kachel-VAE-Kodierung"
+        },
+        "outputs": {
+            "image_embeds": "Bild-Einbettung"
+        }
+    }
+}

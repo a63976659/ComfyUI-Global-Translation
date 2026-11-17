@@ -1,0 +1,938 @@
+{
+    "🔀 Batch Wildcard Upscale Sampler": {
+        "title": "🔀 מדגם פרומפטים באצווה",
+        "inputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "upscale_model": "מודל הגדלה"
+        },
+        "widgets": {
+            "positive": "פרומפט חיובי",
+            "negative": "פרומפט שלילי",
+            "seed": "זרע אקראי",
+            "batch_size": "גודל אצווה",
+            "width": "רוחב",
+            "height": "גובה",
+            "steps": "מספר צעדים",
+            "cfg": "מקדם הנחיית CFG",
+            "sampler_name": "מדגם",
+            "scheduler": "מתזמן",
+            "denoise": "הסרת רעש",
+            "upscale": "יחס הגדלה",
+            "upscale_rate": "מקדם הגדלה",
+            "upscale_denoise": "הסרת רעש בהגדלה",
+            "upscale_steps": "מספר צעדים בהגדלה",
+            "upscale_cfg": "CFG של הגדלה",
+            "upscale_sampler_name": "שם המדגם בהגדלה",
+            "upscale_scheduler": "מתזמן בהגדלה",
+            "upscale_noise_inject_strength": "עוצמת הזרקת רעש בהגדלה",
+            "strip_prompt_weights": "הסרת משקולות פרומפט",
+            "recache_wildcards": "מטמון פרומפט מחדש",
+            "console_log": "יומן מסוף"
+        },
+        "outputs": {
+            "model": "מודל",
+            "clip": "CLIP",
+            "vae": "VAE",
+            "positive": "חיובי",
+            "negative": "שלילי",
+            "latent": "Latent",
+            "prompt": "פרומפט"
+        },
+        "description": "פרומפט נפתר באופן עצמאי לכל תמונה באצווה, ולכן הרצה יחידה מייצרת פרומפטים שונים (וגם תמונות שונות) לכל אינדקס באצווה. ניתן לטעון LoRAs תמונה אחר תמונה באמצעות תגיות <lora:name:strength> שבתוך הפרומפט. אפשר לחבר מודל ו-CLIP למדגם, או לוותר עליהם כדי רק להציג תצוגה מקדימה של הפרומפטים שנפתרו."
+    },
+    "💾 Save Image With Metadata": {
+        "title": "💾שמירת תמונה עם מטא-נתונים",
+        "inputs": {
+            "images": "תמונה",
+            "positive_override": "דריסת חיובי"
+        },
+        "widgets": {
+            "filename_prefix": "קידומת שם קובץ",
+            "folder": "תיקייה",
+            "file_format": "פורמט קובץ",
+            "quality": "איכות",
+            "embed_workflow": "שילוב זרימת עבודה",
+            "strip_lora_prompt": "הסרת פרומפט LoRA"
+        },
+        "description": "שמירת התמונה עם מטא-נתונים מצורפים"
+    },
+    "🖼️ Load Image Temporarily": {
+        "title": "🖼️ טעינת תמונה זמנית",
+        "widgets": {
+            "image": "תמונה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה",
+            "width": "רוחב",
+            "height": "גובה"
+        },
+        "description": "טוען תמונה באופן זמני ומפיק תמונה, מסיכה, רוחב וגובה."
+    },
+    "📝 Wildcard Processor Advanced": {
+        "title": "📝מעבד פרומפט מתקדם",
+        "inputs": {
+            "seed": "זרע אקראי"
+        },
+        "widgets": {
+            "multiple_separator": "מפרידים מרובים",
+            "recache_wildcards": "מטמון פרומפט מחדש",
+            "console_log": "יומן מסוף"
+        },
+        "outputs": {
+            "processed_text": "הטקסט המעובד",
+            "seed": "זרע אקראי",
+            "extracted_tags_string": "מחרוזת התגיות שחולצו",
+            "extracted_tags_list": "רשימת התגיות שחולצו",
+            "raw_tags_string": "מחרוזת תגיות מקורית",
+            "raw_tags_list": "רשימת תגיות מקורית"
+        },
+        "description": "צומת מתקדם לעיבוד פרומפטים וחילוץ תגיות"
+    },
+    "🎵📊 Audio Visualizer": {
+        "title": "🎵📊 מחווה חזותית של אודיו",
+        "inputs": {
+            "audio": "אודיו"
+        },
+        "widgets": {
+            "output_type": "סוג פלט",
+            "visualizer_script": "סקריט הדמיה",
+            "scale": "יחס קנה מידה",
+            "stereo_to_mono": "המרה מסטריאו למונו",
+            "framerate": "קצב פריימים",
+            "width": "רוחב",
+            "height": "גובה",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "image_batch": "אצוות תמונות",
+            "video": "וידאו"
+        }
+    },
+    "🎨 Colorful Starting Image": {
+        "title": "🎨 תמונת התחלה צבעונית",
+        "widgets": {
+            "width": "רוחב",
+            "height": "גובה",
+            "components": "מספר רכיבים",
+            "component_scale": "קנה מידה של הרכיב",
+            "shape_string": "מחרוזת צורה",
+            "color_palette": "פלטת צבעים",
+            "color_harmony": "דרגת הרמוניית הצבעים",
+            "fill_mode": "מצב מילוי",
+            "shape_opacity": "אטימות צורה",
+            "background_color": "צבע רקע",
+            "positioning_bias": "היסט מיצוב",
+            "arrangement": "אופן סידור",
+            "size_distribution": "התפלגות גדלים",
+            "allow_rotation": "אפשר סיבוב",
+            "noise_level": "רמת גרעיניות",
+            "noise_scale": "שינוי קנה מידה של גרעיניות",
+            "noise_color": "צבע הגרעיניות",
+            "warp_type": "סוג עיוות",
+            "warp_intensity": "עוצמת עיוות",
+            "blur_radius": "רדיוס טשטוש",
+            "seed": "זרע אקראי",
+            "harmony": "דרגת ההרמוניה",
+            "palette": "לוח צבעים",
+            "harmony_colors": "צבעים הרמוניים",
+            "colorized_hue": "גוון צבעוני",
+            "bias": "הטיה",
+            "arrangement_params": "פרמטרי סידור",
+            "max_size": "גודל מקסימלי",
+            "distribution": "התפלגות",
+            "draw": "ציור",
+            "points": "קבוצת נקודות",
+            "color": "צבע",
+            "color1": "צבע 1",
+            "color2": "צבע 2",
+            "opacity": "אטימות",
+            "shape": "צורה",
+            "image": "תמונה",
+            "mask": "מסיכה",
+            "pos_bias": "היסט מיקום",
+            "size_dist": "התפלגות גדלים",
+            "rotation": "סיבוב",
+            "noise_rng": "מחולל מספרים אקראיים לגרעיניות",
+            "intensity": "עוצמה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה"
+        }
+    },
+    "🖼️ Download Image from URL": {
+        "title": "🖼️ הורדת תמונה מ-URL",
+        "widgets": {
+            "image_url": "כתובת URL של תמונה",
+            "save_file_name_override": "דריסת שם הקובץ הנשמר",
+            "save_path": "נתיב שמירה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "width": "רוחב",
+            "height": "גובה",
+            "int": "מספר שלם"
+        }
+    },
+    "📅 Format Date Time": {
+        "title": "📅 תאריך ושעה בפורמט",
+        "inputs": {
+            "date_format": "פורמט תאריך"
+        },
+        "widgets": {
+            "date_format": "פורמט תאריך"
+        },
+        "outputs": {
+            "formatted_date_time": "תאריך ושעה מעוצבים"
+        }
+    },
+    "⛔ Generate Negative Prompt": {
+        "title": "⛔ יצירת פרומפט שלילי",
+        "inputs": {
+            "input_prompt": "פרומפט קלט"
+        },
+        "widgets": {
+            "max_length": "אורך מרבי",
+            "num_beams": "מספר חיפוש קרניים",
+            "temperature": "טמפרטורה",
+            "top_k": "Top-K",
+            "top_p": "Top-P",
+            "blocked_words": "מילים חסומות"
+        },
+        "outputs": {
+            "negative_prompt": "פרומפט שלילי"
+        }
+    },
+    "📁 Get File Path": {
+        "title": "קבלת נתיב קובץ",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "image": "תמונה"
+        },
+        "outputs": {
+            "full_file_path": "נתיב קובץ מלא",
+            "file_path_only": "נתיב קובץ בלבד",
+            "file_name_only": "שם קובץ בלבד",
+            "file_extension_only": "סיומת קובץ בלבד"
+        }
+    },
+    "GroqAudiotranscription": {
+        "title": "תמלול אודיו של GroqI",
+        "widgets": {
+            "model": "מודל",
+            "file_path": "נתיב קובץ",
+            "preset": "הגדרה מראש",
+            "user_input": "קלט משתמש",
+            "response_format": "פורמט תגובה",
+            "temperature": "טמפרטורה",
+            "language": "שפה",
+            "max_retries": "מספר ניסיונות חוזרים מרבי"
+        },
+        "outputs": {
+            "transcription_result": "תוצאת תמלול",
+            "success": "הצלחה",
+            "status_code": "קוד מצב"
+        }
+    },
+    "✨📝 Groq ALM API - Transcribe": {
+        "title": "תרגום טקסט דרך Groq API",
+        "widgets": {
+            "model": "מודל",
+            "file_path": "נתיב קובץ",
+            "preset": "הגדרה מראש",
+            "user_input": "קלט משתמש",
+            "response_format": "פורמט תגובה",
+            "temperature": "טמפרטורה",
+            "language": "שפה",
+            "max_retries": "מספר ניסיונות חוזרים מרבי"
+        },
+        "outputs": {
+            "transcription_result": "תוצאת תמלול",
+            "success": "הצלחה",
+            "status_code": "קוד מצב"
+        }
+    },
+    "GroqAPICompletion": {
+        "title": "השלמה דרך Groq API",
+        "inputs": {
+            "image": "תמונה",
+            "prompt_name": "שם פרומפט",
+            "image_path": "נתיב התמונה",
+            "image_tensor": "טנזור תמונה",
+            "image_pil": "תמונת PIL",
+            "filename": "שם קובץ"
+        },
+        "widgets": {
+            "model": "מודל",
+            "preset": "הגדרה מראש",
+            "system_message": "הודעת מערכת",
+            "user_input": "קלט משתמש",
+            "temperature": "טמפרטורה",
+            "max_tokens": "מספר טוקנים מרבי",
+            "top_p": "Top-P",
+            "seed": "זרע אקראי",
+            "max_retries": "מספר ניסיונות חוזרים מרבי",
+            "stop": "רצף עצירה",
+            "json_mode": "מצב JSON"
+        },
+        "outputs": {
+            "string": "מחרוזת",
+            "boolean": "ערך בוליאני"
+        }
+    },
+    "✨💬 Groq LLM API": {
+        "title": "✨💬 מודל שפה גדול Groq API LLM",
+        "widgets": {
+            "model": "מודל",
+            "preset": "הגדרה מראש",
+            "system_message": "הודעת מערכת",
+            "user_input": "קלט משתמש",
+            "temperature": "טמפרטורה",
+            "max_tokens": "מספר טוקנים מרבי",
+            "top_p": "Top-P",
+            "seed": "זרע אקראי",
+            "max_retries": "מספר ניסיונות חוזרים מרבי",
+            "stop": "רצף עצירה",
+            "json_mode": "מצב JSON"
+        },
+        "outputs": {
+            "api_response": "תגובת API",
+            "success": "הצלחה",
+            "status_code": "קוד מצב"
+        }
+    },
+    "✨📷 Groq VLM API": {
+        "title": "✨📷 מודל שפה-חזותית Groq API VLM",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "model": "מודל",
+            "preset": "הגדרה מראש",
+            "system_message": "הודעת מערכת",
+            "user_input": "קלט משתמש",
+            "temperature": "טמפרטורה",
+            "max_tokens": "מספר טוקנים מרבי",
+            "top_p": "Top-P",
+            "seed": "זרע אקראי",
+            "max_retries": "מספר ניסיונות חוזרים מרבי",
+            "stop": "רצף עצירה",
+            "json_mode": "מצב JSON"
+        },
+        "outputs": {
+            "api_response": "תגובת API",
+            "success": "הצלחה",
+            "status_code": "קוד מצב"
+        }
+    },
+    "📂 Load Images From Path": {
+        "title": "📂טעינת תמונות מנתיב",
+        "widgets": {
+            "seed": "זרע אקראי",
+            "input_path": "נתיב קלט"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה",
+            "string": "מחרוזת",
+            "image_path": "נתיב התמונה",
+            "current_index": "אינדקס נוכחי",
+            "total_count": "מספר כולל"
+        }
+    },
+    "🖼️ Load Image Advanced": {
+        "title": "🖼️ טעינת תמונה מתקדמת",
+        "inputs": {
+            "image": "תמונה"
+        },
+        "widgets": {
+            "image": "תמונה"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "mask": "מסיכה",
+            "image_path": "נתיב התמונה",
+            "positive_prompt": "פרומפט חיובי",
+            "width": "רוחב",
+            "height": "גובה",
+            "string": "מחרוזת",
+            "int": "מספר שלם"
+        }
+    },
+    "🎲 Load Random Checkpoint": {
+        "title": "טעינת אקראית של מודל Checkpoint",
+        "widgets": {
+            "checkpoints": "מודל Checkpoint",
+            "seed": "זרע אקראי",
+            "repeat_count": "מספר חזרות",
+            "shuffle": "ערבוב אקראי",
+            "query": "שאילתה",
+            "candidates": "קבוצת מועמדים",
+            "limit_to_paths": "הגבלת נתיבים"
+        },
+        "outputs": {
+            "model": "מודל",
+            "clip": "מודל CLIP",
+            "vae": "מודל VAE",
+            "path": "נתיב"
+        }
+    },
+    "LoadTextImagePairsList": {
+        "title": "טעינת רשימת זוגות טקסט-תמונה",
+        "inputs": {
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "folder_path": "נתיב תיקייה",
+            "force_reload": "אילוץ טעינה מחדש",
+            "text_input": "כניסת טקסט",
+            "limit_count": "הגבלת מספר",
+            "text_format_extension": "סיומת פורמט טקסט",
+            "img_tensor": "טנזור תמונה",
+            "target_height": "גובה יעד",
+            "target_width": "רוחב יעד"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "string": "מחרוזת",
+            "int": "מספר שלם"
+        }
+    },
+    "LoadTextImagePairSingle": {
+        "title": "טעינת זוג טקסט-תמונה יחיד",
+        "inputs": {
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "folder_path": "נתיב תיקייה",
+            "image_input": "קלט תמונה",
+            "text_input": "כניסת טקסט",
+            "text_format_extension": "סיומת פורמט טקסט"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "string": "מחרוזת",
+            "int": "מספר שלם"
+        }
+    },
+    "🏷️ LoRA Loader Prompt Tags": {
+        "title": "🏷️ טעינת תגיות LoRA",
+        "inputs": {
+            "MODEL": "מודל",
+            "CLIP": "מודל CLIP",
+            "STRING": "מחרוזת"
+        },
+        "widgets": {
+            "console_log": "יומן מסוף"
+        },
+        "outputs": {
+            "model": "מודל",
+            "clip": "מודל CLIP",
+            "string": "מחרוזת",
+            "MODEL": "מודל",
+            "CLIP": "מודל CLIP",
+            "STRING": "מחרוזת"
+        }
+    },
+    "🖼️📊 Metadata Extractor (List)": {
+        "title": "🖼️📊 מחלץ מטא-נתונים (רשימה)",
+        "inputs": {
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "input_path": "נתיב קלט",
+            "filter_params": "פרמטרי סינון",
+            "max_file_count": "מספר קבצים מרבי"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "positive_prompt": "פרומפט חיובי",
+            "negative_prompt": "פרומפט שלילי",
+            "parsed_params_json": "נתוני JSON של פרמטרים שפורשו",
+            "filtered_params_grouped": "פרמטרים לאחר סינון, מקובצים",
+            "raw_metadata_json": "נתוני JSON של מטא-נתונים מקוריים",
+            "string": "מחרוזת"
+        }
+    },
+    "🖼️📊 Metadata Extractor (Single)": {
+        "title": "🖼️📊 מחלץ מטא-נתונים (קובץ יחיד)",
+        "inputs": {
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "input_path": "נתיב קלט",
+            "filter_params": "פרמטרי סינון"
+        },
+        "outputs": {
+            "image": "תמונה",
+            "positive_prompt": "פרומפט חיובי",
+            "negative_prompt": "פרומפט שלילי",
+            "parsed_params_json": "נתוני JSON של פרמטרים שפורשו",
+            "filtered_params_grouped": "פרמטרים לאחר סינון, מקובצים",
+            "filtered_params_list": "רשימת פרמטרים לאחר סינון",
+            "raw_metadata_json": "נתוני JSON של מטא-נתונים מקוריים",
+            "string": "מחרוזת"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pair (Single)": {
+        "title": "🖼️+📝טעינת זוג טקסט+תמונה（יחיד）",
+        "inputs": {
+            "text_input": "כניסת טקסט",
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "folder_path": "נתיב תיקייה",
+            "text_format_extension": "סיומת פורמט טקסט"
+        },
+        "outputs": {
+            "image_single": "תמונה בודדת",
+            "string_single": "מחרוזת בודדת",
+            "image_path_single": "נתיב של תמונה בודדת",
+            "image_filename_single": "שם קובץ של תמונה בודדת",
+            "total_count": "מספר כולל",
+            "string": "מחרוזת"
+        }
+    },
+    "🖼️+📝 Load Text-Image Pairs (List)": {
+        "title": "🖼️+📝 טעינת זוג טקסט+תמונה（רשימה）",
+        "inputs": {
+            "text_input": "כניסת טקסט",
+            "image_input": "קלט תמונה"
+        },
+        "widgets": {
+            "seed": "זרע אקראי",
+            "folder_path": "נתיב תיקייה",
+            "force_reload": "אילוץ טעינה מחדש",
+            "limit_count": "הגבלת מספר הפעמים",
+            "text_format_extension": "סיומת פורמט טקסט"
+        },
+        "outputs": {
+            "image_list": "רשימת תמונות",
+            "string_list": "רשימת מחרוזות",
+            "image_path_list": "רשימת נתיבי תמונות",
+            "image_filename_list": "רשימת שמות קובץ של תמונות",
+            "total_count": "מספר כולל",
+            "string": "מחרוזת"
+        }
+    },
+    "⚙️ Prompt Property Extractor": {
+        "title": "⚙️ מחלץ מאפייני פרומפט",
+        "inputs": {
+            "model": "מודל",
+            "clip": "מודל CLIP",
+            "vae": "מודל VAE"
+        },
+        "widgets": {
+            "input_string": "מחרוזת קלט",
+            "load_clip_from_checkpoint": "טעינת CLIP מתוך מודל Checkpoint",
+            "load_vae_from_checkpoint": "טעינת VAE מתוך מודל Checkpoint",
+            "cfg": "CFG",
+            "steps": "מספר צעדים",
+            "sampler_name": "מדגם",
+            "denoise": "הסרת רעש",
+            "width": "רוחב",
+            "height": "גובה",
+            "seed": "זרע אקראי",
+            "start_step": "צעד התחלה",
+            "end_step": "צעד סיום"
+        },
+        "outputs": {
+            "model": "מודל",
+            "clip": "מודל CLIP",
+            "vae": "מודל VAE",
+            "positive": "פרומפט חיובי",
+            "negative": "פרומפט שלילי",
+            "seed": "זרע אקראי",
+            "steps": "מספר צעדים",
+            "latent": "Latent",
+            "cfg": "CFG",
+            "sampler": "מדגם",
+            "denoise": "הסרת רעש",
+            "int": "מספר שלם",
+            "float": "מספר צף",
+            "none": "ללא",
+            "width": "רוחב",
+            "height": "גובה",
+            "start_step": "צעד התחלה",
+            "end_step": "צעד סיום",
+            "other_tags": "תגיות אחרות",
+            "resolved_string": "המחרוזת שפורשה",
+            "string": "מחרוזת"
+        }
+    },
+    "📐 Resolution Image Size Selector": {
+        "title": "📐 בוחר גודל תמונה",
+        "inputs": {
+            "image (optional)": "תמונה (אופציונלית)"
+        },
+        "widgets": {
+            "preset": "הגדרה מראש",
+            "preset_user": "הגדרה מראש של המשתמש",
+            "custom_width": "רוחב מותאם",
+            "custom_height": "גובה מותאם",
+            "multiply": "מכפיל",
+            "swap_width_and_height": "החלף רוחב וגובה",
+            "image_min_length": "אורך תמונה מינימלי",
+            "image_max_length": "אורך תמונה מרבי",
+            "snap_to_nearest": "יישור לערך הקרוב",
+            "snap_resolution": "יישור רזולוציה",
+            "batch_size": "גודל אצווה",
+            "width": "רוחב",
+            "height": "גובה",
+            "preset_name": "שם הגדרה מראש",
+            "from_user_presets": "מהגדרות מראש של המשתמש",
+            "image": "תמונה"
+        },
+        "outputs": {
+            "width": "רוחב",
+            "height": "גובה",
+            "latent": "Latent"
+        }
+    },
+    "💾 Save Text File With Path": {
+        "title": "💾 שמירת קובץ טקסט לנתיב",
+        "inputs": {
+            "file_text": "טקסט הקובץ"
+        },
+        "widgets": {
+            "path": "נתיב",
+            "prefix": "קידומת",
+            "counter_separator": "מפריד המונה",
+            "counter_length": "אורך המונה",
+            "suffix": "סיומת",
+            "output_extension": "סיומת הפלט",
+            "separator": "מפריד",
+            "number_padding": "ריפוד ספרות",
+            "extension": "סיומת",
+            "file": "קובץ",
+            "content": "תוכן"
+        },
+        "outputs": {
+            "output_full_path": "נתיב מלא של הפלט",
+            "output_name": "שם הפלט",
+            "output_path": "נתיב פלט"
+        }
+    },
+    "🧹 String Cleaning": {
+        "title": "🧹 ניקוי מחרוזת",
+        "inputs": {
+            "input_string": "מחרוזת קלט"
+        },
+        "widgets": {
+            "collapse_sequential_spaces": "איחוד רווחים רצופים",
+            "strip_leading_spaces": "הסרת רווחים מובילים",
+            "strip_trailing_spaces": "הסרת רווחים בסוף",
+            "strip_empty_lines": "הסרת שורות ריקות",
+            "strip_leading_symbols": "הסרת תווים מובילים",
+            "strip_trailing_symbols": "הסרת תווים בסוף",
+            "strip_newlines": "הסרת תווי מעבר שורה",
+            "replace_newlines_with_period_space": "החלפת מעברי שורה בנקודה ורווח",
+            "strip_inside_tags": "הסרת התוכן שבתוך התגיות",
+            "strip_between_start": "הסרה בין סמני פתיחה",
+            "strip_between_end": "הסרה בין סמני סיום",
+            "strip_leading_custom": "הסרת תו מוביל מותאם אישית",
+            "strip_trailing_custom": "הסרת תו מותאם אישית בסוף",
+            "strip_all_custom": "הסרת כל התווים המותאמים אישית",
+            "remove_text_before": "הסרת הטקסט שלפני",
+            "remove_text_after": "הסרת הטקסט שאחריו",
+            "multiline_find": "חיפוש רב-שורות",
+            "multiline_replace": "החלפה רבת-שורות"
+        },
+        "outputs": {
+            "string": "מחרוזת",
+            "cleaned_string": "המחרוזת המנוקה"
+        }
+    },
+    "✂️ String Text Extractor": {
+        "title": "✂️ מחלץ טקסט ממחרוזת",
+        "inputs": {
+            "input_string": "מחרוזת קלט"
+        },
+        "widgets": {
+            "input_string": "מחרוזת קלט",
+            "delimiters": "מפריד"
+        },
+        "outputs": {
+            "string": "מחרוזת",
+            "extracted_text": "הטקסט שחולץ",
+            "remainder_text": "הטקסט שנותר",
+            "extracted_list": "הרשימה שחולצה"
+        }
+    },
+    "✂️ String Text Splitter": {
+        "title": "✂️ מפצל מחרוזות טקסט",
+        "inputs": {
+            "input_string": "מחרוזת קלט"
+        },
+        "widgets": {
+            "delimiter": "מפריד",
+            "split_at_linebreaks": "פיצול במעברי שורה",
+            "target_indices": "אינדקס יעד"
+        },
+        "outputs": {
+            "string": "מחרוזת",
+            "first_chunk": "החלק הראשון",
+            "remainder": "שארית",
+            "chunk_list": "רשימת חלקים",
+            "targeted_chunks": "חלקים ייעודיים"
+        }
+    },
+    "🔠 Tiktoken Tokenizer Info": {
+        "title": "🔠 מפצל הטוקנים של Tiktoken",
+        "inputs": {
+            "input_string": "מחרוזת קלט"
+        },
+        "widgets": {
+            "input_string": "מחרוזת קלט",
+            "encoding_type": "סוג קידוד",
+            "token_chunk_size": "גודל בלוק סימון"
+        },
+        "outputs": {
+            "int": "מספר שלם",
+            "list": "רשימה",
+            "token_count": "ספירת טוקנים",
+            "character_count": "ספירת תווים",
+            "word_count": "ספירת מילים",
+            "split_string": "מחרוזת מפוצלת",
+            "split_string_list": "רשימת מחרוזות מפוצלות",
+            "split_token_ids": "מזהי טוקן מפוצלים",
+            "split_token_ids_list": "רשימת מזהי טוקן מפוצלים",
+            "text_hash": "גיבוב טקסט",
+            "special_tokens_used": "טוקנים מיוחדים שבהם נעשה שימוש",
+            "special_tokens_used_list": "רשימת הטוקנים המיוחדים שבהם נעשה שימוש",
+            "token_chunk_by_size": "טוקנים מחולקים לחלקים לפי גודל",
+            "token_chunk_by_size_to_word": "חתיכה לפי גודל עד גבול מילה",
+            "token_chunk_by_size_to_section": "חתיכה לפי גודל עד גבול פסקה"
+        }
+    },
+    "🎲 Random Int in Range": {
+        "title": "🎲 מספר שלם אקראי בטווח נתון",
+        "widgets": {
+            "min_value": "ערך מינימלי",
+            "max_value": "ערך מקסימלי",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "random_int": "מספר שלם אקראי"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🎲 Random Float in Range": {
+        "title": "🎲 מספר נקודה צפה אקראי בטווח נתון",
+        "widgets": {
+            "min_value": "ערך מינימלי",
+            "max_value": "ערך מקסימלי",
+            "decimals": "מספר מקומות עשרוניים",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "random_float": "מספר נקודה צפה אקראי"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🎲 Random Bool": {
+        "title": "🎲 ערך בוליאני אקראי",
+        "widgets": {
+            "true_probability": "הסתברות לערך אמת",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "random_bool": "ערך בוליאני אקראי"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🎲 Random String": {
+        "title": "🎲 מחרוזת אקראית",
+        "widgets": {
+            "input_list": "רשימת קלט",
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "random_choice": "בחירה אקראית"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🎲 Random Seed": {
+        "title": "🎲 זרע אקראי",
+        "outputs": {
+            "seed": "זרע אקראי"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🎲 Random Color": {
+        "title": "🎲 צבע אקראי",
+        "widgets": {
+            "seed": "זרע אקראי"
+        },
+        "outputs": {
+            "hex_color": "צבע הקספדצימלי",
+            "red": "אדום",
+            "green": "ירוק",
+            "blue": "כחול"
+        },
+        "description": "קטגוריה: ⚡ צמתים של MNeMiC"
+    },
+    "🔗 String Concat / Append": {
+        "title": "🔗 חיבור/הוספת מחרוזת",
+        "inputs": {
+            "string_0": "מחרוזת 0",
+            "string_1": "מחרוזת 1"
+        },
+        "widgets": {
+            "delimiter": "מפריד"
+        },
+        "outputs": {
+            "concatenated_string": "המחרוזת המצורפת"
+        },
+        "description": "קטגוריה: ⚡ צומת MNeMiC"
+    },
+    "✏️ Literal Bool": {
+        "title": "✏️ ערך בוליאני מילולי",
+        "widgets": {
+            "value": "ערך"
+        },
+        "outputs": {
+            "value": "ערך"
+        },
+        "description": "קטגוריה: ⚡ צומת MNeMiC"
+    },
+    "✏️ Literal Float": {
+        "title": "✏️ מספר נקודה צפה מילולי",
+        "widgets": {
+            "value": "ערך"
+        },
+        "outputs": {
+            "value": "ערך"
+        },
+        "description": "קטגוריה: ⚡ צומת MNeMiC"
+    },
+    "✏️ Literal Int": {
+        "title": "✏️ מספר שלם מילולי",
+        "widgets": {
+            "value": "ערך"
+        },
+        "outputs": {
+            "value": "ערך"
+        },
+        "description": "קטגוריה: ⚡ צומת MNeMiC"
+    },
+    "✏️ Literal String": {
+        "title": "✏️מחרוזת מילולית",
+        "widgets": {
+            "value": "ערך"
+        },
+        "outputs": {
+            "value": "ערך"
+        },
+        "description": "קטגוריה: ⚡ צומת MNeMiC"
+    },
+    "🎲 Ideogram 4 Random Prompter": {
+        "title": "🎲 מחולל פרומפטים אקראיים של Ideogram 4",
+        "widgets": {
+            "seed": "זרע אקראי",
+            "width": "רוחב",
+            "height": "גובה",
+            "region_count_min": "מספר אזורים מינימלי",
+            "region_count_max": "מספר אזורים מקסימלי",
+            "background_weight": "משקל הרקע",
+            "large_weight": "משקל אזור גדול",
+            "medium_weight": "משקל אזור בינוני",
+            "small_weight": "משקל אזור קטן",
+            "word_length_bias": "היסט אורך מילה",
+            "word_length_randomness": "אקראיות אורך המילה",
+            "scene_framing": "קומפוזיציית הסצנה",
+            "region_word_min": "מספר מילים מינימלי לאזור",
+            "region_word_max": "מספר מילים מרבי לאזור",
+            "freeform_chance": "הסתברות צורה חופשית",
+            "text_region_min": "מספר אזורי טקסט מינימלי",
+            "text_region_max": "מספר אזורי טקסט מרבי",
+            "element_palette_chance": "הסתברות פלטת צבעים לאלמנט",
+            "description_length": "אורך תיאור",
+            "description_override": "דריסת תיאור",
+            "description_prefix": "קידומת תיאור",
+            "medium": "מדיה",
+            "color_palette": "לוח צבעים",
+            "color_harmony": "הרמוניית צבעים",
+            "positioning_bias": "סטיית מיצוב",
+            "arrangement": "פריסה",
+            "description_background_prefix": "קידומת תיאור הרקע"
+        },
+        "outputs": {
+            "prompt": "פרומפט",
+            "preview": "תצוגה מקדימה",
+            "bboxes": "מסגרת גבולות",
+            "width": "רוחב",
+            "height": "גובה"
+        },
+        "description": "מחולל פרומפטים אקראיים ניסיוני בפורמט כיתוב JSON מובנה של Ideogram 4. כל מילה נלקחת ישירות ממילון wonderwords (ללא מילים קבועות מראש). מפזר אזורים משוקללים של רקע/גדול/בינוני/קטן ומאקראי סגנון, תאורה, מדיה, פלטת צבעים ופריסה. פלט: פרומפט/תצוגה מקדימה/תיבות גבול/רוחב/גובה. נדרשת חבילת 'wonderwords' מותקנת"
+    },
+    "🧩 Ideogram 4 Prompt Builder w. String Inputs": {
+        "title": "🧩 בונה פרומפטים של Ideogram 4",
+        "inputs": {
+            "image": "תמונה",
+            "import_json": "ייבוא JSON"
+        },
+        "widgets": {
+            "width": "רוחב",
+            "height": "גובה",
+            "high_level_description": "תיאור מתקדם",
+            "background": "רקע",
+            "style": "סגנון",
+            "photo": "תמונה",
+            "art_style": "סגנון אמנותי",
+            "aesthetics": "אסתטיקה",
+            "lighting": "תאורה",
+            "medium": "מדיה",
+            "style_palette_data": "נתוני לוח צבעי הסגנון",
+            "elements_data": "נתוני אלמנטים"
+        },
+        "outputs": {
+            "prompt": "פרומפט",
+            "preview": "תצוגה מקדימה",
+            "bboxes": "מסגרת גבולות",
+            "width": "רוחב",
+            "height": "גובה"
+        },
+        "description": "בונה פרומפטים ויזואלי בפורמט כיתוב JSON מובנה של Ideogram 4. גרור על הקנבס או לחץ על '+ אזור' כדי להוסיף אזורים; לכל אזור יש pin קלט של מחרוזת region_N תואם, וחיבור שלו דורס את התיאור שלו. תיבות הגבול מנורמלות לרשת 0-1000 בפורמט [ymin, xmin, ymax, xmax]; רוחב/גובה מגדירים את יחס רוחב-גובה של הקנבס"
+    },
+    "📝 Wildcard Processor": {
+        "title": "📝 מעבד פרומפט",
+        "inputs": {
+            "wildcard_string": "מחרוזת פרומפט"
+        },
+        "widgets": {
+            "wildcard_string": "מחרוזת פרומפט",
+            "seed": "זרע אקראי",
+            "multiple_separator": "מפריד מרובה",
+            "recache_wildcards": "מטמון פרומפט מחדש",
+            "console_log": "יומן מסוף",
+            "message": "הודעה",
+            "level": "רמה",
+            "log": "יומן",
+            "wildcard_name": "שם פרומפט",
+            "match": "התאמה",
+            "text": "טקסט",
+            "tag_delimiters_str": "מחרוזת מפרידי תגיות"
+        },
+        "outputs": {
+            "string": "מחרוזת",
+            "processed_text": "טקסט מעובד",
+            "seed": "זרע אקראי",
+            "extracted_tags_string": "חילוץ תגיות（מחרוזת）",
+            "extracted_tags_list": "חילוץ תגיות（רשימה）",
+            "raw_tags_string": "תגיות מקוריות（מחרוזת）",
+            "raw_tags_list": "תגיות גולמיות（רשימה）"
+        }
+    }
+}
