@@ -1,0 +1,252 @@
+{
+    "omni_llm_api_config": {
+        "title": "Configuration API Omni LLM",
+        "inputs": {
+            "load_preset": "Charger le préréglage"
+        },
+        "widgets": {
+            "api_provider": "Fournisseur API",
+            "model_name": "Nom du modèle",
+            "api_base": "Adresse API",
+            "api_key": "Clé API",
+            "context_limit": "Limite de contexte",
+            "timeout": "Durée d'expiration",
+            "max_history_rounds": "Nombre maximum d'échanges retenus",
+            "max_edge": "Côté maximum",
+            "preserve_thinking": "Conserver le processus de réflexion",
+            "save_preset": "Enregistrer le préréglage",
+            "preset_name": "Nom du préréglage",
+            "delete_preset": "Supprimer le préréglage"
+        },
+        "outputs": {
+            "api_config": "Configuration de l'API"
+        },
+        "description": "Nœud de configuration API Omni LLM"
+    },
+    "omni_llm_asr_loader": {
+        "title": "Chargeur de modèle Omni LLM ASR",
+        "inputs": {
+            "mmproj": "Projection multimodale"
+        },
+        "widgets": {
+            "asr_model": "Modèle ASR",
+            "n_gpu_layers": "Nombre de couches GPU",
+            "language": "Langue",
+            "task": "Tâche",
+            "enable_timestamps": "Activer les horodatages",
+            "n_ctx": "Taille de la fenêtre de contexte"
+        },
+        "outputs": {
+            "asr_model": "Modèle ASR"
+        },
+        "description": "Chargeur de modèle ASR basé sur llama-cpp-python 0.4.0 MTMD\nUtilise Qwen3ASRChatHandler pour appeler l'inférence audio native de llama.cpp"
+    },
+    "omni_llm_clean_states": {
+        "title": "Nettoyage d'états Omni LLM",
+        "inputs": {
+            "any": "N'importe lequel"
+        },
+        "widgets": {
+            "state_uid": "UID de l'état",
+            "clean_llm": "Nettoyage du LLM",
+            "clean_asr": "Nettoyer l'ASR",
+            "clean_tts": "Nettoyer le TTS",
+            "unload_all_comfyui_models": "Décharger tous les modèles ComfyUI"
+        },
+        "outputs": {
+            "any": "N'importe lequel"
+        },
+        "description": ""
+    },
+    "omni_llm_model_loader": {
+        "title": "Chargeur de modèle Omni LLM",
+        "widgets": {
+            "model": "Modèle",
+            "enable_mmproj": "Activer la projection multimodale",
+            "mmproj": "Projection multimodale",
+            "mtp_mode": "Mode MTP",
+            "n_ctx": "Taille de la fenêtre de contexte",
+            "n_gpu_layers": "Nombre de couches GPU",
+            "vram_limit": "Limite de VRAM",
+            "image_max_tokens": "Nombre maximal de jetons par image",
+            "attention_type": "Type d'attention",
+            "tensor_split": "Division de tenseur"
+        },
+        "outputs": {
+            "llama_model": "Modèle Llama"
+        },
+        "description": ""
+    },
+    "omni_llm_parameters": {
+        "title": "Paramètres Omni LLM",
+        "widgets": {
+            "max_tokens": "Nombre maximal de tokens",
+            "top_k": "Top K",
+            "top_p": "Top P",
+            "min_p": "Min P",
+            "typical_p": "Typical P",
+            "temperature": "Température",
+            "repeat_penalty": "Pénalité de répétition",
+            "frequency_penalty": "Pénalité de fréquence",
+            "presence_penalty": "Pénalité de présence",
+            "mirostat_mode": "Mode Mirostat",
+            "mirostat_eta": "Taux d'apprentissage Mirostat",
+            "mirostat_tau": "Entropie cible Mirostat",
+            "seed": "Graine",
+            "state_uid": "UID de l'état",
+            "reasoning_budget": "Budget de raisonnement"
+        },
+        "outputs": {
+            "parameters": "Paramètres"
+        },
+        "description": ""
+    },
+    "omni_llm_multi_image_input": {
+        "title": "Entrée multi-images Omni LLM",
+        "inputs": {
+            "image1": "Image 1",
+            "image2": "Image 2",
+            "image3": "Image 3",
+            "image4": "Image 4",
+            "image5": "Image 5",
+            "image6": "Image 6",
+            "image7": "Image 7",
+            "image8": "Image 8",
+            "image9": "Image 9"
+        },
+        "widgets": {
+            "mode": "Mode (sélection)",
+            "story_type": "Type d'histoire",
+            "story_length": "Longueur de l'histoire",
+            "language": "Langue",
+            "max_size": "Taille maximale",
+            "custom_prompt": "Prompt personnalisé",
+            "include_image_descriptions": "Inclure les descriptions d'images",
+            "story_theme": "Thème de l'histoire",
+            "narrative_style": "Style narratif",
+            "content_focus": "Point focal du contenu",
+            "target_audience": "Public cible",
+            "video_model": "Modèle vidéo"
+        },
+        "outputs": {
+            "images": "Image",
+            "prompt": "Prompt (texte)"
+        },
+        "description": "Nœud d'entrée multi-images\n- Prend en charge l'analyse de plusieurs images（9 maximum）\n- Prend en charge le mode sans image, où le prompt est généré via les options\n- Prétraitement et encodage automatiques\n- La sortie peut être branchée directement sur toutes les images du lot et sur le custom_prompt du nœud llama_cpp_unified_inference\n- Optimisé pour la génération vidéo Wan2.2/LTX2.5/MiniMax-H3\n- Prend en charge l'inférence inverse multi-images, ce qui compense la limite des nœuds d'inférence restreints à une seule image"
+    },
+    "omni_llm_realtime_chat": {
+        "title": "Conversation Omni LLM en temps réel",
+        "inputs": {
+            "llama_model": "Modèle Llama",
+            "api_config": "Configuration de l'API",
+            "parameters": "Paramètres",
+            "skill_loader": "Chargeur de compétences",
+            "system_prompt_preset": "Préréglage de prompt système"
+        },
+        "widgets": {
+            "user_message": "Message de l'utilisateur",
+            "chat_history_json": "Historique de chat JSON",
+            "request_id": "ID de requête",
+            "current_images_json": "JSON des images actuelles",
+            "flow_state_json": "État du flux en JSON",
+            "options_json": "Options JSON",
+            "system_prompt": "Prompt système",
+            "native_video": "Vidéo native",
+            "save_conversation": "Enregistrer la conversation",
+            "session_id": "ID de session"
+        },
+        "description": "Omni LLM Conversation en temps réel (fenêtre de chat intégrée + protocole Skill multi-étapes)"
+    },
+    "omni_llm_skill_loader": {
+        "title": "Chargeur de compétences Omni LLM",
+        "inputs": {
+            "skill": "Compétence"
+        },
+        "widgets": {
+            "language": "Langue"
+        },
+        "outputs": {
+            "skill_loader": "Chargeur de compétences"
+        },
+        "description": "Chargeur de compétences : sélection automatique ou compétence fixée au choix"
+    },
+    "omni_llm_tts_loader": {
+        "title": "Chargeur de modèle TTS Omni LLM",
+        "inputs": {
+            "mmproj": "Projection multimodale"
+        },
+        "widgets": {
+            "tts_model": "Modèle TTS",
+            "n_gpu_layers": "Nombre de couches GPU",
+            "language": "Langue",
+            "n_ctx": "Taille de la fenêtre de contexte",
+            "ref_audio_path": "Chemin de l'audio de référence"
+        },
+        "outputs": {
+            "tts_model": "Modèle TTS"
+        },
+        "description": "Chargeur de modèle TTS (llama-cpp MTMD), sélectionnez le fichier de modèle spécifique dans le répertoire"
+    },
+    "omni_llm_unified_inference": {
+        "title": "Inférence unifiée Omni LLM",
+        "inputs": {
+            "image_model": "Modèle d'image",
+            "video_model": "Modèle vidéo",
+            "llama_model": "Modèle Llama",
+            "api_config": "Configuration de l'API",
+            "asr_model": "Modèle ASR",
+            "tts_model": "Modèle TTS",
+            "parameters": "Paramètres",
+            "images": "Image",
+            "video": "Vidéo",
+            "audio": "Signal audio",
+            "queue_handler": "Gestionnaire de file d'attente"
+        },
+        "widgets": {
+            "inference_mode": "Mode d'inférence",
+            "preset_prompt": "Prompt prédéfini",
+            "system_prompt": "Prompt système",
+            "text_input": "Entrée de texte",
+            "prompt_language": "Langue du prompt",
+            "response_language": "Langue de la réponse",
+            "output_format": "Format de sortie",
+            "enable_constraints": "Activer les contraintes",
+            "enable_negative_prompts": "Activer le prompt négatif",
+            "audio_model": "Modèle audio",
+            "video_max_frames": "Nombre maximal d'images de la vidéo",
+            "video_sampling": "Échantillonnage vidéo",
+            "video_manual_indices": "Indices manuels de la vidéo",
+            "video_audio": "Audio de la vidéo",
+            "image_max_size": "Taille maximale de l'image",
+            "batch_combination": "Combinaison de lots",
+            "force_offload": "Déchargement forcé"
+        },
+        "outputs": {
+            "output": "Sortie",
+            "output_list": "Liste de sortie",
+            "state_uid": "UID de l'état",
+            "audio": "Signal audio"
+        },
+        "description": "Nœud d'inférence unifié - prend en charge les modèles VL\nDétection automatique du type de modèle et utilisation de la méthode d'inférence correspondante\nPrise en charge du traitement audio par combinaison ASR+VL"
+    },
+    "omni_llm_video_loader": {
+        "title": "Chargeur de vidéo Omni LLM",
+        "inputs": {
+            "video": "Vidéo"
+        },
+        "widgets": {
+            "force_rate": "Forcer la fréquence d'images",
+            "custom_width": "Largeur personnalisée",
+            "custom_height": "Hauteur personnalisée",
+            "frame_load_cap": "Limite de trames chargées",
+            "skip_first_frames": "Sauter les N premières trames",
+            "select_every_nth": "Sélectionner 1 trame toutes les N trames"
+        },
+        "outputs": {
+            "images": "Image",
+            "video": "Vidéo",
+            "audio": "Signal audio"
+        },
+        "description": "Nœud de chargement de vidéo\n- Aucun port d'entrée\n- Ports de sortie : séquence d'images, vidéo, signal audio\n- Sélection et téléversement de fichiers vidéo pris en charge\n- Paramètres personnalisables : fréquence d'images, résolution, limite de trames, etc."
+    }
+}

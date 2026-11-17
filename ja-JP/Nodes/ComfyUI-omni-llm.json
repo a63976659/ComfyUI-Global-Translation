@@ -1,0 +1,252 @@
+{
+    "omni_llm_api_config": {
+        "title": "Omni LLM API 設定",
+        "inputs": {
+            "load_preset": "プリセット読み込み"
+        },
+        "widgets": {
+            "api_provider": "APIプロバイダー",
+            "model_name": "モデル名",
+            "api_base": "APIアドレス",
+            "api_key": "APIキー",
+            "context_limit": "コンテキスト制限",
+            "timeout": "タイムアウト時間",
+            "max_history_rounds": "履歴の最大ターン数",
+            "max_edge": "最大エッジ",
+            "preserve_thinking": "思考過程を保持",
+            "save_preset": "プリセット保存",
+            "preset_name": "プリセット名",
+            "delete_preset": "プリセット削除"
+        },
+        "outputs": {
+            "api_config": "API設定"
+        },
+        "description": "Omni LLM API 設定ノード"
+    },
+    "omni_llm_asr_loader": {
+        "title": "Omni LLM ASR モデルローダ",
+        "inputs": {
+            "mmproj": "マルチモーダル投影"
+        },
+        "widgets": {
+            "asr_model": "ASRモデル",
+            "n_gpu_layers": "GPUレイヤー数",
+            "language": "言語",
+            "task": "タスク",
+            "enable_timestamps": "タイムスタンプを有効化",
+            "n_ctx": "コンテキストウィンドウサイズ"
+        },
+        "outputs": {
+            "asr_model": "ASRモデル"
+        },
+        "description": "llama-cpp-python 0.4.0 MTMD ベースの ASR モデルローダ\nQwen3ASRChatHandler を使用して llama.cpp ネイティブ音声推論を呼び出し"
+    },
+    "omni_llm_clean_states": {
+        "title": "Omni LLM ステータスクリア",
+        "inputs": {
+            "any": "任意"
+        },
+        "widgets": {
+            "state_uid": "状態UID",
+            "clean_llm": "LLMクリア",
+            "clean_asr": "ASRクリーンアップ",
+            "clean_tts": "TTS をクリーン",
+            "unload_all_comfyui_models": "すべてのComfyUIモデルをアンロード"
+        },
+        "outputs": {
+            "any": "任意"
+        },
+        "description": ""
+    },
+    "omni_llm_model_loader": {
+        "title": "Omni LLM モデルローダ",
+        "widgets": {
+            "model": "モデル",
+            "enable_mmproj": "マルチモーダルプロジェクション有効",
+            "mmproj": "マルチモーダル投影",
+            "mtp_mode": "MTP モード",
+            "n_ctx": "コンテキストウィンドウサイズ",
+            "n_gpu_layers": "GPUレイヤー数",
+            "vram_limit": "VRAM 制限",
+            "image_max_tokens": "画像の最大トークン数",
+            "attention_type": "アテンションタイプ",
+            "tensor_split": "テンソル分割"
+        },
+        "outputs": {
+            "llama_model": "Llamaモデル"
+        },
+        "description": ""
+    },
+    "omni_llm_parameters": {
+        "title": "Omni LLM パラメータ",
+        "widgets": {
+            "max_tokens": "最大トークン数",
+            "top_k": "Top K",
+            "top_p": "Top P",
+            "min_p": "Min P",
+            "typical_p": "典型P",
+            "temperature": "温度",
+            "repeat_penalty": "繰り返しペナルティ",
+            "frequency_penalty": "頻度ペナルティ",
+            "presence_penalty": "存在ペナルティ",
+            "mirostat_mode": "Mirostatモード",
+            "mirostat_eta": "Mirostat 学習率",
+            "mirostat_tau": "Mirostat 目標エントロピー",
+            "seed": "シード",
+            "state_uid": "状態UID",
+            "reasoning_budget": "推論予算"
+        },
+        "outputs": {
+            "parameters": "パラメータ"
+        },
+        "description": ""
+    },
+    "omni_llm_multi_image_input": {
+        "title": "Omni LLM 複数画像入力",
+        "inputs": {
+            "image1": "画像1",
+            "image2": "画像2",
+            "image3": "画像3",
+            "image4": "画像4",
+            "image5": "画像5",
+            "image6": "画像6",
+            "image7": "画像7",
+            "image8": "画像8",
+            "image9": "画像9"
+        },
+        "widgets": {
+            "mode": "モード",
+            "story_type": "ストーリータイプ",
+            "story_length": "ストーリーの長さ",
+            "language": "言語",
+            "max_size": "最大サイズ",
+            "custom_prompt": "カスタムプロンプト",
+            "include_image_descriptions": "画像の説明を含む",
+            "story_theme": "ストーリーテーマ",
+            "narrative_style": "叙事スタイル",
+            "content_focus": "内容フォーカス",
+            "target_audience": "対象読者",
+            "video_model": "動画モデル"
+        },
+        "outputs": {
+            "images": "画像",
+            "prompt": "プロンプト"
+        },
+        "description": "複数画像入力ノード\n- 複数枚の画像を入力して分析（最大 9 枚）\n- 画像なしモードに対応し、オプション設定でプロンプトを生成\n- 前処理とエンコードを自動実行\n- 出力は llama_cpp_unified_inference ノードのバッチ内の全画像と custom_prompt に直接接続可能\n- Wan2.2/LTX2.5/MiniMax-H3 動画生成向けに最適化\n- 複数画像からのプロンプト逆算に対応し、推論ノードが 1 枚しか入力できない制限を補完"
+    },
+    "omni_llm_realtime_chat": {
+        "title": "Omni LLM リアルタイムチャット",
+        "inputs": {
+            "llama_model": "Llamaモデル",
+            "api_config": "API設定",
+            "parameters": "パラメータ",
+            "skill_loader": "スキルローダ",
+            "system_prompt_preset": "システムプロンプトプリセット"
+        },
+        "widgets": {
+            "user_message": "ユーザーメッセージ",
+            "chat_history_json": "チャット履歴JSON",
+            "request_id": "リクエストID",
+            "current_images_json": "現在画像JSON",
+            "flow_state_json": "フロー状態 JSON",
+            "options_json": "オプションJSON",
+            "system_prompt": "システムプロンプト",
+            "native_video": "ネイティブ動画",
+            "save_conversation": "チャットを保存",
+            "session_id": "セッション ID"
+        },
+        "description": "Omni LLM リアルタイム会話（チャットウィンドウ内蔵 + Skill マルチステージプロトコル）"
+    },
+    "omni_llm_skill_loader": {
+        "title": "Omni LLM スキルローダー",
+        "inputs": {
+            "skill": "スキル"
+        },
+        "widgets": {
+            "language": "言語"
+        },
+        "outputs": {
+            "skill_loader": "スキルローダ"
+        },
+        "description": "スキルローダ：自動選択、または1つのスキルを固定選択"
+    },
+    "omni_llm_tts_loader": {
+        "title": "Omni LLM TTS モデルローダ",
+        "inputs": {
+            "mmproj": "マルチモーダル投影"
+        },
+        "widgets": {
+            "tts_model": "TTSモデル",
+            "n_gpu_layers": "GPUレイヤー数",
+            "language": "言語",
+            "n_ctx": "コンテキストウィンドウサイズ",
+            "ref_audio_path": "参考音声パス"
+        },
+        "outputs": {
+            "tts_model": "TTSモデル"
+        },
+        "description": "TTS モデルローダ（llama-cpp MTMD）、ディレクトリ内の特定のモデルファイルを選択"
+    },
+    "omni_llm_unified_inference": {
+        "title": "Omni LLM 統一推論",
+        "inputs": {
+            "image_model": "画像モデル",
+            "video_model": "動画モデル",
+            "llama_model": "Llamaモデル",
+            "api_config": "API設定",
+            "asr_model": "ASRモデル",
+            "tts_model": "TTSモデル",
+            "parameters": "パラメータ",
+            "images": "画像",
+            "video": "動画",
+            "audio": "音声",
+            "queue_handler": "キューハンドラー"
+        },
+        "widgets": {
+            "inference_mode": "推論モード",
+            "preset_prompt": "プリセットプロンプト",
+            "system_prompt": "システムプロンプト",
+            "text_input": "txt_in.",
+            "prompt_language": "プロンプト言語",
+            "response_language": "応答言語",
+            "output_format": "出力形式",
+            "enable_constraints": "制約有効",
+            "enable_negative_prompts": "ネガティブプロンプト有効",
+            "audio_model": "音声モデル",
+            "video_max_frames": "動画の最大フレーム数",
+            "video_sampling": "動画サンプリング",
+            "video_manual_indices": "動画手動インデックス",
+            "video_audio": "動画音声",
+            "image_max_size": "画像の最大サイズ",
+            "batch_combination": "バッチ組み合わせ",
+            "force_offload": "強制アンロード"
+        },
+        "outputs": {
+            "output": "出力",
+            "output_list": "出力リスト",
+            "state_uid": "状態UID",
+            "audio": "音声"
+        },
+        "description": "統一推論ノード - VLモデル対応\nモデルタイプを自動検出し、対応する推論方式を使用\nASR+VLの組み合わせによる音声処理に対応"
+    },
+    "omni_llm_video_loader": {
+        "title": "Omni LLM 動画ローダ",
+        "inputs": {
+            "video": "動画"
+        },
+        "widgets": {
+            "force_rate": "強制フレームレート",
+            "custom_width": "カスタム幅",
+            "custom_height": "カスタム高さ",
+            "frame_load_cap": "フレーム読み込み上限",
+            "skip_first_frames": "最初の N フレームをスキップ",
+            "select_every_nth": "N フレームごとに 1 フレーム選択"
+        },
+        "outputs": {
+            "images": "画像",
+            "video": "動画",
+            "audio": "音声"
+        },
+        "description": "動画読み込みノード\n- 入力ポートなし\n- 出力ポート：画像シーケンス、動画、音声\n- 動画ファイルの選択とアップロードに対応\n- フレームレート、解像度、フレーム数制限などのパラメータのカスタムに対応"
+    }
+}

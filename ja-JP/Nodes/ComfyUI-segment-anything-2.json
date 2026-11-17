@@ -1,0 +1,105 @@
+{
+    "DownloadAndLoadSAM2Model": {
+        "title": "SAM2 モデルをダウンロードして読み込み",
+        "widgets": {
+            "model": "モデル",
+            "segmentor": "セグメンテーションフレームワーク",
+            "device": "デバイス",
+            "precision": "精度"
+        },
+        "outputs": {
+            "sam2_model": "SAM2"
+        }
+    },
+    "Sam2Segmentation": {
+        "title": "SAM2 分割",
+        "inputs": {
+            "sam2_model": "SAM2",
+            "image": "画像",
+            "bboxes": "BBox",
+            "mask": "マスク",
+            "coordinates_positive": "ポジティブ座標",
+            "coordinates_negative": "ネガティブ座標"
+        },
+        "widgets": {
+            "keep_model_loaded": "モデル読み込みを保持",
+            "individual_objects": "個別オブジェクト"
+        },
+        "outputs": {
+            "mask": "マスク"
+        }
+    },
+    "Florence2toCoordinates": {
+        "title": "Florence2 データ座標",
+        "inputs": {
+            "data": "データ"
+        },
+        "widgets": {
+            "index": "番号",
+            "batch": "バッチ"
+        },
+        "outputs": {
+            "center_coordinates": "中心座標",
+            "bboxes": "BBox"
+        }
+    },
+    "Sam2AutoSegmentation": {
+        "title": "SAM2 自動分割",
+        "inputs": {
+            "sam2_model": "SAM2",
+            "image": "画像"
+        },
+        "widgets": {
+            "points_per_side": "各辺の点数",
+            "points_per_batch": "バッチポイント数",
+            "pred_iou_thresh": "マスク品質しきい値",
+            "stability_score_thresh": "安定性しきい値",
+            "stability_score_offset": "安定性スコアオフセット",
+            "mask_threshold": "マスク閾値",
+            "crop_n_layers": "クロップレイヤー数",
+            "box_nms_thresh": "box枠 枠内非重複しきい値",
+            "crop_nms_thresh": "クロップ領域非重複しきい値",
+            "crop_overlap_ratio": "クロップ重複率",
+            "crop_n_points_downscale_factor": "トリミング点ダウンサンプリング係数",
+            "min_mask_region_area": "最小マスク領域",
+            "use_m2m": "m2m を有効化",
+            "keep_model_loaded": "モデル読み込みを保持"
+        },
+        "outputs": {
+            "mask": "マスク",
+            "segmented_image": "画像",
+            "bbox": "BBox"
+        }
+    },
+    "Sam2VideoSegmentationAddPoints": {
+        "title": "SAM2 動画分割（ポイント追加）",
+        "inputs": {
+            "sam2_model": "SAM2",
+            "image": "画像",
+            "prev_inference_state": "前回のサンプリング状態",
+            "coordinates_negative": "ネガティブ座標",
+            "coordinates_positive": "ポジティブ座標"
+        },
+        "widgets": {
+            "frame_index": "フレームインデックス",
+            "object_index": "オブジェクトインデックス"
+        },
+        "outputs": {
+            "sam2_model": "SAM2",
+            "inference_state": "サンプリング状態"
+        }
+    },
+    "Sam2VideoSegmentation": {
+        "title": "SAM2 動画セグメンテーション",
+        "inputs": {
+            "sam2_model": "SAM2",
+            "inference_state": "サンプリング状態"
+        },
+        "widgets": {
+            "keep_model_loaded": "モデル読み込みを保持"
+        },
+        "outputs": {
+            "mask": "マスク"
+        }
+    }
+}
