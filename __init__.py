@@ -13,7 +13,13 @@ import atexit
 import server
 import folder_paths
 from aiohttp import web
+from functools import lru_cache
 from pathlib import Path
+
+try:
+    from comfyui_workflow_templates import get_asset_path, iter_templates
+except ImportError:
+    iter_templates = None
 
 # 插件版本信息
 VERSION = "2.0"
@@ -129,6 +135,103 @@ def get_menu_translation(locale):
     return menus
 
 
+@lru_cache(maxsize=1)
+def get_blueprint_catalog():
+    catalog = {}
+    sources = [(path, True) for path in COMFY_PATH.joinpath("blueprints").glob("*.json")]
+    templates = ()
+    if iter_templates is not None:
+        try:
+            templates = iter_templates()
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            pass
+    for template in templates:
+        for asset in template.assets:
+            if isinstance(asset.filename, str) and asset.filename.endswith(".json"):
+                try:
+                    sources.append((Path(get_asset_path(template.template_id, asset.filename)), False))
+                except (OSError, KeyError):
+                    continue
+    seen = set()
+    for path, from_library in sources:
+        workflow = try_get_json(path)
+        nodes = workflow.get("nodes") if isinstance(workflow, dict) else None
+        if not isinstance(nodes, list):
+            continue
+        nodes = [node for node in nodes if isinstance(node, dict)]
+        if not nodes:
+            continue
+        definitions = workflow.get("definitions")
+        subgraphs = definitions.get("subgraphs") if isinstance(definitions, dict) else None
+        if not isinstance(subgraphs, list):
+            continue
+        instances = nodes + [
+            node
+            for definition in subgraphs
+            if isinstance(definition, dict) and isinstance(definition.get("nodes"), list)
+            for node in definition.get("nodes", [])
+            if isinstance(node, dict)
+        ]
+        for graph in subgraphs:
+            graph_id = graph.get("id") if isinstance(graph, dict) else None
+            if not isinstance(graph_id, str) or (from_library and graph_id != nodes[0].get("type")):
+                continue
+            name = graph.get("name")
+            if not isinstance(name, str) or not name:
+                continue
+            instance = next((node for node in instances if node.get("type") == graph_id), {})
+            title = instance.get("title")
+            title = title if isinstance(title, str) and title else name
+            file = path.stem if from_library else name
+            slot_ids = []
+            labels = {}
+            for direction in ("inputs", "outputs"):
+                slots = graph.get(direction)
+                if not isinstance(slots, list):
+                    continue
+                slot_ids.extend(
+                    slot["id"]
+                    for slot in slots
+                    if isinstance(slot, dict) and isinstance(slot.get("id"), str)
+                )
+                labels[direction] = {
+                    slot["name"]: slot.get("label") or slot.get("localized_name") or slot["name"]
+                    for slot in slots
+                    if isinstance(slot, dict) and isinstance(slot.get("name"), str)
+                }
+            blueprint = {
+                "id": graph_id,
+                "name": name,
+                "title": title,
+                "file": file,
+                "slots": slot_ids,
+                "labels": labels,
+            }
+            signature = json.dumps(blueprint, sort_keys=True)
+            if signature in seen:
+                continue
+            seen.add(signature)
+            for alias in dict.fromkeys((name, file, title)):
+                catalog.setdefault(alias, []).append(blueprint)
+            if from_library:
+                break
+    return catalog
+
+
+def get_blueprint_translation(menus):
+    catalog = {
+        name: [
+            {
+                **blueprint,
+                "label": menus.get(blueprint["file"]) or menus.get(blueprint["title"]) or menus.get(blueprint["name"]),
+            }
+            for blueprint in blueprints
+        ]
+        for name, blueprints in get_blueprint_catalog().items()
+    }
+    return {"catalog": catalog}
+
+
 def compile_translation(locale, disabled_plugins=None):
     nodes_translation = get_nodes_translation(locale, disabled_plugins)
     node_category_translation = get_category_translation(locale)
@@ -137,7 +240,8 @@ def compile_translation(locale, disabled_plugins=None):
     return json.dumps({
         "Nodes": nodes_translation,
         "NodeCategory": node_category_translation,
-        "Menu": menu_translation
+        "Menu": menu_translation,
+        "Blueprints": get_blueprint_translation(menu_translation)
     }, ensure_ascii=False)
 
 

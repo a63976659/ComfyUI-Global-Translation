@@ -5,34 +5,38 @@ const vueTextareaSelector = `${vueWidgetSelector} textarea`;
 const vueWidgetLabelSelector = `${vueWidgetSelector} label[for]`;
 const vueTextSelector = `${vueTitleSelector}, ${vueTextareaSelector}, ${vueWidgetLabelSelector}`;
 
-function getBlueprint(node, catalog, includeRenamed = false) {
+function getBlueprint(node, catalog) {
   if (!node.isSubgraphNode?.() || !catalog) return;
   const graph = node.subgraph;
   const definitions = Object.hasOwn(catalog, graph.name) ? catalog[graph.name] : [];
-  if (!definitions.length && !includeRenamed) return;
 
   // Clipboard insertion remaps the definition UUID but keeps its boundary slot IDs.
   const slotIds = new Set([...graph.inputNode.slots, ...graph.outputNode.slots].map((slot) => slot.id));
-  const named = definitions.find((definition) => definition.id === graph.id) ??
-    definitions.find((definition) => definition.slots.some((id) => slotIds.has(id)));
-  if (named || !includeRenamed) return named;
+  const named = definitions.filter((definition) => definition.id === graph.id ||
+    definition.slots.some((id) => slotIds.has(id)));
 
   // Renaming in the UI also changes the definition name. Recover the labels
   // from its complete original boundary, allowing new promoted ports.
-  const matches = Object.values(catalog).flat().filter((definition) =>
+  const matches = named.length ? named : Object.values(catalog).flat().filter((definition) =>
     definition.slots.length && definition.slots.every((id) => slotIds.has(id))
   );
   if (!matches.length) return;
-  const largest = Math.max(...matches.map((definition) => definition.slots.length));
-  const [first, ...others] = matches.filter((definition) => definition.slots.length === largest);
-  const sameLabels = others.every((definition) =>
-    ["inputs", "outputs"].every((direction) => {
-      const labels = Object.entries(first.labels[direction] ?? {});
-      const other = definition.labels[direction] ?? {};
-      return labels.length === Object.keys(other).length && labels.every(([name, label]) => other[name] === label);
-    })
-  );
-  if (sameLabels) return { labels: first.labels };
+  const ranked = matches.map((definition) => ({
+    definition,
+    count: definition.slots.filter((id) => slotIds.has(id)).length,
+  }));
+  const largest = Math.max(...ranked.map(({ count }) => count));
+  const best = ranked.filter(({ count }) => count === largest).map(({ definition }) => definition);
+  const [first] = best;
+  const labels = Object.fromEntries(["inputs", "outputs"].map((direction) => [
+    direction,
+    Object.fromEntries(Object.entries(first.labels[direction] ?? {}).filter(([name, label]) =>
+      best.every((definition) => definition.labels[direction]?.[name] === label)
+    )),
+  ]));
+  const title = named.length && best.every((definition) => definition.label === first.label)
+    ? first : {};
+  return { ...title, labels };
 }
 
 function getTitleTranslation(original, blueprint) {
@@ -45,8 +49,9 @@ function normalizeComponentName(name) {
   return name.toLowerCase().replace(/[\s_-]+/g, " ").trim();
 }
 
-function getInternalTranslation(graph, slot, direction, label, nodes) {
-  if (!slot?.linkIds.length) return;
+function getInternalTranslation(graph, slot, direction, label, nodes, visited = new Set()) {
+  if (!slot?.linkIds.length || visited.has(slot)) return;
+  const path = new Set(visited).add(slot);
   const normalizedLabel = normalizeComponentName(label);
   const translations = slot.linkIds.map((id) => {
     const connection = graph.getLink(id)?.resolve(graph);
@@ -56,6 +61,12 @@ function getInternalTranslation(graph, slot, direction, label, nodes) {
     if (!field || ![field.name, field.localized_name, field.label].some(
       (name) => typeof name === "string" && normalizeComponentName(name) === normalizedLabel
     )) return;
+    if (internalNode.isSubgraphNode?.()) {
+      const nested = internalNode.subgraph;
+      const boundary = direction === "inputs" ? field._subgraphSlot :
+        nested.outputNode.slots[internalNode.outputs.indexOf(field)];
+      return getInternalTranslation(nested, boundary, direction, label, nodes, path);
+    }
     return translation?.[direction]?.[field.name] ??
       (direction === "inputs" ? translation?.widgets?.[field.name] : undefined);
   });
@@ -65,6 +76,7 @@ function getInternalTranslation(graph, slot, direction, label, nodes) {
 
 export function installBlueprintTranslation(app, getTranslations, getMenus) {
   const originals = new WeakMap();
+  const workflowDefinitions = new WeakMap();
   const observedGraphs = new WeakSet();
   const decorated = new WeakSet();
   const vuePlaceholders = new WeakMap();
@@ -72,6 +84,7 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
   const canvasContainer = app.canvas.canvas.parentElement;
   let menu;
   let normalizedMenu;
+  let refreshQueued = false;
 
   function getMenuTranslation(name) {
     const currentMenu = getMenus();
@@ -88,6 +101,29 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
     const exact = Object.hasOwn(menu, name) ? menu[name] : undefined;
     if (typeof exact === "string" && exact) return exact;
     return normalizedMenu.get(normalizeComponentName(name)) ?? undefined;
+  }
+
+  function getWorkflowDefinition(graph) {
+    let definition = workflowDefinitions.get(graph);
+    if (!definition) {
+      definition = { labels: { inputs: {}, outputs: {} } };
+      workflowDefinitions.set(graph, definition);
+      for (const [direction, slots] of [
+        ["inputs", graph.inputNode.slots], ["outputs", graph.outputNode.slots],
+      ]) {
+        for (const slot of slots) {
+          definition.labels[direction][slot.name] = slot.label || slot.localized_name || slot.name;
+        }
+      }
+    }
+    return definition;
+  }
+
+  function getDisplayTitle(node, original) {
+    const translations = getTranslations();
+    if (!translations) return;
+    const blueprint = getBlueprint(node, translations.Blueprints?.catalog);
+    if (blueprint) return getTitleTranslation(original, blueprint);
   }
 
   function originalLabel(slot) {
@@ -115,15 +151,15 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
 
   function applyBlueprint(node) {
     const translation = getTranslations();
-    const blueprint = getBlueprint(node, translation?.Blueprints?.catalog, true);
+    const blueprint = translation && (getBlueprint(node, translation.Blueprints?.catalog) ??
+      getWorkflowDefinition(node.subgraph));
     if (!blueprint && !decorated.has(node)) return;
     if (!decorated.has(node)) {
       decorated.add(node);
       const getTitle = node.getTitle;
       node.getTitle = function () {
         const original = getTitle.call(this);
-        const definition = getBlueprint(this, getTranslations()?.Blueprints?.catalog);
-        return getTitleTranslation(original, definition) || original;
+        return getDisplayTitle(this, original) || original;
       };
 
       // Save and clipboard use this serializer, including for nested instances.
@@ -154,8 +190,10 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
             (original == null || original === definition.label ||
               original === definition.name || original === definition.localized_name)) {
           const display = original || slot.localized_name || slot.name;
-          label = getInternalTranslation(graph, definition, direction, display, translation.Nodes) ??
-            getMenuTranslation(menuPrefix + display) ?? getMenuTranslation(display);
+          if (typeof display === "string") {
+            label = getInternalTranslation(graph, definition, direction, display, translation.Nodes) ??
+              getMenuTranslation(menuPrefix + display) ?? getMenuTranslation(display);
+          }
         }
         applySlotLabel(slot, original, label);
       }
@@ -170,6 +208,24 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
   function observeGraph(graph) {
     if (observedGraphs.has(graph)) return;
     observedGraphs.add(graph);
+    if (graph !== app.rootGraph) {
+      const definition = getWorkflowDefinition(graph);
+      for (const direction of ["input", "output"]) {
+        graph.events.addEventListener(`${direction}-added`, ({ detail }) => queueMicrotask(() => {
+          const slot = detail[direction];
+          if (graph[`${direction}Node`].slots.includes(slot)) {
+            definition.labels[`${direction}s`][slot.name] = slot.label || slot.localized_name || slot.name;
+            if (!refreshQueued) {
+              refreshQueued = true;
+              queueMicrotask(() => {
+                refreshQueued = false;
+                refresh();
+              });
+            }
+          }
+        }));
+      }
+    }
     graph.events.addEventListener("node:added", ({ detail: { node } }) => {
       if (node.isSubgraphNode?.()) queueMicrotask(() => {
         if (node.graph === graph) applyBlueprint(node);
@@ -212,8 +268,7 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
     const id = title.closest(vueHeaderSelector)?.dataset.testid.slice("node-header-".length);
     const node = graph?.getNodeById(id);
     if (!node?.isSubgraphNode?.()) return;
-    const blueprint = getBlueprint(node, getTranslations()?.Blueprints?.catalog);
-    const label = getTitleTranslation(node.title, blueprint);
+    const label = getDisplayTitle(node, node.title);
     const text = title.firstChild;
     if (label && text?.nodeType === Node.TEXT_NODE && text.nodeValue === node.title) {
       text.nodeValue = label;
