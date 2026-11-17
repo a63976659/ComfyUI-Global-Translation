@@ -24,7 +24,7 @@ export const translatedValueSet = new Set();
  * @returns {boolean}
  */
 export function isAlreadyTranslatedText(text) {
-    if (!text) return false;
+    if (typeof text !== "string" || !text) return false;
     return translatedValueSet.has(text) || translatedValueSet.has(text.trim());
 }
 
@@ -32,7 +32,8 @@ export function isAlreadyTranslatedText(text) {
  * 检查节点属性是否看起来已经被翻译过
  */
 export function isAlreadyTranslated(originalName, currentLabel) {
-    if (!originalName || !currentLabel) return false;
+    if (typeof originalName !== "string" || typeof currentLabel !== "string" ||
+        !originalName || !currentLabel) return false;
     
     if (currentLabel !== originalName && isAlreadyTranslatedText(currentLabel)) {
         return true;
@@ -41,10 +42,12 @@ export function isAlreadyTranslated(originalName, currentLabel) {
     // V3 API 节点常用 display_name 作为 label（如 name: "horizontal_angle", label: "Horizontal Angle"），
     // 若 label 仅是 name 的美化形式（大小写/空格/下划线/连字符差异），不视为已翻译
     const normalize = (s) => s.toLowerCase().replace(/[\s_-]+/g, "");
-    if (normalize(currentLabel) === normalize(originalName)) {
+    const normalizedLabel = normalize(currentLabel);
+    const shortName = originalName.slice(originalName.lastIndexOf(".") + 1);
+    if (normalizedLabel === normalize(originalName) || normalizedLabel === normalize(shortName)) {
         return false;
     }
-    
+
     if (currentLabel !== originalName && 
         currentLabel !== originalName.toLowerCase() &&
         currentLabel !== originalName.toUpperCase()) {
@@ -119,6 +122,13 @@ export function isOptionTranslationEnabled() {
     return currentConfig.translate_options;
 }
 
+export function canTranslateDropdownText(element) {
+    if (!element?.closest) return true;
+    if (!isOptionTranslationEnabled()) return !element.closest("option, .litecontextmenu");
+    const option = element.closest("option");
+    return !option || option.hasAttribute("value");
+}
+
 /**
  * ComfyUI 官方语言码 -> 本插件语言目录名的显式映射。
  * 避免仅靠主语言子标签匹配时，"zh" 同时命中 zh-CN / zh-TW 的歧义。
@@ -177,7 +187,7 @@ export async function syncWithComfyLocale(app) {
         } catch (e) { /* 忽略，回退主语言匹配 */ }
         let comfyLocale = "en";
         try {
-            comfyLocale = app?.ui?.settings?.getSettingValue?.("Comfy.Locale", "en") || "en";
+            comfyLocale = app?.ui?.settings?.getSettingValue?.("Comfy.Locale") || "en";
         } catch (e) { /* 旧版无该设置 */ }
         currentConfig.locale = matchPackLocale(comfyLocale, available) || "en-US";
     } catch (e) {
@@ -193,7 +203,7 @@ export async function syncWithComfyLocale(app) {
 export function watchComfyLocale(app) {
     const read = () => {
         try {
-            return app?.ui?.settings?.getSettingValue?.("Comfy.Locale", null) ?? null;
+            return app?.ui?.settings?.getSettingValue?.("Comfy.Locale") ?? null;
         } catch (e) {
             return null;
         }

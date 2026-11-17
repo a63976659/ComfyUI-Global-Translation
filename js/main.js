@@ -3,6 +3,7 @@
  */
 
 import { app } from "../../../scripts/app.js";
+import { installBlueprintTranslation } from "./BlueprintTranslate.js";
 import { applyMenuTranslation, observeFactory } from "./MenuTranslate.js";
 import { registerSettings, addPanelButtons, setupPluginManager } from "./SettingsPanel.js";
 import {
@@ -11,6 +12,7 @@ import {
   nativeTranslatedSettings,
   isTranslationEnabled,
   isOptionTranslationEnabled,
+  canTranslateDropdownText,
   initConfig,
   syncWithComfyLocale,
   watchComfyLocale,
@@ -24,13 +26,16 @@ export class TUtils {
     Menu: {},
     Nodes: {},
     NodeCategory: {},
+    Blueprints: {},
   };
+  static refreshBlueprintTranslation;
+  static menuTranslations = {};
 
   // ===== 【石头(Q:34720803)优化更新】自定义DOM面板翻译支持 开始 =====
   // 所有节点 ui 字典的汇总，用于翻译挂到 body 下的弹窗等节点外 DOM
   static globalUiDict = {};
   // 已挂载翻译观察器的 DOMWidget 根元素
-  static domObserved = new WeakSet();
+  static domObserved = new WeakMap();
   // ===== 【石头(Q:34720803)优化更新】自定义DOM面板翻译支持 结束 =====
 
   static async syncTranslation(OnFinished = () => {}) {
@@ -38,7 +43,8 @@ export class TUtils {
       translatedValueSet.clear();
       
       if (!isTranslationEnabled()) {
-        TUtils.T = { Menu: {}, Nodes: {}, NodeCategory: {} };
+        TUtils.T = { Menu: {}, Nodes: {}, NodeCategory: {}, Blueprints: {} };
+        TUtils.menuTranslations = {};
         TUtils.globalUiDict = {}; // 【石头(Q:34720803)优化更新】关闭翻译时同步清空 ui 字典
         OnFinished();
         return;
@@ -62,7 +68,8 @@ export class TUtils {
         }
 
         // 合并分类到菜单中
-        TUtils.T.Menu = Object.assign(TUtils.T.Menu || {}, TUtils.T.NodeCategory || {});
+        TUtils.menuTranslations = TUtils.T.Menu;
+        TUtils.T.Menu = Object.assign({}, TUtils.T.Menu || {}, TUtils.T.NodeCategory || {});
         
         // 提取 Node 中 key 到 Menu
         for (let key in TUtils.T.Nodes) {
@@ -169,6 +176,8 @@ export class TUtils {
 
   static applyVueNodeDisplayNameTranslation(nodeDef) {
     try {
+      if (typeof nodeDef?.name !== "string") return;
+      if (nodeDef.display_name != null && typeof nodeDef.display_name !== "string") return;
       const nodesT = TUtils.T.Nodes;
       const class_type = nodeDef.name;
       if (nodesT.hasOwnProperty(class_type)) {
@@ -205,13 +214,13 @@ export class TUtils {
   }
 
   static needsTranslation(item) {
-    if (!item || !item.hasOwnProperty("name")) return false;
+    if (typeof item?.name !== "string" || !item.name) return false;
+    if (item.label != null && typeof item.label !== "string") return false;
+
+    const rowField = item.name.match(/\.\d+\.([^.]+)$/)?.[1];
+    if (rowField && item.label?.endsWith(` ${rowField}`)) return true;
     
     if (isAlreadyTranslated(item.name, item.label)) {
-      return false;
-    }
-    
-    if (isAlreadyTranslatedText(item.name)) {
       return false;
     }
     
@@ -219,11 +228,14 @@ export class TUtils {
   }
 
   static safeApplyTranslation(item, translation) {
-    if (this.needsTranslation(item) && translation) {
+    if (typeof translation === "string" && translation && this.needsTranslation(item)) {
       if (!item._original_name) {
         item._original_name = item.name;
       }
-      item.label = translation;
+      const rowField = item.name.match(/\.\d+\.([^.]+)$/)?.[1];
+      item.label = rowField && item.label?.endsWith(` ${rowField}`)
+        ? item.label.slice(0, -rowField.length) + translation
+        : translation;
     }
   }
 
@@ -234,6 +246,13 @@ export class TUtils {
     } else if (item.label && item.name) {
       item.label = item.name;
     }
+  }
+
+  static isCustomNodeTitle(node, translation) {
+    const type = node.constructor;
+    return !!node.title && ![
+      type.comfyClass || type.type, type.title, type.nodeData?.display_name, translation
+    ].includes(node.title);
   }
 
   static applyNodeTranslation(node) {
@@ -276,7 +295,7 @@ export class TUtils {
         if (!node[key] || !Array.isArray(node[key])) continue;
         
         node[key].forEach((item) => {
-          if (!item || !item.name) return;
+          if (typeof item?.name !== "string" || !item.name) return;
           // 【石头(Q:34720803)优化更新】
           // 控件被“转换为输入”后会作为 input 槽位从工作流恢复，
           // inputs 字典查不到时回退到 widgets 字典（与动态 addInput 路径行为一致）
@@ -295,12 +314,11 @@ export class TUtils {
       
       if (t.hasOwnProperty("title")) {
         const hasNativeTranslation = node.title && isAlreadyTranslatedText(node.title);
-        const isCustomizedTitle = node._translation_custom_title || 
-          (node.title && node.title !== (node.constructor.comfyClass || node.constructor.type) && node.title !== t["title"]);
+        const isCustomizedTitle = node._translation_custom_title || this.isCustomNodeTitle(node, t.title);
         
         if (!isCustomizedTitle && !hasNativeTranslation) {
           if (!node._original_title) {
-            node._original_title = node.constructor.comfyClass || node.constructor.type;
+            node._original_title = node.title || node.constructor.nodeData?.display_name || class_type;
           }
           node.title = t["title"];
           node.constructor.title = t["title"];
@@ -311,15 +329,15 @@ export class TUtils {
       node.addInput = function (name, type, extra_info) {
         var oldInputs = [];
         if (this.inputs && Array.isArray(this.inputs)) {
-          this.inputs.forEach((i) => oldInputs.push(i.name));
+          this.inputs.forEach((i) => oldInputs.push(i?.name));
         }
         var res = addInput.apply(this, arguments);
         if (this.inputs && Array.isArray(this.inputs)) {
           this.inputs.forEach((i) => {
-            if (oldInputs.includes(i.name)) return;
-            if (t["widgets"] && i.widget?.name in t["widgets"]) {
-              TUtils.safeApplyTranslation(i, t["widgets"][i.widget?.name]);
-            }
+            if (typeof i?.name !== "string" || oldInputs.includes(i.name)) return;
+            const widgetName = typeof i.widget?.name === "string" ? i.widget.name : i.name;
+            const translation = t.inputs?.[i.name] ?? t.widgets?.[widgetName];
+            if (isTranslationEnabled()) TUtils.safeApplyTranslation(i, translation);
           });
         }
         return res;
@@ -331,11 +349,22 @@ export class TUtils {
         if (onInputAdded) {
           res = onInputAdded.apply(this, arguments);
         }
-        let t = TUtils.T.Nodes[this.comfyClass];
-        if (t?.["widgets"] && slot.name in t["widgets"]) {
-          if (TUtils.needsTranslation(slot)) {
-            slot.localized_name = t["widgets"][slot.name];
-          }
+        if (!slot || !isTranslationEnabled()) return res;
+        const classType = this.constructor.comfyClass || this.constructor.type;
+        const t = TUtils.T.Nodes[classType];
+        const name = slot.name;
+        if (typeof name === "string") {
+          TUtils.safeApplyTranslation(slot, t?.inputs?.[name] ?? t?.widgets?.[name]);
+        }
+        if (t?.widgets) {
+          queueMicrotask(() => {
+            const currentName = slot.name;
+            if (!isTranslationEnabled() || typeof currentName !== "string") return;
+            const translation = TUtils.T.Nodes[classType]?.widgets?.[currentName];
+            if (!translation) return;
+            const widget = this.widgets?.find((item) => item?.name === currentName);
+            if (widget) TUtils.safeApplyTranslation(widget, translation);
+          });
         }
         return res;
       };
@@ -347,7 +376,7 @@ export class TUtils {
           // 先让底层创建控件
           let res = addWidget.apply(this, arguments);
           // 控件创建完毕后立刻检查翻译
-          if (isTranslationEnabled() && res && res.name) {
+          if (isTranslationEnabled() && typeof res?.name === "string" && res.name) {
             let class_type = this.constructor.comfyClass || this.constructor.type;
             let dict = TUtils.T.Nodes[class_type];
             if (dict && dict["widgets"] && res.name in dict["widgets"]) {
@@ -377,17 +406,38 @@ export class TUtils {
   // 【石头(Q:34720803)优化更新】支持翻译的元素属性白名单
   static DOM_TEXT_ATTRIBUTES = ["placeholder", "title", "aria-label"];
 
+  static hasNodeUiTranslation(element, key) {
+    const header = element?.closest?.('[data-testid="node-title"]');
+    if (header) {
+      const id = header.closest("[data-node-id]")?.dataset.nodeId;
+      const node = app.canvas?.graph?.getNodeById(id);
+      if (node?.isSubgraphNode?.()) return true;
+      if (node) {
+        const type = node.constructor.comfyClass || node.constructor.type;
+        if (this.isCustomNodeTitle(node, this.T.Nodes[type]?.title)) return true;
+      }
+    }
+    for (let current = element; current; current = current.parentElement) {
+      const nodeType = this.domObserved.get(current);
+      const ui = nodeType && this.T.Nodes[nodeType]?.ui;
+      if (ui && Object.hasOwn(ui, key) && typeof ui[key] === "string") return true;
+    }
+    return false;
+  }
+
   // 【石头(Q:34720803)优化更新】翻译一个 DOM 子树：全等匹配文本节点与白名单属性
-  static translateDomSubtree(root, dict) {
+  static translateDomSubtree(root, dict, fallback = false) {
     if (!root || root.nodeType !== 1 || !dict) return;
     const has = Object.prototype.hasOwnProperty;
     // 1) 文本节点：仅当整个文本（去除首尾空白后）与字典键完全一致时替换，
     //    保留原有首尾空白；含变量拼接的动态文本因不能全等匹配而自然跳过
     try {
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-        acceptNode(n) {
+        acceptNode: (n) => {
           const key = n.nodeValue && n.nodeValue.trim();
-          return key && has.call(dict, key) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          if (!key || !has.call(dict, key) || !canTranslateDropdownText(n.parentElement) ||
+              (fallback && this.hasNodeUiTranslation(n.parentElement, key))) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
         }
       });
       const targets = [];
@@ -410,7 +460,8 @@ export class TUtils {
         if (el.nodeType !== 1) continue;
         for (const attr of this.DOM_TEXT_ATTRIBUTES) {
           const v = el.getAttribute(attr);
-          if (v && has.call(dict, v) && typeof dict[v] === "string" && dict[v] !== v) {
+          if (v && has.call(dict, v) && typeof dict[v] === "string" && dict[v] !== v &&
+              (!fallback || !this.hasNodeUiTranslation(el, v))) {
             el.setAttribute(attr, dict[v]);
           }
         }
@@ -425,15 +476,24 @@ export class TUtils {
     try {
       if (!isTranslationEnabled() || !node || !Array.isArray(node.widgets)) return;
       const class_type = node.constructor?.comfyClass ? node.constructor.comfyClass : node.constructor?.type;
-      if (!class_type || !this.T.Nodes[class_type]?.["ui"]) return;
+      const translation = this.T.Nodes[class_type];
+      if (!translation) return;
       for (const w of node.widgets) {
-        const el = w.element || w.domElement;
+        const el = w?.element || w?.domElement;
         if (!el || el.nodeType !== 1 || this.domObserved.has(el)) continue;
-        this.domObserved.add(el);
+        if (!translation.ui && (typeof w.name !== "string" || !translation.widgets?.[w.name])) continue;
+        this.domObserved.set(el, class_type);
         // 字典在重新同步翻译后可能整体替换，回调时按类名现取
         const repaint = () => {
-          const ui = this.T.Nodes[class_type]?.["ui"];
-          if (ui) this.translateDomSubtree(el, ui);
+          const dict = this.T.Nodes[class_type];
+          if (dict?.ui) this.translateDomSubtree(el, dict.ui);
+          const name = w.name;
+          if (typeof name !== "string") return;
+          const placeholder = el.getAttribute("placeholder");
+          const label = dict?.widgets?.[name];
+          if (typeof label === "string" && label && (placeholder === name || placeholder === name.split(".").at(-1))) {
+            el.setAttribute("placeholder", label);
+          }
         };
         repaint();
         // 自定义面板常在交互后整体重建（replaceChildren），监听子树变化并按帧合并后幂等重翻
@@ -464,7 +524,7 @@ export class TUtils {
         const arr = node[key];
         if (!Array.isArray(arr)) continue;
         for (const item of arr) {
-          if (!item || !item.name) continue;
+          if (typeof item?.name !== "string" || !item.name) continue;
           // 【石头(Q:34720803)优化更新】同上：转换为输入的控件在 inputs 中但译文在 widgets 字典里
           let trans = dict ? dict[item.name] : undefined;
           if (trans === undefined && key === "inputs" && t["widgets"]) {
@@ -491,7 +551,7 @@ export class TUtils {
         if (!isTranslationEnabled()) return;
         for (const m of mutations) {
           for (const added of m.addedNodes) {
-            if (added.nodeType === 1) this.translateDomSubtree(added, this.globalUiDict);
+            if (added.nodeType === 1) this.translateDomSubtree(added, this.globalUiDict, true);
           }
         }
       });
@@ -564,7 +624,7 @@ export class TUtils {
   static applyMenuTranslation(app) {
     try {
       if (!isTranslationEnabled()) return;
-      applyMenuTranslation(TUtils.T);
+      applyMenuTranslation(TUtils.T, (element, key) => this.hasNodeUiTranslation(element, key));
       
       const dragHandle = app.ui.menuContainer.querySelector(".drag-handle");
       if (dragHandle && dragHandle.childNodes[1]) {
@@ -770,6 +830,14 @@ const ext = {
 
       addPanelButtons(app);
       setupPluginManager();
+
+      if (isTranslationEnabled()) {
+        TUtils.refreshBlueprintTranslation = installBlueprintTranslation(
+          app,
+          () => isTranslationEnabled() ? TUtils.T : null,
+          () => TUtils.menuTranslations
+        );
+      }
     } catch (e) {
       error("扩展设置失败:", e);
     }
@@ -799,7 +867,7 @@ const ext = {
       const nodeT = TUtils.T.Nodes[originalTitle];
       const translatedTitle = nodeT?.title;
       
-      if (node.title && node.title !== originalTitle && node.title !== translatedTitle) {
+      if (TUtils.isCustomNodeTitle(node, translatedTitle)) {
         node._translation_custom_title = true;
       }
       TUtils.applyNodeTranslation(node);
@@ -808,6 +876,10 @@ const ext = {
     }
   },
   
+  afterConfigureGraph() {
+    TUtils.refreshBlueprintTranslation?.();
+  },
+
   nodeCreated(node, app) {
     try {
       TUtils.applyNodeTranslation(node);

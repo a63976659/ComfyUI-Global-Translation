@@ -5,18 +5,20 @@
 import { 
   isAlreadyTranslatedText, 
   nativeTranslatedSettings,
-  isOptionTranslationEnabled,
+  canTranslateDropdownText,
   error
 } from "./utils.js";
 
 class TExe {
   static T = null;
 
-  MT(txt) {
+  MT(txt, element) {
     if (isAlreadyTranslatedText(txt)) {
       return null;
     }
-    return this.T?.Menu?.[txt] || this.T?.Menu?.[txt?.trim?.()];
+    const key = txt?.trim?.();
+    const translated = this.T?.Menu?.[txt] || this.T?.Menu?.[key];
+    return translated && this.hasNodeUiTranslation?.(element, key) ? null : translated;
   }
 
   constructor() {
@@ -112,11 +114,8 @@ class TExe {
         return;
       }
       
-      // COMBO 下拉选项翻译开关：ContextMenu 容器内的文本受此开关控制
-      if (!isOptionTranslationEnabled()) {
-        const el = target.nodeType === Node.TEXT_NODE ? target.parentElement : target;
-        if (el?.closest?.(".litecontextmenu")) return;
-      }
+      const element = target.nodeType === Node.TEXT_NODE ? target.parentElement : target;
+      if (!canTranslateDropdownText(element)) return;
       
       if (target.childNodes && target.childNodes.length) {
         const childNodes = Array.from(target.childNodes);
@@ -127,13 +126,14 @@ class TExe {
       
       if (target.nodeType === Node.TEXT_NODE) {
         if (target.nodeValue && !isAlreadyTranslatedText(target.nodeValue)) {
-          const translated = this.MT(target.nodeValue);
+          const translated = this.MT(target.nodeValue, element);
           if (translated) {
             target.nodeValue = translated;
           }
         }
       } else if (target.nodeType === Node.ELEMENT_NODE) {
-        if (target.title && !isAlreadyTranslatedText(target.title)) {
+        if (target.title && !isAlreadyTranslatedText(target.title) &&
+            !this.hasNodeUiTranslation?.(element, target.title)) {
           const titleTranslated = this.MT(target.title);
           if (titleTranslated) {
             target.title = titleTranslated;
@@ -150,21 +150,10 @@ class TExe {
 
         if (target.innerText && !isAlreadyTranslatedText(target.innerText) &&
             (!target.children || target.children.length === 0)) {
-          const innerTextTranslated = this.MT(target.innerText);
+          const innerTextTranslated = this.MT(target.innerText, element);
           if (innerTextTranslated) {
             target.innerText = innerTextTranslated;
           }
-        }
-        
-        if (target.nodeName === "SELECT" && isOptionTranslationEnabled()) {
-          Array.from(target.options).forEach(option => {
-            if (option.text && !isAlreadyTranslatedText(option.text)) {
-              const optionTextTranslated = this.MT(option.text);
-              if (optionTextTranslated) {
-                option.text = optionTextTranslated;
-              }
-            }
-          });
         }
       }
     } catch (e) {
@@ -195,7 +184,7 @@ let _pendingNodes = new Set();
 let _rafId = null;
 
 function scheduleTranslation(node) {
-  if (!node || !node.querySelectorAll) return;
+  if (!node?.querySelectorAll && node?.nodeType !== Node.TEXT_NODE) return;
   _pendingNodes.add(node);
   if (_rafId !== null) cancelAnimationFrame(_rafId);
   _rafId = requestAnimationFrame(flushTranslations);
@@ -207,12 +196,23 @@ function flushTranslations() {
   _isTranslating = true;
   try {
     for (const node of _pendingNodes) {
-      if (node.isConnected) texe.translateAllText(node);
+      if (node.nodeType === Node.TEXT_NODE) {
+        translateAddedText(node);
+      } else if (node.isConnected) {
+        texe.translateAllText(node);
+      }
     }
     _pendingNodes.clear();
   } finally {
     setTimeout(() => { _isTranslating = false; }, 0);
   }
+}
+
+function translateAddedText(node) {
+  const parent = node.parentElement;
+  if (!node.isConnected || !parent || parent.isContentEditable ||
+      parent.closest(".litesearchbox, .lite-search-item, textarea, script, style")) return;
+  texe.replaceText(node);
 }
 
 function isSearchRelatedElement(node) {
@@ -222,21 +222,27 @@ function isSearchRelatedElement(node) {
          (node.querySelector && !!node.querySelector(".litesearchbox"));
 }
 
-export function applyMenuTranslation(T) {
+export function applyMenuTranslation(T, hasNodeUiTranslation) {
   try {
     texe.cleanupObservers();
     texe.T = T;
+    texe.hasNodeUiTranslation = hasNodeUiTranslation;
     
     texe.translateAllText(document.querySelector(".litegraph"));
     
     let _bodyDebounceTimer = null;
-    let _bodyPendingMutations = [];
+    let _bodyPendingElements = new Set();
     
     const bodyObserver = observeFactory(document.querySelector("body.litegraph"), (mutationsList) => {
-      // 【立即检测】在防抖之前，同步检测新增的 .p-tree 元素
+      // 在防抖前处理新增文本并识别新增的 .p-tree 元素
+      const pendingCount = _bodyPendingElements.size;
       for (const mutation of mutationsList) {
         for (const node of mutation.addedNodes) {
-          if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            if (_isTranslating) scheduleTranslation(node);
+            else translateAddedText(node);
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            _bodyPendingElements.add(node);
             if (node.classList?.contains('p-tree')) {
               setupTreeObserver(node);
             } else if (node.querySelectorAll) {
@@ -246,40 +252,36 @@ export function applyMenuTranslation(T) {
         }
       }
       
-      _bodyPendingMutations.push(...mutationsList);
+      if (_bodyPendingElements.size === pendingCount) return;
       if (_bodyDebounceTimer) clearTimeout(_bodyDebounceTimer);
       _bodyDebounceTimer = setTimeout(() => {
         _bodyDebounceTimer = null;
-        const mutations = _bodyPendingMutations;
-        _bodyPendingMutations = [];
+        const elements = _bodyPendingElements;
+        _bodyPendingElements = new Set();
         
         if (_isTranslating) {
           // 被阻塞时不丢弃，收集到调度器延迟处理
-          for (const mutation of mutations) {
-            for (const node of mutation.addedNodes) {
-              if (node.nodeType === Node.ELEMENT_NODE) scheduleTranslation(node);
-            }
+          for (const node of elements) {
+            if (!isSearchRelatedElement(node)) scheduleTranslation(node);
           }
           return;
         }
         _isTranslating = true;
         try {
-          for (const mutation of mutations) {
-            for (const node of mutation.addedNodes) {
-              // 搜索元素由 setupSearchBoxObserver 专责处理
-              if (isSearchRelatedElement(node)) continue;
-              if (node.classList?.contains("comfy-modal")) {
-                texe.translateAllText(node);
-                observeModalNode(node);
-              } else if (node.classList?.contains("p-dialog-mask")) {
-                const dialog = node.querySelector(".p-dialog");
-                if (dialog) {
-                  texe.translateAllText(dialog);
-                  observeFactory(dialog, handleSettingsDialog, dialog?.role === "dialog");
-                }
-              } else {
-                texe.translateAllText(node);
+          for (const node of elements) {
+            // 搜索元素由 setupSearchBoxObserver 专责处理
+            if (!node.isConnected || isSearchRelatedElement(node)) continue;
+            if (node.classList?.contains("comfy-modal")) {
+              texe.translateAllText(node);
+              observeModalNode(node);
+            } else if (node.classList?.contains("p-dialog-mask")) {
+              const dialog = node.querySelector(".p-dialog");
+              if (dialog) {
+                texe.translateAllText(dialog);
+                observeFactory(dialog, handleSettingsDialog, dialog?.role === "dialog");
               }
+            } else {
+              texe.translateAllText(node);
             }
           }
         } finally {
@@ -589,9 +591,9 @@ function translateTreeLabels(treeRoot) {
     let textNode;
     while (textNode = walker.nextNode()) {
       const txt = textNode.textContent?.trim();
-      if (!txt) continue;
+      if (!txt || !canTranslateDropdownText(textNode.parentElement)) continue;
       if (isAlreadyTranslatedText(txt)) continue;
-      const translated = texe.MT(txt);
+      const translated = texe.MT(txt, textNode.parentElement);
       if (translated && translated !== txt) {
         textNode.textContent = textNode.textContent.replace(txt, translated);
       }
