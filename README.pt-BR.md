@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**Uma solução de tradução multilíngue completa, inteligente e compatível para a interface do ComfyUI**
+**Tradução multilíngue da interface do ComfyUI**
 
-> Um plugin de tradução em tempo real que une front-end e back-end: cobre nós, menus, painel de configurações, gerenciador e todo texto visível, em perfeita compatibilidade com a tradução nativa oficial do ComfyUI.
+> Adiciona traduções a nós, blueprints oficiais, menus, configurações e interfaces de nós de terceiros no idioma selecionado no ComfyUI.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#uso)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## Visão geral
 
-O ComfyUI-Global-Translation é um plugin de tradução projetado para o ComfyUI. Por meio da colaboração entre front-end e back-end, ele realiza a tradução da interface em tempo real, cobrindo nós, menus, painel de configurações, gerenciador e todo texto visível, coexistindo perfeitamente com a tradução nativa oficial do ComfyUI. O idioma de tradução segue automaticamente a configuração de idioma oficial do ComfyUI (Configurações → Geral → `Comfy.Locale`); os textos de interface do próprio plugin suportam 15 idiomas.
+O ComfyUI-Global-Translation é um plugin de tradução multilíngue da interface. Ele segue o idioma escolhido no ComfyUI (Configurações → Geral → `Comfy.Locale`) e adiciona traduções a nós, menus, painel de configurações, gerenciador e interfaces de nós de terceiros. Também traduz textos da interface que os nós de terceiros atualizam dinamicamente. A interface do plugin tem suporte a 15 idiomas, e a cobertura depende do dicionário de cada idioma.
 
 ### Por que escolher este plugin?
 
 | Recurso | Este plugin | Outros plugins de tradução |
 |------|--------|-------------|
-| Compatível com tradução oficial | ✅ Não sobrepõe as traduções oficiais existentes | ❌ Pode entrar em conflito |
+| Compatível com tradução oficial | ✅ Adiciona traduções no idioma selecionado no ComfyUI | ❌ Pode entrar em conflito |
 | Funções do menu de contexto | ✅ Continuam funcionando após traduzir | ❌ Algumas funções quebram |
 | Compatível com UI antiga e nova | ✅ Arquitetura de botão duplo | ❌ Suporta apenas uma versão |
-| Alternância em tempo real | ✅ Sem reiniciar | ❌ Requer reinício |
+| Ativar ou desativar a tradução | ✅ Ao alternar, a página é recarregada | — |
 | Proteção de títulos personalizados | ✅ Não sobrepõe edições do usuário | ❌ Podem ser sobrescritos |
 
 ---
@@ -196,6 +196,7 @@ Abaixo das opções há também um painel **Gerenciador de tradução de plugins
 |------|---------|------|
 | **Nomes dos nós** | Títulos e nomes de exibição de todos os nós do fluxo de trabalho | ✅ |
 | **Propriedades dos nós** | Portas de entrada/saída, rótulos de widgets, descrições | ✅ |
+| **Blueprints oficiais** | Títulos na biblioteca de nós e no canvas, portas expostas, rótulos de widgets e textos de orientação nos campos | ✅ |
 | **Menus** | Menu principal, menu de contexto, menus de clique direito | ✅ |
 | **Painel de configurações** | A caixa de diálogo de configurações do ComfyUI | ✅ |
 | **Gerenciador** | A interface do ComfyUI Manager | ✅ |
@@ -216,6 +217,7 @@ pt-BR/
 └── Menus/          # Tradução de menus e interface
     ├── Comfy设置菜单及管理器菜单.json
     ├── Comfy条件选项.json
+    ├── ComfyUI-子图.json
     ├── Comfy模版汉化-zdfxm.json
     └── ...
 ```
@@ -263,6 +265,16 @@ Crie um arquivo JSON em `pt-BR/Menus/` para adicionar traduções de menus:
 ```
 
 > Após adicionar arquivos de tradução não é preciso reiniciar o ComfyUI — basta alternar o interruptor de tradução.
+
+### Tradução dos blueprints oficiais
+
+Abra a aba **Nós** na barra lateral, encontre os blueprints oficiais do ComfyUI e arraste um deles para o canvas. O recurso funciona tanto no canvas tradicional quanto na nova interface de nós. A tradução de títulos, portas expostas, rótulos de widgets e textos de orientação nos campos depende do dicionário disponível para o idioma selecionado.
+
+- Os títulos dos blueprints são consultados em `Menus/` no idioma atual. Adicione as traduções em português brasileiro a `pt-BR/Menus/`. Consulte o [dicionário de blueprints em chinês simplificado](zh-CN/Menus/ComfyUI-子图.json) para ver exemplos de títulos e termos compartilhados.
+- A tradução do campo correspondente no nó interno tem prioridade. Quando o nome exposto difere do nome do campo interno, o plugin procura o nome de exibição completo em `Menus/`, normalizando maiúsculas, minúsculas, espaços, sublinhados e hífens. Uma entrada pode ser reutilizada por vários blueprints.
+- Use os prefixos `input.` e `output.` quando uma porta precisar de traduções diferentes de acordo com a direção. Por exemplo, a chave `output.depth_colored` traduz a porta de saída `depth_colored`. Se nenhuma entrada corresponder, o texto original é exibido, e o fluxo de trabalho continua armazenando os nomes dos campos e os valores dos parâmetros originais.
+
+Reinicie o ComfyUI depois de atualizar o plugin. Depois de editar um dicionário, recarregue a página para carregar as novas traduções.
 
 ---
 
@@ -322,10 +334,16 @@ Crie um arquivo JSON em `pt-BR/Menus/` para adicionar traduções de menus:
 
 ## Registro de alterações
 
+### 2026-11-17
+
+- Adicionada a tradução dos blueprints oficiais com os dicionários dos nós internos e de menus compartilhados. O recurso abrange títulos, portas, rótulos de widgets e textos de orientação nos campos. Foram corrigidos casos de traduções ausentes ao inserir um blueprint pela biblioteca de nós, ao reabri-lo após renomear e salvar, e nos títulos e campos de texto da nova interface.
+
 ### 2026-11-16
 
 - As traduções de nós, categorias, menus e configurações foram alinhadas à tradução oficial do ComfyUI em chinês simplificado. Também foram adicionados rótulos de portas que faltavam em alguns nós integrados.
 - Os rótulos `Latent` e `采样` foram padronizados em chinês simplificado. Os rótulos de amostragem dos nós integrados também foram padronizados em outros 13 idiomas, mantendo a numeração das portas.
+- Corrigidas as traduções ausentes quando o texto da interface é atualizado. Foram adicionados textos em chinês simplificado para as configurações de ferramentas do VNCCS UniCanvas e os avisos do SAM. As traduções específicas de cada nó têm prioridade, e os valores das opções dos menus suspensos são protegidos. ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- Corrigido um erro que podia interromper o carregamento de fluxos de trabalho quando os rótulos dos nós continham valores não textuais. Os controles associados são traduzidos após a renomeação de entradas dinâmicas. ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 

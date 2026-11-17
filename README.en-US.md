@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**A comprehensive, smart and compatible multi-language translation solution for the ComfyUI interface**
+**Multilingual interface translation for ComfyUI**
 
-> A front-end + back-end real-time translation plugin covering nodes, menus, the settings panel, the manager and every visible text, fully compatible with ComfyUI's official native translations.
+> Adds translations for nodes, official blueprints, menus, settings, and third-party node interfaces in the language selected in ComfyUI.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#usage)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## Plugin Introduction
 
-ComfyUI-Global-Translation is a translation plugin designed for ComfyUI. Through front-end and back-end collaboration, it delivers real-time interface translation covering nodes, menus, the settings panel, the manager and every visible text, while staying perfectly compatible with ComfyUI's official native translation. The translation language automatically follows the official ComfyUI language setting (Settings → General → `Comfy.Locale`); the plugin's own UI strings support 15 languages.
+ComfyUI-Global-Translation is a multilingual interface translation plugin. It follows the language selected in ComfyUI (Settings → General → `Comfy.Locale`) and adds translations for nodes, menus, the settings panel, the Manager, and third-party node interfaces. It also translates interface text that third-party nodes update dynamically. The plugin’s own interface supports 15 languages, and coverage depends on each language’s translation dictionary.
 
 ### Why this plugin?
 
 | Feature | This plugin | Other translation plugins |
 |------|--------|-------------|
-| Official translation compatible | ✅ Never overrides existing official translations | ❌ May conflict |
+| Official translation compatible | ✅ Adds interface translations in the selected ComfyUI language | ❌ May conflict |
 | Right-click menu functions | ✅ Still work after translation | ❌ Some functions break |
 | Old & new UI compatible | ✅ Dual-button architecture | ❌ Single version only |
-| Real-time switching | ✅ No restart needed | ❌ Restart required |
+| Translation toggle | ✅ Switching translation reloads the page | — |
 | Custom title protection | ✅ Never overrides user edits | ❌ May get overwritten |
 
 ---
@@ -196,6 +196,7 @@ Below the options there is also a **Plugin Translation Manager**: it lists every
 |------|---------|------|
 | **Node names** | Titles and display names of all workflow nodes | ✅ |
 | **Node properties** | Input/output ports, widget labels, descriptions | ✅ |
+| **Official blueprints** | Titles in the node library and on the canvas, exposed ports, widget labels, and text field placeholders | ✅ |
 | **Menus** | Main menu, right-click menu, context menu | ✅ |
 | **Settings panel** | The ComfyUI settings dialog | ✅ |
 | **Manager** | The ComfyUI Manager interface | ✅ |
@@ -264,6 +265,16 @@ Create a JSON file under `en-US/Menus/` to add menu translations:
 
 > After adding translation files, no restart is needed — toggling translation applies them.
 
+### Translating official blueprints
+
+Open **Nodes → Comfy Blueprints** in the sidebar and drag a blueprint onto the canvas. Translations work in both the traditional canvas and the newer node interface. Available translations depend on the dictionaries for the active language.
+
+- Blueprint titles are looked up in the active language's `Menus/` directory. The [Simplified Chinese blueprint dictionary](zh-CN/Menus/ComfyUI-子图.json) contains titles and shared widget labels that can serve as examples.
+- Exposed ports and widgets reuse the translation of the underlying node field when it matches directly. For an exposed name that differs from the underlying field name, the plugin looks up the full display name in the active language's `Menus/` directory. It normalizes case, spaces, underscores, and hyphens when matching. Blueprints can share the same entry.
+- Use the `input.` or `output.` prefix when inputs and outputs need different translations. For example, `output.depth_colored` can label the output “Colorized depth map.” Unmatched labels appear in their original language. Workflows retain their original fields and parameter values.
+
+Restart ComfyUI after updating the plugin. Refresh the page after editing a dictionary to load the new translations.
+
 ---
 
 ## Architecture
@@ -322,10 +333,16 @@ Create a JSON file under `en-US/Menus/` to add menu translations:
 
 ## Changelog
 
+### 2026-11-17
+
+- Added translations for official blueprint titles, ports, widget labels, and placeholders using internal node translations and shared menu dictionaries. Fixed missing translations when adding blueprints from the node library or reopening a renamed blueprint, and fixed title and text field translations in the newer node interface.
+
 ### 2026-11-16
 
 - Aligned node, category, menu, and settings translations with ComfyUI’s official Simplified Chinese localization and filled in missing port labels for some built-in nodes.
 - Standardized the Simplified Chinese labels `Latent` and `采样`, and unified sampling labels for built-in nodes in 13 other languages while preserving port numbers.
+- Fixed missing translations when interface text updates and added Simplified Chinese translations for VNCCS UniCanvas tool settings and SAM messages. Node-specific translations take priority, and dropdown option values are protected. ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- Fixed an error that could interrupt workflow loading when node labels contain non-text values. Related controls are translated after dynamic inputs are renamed. ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 

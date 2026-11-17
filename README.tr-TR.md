@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**ComfyUI arayüzü için kapsamlı, akıllı ve uyumlu çok dilli çeviri çözümü**
+**ComfyUI için çok dilli arayüz çevirisi**
 
-> Ön yüz ve arka yüzü birleştiren gerçek zamanlı çeviri eklentisi: düğümleri, menüleri, ayar panelini, yöneticiyi ve görünen her metni kapsar; ComfyUI'nin resmi yerel çevirisiyle tam uyumludur.
+> ComfyUI’de seçilen dilde düğümlere, resmî alt grafik şablonlarına, menülere, ayarlara ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#kullanım)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## Eklenti Tanıtımı
 
-ComfyUI-Global-Translation, ComfyUI için tasarlanmış bir çeviri eklentisidir. Ön yüz ve arka yüz işbirliği sayesinde düğümleri, menüleri, ayar panelini, yöneticiyi ve görünen her metni kapsayan gerçek zamanlı arayüz çevirisi sunar; ComfyUI'nin resmi yerel çevirisiyle mükemmel biçimde bir arada yaşar. Çeviri dili, ComfyUI'nin resmi dil ayarını otomatik olarak izler (Ayarlar → Genel → `Comfy.Locale`); eklentinin kendi arayüz metinleri 15 dili destekler.
+ComfyUI-Global-Translation, çok dilli bir arayüz çevirisi eklentisidir. ComfyUI’nin dil ayarını (Ayarlar → Genel → `Comfy.Locale`) izleyerek düğümlere, menülere, ayar paneline, yöneticiye ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler. Üçüncü taraf düğümlerin dinamik olarak güncellediği arayüz metinlerini de çevirir. Eklentinin kendi arayüzü 15 dili destekler. Çevirinin kapsamı her dilin sözlüğüne bağlıdır.
 
 ### Bu eklentiyi neden seçmelisiniz?
 
 | Özellik | Bu eklenti | Diğer çeviri eklentileri |
 |------|--------|-------------|
-| Resmi çeviriyle uyumlu | ✅ Mevcut resmi çevirilerin üzerine yazmaz | ❌ Çakışabilir |
+| Resmi çeviriyle uyumlu | ✅ ComfyUI’de seçilen dilde arayüz çevirileri ekler | ❌ Çakışabilir |
 | Sağ tık menüsü işlevleri | ✅ Çeviriden sonra da çalışmaya devam eder | ❌ Bazı işlevler bozulur |
 | Eski ve yeni arayüz uyumu | ✅ Çift buton mimarisi | ❌ Yalnızca tek sürüm |
-| Gerçek zamanlı değiştirme | ✅ Yeniden başlatma gerekmez | ❌ Yeniden başlatma gerekir |
+| Çeviri anahtarı | ✅ Çeviri açılıp kapatılınca sayfa yenilenir | — |
 | Özel başlık koruması | ✅ Kullanıcı düzenlemelerinin üzerine yazmaz | ❌ Üzerine yazılabilir |
 
 ---
@@ -196,6 +196,7 @@ Seçeneklerin altında ayrıca bir **Eklenti Çeviri Yöneticisi** paneli bulunu
 |------|---------|------|
 | **Düğüm adları** | Tüm iş akışı düğümlerinin başlıkları ve görünen adları | ✅ |
 | **Düğüm özellikleri** | Giriş/çıkış portları, widget etiketleri, açıklamalar | ✅ |
+| **Resmî alt grafik şablonları** | Düğüm kitaplığı ve tuvaldeki başlıklar, dışa açılan portlar, widget etiketleri ve metin alanlarındaki yer tutucular | ✅ |
 | **Menüler** | Ana menü, sağ tık menüsü, bağlam menüsü | ✅ |
 | **Ayar paneli** | ComfyUI ayarlar penceresi | ✅ |
 | **Yönetici** | ComfyUI Manager arayüzü | ✅ |
@@ -216,6 +217,7 @@ tr-TR/
 └── Menus/          # Menü ve arayüz çevirileri
     ├── Comfy设置菜单及管理器菜单.json
     ├── Comfy条件选项.json
+    ├── ComfyUI-子图.json
     ├── Comfy模版汉化-zdfxm.json
     └── ...
 ```
@@ -263,6 +265,16 @@ tr-TR/
 ```
 
 > Çeviri dosyaları eklendikten sonra yeniden başlatmaya gerek yoktur — çeviriyi değiştirmek bunları anında uygular.
+
+### Resmî alt grafik şablonlarının çevirisi
+
+Kenar çubuğundaki **Düğümler** sekmesinden resmî ComfyUI alt grafik şablonlarını açın ve istediğiniz şablonu tuvale sürükleyin. Bu özellik hem klasik tuvalde hem de yeni düğüm arayüzünde çalışır. Başlıkların, dışa açılan portların, widget etiketlerinin ve metin alanlarındaki yer tutucuların çevirisi, seçili dildeki sözlüğe bağlıdır.
+
+- Şablon başlıkları, geçerli dilin `Menus/` klasöründen alınır. Türkçe çevirileri `tr-TR/Menus/` altına ekleyin. Başlık ve ortak terim örnekleri için [Basitleştirilmiş Çince şablon sözlüğüne](zh-CN/Menus/ComfyUI-子图.json) bakın.
+- Öncelik, iç düğümde doğrudan karşılık gelen alanın çevirisindedir. Dışa açılan ad iç alanın adından farklıysa eklenti, görünen adın tamamını `Menus/` içinde arar ve büyük-küçük harf, boşluk, alt çizgi ve kısa çizgi farklarını normalleştirir. Aynı sözlük girdisi birden fazla şablonda kullanılabilir.
+- Giriş ve çıkış farklı çevrilecekse `input.` ve `output.` öneklerini kullanın. Örneğin `output.depth_colored` anahtarı, `depth_colored` çıkış portunun çevirisini belirtir. Eşleşme bulunmadığında özgün metin gösterilir. İş akışı, özgün alan adlarını ve parametre değerlerini saklamaya devam eder.
+
+Eklentiyi güncelledikten sonra ComfyUI’yi yeniden başlatın. Sözlüğü düzenledikten sonra yeni çevirileri yüklemek için sayfayı yenileyin.
 
 ---
 
@@ -322,10 +334,16 @@ tr-TR/
 
 ## Değişiklik Günlüğü
 
+### 2026-11-17
+
+- Resmî alt grafik şablonları için iç düğüm çevirilerinden ve ortak menü sözlüğünden yararlanan çeviri desteği eklendi. Başlıklar, portlar, widget etiketleri ve yer tutucular çevrilebiliyor. Düğüm kitaplığından şablon eklerken, şablonu yeniden adlandırıp kaydettikten sonra açarken ve yeni arayüzde başlıklarla metin alanları görüntülenirken karşılaşılan çeviri eksiklikleri giderildi.
+
 ### 2026-11-16
 
 - Düğüm, kategori, menü ve ayar çevirileri ComfyUI’nin resmî Basitleştirilmiş Çince çevirisiyle uyumlu hâle getirildi. Bazı yerleşik düğümlerin eksik bağlantı noktası etiketleri eklendi.
 - Basitleştirilmiş Çincede `Latent` ve `采样` etiketleri standartlaştırıldı. Diğer 13 dilde de yerleşik düğümlerin örnekleme etiketleri, bağlantı noktası numaraları korunarak standartlaştırıldı.
+- Arayüz metinleri güncellendiğinde çevirilerin eksik kalmasına yol açan sorun giderildi. VNCCS UniCanvas araç ayarları ve SAM iletileri için Basitleştirilmiş Çince çeviri eklendi. Düğüme özgü çevirilere öncelik veriliyor ve açılır liste seçeneklerinin gerçek değerleri korunuyor. ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- Düğüm etiketleri metin dışı değerler içerdiğinde iş akışının yüklenmesini kesintiye uğratabilen hata giderildi. Dinamik girişler yeniden adlandırıldığında ilişkili denetimler de çevriliyor. ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 

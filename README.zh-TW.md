@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**全面、智慧、相容的 ComfyUI 介面多國語言翻譯解決方案**
+**ComfyUI 多語言介面翻譯外掛**
 
-> 前後端協同的即時翻譯外掛，覆蓋節點、選單、設定面板、管理器等所有可見文字，與 ComfyUI 官方原生翻譯完美相容。
+> 跟隨 ComfyUI 的語言設定，為節點、官方藍圖、選單、設定和第三方節點介面補充譯文。
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#使用說明)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## 外掛簡介
 
-ComfyUI-Global-Translation 是一個專為 ComfyUI 設計的翻譯外掛。透過前後端協同工作，實現介面元素的即時翻譯，覆蓋節點、選單、設定面板、管理器等所有可見文字，同時與 ComfyUI 官方原生翻譯完美相容。翻譯語言自動跟隨 ComfyUI 官方語言設定（設定 → 一般 → `Comfy.Locale`），外掛自身的介面文案支援 15 種語言。
+ComfyUI-Global-Translation 是一款多語言介面翻譯外掛。它跟隨 ComfyUI 的語言設定（設定 → 一般 → `Comfy.Locale`），為節點、選單、設定面板、管理器和第三方節點介面補充譯文，支援翻譯第三方節點動態更新的介面文字。外掛本身的介面支援 15 種語言，各語言的翻譯範圍以對應的詞典為準。
 
 ### 為什麼選擇本外掛？
 
 | 特性 | 本外掛 | 其他翻譯外掛 |
 |------|--------|-------------|
-| 官方翻譯相容 | ✅ 不覆蓋官方已有翻譯 | ❌ 可能衝突 |
+| 官方翻譯相容 | ✅ 配合官方語言設定，補充介面譯文 | ❌ 可能衝突 |
 | 右鍵選單功能 | ✅ 翻譯後功能正常 | ❌ 部分功能失效 |
 | 新舊版 UI 相容 | ✅ 雙重按鈕架構 | ❌ 僅支援單一版本 |
-| 即時切換 | ✅ 無需重啟 | ❌ 需要重啟 |
+| 翻譯開關 | ✅ 切換後重新整理頁面生效 | — |
 | 使用者自訂標題保護 | ✅ 不覆蓋使用者修改 | ❌ 可能被覆蓋 |
 
 ---
@@ -196,6 +196,7 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 |------|---------|------|
 | **節點名稱** | 所有工作流節點的標題和顯示名稱 | ✅ |
 | **節點屬性** | 輸入/輸出埠、控件標籤、描述資訊 | ✅ |
+| **官方藍圖** | 節點庫和畫布上的標題、對外開放的連接埠、控制項標籤及文字欄位的提示文字 | ✅ |
 | **選單系統** | 主選單、右鍵選單、上下文選單 | ✅ |
 | **設定面板** | ComfyUI 設定對話框 | ✅ |
 | **管理器** | ComfyUI Manager 介面 | ✅ |
@@ -216,6 +217,7 @@ zh-TW/
 └── Menus/          # 選單和介面翻譯
     ├── Comfy设置菜单及管理器菜单.json
     ├── Comfy条件选项.json
+    ├── ComfyUI-子图.json
     ├── Comfy模版汉化-zdfxm.json
     └── ...
 ```
@@ -263,6 +265,16 @@ zh-TW/
 ```
 
 > 新增翻譯檔案後無需重啟 ComfyUI，切換翻譯開關即可生效。
+
+### 官方藍圖翻譯
+
+在左側「節點」→「Comfy 藍圖」找到藍圖，再拖曳到畫布。傳統畫布和新版節點介面均支援翻譯，實際涵蓋範圍取決於目前語言的詞典。
+
+- 藍圖標題從目前語言的 `Menus/` 查找。簡體中文的標題和共用控制項詞條可參考 [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)。
+- 對外開放的連接埠和控制項優先沿用直接對應的內部節點譯文。如果對外顯示名稱與內部欄位名稱不同，外掛會按完整顯示名稱到目前語言的 `Menus/` 查找，並統一處理大小寫、空格、底線和連字號的差異。多個藍圖可以共用同一詞條。
+- 輸入和輸出需要不同譯法時，可使用 `input.` 或 `output.` 前綴。例如可將 `output.depth_colored` 譯為「彩色深度圖」。找不到對應譯文時顯示原文，工作流程仍儲存原始欄位和參數值。
+
+更新外掛後請重新啟動 ComfyUI。修改詞典後重新整理頁面即可載入新譯文。
 
 ---
 
@@ -322,10 +334,16 @@ zh-TW/
 
 ## 更新記錄
 
+### 2026-11-17
+
+- 新增官方藍圖翻譯，使用內部節點譯文和共用選單詞典翻譯標題、連接埠、控制項標籤及提示文字。修正從節點庫加入、重新命名後重開的藍圖漏譯，以及新版節點介面的標題和文字欄位漏譯。
+
 ### 2026-11-16
 
 - 對齊 ComfyUI 官方簡體中文的節點、分類、選單和設定譯文，補齊部分內建節點的連接埠標籤。
 - 簡體中文統一使用 `Latent` 和「采样」，並統一其他 13 種語言中內建節點的取樣標籤，保留連接埠編號。
+- 修正動態更新的介面文字漏譯，補齊 VNCCS UniCanvas 工具設定和 SAM 提示的簡體中文。節點介面優先採用該節點的譯文，並保護下拉選單的實際選項值。 ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- 修正非文字節點標籤可能中斷工作流程載入的問題，動態輸入連接埠重新命名後也能翻譯相關控制項。 ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 

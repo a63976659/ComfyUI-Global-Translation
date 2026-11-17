@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**全面、智能、兼容的 ComfyUI 界面多国语言翻译解决方案**
+**ComfyUI 多语言界面翻译插件**
 
-> 前后端协同的实时翻译插件，覆盖节点、菜单、设置面板、管理器等所有可见文本，与 ComfyUI 官方原生翻译完美兼容。
+> 跟随 ComfyUI 的语言设置，为节点、官方蓝图、菜单、设置和第三方节点界面补充译文。
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#使用说明)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## 插件简介
 
-ComfyUI-Global-Translation 是一个专为 ComfyUI 设计的汉化插件。通过前后端协同工作，实现界面元素的实时中文翻译，覆盖节点、菜单、设置面板、管理器等所有可见文本，同时与 ComfyUI 官方原生翻译完美兼容。翻译语言自动跟随 ComfyUI 官方语言设置（设置 → 通用 → Comfy.Locale），插件自身的界面文案支持 15 种语言。
+ComfyUI-Global-Translation 是一款多语言界面翻译插件。它跟随 ComfyUI 的语言设置（设置 → 通用 → `Comfy.Locale`），为节点、菜单、设置面板、管理器和第三方节点界面补充译文，支持翻译第三方节点动态更新的界面文字。插件自身界面支持 15 种语言，各语言的翻译范围以对应词典为准。
 
 ### 为什么选择本插件？
 
 | 特性 | 本插件 | 其他翻译插件 |
 |------|--------|-------------|
-| 官方翻译兼容 | ✅ 不覆盖官方已有翻译 | ❌ 可能冲突 |
+| 官方翻译兼容 | ✅ 配合官方语言设置，补充界面译文 | ❌ 可能冲突 |
 | 右键菜单功能 | ✅ 翻译后功能正常 | ❌ 部分功能失效 |
 | 新旧版 UI 兼容 | ✅ 双重按钮架构 | ❌ 仅支持单一版本 |
-| 实时切换 | ✅ 无需重启 | ❌ 需要重启 |
+| 翻译开关 | ✅ 切换后刷新页面生效 | — |
 | 用户自定义标题保护 | ✅ 不覆盖用户修改 | ❌ 可能被覆盖 |
 
 ---
@@ -195,6 +195,7 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 |------|---------|------|
 | **节点名称** | 所有工作流节点的标题和显示名称 | ✅ |
 | **节点属性** | 输入/输出端口、控件标签、描述信息 | ✅ |
+| **官方蓝图** | 节点库和画布中的标题，以及外露端口、控件标签和文本框占位提示 | ✅ |
 | **菜单系统** | 主菜单、右键菜单、上下文菜单 | ✅ |
 | **设置面板** | ComfyUI 设置对话框 | ✅ |
 | **管理器** | ComfyUI Manager 界面 | ✅ |
@@ -215,6 +216,7 @@ zh-CN/
 └── Menus/          # 菜单和界面翻译
     ├── Comfy设置菜单及管理器菜单.json
     ├── Comfy条件选项.json
+    ├── ComfyUI-子图.json
     ├── Comfy模版汉化-zdfxm.json
     └── ...
 ```
@@ -252,7 +254,7 @@ zh-CN/
 > - 请勿添加"恒等翻译"（值与键相同的条目，如 `"cfg": "cfg"`），此类条目没有翻译意义
 > - 注意核对键名拼写，键名与源码不一致（如 `perturb_atttn` 多打一个 t）会导致该控件翻译不生效
 
-简体中文词典将 `latent` 和 `LATENT` 统一写作「Latent」，将 `samples` 写作「采样」，编号端口写作「采样 1」「采样 2」等。其他有官方译文的条目按节点 ID、字段和界面语境采用 ComfyUI 官方译文，未覆盖的条目沿用插件译文。更新译名时保留 JSON 键和工作流选项值。
+简体中文词典将 `latent` 和 `LATENT` 统一写作「Latent」，将 `samples` 写作「采样」，编号端口写作「采样 1」「采样 2」等。`mask` 和 `masks` 统一使用「遮罩」，复合标签保留原有修饰语。其他有官方译文的条目按节点 ID、字段和界面语境采用 ComfyUI 官方译文，未覆盖的条目沿用插件译文。更新译名时保留 JSON 键和工作流选项值。
 
 在 `zh-CN/Menus/` 目录下创建 JSON 文件即可添加菜单翻译：
 
@@ -264,6 +266,16 @@ zh-CN/
 ```
 
 > 添加翻译文件后无需重启 ComfyUI，切换翻译开关即可生效。
+
+### 官方蓝图翻译
+
+在左侧「节点」→「Comfy 蓝图」中找到蓝图，然后拖到画布。翻译支持传统画布和新版节点界面，按当前语言的词典显示蓝图标题、外露端口、控件标签和文本框占位提示。
+
+- 蓝图标题从当前语言的 `Menus/` 查找。简体中文的蓝图标题和共享组件词条收录在 [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)。
+- 外露组件优先采用直接对应的内部节点译文。外露名称与内部字段名不同时，插件按完整显示名称在当前语言的 `Menus/` 中查词，可匹配大小写、空格、下划线和连字符的差异。同一个词条可供多个蓝图复用。
+- 输入和输出需要不同译法时，可给共享词条加 `input.` 或 `output.` 前缀。例如 `output.depth_colored` 会将同名输出显示为「彩色深度图」。无匹配时显示原文，工作流继续保存原始字段和参数值。
+
+更新插件后重启 ComfyUI。修改词典后刷新页面即可加载新译文。
 
 ---
 
@@ -323,10 +335,16 @@ zh-CN/
 
 ## 更新记录
 
+### 2026-11-17
+
+- 新增官方蓝图翻译，按内部节点译文和共享菜单词典显示标题、端口、控件标签和占位提示。修复部分蓝图从节点库插入、改名后保存重开，以及新版画布标题和文本框漏译的问题。
+
 ### 2026-11-16
 
 - 对齐 ComfyUI 官方简体中文的节点、分类、菜单和设置译文，补齐部分原生节点的端口标签。
 - 简体中文统一使用 `Latent` 和「采样」，并统一其他 13 种语言中原生节点的采样标签，保留端口编号。
+- 修复动态更新的界面文字漏译，补齐 VNCCS UniCanvas 工具设置和 SAM 提示的简体中文。节点界面优先采用该节点的译文，并保护下拉框的实际选项值。 ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- 修复非文本节点标签可能中断工作流加载的问题，动态输入口改名后也能翻译关联控件。 ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 

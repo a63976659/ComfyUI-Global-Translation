@@ -2,12 +2,12 @@
 
 # 🌐 ComfyUI-Global-Translation
 
-**Eine umfassende, intelligente und kompatible mehrsprachige Übersetzungslösung für die ComfyUI-Oberfläche**
+**Mehrsprachige Übersetzung der ComfyUI-Oberfläche**
 
-> Ein Echtzeit-Übersetzungs-Plugin, das Frontend und Backend kombiniert: Es deckt Knoten, Menüs, das Einstellungsfenster, den Manager und jeden sichtbaren Text ab – voll kompatibel mit der offiziellen nativen Übersetzung von ComfyUI.
+> Ergänzt Übersetzungen für Knoten, offizielle Blueprints, Menüs, Einstellungen und Oberflächen von Drittanbieter-Knoten in der in ComfyUI gewählten Sprache.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.0.1-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#verwendung)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -41,16 +41,16 @@
 
 ## Überblick
 
-ComfyUI-Global-Translation ist ein für ComfyUI entwickeltes Übersetzungs-Plugin. Durch das Zusammenspiel von Frontend und Backend führt es eine Echtzeit-Übersetzung der Oberfläche durch und deckt Knoten, Menüs, das Einstellungsfenster, den Manager und jeden sichtbaren Text ab – bei perfektem Zusammenspiel mit der offiziellen nativen Übersetzung von ComfyUI. Die Übersetzungssprache folgt automatisch der offiziellen Spracheneinstellung von ComfyUI (Einstellungen → Allgemein → `Comfy.Locale`); die eigenen Oberflächentexte des Plugins unterstützen 15 Sprachen.
+ComfyUI-Global-Translation ist ein Plugin zur mehrsprachigen Übersetzung der Benutzeroberfläche. Es folgt der Spracheinstellung in ComfyUI (Einstellungen → Allgemein → `Comfy.Locale`) und ergänzt Übersetzungen für Knoten, Menüs, das Einstellungsfenster, den Manager und die Oberflächen von Drittanbieter-Knoten. Auch Oberflächentexte, die Drittanbieter-Knoten dynamisch aktualisieren, werden übersetzt. Die Plugin-Oberfläche unterstützt 15 Sprachen. Der Übersetzungsumfang richtet sich nach dem Wörterbuch der jeweils gewählten Sprache.
 
 ### Warum dieses Plugin?
 
 | Funktion | Dieses Plugin | Andere Übersetzungs-Plugins |
 |------|--------|-------------|
-| Kompatibel mit offizieller Übersetzung | ✅ Überschreibt keine vorhandenen offiziellen Übersetzungen | ❌ Möglichweise Konflikte |
+| Kompatibel mit offizieller Übersetzung | ✅ Ergänzt Oberflächenübersetzungen in der gewählten ComfyUI-Sprache | ❌ Möglichweise Konflikte |
 | Rechtsklick-Menü-Funktionen | ✅ Nach Übersetzung weiterhin funktionsfähig | ❌ Einige Funktionen brechen |
 | Kompatibel mit alter & neuer UI | ✅ Doppelte Schaltflächen-Architektur | ❌ Nur eine Version |
-| Echtzeit-Umschaltung | ✅ Ohne Neustart | ❌ Neustart erforderlich |
+| Übersetzung umschalten | ✅ Beim Umschalten wird die Seite neu geladen | — |
 | Schutz benutzerdefinierter Titel | ✅ Überschreibt keine Benutzeränderungen | ❌ Könnte überschrieben werden |
 
 ---
@@ -196,6 +196,7 @@ Unter den Optionen befindet sich zudem ein **Plugin-Übersetzungs-Manager**: Er 
 |------|---------|------|
 | **Knotennamen** | Titel und Anzeigenamen aller Workflow-Knoten | ✅ |
 | **Knoteneigenschaften** | Ein-/Ausgabedaten, Widget-Beschriftungen, Beschreibungen | ✅ |
+| **Offizielle Blueprints** | Titel in der Knotenbibliothek und auf der Arbeitsfläche, sichtbare Anschlüsse, Widget-Beschriftungen und Platzhalter in Textfeldern | ✅ |
 | **Menüs** | Hauptmenü, Rechtsklick-Menü, Kontextmenü | ✅ |
 | **Einstellungsfenster** | Der ComfyUI-Einstellungsdialog | ✅ |
 | **Manager** | Die ComfyUI-Manager-Oberfläche | ✅ |
@@ -216,6 +217,7 @@ de-DE/
 └── Menus/          # Menü- und Oberflächenübersetzung
     ├── Comfy设置菜单及管理器菜单.json
     ├── Comfy条件选项.json
+    ├── ComfyUI-子图.json
     ├── Comfy模版汉化-zdfxm.json
     └── ...
 ```
@@ -263,6 +265,16 @@ Erstellen Sie eine JSON-Datei unter `de-DE/Menus/`, um Menüübersetzungen hinzu
 ```
 
 > Nach dem Hinzufügen von Übersetzungsdateien ist kein Neustart nötig — schalten Sie die Übersetzung um, um sie anzuwenden.
+
+### Offizielle Blueprints übersetzen
+
+Öffnen Sie links die Knotenbibliothek, wählen Sie unter **Comfy Blueprints** einen Blueprint aus und ziehen Sie ihn auf die Arbeitsfläche. Die Übersetzung funktioniert in der klassischen und der neuen Knotenansicht. Welche Titel, Anschlüsse, Widget-Beschriftungen und Platzhalter übersetzt werden, hängt von den Wörterbüchern der gewählten Sprache ab.
+
+- Titel werden in `Menus/` der aktuellen Sprache gesucht. Die vereinfachte chinesische Datei enthält Beispiele für Blueprint-Titel und gemeinsam verwendete Begriffe. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
+- Für sichtbare Anschlüsse und Bedienelemente verwendet das Plugin zuerst die Übersetzung des direkt zugehörigen Felds im internen Knoten. Weicht der sichtbare Name vom internen Feldnamen ab, sucht es den vollständigen Anzeigenamen in `de-DE/Menus/`. Unterschiede bei Groß- und Kleinschreibung, Leerzeichen, Unterstrichen und Bindestrichen werden berücksichtigt. Ein Eintrag kann für mehrere Blueprints verwendet werden.
+- Wenn Ein- und Ausgänge unterschiedliche Übersetzungen brauchen, können Sie den gemeinsamen Schlüsseln `input.` oder `output.` voranstellen. Mit `output.depth_colored` lässt sich etwa der gleichnamige Ausgang als „Farbige Tiefenkarte“ anzeigen. Ohne passenden Eintrag bleibt der Originaltext sichtbar. Der Workflow speichert die ursprünglichen Feldnamen und Parameterwerte.
+
+Starten Sie ComfyUI nach einem Plugin-Update neu. Nach Änderungen an den Wörterbüchern genügt es, die Seite neu zu laden.
 
 ---
 
@@ -322,10 +334,16 @@ Erstellen Sie eine JSON-Datei unter `de-DE/Menus/`, um Menüübersetzungen hinzu
 
 ## Änderungsverlauf
 
+### 2026-11-17
+
+- Offizielle Blueprints unterstützen jetzt übersetzte Titel, Anschlüsse, Widget-Beschriftungen und Platzhalter. Die Übersetzungen stammen aus internen Knoten oder dem gemeinsamen Menüwörterbuch. Korrigiert wurden fehlende Übersetzungen beim Einfügen aus der Knotenbibliothek, beim erneuten Öffnen umbenannter Blueprints sowie bei Titeln und Textfeldern in der neuen Knotenansicht.
+
 ### 2026-11-16
 
 - Die Übersetzungen für Knoten, Kategorien, Menüs und Einstellungen wurden an die offizielle vereinfachte chinesische Übersetzung von ComfyUI angeglichen. Fehlende Anschlussbeschriftungen einiger integrierter Knoten wurden ergänzt.
 - Die Bezeichnungen `Latent` und `采样` wurden im vereinfachten Chinesisch vereinheitlicht. Auch die Sampling-Beschriftungen integrierter Knoten wurden in 13 weiteren Sprachen vereinheitlicht, wobei die Anschlussnummern erhalten blieben.
+- Fehlende Übersetzungen nach Aktualisierungen von Oberflächentexten wurden behoben. Für die Werkzeugeinstellungen von VNCCS UniCanvas und die SAM-Hinweise wurden vereinfachte chinesische Texte ergänzt. Knotenspezifische Übersetzungen haben Vorrang, und die tatsächlichen Werte von Dropdown-Optionen werden geschützt. ([#13](https://github.com/a63976659/ComfyUI-Global-Translation/issues/13))
+- Ein Fehler wurde behoben, durch den Knotenbeschriftungen mit Nicht-Textwerten das Laden eines Workflows unterbrechen konnten. Zugehörige Bedienelemente werden auch nach dem Umbenennen dynamischer Eingänge übersetzt. ([#14](https://github.com/a63976659/ComfyUI-Global-Translation/issues/14), [#15](https://github.com/a63976659/ComfyUI-Global-Translation/issues/15))
 
 ### 2026-11-11
 
