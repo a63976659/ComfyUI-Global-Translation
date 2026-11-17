@@ -22,7 +22,7 @@ except ImportError:
     iter_templates = None
 
 # 插件版本信息
-VERSION = "2.0"
+VERSION = "3.5.3"
 # 插件名称
 ADDON_NAME = "ComfyUI-Global-Translation"
 # ComfyUI 主程序路径
