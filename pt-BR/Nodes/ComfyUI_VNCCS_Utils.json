@@ -1,0 +1,185 @@
+{
+    "VNCCS_PoseStudio": {
+        "title": "VNCCS Estúdio de Pose",
+        "inputs": {
+            "pose_image": "Imagem da pose"
+        },
+        "widgets": {
+            "pose_data": "Dados da pose"
+        },
+        "outputs": {
+            "images": "Imagens",
+            "lighting_prompt": "Prompt de Iluminação"
+        },
+        "description": "Estúdio de pose com suporte a edição de malha e geração de múltiplas poses"
+    },
+    "VNCCS_ModelManager": {
+        "title": "VNCCS Gerenciador de Modelos",
+        "widgets": {
+            "Check/Refresh Models": "Verificar/Atualizar Modelos",
+            "repo_id": "ID do repositório"
+        },
+        "outputs": {
+            "repo_id": "ID do repositório"
+        },
+        "description": ""
+    },
+    "VNCCS_ModelSelector": {
+        "title": "VNCCS Seletor de Modelos",
+        "widgets": {
+            "repo_id": "ID do repositório"
+        },
+        "outputs": {
+            "model_path": "Caminho do modelo"
+        },
+        "description": ""
+    },
+    "VNCCS_PositionControl": {
+        "title": "VNCCS Controlador de Posição",
+        "widgets": {
+            "azimuth": "Azimute",
+            "elevation": "Ângulo de elevação",
+            "distance": "Distância",
+            "include_trigger": "Incluir palavras de ativação"
+        },
+        "outputs": {
+            "prompt": "Texto do Prompt"
+        },
+        "description": ""
+    },
+    "VNCCS_VisualPositionControl": {
+        "title": "VNCCS Controlador de Posição Visualizado",
+        "widgets": {
+            "camera_data": "Dados da câmera"
+        },
+        "outputs": {
+            "prompt": "Texto do Prompt"
+        },
+        "description": ""
+    },
+    "VNCCS_QWEN_Detailer": {
+        "title": "VNCCS Qwen Realçador de Detalhes",
+        "inputs": {
+            "image": "Imagem",
+            "bbox_detector": "Detector de caixa delimitadora",
+            "model": "Modelo",
+            "clip": "Clipe",
+            "vae": "VAE",
+            "sampler_name": "Amostrador",
+            "scheduler": "Agendador",
+            "controlnet_image": "Imagem de referência do ControlNet",
+            "image2": "Imagem 2",
+            "sam_model_opt": "Modelo SAM (opcional)",
+            "segm_detector_opt": "Detector de segmentação (opcional)"
+        },
+        "widgets": {
+            "prompt": "Texto do Prompt",
+            "threshold": "Limiar",
+            "dilation": "Coeficiente de dilatação",
+            "drop_size": "Tamanho mínimo de filtragem",
+            "feather": "Valor de esmaecimento",
+            "steps": "Número de Passos",
+            "cfg": "CFG",
+            "seed": "Semente aleatória",
+            "denoise": "Força de Remoção de Ruído",
+            "tiled_vae_decode": "Decodificação VAE em blocos",
+            "tile_size": "Tamanho do bloco",
+            "sam_detection_hint": "Dica de detecção SAM",
+            "sam_dilation": "Dilatação da máscara SAM",
+            "sam_threshold": "Limiar SAM",
+            "sam_bbox_expansion": "Expansão da caixa delimitadora SAM",
+            "sam_mask_hint_threshold": "Limiar da dica de máscara SAM",
+            "sam_mask_hint_use_negative": "Usar negativo na dica de máscara SAM",
+            "target_size": "Tamanho alvo",
+            "upscale_method": "Método de ampliação",
+            "crop_method": "Método de recorte",
+            "instruction": "Instrução",
+            "inpaint_mode": "Modo de repintura",
+            "inpaint_prompt": "Prompt de Repintura",
+            "color_match_method": "Método de correspondência de cores",
+            "seam_fix": "Correção de emendas",
+            "qwen_2511": "Modelo Qwen 2511",
+            "distortion_fix": "Correção de distorção"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": ""
+    },
+    "VNCCS_BBox_Extractor": {
+        "title": "VNCCS Extrator de Caixa Delimitadora",
+        "inputs": {
+            "image": "Imagem",
+            "bbox_detector": "Detector de caixa delimitadora"
+        },
+        "widgets": {
+            "threshold": "Limiar",
+            "dilation": "Coeficiente de dilatação",
+            "drop_size": "Tamanho mínimo de filtragem"
+        },
+        "outputs": {
+            "images": "Imagens"
+        },
+        "description": "Extrai da imagem as regiões detectadas pelo detector de caixa delimitadora"
+    },
+    "LoadSAM3DBodyModel": {
+        "title": "Carregar Modelo Corporal 3D SAM",
+        "inputs": {
+            "device_mode": "Modo do dispositivo"
+        },
+        "outputs": {
+            "model": "Modelo"
+        },
+        "description": "Configura os parâmetros do modelo corporal 3D SAM.\n\nOs arquivos do modelo ficam no diretório fixo `<ComfyUI>/models/sam3dbody/`;\nno primeiro uso, os pesos ausentes são baixados automaticamente da HuggingFace.\nO modelo efetivo é carregado sob demanda em um processo de trabalho separado durante a inferência."
+    },
+    "SAM3DBodyProcessToJson": {
+        "title": "Corporal 3D SAM para JSON de Pose",
+        "inputs": {
+            "model": "Modelo",
+            "image": "Imagem",
+            "mask": "Máscara",
+            "Left_hand_image": "Imagem da mão esquerda",
+            "Right_hand_image": "Imagem da mão direita"
+        },
+        "widgets": {
+            "bbox_threshold": "Limiar da caixa delimitadora",
+            "inference_type": "Tipo de inferência",
+            "debug_scale": "Escala de depuração"
+        },
+        "outputs": {
+            "pose_json": "JSON da Pose"
+        },
+        "description": "Executa o modelo corporal 3D SAM sobre a imagem e exporta a pose prevista em formato JSON (para uso pelo nó «Renderizar Corpo a partir do JSON da Pose»).\nAs malhas, o esqueleto e os resultados de visualização intermediários gerados internamente são descartados; apenas os parâmetros da pose são passados aos nós a jusante."
+    },
+    "SAM3DBodySettingBodyPresetJson": {
+        "title": "Gerador de JSON de Predefinição Corporal 3D SAM",
+        "outputs": {
+            "body_preset_json": "JSON da Predefinição Corporal"
+        },
+        "description": "Editor de predefinição corporal que exporta apenas a cadeia JSON da predefinição corporal.\n\nFoi separado do nó antigo «SAM3DBodyRenderFromJson», assim o estado dos parâmetros de corpo/esqueleto/blendshape pode ser editado uma vez e reaproveitado em várias tarefas de renderização (também pode ser usado por outros nós, como o nó de exportação e a entrada de JSON de predefinição corporal do editor de poses). Combine com o nó «SAM3DBodyRenderFromPoseAndBodyPresetJson» para renderizar um único quadro.\n\nA estrutura do JSON de saída é idêntica à dos arquivos `body_preset_settings/*.json`, portanto ela pode substituir diretamente uma predefinição salva ou ser importada diretamente no editor independente de predefinições corporais."
+    },
+    "SAM3DBodyRenderFromPoseAndBodyPresetJson": {
+        "title": "Renderizar do JSON de Pose + Predefinição Corporal 3D SAM",
+        "inputs": {
+            "model": "Modelo",
+            "background_image": "Imagem de fundo"
+        },
+        "widgets": {
+            "pose_json": "JSON da Pose",
+            "body_preset_json": "JSON da Predefinição Corporal",
+            "offset_x": "Deslocamento no eixo X",
+            "offset_y": "Deslocamento no eixo Y",
+            "scale_offset": "Deslocamento de escala",
+            "camera_yaw_deg": "Guinada da câmera (graus)",
+            "camera_pitch_deg": "Arfagem da câmera (graus)",
+            "width": "Largura",
+            "height": "Altura",
+            "pose_adjust": "Ajuste da pose",
+            "debug_scale": "Escala de depuração"
+        },
+        "outputs": {
+            "image": "Imagem"
+        },
+        "description": "Renderiza o corpo com a pose como imagem. Os dados da pose vêm de `JSON da Pose` (nó de imagem para JSON de pose/editor de poses) e os dados do corpo vêm de `JSON da Predefinição Corporal` (nó gerador de JSON de predefinição corporal/editor de predefinições corporais).\n\nOs demais controles são apenas parâmetros de controle de quadro único: deslocamento da câmera, rotação orbital, composição e intensidade da correção de inclinação; nenhum deles é gravado no JSON da predefinição corporal."
+    }
+}

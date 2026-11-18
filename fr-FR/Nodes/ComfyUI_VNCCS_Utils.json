@@ -1,0 +1,185 @@
+{
+    "VNCCS_PoseStudio": {
+        "title": "Studio de pose VNCCS",
+        "inputs": {
+            "pose_image": "Image de pose"
+        },
+        "widgets": {
+            "pose_data": "Données de pose"
+        },
+        "outputs": {
+            "images": "Images de sortie",
+            "lighting_prompt": "Prompt d'éclairage"
+        },
+        "description": "Studio de pose prenant en charge l'édition de maillage et la génération multi-poses"
+    },
+    "VNCCS_ModelManager": {
+        "title": "Gestionnaire de modèles VNCCS",
+        "widgets": {
+            "Check/Refresh Models": "Vérifier/Actualiser les modèles",
+            "repo_id": "Identifiant du dépôt"
+        },
+        "outputs": {
+            "repo_id": "Identifiant du dépôt"
+        },
+        "description": ""
+    },
+    "VNCCS_ModelSelector": {
+        "title": "Sélecteur de modèles VNCCS",
+        "widgets": {
+            "repo_id": "Identifiant du dépôt"
+        },
+        "outputs": {
+            "model_path": "Chemin du modèle"
+        },
+        "description": ""
+    },
+    "VNCCS_PositionControl": {
+        "title": "Contrôleur de position VNCCS",
+        "widgets": {
+            "azimuth": "Azimut",
+            "elevation": "Élévation",
+            "distance": "Distance de caméra",
+            "include_trigger": "Inclure les mots de déclenchement"
+        },
+        "outputs": {
+            "prompt": "Texte du prompt"
+        },
+        "description": ""
+    },
+    "VNCCS_VisualPositionControl": {
+        "title": "Contrôleur de position visualisé VNCCS",
+        "widgets": {
+            "camera_data": "Données de la caméra"
+        },
+        "outputs": {
+            "prompt": "Texte du prompt"
+        },
+        "description": ""
+    },
+    "VNCCS_QWEN_Detailer": {
+        "title": "Améliorateur de détails Qwen VNCCS",
+        "inputs": {
+            "image": "Image d'entrée",
+            "bbox_detector": "Détecteur de boîtes englobantes",
+            "model": "Modèle",
+            "clip": "Modèle CLIP",
+            "vae": "VAE",
+            "sampler_name": "Échantillonneur",
+            "scheduler": "Planificateur",
+            "controlnet_image": "Image de référence ControlNet",
+            "image2": "Image 2",
+            "sam_model_opt": "Modèle SAM (facultatif)",
+            "segm_detector_opt": "Détecteur de segmentation (facultatif)"
+        },
+        "widgets": {
+            "prompt": "Texte du prompt",
+            "threshold": "Seuil",
+            "dilation": "Coefficient de dilatation",
+            "drop_size": "Taille minimale de filtrage",
+            "feather": "Valeur de fondu",
+            "steps": "Nombre d'étapes",
+            "cfg": "CFG",
+            "seed": "Graine aléatoire",
+            "denoise": "Intensité de débruitage",
+            "tiled_vae_decode": "Décodage VAE par blocs",
+            "tile_size": "Taille des blocs",
+            "sam_detection_hint": "Indication de détection SAM",
+            "sam_dilation": "Dilatation du masque SAM",
+            "sam_threshold": "Seuil SAM",
+            "sam_bbox_expansion": "Extension de la boîte englobante SAM",
+            "sam_mask_hint_threshold": "Seuil de l'indication de masque SAM",
+            "sam_mask_hint_use_negative": "Utiliser un négatif pour l'indication de masque SAM",
+            "target_size": "Taille cible",
+            "upscale_method": "Méthode d'agrandissement",
+            "crop_method": "Méthode de recadrage",
+            "instruction": "Instruction du modèle",
+            "inpaint_mode": "Mode de repeinture",
+            "inpaint_prompt": "Prompt de repeinture",
+            "color_match_method": "Méthode de correspondance des couleurs",
+            "seam_fix": "Correction des coutures",
+            "qwen_2511": "Modèle Qwen 2511",
+            "distortion_fix": "Correction des distorsions"
+        },
+        "outputs": {
+            "image": "Image de sortie"
+        },
+        "description": ""
+    },
+    "VNCCS_BBox_Extractor": {
+        "title": "Extracteur de boîtes englobantes VNCCS",
+        "inputs": {
+            "image": "Image d'entrée",
+            "bbox_detector": "Détecteur de boîtes englobantes"
+        },
+        "widgets": {
+            "threshold": "Seuil",
+            "dilation": "Coefficient de dilatation",
+            "drop_size": "Taille minimale de filtrage"
+        },
+        "outputs": {
+            "images": "Images de sortie"
+        },
+        "description": "Extrait de l'image les régions détectées par le détecteur de boîtes englobantes"
+    },
+    "LoadSAM3DBodyModel": {
+        "title": "Charger le modèle corporel SAM 3D",
+        "inputs": {
+            "device_mode": "Mode du périphérique"
+        },
+        "outputs": {
+            "model": "Modèle"
+        },
+        "description": "Configure les paramètres du modèle corporel SAM 3D.\n\nLes fichiers du modèle sont rangés dans le répertoire fixe `<ComfyUI>/modèles/sam3dbody/` ;\nles poids manquants sont téléchargés automatiquement depuis HuggingFace lors de la première utilisation.\nLe modèle réel est chargé en différé dans un processus de travail séparé au moment de l'inférence."
+    },
+    "SAM3DBodyProcessToJson": {
+        "title": "SAM 3D - Image vers JSON de pose",
+        "inputs": {
+            "model": "Modèle",
+            "image": "Image d'entrée",
+            "mask": "Masque",
+            "Left_hand_image": "Image de la main gauche",
+            "Right_hand_image": "Image de la main droite"
+        },
+        "widgets": {
+            "bbox_threshold": "Seuil de la boîte englobante",
+            "inference_type": "Type d'inférence",
+            "debug_scale": "Échelle de débogage"
+        },
+        "outputs": {
+            "pose_json": "JSON de pose"
+        },
+        "description": "Exécute le modèle corporel SAM 3D sur l'image et renvoie la pose prédite au format JSON (pour le nœud « Rendu du corps à partir du JSON de pose »).\nLes maillages, squelettes et visualisations intermédiaires générés en interne sont supprimés ; seuls les paramètres de pose sont transmis aux nœuds en aval."
+    },
+    "SAM3DBodySettingBodyPresetJson": {
+        "title": "SAM 3D - Générateur de JSON de préréglage corporel",
+        "outputs": {
+            "body_preset_json": "JSON de préréglage corporel"
+        },
+        "description": "Éditeur de préréglage corporel qui ne produit que la chaîne JSON du préréglage.\n\nSéparé de l'ancien nœud « SAM3DBodyRenderFromJson » : l'état des paramètres de morphologie, de squelette et de déformation de fusion peut donc être édité une fois puis réutilisé pour plusieurs tâches de rendu (également utilisable par d'autres nœuds, par exemple le nœud d'exportation ou l'entrée JSON de préréglage corporel de l'éditeur de pose). Associé au nœud « SAM3DBodyRenderFromPoseAndBodyPresetJson », il permet de rendre une image unique.\n\nLa structure JSON produite est identique à celle de `body_preset_settings/*.json`, elle peut donc remplacer directement un préréglage enregistré ou être importée dans l'éditeur de préréglage corporel indépendant."
+    },
+    "SAM3DBodyRenderFromPoseAndBodyPresetJson": {
+        "title": "SAM 3D - Rendu à partir de pose + JSON de préréglage",
+        "inputs": {
+            "model": "Modèle",
+            "background_image": "Image de fond"
+        },
+        "widgets": {
+            "pose_json": "JSON de pose",
+            "body_preset_json": "JSON de préréglage corporel",
+            "offset_x": "Décalage axe X",
+            "offset_y": "Décalage axe Y",
+            "scale_offset": "Décalage d'échelle",
+            "camera_yaw_deg": "Angle de lacet de la caméra (deg)",
+            "camera_pitch_deg": "Angle de tangage de la caméra (deg)",
+            "width": "Largeur",
+            "height": "Hauteur",
+            "pose_adjust": "Ajustement de la pose",
+            "debug_scale": "Échelle de débogage"
+        },
+        "outputs": {
+            "image": "Image de sortie"
+        },
+        "description": "Rend le corps avec sa pose sous forme d'image. Les données de pose proviennent de `JSON de pose` (nœud Image vers JSON de pose / éditeur de pose) et les données de morphologie de `JSON de préréglage corporel` (nœud Générateur de JSON de préréglage corporel / éditeur de préréglage corporel).\n\nLes autres contrôles ne sont que des paramètres de contrôle d'une image unique : décalage de caméra, rotation orbitale, composition et intensité de correction d'inclinaison ; aucun de ces paramètres n'est écrit dans le JSON de préréglage corporel."
+    }
+}

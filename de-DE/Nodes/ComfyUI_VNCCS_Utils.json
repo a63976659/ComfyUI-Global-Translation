@@ -1,0 +1,185 @@
+{
+    "VNCCS_PoseStudio": {
+        "title": "VNCCS Pose-Studio",
+        "inputs": {
+            "pose_image": "Pose-Bild"
+        },
+        "widgets": {
+            "pose_data": "Pose-Daten"
+        },
+        "outputs": {
+            "images": "Bild",
+            "lighting_prompt": "Beleuchtungs-Prompt"
+        },
+        "description": "Pose-Studio mit Mesh-Bearbeitung und Generierung mehrerer Posen"
+    },
+    "VNCCS_ModelManager": {
+        "title": "VNCCS Modellmanager",
+        "widgets": {
+            "Check/Refresh Models": "Modelle prüfen/aktualisieren",
+            "repo_id": "Repository-ID"
+        },
+        "outputs": {
+            "repo_id": "Repository-ID"
+        },
+        "description": ""
+    },
+    "VNCCS_ModelSelector": {
+        "title": "VNCCS Modellauswahl",
+        "widgets": {
+            "repo_id": "Repository-ID"
+        },
+        "outputs": {
+            "model_path": "Modellpfad"
+        },
+        "description": ""
+    },
+    "VNCCS_PositionControl": {
+        "title": "VNCCS Positionscontroller",
+        "widgets": {
+            "azimuth": "Azimut",
+            "elevation": "Höhenwinkel (Elevation)",
+            "distance": "Abstand",
+            "include_trigger": "Auslösewörter einschließen"
+        },
+        "outputs": {
+            "prompt": "Prompt-Text"
+        },
+        "description": ""
+    },
+    "VNCCS_VisualPositionControl": {
+        "title": "VNCCS Visueller Positionscontroller",
+        "widgets": {
+            "camera_data": "Kameradaten"
+        },
+        "outputs": {
+            "prompt": "Prompt-Text"
+        },
+        "description": ""
+    },
+    "VNCCS_QWEN_Detailer": {
+        "title": "VNCCS Qianwen Detailverbesserer",
+        "inputs": {
+            "image": "Bild",
+            "bbox_detector": "Begrenzungsrahmen-Detektor",
+            "model": "Modell",
+            "clip": "CLIP (Encoder)",
+            "vae": "VAE",
+            "sampler_name": "Sampler",
+            "scheduler": "Scheduler (Ablaufplanung)",
+            "controlnet_image": "ControlNet-Referenzbild",
+            "image2": "Bild 2",
+            "sam_model_opt": "SAM-Modell (optional)",
+            "segm_detector_opt": "Segmentierungs-Detektor (optional)"
+        },
+        "widgets": {
+            "prompt": "Prompt-Text",
+            "threshold": "Schwellenwert",
+            "dilation": "Dilationsfaktor",
+            "drop_size": "Minimale Filtergröße",
+            "feather": "Feather-Wert",
+            "steps": "Schrittzahl",
+            "cfg": "CFG",
+            "seed": "Zufalls-Seed",
+            "denoise": "Entrauschungsstärke",
+            "tiled_vae_decode": "Gekachelte VAE-Dekodierung",
+            "tile_size": "Kachelgröße",
+            "sam_detection_hint": "SAM-Erkennungs-Prompt",
+            "sam_dilation": "SAM-Masken-Dilation",
+            "sam_threshold": "SAM-Schwellenwert",
+            "sam_bbox_expansion": "SAM-Begrenzungsrahmen-Erweiterung",
+            "sam_mask_hint_threshold": "SAM-Masken-Prompt-Schwellenwert",
+            "sam_mask_hint_use_negative": "SAM-Masken-Prompt nutzt Negativbeispiel",
+            "target_size": "Zielgröße",
+            "upscale_method": "Hochskalierungsmethode",
+            "crop_method": "Zuschnittmethode",
+            "instruction": "Anweisung",
+            "inpaint_mode": "Neuzeichnungs-Modus",
+            "inpaint_prompt": "Neuzeichnungs-Prompt",
+            "color_match_method": "Farbabgleichmethode",
+            "seam_fix": "Nahtreparatur",
+            "qwen_2511": "Qwen-2511-Modell",
+            "distortion_fix": "Verzerrungskorrektur"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": ""
+    },
+    "VNCCS_BBox_Extractor": {
+        "title": "VNCCS Begrenzungsrahmen-Extraktor",
+        "inputs": {
+            "image": "Bild",
+            "bbox_detector": "Begrenzungsrahmen-Detektor"
+        },
+        "widgets": {
+            "threshold": "Schwellenwert",
+            "dilation": "Dilationsfaktor",
+            "drop_size": "Minimale Filtergröße"
+        },
+        "outputs": {
+            "images": "Bild"
+        },
+        "description": "Extrahiert die vom Begrenzungsrahmen-Detektor erkannten Bereiche aus dem Bild"
+    },
+    "LoadSAM3DBodyModel": {
+        "title": "SAM 3D-Körpermodell laden",
+        "inputs": {
+            "device_mode": "Gerätemodus"
+        },
+        "outputs": {
+            "model": "Modell"
+        },
+        "description": "Konfiguriert die Parameter des SAM 3D-Körpermodells.\n\nDie Modelldateien liegen im festen Verzeichnis `<ComfyUI>/models/sam3dbody/`;\nfehlende Gewichte werden bei der ersten Verwendung automatisch von HuggingFace heruntergeladen.\nDas eigentliche Modell wird beim Inferenzlauf in einem separaten Worker-Prozess verzögert geladen."
+    },
+    "SAM3DBodyProcessToJson": {
+        "title": "SAM 3D-Körper zu Pose-JSON",
+        "inputs": {
+            "model": "Modell",
+            "image": "Bild",
+            "mask": "Maske",
+            "Left_hand_image": "Bild der linken Hand",
+            "Right_hand_image": "Bild der rechten Hand"
+        },
+        "widgets": {
+            "bbox_threshold": "Begrenzungsrahmen-Schwellenwert",
+            "inference_type": "Inferenztyp",
+            "debug_scale": "Debug-Skalierung"
+        },
+        "outputs": {
+            "pose_json": "Pose-JSON"
+        },
+        "description": "Führt das SAM 3D-Körpermodell auf einem Bild aus und gibt die vorhergesagte Pose im JSON-Format aus (zur Verwendung durch den Knoten „Körper aus Pose-JSON renderieren“).\nIntern erzeugte Netze, Skelette und Zwischen-Visualisierungen werden verworfen; nur die Posenparameter werden an nachgelagerte Knoten übergeben."
+    },
+    "SAM3DBodySettingBodyPresetJson": {
+        "title": "SAM 3D-Körper-Preset-JSON-Generator",
+        "outputs": {
+            "body_preset_json": "Körper-Preset-JSON"
+        },
+        "description": "Editor für Körper-Presets, der nur die Körper-Preset-JSON-Zeichenkette ausgibt.\n\nAus dem ehemaligen Knoten „SAM3DBodyRenderFromJson“ herausgelöst, sodass die Parameter für Körperbau/Skelett/Blendshapes einmal bearbeitet und mehrfach für verschiedene Renderaufgaben wiederverwendet werden können (auch von anderen Knoten, z. B. als Körper-Preset-JSON-Eingang des Exportknotens oder der Pose-Editors). Zusammen mit dem Knoten „SAM3DBodyRenderFromPoseAndBodyPresetJson“ lässt sich ein Einzelbild rendern.\n\nDie ausgegebene JSON-Struktur ist identisch mit der von `body_preset_settings/*.json`, daher können gespeicherte Presets direkt ersetzt oder in den eigenständigen Körper-Preset-Editor importiert werden."
+    },
+    "SAM3DBodyRenderFromPoseAndBodyPresetJson": {
+        "title": "SAM 3D-Körper aus Pose+Preset-JSON renderieren",
+        "inputs": {
+            "model": "Modell",
+            "background_image": "Hintergrundbild"
+        },
+        "widgets": {
+            "pose_json": "Pose-JSON",
+            "body_preset_json": "Körper-Preset-JSON",
+            "offset_x": "X-Achsen-Versatz",
+            "offset_y": "Y-Achsen-Versatz",
+            "scale_offset": "Skalierungsversatz",
+            "camera_yaw_deg": "Kamera-Gierwinkel (Grad)",
+            "camera_pitch_deg": "Kamera-Nickwinkel (Grad)",
+            "width": "Breite",
+            "height": "Höhe",
+            "pose_adjust": "Pose-Anpassung",
+            "debug_scale": "Debug-Skalierung"
+        },
+        "outputs": {
+            "image": "Bild"
+        },
+        "description": "Rendert einen Körper mit Pose als Bild. Posedaten stammen aus `Pose-JSON` (Knoten „Bild zu Pose-JSON“/Pose-Editor), Körperbaudaten aus `Body-Preset-JSON` (Generator für Körper-Preset-JSON/ Körper-Preset-Editor).\n\nDie übrigen Widgets sind nur Steuerparameter für Einzelbilder: Kameraversatz, Orbitrotation, Komposition, Stärke der Neigungskorrektur; keiner dieser Parameter wird in das Körper-Preset-JSON geschrieben."
+    }
+}

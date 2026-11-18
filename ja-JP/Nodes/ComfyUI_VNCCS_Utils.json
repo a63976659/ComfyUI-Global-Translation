@@ -1,0 +1,185 @@
+{
+    "VNCCS_PoseStudio": {
+        "title": "VNCCS ポーズスタジオ",
+        "inputs": {
+            "pose_image": "ポーズ画像"
+        },
+        "widgets": {
+            "pose_data": "ポーズデータ"
+        },
+        "outputs": {
+            "images": "画像",
+            "lighting_prompt": "ライティングプロンプト"
+        },
+        "description": "メッシュ編集と複数ポーズ生成に対応したポーズスタジオ"
+    },
+    "VNCCS_ModelManager": {
+        "title": "VNCCS モデルマネージャ",
+        "widgets": {
+            "Check/Refresh Models": "モデルを確認/更新",
+            "repo_id": "リポジトリID"
+        },
+        "outputs": {
+            "repo_id": "リポジトリID"
+        },
+        "description": ""
+    },
+    "VNCCS_ModelSelector": {
+        "title": "VNCCS モデルセレクタ",
+        "widgets": {
+            "repo_id": "リポジトリID"
+        },
+        "outputs": {
+            "model_path": "モデルパス"
+        },
+        "description": ""
+    },
+    "VNCCS_PositionControl": {
+        "title": "VNCCS ポジションコントローラ",
+        "widgets": {
+            "azimuth": "方位角",
+            "elevation": "仰角",
+            "distance": "距離",
+            "include_trigger": "トリガーワードを含む"
+        },
+        "outputs": {
+            "prompt": "プロンプト"
+        },
+        "description": ""
+    },
+    "VNCCS_VisualPositionControl": {
+        "title": "VNCCS 可視化ポジションコントローラ",
+        "widgets": {
+            "camera_data": "カメラデータ"
+        },
+        "outputs": {
+            "prompt": "プロンプト"
+        },
+        "description": ""
+    },
+    "VNCCS_QWEN_Detailer": {
+        "title": "VNCCS 千问 ディテールエンハンサ",
+        "inputs": {
+            "image": "画像",
+            "bbox_detector": "バウンディングボックス検出器",
+            "model": "モデル",
+            "clip": "クリップ",
+            "vae": "VAE",
+            "sampler_name": "サンプラー",
+            "scheduler": "スケジューラ",
+            "controlnet_image": "ControlNet 参照画像",
+            "image2": "画像2",
+            "sam_model_opt": "SAMモデル（オプション）",
+            "segm_detector_opt": "分割検出器（オプション）"
+        },
+        "widgets": {
+            "prompt": "プロンプト",
+            "threshold": "閾値",
+            "dilation": "膨張係数",
+            "drop_size": "最小フィルタサイズ",
+            "feather": "フェザー値",
+            "steps": "ステップ数",
+            "cfg": "CFG",
+            "seed": "シード",
+            "denoise": "ノイズ除去強度",
+            "tiled_vae_decode": "タイル分割VAEデコード",
+            "tile_size": "タイルサイズ",
+            "sam_detection_hint": "SAM検出プロンプト",
+            "sam_dilation": "SAMマスク膨張",
+            "sam_threshold": "SAM閾値",
+            "sam_bbox_expansion": "SAMバウンディングボックス拡張",
+            "sam_mask_hint_threshold": "SAMマスクプロンプト閾値",
+            "sam_mask_hint_use_negative": "SAMマスクプロンプトで負例を使用",
+            "target_size": "ターゲットサイズ",
+            "upscale_method": "拡大方法",
+            "crop_method": "トリミング方法",
+            "instruction": "指示",
+            "inpaint_mode": "インペイントモード",
+            "inpaint_prompt": "インペイントプロンプト",
+            "color_match_method": "カラーマッチ方法",
+            "seam_fix": "継ぎ目補正",
+            "qwen_2511": "Qwen 2511モデル",
+            "distortion_fix": "歪み補正"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": ""
+    },
+    "VNCCS_BBox_Extractor": {
+        "title": "VNCCS バウンディングボックス抽出器",
+        "inputs": {
+            "image": "画像",
+            "bbox_detector": "バウンディングボックス検出器"
+        },
+        "widgets": {
+            "threshold": "閾値",
+            "dilation": "膨張係数",
+            "drop_size": "最小フィルタサイズ"
+        },
+        "outputs": {
+            "images": "画像"
+        },
+        "description": "画像からバウンディングボックス検出器が検出した領域を抽出します"
+    },
+    "LoadSAM3DBodyModel": {
+        "title": "SAM 3D人体モデルを読み込み",
+        "inputs": {
+            "device_mode": "デバイスモード"
+        },
+        "outputs": {
+            "model": "モデル"
+        },
+        "description": "SAM 3D人体モデルのパラメータを設定します。\n\nモデルファイルは固定ディレクトリ `<ComfyUI>/models/sam3dbody/` 以下に保存されます；\n初回使用時に不足している重みはHuggingFaceから自動的にダウンロードされます。\n実際のモデルは推論実行時に独立したワーカープロセス内で遅延ロードされます。"
+    },
+    "SAM3DBodyProcessToJson": {
+        "title": "SAM 3D人体をポーズJSONに変換",
+        "inputs": {
+            "model": "モデル",
+            "image": "画像",
+            "mask": "マスク",
+            "Left_hand_image": "左手画像",
+            "Right_hand_image": "右手画像"
+        },
+        "widgets": {
+            "bbox_threshold": "バウンディングボックス閾値",
+            "inference_type": "推論タイプ",
+            "debug_scale": "デバッグスケール比率"
+        },
+        "outputs": {
+            "pose_json": "ポーズJSON"
+        },
+        "description": "画像に対してSAM 3D人体モデルを実行し、予測されたポーズをJSON形式で出力します（「ポーズJSONから人体をレンダリング」ノードで使用）。\n内部で生成されるメッシュ、スケルトン、中間可視化結果は破棄され、ポーズパラメータのみが下流ノードに渡されます。"
+    },
+    "SAM3DBodySettingBodyPresetJson": {
+        "title": "SAM 3D人体プリセットJSON生成器",
+        "outputs": {
+            "body_preset_json": "人体プリセットJSON"
+        },
+        "description": "人体プリセットエディタで、人体プリセットのJSON文字列のみを出力します。\n\n旧版「SAM3DBodyRenderFromJson」ノードから分離されたため、体格/スケルトン/ブレンドシェイプのパラメータ状態を一度編集すれば複数のレンダリングタスクに繰り返し利用できます（他のノード、たとえばエクスポートノードやポーズエディタの身体プリセットJSON入力でも使用可能）。「SAM3DBodyRenderFromPoseAndBodyPresetJson」ノードと組み合わせると1フレームをレンダリングできます。\n\n出力されるJSON構造は `body_preset_settings/*.json` と完全に一致するため、保存済みのプリセットを直接差し替えられ、独立した人体プリセットエディタに直接インポートして使用することもできます。"
+    },
+    "SAM3DBodyRenderFromPoseAndBodyPresetJson": {
+        "title": "SAM 3D人体をポーズ+プリセットJSONでレンダリング",
+        "inputs": {
+            "model": "モデル",
+            "background_image": "背景画像"
+        },
+        "widgets": {
+            "pose_json": "ポーズJSON",
+            "body_preset_json": "人体プリセットJSON",
+            "offset_x": "X軸オフセット",
+            "offset_y": "Y軸オフセット",
+            "scale_offset": "スケールオフセット",
+            "camera_yaw_deg": "カメラヨー角（度）",
+            "camera_pitch_deg": "カメラピッチ角（度）",
+            "width": "幅",
+            "height": "高さ",
+            "pose_adjust": "ポーズ調整",
+            "debug_scale": "デバッグスケール比率"
+        },
+        "outputs": {
+            "image": "画像"
+        },
+        "description": "ポーズ付きの人体を画像としてレンダリングします。ポーズデータは `ポーズJSON`（画像をポーズJSONに変換するノード/ポーズエディタ）由来、体型データは `身体プリセットJSON`（人体プリセットJSON生成ノード/人体プリセットエディタ）由来です。\n\nその他のコントロールは1フレーム用の制御パラメータのみです：カメラオフセット、軌道回転、構図、傾き補正強度。これらのパラメータは身体プリセットJSONには書き込まれません。"
+    }
+}

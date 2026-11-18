@@ -1,0 +1,74 @@
+{
+    "IDEmbeddingModelLoader": {
+        "title": "顔埋め込みモデルローダー",
+        "widgets": {
+            "image_proj_model_name": "画像投影モデル名",
+            "image_proj_num_tokens": "画像投影トークン数",
+            "face_analysis_provider": "顔分析デバイス",
+            "face_analysis_det_size": "顔分析検出サイズ"
+        },
+        "outputs": {
+            "FACE_DETECTOR": "顔検出器",
+            "ARCFACE_MODEL": "アークフェースモデル",
+            "IMAGE_PROJ_MODEL": "画像投影モデル"
+        }
+    },
+    "ExtractFacePoseImage": {
+        "title": "顔ポーズ画像を抽出",
+        "inputs": {
+            "face_detector": "顔検出器",
+            "image": "画像",
+            "mask": "マスク"
+        },
+        "widgets": {
+            "width": "幅",
+            "height": "高さ"
+        },
+        "outputs": {
+            "IMAGE": "画像"
+        }
+    },
+    "ExtractIDEmbedding": {
+        "title": "顔埋め込みを抽出",
+        "inputs": {
+            "face_detector": "顔検出器",
+            "arcface_model": "アークフェースモデル",
+            "image_proj_model": "画像投影モデル",
+            "image": "画像"
+        },
+        "outputs": {
+            "conditioning": "顔埋め込み条件",
+            "CONDITIONING": "顔埋め込み条件"
+        }
+    },
+    "InfuseNetLoader": {
+        "title": "InfuseNet InfiniteYou 読み込み",
+        "widgets": {
+            "controlnet_name": "infusenet_simモデル"
+        },
+        "outputs": {
+            "controlnet": "ControlNet"
+        }
+    },
+    "InfuseNetApply": {
+        "title": "InfuseNet InfiniteYou適用",
+        "inputs": {
+            "positive": "ポジティブ条件",
+            "id_embedding": "顔埋め込み",
+            "control_net": "ControlNet",
+            "image": "画像",
+            "negative": "ネガティブ条件",
+            "vae": "VAE",
+            "control_mask": "制御マスク"
+        },
+        "widgets": {
+            "strength": "強度",
+            "start_percent": "開始率",
+            "end_percent": "終了率"
+        },
+        "outputs": {
+            "positive": "ポジティブ条件",
+            "negative": "ネガティブ条件"
+        }
+    }
+}

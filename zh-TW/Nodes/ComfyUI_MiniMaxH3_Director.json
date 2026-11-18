@@ -1,0 +1,188 @@
+{
+    "MiniMaxH3DirectorConditioning": {
+        "title": "MiniMax H3 導演條件",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "audio_vae": "音訊 VAE",
+            "first_frame": "首幀圖",
+            "last_frame": "尾幀影像"
+        },
+        "widgets": {
+            "prompt": "提示詞",
+            "width": "寬度",
+            "height": "高度",
+            "length": "長度",
+            "ref_image_size": "參考影像尺寸"
+        },
+        "outputs": {
+            "positive": "正面條件",
+            "latent": "Latent"
+        },
+        "description": "官方MiniMax H3條件（正面+Latent）的輕量封裝。"
+    },
+    "MiniMaxH3DirectorPlannerConditioning": {
+        "title": "MiniMax H3 導演規劃器條件",
+        "inputs": {
+            "clip": "CLIP",
+            "vae": "VAE",
+            "audio_vae": "音訊 VAE",
+            "first_frame": "首幀圖",
+            "last_frame": "尾幀影像"
+        },
+        "widgets": {
+            "prompt": "提示詞",
+            "width": "寬度",
+            "height": "高度",
+            "length": "長度",
+            "ref_image_size": "參考影像尺寸"
+        },
+        "outputs": {
+            "positive": "正面條件",
+            "latent": "Latent",
+            "task_mode": "任務模式"
+        },
+        "description": "官方MiniMax H3條件，以及用於規劃UI的任務模式字串。"
+    },
+    "ComfyMiniMaxH3Director": {
+        "title": "Comfy MiniMax H3 導演",
+        "inputs": {
+            "model": "模型名稱",
+            "video_vae": "影片VAE",
+            "audio_vae": "音訊 VAE",
+            "clip": "CLIP",
+            "i2v_groups": "圖生影片組",
+            "r2v_groups": "參考生影片組",
+            "refine": "優化"
+        },
+        "widgets": {
+            "bd_grp_advanced": "進階分組",
+            "steps": "步數",
+            "sampler": "採樣器",
+            "scheduler": "調度器",
+            "shift_video": "視訊偏移量",
+            "shift_audio": "音訊偏移量"
+        },
+        "outputs": {
+            "images": "影像",
+            "audio": "音訊",
+            "fps": "幀率",
+            "frame_count": "幀數",
+            "source_images": "來源影像",
+            "report": "報告",
+            "images_pre_refine": "優化前影像"
+        },
+        "description": "MiniMax H3 導演：MiniMaxH3圖生影片/參考生影片條件，單階段KSampler + MiniMaxH3SigmaShift，LTXVSeparateAVLatent 解碼。支援t2v/i2v/fl2v/r2v/v2v/rv2v。可選的i2v_groups/r2v_groups可接受來自導演分組節點的多組包（外部優先順序高於UI卡片）。可選的優化接受MiniMax H3導演優化（第二次取樣/放大）。images_pre_refine是優化前的首輪影片。預設設定：0.4MP 16:9（864×480），5秒/124幀 @24幀率。"
+    },
+    "MiniMaxH3Director": {
+        "title": "MiniMax H3 導演",
+        "inputs": {
+            "model": "模型名稱",
+            "video_vae": "影片VAE",
+            "audio_vae": "音訊 VAE",
+            "clip": "CLIP",
+            "i2v_groups": "圖生影片組",
+            "r2v_groups": "參考生影片組",
+            "refine": "優化"
+        },
+        "widgets": {
+            "bd_grp_advanced": "進階分組",
+            "steps": "步數",
+            "sampler": "採樣器",
+            "scheduler": "調度器",
+            "shift_video": "視訊偏移量",
+            "shift_audio": "音訊偏移量"
+        },
+        "outputs": {
+            "images": "影像",
+            "audio": "音訊",
+            "fps": "幀率",
+            "frame_count": "幀數",
+            "source_images": "來源影像",
+            "report": "報告",
+            "images_pre_refine": "優化前影像"
+        },
+        "description": "MiniMax H3 導演：MiniMaxH3圖生影片/參考生影片條件，單階段KSampler + MiniMaxH3SigmaShift，LTXVSeparateAVLatent 解碼。支援t2v/i2v/fl2v/r2v/v2v/rv2v。可選的i2v_groups/r2v_groups可接受來自導演分組節點的多組包（外部優先順序高於UI卡片）。可選的優化接受MiniMax H3導演優化（第二次取樣/放大）。images_pre_refine是優化前的首輪影片。預設設定：0.4MP 16:9（864×480），5秒/124幀 @24幀率。"
+    },
+    "MiniMaxH3DirectorGuide": {
+        "title": "MiniMax H3 導演引導",
+        "inputs": {
+            "model": "模型名稱",
+            "vae": "VAE",
+            "audio_vae": "音訊 VAE",
+            "clip": "CLIP"
+        },
+        "outputs": {
+            "positive": "正面條件",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3DirectorGroupImageToVideo": {
+        "title": "MiniMax H3 導演分組圖生影片",
+        "inputs": {
+            "first_frame": "首幀圖",
+            "last_frame": "尾幀影像"
+        },
+        "widgets": {
+            "duration_sec": "持續時間（秒）"
+        },
+        "outputs": {
+            "group": "分組"
+        },
+        "description": "為Director.i2v_groups打包一個MiniMax H3圖生影片分組。無幀則為t2v；僅第一幀為i2v；僅最後一幀/首尾幀為fl2v。輸出尺寸由導演節點控制（而非此打包器）。將`group`連接到導演（單個）或分組合併（批次）。"
+    },
+    "MiniMaxH3DirectorGroupReferenceToVideo": {
+        "title": "MiniMax H3 導演分組參考生影片",
+        "inputs": {
+            "ref_images": "參考影像",
+            "ref_videos": "參考影片",
+            "ref_video_audios": "參考影片音訊",
+            "ref_audios": "參考音訊"
+        },
+        "widgets": {
+            "prompt": "提示詞",
+            "duration_sec": "時長（秒）"
+        },
+        "outputs": {
+            "group": "分組"
+        },
+        "description": "為Director.r2v_groups打包一個MiniMax H3參考生影片分組。自動擴展影像（≤9）、影片（≤3）、影片音訊（≤3）、音訊（≤3）的槽位——與官方MiniMax H3參考生影片一致。輸出尺寸由導演節點控制。將`group`連接到導演（單個）或分組合併（批次）。"
+    },
+    "MiniMaxH3DirectorGroupsCombine": {
+        "title": "MiniMax H3 導演分組合併",
+        "inputs": {
+            "groups": "分組",
+            "groups_0": "分組0",
+            "groups_1": "分組1",
+            "groups_2": "分組2"
+        },
+        "outputs": {
+            "groups": "分組"
+        },
+        "description": "將多個導演分組輸出合併為一個清單供導演使用。連線一個分組可擴展另一個空槽位（自動擴展，與官方MiniMax H3參考生影片一致）。空槽位會被跳過；順序遵循連線索引（group_0、group_1……）。"
+    },
+    "MiniMaxH3DirectorRefine": {
+        "title": "MiniMax H3 導演優化",
+        "inputs": {
+            "upscale_model": "增強模型"
+        },
+        "widgets": {
+            "mode": "軌道模式",
+            "upscale_method": "放大方式",
+            "seed_mode": "隨機種子模式",
+            "aspect_ratio": "寬高比",
+            "denoise": "降噪",
+            "steps": "步數",
+            "megapixels": "百萬像素",
+            "width": "寬度",
+            "height": "高度",
+            "skip_fl2v": "跳過首尾幀生影片"
+        },
+        "outputs": {
+            "refine": "優化",
+            "width": "寬度",
+            "height": "高度"
+        },
+        "description": "MiniMax H3 導演優化：連接到Director.優化。Director.影像是優化/放大後的結果；Director.images_pre_refine是首輪影片（第二次取樣前）。放大畫布使用與導演相同的寬高比+百萬像素/自訂寬×高。寬度/高度是解析後的目標畫布（×32）。自身不進行取樣——無影像輸出。"
+    }
+}
