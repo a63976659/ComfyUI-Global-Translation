@@ -4,10 +4,10 @@
 
 **Traducción multilingüe de la interfaz de ComfyUI**
 
-> Añade traducciones para nodos, blueprints oficiales, menús, ajustes e interfaces de nodos de terceros en el idioma seleccionado en ComfyUI.
+> Añade traducciones para nodos, blueprints y subgrafos de flujos de trabajo, menús, ajustes e interfaces de nodos de terceros en el idioma seleccionado en ComfyUI.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#uso)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -62,9 +62,9 @@ ComfyUI-Global-Translation es un complemento de traducción multilingüe de la i
 - **Detección inteligente** — reconoce automáticamente el texto ya traducido, evitando traducciones repetidas y recursión infinita
 - **Compatibilidad nativa** — coexiste perfectamente con la traducción oficial de ComfyUI sin interferencias mutuas
 - **Conciencia de contexto** — aplica la estrategia más adecuada según el tipo de elemento (nodos, menús, widgets, etc.)
-- **Fusión inteligente de datos** — cuando varios archivos de traducción contienen el mismo nodo, las entradas se combinan de forma complementaria en lugar de sobrescribirse
-- **Traducción de paneles personalizados** — los paneles creados dentro de los nodos (botones, etiquetas, desplegables, textos de ayuda, ventanas emergentes, etc.) también se traducen automáticamente
-- **Protección de devoluciones de llamada** — tras traducir el menú contextual, todas las funciones (desconectar, renombrar, etc.) siguen funcionando correctamente
+- **Combinación de traducciones** — las traducciones del mismo nodo se combinan por campos. Si se identifica el complemento al que pertenece el nodo, su diccionario tiene prioridad
+- **Traducción de paneles personalizados** — traduce botones, etiquetas de controles, marcadores de posición y ventanas emergentes de los paneles de los nodos
+- **Traducción del menú contextual** — el menú muestra los textos traducidos, mientras que las acciones de desconectar o renombrar siguen usando los elementos y valores originales
 
 ### 🎨 Interfaz de usuario atractiva
 
@@ -79,14 +79,14 @@ ComfyUI-Global-Translation es un complemento de traducción multilingüe de la i
 - **Cambio en tiempo real** — activar/desactivar la traducción sin reiniciar
 - **Estado persistente** — los ajustes se guardan automáticamente y sobreviven a los reinicios
 - **Integración en el panel de ajustes** — configurar el estilo del interruptor y la traducción de opciones desplegables en los ajustes de ComfyUI (el idioma sigue el ajuste oficial de ComfyUI)
-- **Interruptor por complemento** — un gestor integrado permite desactivar la traducción de complementos concretos
-- **Añadir y aplicar al instante** — los nuevos archivos de traducción surten efecto sin reiniciar
+- **Interruptor por complemento** — activa o desactiva la traducción de nodos por archivo
+- **Actualizar los diccionarios** — recargue la página después de añadir o modificar un archivo de traducción
 
 ### 🛡️ Estable y fiable
 
 - **Manejo robusto de excepciones** — todas las operaciones críticas están protegidas
-- **Degradación elegante** — ante un fallo de traducción se vuelve automáticamente al texto original
-- **Protección del DOM** — la traducción no rompe el enlace de eventos de los componentes Vue/PrimeVue
+- **Tolerancia a errores en diccionarios** — si un diccionario tiene una estructura incorrecta o no se puede leer, el complemento lo omite y registra su nombre
+- **Protección del contenido del usuario** — conserva el texto editable, los prompts y los nombres de archivos y carpetas de la barra lateral de flujos de trabajo
 - **Compatibilidad multi-versión** — admite las interfaces antigua y nueva de ComfyUI
 
 ---
@@ -151,10 +151,10 @@ Reinicie ComfyUI tras la instalación.
 
 ### Interruptor de traducción
 
-Tras la instalación aparece un botón de activación en la interfaz; púlselo para cambiar el estado de la traducción:
+Pulse el interruptor de traducción de la barra de herramientas para cambiar su estado. Con el teclado, use Tab para seleccionarlo y luego Entrar o Espacio para activarlo. Si el cambio se guarda correctamente, la página se recarga de forma automática.
 
 - **Traducción activada** — el botón muestra "traducción activada" y el texto de la interfaz se traduce al idioma actual (sigue el ajuste de idioma oficial de ComfyUI)
-- **Traducción desactivada** — el botón muestra "traducción desactivada" y se restaura la interfaz inglesa original
+- **Traducción desactivada** — el botón muestra «traducción desactivada» y vuelve a mostrar los textos originales de ComfyUI y de los nodos de terceros
 
 ### Idioma de traducción
 
@@ -172,9 +172,7 @@ En ComfyUI Ajustes → «🌐 Ajustes de traducción» hay dos opciones. Los tex
 | 🎨 Estilo del interruptor | Elija la apariencia; se redibuja al instante sin recargar | pill (píldora segmentada) / gradient (arcoíris) / plain (nativo discreto) |
 | 📋 Opciones desplegables | Si se traduce también el texto de las opciones de los desplegables COMBO | Activado / Desactivado (recarga automática al cambiar) |
 
-Debajo de las opciones hay también un panel **Gestor de traducción de complementos**: lista todos los complementos con archivos de traducción — desmarque uno para desactivar su traducción; la página se recarga al guardar.
-
-> 💡 **Píldora segmentada (recomendada)**: forma redondeada con un control deslizante azul resaltado sobre el estado actual. **Pulse el control deslizante azul** para que se deslice al otro lado; la elección se guarda de inmediato en el archivo de configuración y persiste tras reiniciar ComfyUI.
+El **Gestión de traducción de plugins**, debajo de las opciones, muestra los archivos de traducción de nodos disponibles. Desmarque un archivo para desactivar sus traducciones. Cuando la lista se haya cargado y tenga elementos seleccionables, puede pulsar «Guardar y recargar». Se conservan las opciones desactivadas de otros idiomas. Si falla el guardado, el panel avisa y permite volver a intentarlo.
 
 ### Referencia de estilos de botón
 
@@ -184,7 +182,7 @@ Debajo de las opciones hay también un panel **Gestor de traducción de compleme
 | **Degradado arcoíris** | Animación de arcoíris fluido, blanco en negrita | Animación gris fluida, texto oscuro en negrita | Quieres algo llamativo |
 | **Nativo discreto** | Fondo del color del tema de ComfyUI | Fondo oscuro, texto gris | Quieres integrarte en la interfaz |
 
-> **Interacción de la píldora segmentada**: solo el control deslizante azul resaltado activa el cambio — al pulsarlo primero reproduce una animación de deslizamiento (~300 ms), luego guarda y recarga la página; el segmento de texto gris es solo una etiqueta de estado y que no responda al clic es un comportamiento intencionado.
+> Pulse cualquier parte del botón segmentado para cambiar su estado. Cuando se guarde el cambio, el control deslizante se moverá al nuevo estado y la página se recargará. Si falla el guardado, se conserva el estado anterior y puede volver a intentarlo.
 
 ---
 
@@ -196,7 +194,7 @@ Debajo de las opciones hay también un panel **Gestor de traducción de compleme
 |------|---------|------|
 | **Nombres de nodos** | Títulos y nombres visibles de todos los nodos del flujo de trabajo | ✅ |
 | **Propiedades de nodos** | Puertos de entrada/salida, etiquetas de widgets, descripciones | ✅ |
-| **Blueprints oficiales** | Títulos en la biblioteca de nodos y en el lienzo, puertos expuestos, etiquetas de widgets y marcadores de posición en campos de texto | ✅ |
+| **Blueprints y subgrafos** | Títulos de blueprints y subgrafos de plantillas oficiales con una entrada en el diccionario, además de puertos expuestos, etiquetas de widgets y marcadores de posición en subgrafos oficiales y personalizados | ✅ |
 | **Menús** | Menú principal, menú contextual, menús de clic derecho | ✅ |
 | **Panel de ajustes** | El cuadro de diálogo de ajustes de ComfyUI | ✅ |
 | **Gestor** | La interfaz de ComfyUI Manager | ✅ |
@@ -264,17 +262,17 @@ Cree un archivo JSON bajo `es-ES/Menus/` para añadir traducciones de menús:
 }
 ```
 
-> Tras añadir archivos de traducción no hace falta reiniciar ComfyUI — alterne el interruptor de traducción para aplicarlos.
+La raíz de cada archivo de diccionario debe ser un objeto JSON. Si no hay una traducción válida, se muestra el texto original. Los archivos que no se puedan leer o que tengan una estructura incorrecta se omiten y se anotan en el registro. Los diccionarios se ordenan por nombre de archivo. Cuando una clave se repite, se usa la traducción del último archivo en ese orden. Si se identifica el complemento al que pertenece un nodo, se da prioridad a su diccionario y se completan los campos que falten con otras entradas.
 
-### Traducción de blueprints oficiales
+> Tras añadir, modificar o eliminar un diccionario, recargue la página del navegador para aplicar los cambios. Tras actualizar el complemento, reinicie ComfyUI y luego recargue la página.
 
-Abra la biblioteca de nodos en la barra lateral izquierda, elija un blueprint en **Comfy Blueprints** y arrástrelo al lienzo. La traducción funciona tanto en el lienzo clásico como en la nueva vista de nodos. Los títulos, puertos expuestos, etiquetas y marcadores de posición aparecen traducidos según los diccionarios disponibles para el idioma seleccionado.
+### Traducción de blueprints y subgrafos
 
-- Los títulos se buscan en `Menus/` del idioma actual. El archivo de chino simplificado incluye ejemplos de títulos y términos compartidos entre blueprints. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
-- Para los componentes expuestos, el complemento da prioridad a la traducción del campo correspondiente del nodo interno. Si el nombre visible difiere del nombre interno, busca el nombre completo en `es-ES/Menus/`. La búsqueda admite diferencias de mayúsculas y minúsculas, espacios, guiones bajos y guiones. Varios blueprints pueden reutilizar la misma entrada.
-- Si una entrada y una salida requieren traducciones distintas, use los prefijos `input.` y `output.` en el diccionario compartido. Por ejemplo, con `output.depth_colored` se puede mostrar la salida del mismo nombre como «Mapa de profundidad en color». Cuando no hay coincidencias, se muestra el texto original. El flujo de trabajo guarda los nombres de campo y los valores de los parámetros originales.
+Desde **Nodos → Comfy Blueprints** en la barra lateral izquierda, arrastre un blueprint al lienzo. También puede abrir directamente una plantilla oficial o un flujo de trabajo propio que contenga subgrafos. Tanto el lienzo clásico como la nueva vista de nodos traducen, en el idioma activo, los puertos expuestos, las etiquetas de widgets y los marcadores de posición de los campos de texto. Esto incluye los controles expuestos desde subgrafos anidados.
 
-Reinicie ComfyUI tras actualizar el complemento. Si solo modifica los diccionarios, recargue la página para aplicar los cambios.
+- Los títulos de los blueprints oficiales y de los subgrafos de plantillas oficiales que el complemento reconoce se buscan en `Menus/` en el idioma activo. Los subgrafos personalizados conservan los títulos elegidos por el usuario. El diccionario en chino simplificado contiene ejemplos de títulos y términos compartidos. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
+- Cada componente expuesto usa primero la traducción del campo correspondiente del nodo interno. Si falta, el complemento busca el nombre visible completo en `es-ES/Menus/`. La búsqueda admite variantes de mayúsculas, minúsculas, espacios, guiones bajos y guiones. Varios subgrafos pueden reutilizar la misma entrada.
+- Si una entrada y una salida requieren traducciones distintas, use los prefijos `input.` y `output.` en el diccionario compartido. Por ejemplo, `output.depth_colored` permite mostrar la salida del mismo nombre como «Mapa de profundidad en color». El flujo de trabajo conserva los títulos, los nombres de los puertos y los valores de los parámetros originales.
 
 ---
 
@@ -303,12 +301,14 @@ Reinicie ComfyUI tras actualizar el complemento. Si solo modifica los diccionari
 
 | Técnica | Descripción |
 |------|------|
-| **Envoltura de devoluciones de llamada (Callback Wrapping)** | Traduce el texto del menú contextual preservando la lógica de coincidencia `content` de la devolución subyacente |
+| **Menú contextual nativo** | Traduce las etiquetas después de que ComfyUI construya el menú. Los elementos, las funciones asociadas y los valores desplegables conservan sus datos originales |
 | **Arquitectura de doble botón** | Admite tanto el antiguo `.comfy-menu` como el nuevo `.comfyui-menu` |
-| **Vigilancia con MutationObserver** | Detecta cambios del DOM en tiempo real y traduce automáticamente los elementos recién aparecidos |
+| **Observación con MutationObserver** | Detecta cambios en la interfaz y revisa juntos los cambios de un mismo lote de menús |
 | **translatedValueSet** | Usa un Set para comprobar en O(1) si un texto ya está traducido, evitando procesamientos repetidos |
 | **Protección de nodos hoja** | Asigna `innerText` solo a nodos sin hijos, protegiendo el enlace de eventos de Vue |
-| **Transferencia Gzip** | Los datos de traducción se transfieren comprimidos con Gzip para reducir la carga de red |
+| **Caché de traducciones** | Compila y comprime las traducciones en segundo plano y reutiliza el resultado si los diccionarios y los elementos desactivados son los mismos |
+| **Caché de coincidencias de subgrafos** | Reutiliza la coincidencia de cada subgrafo y vuelve a comprobarla si cambian el nombre del grafo o los identificadores de los puertos expuestos |
+| **Transferencia con Gzip** | Envía datos comprimidos si el navegador admite Gzip para reducir el volumen transferido |
 
 > Para todos los detalles técnicos, consulte [TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)
 
@@ -322,6 +322,12 @@ Reinicie ComfyUI tras actualizar el complemento. Si solo modifica los diccionari
 - **Complemento con conflicto conocido** — `ComfyUI Browser` puede tener problemas de compatibilidad
 - **Navegadores admitidos** — se recomiendan Chrome, Edge y 360 Browser; los demás no se han probado a fondo
 
+### Si las traducciones aún no se actualizan
+
+- **Tras recargar la página sigue apareciendo la traducción anterior.** Algunas herramientas de sincronización sobrescriben los diccionarios y conservan el tamaño, la fecha de modificación y los metadatos del directorio. El complemento puede seguir usando la caché anterior. Reinicie ComfyUI para volver a leer los diccionarios.
+- **El texto de una ventana emergente sigue en inglés después de cambiar.** Algunas ventanas emergentes actualizan el texto de estado tras abrirse. El texto nuevo puede permanecer en inglés temporalmente.
+- **Un puerto expuesto conserva su traducción tras cambiar una conexión en el subgrafo.** La conexión al nuevo nodo entra en vigor de inmediato. Guarde y vuelva a abrir el flujo de trabajo para actualizar la traducción del puerto.
+
 ### Requisitos
 
 | Componente | Requisito |
@@ -333,6 +339,16 @@ Reinicie ComfyUI tras actualizar el complemento. Si solo modifica los diccionari
 ---
 
 ## Registro de cambios
+
+### 2026-11-18
+
+- Se añadieron traducciones de los componentes expuestos de subgrafos en plantillas oficiales y en flujos de trabajo propios, incluidos los subgrafos anidados y los controles recién expuestos. El diccionario en chino simplificado incluye el título de «Texto a imagen (MiniMax H3 Image)» y los términos de mejora del prompt.
+- Los nodos habituales, los menús y los blueprints de la biblioteca de nodos siguen traduciéndose aunque falte el índice de plantillas o esté dañado. Los controles añadidos en el mismo lote comparten una actualización del lienzo.
+- Se corrigieron el menú contextual del lienzo clásico, las traducciones que faltaban en menús dinámicos y los valores duplicados de los controles deslizantes. Se conservan los prompts, los nombres elegidos por el usuario y los valores de las opciones desplegables.
+- Se corrigió un problema por el que el gestor podía borrar los elementos desactivados. El interruptor de traducción admite el teclado y se puede reintentar el guardado si falla.
+- Se corrigió un fallo por el que un diccionario incorrecto podía dejar sin traducción todo el paquete de idioma. También se fijó el orden para resolver claves repetidas y se completaron la detección de paquetes y las comprobaciones de entradas faltantes de la herramienta de revisión.
+- Las traducciones se compilan en segundo plano y se guardan en caché. Los cambios de un mismo lote de menús se revisan juntos y se reducen las búsquedas repetidas de traducciones de subgrafos.
+- Se corrigió el uso de traducciones antiguas al guardar un diccionario por reemplazo en Windows. También se corrigieron el fallo de todo el paquete cuando el directorio de diccionarios no se puede leer temporalmente y las traducciones ausentes en las ayudas de controles de menú recién añadidos.
 
 ### 2026-11-17
 

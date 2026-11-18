@@ -4,10 +4,10 @@
 
 **Traduction multilingue de l’interface de ComfyUI**
 
-> Ajoute des traductions pour les nœuds, les blueprints officiels, les menus, les réglages et les interfaces des nœuds tiers dans la langue sélectionnée dans ComfyUI.
+> Ajoute des traductions pour les nœuds, les blueprints et sous-graphes de flux de travail, les menus, les réglages et les interfaces des nœuds tiers dans la langue sélectionnée dans ComfyUI.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#utilisation)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -62,9 +62,9 @@ ComfyUI-Global-Translation est un plugin de traduction multilingue pour l’inte
 - **Détection intelligente** — reconnaît automatiquement le texte déjà traduit, évitant les traductions répétées et la récursion infinie
 - **Compatibilité native** — cohabite parfaitement avec la traduction officielle de ComfyUI sans interference
 - **Sensibilité au contexte** — applique la meilleure stratégie selon le type d'élément (nœuds, menus, widgets, etc.)
-- **Fusion intelligente des données** — lorsque plusieurs fichiers de traduction contiennent un même nœud, les entrées sont fusionnées de façon complémentaire au lieu de s'écraser
-- **Traduction des panneaux personnalisés** — les panneaux créés dans les nœuds (boutons, étiquettes, listes déroulantes, infobulles, popups, etc.) sont aussi traduits automatiquement
-- **Sécurité des rappels** — après traduction du menu contextuel, toutes les fonctions (déconnecter, renommer, etc.) fonctionnent parfaitement
+- **Fusion des traductions** — les traductions d’un même nœud sont fusionnées champ par champ. Le dictionnaire du plugin qui fournit le nœud est prioritaire lorsque ce plugin est identifié
+- **Traduction des panneaux personnalisés** — traduit les boutons, les libellés des contrôles, les textes indicatifs et les fenêtres contextuelles des panneaux de nœuds
+- **Traduction du menu contextuel** — le menu affiche les traductions et les opérations de déconnexion ou de renommage continuent d’utiliser les éléments et les valeurs d’origine
 
 ### 🎨 Interface utilisateur soignée
 
@@ -79,14 +79,14 @@ ComfyUI-Global-Translation est un plugin de traduction multilingue pour l’inte
 - **Bascule en temps réel** — activer/désactiver la traduction sans redémarrer
 - **État persistant** — les réglages sont enregistrés automatiquement et survivent au redémarrage
 - **Intégration au panneau de réglages** — configurer le style de l'interrupteur et la traduction des options déroulantes dans les réglages ComfyUI (la langue suit le réglage officiel de ComfyUI)
-- **Interrupteur par plugin** — un gestionnaire intégré permet de désactiver la traduction de certains plugins
-- **Ajout appliqué immédiatement** — les nouveaux fichiers de traduction prennent effet sans redémarrage
+- **Interrupteur par plugin** — active ou désactive les traductions des nœuds par fichier
+- **Actualisation des dictionnaires** — rechargez la page après avoir ajouté ou modifié un fichier de traduction
 
 ### 🛡️ Stabilité et fiabilité
 
 - **Gestion robuste des exceptions** — chaque opération critique est encapsulée
-- **Dégradation gracieuse** — en cas d'échec de traduction, retour automatique au texte d'origine
-- **Protection du DOM** — la traduction ne casse pas la liaison des événements des composants Vue/PrimeVue
+- **Tolérance aux erreurs de dictionnaire** — le plugin ignore les dictionnaires illisibles ou mal structurés et indique leur nom dans le journal
+- **Protection du contenu utilisateur** — conserve les textes modifiables, les prompts et les noms des fichiers et dossiers dans la barre latérale des flux de travail
 - **Compatibilité multi-versions** — prend en charge les interfaces anciennes et nouvelles de ComfyUI
 
 ---
@@ -151,10 +151,10 @@ Redémarrez ComfyUI après l'installation.
 
 ### Interrupteur de traduction
 
-Après l'installation, un bouton d'activation de la traduction apparaît ; cliquez dessus pour changer l'état :
+Cliquez sur l’interrupteur de traduction dans la barre d’outils pour changer son état. Au clavier, utilisez la touche Tab pour sélectionner le bouton, puis Entrée ou Espace pour le basculer. Une fois le changement enregistré, la page se recharge automatiquement.
 
 - **Traduction activée** — le bouton affiche « traduction activée » et le texte de l'interface est traduit dans la langue courante (suit le réglage de langue officiel de ComfyUI)
-- **Traduction désactivée** — le bouton affiche « traduction désactivée » et l'interface anglaise d'origine est restaurée
+- **Traduction désactivée** — le bouton affiche « traduction désactivée » et le texte d’origine de ComfyUI et des nœuds tiers est rétabli
 
 ### Langue de traduction
 
@@ -172,9 +172,7 @@ Dans ComfyUI Réglages → « 🌐 Réglages de traduction » se trouvent deux o
 | 🎨 Style d'interrupteur | Choisir l'apparence ; redessin en direct, sans rafraîchissement | pill (pilule segmentée) / gradient (arc-en-ciel) / plain (natif discret) |
 | 📋 Options déroulantes | Traduire aussi le texte des options des listes déroulantes COMBO | Activé / Désactivé (rafraîchissement auto après modification) |
 
-Sous les options se trouve aussi un panneau **Gestionnaire de traduction des plugins** : il liste tous les plugins disposant de fichiers de traduction — décochez-en un pour désactiver sa traduction ; la page se rafraîchit après enregistrement.
-
-> 💡 **Pilule segmentée (recommandée)** : forme arrondie avec un curseur bleu surligné couvrant l'état courant. **Cliquez sur le curseur bleu** pour qu'il glisse de l'autre côté ; le choix est enregistré immédiatement dans le fichier de configuration et persiste après redémarrage de ComfyUI.
+Le panneau **Gestion des traductions de plugins**, sous les options, affiche les fichiers de traduction de nœuds disponibles. Décochez un fichier pour désactiver ses traductions. Lorsque la liste est chargée et contient des éléments sélectionnables, cliquez sur « Enregistrer et recharger ». Les désactivations définies pour les autres langues sont conservées. En cas d’échec de l’enregistrement, le panneau affiche un message et permet de réessayer.
 
 ### Référence des styles de bouton
 
@@ -184,7 +182,7 @@ Sous les options se trouve aussi un panneau **Gestionnaire de traduction des plu
 | **Dégradé arc-en-ciel** | Animation arc-en-ciel fluide, blanc gras | Animation grise fluide, texte foncé gras | Vouloir quelque chose de voyant |
 | **Natif discret** | Fond de la couleur du thème ComfyUI | Fond sombre, texte gris | Vouloir se fondre dans l'interface |
 
-> **Interaction de la pilule segmentée** : seul le curseur bleu surligné déclenche la bascule — au clic, il joue d'abord une animation de glissement (~300 ms), puis enregistre et rafraîchit la page ; le segment de texte gris n'est qu'une étiquette d'état et ne rien faire au clic est un comportement voulu.
+> Cliquez n’importe où sur le bouton en pilule pour changer son état. Une fois le changement enregistré, le curseur glisse vers le nouvel état et la page se recharge. Si l’enregistrement échoue, l’état précédent est conservé et vous pouvez réessayer.
 
 ---
 
@@ -196,7 +194,7 @@ Sous les options se trouve aussi un panneau **Gestionnaire de traduction des plu
 |------|---------|------|
 | **Noms des nœuds** | Titres et noms d'affichage de tous les nœuds du flux de travail | ✅ |
 | **Propriétés des nœuds** | Ports d'entrée/sortie, étiquettes des widgets, descriptions | ✅ |
-| **Blueprints officiels** | Titres dans la bibliothèque de nœuds et sur le canevas, ports exposés, libellés des widgets et textes indicatifs des champs | ✅ |
+| **Blueprints et sous-graphes** | Titres des blueprints et des sous-graphes de modèles officiels qui figurent dans le dictionnaire, ainsi que ports exposés, libellés et textes indicatifs des sous-graphes officiels ou personnalisés | ✅ |
 | **Menus** | Menu principal, menu contextuel, menus de clic droit | ✅ |
 | **Panneau de réglages** | La boîte de dialogue des réglages ComfyUI | ✅ |
 | **Gestionnaire** | L'interface de ComfyUI Manager | ✅ |
@@ -264,17 +262,17 @@ Créez un fichier JSON sous `fr-FR/Menus/` pour ajouter des traductions de menus
 }
 ```
 
-> Après ajout de fichiers de traduction, aucun redémarrage n'est nécessaire — basculez l'interrupteur de traduction pour les appliquer.
+La racine de chaque fichier de dictionnaire doit être un objet JSON. Le texte d’origine s’affiche quand aucune traduction valide n’est disponible. Les fichiers illisibles ou mal structurés sont ignorés et signalés dans le journal. Les dictionnaires sont triés par nom de fichier. Si une clé figure dans plusieurs fichiers, la traduction du dernier fichier dans cet ordre est utilisée. Si le plugin qui fournit le nœud est identifié, son dictionnaire est prioritaire et les autres entrées complètent les champs manquants.
 
-### Traduction des blueprints officiels
+> Après avoir ajouté, modifié ou supprimé un dictionnaire, rechargez la page du navigateur. Après une mise à jour du plugin, redémarrez ComfyUI, puis rechargez la page.
 
-Dans la barre latérale gauche, ouvrez la bibliothèque de nœuds, choisissez un blueprint dans **Comfy Blueprints**, puis faites-le glisser sur le canevas. La traduction fonctionne sur le canevas classique et dans la nouvelle vue des nœuds. Les dictionnaires de la langue sélectionnée déterminent les titres, ports exposés, libellés et textes indicatifs traduits.
+### Traduction des blueprints et des sous-graphes
 
-- Les titres sont recherchés dans `Menus/` de la langue active. Le dictionnaire en chinois simplifié contient des exemples de titres et de libellés partagés entre plusieurs blueprints. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
-- Pour les composants exposés, l'extension utilise en priorité la traduction du champ correspondant du nœud interne. Si le nom affiché diffère du nom interne, elle cherche le nom affiché complet dans `fr-FR/Menus/`. La recherche tient compte des variantes de casse, d'espaces, de traits de soulignement et de traits d'union. Plusieurs blueprints peuvent réutiliser une même entrée.
-- Quand une entrée et une sortie nécessitent des traductions différentes, utilisez les préfixes `input.` et `output.` dans le dictionnaire partagé. Par exemple, `output.depth_colored` peut afficher la sortie du même nom sous le libellé « Carte de profondeur en couleur ». Si aucune traduction ne correspond, le texte d'origine s'affiche. Le flux de travail conserve les noms de champs et les valeurs de paramètres d'origine.
+Dans la barre latérale gauche, ouvrez **Nœuds → Comfy Blueprints** et faites glisser un blueprint sur le canevas. Vous pouvez aussi ouvrir directement un modèle officiel ou votre propre flux de travail contenant des sous-graphes. Le canevas classique et la nouvelle vue des nœuds traduisent les ports exposés, les libellés des widgets et les textes indicatifs dans la langue active, y compris pour les contrôles exposés depuis des sous-graphes imbriqués.
 
-Redémarrez ComfyUI après la mise à jour de l'extension. Après une modification des dictionnaires, rechargez la page pour appliquer les nouvelles traductions.
+- Les titres des blueprints officiels et des sous-graphes de modèles officiels reconnus sont recherchés dans `Menus/` pour la langue active. Les sous-graphes personnalisés conservent les titres choisis par l’utilisateur. Le dictionnaire en chinois simplifié contient des exemples de titres et de termes partagés. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
+- Pour chaque composant exposé, le plugin utilise en priorité la traduction du champ correspondant dans le nœud interne. À défaut, il recherche le libellé affiché complet dans `fr-FR/Menus/`, en tenant compte des variantes de casse, d’espaces, de traits de soulignement et de traits d’union. Plusieurs sous-graphes peuvent réutiliser la même entrée.
+- Quand une entrée et une sortie nécessitent des traductions différentes, utilisez les préfixes `input.` et `output.` dans le dictionnaire partagé. Par exemple, `output.depth_colored` peut afficher la sortie du même nom sous le libellé « Carte de profondeur en couleur ». Le flux de travail conserve les titres, les noms des ports et les valeurs des paramètres d’origine.
 
 ---
 
@@ -303,12 +301,14 @@ Redémarrez ComfyUI après la mise à jour de l'extension. Après une modificati
 
 | Technique | Description |
 |------|------|
-| **Encapsulation de rappels (Callback Wrapping)** | Traduit le texte du menu contextuel tout en préservant la logique de correspondance `content` du rappel sous-jacent |
+| **Menu contextuel natif** | Traduit les libellés après la construction du menu par ComfyUI. Les éléments, les rappels et les valeurs des listes déroulantes conservent leurs données d’origine |
 | **Architecture à double bouton** | Prend en charge à la fois l'ancien `.comfy-menu` et le nouveau `.comfyui-menu` |
-| **Surveillance MutationObserver** | Détecte les changements du DOM en temps réel et traduit automatiquement les nouveaux éléments |
+| **Surveillance MutationObserver** | Détecte les changements de l’interface et traite ensemble les changements d’un même lot de menus |
 | **translatedValueSet** | Utilise un Set pour une vérification O(1) du texte déjà traduit, évitant les traitements répétitifs |
 | **Protection des nœuds feuilles** | N'affecte `innerText` qu'aux nœuds sans enfants, protégeant la liaison d'événements Vue |
-| **Transfert Gzip** | Les données de traduction sont transférées compressées en Gzip pour réduire la charge réseau |
+| **Cache de traduction** | Compile et compresse les traductions en arrière-plan et réutilise le résultat si les dictionnaires et les éléments désactivés sont identiques |
+| **Cache des correspondances de sous-graphes** | Réutilise la correspondance d’un sous-graphe et la recalcule si le nom du graphe ou les identifiants des ports exposés changent |
+| **Transfert Gzip** | Envoie les données compressées si le navigateur accepte Gzip pour réduire le volume transféré |
 
 > Pour tous les détails techniques, voir [TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)
 
@@ -322,6 +322,12 @@ Redémarrez ComfyUI après la mise à jour de l'extension. Après une modificati
 - **Plugin en conflit connu** — `ComfyUI Browser` peut présenter des problèmes de compatibilité
 - **Navigateurs pris en charge** — Chrome, Edge et 360 Browser recommandés ; les autres ne sont pas suffisamment testés
 
+### Quand les traductions ne sont pas à jour
+
+- **L’ancienne traduction reste affichée après le rechargement de la page.** Certains outils de synchronisation remplacent les dictionnaires en conservant la taille, la date de modification et les métadonnées du dossier. Le plugin peut alors réutiliser l’ancien cache. Redémarrez ComfyUI pour relire les dictionnaires.
+- **Le nouveau texte d’une fenêtre contextuelle reste en anglais.** Certaines fenêtres modifient leur texte d’état après leur ouverture. Le nouveau texte peut rester temporairement en anglais.
+- **Un port exposé garde son ancien libellé après la modification d’une connexion dans le sous-graphe.** La connexion au nouveau nœud s’applique immédiatement. Enregistrez puis rouvrez le flux de travail pour actualiser la traduction du port.
+
 ### Prérequis
 
 | Composant | Exigence |
@@ -333,6 +339,16 @@ Redémarrez ComfyUI après la mise à jour de l'extension. Après une modificati
 ---
 
 ## Journal des modifications
+
+### 2026-11-18
+
+- Ajout de la traduction des composants exposés des sous-graphes intégrés aux modèles officiels ou créés par l’utilisateur, y compris les sous-graphes imbriqués et les contrôles qui viennent d’être exposés. Le dictionnaire en chinois simplifié inclut le titre de « Texte vers image (MiniMax H3 Image) » et les termes d’amélioration du prompt.
+- La traduction des nœuds ordinaires, des menus et des blueprints de la bibliothèque reste disponible si le catalogue des modèles est manquant ou endommagé. Les contrôles ajoutés dans le même lot partagent un seul rafraîchissement du canevas.
+- Correction du menu contextuel du canevas classique, des traductions manquantes dans les menus dynamiques et de l’affichage en double des valeurs des curseurs. Les prompts, les noms choisis par l’utilisateur et les valeurs des options déroulantes sont conservés.
+- Correction d’un problème qui pouvait effacer les éléments désactivés dans le gestionnaire de traduction. L’interrupteur fonctionne au clavier et il est possible de relancer un enregistrement qui a échoué.
+- Correction d’un problème qui privait un pack de langue de toutes ses traductions à cause d’un dictionnaire invalide. L’ordre de priorité des clés identiques est défini, et la détection des packs de langue ainsi que les vérifications d’entrées manquantes de l’outil de contrôle ont été complétées.
+- Les traductions sont compilées en arrière-plan et mises en cache. Les changements d’un même lot de menus sont traités ensemble et les recherches répétées pour les sous-graphes sont réduites.
+- Correction des anciennes traductions conservées après un enregistrement par remplacement sous Windows, de l’échec du pack lorsque le dossier des dictionnaires est temporairement illisible et des infobulles non traduites sur les nouveaux contrôles de menu.
 
 ### 2026-11-17
 

@@ -4,10 +4,10 @@
 
 **ComfyUI için çok dilli arayüz çevirisi**
 
-> ComfyUI’de seçilen dilde düğümlere, resmî alt grafik şablonlarına, menülere, ayarlara ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler.
+> ComfyUI’de seçilen dilde düğümlere, planlara, iş akışı alt grafiklerine, menülere, ayarlara ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#kullanım)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -62,9 +62,9 @@ ComfyUI-Global-Translation, çok dilli bir arayüz çevirisi eklentisidir. Comfy
 - **Akıllı algılama** — zaten çevrilmiş metni otomatik olarak tanır, tekrarlayan çeviriyi ve sonsuz özyinelemeyi önler
 - **Yerel uyumluluk** — ComfyUI'nin resmi çevirisiyle karşılıklı müdahale olmadan mükemmel biçimde bir arada yaşar
 - **Bağlam farkındalığı** — öğe türüne göre (düğümler, menüler, widgetlar vb.) en uygun stratejiyi uygular
-- **Akıllı veri birleştirme** — birden fazla çeviri dosyası aynı düğümü içerdiğinde, girdiler birbirinin üzerine yazılmak yerine bütünleyici biçimde birleştirilir
-- **Özel panel çevirisi** — düğümler içinde oluşturulan panellerdeki (butonlar, etiketler, açılır menüler, ipuçları, açılır pencereler vb.) metinler de otomatik olarak çevrilir
-- **Geri çağırma güvenliği** — sağ tık menüsü çevrildikten sonra tüm işlevler (bağlantıyı kes, yeniden adlandır vb.) doğru şekilde çalışmaya devam eder
+- **Çeviri verilerini birleştirme** — Aynı adlı düğümlerin çevirileri alan bazında birleştirilir. Düğümün ait olduğu eklenti belirlenebiliyorsa o eklentinin sözlüğüne öncelik verilir
+- **Özel panel çevirisi** — Düğümlerin özel panellerindeki butonlar, denetim etiketleri, yer tutucular ve açılır pencereler çevrilebilir
+- **Sağ tık menüsü çevirisi** — Menü çevrilmiş etiketleri gösterir. Bağlantıyı kesme ve yeniden adlandırma gibi işlemler özgün menü öğelerini ve değerlerini kullanır
 
 ### 🎨 Güzel kullanıcı arayüzü
 
@@ -79,14 +79,14 @@ ComfyUI-Global-Translation, çok dilli bir arayüz çevirisi eklentisidir. Comfy
 - **Gerçek zamanlı değiştirme** — yeniden başlatmadan çeviriyi açma/kapama
 - **Kalıcı durum** — ayarlar otomatik olarak kaydedilir ve yeniden başlatmalarda korunur
 - **Ayar paneli entegrasyonu** — anahtar stilini ve açılır menü seçeneklerinin çevirisini ComfyUI ayarlarından yapılandırma (dil, ComfyUI'nin resmi ayarını izler)
-- **Eklenti bazında anahtar** — yerleşik yönetici, belirli eklentilerin çevirisini devre dışı bırakmanıza olanak tanır
-- **Anında ekle ve uygula** — yeni çeviri dosyaları yeniden başlatmadan geçerli olur
+- **Eklentiye göre çeviri anahtarı** — Düğüm çevirileri, eklentinin çeviri dosyası bazında açılıp kapatılabilir
+- **Sözlüğü yenileme** — Çeviri dosyası ekledikten veya düzenledikten sonra çevirileri yüklemek için sayfayı yenileyin
 
 ### 🛡️ Kararlı ve güvenilir
 
 - **Sağlam hata yönetimi** — tüm kritik işlemler koruma altındadır
-- **Zarif geri dönüş** — çeviri başarısız olursa otomatik olarak orijinal metne döner
-- **DOM koruması** — çeviri, Vue/PrimeVue bileşenlerinin olay bağlarını bozmaz
+- **Sözlük hatalarına tolerans** — Geçersiz yapıya sahip veya okunamayan sözlükler atlanır ve dosya adları günlüğe yazılır
+- **Kullanıcı içeriğini koruma** — Düzenlenebilir metinler, istemler ve iş akışı kenar çubuğunda kullanıcıların adlandırdığı dosya ve klasörler korunur
 - **Çoklu sürüm uyumluluğu** — ComfyUI'nin hem eski hem yeni arayüzlerini destekler
 
 ---
@@ -151,10 +151,10 @@ Kurulumdan sonra ComfyUI'yi yeniden başlatın.
 
 ### Çeviri anahtarı
 
-Kurulumdan sonra arayüzde bir çeviri etkinleştirme butonu belirir; çeviri durumunu değiştirmek için tıklayın:
+Çeviriyi açıp kapatmak için araç çubuğundaki çeviri anahtarına tıklayın. Klavyeyle `Tab` tuşuyla düğmeye odaklanın, ardından `Enter` veya boşluk tuşuna basın. Ayar kaydedildiğinde sayfa otomatik olarak yenilenir.
 
-- **Çeviri açık** — buton "çeviri açık" olarak gösterilir ve arayüz metni güncel dile çevrilir (ComfyUI'nin resmi dil ayarını izler)
-- **Çeviri kapalı** — buton "çeviri kapalı" olarak gösterilir ve orijinal İngilizce arayüzü geri yüklenir
+- **Çeviri açık** — Düğme «Çeviri Açık» durumunu gösterir ve arayüz metni ComfyUI’de seçilen dile çevrilir.
+- **Çeviri kapalı** — Düğme «Çeviri Kapalı» durumunu gösterir ve ComfyUI ile üçüncü taraf düğümler özgün metinlerine döner.
 
 ### Çeviri dili
 
@@ -172,9 +172,7 @@ ComfyUI Ayarlar → «🌐 Çeviri Ayarları» bölümünde iki seçenek bulunur
 | 🎨 Anahtar stili | Görünümü seçin; yenilemeden anında yeniden çizilir | pill (segmentli hap) / gradient (gökkuşağı) / plain (sade yerel) |
 | 📋 Açılır menü seçenekleri | COMBO açılır menülerindeki seçenek metinlerinin de çevrilip çevrilmeyeceği | Açık / Kapalı (değişiklikte otomatik yeniler) |
 
-Seçeneklerin altında ayrıca bir **Eklenti Çeviri Yöneticisi** paneli bulunur: çeviri dosyası olan tüm eklentileri listeler — birinin çevirisini devre dışı bırakmak için işaretini kaldırın; kaydettikten sonra sayfa yenilenir.
-
-> 💡 **Segmentli hap (önerilen)**: yuvarlak hatlı bir hap biçimi ve güncel durumun üzerinde vurgulanmış mavi bir kaydırıcı. Mavi kaydırıcıya **tıklayın** ki diğer tarafa kaysın; seçim anında yapılandırma dosyasına kaydedilir ve ComfyUI yeniden başlatıldıktan sonra da korunur.
+Ayarların altındaki **Eklenti çeviri yönetimi**, kullanılabilir düğüm çeviri dosyalarını listeler. Bir dosyanın düğüm çevirilerini kapatmak için işaretini kaldırın. Liste yüklendiğinde ve seçilebilir öğeler olduğunda «Kaydet ve yenile» düğmesine tıklayabilirsiniz. Diğer dillerde devre dışı bırakılan çeviriler korunur. Kaydetme başarısız olursa panel bir uyarı gösterir ve yeniden denemenize olanak tanır.
 
 ### Buton stili referansı
 
@@ -184,7 +182,7 @@ Seçeneklerin altında ayrıca bir **Eklenti Çeviri Yöneticisi** paneli bulunu
 | **Gökkuşağı gradyanı** | Akıcı gökkuşağı animasyonu, kalın beyaz | Akıcı gri animasyon, kalın koyu metin | Dikkat çekici bir şey istiyorsanız |
 | **Sade yerel** | ComfyUI tema rengi arka planı | Koyu arka plan, gri metin | Arayüze karışmak istiyorsanız |
 
-> **Segmentli hap etkileşimi**: yalnızca vurgulanmış mavi kaydırıcı değiştirmeyi tetikler — tıklandığında önce bir kayma animasyonu (~300 ms) oynatır, ardından kaydeder ve sayfayı yeniler; gri metin bölümü yalnızca bir durum etiketidir ve tıklamaya tepki vermemesi bilinçli bir davranıştır.
+> Durumu değiştirmek için hap biçimli düğmenin herhangi bir yerine tıklayabilirsiniz. Ayar kaydedildiğinde kaydırıcı yeni konuma geçer ve sayfa yenilenir. Kaydetme başarısız olursa önceki durum korunur. Yeniden denemek için tekrar tıklayın.
 
 ---
 
@@ -196,7 +194,7 @@ Seçeneklerin altında ayrıca bir **Eklenti Çeviri Yöneticisi** paneli bulunu
 |------|---------|------|
 | **Düğüm adları** | Tüm iş akışı düğümlerinin başlıkları ve görünen adları | ✅ |
 | **Düğüm özellikleri** | Giriş/çıkış portları, widget etiketleri, açıklamalar | ✅ |
-| **Resmî alt grafik şablonları** | Düğüm kitaplığı ve tuvaldeki başlıklar, dışa açılan portlar, widget etiketleri ve metin alanlarındaki yer tutucular | ✅ |
+| **Planlar ve alt grafikler** | Sözlükte eşleşmesi bulunan resmî plan ve şablon alt grafiği başlıkları ile resmî ve kullanıcı yapımı alt grafiklerin dışa açılan portları, denetim etiketleri ve metin alanı yer tutucuları | ✅ |
 | **Menüler** | Ana menü, sağ tık menüsü, bağlam menüsü | ✅ |
 | **Ayar paneli** | ComfyUI ayarlar penceresi | ✅ |
 | **Yönetici** | ComfyUI Manager arayüzü | ✅ |
@@ -222,7 +220,7 @@ tr-TR/
     └── ...
 ```
 
-> Diğer dil klasörleri (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `fa-IR/`, `he-IL/`) aynı yapıyı paylaşır ve güncel dile göre yüklenir; `en-US/`, Çin dışı eklentilerin düğümlerini İngilizce'ye geri döndürmek için kullanılır.
+> Diğer dil klasörleri (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `fa-IR/`, `he-IL/`) aynı yapıyı paylaşır ve güncel dile göre yüklenir; `en-US/`, Çin dışı eklentilerin düğümlerini İngilizce'ye geri döndürmek için kullanılır. Yalnızca `Menus/` veya `Categories/` içeren dil klasörleri de tanınır.
 
 ### Özel çeviri ekleme
 
@@ -264,17 +262,15 @@ tr-TR/
 }
 ```
 
-> Çeviri dosyaları eklendikten sonra yeniden başlatmaya gerek yoktur — çeviriyi değiştirmek bunları anında uygular.
+> Sözlük ekledikten, düzenledikten veya sildikten sonra güncel çevirileri yüklemek için tarayıcı sayfasını yenileyin. Eklentiyi güncelledikten sonra önce ComfyUI’yi yeniden başlatın, ardından sayfayı yenileyin.
 
-### Resmî alt grafik şablonlarının çevirisi
+### Planların ve alt grafiklerin çevirisi
 
-Kenar çubuğundaki **Düğümler** sekmesinden resmî ComfyUI alt grafik şablonlarını açın ve istediğiniz şablonu tuvale sürükleyin. Bu özellik hem klasik tuvalde hem de yeni düğüm arayüzünde çalışır. Başlıkların, dışa açılan portların, widget etiketlerinin ve metin alanlarındaki yer tutucuların çevirisi, seçili dildeki sözlüğe bağlıdır.
+Kenar çubuğunda **Düğümler → Comfy Şablonları** bölümünden bir planı tuvale sürükleyin veya alt grafik içeren resmî bir şablonu ya da kendi iş akışınızı açın. Hem klasik tuval hem yeni düğüm arayüzü, iç içe alt grafiklerden dışa açılanlar da dahil olmak üzere portları, denetim etiketlerini ve metin alanı yer tutucularını geçerli dile çevirir.
 
-- Şablon başlıkları, geçerli dilin `Menus/` klasöründen alınır. Türkçe çevirileri `tr-TR/Menus/` altına ekleyin. Başlık ve ortak terim örnekleri için [Basitleştirilmiş Çince şablon sözlüğüne](zh-CN/Menus/ComfyUI-子图.json) bakın.
-- Öncelik, iç düğümde doğrudan karşılık gelen alanın çevirisindedir. Dışa açılan ad iç alanın adından farklıysa eklenti, görünen adın tamamını `Menus/` içinde arar ve büyük-küçük harf, boşluk, alt çizgi ve kısa çizgi farklarını normalleştirir. Aynı sözlük girdisi birden fazla şablonda kullanılabilir.
-- Giriş ve çıkış farklı çevrilecekse `input.` ve `output.` öneklerini kullanın. Örneğin `output.depth_colored` anahtarı, `depth_colored` çıkış portunun çevirisini belirtir. Eşleşme bulunmadığında özgün metin gösterilir. İş akışı, özgün alan adlarını ve parametre değerlerini saklamaya devam eder.
-
-Eklentiyi güncelledikten sonra ComfyUI’yi yeniden başlatın. Sözlüğü düzenledikten sonra yeni çevirileri yüklemek için sayfayı yenileyin.
+- Resmî planların ve tanınabilen resmî şablon alt grafiklerinin başlıkları için geçerli dilin `Menus/` klasörüne bakılır. Kendi oluşturduğunuz alt grafikler, verdiğiniz başlıkları korur. Basitleştirilmiş Çince başlıklar ve ortak terimler [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json) dosyasındadır.
+- Dışa açılan bileşenlerde önce doğrudan karşılık gelen iç düğüm çevirisi kullanılır. Bu çeviri bulunamazsa görünen adın tamamı geçerli dilin `Menus/` klasöründe aranır. Eşleştirme büyük-küçük harf, boşluk, alt çizgi ve kısa çizgi farklarını tanır. Bir sözlük girdisi birden çok alt grafikte kullanılabilir.
+- Giriş ve çıkış için farklı çeviriler gerekiyorsa ortak girdiye `input.` veya `output.` önekini ekleyin. Örneğin `output.depth_colored`, ilgili çıkışı «Renkli derinlik haritası» olarak göstermek için kullanılabilir. İş akışına özgün başlıklar, port adları ve parametre değerleri kaydedilir.
 
 ---
 
@@ -303,12 +299,14 @@ Eklentiyi güncelledikten sonra ComfyUI’yi yeniden başlatın. Sözlüğü dü
 
 | Teknik | Açıklama |
 |------|------|
-| **Geri Çağırma Sarmalama** | Sağ tık menüsü metnini çevirirken altta yatan geri çağırmanın `content` eşleşmesini korur |
+| **Yerel sağ tık menüsü** | Etiketler ComfyUI menüyü oluşturduktan sonra çevrilir. Menü öğeleri, geri çağırmalar ve açılır liste değerleri özgün verileri kullanır |
 | **Çift buton mimarisi** | Hem eski `.comfy-menu` hem yeni `.comfyui-menu` arayüzlerini destekler |
-| **MutationObserver** | DOM değişikliklerini gerçek zamanlı izler ve yeni beliren öğeleri otomatik çevirir |
+| **MutationObserver** | Arayüz değişikliklerini izler ve aynı gruptaki menü değişikliklerini tek taramada işler |
 | **translatedValueSet** | Bir metnin çevrilip çevrilmediğini O(1) hızında denetlemek için Set kullanır, tekrarlayan işlemi önler |
 | **Yaprak düğüm koruması** | `innerText` atamasını yalnızca çocuğu olmayan düğümlere yapar, Vue olay bağlarını korur |
-| **Gzip aktarımı** | Çeviri verisi ağ maliyetini azaltmak için Gzip sıkıştırılmış olarak aktarılır |
+| **Çeviri önbelleği** | Çeviriler arka planda derlenip sıkıştırılır. Sözlükler ve devre dışı bırakılan öğeler aynıysa sonuç yeniden kullanılır |
+| **Alt grafik eşleştirme önbelleği** | Aynı alt grafiğin eşleşmeleri yeniden kullanılır. Grafik adı veya dışa açılan port tanımlayıcıları değiştiğinde yeniden eşleştirme yapılır |
+| **Gzip aktarımı** | Tarayıcı Gzip kabul ediyorsa aktarım maliyetini azaltmak için veriler sıkıştırılmış gönderilir |
 
 > Tam teknik ayrıntılar için bkz. [TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)
 
@@ -322,6 +320,12 @@ Eklentiyi güncelledikten sonra ComfyUI’yi yeniden başlatın. Sözlüğü dü
 - **Bilinen çakışan eklenti** — `ComfyUI Browser` uyumluluk sorunları yaşatabilir
 - **Tarayıcı desteği** — Chrome, Edge ve 360 Browser önerilir; diğerleri tam olarak test edilmemiştir
 
+### Çeviriler güncel görünmüyorsa
+
+- **Sayfayı yeniledikten sonra eski çeviri görünüyor.** Bazı eşitleme araçları sözlükleri değiştirirken dosya boyutunu, son değiştirme zamanını ve dizin kayıtlarını korur. Eklenti eski önbelleği kullanmaya devam edebilir. Sözlükleri yeniden okutmak için ComfyUI’yi yeniden başlatın.
+- **Açılır pencere güncellendikten sonra metin İngilizce kalıyor.** Bazı pencereler açıldıktan sonra durum metnini doğrudan değiştirir. Yeni metin geçici olarak İngilizce kalabilir.
+- **Alt grafik bağlantısı değiştiği halde port eski çeviriyi gösteriyor.** Bir port alt grafikte başka bir düğüme bağlanınca bağlantı hemen etkinleşir. Dışa açılan portun çevirisini yeniden eşleştirmek için iş akışını kaydedip yeniden açın.
+
 ### Gereksinimler
 
 | Bileşen | Gereksinim |
@@ -333,6 +337,16 @@ Eklentiyi güncelledikten sonra ComfyUI’yi yeniden başlatın. Sözlüğü dü
 ---
 
 ## Değişiklik Günlüğü
+
+### 2026-11-18
+
+- Resmî iş akışı şablonlarındaki ve kullanıcıların oluşturduğu alt grafiklerdeki dışa açılan bileşenler çevriliyor. İç içe alt grafikler ve yeni dışa açılan denetimler de kapsama dahil. «Metinden Görüntüye (MiniMax H3 Image)» ve ilgili istem geliştirme terimleri eklendi.
+- Şablon listesi eksik veya bozuk olduğunda normal düğümler, menüler ve düğüm kitaplığındaki planlar çevrilmeye devam ediyor. Aynı anda eklenen birden fazla denetimin tetiklediği tuval yenilemeleri birleştiriliyor.
+- Klasik tuvalde sağ tık menüsünün çalışmaması, dinamik menülerde eksik çeviriler ve kaydırıcı değerlerinin iki kez gösterilmesi düzeltildi. İstemler, kullanıcıların verdiği adlar ve açılır liste seçeneklerinin gerçek değerleri korunuyor.
+- Eklenti çeviri yöneticisinin devre dışı bırakılan öğeleri silebilmesi düzeltildi. Çeviri anahtarı klavyeyle kullanılabiliyor ve ayarlar kaydedilemediğinde yeniden denenebiliyor.
+- Hatalı bir sözlüğün tüm çeviri paketini devre dışı bırakması düzeltildi. Aynı adlı girdilerin eşleştirme sırası birleştirildi. Dil paketi algılama ve denetim aracındaki eksik öğe kontrolleri tamamlandı.
+- Çeviriler arka planda derleniyor ve önbellekten yeniden kullanılıyor. Aynı gruptaki menü taramaları birleştiriliyor ve tekrarlanan alt grafik aramaları azaltılıyor.
+- Windows’ta sözlük dosyası değiştirilerek kaydedildiğinde eski çevirilerin kullanılmasına, sözlük dizini geçici olarak okunamadığında tüm paketin hata vermesine ve yeni eklenen menü denetimlerinin ipuçlarının çevrilmemesine yol açan sorunlar düzeltildi.
 
 ### 2026-11-17
 

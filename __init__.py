@@ -1,20 +1,28 @@
 """
 ComfyUI-Translation 插件主初始化文件
 主要功能：提供多语言翻译服务的后端API，管理翻译配置和资源文件
-版本: 2.0 (多国语言版)
 """
 
+import asyncio
+import gzip
 import os
 import json
+import logging
 import platform
 import sys
 import shutil
+import stat
 import atexit
 import server
 import folder_paths
 from aiohttp import web
+from collections import OrderedDict
+from copy import deepcopy
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+from threading import Lock
+from typing import Optional
 
 try:
     from comfyui_workflow_templates import get_asset_path, iter_templates
@@ -29,31 +37,47 @@ ADDON_NAME = "ComfyUI-Global-Translation"
 COMFY_PATH = Path(folder_paths.__file__).parent
 # 当前插件路径
 CUR_PATH = Path(__file__).parent
+FALLBACK_LOCALE = "en-US"
+LOGGER = logging.getLogger(__name__)
+TRANSLATION_CACHE_SIZE = 8
+translation_cache = OrderedDict()
+translation_work = {}
+blueprint_catalog_lock = Lock()
+
+
+def read_json(path: Path, *, object_only=False, read_errors=None, **kwargs):
+    try:
+        content = path.read_bytes()
+        try:
+            data = json.loads(content.decode("utf-8-sig"), **kwargs)
+        except UnicodeDecodeError:
+            data = json.loads(content.decode("gbk"), **kwargs)
+        if object_only and not isinstance(data, dict):
+            raise ValueError("expected a JSON object")
+        return data
+    except (OSError, ValueError, RecursionError) as exc:
+        if read_errors is not None and isinstance(exc, OSError):
+            read_errors.append(path)
+        LOGGER.warning("Cannot read translation JSON %s: %s", path, exc)
+        return None
+
+
+def disabled_plugin_names(value):
+    return [name for name in value if isinstance(name, str)] if isinstance(value, list) else []
 
 
 def load_config():
     config_path = CUR_PATH.joinpath("config.json")
     default_config = {"translation_enabled": True, "locale": "zh-CN", "button_style": "gradient", "disabled_plugins": [], "translate_options": True}
     if config_path.exists():
-        try:
-            config_data = try_get_json(config_path)
+        config_data = read_json(config_path, object_only=True)
+        if isinstance(config_data, dict):
             default_config.update(config_data)
-        except Exception:
-            pass
+            default_config["disabled_plugins"] = disabled_plugin_names(default_config["disabled_plugins"])
     return default_config
 
 # 全局配置变量 - 存储翻译启用状态和当前语言
 GLOBAL_CONFIG = load_config()
-
-
-def try_get_json(path: Path):
-    """尝试使用不同编码读取JSON文件"""
-    for coding in ["utf-8", "gbk"]:
-        try:
-            return json.loads(path.read_text(encoding=coding))
-        except Exception:
-            continue
-    return {}
 
 
 def sanitize_locale(locale):
@@ -77,62 +101,166 @@ def sanitize_locale(locale):
     return locale
 
 
-# ============================================================
-# 【石头(Q:34720803)优化更新】翻译数据递归深合并
-# 解决不同翻译文件含同名节点类时子字典被整体覆盖的问题
-# ============================================================
-def deep_merge_translation(base, incoming):
-    """递归合并翻译字典。
-    不同翻译文件可能包含同一个节点类名（同一节点的不同实现/分支很常见），
-    若整体 update 会让后加载的文件把先加载文件的 inputs/widgets/outputs/ui
-    等子字典全部冲掉。这里对子字典按键互补合并；title/description 等字符串
-    仍以后加载者为准。扁平的字符串字典走此函数时行为与 update 完全一致。"""
+def merge_translation(base, incoming, *, deep=False, conflicts=None, prefix=()):
     for key, value in incoming.items():
-        if isinstance(value, dict) and isinstance(base.get(key), dict):
-            deep_merge_translation(base[key], value)
+        if deep and isinstance(value, dict) and isinstance(base.get(key), dict):
+            merge_translation(base[key], value, deep=True, conflicts=conflicts, prefix=(*prefix, key))
         else:
+            if conflicts is not None and key in base and base[key] != value:
+                conflicts.append(".".join((*prefix, key)))
             base[key] = value
-    return base
 
 
-def get_nodes_translation(locale, disabled_plugins=None):
+def reject_nonfinite_number(value):
+    raise ValueError(f"Invalid JSON number: {value}")
+
+
+def read_translation_dict(path, read_errors):
+    duplicate_keys = set()
+    options = {"parse_constant": reject_nonfinite_number}
+    if LOGGER.isEnabledFor(logging.DEBUG):
+        def collect_duplicates(pairs):
+            result = {}
+            for key, value in pairs:
+                if key in result and result[key] != value:
+                    duplicate_keys.add(key)
+                result[key] = value
+            return result
+
+        options["object_pairs_hook"] = collect_duplicates
+    data = read_json(path, object_only=True, read_errors=read_errors, **options)
+    if duplicate_keys:
+        LOGGER.debug("Translation dictionary %s has conflicting duplicate keys: %s", path, ", ".join(sorted(duplicate_keys)))
+    return data or {}
+
+
+def merge_translation_file(base, incoming, path, *, deep=False):
+    conflicts = [] if LOGGER.isEnabledFor(logging.DEBUG) else None
+    merge_translation(base, incoming, deep=deep, conflicts=conflicts)
+    if conflicts:
+        LOGGER.debug("Translation dictionary %s overrides these keys: %s", path, ", ".join(conflicts))
+
+
+def record_translation_scan_error(path, exc, scan_errors):
+    LOGGER.warning("Cannot inspect translation path %s: %s", path, exc)
+    if scan_errors is not None:
+        scan_errors.append(path)
+
+
+def translation_file_entries(path, scan_errors=None):
+    # Stable across filesystems: later names win unless the registered node has a matching source.
+    try:
+        with os.scandir(path) as entries:
+            return sorted(
+                (entry for entry in entries if os.path.normcase(entry.name).endswith(".json")),
+                key=lambda entry: (entry.name.casefold(), entry.name),
+            )
+    except (FileNotFoundError, NotADirectoryError):
+        return []
+    except OSError as exc:
+        record_translation_scan_error(path, exc, scan_errors)
+        return []
+
+
+def nodes_translation_path(locale, scan_errors=None):
     path = CUR_PATH.joinpath(locale, "Nodes")
-    if not path.exists():
-        path = CUR_PATH.joinpath("en_US", "Nodes")
-    if not path.exists():
-        return {}
-    disabled = set(disabled_plugins or [])
+    try:
+        if stat.S_ISDIR(path.stat().st_mode):
+            return path
+    except (FileNotFoundError, NotADirectoryError):
+        pass
+    except OSError as exc:
+        record_translation_scan_error(path, exc, scan_errors)
+        return path
+    return CUR_PATH.joinpath(FALLBACK_LOCALE, "Nodes")
+
+
+def node_source_name(node_class):
+    module = getattr(node_class, "RELATIVE_PYTHON_MODULE", "nodes")
+    if not isinstance(module, str):
+        return None
+    package, _, module_name = module.partition(".")
+    if package == "custom_nodes":
+        return module_name.casefold().replace("-", "_")
+    if package in ("nodes", "comfy_extras"):
+        return "internal"
+    if package == "comfy_api_nodes":
+        return "comfyui_api_partner"
+
+
+def translation_revision(path, read_stat, scan_errors, accepts_mode=stat.S_ISREG):
+    try:
+        info = read_stat()
+    except (FileNotFoundError, NotADirectoryError):
+        return None
+    except OSError as exc:
+        record_translation_scan_error(path, exc, scan_errors)
+        return None
+    if accepts_mode(info.st_mode):
+        return path, info.st_size, info.st_mtime_ns, info.st_ctime_ns, info.st_ino
+
+
+def directory_revisions(path, scan_errors, disabled=()):
+    revisions = []
+    for entry in translation_file_entries(path, scan_errors):
+        source = Path(entry.path)
+        if source.stem not in disabled:
+            revision = translation_revision(source, entry.stat, scan_errors)
+            if revision is not None:
+                revisions.append(revision)
+    return tuple(revisions)
+
+
+def flat_dictionary_revisions(locale, directory, single_file, scan_errors):
+    override = CUR_PATH.joinpath(locale, single_file)
+    local = translation_revision(override, override.stat, scan_errors)
+    files = directory_revisions(CUR_PATH.joinpath(locale, directory), scan_errors)
+    if local is not None:
+        return (*files, local)
+
+    fallback = CUR_PATH.joinpath(FALLBACK_LOCALE, single_file)
+    default = translation_revision(fallback, fallback.stat, scan_errors)
+    return files if default is None else (default, *files)
+
+
+def translation_inputs(locale, disabled_plugins):
+    scan_errors = []
+    disabled = set(disabled_plugin_names(disabled_plugins))
+    node_directory = nodes_translation_path(locale, scan_errors)
+    locale_path = CUR_PATH.joinpath(locale)
+    directories = (node_directory, locale_path.joinpath("Categories"), locale_path.joinpath("Menus"))
+    # Windows atomic replacements can retain file timestamps and size. Observe
+    # the containing directories as well, without opening each dictionary.
+    directory_stamps = tuple(translation_revision(path, path.stat, scan_errors, stat.S_ISDIR) for path in directories)
+    node_files = directory_revisions(node_directory, scan_errors, disabled)
+    category_files = flat_dictionary_revisions(locale, "Categories", "NodeCategory.json", scan_errors)
+    menu_files = flat_dictionary_revisions(locale, "Menus", "Menu.json", scan_errors)
+    registered = getattr(sys.modules.get("nodes"), "NODE_CLASS_MAPPINGS", {})
+    # Capture the source priority used by compilation as part of the cache key.
+    sources = tuple(sorted((name, node_source_name(cls)) for name, cls in registered.copy().items()))
+    inputs = node_files, category_files, menu_files, sources, directory_stamps
+    return inputs, not scan_errors
+
+
+def get_nodes_translation(files, sources, read_errors):
     translations = {}
-    for jpath in path.glob("*.json"):
-        if jpath.stem in disabled:
-            continue
-        # 【石头(Q:34720803)优化更新】由浅合并 update 改为递归深合并
-        deep_merge_translation(translations, try_get_json(jpath))
+    preferred = {}
+    for path, *_ in files:
+        dictionary = read_translation_dict(path, read_errors)
+        source = path.stem.casefold().replace("-", "_")
+        matching = {key: value for key, value in dictionary.items() if sources.get(key) == source}
+        if matching:
+            merge_translation(preferred, deepcopy(matching), deep=True)
+        merge_translation_file(translations, dictionary, path, deep=True)
+    merge_translation_file(translations, preferred, "registered node sources", deep=True)
     return translations
 
 
-def get_category_translation(locale):
-    cats = {}
-    for cat_json in CUR_PATH.joinpath(locale, "Categories").glob("*.json"):
-        cats.update(try_get_json(cat_json))
-    path = CUR_PATH.joinpath(locale, "NodeCategory.json")
-    if not path.exists():
-        path = CUR_PATH.joinpath("en_US", "NodeCategory.json")
-    if path.exists():
-        cats.update(try_get_json(path))
-    return cats
-
-
-def get_menu_translation(locale):
-    menus = {}
-    for menu_json in CUR_PATH.joinpath(locale, "Menus").glob("*.json"):
-        menus.update(try_get_json(menu_json))
-    path = CUR_PATH.joinpath(locale, "Menu.json")
-    if not path.exists():
-        path = CUR_PATH.joinpath("en_US", "Menu.json")
-    if path.exists():
-        menus.update(try_get_json(path))
-    return menus
+def get_flat_translation(files, read_errors):
+    translations = {}
+    for path, *_ in files:
+        merge_translation_file(translations, read_translation_dict(path, read_errors), path)
+    return translations
 
 
 @lru_cache(maxsize=1)
@@ -154,7 +282,7 @@ def get_blueprint_catalog():
                     continue
     seen = set()
     for path, from_library in sources:
-        workflow = try_get_json(path)
+        workflow = read_json(path)
         nodes = workflow.get("nodes") if isinstance(workflow, dict) else None
         if not isinstance(nodes, list):
             continue
@@ -219,6 +347,8 @@ def get_blueprint_catalog():
 
 
 def get_blueprint_translation(menus):
+    with blueprint_catalog_lock:
+        blueprints_by_name = get_blueprint_catalog()
     catalog = {
         name: [
             {
@@ -227,29 +357,98 @@ def get_blueprint_translation(menus):
             }
             for blueprint in blueprints
         ]
-        for name, blueprints in get_blueprint_catalog().items()
+        for name, blueprints in blueprints_by_name.items()
     }
     return {"catalog": catalog}
 
 
-def compile_translation(locale, disabled_plugins=None):
-    nodes_translation = get_nodes_translation(locale, disabled_plugins)
-    node_category_translation = get_category_translation(locale)
-    menu_translation = get_menu_translation(locale)
+@dataclass
+class TranslationPayload:
+    plain: bytes
+    cacheable: bool
+    gzipped: Optional[bytes] = None
 
-    return json.dumps({
+
+def compile_translation(inputs):
+    node_files, category_files, menu_files, sources, _directory_stamps = inputs
+    read_errors = []
+    nodes_translation = get_nodes_translation(node_files, dict(sources), read_errors)
+    node_category_translation = get_flat_translation(category_files, read_errors)
+    menu_translation = get_flat_translation(menu_files, read_errors)
+
+    data = json.dumps({
         "Nodes": nodes_translation,
         "NodeCategory": node_category_translation,
         "Menu": menu_translation,
         "Blueprints": get_blueprint_translation(menu_translation)
     }, ensure_ascii=False)
+    return TranslationPayload(data.encode("utf-8"), cacheable=not read_errors)
 
 
-def compress_json(data, method="gzip"):
-    if method == "gzip":
-        import gzip
-        return gzip.compress(data.encode("utf-8"))
-    return data
+def gzip_translation(payload):
+    payload.gzipped = gzip.compress(payload.plain)
+    return payload.gzipped
+
+
+async def run_translation_work(key, operation, *args, on_success=None):
+    future = translation_work.get(key)
+    if future is None:
+        future = asyncio.get_running_loop().run_in_executor(None, operation, *args)
+        translation_work[key] = future
+
+        def completed(result):
+            translation_work.pop(key, None)
+            if not result.cancelled() and result.exception() is None and on_success is not None:
+                on_success(result.result())
+
+        future.add_done_callback(completed)
+    # A disconnected client must not cancel work shared by other requests.
+    return await asyncio.shield(future)
+
+
+async def get_translation_body(locale, disabled_plugins, compressed):
+    loop = asyncio.get_running_loop()
+    inputs, scan_succeeded = await loop.run_in_executor(None, translation_inputs, locale, disabled_plugins)
+    payload = translation_cache.get(inputs) if scan_succeeded else None
+    if payload is not None:
+        translation_cache.move_to_end(inputs)
+    else:
+        def cache_payload(result):
+            # Incomplete results from temporary filesystem errors must be retried.
+            if scan_succeeded and result.cacheable:
+                translation_cache[inputs] = result
+                if len(translation_cache) > TRANSLATION_CACHE_SIZE:
+                    translation_cache.popitem(last=False)
+
+        payload = await run_translation_work(
+            ("compile", inputs, scan_succeeded), compile_translation, inputs, on_success=cache_payload
+        )
+    if not compressed:
+        return payload.plain
+    if payload.gzipped is None:
+        return await run_translation_work(("gzip", id(payload)), gzip_translation, payload)
+    return payload.gzipped
+
+
+def accepts_gzip(accept_encoding):
+    qualities = {}
+    for entry in accept_encoding.split(","):
+        coding, _, parameters = entry.partition(";")
+        coding = coding.strip().lower()
+        if coding not in ("gzip", "identity", "*"):
+            continue
+        quality = 1.0
+        for parameter in parameters.split(";"):
+            name, _, value = parameter.partition("=")
+            if name.strip().lower() == "q":
+                try:
+                    quality = float(value)
+                except ValueError:
+                    quality = 0.0
+                break
+        qualities[coding] = quality if 0 <= quality <= 1.0 else 0.0
+    gzip_quality = qualities.get("gzip", qualities.get("*", 0.0))
+    return gzip_quality > 0 and gzip_quality >= qualities.get("identity", 0.0)
 
 
 @server.PromptServer.instance.routes.get("/translation_node/get_locales")
@@ -258,14 +457,14 @@ async def get_locales(request: web.Request):
     API端点: 获取支持的语言列表
     扫描插件目录，返回所有包含语言文件的文件夹名称
     """
-    locales = []
-    for item in CUR_PATH.iterdir():
-        if item.is_dir() and item.name not in [".git", "js", "__pycache__"]:
-            # 简单判断该目录下是否有 Nodes, Categories 或 Menu.json
-            if item.joinpath("Nodes").exists() or item.joinpath("Menu.json").exists() or item.joinpath("NodeCategory.json").exists():
-                locales.append(item.name)
+    locales = sorted(
+        item.name for item in CUR_PATH.iterdir() if item.is_dir() and (
+            any(item.joinpath(name).is_dir() for name in ("Nodes", "Menus", "Categories"))
+            or any(item.joinpath(name).is_file() for name in ("Menu.json", "NodeCategory.json"))
+        )
+    )
     if not locales:
-        locales = ["en_US", "zh-CN"]
+        locales = [FALLBACK_LOCALE, "zh-CN"]
     return web.Response(status=200, body=json.dumps(locales), headers={"Content-Type": "application/json"})
 
 
@@ -276,22 +475,22 @@ async def get_translation(request: web.Request):
     if sanitize_locale(locale) is None:
         return web.Response(status=400, body=json.dumps({"error": "invalid locale"}), headers={"Content-Type": "application/json"})
     accept_encoding = request.headers.get("Accept-Encoding", "")
-    json_data = "{}"
-    headers = {}
+    headers = {"Vary": "Accept-Encoding"}
 
     # 翻译的启用/停用由前端决定：默认不翻译，前端在跟随 Comfy.Locale 或用户手动开启时才会请求本接口。
     # 因此服务端不再按 translation_enabled 拦截，仅按请求的 locale 返回对应译文。
     disabled_plugins = GLOBAL_CONFIG.get("disabled_plugins", [])
 
     try:
-        json_data = compile_translation(locale, disabled_plugins)
-        if "gzip" in accept_encoding:
-            json_data = compress_json(json_data, method="gzip")
+        compressed = accepts_gzip(accept_encoding)
+        json_data = await get_translation_body(locale, disabled_plugins, compressed)
+        if compressed:
             headers["Content-Encoding"] = "gzip"
     except Exception:
-        pass
+        LOGGER.exception("Cannot compile translations for %s", locale)
+        return web.json_response({"error": "cannot compile translations"}, status=500)
 
-    return web.Response(status=200, body=json_data, headers=headers)
+    return web.Response(body=json_data, headers=headers, content_type="application/json")
 
 
 @server.PromptServer.instance.routes.get("/translation_node/get_config")
@@ -314,8 +513,7 @@ async def get_plugin_list(request: web.Request):
     locale = request.query.get("locale") or GLOBAL_CONFIG.get("locale", "zh-CN")
     if sanitize_locale(locale) is None:
         return web.Response(status=400, body=json.dumps({"error": "invalid locale"}), headers={"Content-Type": "application/json"})
-    path = CUR_PATH.joinpath(locale, "Nodes")
-    plugins = sorted([f.stem for f in path.glob("*.json")]) if path.exists() else []
+    plugins = [Path(entry.name).stem for entry in translation_file_entries(nodes_translation_path(locale))]
     return web.Response(status=200, body=json.dumps(plugins, ensure_ascii=False), headers={"Content-Type": "application/json"})
 
 
@@ -330,9 +528,7 @@ async def set_config(request: web.Request):
         # 解析禁用插件列表
         disabled_plugins_str = post.get("disabled_plugins", "[]")
         try:
-            disabled_plugins = json.loads(disabled_plugins_str)
-            if not isinstance(disabled_plugins, list):
-                disabled_plugins = []
+            disabled_plugins = disabled_plugin_names(json.loads(disabled_plugins_str))
         except (json.JSONDecodeError, TypeError):
             disabled_plugins = []
 

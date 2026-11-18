@@ -32,16 +32,20 @@ function isSettingsDialogOpen() {
   return !!document.querySelector(DIALOG_SELECTOR);
 }
 
+async function readStoredConfig() {
+  const response = await fetch("./translation_node/get_config", { cache: "no-store" });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
 /** 从服务器拉取最新 config.json 更新 currentConfig（避免多标签/多客户端下用陈旧值覆盖） */
 async function refreshCurrentConfig() {
   try {
-    const res = await fetch("./translation_node/get_config");
-    if (!res.ok) return;
-    const c = await res.json();
-    currentConfig.translation_enabled = c.translation_enabled;
+    const c = await readStoredConfig();
+    currentConfig.translation_enabled = c.translation_enabled !== false;
     currentConfig.locale = c.locale || currentConfig.locale;
     currentConfig.button_style = c.button_style || currentConfig.button_style;
-    currentConfig.disabled_plugins = c.disabled_plugins || [];
+    currentConfig.disabled_plugins = Array.isArray(c.disabled_plugins) ? c.disabled_plugins : [];
     currentConfig.translate_options = c.translate_options !== false;
   } catch (e) {
     error("刷新配置失败:", e);
@@ -59,6 +63,10 @@ function syncSettingsFromConfig(app) {
   } finally {
     applyingConfig = false;
   }
+}
+
+function showSaveFailure(app, strings) {
+  app.extensionManager?.toast?.add?.({ severity: "error", summary: strings.saveFailed });
 }
 
 /** 设置对话框每次打开时，用最新配置同步一次显示值（防止对话框显示陈旧/默认值） */
@@ -102,8 +110,12 @@ export async function registerSettings(app) {
       if (!isSettingsDialogOpen()) return;
       const key = parseStyleKey(newVal);
       if (key !== currentConfig.button_style) {
-        await saveConfig(currentConfig.translation_enabled, currentConfig.locale, key, currentConfig.disabled_plugins, currentConfig.translate_options);
-        renderToggle(app);
+        if (await saveConfig(currentConfig.translation_enabled, currentConfig.locale, key)) {
+          renderToggle(app);
+        } else {
+          syncSettingsFromConfig(app);
+          showSaveFailure(app, t.panel);
+        }
       }
     }
   });
@@ -122,8 +134,12 @@ export async function registerSettings(app) {
       if (!isSettingsRegistered) return;
       if (!isSettingsDialogOpen()) return;
       if (newVal !== currentConfig.translate_options) {
-        await saveConfig(currentConfig.translation_enabled, currentConfig.locale, currentConfig.button_style, currentConfig.disabled_plugins, newVal);
-        location.reload();
+        if (await saveConfig(currentConfig.translation_enabled, currentConfig.locale, currentConfig.button_style, currentConfig.disabled_plugins, newVal)) {
+          location.reload();
+        } else {
+          syncSettingsFromConfig(app);
+          showSaveFailure(app, t.panel);
+        }
       }
     }
   });
@@ -204,6 +220,7 @@ const PANEL_I18N = {
       title: "🚫 插件翻译管理", hint: "取消勾选可禁用对应插件的节点翻译。修改后点击「保存并刷新」生效。",
       search: "搜索插件...", selectAll: "全选", deselectAll: "全不选", save: "保存并刷新",
       loading: "正在加载插件列表...", loaded: "共 {n} 个翻译文件，已禁用 {d} 个", loadFailed: "加载插件列表失败",
+      saveFailed: "保存失败，请重试。",
     },
   },
   "zh-TW": {
@@ -215,6 +232,7 @@ const PANEL_I18N = {
       title: "🚫 外掛翻譯管理", hint: "取消勾選可停用對應外掛的節點翻譯。修改後點擊「儲存並重新整理」生效。",
       search: "搜尋外掛...", selectAll: "全選", deselectAll: "全不選", save: "儲存並重新整理",
       loading: "正在載入外掛清單...", loaded: "共 {n} 個翻譯檔案，已停用 {d} 個", loadFailed: "載入外掛清單失敗",
+      saveFailed: "儲存失敗，請重試。",
     },
   },
   "en-US": {
@@ -226,6 +244,7 @@ const PANEL_I18N = {
       title: "🚫 Plugin Translation Manager", hint: "Uncheck a plugin to disable its node translation. Click \"Save & Reload\" to apply.",
       search: "Search plugins...", selectAll: "Select All", deselectAll: "Select None", save: "Save & Reload",
       loading: "Loading plugin list...", loaded: "{n} translation files, {d} disabled", loadFailed: "Failed to load plugin list",
+      saveFailed: "Could not save. Please try again.",
     },
   },
   "de-DE": {
@@ -237,6 +256,7 @@ const PANEL_I18N = {
       title: "🚫 Plugin-Übersetzungsverwaltung", hint: "Deaktivieren Sie das Ankreuzfeld, um die Knotenübersetzung eines Plugins zu deaktivieren. Klicken Sie auf „Speichern & neu laden“, um anzuwenden.",
       search: "Plugins durchsuchen...", selectAll: "Alle auswählen", deselectAll: "Keine auswählen", save: "Speichern & neu laden",
       loading: "Plugin-Liste wird geladen...", loaded: "{n} Übersetzungsdateien, {d} deaktiviert", loadFailed: "Laden der Plugin-Liste fehlgeschlagen",
+      saveFailed: "Speichern fehlgeschlagen. Bitte erneut versuchen.",
     },
   },
   "fr-FR": {
@@ -248,6 +268,7 @@ const PANEL_I18N = {
       title: "🚫 Gestion des traductions de plugins", hint: "Décochez un plugin pour désactiver la traduction de ses nœuds. Cliquez sur « Enregistrer et recharger » pour appliquer.",
       search: "Rechercher des plugins...", selectAll: "Tout sélectionner", deselectAll: "Tout désélectionner", save: "Enregistrer et recharger",
       loading: "Chargement de la liste des plugins...", loaded: "{n} fichiers de traduction, {d} désactivés", loadFailed: "Échec du chargement de la liste",
+      saveFailed: "Échec de l’enregistrement. Veuillez réessayer.",
     },
   },
   "es-ES": {
@@ -259,6 +280,7 @@ const PANEL_I18N = {
       title: "🚫 Gestión de traducción de plugins", hint: "Desmarca un plugin para desactivar la traducción de sus nodos. Pulsa «Guardar y recargar» para aplicar.",
       search: "Buscar plugins...", selectAll: "Seleccionar todo", deselectAll: "Deseleccionar todo", save: "Guardar y recargar",
       loading: "Cargando lista de plugins...", loaded: "{n} archivos de traducción, {d} desactivados", loadFailed: "No se pudo cargar la lista de plugins",
+      saveFailed: "No se pudo guardar. Inténtalo de nuevo.",
     },
   },
   "it-IT": {
@@ -270,6 +292,7 @@ const PANEL_I18N = {
       title: "🚫 Gestione traduzione plugin", hint: "Deseleziona un plugin per disattivare la traduzione dei suoi nodi. Fai clic su \"Salva e ricarica\" per applicare.",
       search: "Cerca plugin...", selectAll: "Seleziona tutto", deselectAll: "Deseleziona tutto", save: "Salva e ricarica",
       loading: "Caricamento elenco plugin...", loaded: "{n} file di traduzione, {d} disattivati", loadFailed: "Impossibile caricare l'elenco dei plugin",
+      saveFailed: "Salvataggio non riuscito. Riprova.",
     },
   },
   "pt-BR": {
@@ -281,6 +304,7 @@ const PANEL_I18N = {
       title: "🚫 Gerenciador de tradução de plugins", hint: "Desmarque um plugin para desativar a tradução de seus nós. Clique em \"Salvar e recarregar\" para aplicar.",
       search: "Pesquisar plugins...", selectAll: "Selecionar tudo", deselectAll: "Limpar seleção", save: "Salvar e recarregar",
       loading: "Carregando lista de plugins...", loaded: "{n} arquivos de tradução, {d} desativados", loadFailed: "Falha ao carregar a lista de plugins",
+      saveFailed: "Não foi possível salvar. Tente novamente.",
     },
   },
   "ja-JP": {
@@ -292,6 +316,7 @@ const PANEL_I18N = {
       title: "🚫 プラグイン翻訳管理", hint: "チェックを外すとそのプラグインのノード翻訳が無効になります。「保存して再読み込み」で反映。",
       search: "プラグインを検索...", selectAll: "すべて選択", deselectAll: "すべて解除", save: "保存して再読み込み",
       loading: "プラグイン一覧を読み込み中...", loaded: "{n} 件の翻訳ファイル、{d} 件が無効", loadFailed: "プラグイン一覧の読み込みに失敗",
+      saveFailed: "保存できませんでした。もう一度お試しください。",
     },
   },
   "ko-KR": {
@@ -303,6 +328,7 @@ const PANEL_I18N = {
       title: "🚫 플러그인 번역 관리", hint: "체크를 해제하면 해당 플러그인의 노드 번역이 비활성화됩니다. 「저장 후 새로고침」을 누르면 적용됩니다.",
       search: "플러그인 검색...", selectAll: "모두 선택", deselectAll: "모두 해제", save: "저장 후 새로고침",
       loading: "플러그인 목록 불러오는 중...", loaded: "번역 파일 {n}개, 비활성화 {d}개", loadFailed: "플러그인 목록 불러오기 실패",
+      saveFailed: "저장하지 못했습니다. 다시 시도하세요.",
     },
   },
   "ru-RU": {
@@ -314,6 +340,7 @@ const PANEL_I18N = {
       title: "🚫 Управление переводом плагинов", hint: "Снимите отметку, чтобы отключить перевод узлов плагина. Нажмите «Сохранить и перезагрузить» для применения.",
       search: "Поиск плагинов...", selectAll: "Выбрать все", deselectAll: "Снять все", save: "Сохранить и перезагрузить",
       loading: "Загрузка списка плагинов...", loaded: "Файлов перевода: {n}, отключено: {d}", loadFailed: "Не удалось загрузить список плагинов",
+      saveFailed: "Не удалось сохранить. Повторите попытку.",
     },
   },
   "tr-TR": {
@@ -325,6 +352,7 @@ const PANEL_I18N = {
       title: "🚫 Eklenti çeviri yönetimi", hint: "Bir eklentinin düğüm çevirisini kapatmak için işaretini kaldırın. Uygulamak için «Kaydet ve yenile» düğmesine basın.",
       search: "Eklenti ara...", selectAll: "Tümünü seç", deselectAll: "Hiçbirini seçme", save: "Kaydet ve yenile",
       loading: "Eklenti listesi yükleniyor...", loaded: "{n} çeviri dosyası, {d} kapalı", loadFailed: "Eklenti listesi yüklenemedi",
+      saveFailed: "Kaydedilemedi. Lütfen tekrar deneyin.",
     },
   },
   "ar-SA": {
@@ -336,6 +364,7 @@ const PANEL_I18N = {
       title: "🚫 إدارة ترجمة الإضافات", hint: "ألغِ تحديد الإضافة لإيقاف ترجمة عقدها. انقر «حفظ وإعادة تحميل» للتطبيق.",
       search: "البحث في الإضافات...", selectAll: "تحديد الكل", deselectAll: "إلغاء تحديد الكل", save: "حفظ وإعادة تحميل",
       loading: "جارٍ تحميل قائمة الإضافات...", loaded: "{n} ملفات ترجمة، {d} معطّلة", loadFailed: "فشل تحميل قائمة الإضافات",
+      saveFailed: "تعذّر الحفظ. يُرجى المحاولة مرة أخرى.",
     },
   },
   "fa-IR": {
@@ -347,6 +376,7 @@ const PANEL_I18N = {
       title: "🚫 مدیریت ترجمه افزونه‌ها", hint: "تیک یک افزونه را بردارید تا ترجمه گره‌هایش غیرفعال شود. برای اعمال روی «ذخیره و بارگذاری مجدد» کلیک کنید.",
       search: "جستجوی افزونه‌ها...", selectAll: "انتخاب همه", deselectAll: "لغو انتخاب همه", save: "ذخیره و بارگذاری مجدد",
       loading: "در حال بارگذاری فهرست افزونه‌ها...", loaded: "{n} فایل ترجمه، {d} غیرفعال", loadFailed: "بارگذاری فهرست افزونه‌ها ناموفق بود",
+      saveFailed: "ذخیره انجام نشد. دوباره تلاش کنید.",
     },
   },
   "he-IL": {
@@ -358,6 +388,7 @@ const PANEL_I18N = {
       title: "🚫 ניהול תרגום תוספים", hint: "בטל הסימון של תוסף כדי להשבית את תרגום הצמתים שלו. לחץ על «שמירה וטעינה מחדש» ליישום.",
       search: "חיפוש תוספים...", selectAll: "בחר הכל", deselectAll: "בטל בחירה", save: "שמור וטען מחדש",
       loading: "טוען רשימת תוספים...", loaded: "{n} קובצי תרגום, {d} מושבתים", loadFailed: "טעינת רשימת התוספים נכשלה",
+      saveFailed: "השמירה נכשלה. יש לנסות שוב.",
     },
   },
 };
@@ -445,21 +476,26 @@ function injectToggleStyles() {
       background: var(--comfy-input-bg, #1e1e1e);
       border: 1px solid var(--border-color, #45484c);
       border-radius: 999px; padding: 3px;
-      font-size: 12px; user-select: none;
+      font-family: inherit; font-size: 12px; user-select: none; cursor: pointer;
+    }
+    .tl-toggle-pill:focus-visible {
+      outline: 2px solid #4a9eff; outline-offset: 2px;
+    }
+    .tl-toggle-pill[aria-busy="true"], .translation-btn[aria-busy="true"] {
+      cursor: progress;
     }
     .tl-toggle-thumb {
       position: absolute; top: 3px; bottom: 3px; left: 3px; width: 0;
       background: #4a9eff; border-radius: 999px;
       box-shadow: 0 1px 4px rgba(74, 158, 255, 0.4);
       transition: left 0.25s ease, width 0.25s ease;
-      cursor: pointer;
     }
     .tl-toggle-seg {
       position: relative; z-index: 1;
-      padding: 5px 14px; border-radius: 999px; cursor: default;
+      padding: 5px 14px; border-radius: 999px;
       color: var(--descrip-text, #888888); line-height: 1.4;
       white-space: nowrap; transition: color 0.25s ease;
-      pointer-events: none; /* 文字分段不响应点击，事件穿透到蓝色滑块 */
+      pointer-events: none;
     }
     .tl-toggle-seg.active {
       color: #ffffff; font-weight: bold;
@@ -468,20 +504,44 @@ function injectToggleStyles() {
   document.head.appendChild(styleElem);
 }
 
+function bindTranslationToggle(button, app, text, renderState, reloadDelay = 0) {
+  const panel = getPanelI18n(currentConfig.locale);
+  const updateState = (animate) => {
+    const on = isTranslationEnabled();
+    button.setAttribute("aria-pressed", String(on));
+    button.title = on ? text.tipOn : text.tipOff;
+    renderState(on, animate);
+  };
+
+  button.type = "button";
+  button.setAttribute("aria-label", panel.cat);
+  updateState(false);
+  button.addEventListener("click", async () => {
+    if (button.getAttribute("aria-busy") === "true") return;
+    button.setAttribute("aria-busy", "true");
+    button.setAttribute("aria-disabled", "true");
+    if (await toggleTranslation()) {
+      updateState(true);
+      setTimeout(() => location.reload(), reloadDelay);
+    } else {
+      button.removeAttribute("aria-busy");
+      button.removeAttribute("aria-disabled");
+      button.title = panel.panel.saveFailed;
+      showSaveFailure(app, panel.panel);
+    }
+  });
+}
+
 /** 按当前配置构建开关元素（不插入 DOM） */
-function buildToggle() {
-  const translationEnabled = isTranslationEnabled();
+function buildToggle(app) {
   const locale = currentConfig.locale;
   const style = parseStyleKey(currentConfig.button_style);
   const i18n = getToggleI18n(locale);
-  const tooltip = translationEnabled ? i18n.tipOn : i18n.tipOff;
   injectToggleStyles();
 
   if (style === "pill") {
-    // 胶囊分段控件：蓝色滑块指示当前状态，点击蓝色滑块滑动切换（灰色文字分段不响应）
-    const pill = document.createElement("div");
+    const pill = document.createElement("button");
     pill.className = "tl-toggle-pill";
-    pill.title = tooltip;
 
     const thumb = document.createElement("span");
     thumb.className = "tl-toggle-thumb";
@@ -491,20 +551,9 @@ function buildToggle() {
     const segRight = document.createElement("span");
     segRight.className = "tl-toggle-seg";
 
-    let on = translationEnabled;
-    let sliding = false;
-
-    const applyTexts = () => {
-      segLeft.textContent = on ? i18n.onFull : i18n.switchOn;
-      segRight.textContent = on ? i18n.switchOff : i18n.offFull;
-      segLeft.classList.toggle("active", on);
-      segRight.classList.toggle("active", !on);
-    };
-    applyTexts();
-
     // 将滑块定位到活动分段（初次渲染不动画）
     pill.initThumb = (animate) => {
-      const target = on ? segLeft : segRight;
+      const target = isTranslationEnabled() ? segLeft : segRight;
       if (!animate) thumb.style.transition = "none";
       thumb.style.left = target.offsetLeft + "px";
       thumb.style.width = target.offsetWidth + "px";
@@ -514,21 +563,14 @@ function buildToggle() {
       }
     };
 
-    const slideAndToggle = (segIsOn) => {
-      if (sliding || segIsOn === on) return;
-      sliding = true;
-      on = !on;
-      applyTexts();
-      pill.initThumb(true);
-      // 先播放滑动动画，再保存并刷新
-      setTimeout(() => toggleTranslation(), 320);
-    };
-    // 触发点仅为蓝色滑块：点击后切换到另一侧（灰色文字分段 pointer-events:none 不响应）
-    thumb.addEventListener("click", () => slideAndToggle(!on));
-
-    pill.appendChild(thumb);
-    pill.appendChild(segLeft);
-    pill.appendChild(segRight);
+    pill.append(thumb, segLeft, segRight);
+    bindTranslationToggle(pill, app, i18n, (on, animate) => {
+      segLeft.textContent = on ? i18n.onFull : i18n.switchOn;
+      segRight.textContent = on ? i18n.switchOff : i18n.offFull;
+      segLeft.classList.toggle("active", on);
+      segRight.classList.toggle("active", !on);
+      if (animate) pill.initThumb(true);
+    }, 270);
     return pill;
   }
 
@@ -538,12 +580,13 @@ function buildToggle() {
   btn.className = "translation-btn";
   const activeClass = isPlain ? "translation-active-plain" : "translation-active-gradient";
   const inactiveClass = isPlain ? "translation-inactive-plain" : "translation-inactive-gradient";
-  btn.classList.add(translationEnabled ? activeClass : inactiveClass);
-  btn.textContent = translationEnabled ? i18n.onFull : i18n.offFull;
   btn.style.fontWeight = isPlain ? "normal" : "bold";
   btn.style.margin = "2px";
-  btn.title = tooltip;
-  btn.addEventListener("click", async () => { await toggleTranslation(); });
+  bindTranslationToggle(btn, app, i18n, (on) => {
+    btn.classList.toggle(activeClass, on);
+    btn.classList.toggle(inactiveClass, !on);
+    btn.textContent = on ? i18n.onFull : i18n.offFull;
+  });
   return btn;
 }
 
@@ -625,7 +668,7 @@ function renderToggle(app) {
     if (toggleWatchdog) { clearInterval(toggleWatchdog); toggleWatchdog = null; }
     document.getElementById(TOGGLE_ID)?.remove();
 
-    const el = buildToggle();
+    const el = buildToggle(app);
     el.id = TOGGLE_ID;
 
     const result = insertToggle(app, el);
@@ -675,8 +718,8 @@ function buildPluginPanel(parentEl) {
   const existing = document.getElementById(PANEL_ID);
   if (existing) return;
 
-  const disabled = new Set(currentConfig.disabled_plugins || []);
-  const p = getPanelI18n(currentConfig.locale).panel;
+  const locale = currentConfig.locale;
+  const p = getPanelI18n(locale).panel;
 
   // 先创建面板 DOM 并设置 ID，确保去重检查能正确工作
   const panel = document.createElement("div");
@@ -691,73 +734,111 @@ function buildPluginPanel(parentEl) {
     <input type="text" placeholder="${p.search}" id="tl-plugin-search"
       style="width:100%;padding:5px 8px;margin-bottom:6px;border:1px solid #555;border-radius:4px;background:#2a2a2a;color:#ddd;box-sizing:border-box;outline:none;" />
     <div style="display:flex;gap:6px;margin-bottom:6px;">
-      <button id="tl-select-all" style="flex:1;padding:3px;border:1px solid #555;border-radius:4px;background:#333;color:#ddd;cursor:pointer;font-size:12px;">${p.selectAll}</button>
-      <button id="tl-deselect-all" style="flex:1;padding:3px;border:1px solid #555;border-radius:4px;background:#333;color:#ddd;cursor:pointer;font-size:12px;">${p.deselectAll}</button>
+      <button type="button" id="tl-select-all" disabled style="flex:1;padding:3px;border:1px solid #555;border-radius:4px;background:#333;color:#ddd;cursor:pointer;font-size:12px;">${p.selectAll}</button>
+      <button type="button" id="tl-deselect-all" disabled style="flex:1;padding:3px;border:1px solid #555;border-radius:4px;background:#333;color:#ddd;cursor:pointer;font-size:12px;">${p.deselectAll}</button>
     </div>
-    <div id="tl-plugin-list" style="height:300px;overflow-y:auto;border:1px solid #444;border-radius:4px;padding:4px;"></div>
+    <fieldset id="tl-plugin-list" disabled style="height:300px;min-width:0;margin:0;overflow-y:auto;border:1px solid #444;border-radius:4px;padding:4px;"></fieldset>
     <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
-      <button id="tl-save-plugins" style="padding:6px 20px;border:none;border-radius:4px;background:#4a9eff;color:#fff;cursor:pointer;font-weight:bold;">${p.save}</button>
-      <span id="tl-status" style="font-size:11px;color:#888;"></span>
+      <button type="button" id="tl-save-plugins" disabled style="padding:6px 20px;border:none;border-radius:4px;background:#4a9eff;color:#fff;cursor:pointer;font-weight:bold;">${p.save}</button>
+      <span id="tl-status" role="status" style="font-size:11px;color:#888;"></span>
     </div>
   `;
 
   const listEl = panel.querySelector("#tl-plugin-list");
   const searchEl = panel.querySelector("#tl-plugin-search");
   const statusEl = panel.querySelector("#tl-status");
+  const selectAll = panel.querySelector("#tl-select-all");
+  const deselectAll = panel.querySelector("#tl-deselect-all");
+  const saveButton = panel.querySelector("#tl-save-plugins");
+  const setControlsDisabled = (disabled) => {
+    for (const control of [listEl, selectAll, deselectAll, saveButton]) {
+      control.disabled = disabled;
+    }
+  };
+  const filterList = () => {
+    const query = searchEl.value.toLowerCase();
+    for (const row of listEl.children) {
+      row.style.display = row.textContent.toLowerCase().includes(query) ? "" : "none";
+    }
+  };
+  const readPluginList = async () => {
+    const response = await fetch(`./translation_node/get_plugin_list?locale=${encodeURIComponent(locale)}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const plugins = await response.json();
+    if (!Array.isArray(plugins) || plugins.some(name => typeof name !== "string")) {
+      throw new Error("Invalid plugin list");
+    }
+    return plugins.filter(name => name !== SELF_NAME && name !== "internal");
+  };
 
-  // 先显示加载状态
   statusEl.textContent = p.loading;
-
-  // 异步加载插件列表并填充内容
-  fetch(`./translation_node/get_plugin_list?locale=${encodeURIComponent(currentConfig.locale)}`)
-    .then(resp => resp.json())
-    .then(plugins => {
-      plugins = plugins.filter(n => n !== SELF_NAME && n !== "internal");
-      statusEl.textContent = p.loaded.replace("{n}", plugins.length).replace("{d}", disabled.size);
-      
-      plugins.forEach(name => {
-        const checked = !disabled.has(name);
-        const div = document.createElement("div");
-        div.style.cssText = "padding:2px 4px;border-radius:3px;";
-        div.innerHTML = `<label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" ${checked ? "checked" : ""} data-plugin="${name}" style="cursor:pointer;"> <span style="word-break:break-all;">${name}</span></label>`;
-        div.addEventListener("mouseenter", () => div.style.background = "#333");
-        div.addEventListener("mouseleave", () => div.style.background = "");
-        listEl.appendChild(div);
-      });
+  Promise.all([readPluginList(), readStoredConfig()])
+    .then(([plugins, config]) => {
+      if (!Array.isArray(config?.disabled_plugins)) throw new Error("Invalid disabled plugin list");
+      const disabled = new Set(config.disabled_plugins);
+      const rows = document.createDocumentFragment();
+      for (const name of plugins) {
+        const row = document.createElement("div");
+        row.style.cssText = "padding:2px 4px;border-radius:3px;";
+        const label = document.createElement("label");
+        label.style.cssText = "display:flex;align-items:center;gap:6px;cursor:pointer;";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.style.cursor = "pointer";
+        checkbox.dataset.plugin = name;
+        checkbox.defaultChecked = !disabled.has(name);
+        const caption = document.createElement("span");
+        caption.style.wordBreak = "break-all";
+        caption.textContent = name;
+        label.append(checkbox, caption);
+        row.appendChild(label);
+        row.addEventListener("mouseenter", () => row.style.background = "#333");
+        row.addEventListener("mouseleave", () => row.style.background = "");
+        rows.appendChild(row);
+      }
+      listEl.appendChild(rows);
+      filterList();
+      const disabledCount = plugins.filter(name => disabled.has(name)).length;
+      statusEl.textContent = p.loaded.replace("{n}", plugins.length).replace("{d}", disabledCount);
+      setControlsDisabled(plugins.length === 0);
     })
     .catch(e => {
       error("获取插件列表失败:", e);
       statusEl.textContent = p.loadFailed;
     });
 
-  // 搜索过滤
-  searchEl.addEventListener("input", () => {
-    const q = searchEl.value.toLowerCase();
-    listEl.querySelectorAll("div").forEach(d => {
-      d.style.display = d.textContent.toLowerCase().includes(q) ? "" : "none";
-    });
-  });
+  searchEl.addEventListener("input", filterList);
+  const setVisibleChecked = (checked) => {
+    for (const checkbox of listEl.querySelectorAll('input[type="checkbox"]')) {
+      if (checkbox.closest("div").style.display !== "none") checkbox.checked = checked;
+    }
+  };
+  selectAll.addEventListener("click", () => setVisibleChecked(true));
+  deselectAll.addEventListener("click", () => setVisibleChecked(false));
 
-  // 全选 / 全不选
-  panel.querySelector("#tl-select-all").addEventListener("click", () => {
-    listEl.querySelectorAll("input[type=checkbox]").forEach(cb => {
-      if (cb.closest("div").style.display !== "none") cb.checked = true;
-    });
-  });
-  panel.querySelector("#tl-deselect-all").addEventListener("click", () => {
-    listEl.querySelectorAll("input[type=checkbox]").forEach(cb => {
-      if (cb.closest("div").style.display !== "none") cb.checked = false;
-    });
-  });
-
-  // 保存并刷新
-  panel.querySelector("#tl-save-plugins").addEventListener("click", async () => {
-    const newDisabled = [];
-    listEl.querySelectorAll("input[type=checkbox]").forEach(cb => {
-      if (!cb.checked) newDisabled.push(cb.dataset.plugin);
-    });
-    await saveConfig(currentConfig.translation_enabled, currentConfig.locale, currentConfig.button_style, newDisabled, currentConfig.translate_options);
-    location.reload();
+  saveButton.addEventListener("click", async () => {
+    if (saveButton.disabled) return;
+    setControlsDisabled(true);
+    try {
+      const config = await readStoredConfig();
+      if (!Array.isArray(config?.disabled_plugins)) throw new Error("Invalid disabled plugin list");
+      const disabled = new Set(config.disabled_plugins);
+      for (const checkbox of listEl.querySelectorAll('input[type="checkbox"]')) {
+        if (checkbox.checked === checkbox.defaultChecked) continue;
+        if (checkbox.checked) disabled.delete(checkbox.dataset.plugin);
+        else disabled.add(checkbox.dataset.plugin);
+      }
+      const success = await saveConfig(config.translation_enabled !== false, locale,
+        config.button_style || currentConfig.button_style, [...disabled], config.translate_options !== false);
+      if (success) {
+        location.reload();
+        return;
+      }
+    } catch (e) {
+      error("保存插件翻译设置失败:", e);
+    }
+    statusEl.textContent = p.saveFailed;
+    setControlsDisabled(false);
   });
 
   parentEl.appendChild(panel);

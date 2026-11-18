@@ -129,6 +129,14 @@ export function canTranslateDropdownText(element) {
     return !option || option.hasAttribute("value");
 }
 
+export function isProtectedUiText(element) {
+    if (!element?.closest) return false;
+    if (element.isContentEditable ||
+        element.closest('textarea, script, style, [contenteditable]:not([contenteditable="false"])')) return true;
+    return !!(element.closest('.workflows-sidebar-tab, [data-testid="workflows-sidebar"]') &&
+        element.closest('.tree-node .node-label, .p-tree-node-label, .p-treenode-label'));
+}
+
 /**
  * ComfyUI 官方语言码 -> 本插件语言目录名的显式映射。
  * 避免仅靠主语言子标签匹配时，"zh" 同时命中 zh-CN / zh-TW 的歧义。
@@ -228,10 +236,5 @@ export async function initConfig() {
 export async function toggleTranslation() {
     // 顶栏开关只切换启用/停用；翻译语言始终跟随 Comfy.Locale
     const newEnabled = !currentConfig.translation_enabled;
-    const success = await saveConfig(newEnabled, currentConfig.locale, currentConfig.button_style, currentConfig.disabled_plugins, currentConfig.translate_options);
-    if (success) {
-        setTimeout(() => location.reload(), 100);
-    } else {
-        error("切换翻译状态失败");
-    }
+    return saveConfig(newEnabled);
 }

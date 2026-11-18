@@ -6,19 +6,19 @@ import {
   isAlreadyTranslatedText, 
   nativeTranslatedSettings,
   canTranslateDropdownText,
+  isProtectedUiText,
   error
 } from "./utils.js";
 
 class TExe {
-  static T = null;
-
   MT(txt, element) {
     if (isAlreadyTranslatedText(txt)) {
       return null;
     }
     const key = txt?.trim?.();
     const translated = this.T?.Menu?.[txt] || this.T?.Menu?.[key];
-    return translated && this.hasNodeUiTranslation?.(element, key) ? null : translated;
+    if (typeof translated !== "string" || translated === txt || this.hasNodeUiTranslation?.(element, key)) return null;
+    return translated;
   }
 
   constructor() {
@@ -36,7 +36,7 @@ class TExe {
     this.isScheduling = false;
 
     // 子图区域翻译：已设置 Observer 的 .p-tree 元素集合，避免重复创建
-    this.observedTrees = new Set();
+    this.observedTrees = new Map();
   }
 
   tSkip(node) {
@@ -46,24 +46,6 @@ class TExe {
       if (!el || typeof el.closest !== 'function') return false;
       return this.excludeClass.some((cls) => el.closest(`.${cls}`));
     } catch (e) {
-      return false;
-    }
-  }
-
-  translateKjPopDesc(node) {
-    try {
-      let T = this.T;
-      if (!T) return false;
-      if (!node || !node.querySelectorAll) return false;
-      if (!node?.classList?.contains("kj-documentation-popup")) return false;
-      
-      const allElements = node.querySelectorAll("*");
-      for (const ele of allElements) {
-        this.replaceText(ele);
-      }
-      return true;
-    } catch (e) {
-      error("翻译KJ弹窗出错:", e);
       return false;
     }
   }
@@ -83,19 +65,19 @@ class TExe {
         
         // 使用 queueMicrotask 在当前所有同步 Mutation 回调执行完毕后，统一收网
         queueMicrotask(() => {
-          const nodesToTranslate = Array.from(this.pendingNodes);
-          this.pendingNodes.clear();
+          const nodesToTranslate = this.pendingNodes;
+          this.pendingNodes = new Set();
           this.isScheduling = false;
 
+          const scanned = nodesToTranslate.size > 1 ? new Set() : undefined;
           for (const targetNode of nodesToTranslate) {
+            if (scanned?.has(targetNode)) continue;
             // 如果节点已经被销毁（Vue 虚拟列表频繁销毁重建），直接跳过
             if (!document.contains(targetNode) && targetNode.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
               continue;
             }
 
-            // 【核心修复 2】：彻底移除 querySelectorAll("*") ！！
-            // 直接把父容器抛给 replaceText，让它利用自带的递归完成 O(N) 的单次遍历。
-            this.replaceText(targetNode);
+            this.replaceText(targetNode, scanned);
           }
         });
       }
@@ -104,7 +86,7 @@ class TExe {
     }
   }
 
-  replaceText(target) {
+  replaceText(target, scanned) {
     try {
       if (!target) return;
       if (!this.T) return;
@@ -116,15 +98,19 @@ class TExe {
       
       const element = target.nodeType === Node.TEXT_NODE ? target.parentElement : target;
       if (!canTranslateDropdownText(element)) return;
+
+      // 已完成扫描的节点在本批次复用。提前跳过的范围仍可独立处理排队的后代。
+      scanned?.add(target);
       
       if (target.childNodes && target.childNodes.length) {
         const childNodes = Array.from(target.childNodes);
         for (const childNode of childNodes) {
-          this.replaceText(childNode);
+          if (!scanned?.has(childNode)) this.replaceText(childNode, scanned);
         }
       }
       
       if (target.nodeType === Node.TEXT_NODE) {
+        if (isProtectedUiText(element)) return;
         if (target.nodeValue && !isAlreadyTranslatedText(target.nodeValue)) {
           const translated = this.MT(target.nodeValue, element);
           if (translated) {
@@ -140,7 +126,7 @@ class TExe {
           }
         }
 
-        if (target.nodeName === "INPUT" && target.type === "button" && 
+        if (target.nodeName === "INPUT" && target.type === "button" && !isProtectedUiText(target) &&
             !isAlreadyTranslatedText(target.value)) {
           const valueTranslated = this.MT(target.value);
           if (valueTranslated) {
@@ -148,7 +134,7 @@ class TExe {
           }
         }
 
-        if (target.innerText && !isAlreadyTranslatedText(target.innerText) &&
+        if (!isProtectedUiText(target) && target.innerText && !isAlreadyTranslatedText(target.innerText) &&
             (!target.children || target.children.length === 0)) {
           const innerTextTranslated = this.MT(target.innerText, element);
           if (innerTextTranslated) {
@@ -169,6 +155,10 @@ class TExe {
         }
       });
       this.observers = [];
+      for (const { observer, timer } of this.observedTrees.values()) {
+        observer?.disconnect();
+        clearTimeout(timer);
+      }
       this.observedTrees.clear();
     } catch (e) {
       error("清理观察者出错:", e);
@@ -176,7 +166,7 @@ class TExe {
   }
 }
 
-let texe = new TExe();
+const texe = new TExe();
 
 let _isTranslating = false;
 
@@ -210,8 +200,8 @@ function flushTranslations() {
 
 function translateAddedText(node) {
   const parent = node.parentElement;
-  if (!node.isConnected || !parent || parent.isContentEditable ||
-      parent.closest(".litesearchbox, .lite-search-item, textarea, script, style")) return;
+  if (!node.isConnected || !parent || isProtectedUiText(parent) ||
+      parent.closest(".litesearchbox, .lite-search-item")) return;
   texe.replaceText(node);
 }
 
@@ -236,6 +226,14 @@ export function applyMenuTranslation(T, hasNodeUiTranslation) {
     const bodyObserver = observeFactory(document.querySelector("body.litegraph"), (mutationsList) => {
       // 在防抖前处理新增文本并识别新增的 .p-tree 元素
       const pendingCount = _bodyPendingElements.size;
+      if (mutationsList.some((mutation) => mutation.removedNodes.length)) {
+        for (const [tree, { observer, timer }] of texe.observedTrees) {
+          if (tree.isConnected) continue;
+          observer?.disconnect();
+          clearTimeout(timer);
+          texe.observedTrees.delete(tree);
+        }
+      }
       for (const mutation of mutationsList) {
         for (const node of mutation.addedNodes) {
           if (node.nodeType === Node.TEXT_NODE) {
@@ -297,12 +295,12 @@ export function applyMenuTranslation(T, hasNodeUiTranslation) {
     });
     
     if (document.querySelector(".comfyui-menu")) {
-      const menuObserver = observeFactory(document.querySelector(".comfyui-menu"), handleComfyNewUIMenu, true);
+      const menuObserver = observeFactory(document.querySelector(".comfyui-menu"), handleComfyNewUIMenu, true, true);
       texe.observers.push(menuObserver);
     }
     
     document.querySelectorAll(".comfyui-popup").forEach(node => {
-      const popupObserver = observeFactory(node, handleComfyNewUIMenu, true);
+      const popupObserver = observeFactory(node, handleComfyNewUIMenu, true, true);
       texe.observers.push(popupObserver);
     });
     
@@ -315,13 +313,13 @@ export function applyMenuTranslation(T, hasNodeUiTranslation) {
   }
 }
 
-export function observeFactory(observeTarget, fn, subtree = false) {
+export function observeFactory(observeTarget, fn, subtree = false, characterData = false) {
   if (!observeTarget) return null;
   try {
     const observer = new MutationObserver(function (mutationsList, observer) {
       fn(mutationsList, observer);
     });
-    observer.observe(observeTarget, { childList: true, attributes: true, subtree: subtree });
+    observer.observe(observeTarget, { childList: true, attributes: true, subtree, characterData });
     return observer;
   } catch (e) {
     error("创建观察者出错:", e);
@@ -332,21 +330,27 @@ export function observeFactory(observeTarget, fn, subtree = false) {
 function observeModalNode(node) {
   const observer = observeFactory(node, (mutationsList) => {
     for (let mutation of mutationsList) {
-      texe.translateAllText(mutation.target);
+      if (mutation.type === "characterData") translateAddedText(mutation.target);
+      else texe.translateAllText(mutation.target);
     }
-  });
+  }, true, true);
   if (observer) {
     texe.observers.push(observer);
   }
 }
 
 let _menuDebounceTimer = null;
-let _menuPendingMutations = [];
+let _menuPendingTargets = new Set();
 
 function handleComfyNewUIMenu(mutationsList) {
   // 【立即检测】在防抖之前，同步检测 .p-tree 元素
   for (const mutation of mutationsList) {
+    if (mutation.type === "characterData") {
+      translateAddedText(mutation.target);
+      continue;
+    }
     const target = mutation.target;
+    _menuPendingTargets.add(target);
     if (target?.nodeType === Node.ELEMENT_NODE) {
       if (target.classList?.contains('p-tree')) {
         setupTreeObserver(target);
@@ -357,6 +361,10 @@ function handleComfyNewUIMenu(mutationsList) {
     if (mutation.type === "childList") {
       for (const node of mutation.addedNodes) {
         if (node.nodeType === Node.ELEMENT_NODE) {
+          // A parent skipped for native text may still contain an added control with its own label.
+          if (!node.closest(".litesearchbox, .lite-search-item") && !isSearchRelatedElement(node)) {
+            _menuPendingTargets.add(node);
+          }
           if (node.classList?.contains('p-tree')) {
             setupTreeObserver(node);
           } else if (node.querySelectorAll) {
@@ -367,31 +375,22 @@ function handleComfyNewUIMenu(mutationsList) {
     }
   }
   
-  _menuPendingMutations.push(...mutationsList);
+  if (_menuPendingTargets.size === 0) return;
   if (_menuDebounceTimer) clearTimeout(_menuDebounceTimer);
   _menuDebounceTimer = setTimeout(() => {
     _menuDebounceTimer = null;
-    const mutations = _menuPendingMutations;
-    _menuPendingMutations = [];
+    const targets = _menuPendingTargets;
+    _menuPendingTargets = new Set();
     
     if (_isTranslating) {
       // 被阻塞时不丢弃，收集到调度器延迟处理
-      for (const mutation of mutations) {
-        if (mutation.type === "childList") {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeType === Node.ELEMENT_NODE) scheduleTranslation(node);
-          }
-        }
+      for (const target of targets) {
+        scheduleTranslation(target);
       }
       return;
     }
     _isTranslating = true;
     try {
-      // 去重：同一 target 只翻译一次
-      const targets = new Set();
-      for (const mutation of mutations) {
-        targets.add(mutation.target);
-      }
       for (const target of targets) {
         texe.translateAllText(target);
       }
@@ -409,6 +408,7 @@ function handleHistoryAndQueueButtons() {
     const observer = observeFactory(btn, (mutationsList) => {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
+          if (isProtectedUiText(mutation.target)) continue;
           const translatedValue = texe.MT(mutation.target.textContent);
           if (translatedValue) {
             mutation.target.innerText = translatedValue;
@@ -497,7 +497,7 @@ function translateSettingDialog(comfySettingDialog) {
     let titleText = texe.MT(ele.title);
     if (titleText) ele.title = titleText;
     if (!targetLangText) {
-      if (ele.nodeName === "INPUT" && ele.type === "button") {
+      if (ele.nodeName === "INPUT" && ele.type === "button" && !isProtectedUiText(ele)) {
         targetLangText = texe.MT(ele.value);
         if (!targetLangText) continue;
         ele.value = targetLangText;
@@ -559,8 +559,6 @@ function setupSearchBoxObserver() {
 // ========== 子图区域（PrimeVue Tree）专用翻译 ==========
 // 绕开 tSkip 的 p-tree 排除，直接遍历翻译树内文本节点
 
-let _treeDebounceTimer = null;
-
 /**
  * 判断某个 .p-tree 是否属于“工作流”侧边栏。
  * 工作流树渲染的是用户自定义的工作流文件名/文件夹名（可重命名、可拖拽），
@@ -591,7 +589,7 @@ function translateTreeLabels(treeRoot) {
     let textNode;
     while (textNode = walker.nextNode()) {
       const txt = textNode.textContent?.trim();
-      if (!txt || !canTranslateDropdownText(textNode.parentElement)) continue;
+      if (!txt || isProtectedUiText(textNode.parentElement) || !canTranslateDropdownText(textNode.parentElement)) continue;
       if (isAlreadyTranslatedText(txt)) continue;
       const translated = texe.MT(txt, textNode.parentElement);
       if (translated && translated !== txt) {
@@ -613,21 +611,20 @@ function setupTreeObserver(treeEl) {
   // 跳过工作流侧边栏树：其节点是用户命名的工作流文件/文件夹，无需翻译，
   // 也不为其创建 Observer（避免展开/重命名时反复触发字典查表翻译）
   if (isWorkflowSidebarTree(treeEl)) return;
-  texe.observedTrees.add(treeEl);
-
   // 首次翻译
   translateTreeLabels(treeEl);
 
   // 监听树的变化（展开/收起/切换），16ms 防抖
-  const observer = observeFactory(treeEl, () => {
-    if (_treeDebounceTimer) clearTimeout(_treeDebounceTimer);
-    _treeDebounceTimer = setTimeout(() => {
-      _treeDebounceTimer = null;
-      translateTreeLabels(treeEl);
+  const state = { observer: null, timer: null };
+  state.observer = observeFactory(treeEl, () => {
+    clearTimeout(state.timer);
+    state.timer = setTimeout(() => {
+      state.timer = null;
+      if (treeEl.isConnected) translateTreeLabels(treeEl);
     }, 16);
-  }, true);
+  }, true, true);
 
-  if (observer) texe.observers.push(observer);
+  if (state.observer) texe.observedTrees.set(treeEl, state);
 }
 
 /**

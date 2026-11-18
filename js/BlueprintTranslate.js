@@ -5,19 +5,16 @@ const vueTextareaSelector = `${vueWidgetSelector} textarea`;
 const vueWidgetLabelSelector = `${vueWidgetSelector} label[for]`;
 const vueTextSelector = `${vueTitleSelector}, ${vueTextareaSelector}, ${vueWidgetLabelSelector}`;
 
-function getBlueprint(node, catalog) {
-  if (!node.isSubgraphNode?.() || !catalog) return;
-  const graph = node.subgraph;
+function matchBlueprint(graph, catalog, allDefinitions, slotIds) {
   const definitions = Object.hasOwn(catalog, graph.name) ? catalog[graph.name] : [];
 
   // Clipboard insertion remaps the definition UUID but keeps its boundary slot IDs.
-  const slotIds = new Set([...graph.inputNode.slots, ...graph.outputNode.slots].map((slot) => slot.id));
   const named = definitions.filter((definition) => definition.id === graph.id ||
     definition.slots.some((id) => slotIds.has(id)));
 
   // Renaming in the UI also changes the definition name. Recover the labels
   // from its complete original boundary, allowing new promoted ports.
-  const matches = named.length ? named : Object.values(catalog).flat().filter((definition) =>
+  const matches = named.length ? named : allDefinitions.filter((definition) =>
     definition.slots.length && definition.slots.every((id) => slotIds.has(id))
   );
   if (!matches.length) return;
@@ -37,6 +34,14 @@ function getBlueprint(node, catalog) {
   const title = named.length && best.every((definition) => definition.label === first.label)
     ? first : {};
   return { ...title, labels };
+}
+
+function hasSameSlotIds(slots, ids) {
+  if (slots.length !== ids.length) return false;
+  for (let i = 0; i < slots.length; i++) {
+    if (slots[i].id !== ids[i]) return false;
+  }
+  return true;
 }
 
 function getTitleTranslation(original, blueprint) {
@@ -79,12 +84,41 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
   const workflowDefinitions = new WeakMap();
   const observedGraphs = new WeakSet();
   const decorated = new WeakSet();
+  const vueTitles = new WeakMap();
   const vuePlaceholders = new WeakMap();
   const vueWidgetLabels = new WeakMap();
   const canvasContainer = app.canvas.canvas.parentElement;
+  let blueprintCatalog;
+  let catalogDefinitions;
+  let blueprintMatches = new WeakMap();
   let menu;
   let normalizedMenu;
   let refreshQueued = false;
+
+  function getBlueprint(node, catalog) {
+    if (!catalog || !node.isSubgraphNode?.()) return;
+    if (catalog !== blueprintCatalog) {
+      blueprintCatalog = catalog;
+      catalogDefinitions = Object.values(catalog).flat();
+      blueprintMatches = new WeakMap();
+    }
+
+    const graph = node.subgraph;
+    const inputs = graph.inputNode.slots;
+    const outputs = graph.outputNode.slots;
+    const previous = blueprintMatches.get(graph);
+    if (previous && previous.id === graph.id && previous.name === graph.name &&
+        hasSameSlotIds(inputs, previous.inputs) && hasSameSlotIds(outputs, previous.outputs)) {
+      return previous.match;
+    }
+
+    // Keep misses too. Custom subgraphs otherwise scan the catalog on every title draw.
+    const inputIds = inputs.map((slot) => slot.id);
+    const outputIds = outputs.map((slot) => slot.id);
+    const match = matchBlueprint(graph, catalog, catalogDefinitions, new Set([...inputIds, ...outputIds]));
+    blueprintMatches.set(graph, { id: graph.id, name: graph.name, inputs: inputIds, outputs: outputIds, match });
+    return match;
+  }
 
   function getMenuTranslation(name) {
     const currentMenu = getMenus();
@@ -205,6 +239,15 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
     }
   }
 
+  function queueRefresh() {
+    if (refreshQueued) return;
+    refreshQueued = true;
+    queueMicrotask(() => {
+      refreshQueued = false;
+      refresh();
+    });
+  }
+
   function observeGraph(graph) {
     if (observedGraphs.has(graph)) return;
     observedGraphs.add(graph);
@@ -215,14 +258,11 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
           const slot = detail[direction];
           if (graph[`${direction}Node`].slots.includes(slot)) {
             definition.labels[`${direction}s`][slot.name] = slot.label || slot.localized_name || slot.name;
-            if (!refreshQueued) {
-              refreshQueued = true;
-              queueMicrotask(() => {
-                refreshQueued = false;
-                refresh();
-              });
-            }
+            queueRefresh();
           }
+        }));
+        graph.events.addEventListener(`removing-${direction}`, ({ detail }) => queueMicrotask(() => {
+          if (!graph[`${direction}Node`].slots.includes(detail[direction])) queueRefresh();
         }));
       }
     }
@@ -267,12 +307,15 @@ export function installBlueprintTranslation(app, getTranslations, getMenus) {
     const graph = app.canvas?.graph;
     const id = title.closest(vueHeaderSelector)?.dataset.testid.slice("node-header-".length);
     const node = graph?.getNodeById(id);
-    if (!node?.isSubgraphNode?.()) return;
+    if (!node?.isSubgraphNode?.() || typeof node.title !== "string") return;
     const label = getDisplayTitle(node, node.title);
     const text = title.firstChild;
-    if (label && text?.nodeType === Node.TEXT_NODE && text.nodeValue === node.title) {
-      text.nodeValue = label;
-    }
+    if (text?.nodeType !== Node.TEXT_NODE ||
+        (text.nodeValue !== node.title && text.nodeValue !== vueTitles.get(text))) return;
+    if (label) vueTitles.set(text, label);
+    else vueTitles.delete(text);
+    const display = label || node.title;
+    if (text.nodeValue !== display) text.nodeValue = display;
   }
 
   function translateVueText(element) {

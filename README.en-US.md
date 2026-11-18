@@ -4,10 +4,10 @@
 
 **Multilingual interface translation for ComfyUI**
 
-> Adds translations for nodes, official blueprints, menus, settings, and third-party node interfaces in the language selected in ComfyUI.
+> Adds translations for nodes, blueprints and workflow subgraphs, menus, settings, and third-party node interfaces in the language selected in ComfyUI.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#usage)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -62,9 +62,9 @@ ComfyUI-Global-Translation is a multilingual interface translation plugin. It fo
 - **Smart detection** — automatically recognizes already-translated text, avoiding repeated translation and infinite recursion
 - **Native compatibility** — coexists perfectly with ComfyUI's official translation without interference
 - **Context awareness** — applies the best strategy per element type (nodes, menus, widgets, etc.)
-- **Smart data merging** — when several translation files contain the same node, entries are merged complementarily instead of overwriting each other
-- **Custom panel translation** — panels created inside nodes (buttons, labels, dropdowns, tooltips, popups, etc.) are also translated automatically
-- **Callback safety** — after translating right-click menus, every function (disconnect, rename, etc.) keeps working
+- **Dictionary merging** — merges entries for the same node field by field and gives priority to the owning plugin's dictionary when the plugin can be identified
+- **Custom panel translation** — translates buttons, widget labels, placeholders, and popups in custom node panels
+- **Right-click menu translation** — displays translated labels while disconnect, rename, and other actions use the original items and values
 
 ### 🎨 Beautiful user interface
 
@@ -79,14 +79,14 @@ ComfyUI-Global-Translation is a multilingual interface translation plugin. It fo
 - **Real-time switching** — enable/disable translation without restarting
 - **Persistent state** — settings are saved automatically and survive restarts
 - **Settings-panel integration** — configure switch style and dropdown-option translation inside ComfyUI's settings (language follows the official ComfyUI setting)
-- **Per-plugin toggle** — a built-in manager lets you disable translation for specific plugins
-- **Add and apply instantly** — new translation files take effect without restarting
+- **Per-plugin translation toggle** — enables or disables node translations by dictionary file
+- **Dictionary refresh** — refresh the page after adding or editing dictionary files to load translations
 
 ### 🛡️ Stable and reliable
 
 - **Robust error handling** — every critical operation is wrapped
-- **Graceful degradation** — falls back to the original text on failure
-- **DOM safety** — translation never breaks Vue/PrimeVue event bindings
+- **Dictionary error handling** — skips malformed or unreadable dictionaries and logs their filenames
+- **User content protection** — preserves editable text, prompts, and user-named files and folders in the workflow sidebar
 - **Multi-version support** — supports both old and new ComfyUI interfaces
 
 ---
@@ -151,10 +151,10 @@ Restart ComfyUI after installation.
 
 ### Translation toggle
 
-After installation a toggle button appears in the interface; click it to switch translation:
+Click the translation toggle in the toolbar. With the keyboard, press Tab to focus it, then Enter or Space to toggle. The page reloads after the setting is saved.
 
 - **On** — the button shows the "on" label, and the interface text is translated into the current language (following the official ComfyUI language setting)
-- **Off** — the button shows the "off" label, restoring the original English interface
+- **Off** — the button shows the “off” label, restoring the original display text from ComfyUI and third-party nodes
 
 ### Translation language
 
@@ -172,9 +172,7 @@ Under ComfyUI Settings → "🌐 Translation Settings" there are two options. Th
 | 🎨 Switch style | Choose the toggle appearance; redraws live, no refresh | pill (segmented) / gradient (rainbow) / plain (native low-key) |
 | 📋 Dropdown options | Whether to also translate text inside COMBO dropdowns | On / Off (auto-refresh on change) |
 
-Below the options there is also a **Plugin Translation Manager**: it lists every plugin with translation files — uncheck one to disable its translation; the page refreshes on save.
-
-> 💡 **Segmented pill (recommended)**: a rounded pill with a blue highlight slider over the current state. **Click the blue slider** to glide it to the other side; the choice is saved to the config immediately and persists after restarting ComfyUI.
+The **Plugin Translation Manager** below the settings lists the available node dictionary files. Clear a checkbox to disable that file's translations. Once the list loads and contains selectable entries, choose **Save & Reload**. Disabled entries for other languages are retained. If saving fails, the panel displays a message and lets you try again.
 
 ### Button style reference
 
@@ -184,7 +182,7 @@ Below the options there is also a **Plugin Translation Manager**: it lists every
 | **Rainbow gradient** | Flowing rainbow animation, bold white | Flowing gray animation, bold dark text | Want something eye-catching |
 | **Native low-key** | ComfyUI theme background | Dark background, gray text | Want it to blend in |
 
-> **Segmented pill interaction**: only the blue highlight slider is the toggle trigger — clicking it plays a slide animation (~300ms), then saves and refreshes; the gray text segment is only a state label and intentionally does nothing when clicked.
+> Click anywhere on the pill to toggle. Once the setting is saved, the slider moves to the new state and the page reloads. If saving fails, the toggle stays in its previous state and you can try again.
 
 ---
 
@@ -196,7 +194,7 @@ Below the options there is also a **Plugin Translation Manager**: it lists every
 |------|---------|------|
 | **Node names** | Titles and display names of all workflow nodes | ✅ |
 | **Node properties** | Input/output ports, widget labels, descriptions | ✅ |
-| **Official blueprints** | Titles in the node library and on the canvas, exposed ports, widget labels, and text field placeholders | ✅ |
+| **Blueprints and subgraphs** | Matching titles of official blueprints and template subgraphs, plus exposed ports, widget labels, and text field placeholders in official and user-created subgraphs | ✅ |
 | **Menus** | Main menu, right-click menu, context menu | ✅ |
 | **Settings panel** | The ComfyUI settings dialog | ✅ |
 | **Manager** | The ComfyUI Manager interface | ✅ |
@@ -263,17 +261,17 @@ Create a JSON file under `en-US/Menus/` to add menu translations:
 }
 ```
 
-> After adding translation files, no restart is needed — toggling translation applies them.
+Each dictionary must contain a JSON object at the top level. The original text is displayed when no valid translation is found. Invalid dictionaries are skipped and logged. Dictionaries are processed in filename order, and later files take precedence for duplicate keys. When the owning plugin can be identified, its node dictionary takes priority and other entries fill in missing fields.
 
-### Translating official blueprints
+> Refresh the browser after adding, editing, or deleting dictionaries. After updating the plugin, restart ComfyUI first, then refresh the browser.
 
-Open **Nodes → Comfy Blueprints** in the sidebar and drag a blueprint onto the canvas. Translations work in both the traditional canvas and the newer node interface. Available translations depend on the dictionaries for the active language.
+### Translating blueprints and subgraphs
 
-- Blueprint titles are looked up in the active language's `Menus/` directory. The [Simplified Chinese blueprint dictionary](zh-CN/Menus/ComfyUI-子图.json) contains titles and shared widget labels that can serve as examples.
-- Exposed ports and widgets reuse the translation of the underlying node field when it matches directly. For an exposed name that differs from the underlying field name, the plugin looks up the full display name in the active language's `Menus/` directory. It normalizes case, spaces, underscores, and hyphens when matching. Blueprints can share the same entry.
-- Use the `input.` or `output.` prefix when inputs and outputs need different translations. For example, `output.depth_colored` can label the output “Colorized depth map.” Unmatched labels appear in their original language. Workflows retain their original fields and parameter values.
+Drag a blueprint from **Nodes → Comfy Blueprints** in the sidebar, or open an official template or a user-created workflow containing subgraphs. Both the traditional canvas and the newer node interface translate exposed ports, widget labels, and text field placeholders in the active language, including widgets and ports exposed from nested subgraphs.
 
-Restart ComfyUI after updating the plugin. Refresh the page after editing a dictionary to load the new translations.
+- Official blueprint titles and recognized official template subgraph titles are looked up in the active language's `Menus/` directory. User-created subgraphs keep the titles their authors chose. The [Simplified Chinese dictionary](zh-CN/Menus/ComfyUI-子图.json) contains titles and shared terms.
+- Exposed components first use the translation from the directly corresponding internal node field. If none is available, the plugin looks up the full display name in the active language's `Menus/` directory. Matching accounts for differences in case, spaces, underscores, and hyphens. Multiple subgraphs can share the same entry.
+- Prefix shared terms with `input.` or `output.` when the two directions need different translations. For example, `output.depth_colored` can label that output “Colorized depth map.” Workflows save the original titles, port names, and parameter values.
 
 ---
 
@@ -302,12 +300,14 @@ Restart ComfyUI after updating the plugin. Refresh the page after editing a dict
 
 | Technique | Description |
 |------|------|
-| **Callback Wrapping** | Translates right-click menu text while preserving the underlying callback's `content` matching |
+| **Native context menus** | Translates labels after ComfyUI builds the menu and preserves the original items, callbacks, and dropdown values |
 | **Dual-button architecture** | Supports both the legacy `.comfy-menu` and the new `.comfyui-menu` UIs |
-| **MutationObserver** | Watches DOM changes in real time and auto-translates newly appearing elements |
+| **MutationObserver** | Watches interface changes and scans each batch of menu updates together |
 | **translatedValueSet** | Uses a Set for O(1) checks of whether text is already translated, avoiding repeated work |
 | **Leaf-node protection** | Assigns `innerText` only to childless nodes, protecting Vue event bindings |
-| **Gzip transfer** | Translation data is transferred Gzip-compressed to reduce network cost |
+| **Translation cache** | Compiles and compresses translations in the background and reuses the results when dictionaries and disabled entries are the same |
+| **Subgraph match cache** | Reuses subgraph matches and recalculates them when the graph name or exposed port IDs change |
+| **Gzip transfer** | Sends compressed data when the browser accepts Gzip to reduce transfer size |
 
 > For full technical details, see [TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)
 
@@ -321,6 +321,12 @@ Restart ComfyUI after updating the plugin. Refresh the page after editing a dict
 - **Known conflicting plugin** — `ComfyUI Browser` may have compatibility issues
 - **Browser support** — Chrome, Edge and 360 Browser are recommended; others are not fully tested
 
+### When translations have not updated
+
+- **A translation is still outdated after refreshing the page.** Some sync tools overwrite dictionaries while preserving the file size, modification time, and directory metadata. The plugin may keep using its cached copy. Restart ComfyUI to reload the dictionaries.
+- **A popup still shows English after its text changes.** Some popups replace their status text while open. The new text may stay in English for a while.
+- **A reconnected subgraph port still shows its old label.** Reconnecting a port to a different node inside the subgraph takes effect immediately. Save and reopen the workflow to match the exposed port label again.
+
 ### Requirements
 
 | Component | Requirement |
@@ -332,6 +338,16 @@ Restart ComfyUI after updating the plugin. Refresh the page after editing a dict
 ---
 
 ## Changelog
+
+### 2026-11-18
+
+- Added translation for exposed components in subgraphs embedded in official workflow templates and in user-created subgraphs, including nested subgraphs and newly exposed widgets. Added terms for Text to Image (MiniMax H3 Image) and its prompt enhancement controls.
+- Kept translations for regular nodes, menus, and blueprints in the node library available when the template catalog is missing or damaged. Grouped canvas refreshes when multiple widgets are exposed together.
+- Fixed broken context menus on the traditional canvas, missing translations in dynamic menus, and duplicate slider values. Preserved prompts, user-defined names, and actual dropdown values.
+- Fixed a Plugin Translation Manager issue that could clear disabled entries. Added keyboard support for the translation toggle and retry after a settings save failure.
+- Fixed a malformed dictionary issue that could prevent an entire language pack from loading, standardized the order for matching duplicate entries, and added missing checks to language pack discovery and dictionary review tools.
+- Moved translation compilation to the background and cached the results, combined scans of menu updates, and reduced repeated lookups for subgraph translations.
+- Fixed stale translations after replacing a dictionary file on Windows, translation errors when a dictionary directory was temporarily inaccessible, and untranslated tooltips on newly added menu controls.
 
 ### 2026-11-17
 

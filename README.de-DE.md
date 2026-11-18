@@ -4,10 +4,10 @@
 
 **Mehrsprachige Übersetzung der ComfyUI-Oberfläche**
 
-> Ergänzt Übersetzungen für Knoten, offizielle Blueprints, Menüs, Einstellungen und Oberflächen von Drittanbieter-Knoten in der in ComfyUI gewählten Sprache.
+> Ergänzt Übersetzungen für Knoten, Blueprints und Workflow-Subgraphen, Menüs, Einstellungen und Oberflächen von Drittanbieter-Knoten in der in ComfyUI gewählten Sprache.
 
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
-[![Version](https://img.shields.io/badge/version-3.3.3-2f74c0)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
 [![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#verwendung)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
@@ -62,9 +62,9 @@ ComfyUI-Global-Translation ist ein Plugin zur mehrsprachigen Übersetzung der Be
 - **Intelligente Erkennung** — erkennt automatisch bereits übersetzten Text und vermeidet doppelte Übersetzung und unendliche Rekursion
 - **Native Kompatibilität** — besteht friedlich neben der offiziellen ComfyUI-Übersetzung ohne gegenseitige Störung
 - **Kontextbewusstsein** — wendet je nach Elementtyp (Knoten, Menüs, Widgets usw.) die passende Strategie an
-- **Intelligentes Daten-Merging** — enthalten mehrere Übersetzungsdateien denselben Knoten, werden Einträge ergänzend zusammengeführt statt sich gegenseitig zu überschreiben
-- **Übersetzung benutzerdefinierter Panels** — in Knoten erstellte Panels (Schaltflächen, Beschriftungen, Dropdowns, Hinweistexte, Popups usw.) werden ebenfalls automatisch übersetzt
-- **Rückruf-Sicherheit** — nach Übersetzung des Rechtsklick-Menüs funktionieren alle Aktionen (Trennen, Umbenennen usw.) weiterhin vollständig
+- **Übersetzungsdaten zusammenführen** — Einträge für denselben Knoten werden feldweise zusammengeführt. Ist das Plugin eines Knotens bekannt, hat dessen Wörterbuch Vorrang.
+- **Benutzerdefinierte Panels** — Übersetzt Schaltflächen, Beschriftungen, Platzhalter und Pop-ups in Knoten-Panels.
+- **Rechtsklickmenüs** — Zeigt übersetzte Beschriftungen an. Aktionen wie Trennen und Umbenennen verwenden die ursprünglichen Einträge und Werte.
 
 ### 🎨 Ansprechende Benutzeroberfläche
 
@@ -79,14 +79,14 @@ ComfyUI-Global-Translation ist ein Plugin zur mehrsprachigen Übersetzung der Be
 - **Echtzeit-Umschaltung** — Übersetzung ohne Neustart ein-/ausschalten
 - **Dauerhafter Zustand** — Einstellungen werden automatisch gespeichert und überstehen Neustarts
 - **Integration ins Einstellungsfenster** — Schalterstil und Dropdown-Übersetzung in den ComfyUI-Einstellungen konfigurierbar (Sprache folgt der offiziellen ComfyUI-Einstellung)
-- **Plugin-weiter Schalter** — ein integrierter Manager ermöglicht das Deaktivieren der Übersetzung bestimmter Plugins
-- **Sofort wirksam** — neue Übersetzungsdateien werden ohne Neustart übernommen
+- **Übersetzung pro Plugin** — Knotenübersetzungen lassen sich pro Übersetzungsdatei ein- und ausschalten.
+- **Wörterbücher neu laden** — Laden Sie nach dem Hinzufügen oder Ändern von Übersetzungsdateien die Seite neu.
 
 ### 🛡️ Stabil und zuverlässig
 
 - **Umfassende Fehlerbehandlung** — alle kritischen Vorgänge sind abgesichert
-- **Anmutiger Rückfall** — bei Übersetzungsfehlern wird automatisch zum Originaltext zurückgekehrt
-- **DOM-Schutz** — die Übersetzung zerstört keine Event-Bindings von Vue/PrimeVue-Komponenten
+- **Fehlertolerante Wörterbücher** — Unlesbare oder strukturell fehlerhafte Dateien werden übersprungen und mit Dateinamen protokolliert.
+- **Schutz von Benutzerinhalten** — Bearbeitbare Texte, Prompts und selbst vergebene Datei- und Ordnernamen in der Workflow-Seitenleiste bleiben erhalten.
 - **Mehrversions-Kompatibilität** — unterstützt alte und neue ComfyUI-Oberflächen
 
 ---
@@ -151,10 +151,10 @@ Nach der Installation ComfyUI neu starten.
 
 ### Übersetzungs-Schalter
 
-Nach der Installation erscheint in der Oberfläche ein Übersetzungs-Schalter; klicken Sie ihn zum Umschalten:
+Klicken Sie auf den Schalter in der Symbolleiste. Mit Tab fokussieren Sie ihn, mit Eingabe oder Leertaste schalten Sie um. Nach erfolgreichem Speichern lädt die Seite neu.
 
-- **Übersetzung an** — der Schalter zeigt „Übersetzung an", der Oberflächentext wird in die aktuelle Sprache übersetzt (folgt der offiziellen ComfyUI-Spracheneinstellung)
-- **Übersetzung aus** — der Schalter zeigt „Übersetzung aus", die ursprüngliche englische Oberfläche wird wiederhergestellt
+- **Übersetzung an** — Der Schalter zeigt „Übersetzung An“. Die Oberfläche wird in die in ComfyUI gewählte Sprache übersetzt.
+- **Übersetzung aus** — Der Schalter zeigt „Übersetzung Aus“. ComfyUI und Drittanbieter-Knoten zeigen wieder ihre ursprünglichen Texte.
 
 ### Übersetzungssprache
 
@@ -172,9 +172,7 @@ Unter ComfyUI Einstellungen → „🌐 Übersetzungseinstellungen" gibt es zwei
 | 🎨 Schalterstil | Aussehen des Schalters wählen; wird live neu gezeichnet, ohne Neuladen | pill (segmentierte Pillole) / gradient (Regenbogen) / plain (dezent nativ) |
 | 📋 Dropdown-Optionen | Ob auch Text in COMBO-Auswahllisten übersetzt wird | An / Aus (automatisches Neuladen nach Änderung) |
 
-Unter den Optionen befindet sich zudem ein **Plugin-Übersetzungs-Manager**: Er listet alle Plugins mit Übersetzungsdateien — deaktivieren Sie die Übersetzung eines Plugins per Abwählen; nach dem Speichern lädt die Seite neu.
-
-> 💡 **Segmentierte Pillole (empfohlen)**: abgerundete Form mit einem blau hervorgehobenen Slider über dem aktuellen Zustand. **Klicken Sie auf den blauen Slider**, damit er auf die andere Seite gleitet; die Wahl wird sofort in die Konfigurationsdatei gespeichert und bleibt nach einem Neustart von ComfyUI erhalten.
+Der **Plugin-Übersetzungsverwaltung** zeigt verfügbare Knotenübersetzungsdateien an. Entfernen Sie ein Häkchen, um die Knotenübersetzungen dieser Datei zu deaktivieren. Sobald die Liste geladen ist und Einträge enthält, können Sie „Speichern & neu laden“ wählen. Deaktivierungen für andere Sprachen bleiben erhalten. Bei einem Speicherfehler zeigt das Panel einen Hinweis und erlaubt einen neuen Versuch.
 
 ### Schaltflächen-Stilübersicht
 
@@ -184,7 +182,7 @@ Unter den Optionen befindet sich zudem ein **Plugin-Übersetzungs-Manager**: Er 
 | **Regenbogen-Verlauf** | Fließende Regenbogen-Animation, weiß fett | Fließende graue Animation, dunkel fett | Auffällig und direkt gewünscht |
 | **Dezent nativ** | ComfyUI-Thema-Hintergrund | Dunkler Hintergrund, grauer Text | Sich in die Oberfläche einfügen |
 
-> **Interaktion der segmentierten Pille**: Nur der blau hervorgehobene Slider löst das Umschalten aus — nach dem Klick spielt er zuerst eine Gleitanimation (~300 ms), speichert dann und lädt die Seite neu; das graue Textsegment ist lediglich eine Zustandsetikette, und dass ein Klick darauf keine Wirkung zeigt, ist beabsichtigtes Verhalten.
+> Die gesamte Fläche des segmentierten Schalters ist anklickbar. Nach erfolgreichem Speichern bewegt sich der Schieber in die neue Position und die Seite lädt neu. Bei einem Fehler bleibt der bisherige Zustand erhalten und Sie können erneut klicken.
 
 ---
 
@@ -196,7 +194,7 @@ Unter den Optionen befindet sich zudem ein **Plugin-Übersetzungs-Manager**: Er 
 |------|---------|------|
 | **Knotennamen** | Titel und Anzeigenamen aller Workflow-Knoten | ✅ |
 | **Knoteneigenschaften** | Ein-/Ausgabedaten, Widget-Beschriftungen, Beschreibungen | ✅ |
-| **Offizielle Blueprints** | Titel in der Knotenbibliothek und auf der Arbeitsfläche, sichtbare Anschlüsse, Widget-Beschriftungen und Platzhalter in Textfeldern | ✅ |
+| **Blueprints und Subgraphen** | Titel offizieller Blueprints und Vorlagen-Subgraphen mit Wörterbucheintrag sowie sichtbare Anschlüsse, Widget-Beschriftungen und Platzhalter in offiziellen und eigenen Subgraphen | ✅ |
 | **Menüs** | Hauptmenü, Rechtsklick-Menü, Kontextmenü | ✅ |
 | **Einstellungsfenster** | Der ComfyUI-Einstellungsdialog | ✅ |
 | **Manager** | Die ComfyUI-Manager-Oberfläche | ✅ |
@@ -264,17 +262,17 @@ Erstellen Sie eine JSON-Datei unter `de-DE/Menus/`, um Menüübersetzungen hinzu
 }
 ```
 
-> Nach dem Hinzufügen von Übersetzungsdateien ist kein Neustart nötig — schalten Sie die Übersetzung um, um sie anzuwenden.
+Die oberste Ebene eines Wörterbuchs muss ein JSON-Objekt sein. Fehlt eine gültige Übersetzung, erscheint der Originaltext. Fehlerhafte Dateien werden übersprungen und protokolliert. Bei gleichen Schlüsseln gilt die nach Dateinamen später einsortierte Datei. Ist das Plugin eines Knotens bekannt, hat dessen Knotenwörterbuch Vorrang. Andere Einträge ergänzen fehlende Felder.
 
-### Offizielle Blueprints übersetzen
+> Laden Sie die Browserseite nach dem Hinzufügen, Ändern oder Löschen eines Wörterbuchs neu. Starten Sie nach einem Plugin-Update zuerst ComfyUI neu und laden Sie dann die Seite neu.
 
-Öffnen Sie links die Knotenbibliothek, wählen Sie unter **Comfy Blueprints** einen Blueprint aus und ziehen Sie ihn auf die Arbeitsfläche. Die Übersetzung funktioniert in der klassischen und der neuen Knotenansicht. Welche Titel, Anschlüsse, Widget-Beschriftungen und Platzhalter übersetzt werden, hängt von den Wörterbüchern der gewählten Sprache ab.
+### Blueprints und Subgraphen übersetzen
 
-- Titel werden in `Menus/` der aktuellen Sprache gesucht. Die vereinfachte chinesische Datei enthält Beispiele für Blueprint-Titel und gemeinsam verwendete Begriffe. [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json)
-- Für sichtbare Anschlüsse und Bedienelemente verwendet das Plugin zuerst die Übersetzung des direkt zugehörigen Felds im internen Knoten. Weicht der sichtbare Name vom internen Feldnamen ab, sucht es den vollständigen Anzeigenamen in `de-DE/Menus/`. Unterschiede bei Groß- und Kleinschreibung, Leerzeichen, Unterstrichen und Bindestrichen werden berücksichtigt. Ein Eintrag kann für mehrere Blueprints verwendet werden.
-- Wenn Ein- und Ausgänge unterschiedliche Übersetzungen brauchen, können Sie den gemeinsamen Schlüsseln `input.` oder `output.` voranstellen. Mit `output.depth_colored` lässt sich etwa der gleichnamige Ausgang als „Farbige Tiefenkarte“ anzeigen. Ohne passenden Eintrag bleibt der Originaltext sichtbar. Der Workflow speichert die ursprünglichen Feldnamen und Parameterwerte.
+Ziehen Sie einen Blueprint aus „Knoten“ → „Comfy Blueprints“ auf die Arbeitsfläche oder öffnen Sie eine offizielle Vorlage oder einen eigenen Workflow mit Subgraphen. Beide Knotenansichten übersetzen sichtbare Anschlüsse, Widget-Beschriftungen und Platzhalter in die aktuelle Sprache, auch bei Elementen aus verschachtelten Subgraphen.
 
-Starten Sie ComfyUI nach einem Plugin-Update neu. Nach Änderungen an den Wörterbüchern genügt es, die Seite neu zu laden.
+- Titel offizieller Blueprints und erkannter offizieller Vorlagen-Subgraphen werden in `Menus/` der aktuellen Sprache gesucht. Eigene Subgraphen behalten ihre benutzerdefinierten Titel. Vereinfachte chinesische Titel und gemeinsame Begriffe stehen in [ComfyUI-子图.json](zh-CN/Menus/ComfyUI-子图.json).
+- Sichtbare Elemente übernehmen vorrangig die Übersetzung des direkt zugehörigen internen Knotens. Fehlt sie, wird der vollständige Anzeigename in `Menus/` gesucht. Groß- und Kleinschreibung, Leerzeichen, Unterstriche und Bindestriche dürfen abweichen. Ein Eintrag kann für mehrere Subgraphen gelten.
+- Für unterschiedliche Ein- und Ausgangsübersetzungen stehen `input.` und `output.` zur Verfügung. `output.depth_colored` gilt beispielsweise für den gleichnamigen Ausgang. Der Workflow speichert die ursprünglichen Titel, Anschlussnamen und Parameterwerte.
 
 ---
 
@@ -303,12 +301,14 @@ Starten Sie ComfyUI nach einem Plugin-Update neu. Nach Änderungen an den Wörte
 
 | Technik | Beschreibung |
 |------|------|
-| **Rückruf-Umwicklung (Callback Wrapping)** | Übersetzt Rechtsklick-Menütext und bewahrt zugleich die `content`-Abgleichlogik des zugrunde liegenden Rückrufs |
+| **Native Rechtsklickmenüs** | Übersetzt Beschriftungen nach dem Aufbau durch ComfyUI. Menüeinträge, Rückrufe und Dropdown-Werte verwenden die ursprünglichen Daten. |
 | **Doppelte Schaltflächen-Architektur** | Unterstützt sowohl das alte `.comfy-menu` als auch das neue `.comfyui-menu` |
-| **MutationObserver-Überwachung** | Erkennt DOM-Änderungen in Echtzeit und übersetzt neu erschienene Elemente automatisch |
+| **MutationObserver** | Beobachtet Änderungen der Oberfläche und prüft zusammen eingegangene Menüänderungen in einem Durchlauf. |
 | **translatedValueSet** | Nutzt ein Set für O(1)-Prüfung, ob Text bereits übersetzt ist, und vermeidet doppelte Verarbeitung |
 | **Blattknoten-Schutz** | Weist `innerText` nur kindlosen Knoten zu und schützt so Vue-Event-Bindings |
-| **Gzip-Übertragung** | Übersetzungsdaten werden Gzip-komprimiert übertragen, um Netzlast zu senken |
+| **Übersetzungscache** | Erstellt und komprimiert Übersetzungen im Hintergrund und verwendet sie bei gleichen Wörterbüchern und Deaktivierungen erneut. |
+| **Cache für Subgraph-Zuordnungen** | Verwendet Zuordnungen für denselben Subgraphen erneut und ermittelt sie bei Änderungen am Graphnamen oder an Kennungen sichtbarer Anschlüsse neu. |
+| **Gzip-Übertragung** | Sendet komprimierte Daten, wenn der Browser Gzip akzeptiert. |
 
 > Vollständige technische Details finden Sie in [TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)
 
@@ -322,6 +322,12 @@ Starten Sie ComfyUI nach einem Plugin-Update neu. Nach Änderungen an den Wörte
 - **Bekanntermaßen konfliktbehaftetes Plugin** — `ComfyUI Browser` kann Kompatibilitätsprobleme haben
 - **Unterstützte Browser** — Chrome, Edge und 360 Browser empfohlen; andere wurden nicht ausreichend getestet
 
+### Änderungen der Übersetzung fehlen noch
+
+- **Nach dem Neuladen erscheint die alte Übersetzung.** Manche Programme überschreiben Wörterbücher, ohne Dateigröße, Änderungszeit oder Verzeichniseintrag zu ändern. Das Plugin kann dann weiterhin den Cache verwenden. Ein Neustart von ComfyUI liest die Wörterbücher neu ein.
+- **Aktualisierter Text in einem Pop-up bleibt auf Englisch.** Manche Pop-ups ändern den Statustext direkt nach dem Öffnen. Der neue Text kann vorübergehend auf Englisch erscheinen.
+- **Ein sichtbarer Anschluss zeigt nach dem Umverdrahten die alte Übersetzung.** Die neue Verbindung im Subgraphen gilt sofort. Speichern und öffnen Sie den Workflow erneut, um die Übersetzung neu zu ermitteln.
+
 ### Anforderungen
 
 | Komponente | Anforderung |
@@ -333,6 +339,17 @@ Starten Sie ComfyUI nach einem Plugin-Update neu. Nach Änderungen an den Wörte
 ---
 
 ## Änderungsverlauf
+
+### 2026-11-18
+
+- Sichtbare Elemente in Subgraphen offizieller Workflow-Vorlagen und in eigenen Subgraphen werden übersetzt, einschließlich verschachtelter Subgraphen und neu nach außen geführter Widgets. Begriffe für „Text to Image (MiniMax H3 Image)“ und die zugehörige Prompt-Verbesserung wurden ergänzt.
+- Bei fehlender oder beschädigter Vorlagenliste bleiben Übersetzungen für gewöhnliche Knoten, Menüs und Blueprints der Knotenbibliothek verfügbar. Mehrere gleichzeitig hinzugefügte Widgets lösen gemeinsam eine Aktualisierung der Arbeitsfläche aus.
+- Fehler bei Rechtsklickmenüs auf der klassischen Arbeitsfläche, fehlende Übersetzungen dynamischer Menüs und doppelt angezeigte Slider-Werte behoben. Prompts, benutzerdefinierte Namen und tatsächliche Dropdown-Werte bleiben erhalten.
+- Ein Fehler, durch den der Plugin-Übersetzungs-Manager Deaktivierungen löschen konnte, wurde behoben. Der Übersetzungsschalter ist per Tastatur bedienbar. Fehlgeschlagene Speichervorgänge können wiederholt werden.
+- Fehlerhafte Wörterbücher führen nicht mehr zum Ausfall des gesamten Übersetzungspakets. Die Reihenfolge gleichnamiger Einträge wurde vereinheitlicht. Erkennung und Prüfwerkzeuge für Sprachpakete berücksichtigen fehlende Einträge.
+- Übersetzungen werden im Hintergrund erstellt und im Cache wiederverwendet. Menüänderungen werden gemeinsam geprüft und wiederholte Suchen für Subgraphen reduziert.
+- Fehler aufgrund veralteter Übersetzungen nach Dateiersetzung unter Windows, vorübergehend unlesbarer Wörterbuchverzeichnisse und fehlender Übersetzungen für Hinweise neuer Menüelemente wurden behoben.
+
 
 ### 2026-11-17
 

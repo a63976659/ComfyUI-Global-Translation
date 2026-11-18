@@ -9,10 +9,10 @@ import { registerSettings, addPanelButtons, setupPluginManager } from "./Setting
 import {
   isAlreadyTranslatedText,
   isAlreadyTranslated,
-  nativeTranslatedSettings,
   isTranslationEnabled,
   isOptionTranslationEnabled,
   canTranslateDropdownText,
+  isProtectedUiText,
   initConfig,
   syncWithComfyLocale,
   watchComfyLocale,
@@ -36,6 +36,8 @@ export class TUtils {
   static globalUiDict = {};
   // 已挂载翻译观察器的 DOMWidget 根元素
   static domObserved = new WeakMap();
+  static translatedUiText = new WeakMap();
+  static inputHooks = new WeakSet();
   // ===== 【石头(Q:34720803)优化更新】自定义DOM面板翻译支持 结束 =====
 
   static async syncTranslation(OnFinished = () => {}) {
@@ -124,35 +126,6 @@ export class TUtils {
     } catch (err) {
       error("同步翻译过程出错:", err);
       OnFinished();
-    }
-  }
-
-  static enhandeDrawNodeWidgets() {
-    try {
-      let drawNodeWidgets = LGraphCanvas.prototype.drawNodeWidgets;
-      LGraphCanvas.prototype.drawNodeWidgets = function (node, posY, ctx, active_widget) {
-        if (!node.widgets || !node.widgets.length) {
-          return 0;
-        }
-        const widgets = node.widgets.filter((w) => w.type === "slider");
-        widgets.forEach((widget) => {
-          widget._ori_label = widget.label;
-          const fixed = widget.options.precision != null ? widget.options.precision : 3;
-          widget.label = (widget.label || widget.name) + ": " + Number(widget.value).toFixed(fixed).toString();
-        });
-        let result;
-        try {
-          result = drawNodeWidgets.call(this, node, posY, ctx, active_widget);
-        } finally {
-          widgets.forEach((widget) => {
-            widget.label = widget._ori_label;
-            delete widget._ori_label;
-          });
-        }
-        return result;
-      };
-    } catch (e) {
-      error("增强节点小部件绘制失败:", e);
     }
   }
 
@@ -290,7 +263,7 @@ export class TUtils {
       if (!t) return;
       
       for (let key of keys) {
-        if (!t.hasOwnProperty(key)) continue;
+        if (!t[key] && !(key === "inputs" && t.widgets)) continue;
         if (!node.hasOwnProperty(key)) continue;
         if (!node[key] || !Array.isArray(node[key])) continue;
         
@@ -299,10 +272,8 @@ export class TUtils {
           // 【石头(Q:34720803)优化更新】
           // 控件被“转换为输入”后会作为 input 槽位从工作流恢复，
           // inputs 字典查不到时回退到 widgets 字典（与动态 addInput 路径行为一致）
-          let trans = t[key][item.name];
-          if (trans === undefined && key === "inputs" && t["widgets"]) {
-            trans = t["widgets"][item.name];
-          }
+          const widgetName = typeof item.widget?.name === "string" ? item.widget.name : item.name;
+          const trans = t[key]?.[item.name] ?? (key === "inputs" ? t.widgets?.[widgetName] : undefined);
           if (trans !== undefined) {
             const hasNativeTranslation = item.label && isAlreadyTranslatedText(item.label) && !item._original_name;
             if (!hasNativeTranslation) {
@@ -325,49 +296,33 @@ export class TUtils {
         }
       }
       
-      let addInput = node.addInput;
-      node.addInput = function (name, type, extra_info) {
-        var oldInputs = [];
-        if (this.inputs && Array.isArray(this.inputs)) {
-          this.inputs.forEach((i) => oldInputs.push(i?.name));
-        }
-        var res = addInput.apply(this, arguments);
-        if (this.inputs && Array.isArray(this.inputs)) {
-          this.inputs.forEach((i) => {
-            if (typeof i?.name !== "string" || oldInputs.includes(i.name)) return;
-            const widgetName = typeof i.widget?.name === "string" ? i.widget.name : i.name;
-            const translation = t.inputs?.[i.name] ?? t.widgets?.[widgetName];
-            if (isTranslationEnabled()) TUtils.safeApplyTranslation(i, translation);
-          });
-        }
-        return res;
-      };
-      
-      let onInputAdded = node.onInputAdded;
-      node.onInputAdded = function (slot) {
-        let res;
-        if (onInputAdded) {
-          res = onInputAdded.apply(this, arguments);
-        }
-        if (!slot || !isTranslationEnabled()) return res;
-        const classType = this.constructor.comfyClass || this.constructor.type;
-        const t = TUtils.T.Nodes[classType];
-        const name = slot.name;
-        if (typeof name === "string") {
-          TUtils.safeApplyTranslation(slot, t?.inputs?.[name] ?? t?.widgets?.[name]);
-        }
-        if (t?.widgets) {
-          queueMicrotask(() => {
-            const currentName = slot.name;
-            if (!isTranslationEnabled() || typeof currentName !== "string") return;
-            const translation = TUtils.T.Nodes[classType]?.widgets?.[currentName];
-            if (!translation) return;
-            const widget = this.widgets?.find((item) => item?.name === currentName);
-            if (widget) TUtils.safeApplyTranslation(widget, translation);
-          });
-        }
-        return res;
-      };
+      if (!this.inputHooks.has(node)) {
+        this.inputHooks.add(node);
+        const onInputAdded = node.onInputAdded;
+        node.onInputAdded = function (slot) {
+          const result = onInputAdded?.apply(this, arguments);
+          if (!slot || !isTranslationEnabled()) return result;
+          const dict = TUtils.T.Nodes[class_type];
+          const name = slot.name;
+          const widgetName = typeof slot.widget?.name === "string" ? slot.widget.name : name;
+          if (typeof name === "string") {
+            TUtils.safeApplyTranslation(slot, dict?.inputs?.[name] ?? dict?.widgets?.[widgetName]);
+          }
+          if (dict?.inputs || dict?.widgets) {
+            queueMicrotask(() => {
+              if (!isTranslationEnabled() || typeof slot.name !== "string") return;
+              const current = TUtils.T.Nodes[class_type];
+              const currentWidgetName = typeof slot.widget?.name === "string" ? slot.widget.name : slot.name;
+              if (slot.name !== name || currentWidgetName !== widgetName) {
+                TUtils.safeApplyTranslation(slot, current?.inputs?.[slot.name] ?? current?.widgets?.[currentWidgetName]);
+              }
+              const widget = this.widgets?.find((item) => item?.name === currentWidgetName);
+              if (widget) TUtils.safeApplyTranslation(widget, current?.widgets?.[currentWidgetName]);
+            });
+          }
+          return result;
+        };
+      }
 
       // 拦截动态生成的小部件 (addWidget)，确保第三方插件动态添加的控件也能被翻译
       let addWidget = node.addWidget;
@@ -435,7 +390,9 @@ export class TUtils {
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
         acceptNode: (n) => {
           const key = n.nodeValue && n.nodeValue.trim();
-          if (!key || !has.call(dict, key) || !canTranslateDropdownText(n.parentElement) ||
+          if (!key || this.translatedUiText.get(n) === n.nodeValue ||
+              !has.call(dict, key) || isProtectedUiText(n.parentElement) ||
+              !canTranslateDropdownText(n.parentElement) ||
               (fallback && this.hasNodeUiTranslation(n.parentElement, key))) return NodeFilter.FILTER_REJECT;
           return NodeFilter.FILTER_ACCEPT;
         }
@@ -447,7 +404,8 @@ export class TUtils {
         const key = tn.nodeValue.trim();
         const translated = dict[key];
         if (typeof translated === "string" && translated !== key) {
-          tn.nodeValue = tn.nodeValue.replace(key, translated);
+          tn.nodeValue = tn.nodeValue.replace(key, () => translated);
+          this.translatedUiText.set(tn, tn.nodeValue);
         }
       }
     } catch (e) {
@@ -504,7 +462,7 @@ export class TUtils {
             repaint();
           });
         });
-        observer.observe(el, { childList: true, subtree: true });
+        observer.observe(el, { childList: true, characterData: true, subtree: true });
       }
     } catch (e) {
       error(`为节点 ${node?.title || '未知'} 安装DOM翻译失败:`, e);
@@ -520,16 +478,13 @@ export class TUtils {
       // 兜底：第三方节点可能在本插件应用翻译之后直接改名或重建输入/输出槽位，
       // 周期性补刷可覆盖所有此类时序问题；safeApplyTranslation 本身幂等，不会重复翻译
       for (const key of ["inputs", "outputs", "widgets"]) {
-        const dict = t[key];
         const arr = node[key];
         if (!Array.isArray(arr)) continue;
         for (const item of arr) {
           if (typeof item?.name !== "string" || !item.name) continue;
           // 【石头(Q:34720803)优化更新】同上：转换为输入的控件在 inputs 中但译文在 widgets 字典里
-          let trans = dict ? dict[item.name] : undefined;
-          if (trans === undefined && key === "inputs" && t["widgets"]) {
-            trans = t["widgets"][item.name];
-          }
+          const widgetName = typeof item.widget?.name === "string" ? item.widget.name : item.name;
+          const trans = t[key]?.[item.name] ?? (key === "inputs" ? t.widgets?.[widgetName] : undefined);
           if (trans !== undefined) {
             this.safeApplyTranslation(item, trans);
           }
@@ -645,121 +600,67 @@ export class TUtils {
     }
   }
 
-  static applyContextMenuTranslation(app) {
+  static applyContextMenuTranslation() {
     try {
       if (!isTranslationEnabled()) return;
-      
-      var f = LGraphCanvas.prototype.getCanvasMenuOptions;
-      LGraphCanvas.prototype.getCanvasMenuOptions = function () {
-        var res = f.apply(this, arguments);
-        let menuT = TUtils.T.Menu;
-        for (let item of res) {
-          if (item == null || !item.hasOwnProperty("content")) continue;
-          if (item.content in menuT) {
-            if (!item._originalContent) item._originalContent = item.content;
-            item.content = menuT[item.content];
-          }
+
+      const canvasItems = new WeakSet();
+      const getCanvasMenuOptions = LGraphCanvas.prototype.getCanvasMenuOptions;
+      LGraphCanvas.prototype.getCanvasMenuOptions = function (...args) {
+        const items = getCanvasMenuOptions.apply(this, args);
+        for (const item of items ?? []) {
+          if (item && typeof item === "object") canvasItems.add(item);
         }
-        return res;
+        return items;
       };
-      
-      const f2 = LiteGraph.ContextMenu;
-      LiteGraph.ContextMenu = function (values, options) {
-        if (options?.hasOwnProperty("title") && options.title in TUtils.T.Nodes) {
-          options.title = TUtils.T.Nodes[options.title]["title"] || options.title;
+
+      function openContextMenu(target, [items, options = {}]) {
+        const ctx = Reflect.construct(target, [items, options]);
+        const menu = TUtils.T.Menu;
+        const nodes = TUtils.T.Nodes;
+        const title = ctx.root.querySelector(":scope > .litemenu-title");
+        if (title && Object.hasOwn(nodes, title.textContent)) {
+          title.textContent = nodes[title.textContent]?.title || title.textContent;
         }
-        
-        var t = TUtils.T.Menu;
-        var tN = TUtils.T.Nodes;
-        var reInput = /Convert (.*) to input/;
-        var reWidget = /Convert (.*) to widget/;
-        var cvt = t["Convert "] || "Convert ";
-        var tinp = t[" to input"] || " to input";
-        var twgt = t[" to widget"] || " to widget";
-        
-        for (let value of values) {
-          if (value == null || !value.hasOwnProperty("content")) continue;
-          
-          // 保存原始英文 content（优先保留最早的原始值，防止多次翻译覆盖）
-          let originalContent = value._originalContent || value.content;
-          let isTranslated = false;
-          
-          if (value.value in tN) {
-            value.content = tN[value.value]["title"] || value.content;
-            isTranslated = true;
-          } else if (isOptionTranslationEnabled() && value.content in t) {
-            value.content = t[value.content];
-            isTranslated = true;
-          } else {
-            var extra_info = options.extra || options.parentMenu?.options?.extra;
-            
-            var matchInput = value.content?.match(reInput);
-            if (matchInput) {
-              var match = matchInput[1];
-              extra_info?.inputs?.find((i) => {
-                if (i.name != match) return false;
-                match = i.label ? i.label : i.name;
-              });
-              extra_info?.widgets?.find((i) => {
-                if (i.name != match) return false;
-                match = i.label ? i.label : i.name;
-              });
-              value.content = cvt + match + tinp;
-              isTranslated = true;
-            } else {
-              var matchWidget = value.content?.match(reWidget);
-              if (matchWidget) {
-                var match = matchWidget[1];
-                extra_info?.inputs?.find((i) => {
-                  if (i.name != match) return false;
-                  match = i.label ? i.label : i.name;
-                });
-                extra_info?.widgets?.find((i) => {
-                  if (i.name != match) return false;
-                  match = i.label ? i.label : i.name;
-                });
-                value.content = cvt + match + twgt;
-                isTranslated = true;
-              }
+
+        // Core extensions wrap the constructor and keep the original items for
+        // filtering and callbacks. Translate only the visible labels.
+        for (const entry of ctx.root.querySelectorAll(":scope > .litemenu-entry")) {
+          const item = entry.value;
+          const content = typeof item === "string" ? item : item?.content;
+          if (typeof content !== "string" || entry.childElementCount) continue;
+          let label;
+          if (typeof item?.value === "string" && Object.hasOwn(nodes, item.value)) {
+            label = nodes[item.value]?.title;
+          }
+          if (!label && (canvasItems.has(item) || isOptionTranslationEnabled()) && Object.hasOwn(menu, content)) {
+            label = menu[content];
+          }
+          if (!label && typeof item === "object") {
+            const converted = content.match(/^Convert (.+) to (input|widget)$/);
+            if (converted) {
+              const [, field, target] = converted;
+              const node = options.extra ?? options.parentMenu?.options?.extra;
+              const slot = node?.inputs?.find((input) => input.name === field) ??
+                node?.widgets?.find((widget) => widget.name === field);
+              label = (menu["Convert "] ?? "Convert ") + (slot?.label || field) +
+                (menu[` to ${target}`] ?? ` to ${target}`);
             }
           }
-          
-          // 仅对实际翻译过的菜单项包装回调，执行前恢复英文、执行后恢复中文
-          if (isTranslated) {
-            value._originalContent = originalContent;
-            
-            if (typeof value.callback === "function") {
-              const originalCallback = value.callback;
-              value.callback = function(v, ...args) {
-                const translatedContent = v.content;
-                v.content = v._originalContent;
-                const result = originalCallback.apply(this, [v, ...args]);
-                v.content = translatedContent;
-                return result;
-              };
-            }
+          if (typeof label === "string" && label && entry.textContent === content) {
+            entry.textContent = label;
           }
         }
-        
-        // 共享回调也需要拦截：执行前恢复英文、执行后恢复中文
-        if (options && typeof options.callback === "function") {
-          const originalOptCallback = options.callback;
-          options.callback = function(v, ...args) {
-            if (v && v._originalContent) {
-              const translatedContent = v.content;
-              v.content = v._originalContent;
-              const result = originalOptCallback.apply(this, [v, ...args]);
-              v.content = translatedContent;
-              return result;
-            }
-            return originalOptCallback.apply(this, [v, ...args]);
-          };
-        }
-        
-        const ctx = f2.call(this, values, options);
+
+        // LiteGraph opens child menus through the instance constructor.
+        Object.defineProperty(ctx, "constructor", { value: LiteGraph.ContextMenu, configurable: true, writable: true });
         return ctx;
-      };
-      LiteGraph.ContextMenu.prototype = f2.prototype;
+      }
+
+      LiteGraph.ContextMenu = new Proxy(LiteGraph.ContextMenu, {
+        construct: openContextMenu,
+        apply: (target, _thisArg, args) => openContextMenu(target, args)
+      });
     } catch (e) {
       error("应用上下文菜单翻译失败:", e);
     }
@@ -806,7 +707,6 @@ const ext = {
       watchComfyLocale(app);
       await registerSettings(app);
 
-      TUtils.enhandeDrawNodeWidgets();
       await TUtils.syncTranslation();
     } catch (e) {
       error("扩展初始化失败:", e);
@@ -819,7 +719,7 @@ const ext = {
       
       if (isTranslationEnabled()) {
         TUtils.applyNodeTypeTranslation(app);
-        TUtils.applyContextMenuTranslation(app);
+        TUtils.applyContextMenuTranslation();
         TUtils.applyMenuTranslation(app);
         TUtils.addRegisterNodeDefCB(app);
       }
