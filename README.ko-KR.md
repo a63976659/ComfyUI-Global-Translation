@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#사용-방법)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#사용-방법)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## 플러그인 소개
 
-ComfyUI-Global-Translation은 다국어 인터페이스 번역 플러그인입니다. ComfyUI의 언어 설정(설정 → 일반 → `Comfy.Locale`)에 따라 노드, 메뉴, 설정 패널, 매니저 및 타사 노드의 인터페이스에 번역을 추가합니다. 타사 노드가 동적으로 갱신하는 화면 텍스트도 번역합니다. 플러그인 자체의 인터페이스는 15개 언어를 지원하며 번역 범위는 언어별 사전에 따라 달라집니다.
+ComfyUI-Global-Translation은 다국어 인터페이스 번역 플러그인입니다. ComfyUI의 언어 설정(설정 → 일반 → `Comfy.Locale`)에 따라 노드, 메뉴, 설정 패널, 매니저 및 타사 노드의 인터페이스에 번역을 추가합니다. 타사 노드가 동적으로 갱신하는 화면 텍스트도 번역합니다. 번역 범위는 언어별 사전에 따라 달라집니다.
 
 ### 이 플러그인을 선택해야 하는 이유?
 
@@ -160,12 +160,13 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 
 번역 언어는 더 이상 플러그인에서 개별 설정하지 않으며, **ComfyUI 공식 언어 설정**(설정 → 일반 → 언어 / `Comfy.Locale`)을 자동으로 따릅니다:
 
-- 공식 지원 언어 모두 매칭: 간체 중국어, 번체 중국어, 영어, 일본어, 한국어, 러시아어, 프랑스어, 독일어, 스페인어, 이탈리아어, 포르투갈어(브라질), 터키어, 아랍어, 페르시아어, 히브리어. 미지원 언어는 영어로 폴백
+- ComfyUI가 공식 지원하는 14개 언어에 모두 대응: 간체 중국어, 번체 중국어, 영어, 일본어, 한국어, 러시아어, 프랑스어, 스페인어, 이탈리아어, 포르투갈어(브라질), 터키어, 아랍어, 페르시아어, 히브리어. 미지원 언어는 영어로 폴백
+- 플러그인에는 독일어 사전(`de-DE`)이 포함되어 있습니다. ComfyUI의 공식 언어 설정에서는 아직 독일어를 선택할 수 없습니다.
 - ComfyUI 설정에서 공식 언어를 전환하면 페이지가 자동 새로고침되며 번역과 플러그인 UI 문구가 동시에 반영됩니다. 수동 재시작 불필요
 
 ### 설정 패널
 
-ComfyUI 설정 → '🌐 번역 설정'에 두 개의 구성 항목이 있습니다. UI 문구는 현재 언어로 현지화되며(15개 언어) 모든 언어에서 섹션 배열 순서가 일치합니다:
+ComfyUI 설정 → '🌐 번역 설정'에 두 개의 구성 항목이 있습니다. UI 문구는 현재 언어로 현지화되며 모든 언어에서 섹션 배열 순서가 일치합니다:
 
 | 항목 | 설명 | 선택지 |
 |-------|------|------|
@@ -220,7 +221,7 @@ ko-KR/
     └── ...
 ```
 
-> 다른 언어 디렉터리(`zh-CN/`, `zh-TW/`, `en-US/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`)도 동일한 구조이며 현재 언어에 따라 자동 로드됩니다. 그중 `en-US/`는 다른 언어 플러그인의 노드를 영어로 복원하는 데 사용됩니다.
+> 다른 언어 디렉터리(`zh-CN/`, `zh-TW/`, `en-US/`, `ru-RU/`, `fr-FR/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`)도 동일한 구조이며 현재 언어에 따라 자동 로드됩니다. 그중 `en-US/`는 다른 언어 플러그인의 노드를 영어로 복원하는 데 사용됩니다.
 
 ### 사용자 정의 번역 추가
 
@@ -408,7 +409,7 @@ ko-KR/
 
 **독일어(de-DE) 번역 추가**
 
-- 독일어 번역 팩 완성. 노드·분류·메뉴·설정 패널 커버. ComfyUI 공식 언어를 `de-DE`로 설정하면 독일어 인터페이스가 자동 활성화됩니다
+- 노드, 분류, 메뉴, 설정 패널을 위한 독일어 번역 팩을 추가했습니다.
 
 ### 2026-09-19
 

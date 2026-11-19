@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#usage)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#usage)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 Language · 语言
@@ -41,7 +41,7 @@
 
 ## Plugin Introduction
 
-ComfyUI-Global-Translation is a multilingual interface translation plugin. It follows the language selected in ComfyUI (Settings → General → `Comfy.Locale`) and adds translations for nodes, menus, the settings panel, the Manager, and third-party node interfaces. It also translates interface text that third-party nodes update dynamically. The plugin’s own interface supports 15 languages, and coverage depends on each language’s translation dictionary.
+ComfyUI-Global-Translation is a multilingual interface translation plugin. It follows the language selected in ComfyUI (Settings → General → `Comfy.Locale`) and adds translations for nodes, menus, the settings panel, the Manager, and third-party node interfaces. It also translates interface text that third-party nodes update dynamically. Translation coverage depends on each language’s dictionary.
 
 ### Why this plugin?
 
@@ -160,12 +160,13 @@ Click the translation toggle in the toolbar. With the keyboard, press Tab to foc
 
 The translation language is no longer set inside the plugin; it **automatically follows the official ComfyUI language setting** (Settings → General → Language / `Comfy.Locale`):
 
-- Every officially supported language is matched: Simplified Chinese, Traditional Chinese, English, Japanese, Korean, Russian, French, German, Spanish, Italian, Portuguese (Brazil), Turkish, Arabic, Persian, Hebrew; uncovered languages fall back to English
+- The plugin matches all 14 languages officially supported by ComfyUI: Simplified Chinese, Traditional Chinese, English, Japanese, Korean, Russian, French, Spanish, Italian, Portuguese (Brazil), Turkish, Arabic, Persian, Hebrew; uncovered languages fall back to English
+- The plugin includes a German dictionary (`de-DE`). ComfyUI’s official language settings do not yet offer German.
 - After switching the official language in ComfyUI settings, the page refreshes automatically; the translation and the plugin's own UI strings apply together, no manual restart needed
 
 ### Settings panel
 
-Under ComfyUI Settings → "🌐 Translation Settings" there are two options. The UI strings are localized to the current language (15 languages) with a consistent section order across languages:
+Under ComfyUI Settings → "🌐 Translation Settings" there are two options. The UI strings are localized to the current language with a consistent section order across languages:
 
 | Option | Description | Choices |
 |-------|------|------|
@@ -219,7 +220,7 @@ en-US/
     └── ...
 ```
 
-> The other language directories (`zh-CN/`, `zh-TW/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) share the same structure and load by the current language; `en-US/` is used to restore non-Chinese plugins' nodes to English.
+> The other language directories (`zh-CN/`, `zh-TW/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) share the same structure and load by the current language; `en-US/` is used to restore non-Chinese plugins' nodes to English.
 
 ### Adding custom translations
 
@@ -406,7 +407,7 @@ Drag a blueprint from **Nodes → Comfy Blueprints** in the sidebar, or open an 
 
 **Added German (de-DE) translation**
 
-- Completed the German translation pack covering nodes, categories, menus and the settings panel; set the official ComfyUI language to `de-DE` to enable the German interface
+- Added a German translation pack covering nodes, categories, menus, and the settings panel.
 
 ### 2026-09-19
 

@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#使い方)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#使い方)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## プラグイン紹介
 
-ComfyUI-Global-Translation は、インターフェースを多言語に翻訳するプラグインです。ComfyUI の言語設定（設定 → 一般 → `Comfy.Locale`）に従い、ノード、メニュー、設定パネル、マネージャー、サードパーティ製ノードの画面に訳文を追加します。サードパーティ製ノードが動的に更新する画面テキストにも対応します。プラグイン自体の画面は 15 言語に対応し、翻訳範囲は各言語の辞書によって異なります。
+ComfyUI-Global-Translation は、インターフェースを多言語に翻訳するプラグインです。ComfyUI の言語設定（設定 → 一般 → `Comfy.Locale`）に従い、ノード、メニュー、設定パネル、マネージャー、サードパーティ製ノードの画面に訳文を追加します。サードパーティ製ノードが動的に更新する画面テキストにも対応します。翻訳範囲は各言語の辞書によって異なります。
 
 ### なぜこのプラグイン？
 
@@ -160,12 +160,13 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 
 翻訳先言語はプラグイン内で個別に設定せず、**ComfyUI 公式の言語設定**（設定 → 一般 → 言語 / `Comfy.Locale`）に自動で追従します：
 
-- 公式対応言語はすべてマッチ：簡体字中国語、繁体字中国語、英語、日本語、韓国語、ロシア語、フランス語、ドイツ語、スペイン語、イタリア語、ポルトガル語(ブラジル)、トルコ語、アラビア語、ペルシア語、ヘブライ語。未対応言語は英語にフォールバック
+- ComfyUI が公式に対応する 14 言語すべてに対応：簡体字中国語、繁体字中国語、英語、日本語、韓国語、ロシア語、フランス語、スペイン語、イタリア語、ポルトガル語(ブラジル)、トルコ語、アラビア語、ペルシア語、ヘブライ語。未対応言語は英語にフォールバック
+- プラグインにはドイツ語の辞書（`de-DE`）が含まれています。ComfyUI の公式言語設定では、まだドイツ語を選択できません。
 - ComfyUI 設定で公式言語を切り替えるとページが自動リフレッシュし、翻訳とプラグイン UI テキストが同時に反映されます。手動再起動は不要
 
 ### 設定パネル
 
-ComfyUI の設定 →「🌐 翻訳設定」に 2 つの項目があります。UI テキストは現在の言語にローカライズされ（15 言語）、どの言語でもセクションの並び順が一致します：
+ComfyUI の設定 →「🌐 翻訳設定」に 2 つの項目があります。UI テキストは現在の言語にローカライズされ、どの言語でもセクションの並び順が一致します：
 
 | 項目 | 説明 | オプション |
 |-------|------|------|
@@ -220,7 +221,7 @@ ja-JP/
     └── ...
 ```
 
-> 他の言語ディレクトリ（`zh-CN/`、`zh-TW/`、`en-US/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`de-DE/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）も同じ構成で、現在の言語に応じて自動ロードされます。`en-US/` は他言語プラグインのノードを英語へ復元するために使われます。
+> 他の言語ディレクトリ（`zh-CN/`、`zh-TW/`、`en-US/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）も同じ構成で、現在の言語に応じて自動ロードされます。`en-US/` は他言語プラグインのノードを英語へ復元するために使われます。
 
 ### カスタム翻訳の追加
 
@@ -408,7 +409,7 @@ ja-JP/
 
 **ドイツ語（de-DE）翻訳を追加**
 
-- ドイツ語翻訳パックを完成。ノード、カテゴリ、メニュー、設定パネルをカバー。ComfyUI 公式言語を `de-DE` にすると独語界面が自動で有効になります
+- ノード、カテゴリ、メニュー、設定パネルに対応したドイツ語翻訳パックを追加しました。
 
 ### 2026-09-19
 

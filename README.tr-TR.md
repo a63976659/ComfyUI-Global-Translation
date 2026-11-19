@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#kullanım)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#kullanım)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## Eklenti Tanıtımı
 
-ComfyUI-Global-Translation, çok dilli bir arayüz çevirisi eklentisidir. ComfyUI’nin dil ayarını (Ayarlar → Genel → `Comfy.Locale`) izleyerek düğümlere, menülere, ayar paneline, yöneticiye ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler. Üçüncü taraf düğümlerin dinamik olarak güncellediği arayüz metinlerini de çevirir. Eklentinin kendi arayüzü 15 dili destekler. Çevirinin kapsamı her dilin sözlüğüne bağlıdır.
+ComfyUI-Global-Translation, çok dilli bir arayüz çevirisi eklentisidir. ComfyUI’nin dil ayarını (Ayarlar → Genel → `Comfy.Locale`) izleyerek düğümlere, menülere, ayar paneline, yöneticiye ve üçüncü taraf düğümlerin arayüzlerine çeviri ekler. Üçüncü taraf düğümlerin dinamik olarak güncellediği arayüz metinlerini de çevirir. Çevirinin kapsamı her dilin sözlüğüne bağlıdır.
 
 ### Bu eklentiyi neden seçmelisiniz?
 
@@ -160,12 +160,13 @@ Kurulumdan sonra ComfyUI'yi yeniden başlatın.
 
 Çeviri dili artık eklenti içinde ayarlanmıyor; **ComfyUI'nin resmi dil ayarını otomatik olarak izler** (Ayarlar → Genel → Dil / `Comfy.Locale`):
 
-- Resmi olarak desteklenen tüm dillerle eşleşir: Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, Japonca, Korece, Rusça, Fransızca, Almanca, İspanyolca, İtalyanca, Portekizce (Brezilya), Türkçe, Arapça, Farsça, İbranice; kapsanmayan diller İngilizce'ye geri döner
+- Eklenti, ComfyUI’nin resmî olarak desteklediği 14 dilin tamamıyla eşleşir: Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, Japonca, Korece, Rusça, Fransızca, İspanyolca, İtalyanca, Portekizce (Brezilya), Türkçe, Arapça, Farsça, İbranice; kapsanmayan diller İngilizce'ye geri döner
+- Eklenti bir Almanca sözlük (`de-DE`) içerir. ComfyUI’nin resmî dil ayarlarında henüz Almanca seçeneği yok.
 - ComfyUI ayarlarında resmi dil değiştirildikten sonra sayfa otomatik olarak yenilenir; çeviri ve eklenti metinleri birlikte uygulanır, elle yeniden başlatma gerekmez
 
 ### Ayar paneli
 
-ComfyUI Ayarlar → «🌐 Çeviri Ayarları» bölümünde iki seçenek bulunur. Arayüz metinleri güncel dile yerelleştirilir (15 dil) ve tüm dillerde tutarlı bir bölüm sırası korunur:
+ComfyUI Ayarlar → «🌐 Çeviri Ayarları» bölümünde iki seçenek bulunur. Arayüz metinleri güncel dile yerelleştirilir ve tüm dillerde tutarlı bir bölüm sırası korunur:
 
 | Seçenek | Açıklama | Seçimler |
 |-------|------|------|
@@ -220,7 +221,7 @@ tr-TR/
     └── ...
 ```
 
-> Diğer dil klasörleri (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `fa-IR/`, `he-IL/`) aynı yapıyı paylaşır ve güncel dile göre yüklenir; `en-US/`, Çin dışı eklentilerin düğümlerini İngilizce'ye geri döndürmek için kullanılır. Yalnızca `Menus/` veya `Categories/` içeren dil klasörleri de tanınır.
+> Diğer dil klasörleri (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `es-ES/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `fa-IR/`, `he-IL/`) aynı yapıyı paylaşır ve güncel dile göre yüklenir; `en-US/`, Çin dışı eklentilerin düğümlerini İngilizce'ye geri döndürmek için kullanılır. Yalnızca `Menus/` veya `Categories/` içeren dil klasörleri de tanınır.
 
 ### Özel çeviri ekleme
 
@@ -405,7 +406,7 @@ Kenar çubuğunda **Düğümler → Comfy Şablonları** bölümünden bir plan�
 
 **Almanca (de-DE) çevirisi eklendi**
 
-- Düğümleri, kategorileri, menüleri ve ayar panelini kapsayan Almanca çeviri paketi tamamlandı; Almanca arayüzü etkinleştirmek için ComfyUI'nin resmi dilini `de-DE` olarak ayarlayın
+- Düğümler, kategoriler, menüler ve ayar paneli için Almanca çeviri paketi eklendi.
 
 ### 2026-09-19
 

@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#utilizzo)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#utilizzo)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## Panoramica
 
-ComfyUI-Global-Translation è un plugin di traduzione multilingue per l’interfaccia. Segue la lingua selezionata in ComfyUI (Impostazioni → Generale → `Comfy.Locale`) e aggiunge traduzioni a nodi, menu, pannello delle impostazioni, gestore e interfacce dei nodi di terze parti. Traduce anche i testi dell’interfaccia aggiornati dinamicamente dai nodi di terze parti. L’interfaccia del plugin supporta 15 lingue e la copertura dipende dal dizionario di ciascuna lingua.
+ComfyUI-Global-Translation è un plugin di traduzione multilingue per l’interfaccia. Segue la lingua selezionata in ComfyUI (Impostazioni → Generale → `Comfy.Locale`) e aggiunge traduzioni a nodi, menu, pannello delle impostazioni, gestore e interfacce dei nodi di terze parti. Traduce anche i testi dell’interfaccia aggiornati dinamicamente dai nodi di terze parti. La copertura della traduzione dipende dal dizionario di ciascuna lingua.
 
 ### Perché scegliere questo plugin?
 
@@ -160,12 +160,13 @@ Clicca l’interruttore di traduzione nella barra degli strumenti per cambiare s
 
 La lingua di traduzione non si imposta più nel plugin; **segue automaticamente l'impostazione linguistica ufficiale di ComfyUI** (Impostazioni → Generale → Lingua / `Comfy.Locale`):
 
-- Corrispondenza con tutte le lingue ufficialmente supportate: cinese semplificato, cinese tradizionale, inglese, giapponese, coreano, russo, francese, tedesco, spagnolo, italiano, portoghese (Brasile), turco, arabo, persiano, ebraico; le lingue non coperte ricorrono all'inglese
+- Il plugin riconosce tutte le 14 lingue ufficialmente supportate da ComfyUI: cinese semplificato, cinese tradizionale, inglese, giapponese, coreano, russo, francese, spagnolo, italiano, portoghese (Brasile), turco, arabo, persiano, ebraico; le lingue non coperte ricorrono all'inglese
+- Il plugin include un dizionario tedesco (`de-DE`). Il tedesco non è ancora selezionabile nelle impostazioni linguistiche ufficiali di ComfyUI.
 - Dopo aver cambiato la lingua ufficiale nelle impostazioni di ComfyUI, la pagina si aggiorna automaticamente; la traduzione e i testi del plugin si applicano insieme, senza riavvio manuale
 
 ### Pannello delle impostazioni
 
-In ComfyUI Impostazioni → «🌐 Impostazioni di traduzione» sono disponibili due opzioni. I testi dell'interfaccia sono localizzati nella lingua corrente (15 lingue) con un ordine delle sezioni coerente in tutte le lingue:
+In ComfyUI Impostazioni → «🌐 Impostazioni di traduzione» sono disponibili due opzioni. I testi dell'interfaccia sono localizzati nella lingua corrente con un ordine delle sezioni coerente in tutte le lingue:
 
 | Opzione | Descrizione | Scelte |
 |-------|------|------|
@@ -220,7 +221,7 @@ it-IT/
     └── ...
 ```
 
-> Le altre cartelle linguistiche (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `es-ES/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) condividono la stessa struttura e si caricano in base alla lingua corrente; `en-US/` serve a riportare in inglese i nodi dei plugin non cinesi.
+> Le altre cartelle linguistiche (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `es-ES/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) condividono la stessa struttura e si caricano in base alla lingua corrente; `en-US/` serve a riportare in inglese i nodi dei plugin non cinesi.
 
 ### Aggiungere traduzioni personalizzate
 
@@ -407,7 +408,7 @@ Nella barra laterale sinistra, apri **Nodi → Comfy Blueprints** e trascina un 
 
 **Aggiunto tedesco (de-DE)**
 
-- Traduzione tedesca completata che copre nodi, categorie, menu e pannello delle impostazioni; imposta la lingua ufficiale di ComfyUI su `de-DE`
+- Aggiunto un pacchetto di traduzione in tedesco per nodi, categorie, menu e pannello delle impostazioni.
 
 ### 2026-09-19
 

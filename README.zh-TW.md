@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#使用說明)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#使用說明)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 語言 · Language
@@ -41,7 +41,7 @@
 
 ## 外掛簡介
 
-ComfyUI-Global-Translation 是一款多語言介面翻譯外掛。它跟隨 ComfyUI 的語言設定（設定 → 一般 → `Comfy.Locale`），為節點、選單、設定面板、管理器和第三方節點介面補充譯文，支援翻譯第三方節點動態更新的介面文字。外掛本身的介面支援 15 種語言，各語言的翻譯範圍以對應的詞典為準。
+ComfyUI-Global-Translation 是一款多語言介面翻譯外掛。它跟隨 ComfyUI 的語言設定（設定 → 一般 → `Comfy.Locale`），為節點、選單、設定面板、管理器和第三方節點介面補充譯文，支援翻譯第三方節點動態更新的介面文字。各語言的翻譯範圍以對應的詞典為準。
 
 ### 為什麼選擇本外掛？
 
@@ -160,12 +160,13 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 
 翻譯語言不再在外掛內單獨設定，而是**自動跟隨 ComfyUI 官方語言設定**（設定 → 一般 → 語言 / `Comfy.Locale`）：
 
-- 官方支援的語言均可匹配：中文、繁體中文、英、日、韓、俄、法、德、西、義、葡(巴西)、土、阿、波斯、希伯來；未覆蓋的語言回退英文
+- 可對應 ComfyUI 官方支援的 14 種語言：中文、繁體中文、英、日、韓、俄、法、西、義、葡(巴西)、土、阿、波斯、希伯來；未覆蓋的語言回退英文
+- 外掛已提供德語詞典（`de-DE`），ComfyUI 官方設定暫未提供德語選項。
 - 在 ComfyUI 設定中切換官方語言後，頁面會自動重新整理，翻譯內容與本外掛介面文案同時生效，無需手動重啟
 
 ### 設定面板
 
-在 ComfyUI 設定 → 「🌐 翻譯設定」中提供兩個配置項，介面文案隨目前語言本地化（15 種語言）且各語言佈局順序一致：
+在 ComfyUI 設定 → 「🌐 翻譯設定」中提供兩個配置項，介面文案隨目前語言本地化且各語言佈局順序一致：
 
 | 設定項 | 說明 | 選項 |
 |-------|------|------|
@@ -220,7 +221,7 @@ zh-TW/
     └── ...
 ```
 
-> 其他語言目錄（`zh-CN/`、`en-US/`、`ja-JP/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`de-DE/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）採用同樣結構，依目前語言自動載入；其中 `en-US/` 用於把其他語言外掛的節點還原為英文。
+> 其他語言目錄（`zh-CN/`、`en-US/`、`ja-JP/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）採用同樣結構，依目前語言自動載入；其中 `en-US/` 用於把其他語言外掛的節點還原為英文。
 
 ### 新增自訂翻譯
 
@@ -407,7 +408,7 @@ zh-TW/
 
 **新增德語（de-DE）翻譯**
 
-- 完成德語翻譯包，覆蓋節點、分類、選單與設定面板；將 ComfyUI 官方語言設為 `de-DE` 即可自動啟用德語介面
+- 提供德語翻譯套件，涵蓋節點、分類、選單與設定面板。
 
 ### 2026-09-19
 

@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#uso)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#uso)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## Descripción general
 
-ComfyUI-Global-Translation es un complemento de traducción multilingüe de la interfaz. Sigue el ajuste de idioma de ComfyUI (Ajustes → General → `Comfy.Locale`) y añade traducciones para los nodos, los menús, el panel de ajustes, el gestor y las interfaces de nodos de terceros. También traduce los textos de interfaz que los nodos de terceros actualizan dinámicamente. La interfaz del complemento admite 15 idiomas y la cobertura depende del diccionario de cada idioma.
+ComfyUI-Global-Translation es un complemento de traducción multilingüe de la interfaz. Sigue el ajuste de idioma de ComfyUI (Ajustes → General → `Comfy.Locale`) y añade traducciones para los nodos, los menús, el panel de ajustes, el gestor y las interfaces de nodos de terceros. También traduce los textos de interfaz que los nodos de terceros actualizan dinámicamente. El alcance de la traducción depende del diccionario de cada idioma.
 
 ### ¿Por qué elegir este complemento?
 
@@ -160,12 +160,13 @@ Pulse el interruptor de traducción de la barra de herramientas para cambiar su 
 
 El idioma de traducción ya no se configura dentro del complemento; **sigue automáticamente el ajuste de idioma oficial de ComfyUI** (Ajustes → General → Idioma / `Comfy.Locale`):
 
-- Coincide con todos los idiomas admitidos oficialmente: chino simplificado, chino tradicional, inglés, japonés, coreano, ruso, francés, alemán, español, italiano, portugués (Brasil), turco, árabe, persa, hebreo; los idiomas no cubiertos recurren al inglés
+- El complemento es compatible con los 14 idiomas que admite oficialmente ComfyUI: chino simplificado, chino tradicional, inglés, japonés, coreano, ruso, francés, español, italiano, portugués (Brasil), turco, árabe, persa, hebreo; los idiomas no cubiertos recurren al inglés
+- El complemento incluye un diccionario de alemán (`de-DE`). Los ajustes oficiales de idioma de ComfyUI aún no ofrecen la opción de elegir alemán.
 - Tras cambiar el idioma oficial en los ajustes de ComfyUI, la página se actualiza automáticamente; la traducción y los textos del complemento se aplican a la vez, sin reiniciar manualmente
 
 ### Panel de ajustes
 
-En ComfyUI Ajustes → «🌐 Ajustes de traducción» hay dos opciones. Los textos de interfaz se localizan al idioma actual (15 idiomas) con un orden de secciones coherente en todos los idiomas:
+En ComfyUI Ajustes → «🌐 Ajustes de traducción» hay dos opciones. Los textos de interfaz se localizan al idioma actual con un orden de secciones coherente en todos los idiomas:
 
 | Opción | Descripción | Elecciones |
 |-------|------|------|
@@ -220,7 +221,7 @@ es-ES/
     └── ...
 ```
 
-> Los demás directorios de idioma (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `de-DE/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) comparten la misma estructura y se cargan según el idioma actual; `en-US/` sirve para devolver al inglés los nodos de complementos no chinos.
+> Los demás directorios de idioma (`zh-CN/`, `zh-TW/`, `en-US/`, `ja-JP/`, `ko-KR/`, `ru-RU/`, `fr-FR/`, `it-IT/`, `pt-BR/`, `ar-SA/`, `tr-TR/`, `fa-IR/`, `he-IL/`) comparten la misma estructura y se cargan según el idioma actual; `en-US/` sirve para devolver al inglés los nodos de complementos no chinos.
 
 ### Añadir traducciones personalizadas
 
@@ -407,7 +408,7 @@ Desde **Nodos → Comfy Blueprints** en la barra lateral izquierda, arrastre un 
 
 **Añadido alemán (de-DE)**
 
-- Traducción al alemán completada que cubre nodos, categorías, menús y panel de ajustes; establezca el idioma oficial de ComfyUI en `de-DE`
+- Se añadió un paquete de traducción al alemán para nodos, categorías, menús y el panel de ajustes.
 
 ### 2026-09-19
 

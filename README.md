@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#使用说明)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#使用说明)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## 插件简介
 
-ComfyUI-Global-Translation 是一款多语言界面翻译插件。它跟随 ComfyUI 的语言设置（设置 → 通用 → `Comfy.Locale`），为节点、菜单、设置面板、管理器和第三方节点界面补充译文，支持翻译第三方节点动态更新的界面文字。插件自身界面支持 15 种语言，各语言的翻译范围以对应词典为准。
+ComfyUI-Global-Translation 是一款多语言界面翻译插件。它跟随 ComfyUI 的语言设置（设置 → 通用 → `Comfy.Locale`），为节点、菜单、设置面板、管理器和第三方节点界面补充译文，支持翻译第三方节点动态更新的界面文字。各语言的翻译范围以对应词典为准。
 
 ### 为什么选择本插件？
 
@@ -159,12 +159,13 @@ git clone https://github.com/a63976659/ComfyUI-Global-Translation.git
 
 翻译语言不再在插件内单独设置，而是**自动跟随 ComfyUI 官方语言设置**（设置 → 通用 → 语言 / `Comfy.Locale`）：
 
-- 官方支持的语言均可匹配：中文、繁体中文、英、日、韩、俄、法、德、西、意、葡(巴西)、土、阿、波斯、希伯来；未覆盖的语言回退英文
+- 可匹配 ComfyUI 官方支持的 14 种语言：中文、繁体中文、英、日、韩、俄、法、西、意、葡(巴西)、土、阿、波斯、希伯来；未覆盖的语言回退英文
+- 插件已提供德语词典（`de-DE`），ComfyUI 官方设置暂未开放德语选项。
 - 在 ComfyUI 设置中切换官方语言后，页面会自动刷新，翻译内容与本插件界面文案同时生效，无需手动重启
 
 ### 设置面板
 
-在 ComfyUI 设置 → 「🌐 翻译设置」中提供两个配置项，界面文案随当前语言本地化（15 种语言）且各语言布局顺序一致：
+在 ComfyUI 设置 → 「🌐 翻译设置」中提供两个配置项，界面文案随当前语言本地化且各语言布局顺序一致：
 
 | 设置项 | 说明 | 选项 |
 |-------|------|------|
@@ -219,7 +220,7 @@ zh-CN/
     └── ...
 ```
 
-> 其它语言目录（`zh-TW/`、`en-US/`、`ja-JP/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`de-DE/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）采用同样结构，按当前语言自动加载；其中 `en-US/` 用于把其它语言插件的节点还原为英文。仅包含 `Menus/` 或 `Categories/` 的语言目录也会被识别。
+> 其它语言目录（`zh-TW/`、`en-US/`、`ja-JP/`、`ko-KR/`、`ru-RU/`、`fr-FR/`、`es-ES/`、`it-IT/`、`pt-BR/`、`ar-SA/`、`tr-TR/`、`fa-IR/`、`he-IL/`）采用同样结构，按当前语言自动加载；其中 `en-US/` 用于把其它语言插件的节点还原为英文。仅包含 `Menus/` 或 `Categories/` 的语言目录也会被识别。
 
 ### 添加自定义翻译
 
@@ -408,7 +409,7 @@ zh-CN/
 
 **新增德语（de-DE）翻译**
 
-- 完成德语翻译包，覆盖节点、分类、菜单与设置面板；将 ComfyUI 官方语言设为 `de-DE` 即可自动启用德语界面
+- 提供德语翻译包，覆盖节点、分类、菜单与设置面板。
 
 ### 2026-09-19
 

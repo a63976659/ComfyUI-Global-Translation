@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/a63976659/ComfyUI-Global-Translation?style=social&logo=github)](https://github.com/a63976659/ComfyUI-Global-Translation)
 [![Version](https://img.shields.io/badge/version-3.5.3-2f74c0)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-3da92f)](LICENSE)
-[![Languages](https://img.shields.io/badge/languages-15-8a2be2)](#verwendung)
+[![Language packs](https://img.shields.io/badge/language%20packs-15-8a2be2)](#verwendung)
 [![Bilibili](https://img.shields.io/badge/bilibili-猪的飞行梦-00A1D6?logo=bilibili&logoColor=white)](https://space.bilibili.com/2114638644)
 
 ### 🌍 语言 · Language
@@ -41,7 +41,7 @@
 
 ## Überblick
 
-ComfyUI-Global-Translation ist ein Plugin zur mehrsprachigen Übersetzung der Benutzeroberfläche. Es folgt der Spracheinstellung in ComfyUI (Einstellungen → Allgemein → `Comfy.Locale`) und ergänzt Übersetzungen für Knoten, Menüs, das Einstellungsfenster, den Manager und die Oberflächen von Drittanbieter-Knoten. Auch Oberflächentexte, die Drittanbieter-Knoten dynamisch aktualisieren, werden übersetzt. Die Plugin-Oberfläche unterstützt 15 Sprachen. Der Übersetzungsumfang richtet sich nach dem Wörterbuch der jeweils gewählten Sprache.
+ComfyUI-Global-Translation ist ein Plugin zur mehrsprachigen Übersetzung der Benutzeroberfläche. Es folgt der Spracheinstellung in ComfyUI (Einstellungen → Allgemein → `Comfy.Locale`) und ergänzt Übersetzungen für Knoten, Menüs, das Einstellungsfenster, den Manager und die Oberflächen von Drittanbieter-Knoten. Auch Oberflächentexte, die Drittanbieter-Knoten dynamisch aktualisieren, werden übersetzt. Der Übersetzungsumfang richtet sich nach dem Wörterbuch der jeweils gewählten Sprache.
 
 ### Warum dieses Plugin?
 
@@ -160,12 +160,13 @@ Klicken Sie auf den Schalter in der Symbolleiste. Mit Tab fokussieren Sie ihn, m
 
 Die Übersetzungssprache wird nicht mehr im Plugin eingestellt; sie **folgt automatisch der offiziellen Spracheneinstellung von ComfyUI** (Einstellungen → Allgemein → Sprache / `Comfy.Locale`):
 
-- Alle offiziell unterstützten Sprachen werden zugeordnet: Vereinfachtes/Traditionelles Chinesisch, Englisch, Japanisch, Koreanisch, Russisch, Französisch, Deutsch, Spanisch, Italienisch, Portugiesisch (Brasilien), Türkisch, Arabisch, Persisch, Hebräisch; nicht abgedeckte Sprachen fallen auf Englisch zurück
+- Das Plugin unterstützt alle 14 offiziell in ComfyUI verfügbaren Sprachen: Vereinfachtes/Traditionelles Chinesisch, Englisch, Japanisch, Koreanisch, Russisch, Französisch, Spanisch, Italienisch, Portugiesisch (Brasilien), Türkisch, Arabisch, Persisch, Hebräisch; nicht abgedeckte Sprachen fallen auf Englisch zurück
+- Das Plugin enthält ein deutsches Wörterbuch (`de-DE`). Deutsch ist in den offiziellen Spracheinstellungen von ComfyUI noch nicht auswählbar.
 - Nach dem Wechsel der offiziellen Sprache in den ComfyUI-Einstellungen lädt die Seite automatisch neu; Übersetzung und Plugin-Oberflächentexte greifen gleichzeitig, kein manueller Neustart nötig
 
 ### Einstellungsfenster
 
-Unter ComfyUI Einstellungen → „🌐 Übersetzungseinstellungen" gibt es zwei Optionen. Die Oberflächentexte sind in die aktuelle Sprache lokalisiert (15 Sprachen) mit einheitlicher Abschnittsreihenfolge über alle Sprachen hinweg:
+Unter ComfyUI Einstellungen → „🌐 Übersetzungseinstellungen" gibt es zwei Optionen. Die Oberflächentexte sind in die aktuelle Sprache lokalisiert mit einheitlicher Abschnittsreihenfolge über alle Sprachen hinweg:
 
 | Option | Beschreibung | Optionen |
 |-------|------|------|
@@ -408,7 +409,7 @@ Ziehen Sie einen Blueprint aus „Knoten“ → „Comfy Blueprints“ auf die A
 
 **Deutsch (de-DE) hinzugefügt**
 
-- Deutsches Übersetzungspaket fertiggestellt, das Knoten, Kategorien, Menüs und das Einstellungsfenster abdeckt; stellen Sie die offizielle ComfyUI-Sprache auf `de-DE`
+- Deutsches Übersetzungspaket für Knoten, Kategorien, Menüs und das Einstellungsfenster hinzugefügt.
 
 ### 2026-09-19
 
